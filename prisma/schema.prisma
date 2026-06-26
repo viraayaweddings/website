@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model City {
+  id              String   @id @default(cuid())
+  name            String
+  slug            String   @unique
+  sourceCount     Int
+  importedCount   Int
+  seoPayload       Json?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  venues          Venue[]
+}
+
+model Venue {
+  id                  String       @id @default(cuid())
+  vendorId            String       @unique
+  name                String
+  slug                String
+  citySlug            String
+  shortAddress        String?
+  formattedAddress    String?
+  userRating          Float?
+  userRatingCount     Int?
+  isBhPartner         Boolean      @default(false)
+  bhPartnerDealText   String?
+  minPerPlateCost     Int?
+  maxPerPlateCost     Int?
+  minPerDayCost       Int?
+  maxPerDayCost       Int?
+  minRoomCount        Int?
+  maxRoomCount        Int?
+  minAreaCapacity     Int?
+  maxAreaCapacity     Int?
+  parkingCount        Int?
+  latitude            Float?
+  longitude           Float?
+  listingOrder        Int
+  listingPayload      Json
+  detailPayload       Json?
+  searchText          String
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+  city                City         @relation(fields: [citySlug], references: [slug])
+  media               VenueMedia[]
+  tags                VenueTag[]
+  areas               VenueArea[]
+  amenities           VenueAmenity[]
+  facilities          VenueFacility[]
+
+  @@index([citySlug, listingOrder])
+  @@index([citySlug, slug])
+  @@index([userRating])
+  @@index([minPerPlateCost, maxPerPlateCost])
+  @@index([minAreaCapacity, maxAreaCapacity])
+}
+
+model VenueMedia {
+  id          String  @id @default(cuid())
+  venueId     String
+  originalUrl String
+  localPath   String?
+  mimeType    String?
+  mediaId     String?
+  source      String
+  position    Int
+  venue       Venue   @relation(fields: [venueId], references: [vendorId], onDelete: Cascade)
+
+  @@index([venueId, source, position])
+}
+
+model VenueTag {
+  id      String @id @default(cuid())
+  venueId String
+  label   String
+  venue   Venue  @relation(fields: [venueId], references: [vendorId], onDelete: Cascade)
+
+  @@unique([venueId, label])
+  @@index([label])
+}
+
+model VenueArea {
+  id               String @id @default(cuid())
+  venueId          String
+  name             String
+  areaType         String?
+  seatingCapacity  Int?
+  floatingCapacity Int?
+  venue            Venue  @relation(fields: [venueId], references: [vendorId], onDelete: Cascade)
+
+  @@index([venueId])
+}
+
+model VenueAmenity {
+  id      String @id @default(cuid())
+  venueId String
+  label   String
+  venue   Venue  @relation(fields: [venueId], references: [vendorId], onDelete: Cascade)
+
+  @@unique([venueId, label])
+  @@index([label])
+}
+
+model VenueFacility {
+  id      String @id @default(cuid())
+  venueId String
+  label   String
+  venue   Venue  @relation(fields: [venueId], references: [vendorId], onDelete: Cascade)
+
+  @@unique([venueId, label])
+  @@index([label])
+}

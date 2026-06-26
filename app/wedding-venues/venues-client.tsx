@@ -1,0 +1,436 @@
+"use client";
+
+import type { MouseEvent } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+
+type VenueCardData = {
+  vendorId: string;
+  name: string;
+  href: string;
+  city: string;
+  citySlug: string;
+  place: string;
+  rating: string;
+  ratingValue: number | null;
+  price: string;
+  guests: string;
+  badges: string[];
+  isPartner: boolean;
+  images: string[];
+};
+
+type CityData = {
+  slug: string;
+  name: string;
+  sourceCount: number;
+  importedCount: number;
+};
+
+type QueryResult = {
+  size: number;
+  nextPageUrl: string | null;
+  page: number;
+  limit: number;
+  results: VenueCardData[];
+};
+
+const popularCities = ["Delhi", "Gurugram", "Noida", "Jaipur", "Udaipur"];
+const modalCities = ["Delhi", "Gurugram", "Noida", "Jaipur", "Udaipur"];
+const tabs = ["All", "Bestsellers", "Premium", "Budget Friendly", "Viraaya's choice"];
+
+const filterGroups = [
+  { title: "No of guests", param: "guests", items: ["< 100", "100 - 250", "250 - 500", "500 - 1000", "> 1000"] },
+  { title: "Pricing Type", param: "pricingType", type: "pricing", items: ["Per plate", "Per day"] },
+  { title: "Food preference", param: "food", items: ["Vegetarian", "Non - Vegetarian", "Vegan"] },
+  {
+    title: "Venue Type",
+    param: "venueType",
+    items: [
+      "5 Star Venues",
+      "4 Star Venues",
+      "3 Star Venues",
+      "Resorts",
+      "Convention Halls",
+      "Farm Houses",
+      "Kalyan Mantapas",
+      "Heritage Property"
+    ]
+  },
+  {
+    title: "Venue Area",
+    param: "venueArea",
+    grouped: [
+      ["Indoor", "Banquet Halls", "Function Halls", "Party Halls", "Amphitheatre"],
+      ["Outdoor", "Pool Side", "Open Terrace", "Open Lawn"]
+    ]
+  },
+  {
+    title: "Facilities",
+    param: "facility",
+    grouped: [
+      ["Catering", "In-house Catering Only", "Outside Catering Allowed", "Outside Catering Only"],
+      ["Alcohol Policy", "In-house Alcohol Only", "Outside Alcohol Allowed", "Outside Alcohol Only"],
+      ["Outdoor", "In-house Decoration Only", "Outside Decoration Allowed", "Outside Decoration Only"],
+      ["Outdoor", "In-house DJ Only", "Outside DJ Allowed", "Outside DJ Only"]
+    ]
+  },
+  { title: "Room Counts", param: "rooms", items: ["< 30", "30 - 60", "61 - 100", "100 - 200", "200 - 1000"] },
+  { title: "Ratings", param: "rating", items: ["Rated ★ 4.5+", "Rated ★ 4+", "Rated ★ 3+"] }
+];
+
+function SearchIcon() {
+  return (
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+      <path d="m20 20-4.2-4.2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function titleCity(slug?: string | null) {
+  if (!slug) return "Wedding Venues";
+  return `Wedding Venues in ${slug.slice(0, 1).toUpperCase()}${slug.slice(1)}`;
+}
+
+function VenueCard({ venue }: { venue: VenueCardData }) {
+  const images = venue.images.length ? venue.images : ["/twc-next/static/media/hotel-taj.cca019c4.webp"];
+  const visibleImages = images.slice(0, Math.max(1, Math.min(images.length, 4)));
+  const [activeImage, setActiveImage] = useState(0);
+  const hasCarousel = visibleImages.length > 1;
+
+  function changeImage(event: MouseEvent, direction: -1 | 1) {
+    event.preventDefault();
+    event.stopPropagation();
+    setActiveImage((current) => (current + direction + visibleImages.length) % visibleImages.length);
+  }
+
+  function selectImage(event: MouseEvent, index: number) {
+    event.preventDefault();
+    event.stopPropagation();
+    setActiveImage(index);
+  }
+
+  return (
+    <a className="venue-card" href={venue.href}>
+      {venue.isPartner ? <div className="venue-partner">Viraaya Partner</div> : null}
+      <div className="venue-photo-wrap">
+        {visibleImages.map((image, index) => (
+          <img
+            className={index === activeImage ? "venue-photo active" : "venue-photo"}
+            src={image}
+            alt=""
+            key={`${image}-${index}`}
+            loading="lazy"
+          />
+        ))}
+        {hasCarousel ? (
+          <>
+            <button
+              aria-label={`Previous photo for ${venue.name}`}
+              className="venue-card-arrow left"
+              type="button"
+              onClick={(event) => changeImage(event, -1)}
+            >
+              ‹
+            </button>
+            <button
+              aria-label={`Next photo for ${venue.name}`}
+              className="venue-card-arrow right"
+              type="button"
+              onClick={(event) => changeImage(event, 1)}
+            >
+              ›
+            </button>
+          </>
+        ) : null}
+        {venue.badges.length ? (
+          <div className="venue-badges">
+            {venue.badges.slice(0, 3).map((badge, index) => (
+              <span className={index === venue.badges.length - 1 ? "gold" : "pink"} key={badge}>
+                {badge}
+              </span>
+            ))}
+          </div>
+        ) : null}
+        {hasCarousel ? (
+          <div className="venue-dots">
+            {visibleImages.map((image, index) => (
+              <button
+                aria-label={`Show photo ${index + 1} for ${venue.name}`}
+                className={index === activeImage ? "active" : ""}
+                key={`${image}-dot-${index}`}
+                type="button"
+                onClick={(event) => selectImage(event, index)}
+              />
+            ))}
+          </div>
+        ) : null}
+      </div>
+      <div className="venue-card-body">
+        <h2>{venue.name}</h2>
+        <p className="venue-rating"><span>&#9733;</span>{venue.rating}</p>
+        <p className="venue-place">{venue.place}</p>
+        <div className="venue-meta">
+          <span>{venue.price}</span>
+          <span>{venue.guests}</span>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function SeoContent({ citySlug }: { citySlug?: string | null }) {
+  const cityName = citySlug ? citySlug.slice(0, 1).toUpperCase() + citySlug.slice(1) : "India";
+  return (
+    <section className="venues-seo">
+      <p>
+        Planning a wedding in {cityName}? The venue you choose sets the stage for everything - from your mehndi to your big reception night. Browse curated wedding venues, compare pricing, capacity, rooms, ratings, and policies, then shortlist the perfect venue for your celebration.
+      </p>
+      <h2>Popular Types of Wedding Venues in {cityName}</h2>
+      <p>Couples usually choose between luxury hotels, banquet halls, resorts, heritage venues, farmhouses, lawns, and poolside venues depending on guest count, budget, and event style.</p>
+      <h2>Indoor vs Outdoor Wedding Venues</h2>
+      <p>Indoor venues work well for reliable weather control and formal receptions. Outdoor venues are ideal for open-air decor, grand entries, poolside events, and destination-style celebrations.</p>
+      <h2>What should we check before booking a venue?</h2>
+      <ul>
+        <li>Guest capacity and floating capacity</li>
+        <li>Per plate or per day pricing</li>
+        <li>Food, alcohol, decor, and DJ policies</li>
+        <li>Room availability and parking</li>
+        <li>Availability for your wedding date</li>
+      </ul>
+    </section>
+  );
+}
+
+export default function VenuesClient({
+  initial,
+  citySlug,
+  cities
+}: {
+  initial: QueryResult;
+  citySlug?: string | null;
+  cities: CityData[];
+}) {
+  const [venues, setVenues] = useState(initial.results);
+  const [total, setTotal] = useState(initial.size);
+  const [nextPageUrl, setNextPageUrl] = useState(initial.nextPageUrl);
+  const [activeTab, setActiveTab] = useState("All");
+  const [search, setSearch] = useState("");
+  const [pricingType, setPricingType] = useState("Per plate");
+  const [selected, setSelected] = useState<Record<string, string[]>>({});
+  const [loading, setLoading] = useState(false);
+  const didMount = useRef(false);
+
+  const cityName = useMemo(() => titleCity(citySlug), [citySlug]);
+
+  function buildParams(page = 1, tab = activeTab) {
+    const params = new URLSearchParams();
+    if (citySlug) params.set("city", citySlug);
+    params.set("limit", "24");
+    params.set("page", String(page));
+    params.set("tab", tab);
+    if (search.trim()) params.set("search", search.trim());
+    params.set("pricingType", pricingType);
+    Object.entries(selected).forEach(([key, values]) => {
+      values.forEach((value) => params.append(key, value));
+    });
+    return params;
+  }
+
+  async function runSearch(page = 1, append = false, tab = activeTab) {
+    setLoading(true);
+    const params = buildParams(page, tab);
+    const response = await fetch(`/api/venues?${params.toString()}`);
+    const data = (await response.json()) as QueryResult;
+    setVenues((current) => (append ? [...current, ...data.results] : data.results));
+    setTotal(data.size);
+    setNextPageUrl(data.nextPageUrl);
+    setLoading(false);
+  }
+
+  function toggleValue(param: string, item: string) {
+    setSelected((current) => {
+      const existing = current[param] || [];
+      const next = existing.includes(item)
+        ? existing.filter((value) => value !== item)
+        : [...existing, item];
+      return { ...current, [param]: next };
+    });
+  }
+
+  async function changeTab(tab: string) {
+    setActiveTab(tab);
+  }
+
+  async function showMore() {
+    if (!nextPageUrl) return;
+    setLoading(true);
+    const response = await fetch(nextPageUrl);
+    const data = (await response.json()) as QueryResult;
+    setVenues((current) => [...current, ...data.results]);
+    setTotal(data.size);
+    setNextPageUrl(data.nextPageUrl);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    if (!didMount.current) {
+      didMount.current = true;
+      return;
+    }
+    const timeout = window.setTimeout(() => {
+      void runSearch(1, false, activeTab);
+    }, 300);
+    return () => window.clearTimeout(timeout);
+  }, [search, pricingType, selected, activeTab]);
+
+  return (
+    <main className="venues-page">
+      <input aria-hidden="true" className="venues-modal-toggle" id="venues-city-modal-toggle" type="checkbox" />
+      <a className="venues-mobile-select" href="/wedding-venues">Select event city</a>
+      <section className="venues-hero-band">
+        <h1>{cityName}</h1>
+        <label className="venues-search">
+          <SearchIcon />
+          <input
+            placeholder="Search vendor..."
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") runSearch();
+            }}
+          />
+        </label>
+      </section>
+      <section className="venues-mobile-cities">
+        {modalCities.map((city) => (
+          <a className="venues-city-chip" href={`/wedding-venues/${city.toLowerCase()}`} key={city}>
+            {city}
+          </a>
+        ))}
+      </section>
+      <div className="venues-shell">
+        <aside className="venues-filters">
+          <div className="venues-filter-title">Filters</div>
+          <section className="venues-filter-section">
+            <div className="venues-section-heading">
+              <strong>Event City</strong>
+              <span>+</span>
+            </div>
+            <a className="venues-city-search" href="/wedding-venues">
+              <span>o</span>
+              Search your event city
+            </a>
+            <p className="venues-popular-label">POPULAR CITIES</p>
+            <div className="venues-city-pills">
+              {popularCities.map((city) => (
+                <a className={city.toLowerCase() === citySlug ? "active" : ""} href={`/wedding-venues/${city.toLowerCase()}`} key={city}>
+                  {city}
+                </a>
+              ))}
+            </div>
+          </section>
+          {filterGroups.map((group) => (
+            <section className="venues-filter-section" key={group.title}>
+              <details open>
+                <summary>{group.title}<span>^</span></summary>
+                {group.type === "pricing" ? (
+                  <>
+                    <div className="venues-pricing-toggle">
+                      {group.items?.map((item) => (
+                        <button
+                          className={pricingType === item ? "active" : ""}
+                          type="button"
+                          key={item}
+                          onClick={() => setPricingType(item)}
+                        >
+                          {item}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="venues-range"><i /><i /></div>
+                    <div className="venues-range-labels"><span>₹ 0</span><span>₹ 20,000+</span></div>
+                  </>
+                ) : group.grouped ? (
+                  <div className="venues-checks">
+                    {group.grouped.flatMap((items, groupIndex) =>
+                      items.map((item, index) =>
+                        index === 0 ? (
+                          <p key={`${group.title}-${groupIndex}-${item}`} className="venues-subfilter">{item}</p>
+                        ) : (
+                          <label key={`${group.title}-${groupIndex}-${item}`}>
+                            <input
+                              type="checkbox"
+                              checked={(selected[group.param] || []).includes(item)}
+                              onChange={() => toggleValue(group.param, item)}
+                            />
+                            {item}
+                          </label>
+                        )
+                      )
+                    )}
+                  </div>
+                ) : (
+                  <div className="venues-checks">
+                    {group.items?.map((item) => (
+                      <label key={item}>
+                        <input
+                          type="checkbox"
+                          checked={(selected[group.param] || []).includes(item)}
+                          onChange={() => toggleValue(group.param, item)}
+                        />
+                        {item}
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </details>
+            </section>
+          ))}
+          <button className="venues-apply" type="button" onClick={() => runSearch()}>
+            Apply filters
+          </button>
+        </aside>
+        <section className="venues-results">
+          <p className="venues-breadcrumb">
+            Viraaya Weddings / <strong>{citySlug ? `Wedding Venues / ${cityName.replace("Wedding Venues in ", "")}` : "Wedding Venues"}</strong>
+          </p>
+          <div className="venues-results-head">
+            <p>Showing <strong>{total} results</strong> as per your search criteria</p>
+            <div className="venues-tabs">
+              {tabs.map((tab) => (
+                <button className={activeTab === tab ? "active" : ""} type="button" key={tab} onClick={() => changeTab(tab)}>
+                  {tab}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="venues-grid">
+            {venues.map((venue) => <VenueCard venue={venue} key={venue.vendorId} />)}
+          </div>
+          {nextPageUrl ? (
+            <button className="venues-show-more" type="button" onClick={showMore} disabled={loading}>
+              {loading ? "Loading..." : "Show More"}
+            </button>
+          ) : null}
+        </section>
+      </div>
+      <SeoContent citySlug={citySlug} />
+      <div className="venues-links">
+        <section className="venues-link-group">
+          <p>Explore by City</p>
+          <div>
+            {cities.map((city) => (
+              <a href={`/wedding-venues/${city.slug}`} key={city.slug}>Wedding Venues in {city.name}</a>
+            ))}
+          </div>
+        </section>
+      </div>
+      <div className="venues-fixed-actions">
+        <button type="button" className="quote">Get Free Quote</button>
+        <button type="button" className="chat">Chat with us</button>
+      </div>
+      <button className="venues-to-top" type="button">^</button>
+    </main>
+  );
+}

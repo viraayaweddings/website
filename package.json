@@ -1,0 +1,34 @@
+{
+  "name": "viraaya-weddings",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:preview": "set NEXT_DIST_DIR=.next-preview&& next dev",
+    "build": "prisma generate && next build",
+    "postinstall": "prisma generate",
+    "start": "next start",
+    "lint": "tsc --noEmit",
+    "venues:import": "node scripts/import-venues.mjs",
+    "venues:import:no-assets": "set DOWNLOAD_ASSETS=false&& node scripts/import-venues.mjs",
+    "venues:assets": "node scripts/download-venue-assets.mjs",
+    "venues:database": "node scripts/build-venue-database.mjs",
+    "prisma:generate": "prisma generate",
+    "prisma:seed": "node scripts/seed-prisma.mjs"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "next": "^16.2.9",
+    "pg": "^8.22.0",
+    "prisma": "^7.8.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.32",
+    "@types/react": "19.0.12",
+    "@types/react-dom": "19.0.4",
+    "typescript": "5.8.3"
+  }
+}

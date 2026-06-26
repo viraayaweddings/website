@@ -1,0 +1,18 @@
+node_modules
+.next
+.next-preview
+out
+.env*
+.scrape/
+tsconfig.tsbuildinfo
+npm-debug.log*
+
+# local dev artifacts
+*.log
+.local-postgres/
+
+# vendored venue images (9.7GB) — served via CDN/proxy at runtime, never committed
+public/twc-venues-local/
+
+# scratch / temp captures
+data/venues/_*.html
