@@ -2,7 +2,29 @@ import { readFile } from "node:fs/promises";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
-const adapter = new PrismaPg(process.env.DATABASE_URL);
+function getPrismaPgConfig() {
+  if (!process.env.DATABASE_URL) {
+    throw new Error("DATABASE_URL must be configured before running the Prisma seed.");
+  }
+
+  const parsed = new URL(process.env.DATABASE_URL);
+  const sslMode = parsed.searchParams.get("sslmode");
+  const usesSsl = sslMode && sslMode.toLowerCase() !== "disable";
+
+  parsed.searchParams.delete("sslmode");
+  parsed.searchParams.delete("channel_binding");
+
+  if (!usesSsl) {
+    return { connectionString: parsed.toString() };
+  }
+
+  return {
+    connectionString: parsed.toString(),
+    ssl: { rejectUnauthorized: process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== "false" }
+  };
+}
+
+const adapter = new PrismaPg(getPrismaPgConfig());
 const prisma = new PrismaClient({ adapter });
 
 function n(value) {

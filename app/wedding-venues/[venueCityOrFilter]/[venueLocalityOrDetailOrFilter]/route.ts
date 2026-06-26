@@ -1,6 +1,7 @@
 import { getMirrorHtml } from "../../../lib/venue-mirror";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export async function GET(
   _request: Request,
@@ -16,6 +17,9 @@ export async function GET(
     return new Response("Not found", { status: 404 });
   }
   return new Response(html, {
-    headers: { "content-type": "text/html; charset=utf-8" }
+    headers: {
+      "content-type": "text/html; charset=utf-8",
+      "cache-control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400"
+    }
   });
 }

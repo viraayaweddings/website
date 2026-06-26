@@ -56,6 +56,7 @@ model Venue {
 
   @@index([citySlug, listingOrder])
   @@index([citySlug, slug])
+  @@index([citySlug, isBhPartner(sort: Desc), userRating(sort: Desc), listingOrder(sort: Asc)], map: "Venue_city_partner_rating_order_idx")
   @@index([userRating])
   @@index([minPerPlateCost, maxPerPlateCost])
   @@index([minAreaCapacity, maxAreaCapacity])
@@ -73,6 +74,7 @@ model VenueMedia {
   venue       Venue   @relation(fields: [venueId], references: [vendorId], onDelete: Cascade)
 
   @@index([venueId, source, position])
+  @@index([venueId, position])
 }
 
 model VenueTag {

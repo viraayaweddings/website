@@ -12,10 +12,14 @@ const PUBLIC_ASSET_DIR = join(ROOT, "public", "twc-venues-local");
 const CITY_SLUGS = ["delhi", "gurugram", "noida", "jaipur", "udaipur"];
 const LIMIT = 24;
 const BASE_SITE = "https://www.theweddingcompany.com";
-const API_BASE = "https://weddingapi.betterhalf.ai/v1/venue/vendors/";
+const API_BASE = process.env.VENUE_IMPORT_API_BASE;
 const CONCURRENCY = Number(process.env.IMPORT_CONCURRENCY || 8);
 const DOWNLOAD_ASSETS = process.env.DOWNLOAD_ASSETS !== "false";
 const execFileAsync = promisify(execFile);
+
+if (!API_BASE) {
+  throw new Error("VENUE_IMPORT_API_BASE must be set before running this import script.");
+}
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -37,7 +41,7 @@ async function fetchJson(url, tries = 4) {
       await wait(500 * attempt);
     }
   }
-  if (url.includes("weddingapi.betterhalf.ai")) {
+  if (url.startsWith(API_BASE)) {
     const { stdout } = await execFileAsync(
       "curl.exe",
       [

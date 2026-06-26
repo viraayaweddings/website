@@ -1,32 +1,6 @@
-import fs from "node:fs";
-import path from "node:path";
+import { unstable_cache } from "next/cache";
 import { prisma } from "./prisma";
-import { applyBranding, getHomepageFooter } from "../homepage-shell";
-
-// Mirrors theweddingcompany.com's own venue page: the original compiled HTML +
-// vendored JS/CSS/fonts/media are served entirely from the local server, and
-// the page data (__NEXT_DATA__) is rebuilt from the local Prisma DB so every
-// venue renders through the original components with zero live dependency.
-
-let cachedTemplate: string | null = null;
-let cachedNextData: any = null;
-
-function getTemplate(): string {
-  if (cachedTemplate) return cachedTemplate;
-  cachedTemplate = fs.readFileSync(
-    path.join(process.cwd(), "data", "venues", "captured-venue-detail.html"),
-    "utf8"
-  );
-  return cachedTemplate;
-}
-
-function getBaseNextData(): any {
-  if (cachedNextData) return JSON.parse(JSON.stringify(cachedNextData));
-  const html = getTemplate();
-  const m = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
-  cachedNextData = JSON.parse(m![1]);
-  return JSON.parse(JSON.stringify(cachedNextData));
-}
+import { getHomepageFooter } from "../homepage-shell";
 
 const LOCAL_HOSTS: Array<[string, string]> = [
   ["https://gcpimages.theweddingcompany.com", "/venue-assets/gcpimages"],
@@ -42,6 +16,66 @@ const LOCAL_ALIASES: Array<[string, string]> = [
   ["/twc-venues-local/maps.gstatic.com", "/venue-assets/maps"]
 ];
 
+const VENUE_INCLUDE = {
+  city: true,
+  media: {
+    orderBy: { position: "asc" }
+  },
+  tags: true,
+  areas: true,
+  amenities: true,
+  facilities: true
+} as const;
+
+const SIMILAR_SELECT = {
+  vendorId: true,
+  slug: true,
+  name: true,
+  formattedAddress: true,
+  citySlug: true,
+  shortAddress: true,
+  userRating: true,
+  minPerPlateCost: true,
+  maxPerPlateCost: true,
+  minPerDayCost: true,
+  maxPerDayCost: true,
+  minRoomCount: true,
+  maxRoomCount: true,
+  minAreaCapacity: true,
+  maxAreaCapacity: true,
+  parkingCount: true,
+  isBhPartner: true,
+  bhPartnerDealText: true,
+  userRatingCount: true,
+  longitude: true,
+  latitude: true,
+  city: { select: { name: true, slug: true } },
+  media: {
+    orderBy: { position: "asc" },
+    take: 4,
+    select: {
+      localPath: true,
+      originalUrl: true,
+      mimeType: true,
+      mediaId: true,
+      position: true
+    }
+  }
+} as const;
+
+function html(value: unknown) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function json(value: unknown) {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
 function aliasLocalAssetPaths(value: string) {
   let next = value;
   for (const [oldPath, alias] of LOCAL_ALIASES) {
@@ -51,300 +85,302 @@ function aliasLocalAssetPaths(value: string) {
 }
 
 function localizeUrl(url: string | null | undefined): string {
-  if (!url) return url || "";
-  url = aliasLocalAssetPaths(url);
+  if (!url) return "";
+  const aliased = aliasLocalAssetPaths(url);
   for (const [live, local] of LOCAL_HOSTS) {
-    if (url.startsWith(live)) return local + url.slice(live.length);
+    if (aliased.startsWith(live)) return local + aliased.slice(live.length);
   }
-  return url;
+  return aliased;
 }
 
-function num(v: unknown): number | null {
-  return typeof v === "number" ? v : v == null ? null : Number(v) || 0;
+function mediaUrl(media: any) {
+  return localizeUrl(media?.localPath && media.localPath.startsWith("/") ? media.localPath : media?.originalUrl);
 }
 
-function metaFor(row: any) {
-  return {
-    perPlateCost: { maxValue: row.maxPerPlateCost ?? 0, minValue: row.minPerPlateCost ?? 0 },
-    perDayCost: { maxValue: row.maxPerDayCost ?? 0, minValue: row.minPerDayCost ?? 0 },
-    parkingCount: row.parkingCount ?? 0,
-    roomCount: { maxValue: row.maxRoomCount ?? 0, minValue: row.minRoomCount ?? 0 },
-    areasAvailable: { minValue: row.minAreaCapacity ?? 0, maxValue: row.maxAreaCapacity ?? 0 }
-  };
+function money(min?: number | null, max?: number | null) {
+  if (min == null && max == null) return "Contact for pricing";
+  if (min != null && max != null && min !== max) return `Rs ${min} - Rs ${max}`;
+  return `Rs ${min ?? max}+`;
 }
 
-function coverMediaFor(media: any[]) {
-  return media.map((m) => ({
-    mediaUrl: localizeUrl(m.localPath && m.localPath.startsWith("/") ? m.localPath : m.originalUrl),
-    alt: "",
-    mediaId: m.mediaId,
-    mimeType: m.mimeType || "image/webp",
-    compressedMediaUrl: null,
-    videoThumbnailUrl: null
-  }));
+function range(min?: number | null, max?: number | null, fallback = "Contact venue") {
+  if (min == null && max == null) return fallback;
+  if (min != null && max != null && min !== max) return `${min} - ${max}`;
+  return String(min ?? max);
 }
 
-function withIdLabel(items: any[]): Array<{ id: string; label: string }> {
-  return items.map((it, i) =>
-    typeof it === "object" && it
-      ? { id: String(it.id ?? i), label: String(it.label ?? it.name ?? "") }
-      : { id: String(i), label: String(it) }
-  );
+function textFromRichContent(value: unknown) {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  if (typeof value !== "object") return String(value);
+  const maybeOps = (value as { ops?: Array<{ insert?: unknown }> }).ops;
+  if (!Array.isArray(maybeOps)) return "";
+  return maybeOps.map((op) => (typeof op.insert === "string" ? op.insert : "")).join("").trim();
 }
 
-function buildVendorDetails(base: any, row: any) {
-  const dp = (row.detailPayload || {}) as Record<string, any>;
-  const lp = (row.listingPayload || {}) as Record<string, any>;
-  const media = [...(row.media || [])].sort((a, b) => a.position - b.position);
-  const vd = { ...base.props.pageProps.vendorDetails };
-
-  vd.vendorId = row.vendorId;
-  vd.name = row.name;
-  vd.userRating = num(row.userRating);
-  vd.userRatingCount = row.userRatingCount ?? null;
-  vd.formattedAddress = row.formattedAddress || "";
-  vd.imagesCount = media.filter((m) => (m.mimeType || "").startsWith("image")).length || media.length;
-  vd.videosCount = 0;
-  vd.coverMedia = coverMediaFor(media);
-  vd.meta = metaFor(row);
-  vd.about = dp.about ?? lp.about ?? { ops: [] };
-  vd.areasAvailable = dp.areasAvailable ?? lp.areasAvailable ?? [];
-  vd.amenities = withIdLabel((row.amenities || []).map((a: any) => a.label));
-  vd.facilities = withIdLabel((row.facilities || []).map((f: any) => f.label));
-  vd.urlSlug = row.slug;
-  vd.bhPartnerStatus = !!row.isBhPartner;
-  vd.bhPartnerDealText = row.bhPartnerDealText ?? null;
-  vd.coordinates =
-    row.longitude != null && row.latitude != null ? [row.longitude, row.latitude] : vd.coordinates;
-  vd.venueType = dp.venueType ?? lp.venueType ?? vd.venueType;
-  vd.specialTags = [];
-  vd.weddingPlannerTags = [];
-  vd.albums = [];
-  vd.matterportUrl = null;
-  vd.address = JSON.stringify({
-    city: row.city?.name || row.citySlug,
-    cityGroup: row.city?.name || row.citySlug,
-    addressLocality: (row.shortAddress || "").split(",")[0] || "",
-    postalCode: ""
-  });
-  return vd;
+function detailAbout(row: any) {
+  const detail = row.detailPayload && typeof row.detailPayload === "object" ? row.detailPayload : {};
+  const listing = row.listingPayload && typeof row.listingPayload === "object" ? row.listingPayload : {};
+  return textFromRichContent((detail as any).about ?? (listing as any).about);
 }
-
-function buildSimilar(rows: any[]) {
-  return rows.map((row) => {
-    const media = [...(row.media || [])].sort((a, b) => a.position - b.position).slice(0, 4);
-    return {
-      vendorId: row.vendorId,
-      urlSlug: row.slug,
-      media: media.map((m) => ({
-        url: localizeUrl(m.localPath && m.localPath.startsWith("/") ? m.localPath : m.originalUrl),
-        mimeType: m.mimeType || "image/webp",
-        mediaId: m.mediaId,
-        compressedMediaUrl: null
-      })),
-      venueName: row.name,
-      formattedAddress: row.formattedAddress || "",
-      city: row.city?.name || row.citySlug,
-      citySlug: row.citySlug,
-      shortAddress: row.shortAddress || "",
-      userRating: num(row.userRating),
-      meta: metaFor(row),
-      sort_by_status: 1,
-      specialTags: [],
-      isBhPartner: !!row.isBhPartner,
-      bhPartnerDealText: row.bhPartnerDealText ?? null,
-      userRatingCount: row.userRatingCount ?? null,
-      coordinates: row.longitude != null && row.latitude != null ? [row.longitude, row.latitude] : null
-    };
-  });
-}
-
-const VENUE_INCLUDE = {
-  city: true,
-  media: true,
-  tags: true,
-  areas: true,
-  amenities: true,
-  facilities: true
-} as const;
 
 async function findVenue(citySlug: string, slug: string) {
-  const c = decodeURIComponent(citySlug).trim().toLowerCase();
-  const s = decodeURIComponent(slug).trim().toLowerCase();
+  const city = decodeURIComponent(citySlug).trim().toLowerCase();
+  const venueSlug = decodeURIComponent(slug).trim().toLowerCase();
   const exact = await prisma.venue.findFirst({
-    where: { citySlug: { equals: c, mode: "insensitive" }, slug: { equals: s, mode: "insensitive" } },
+    where: { citySlug: { equals: city, mode: "insensitive" }, slug: { equals: venueSlug, mode: "insensitive" } },
     include: VENUE_INCLUDE
   });
   if (exact) return exact;
   return prisma.venue.findFirst({
-    where: { citySlug: { equals: c, mode: "insensitive" }, slug: { contains: s, mode: "insensitive" } },
+    where: { citySlug: { equals: city, mode: "insensitive" }, slug: { contains: venueSlug, mode: "insensitive" } },
     include: VENUE_INCLUDE
   });
 }
 
-// Inject Next assetPrefix so dynamically-imported chunks load from the mirror.
-function injectAssetPrefix(html: string): string {
-  const marker = '<script id="__NEXT_DATA__" type="application/json">';
-  const idx = html.indexOf(marker);
-  if (idx === -1) return html;
-  const jsonStart = idx + marker.length;
-  if (html.slice(jsonStart, jsonStart + 1) !== "{") return html;
-  return html.slice(0, jsonStart + 1) + '"assetPrefix":"/twc-mirror",' + html.slice(jsonStart + 1);
-}
-
-function localizeAssetPaths(html: string): string {
-  let out = html.split("/_next/").join("/twc-mirror/_next/");
-  for (const [live, local] of LOCAL_HOSTS) out = out.split(live).join(local);
-  return aliasLocalAssetPaths(out);
-}
-
-const BRAND_RUNTIME_SCRIPT = `
-<script id="viraaya-runtime-branding">
-(() => {
-  const oldName = "The Wedding " + "Company";
-  const oldHost = "www." + "theweddingcompany" + ".com";
-  const oldDomain = "theweddingcompany" + ".com";
-  const oldSite = "https://" + oldHost;
-  const replacements = [
-    [oldName + " logo", "Viraaya Weddings logo"],
-    [oldName + " Logo", "Viraaya Weddings logo"],
-    [oldName, "Viraaya Weddings"],
-    ["support@" + oldDomain, "support@viraayaweddings.com"],
-    ["@TheWeddingCmpny", "@viraayaweddings"],
-    [oldSite, "https://viraayaweddings.com"],
-    ["http://" + oldHost, "https://viraayaweddings.com"],
-    [oldHost, "viraayaweddings.com"],
-    ["/twc-mirror/_next/static/media/TheWeddingCompanyLogo_Low_Res.88e6d171.webp", "/brand/viraaya-logo-header.png"],
-    ["/_next/static/media/TheWeddingCompanyLogo_Low_Res.88e6d171.webp", "/brand/viraaya-logo-header.png"],
-    ["/twc-mirror/_next/static/media/TheWeddingCompanyLogoVertical.b80524ce.webp", "/brand/viraaya-logo-full.png"],
-    ["/_next/static/media/TheWeddingCompanyLogoVertical.b80524ce.webp", "/brand/viraaya-logo-full.png"],
-    ["/twc-venues-local/gcpimages." + oldDomain, "/venue-assets/gcpimages"],
-    ["/twc-venues-local/imageswedding." + oldDomain, "/venue-assets/imageswedding"]
-  ];
-
-  const rewrite = (value) => {
-    if (!value || typeof value !== "string") return value;
-    let next = value;
-    for (const [from, to] of replacements) {
-      next = next.split(from).join(to);
-    }
-    return next;
-  };
-
-  const patchNode = (node) => {
-    if (!node) return;
-    if (node.nodeType === Node.TEXT_NODE) {
-      const next = rewrite(node.nodeValue);
-      if (next !== node.nodeValue) node.nodeValue = next;
-      return;
-    }
-    if (node.nodeType !== Node.ELEMENT_NODE) return;
-    for (const attr of Array.from(node.attributes || [])) {
-      const next = rewrite(attr.value);
-      if (next !== attr.value) node.setAttribute(attr.name, next);
-    }
-    if (node.matches && node.matches('link[rel="icon"],link[rel="shortcut icon"],link[rel="apple-touch-icon"]')) {
-      if (node.getAttribute("href") !== "/brand/favicon.png") node.setAttribute("href", "/brand/favicon.png");
-      if (node.getAttribute("rel") === "icon" && node.getAttribute("type") !== "image/png") node.setAttribute("type", "image/png");
-    }
-  };
-
-  const patchTree = (root) => {
-    patchNode(root);
-    if (!root || !root.querySelectorAll) return;
-    root.querySelectorAll("*").forEach(patchNode);
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const textNodes = [];
-    while (walker.nextNode()) textNodes.push(walker.currentNode);
-    textNodes.forEach(patchNode);
-  };
-
-  patchTree(document.documentElement);
-  new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-      if (mutation.type === "attributes") patchNode(mutation.target);
-      mutation.addedNodes.forEach(patchTree);
-    }
-  }).observe(document.documentElement, {
-    attributes: true,
-    childList: true,
-    subtree: true
+function gallery(images: any[]) {
+  const items = images.slice(0, 8).map((item, index) => {
+    const src = mediaUrl(item);
+    if (!src) return "";
+    return `<img src="${html(src)}" alt="" class="venue-photo venue-photo-${index}" loading="${index === 0 ? "eager" : "lazy"}" />`;
   });
-})();
-</script>`;
+  return items.join("");
+}
 
-// Swap the venue page's own footer for the shared homepage footer so the whole
-// site uses one consistent (branded) footer.
-function useHomepageFooter(html: string): string {
-  const marker = html.indexOf('id="footer_section"');
-  if (marker === -1) return html;
-  const start = html.lastIndexOf("<footer", marker);
-  if (start === -1) return html;
-  const re = /<\/?footer\b[^>]*>/gi;
-  re.lastIndex = html.indexOf(">", start) + 1;
-  let depth = 1;
-  let m: RegExpExecArray | null;
-  let end = -1;
-  while ((m = re.exec(html))) {
-    depth += m[0].startsWith("</footer") ? -1 : 1;
-    if (depth === 0) {
-      end = re.lastIndex;
-      break;
-    }
+function chips(items: Array<{ label?: string }>) {
+  return items.map((item) => `<span class="chip">${html(item.label)}</span>`).join("");
+}
+
+function areaRows(areas: any[]) {
+  if (!areas.length) return `<p class="muted">Contact the venue for area details.</p>`;
+  return areas
+    .map(
+      (area) => `<div class="info-row">
+        <strong>${html(area.name)}</strong>
+        <span>${html(area.areaType || "Venue space")}</span>
+        <span>${html(range(area.seatingCapacity, area.floatingCapacity, "Capacity on request"))}</span>
+      </div>`
+    )
+    .join("");
+}
+
+function similarCards(rows: any[]) {
+  return rows
+    .map((row) => {
+      const image = mediaUrl(row.media?.[0]);
+      return `<a class="similar-card" href="/wedding-venues/${html(row.citySlug)}/${html(row.slug)}">
+        ${image ? `<img src="${html(image)}" alt="" loading="lazy" />` : ""}
+        <strong>${html(row.name)}</strong>
+        <span>${html(row.shortAddress || row.city?.name || row.citySlug)}</span>
+        <small>${html(money(row.minPerPlateCost, row.maxPerPlateCost))}</small>
+      </a>`;
+    })
+    .join("");
+}
+
+function mapMarkers(row: any, similarRows: any[]) {
+  const markers = [];
+  if (row.longitude != null && row.latitude != null) {
+    markers.push({
+      kind: "current",
+      name: row.name,
+      lat: row.latitude,
+      lng: row.longitude,
+      href: `/wedding-venues/${row.citySlug}/${row.slug}`
+    });
   }
-  if (end === -1) return html;
-  return html.slice(0, start) + getHomepageFooter() + html.slice(end);
+  for (const item of similarRows) {
+    if (item.longitude == null || item.latitude == null) continue;
+    markers.push({
+      kind: "similar",
+      name: item.name,
+      lat: item.latitude,
+      lng: item.longitude,
+      href: `/wedding-venues/${item.citySlug}/${item.slug}`
+    });
+  }
+  return markers;
 }
 
-// Inject the local Leaflet CSS + the enhancer that wires the Similar Venues
-// slider arrows and renders the nearby-venues map.
-function injectEnhancer(html: string): string {
-  const head =
-    '<link rel="stylesheet" href="/twc-mirror/vendor/leaflet/leaflet.css"/>';
-  const script = '<script src="/twc-mirror/venue-enhancer.js" defer></script>';
-  let out = html.includes("</head>") ? html.replace("</head>", head + "</head>") : html;
-  out = out.includes("</body>") ? out.replace("</body>", script + "</body>") : out;
-  return out;
+function pageHtml(row: any, similarRows: any[]) {
+  const images = [...(row.media || [])];
+  const cityName = row.city?.name || row.citySlug;
+  const about = detailAbout(row);
+  const markers = mapMarkers(row, similarRows);
+  const initial = markers[0] || { lat: 28.61, lng: 77.2 };
+  const title = `${row.name} in ${cityName} | Viraaya Weddings`;
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>${html(title)}</title>
+  <meta name="description" content="${html(`${row.name} wedding venue in ${cityName}. View pricing, capacity, photos, amenities and similar venues.`)}" />
+  <link rel="icon" href="/brand/favicon.png" type="image/png" />
+  <link rel="stylesheet" href="/twc-mirror/vendor/leaflet/leaflet.css" />
+  <style>
+    :root { color-scheme: light; --brand: #a1285e; --ink: #1f2933; --muted: #64748b; --line: #e5e7eb; --soft: #fff7fb; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: var(--ink); background: #fff; }
+    a { color: inherit; text-decoration: none; }
+    .topbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 14px clamp(18px, 5vw, 72px); background: rgba(255,255,255,.94); border-bottom: 1px solid var(--line); backdrop-filter: blur(12px); }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--brand); }
+    .brand img { height: 42px; width: auto; }
+    .nav { display: flex; gap: 20px; color: var(--muted); font-size: 14px; }
+    main { padding-bottom: 56px; }
+    .hero { padding: 28px clamp(18px, 5vw, 72px) 18px; }
+    .breadcrumbs { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+    h1 { margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(30px, 5vw, 58px); line-height: 1.05; letter-spacing: 0; }
+    .sub { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 14px; color: var(--muted); }
+    .gallery { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; margin-top: 22px; min-height: 260px; }
+    .venue-photo { width: 100%; height: 100%; min-height: 168px; object-fit: cover; background: #f1f5f9; }
+    .venue-photo-0 { grid-row: span 2; min-height: 420px; border-radius: 8px 0 0 8px; }
+    .venue-photo-2 { border-radius: 0 8px 0 0; }
+    .venue-photo-4 { border-radius: 0 0 8px 0; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 32px; padding: 24px clamp(18px, 5vw, 72px); align-items: start; }
+    .panel { border: 1px solid var(--line); border-radius: 8px; padding: 22px; background: #fff; }
+    .side { position: sticky; top: 88px; }
+    .cta { display: block; width: 100%; margin-top: 18px; padding: 14px 16px; border: 0; border-radius: 999px; background: var(--brand); color: white; text-align: center; font-weight: 700; }
+    h2 { margin: 0 0 14px; font-size: 24px; letter-spacing: 0; }
+    .section { margin-top: 26px; }
+    .text { color: #334155; line-height: 1.75; white-space: pre-line; }
+    .stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .stat { padding: 14px; border-radius: 8px; background: var(--soft); }
+    .stat small { display: block; color: var(--muted); margin-bottom: 4px; }
+    .stat strong { display: block; font-size: 18px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip { display: inline-flex; padding: 8px 11px; border: 1px solid var(--line); border-radius: 999px; color: #334155; background: #fff; font-size: 14px; }
+    .info-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .muted { color: var(--muted); }
+    #venue-map { height: 380px; border-radius: 8px; border: 1px solid var(--line); overflow: hidden; }
+    .similar-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .similar-card { display: flex; flex-direction: column; gap: 7px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; }
+    .similar-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #f1f5f9; }
+    .similar-card strong, .similar-card span, .similar-card small { padding: 0 12px; }
+    .similar-card small { padding-bottom: 12px; color: var(--brand); font-weight: 700; }
+    @media (max-width: 900px) {
+      .nav { display: none; }
+      .gallery { grid-template-columns: 1fr 1fr; }
+      .venue-photo-0 { grid-column: 1 / -1; grid-row: auto; min-height: 280px; border-radius: 8px 8px 0 0; }
+      .layout { grid-template-columns: 1fr; }
+      .side { position: static; }
+      .similar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .info-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .stats, .similar-grid { grid-template-columns: 1fr; }
+      .gallery { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; }
+      .venue-photo { min-width: 82vw; min-height: 280px; border-radius: 8px; scroll-snap-align: start; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/"><img src="/brand/viraaya-logo-header.png" alt="Viraaya Weddings" /> <span>Viraaya Weddings</span></a>
+    <nav class="nav"><a href="/wedding-venues">Venues</a><a href="/wedding-photography">Photography</a><a href="/wedding-decorators">Decorators</a><a href="/contact-us">Contact</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="breadcrumbs"><a href="/">Home</a> / <a href="/wedding-venues">Wedding Venues</a> / <a href="/wedding-venues/${html(row.citySlug)}">${html(cityName)}</a></div>
+      <h1>${html(row.name)}</h1>
+      <div class="sub">
+        <span>${html(row.shortAddress || row.formattedAddress || cityName)}</span>
+        <span>${html(row.userRating ? `${row.userRating} rating` : "Rating on request")}</span>
+        <span>${html(money(row.minPerPlateCost, row.maxPerPlateCost))} per plate</span>
+      </div>
+      <div class="gallery">${gallery(images)}</div>
+    </section>
+    <section class="layout">
+      <div>
+        <section class="section panel">
+          <h2>Venue Details</h2>
+          <div class="stats">
+            <div class="stat"><small>Per plate</small><strong>${html(money(row.minPerPlateCost, row.maxPerPlateCost))}</strong></div>
+            <div class="stat"><small>Per day</small><strong>${html(money(row.minPerDayCost, row.maxPerDayCost))}</strong></div>
+            <div class="stat"><small>Guest capacity</small><strong>${html(range(row.minAreaCapacity, row.maxAreaCapacity))}</strong></div>
+            <div class="stat"><small>Rooms</small><strong>${html(range(row.minRoomCount, row.maxRoomCount))}</strong></div>
+          </div>
+        </section>
+        <section class="section">
+          <h2>About ${html(row.name)}</h2>
+          <p class="text">${html(about || `${row.name} is a wedding venue in ${cityName}. Contact Viraaya Weddings for pricing, availability, photos and planning support.`)}</p>
+        </section>
+        <section class="section">
+          <h2>Spaces and Capacity</h2>
+          ${areaRows(row.areas || [])}
+        </section>
+        <section class="section">
+          <h2>Amenities</h2>
+          <div class="chips">${chips(row.amenities || []) || '<p class="muted">Amenities available on request.</p>'}</div>
+        </section>
+        <section class="section">
+          <h2>Facilities</h2>
+          <div class="chips">${chips(row.facilities || []) || '<p class="muted">Facilities available on request.</p>'}</div>
+        </section>
+        <section class="section">
+          <h2>Explore Nearby Venues</h2>
+          <div id="venue-map"></div>
+        </section>
+        <section class="section">
+          <h2>Similar Venues</h2>
+          <div class="similar-grid">${similarCards(similarRows)}</div>
+        </section>
+      </div>
+      <aside class="side panel">
+        <h2>Check Availability</h2>
+        <p class="muted">Share your wedding date and guest count. Viraaya Weddings will help you compare this venue with suitable options.</p>
+        <a class="cta" href="/contact-us">Contact Viraaya Weddings</a>
+      </aside>
+    </section>
+  </main>
+  ${getHomepageFooter()}
+  <script src="/twc-mirror/vendor/leaflet/leaflet.js"></script>
+  <script>
+    (() => {
+      const markers = ${json(markers)};
+      const initial = ${json(initial)};
+      const map = L.map("venue-map", { scrollWheelZoom: false }).setView([initial.lat, initial.lng], 12);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: "&copy; OpenStreetMap contributors", maxZoom: 19 }).addTo(map);
+      const bounds = [];
+      for (const marker of markers) {
+        const ll = [marker.lat, marker.lng];
+        bounds.push(ll);
+        L.marker(ll).addTo(map).bindPopup('<a href="' + marker.href + '"><strong>' + marker.name + '</strong></a>');
+      }
+      if (bounds.length > 1) map.fitBounds(bounds, { padding: [36, 36], maxZoom: 13 });
+      setTimeout(() => map.invalidateSize(), 200);
+    })();
+  </script>
+</body>
+</html>`;
 }
 
-// Replace the captured __NEXT_DATA__ block with DB-driven data for `row`.
-function injectNextData(html: string, nextData: any): string {
-  const open = '<script id="__NEXT_DATA__" type="application/json">';
-  const start = html.indexOf(open);
-  if (start === -1) return html;
-  const contentStart = start + open.length;
-  const end = html.indexOf("</script>", contentStart);
-  const json = JSON.stringify(nextData).replace(/</g, "\\u003c");
-  return html.slice(0, contentStart) + json + html.slice(end);
-}
-
-export async function getMirrorHtml(citySlug: string, slug: string): Promise<string | null> {
+async function getMirrorHtmlUncached(citySlug: string, slug: string): Promise<string | null> {
   const row = await findVenue(citySlug, slug);
   if (!row) return null;
 
-  const base = getBaseNextData();
   const similarRows = await prisma.venue.findMany({
     where: { citySlug: row.citySlug, NOT: { vendorId: row.vendorId } },
-    include: VENUE_INCLUDE,
+    select: SIMILAR_SELECT,
     orderBy: [{ isBhPartner: "desc" }, { userRating: "desc" }, { listingOrder: "asc" }],
-    take: 10
+    take: 8
   });
 
-  base.props.pageProps.vendorDetails = buildVendorDetails(base, row);
-  base.props.pageProps.similarVenueList = buildSimilar(similarRows);
-  base.props.pageProps.venueCityOrFilter = row.citySlug;
-  base.props.pageProps.venueLocalityOrDetailOrFilter = row.slug;
-  base.query = { venueCityOrFilter: row.citySlug, venueLocalityOrDetailOrFilter: row.slug };
-  base.assetPrefix = "/twc-mirror";
-
-  let html = getTemplate();
-  html = injectNextData(html, base);
-  html = useHomepageFooter(html);
-  html = localizeAssetPaths(html);
-  html = applyBranding(html);
-  html = injectEnhancer(html);
-  return html.replace("</body>", `${BRAND_RUNTIME_SCRIPT}</body>`);
+  return pageHtml(row, similarRows);
 }
 
-// Exported for potential reuse / tests.
+const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["venue-mirror-html"], {
+  revalidate: 3600,
+  tags: ["venues"]
+});
+
+export async function getMirrorHtml(citySlug: string, slug: string): Promise<string | null> {
+  return getMirrorHtmlCached(citySlug, slug);
+}
+
+function injectAssetPrefix(html: string): string {
+  return html;
+}
+
 export { injectAssetPrefix };

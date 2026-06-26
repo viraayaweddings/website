@@ -1,18 +1,30 @@
+import { unstable_cache } from "next/cache";
 import { prisma } from "../../../../../../lib/prisma";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
-// Mirrors weddingapi.theweddingcompany.com /v1/venue/vendors/{id}/media/ —
-// served from the local DB with media URLs pointed at vendored local files.
+const getVenueMedia = unstable_cache(
+  async (vendorId: string) =>
+    prisma.venueMedia.findMany({
+      where: { venueId: vendorId },
+      orderBy: { position: "asc" }
+    }),
+  ["venue-media"],
+  {
+    revalidate: 3600,
+    tags: ["venues"]
+  }
+);
+
+// Mirrors the venue media payload from the local DB with media URLs pointed at
+// vendored local files.
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ vendorId: string }> }
 ) {
   const { vendorId } = await params;
-  const media = await prisma.venueMedia.findMany({
-    where: { venueId: vendorId },
-    orderBy: { position: "asc" }
-  });
+  const media = await getVenueMedia(vendorId);
 
   const results = media.map((m: (typeof media)[number]) => ({
     mediaId: m.mediaId,
@@ -29,5 +41,12 @@ export async function GET(
     videoThumbnailUrl: null
   }));
 
-  return Response.json({ nextPageUrl: null, results });
+  return Response.json(
+    { nextPageUrl: null, results },
+    {
+      headers: {
+        "cache-control": "private, max-age=300, stale-while-revalidate=3600"
+      }
+    }
+  );
 }

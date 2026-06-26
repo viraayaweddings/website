@@ -32,24 +32,26 @@ export async function GET(
   const entry = sources[source];
   if (!entry) return new Response("Not found", { status: 404 });
 
-  // 1) Serve the locally-vendored file when present (dev / no live dependency).
-  const root = path.resolve(process.cwd(), "public", "twc-venues-local", entry.dir);
-  const file = path.resolve(root, ...pathParts);
-  if (file.startsWith(root + path.sep)) {
-    try {
-      const body = await fs.readFile(file);
-      return new Response(body, {
-        headers: {
-          "content-type": mimeTypes[path.extname(file).toLowerCase()] || "application/octet-stream",
-          "cache-control": IMMUTABLE
-        }
-      });
-    } catch {
-      /* fall through to CDN */
+  // 1) Serve the locally-vendored file when present in dev.
+  if (process.env.NODE_ENV !== "production") {
+    const root = path.resolve(process.cwd(), "public", "twc-venues-local", entry.dir);
+    const file = path.resolve(root, ...pathParts);
+    if (file.startsWith(root + path.sep)) {
+      try {
+        const body = await fs.readFile(file);
+        return new Response(body, {
+          headers: {
+            "content-type": mimeTypes[path.extname(file).toLowerCase()] || "application/octet-stream",
+            "cache-control": IMMUTABLE
+          }
+        });
+      } catch {
+        /* fall through to CDN */
+      }
     }
   }
 
-  // 2) Fall back to the upstream CDN (production, where local files aren't shipped).
+  // 2) Fall back to the upstream CDN.
   const target = entry.host + "/" + pathParts.map(encodeURIComponent).join("/") + new URL(request.url).search;
   try {
     const upstream = await fetch(target, { headers: { referer: "https://www.theweddingcompany.com/" } });
