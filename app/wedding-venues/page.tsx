@@ -1,6 +1,7 @@
 import VenuesClient from "./venues-client";
 import { getVenueCities, queryVenues } from "../lib/venue-data";
 
+export const dynamic = "force-dynamic";
 export const revalidate = 900;
 
 export default async function WeddingVenuesPage() {

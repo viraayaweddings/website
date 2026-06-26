@@ -2,11 +2,8 @@ import { notFound } from "next/navigation";
 import VenuesClient from "../venues-client";
 import { getCityBySlug, getVenueCities, queryVenues, supportedVenueCities } from "../../lib/venue-data";
 
+export const dynamic = "force-dynamic";
 export const revalidate = 900;
-
-export function generateStaticParams() {
-  return supportedVenueCities.map((venueCityOrFilter) => ({ venueCityOrFilter }));
-}
 
 export default async function WeddingVenuesCityPage({
   params
