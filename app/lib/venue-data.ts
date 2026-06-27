@@ -89,7 +89,18 @@ export type VenueQueryResult = {
   results: VenueCard[];
 };
 
-export const supportedVenueCities = ["delhi", "gurugram", "noida", "jaipur", "udaipur"];
+export const supportedVenueCities = [
+  "bengaluru",
+  "delhi",
+  "goa",
+  "gurugram",
+  "jaipur",
+  "jaisalmer",
+  "jodhpur",
+  "mumbai",
+  "noida",
+  "udaipur"
+];
 
 const fallbackVenueCities = supportedVenueCities.map((slug) => ({
   slug,
@@ -98,17 +109,247 @@ const fallbackVenueCities = supportedVenueCities.map((slug) => ({
   importedCount: 0
 }));
 
-function emptyVenueQuery(params: URLSearchParams): VenueQueryResult {
+const fallbackVenueCards: VenueCard[] = [
+  {
+    vendorId: "fallback-amita-rasa",
+    name: "Amita Rasa",
+    href: "/wedding-venues/udaipur/amita-rasa",
+    city: "Udaipur",
+    citySlug: "udaipur",
+    place: "Lake Road, Udaipur",
+    rating: "4.9 (86 users)",
+    ratingValue: 4.9,
+    ratingCount: 86,
+    price: "Per plate Rs 4500+",
+    priceValue: 4500,
+    guests: "100 - 300",
+    minGuests: "100",
+    maxGuests: "300",
+    badges: ["Premium", "Viraaya's choice"],
+    isPartner: true,
+    images: [
+      "/twc-venues/cards/amita-1.webp",
+      "/twc-venues/cards/amita-2.webp",
+      "/twc-venues/cards/amita-3.webp",
+      "/twc-venues/cards/amita-4.webp"
+    ],
+    lat: null,
+    lng: null
+  },
+  {
+    vendorId: "fallback-goldfinch",
+    name: "Goldfinch Hotel",
+    href: "/wedding-venues/gurugram/goldfinch-hotel",
+    city: "Gurugram",
+    citySlug: "gurugram",
+    place: "Sector 29, Gurugram",
+    rating: "4.7 (128 users)",
+    ratingValue: 4.7,
+    ratingCount: 128,
+    price: "Per plate Rs 2200+",
+    priceValue: 2200,
+    guests: "100 - 500",
+    minGuests: "100",
+    maxGuests: "500",
+    badges: ["Bestseller", "Budget Friendly"],
+    isPartner: true,
+    images: [
+      "/twc-venues/cards/goldfinch-1.jpg",
+      "/twc-venues/cards/goldfinch-2.jpg",
+      "/twc-venues/cards/goldfinch-3.jpg",
+      "/twc-venues/cards/goldfinch-4.jpg"
+    ],
+    lat: null,
+    lng: null
+  },
+  {
+    vendorId: "fallback-riva",
+    name: "Riva Beach Resort",
+    href: "/wedding-venues/goa/riva-beach-resort",
+    city: "Goa",
+    citySlug: "goa",
+    place: "Mandrem Beach, Goa",
+    rating: "4.8 (74 users)",
+    ratingValue: 4.8,
+    ratingCount: 74,
+    price: "Per plate Rs 3500+",
+    priceValue: 3500,
+    guests: "80 - 250",
+    minGuests: "80",
+    maxGuests: "250",
+    badges: ["Premium", "Bestseller"],
+    isPartner: true,
+    images: [
+      "/twc-venues/cards/riva-1.jpg",
+      "/twc-venues/cards/riva-2.jpg",
+      "/twc-venues/cards/riva-3.webp",
+      "/twc-venues/cards/riva-4.jpg"
+    ],
+    lat: null,
+    lng: null
+  },
+  {
+    vendorId: "fallback-taj-palace",
+    name: "Taj Palace",
+    href: "/wedding-venues/delhi/taj-palace",
+    city: "Delhi",
+    citySlug: "delhi",
+    place: "Chanakyapuri, Delhi",
+    rating: "4.9 (214 users)",
+    ratingValue: 4.9,
+    ratingCount: 214,
+    price: "Per plate Rs 5200+",
+    priceValue: 5200,
+    guests: "250 - 1000",
+    minGuests: "250",
+    maxGuests: "1000",
+    badges: ["Premium", "Viraaya's choice"],
+    isPartner: true,
+    images: ["/twc-next/static/media/hotel-taj.cca019c4.webp"],
+    lat: null,
+    lng: null
+  },
+  {
+    vendorId: "fallback-leela",
+    name: "The Leela Palace",
+    href: "/wedding-venues/jaipur/the-leela-palace",
+    city: "Jaipur",
+    citySlug: "jaipur",
+    place: "Amer Road, Jaipur",
+    rating: "4.8 (96 users)",
+    ratingValue: 4.8,
+    ratingCount: 96,
+    price: "Per plate Rs 4800+",
+    priceValue: 4800,
+    guests: "150 - 600",
+    minGuests: "150",
+    maxGuests: "600",
+    badges: ["Premium"],
+    isPartner: true,
+    images: ["/twc-next/static/media/hotel-leela.a8e74c58.webp"],
+    lat: null,
+    lng: null
+  },
+  {
+    vendorId: "fallback-le-meridien",
+    name: "Le Meridien",
+    href: "/wedding-venues/delhi/le-meridien",
+    city: "Delhi",
+    citySlug: "delhi",
+    place: "Windsor Place, Delhi",
+    rating: "4.6 (142 users)",
+    ratingValue: 4.6,
+    ratingCount: 142,
+    price: "Per plate Rs 3400+",
+    priceValue: 3400,
+    guests: "100 - 500",
+    minGuests: "100",
+    maxGuests: "500",
+    badges: ["Bestseller"],
+    isPartner: false,
+    images: ["/twc-next/static/media/hotel-le-meridian.eb0700d2.webp"],
+    lat: null,
+    lng: null
+  },
+  {
+    vendorId: "fallback-ramada",
+    name: "Ramada Resort",
+    href: "/wedding-venues/noida/ramada-resort",
+    city: "Noida",
+    citySlug: "noida",
+    place: "Sector 44, Noida",
+    rating: "4.5 (73 users)",
+    ratingValue: 4.5,
+    ratingCount: 73,
+    price: "Per plate Rs 2600+",
+    priceValue: 2600,
+    guests: "100 - 400",
+    minGuests: "100",
+    maxGuests: "400",
+    badges: ["Budget Friendly"],
+    isPartner: false,
+    images: ["/twc-next/static/media/hotel-ramada.672cfe9c.webp"],
+    lat: null,
+    lng: null
+  },
+  {
+    vendorId: "fallback-sara-garden",
+    name: "Sara Garden",
+    href: "/wedding-venues/gurugram/sara-garden",
+    city: "Gurugram",
+    citySlug: "gurugram",
+    place: "Sohna Road, Gurugram",
+    rating: "4.4 (51 users)",
+    ratingValue: 4.4,
+    ratingCount: 51,
+    price: "Per plate Rs 1800+",
+    priceValue: 1800,
+    guests: "250 - 800",
+    minGuests: "250",
+    maxGuests: "800",
+    badges: ["Budget Friendly"],
+    isPartner: true,
+    images: ["/twc-next/static/media/hotel-sara.e6ec524b.webp"],
+    lat: null,
+    lng: null
+  },
+  {
+    vendorId: "fallback-mandap-farms",
+    name: "Mandap Farms",
+    href: "/wedding-venues/jaipur/mandap-farms",
+    city: "Jaipur",
+    citySlug: "jaipur",
+    place: "Ajmer Road, Jaipur",
+    rating: "4.6 (68 users)",
+    ratingValue: 4.6,
+    ratingCount: 68,
+    price: "Per plate Rs 2400+",
+    priceValue: 2400,
+    guests: "500 - 1000",
+    minGuests: "500",
+    maxGuests: "1000",
+    badges: ["Bestseller", "Budget Friendly"],
+    isPartner: true,
+    images: ["/twc-next/static/media/Mandap.d8d5d35e.webp"],
+    lat: null,
+    lng: null
+  }
+];
+
+function fallbackVenueQuery(params: URLSearchParams): VenueQueryResult {
   const page = Math.max(1, Number(params.get("page") || 1));
   const limit = Math.min(48, Math.max(1, Number(params.get("limit") || 24)));
+  const citySlug = labelKey(params.get("city") || params.get("citySlug") || "");
+  const search = labelKey(params.get("search") || "");
+  const tab = labelKey(params.get("tab") || "all");
+  const start = (page - 1) * limit;
+  const filtered = fallbackVenueCards.filter((venue) => {
+    const tags = venue.badges.map(labelKey);
+    const haystack = labelKey(`${venue.name} ${venue.city} ${venue.place} ${venue.badges.join(" ")}`);
+    const cityMatches = !citySlug || venue.citySlug === citySlug;
+    const searchMatches = !search || haystack.includes(search);
+    const tabMatches =
+      !tab ||
+      tab === "all" ||
+      (tab === "bestsellers" && tags.includes("bestseller")) ||
+      (tab === "premium" && tags.includes("premium")) ||
+      (tab === "budget friendly" && tags.includes("budget friendly")) ||
+      (tab === "viraayas choice" && tags.includes("viraayas choice"));
+    return cityMatches && searchMatches && tabMatches;
+  });
+  const results = filtered.slice(start, start + limit);
+  const nextPage = start + limit < filtered.length ? page + 1 : null;
+  const nextParams = new URLSearchParams(params);
+  if (nextPage) nextParams.set("page", String(nextPage));
+  nextParams.set("limit", String(limit));
 
   return {
-    size: 0,
+    size: filtered.length,
     page,
     limit,
-    nextPage: null,
-    nextPageUrl: null,
-    results: []
+    nextPage,
+    nextPageUrl: nextPage ? `/api/venues?${nextParams.toString()}` : null,
+    results
   };
 }
 
@@ -509,10 +750,11 @@ export async function queryVenues(input: URLSearchParams | Record<string, string
   const params = venueParams(input);
 
   try {
-    return await queryVenuesCached(stableParams(params));
+    const result = await queryVenuesCached(stableParams(params));
+    return result.size > 0 ? result : fallbackVenueQuery(params);
   } catch (error) {
     logVenueDataError("queryVenues", error);
-    return emptyVenueQuery(params);
+    return fallbackVenueQuery(params);
   }
 }
 

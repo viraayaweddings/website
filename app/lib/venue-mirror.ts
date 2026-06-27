@@ -98,9 +98,11 @@ function mediaUrl(media: any) {
 }
 
 function money(min?: number | null, max?: number | null) {
-  if (min == null && max == null) return "Contact for pricing";
-  if (min != null && max != null && min !== max) return `Rs ${min} - Rs ${max}`;
-  return `Rs ${min ?? max}+`;
+  if ((min == null && max == null) || (min === 0 && max === 0)) return "Contact for pricing";
+  if (min != null && max != null && min !== max && min > 0 && max > 0) return `Rs ${min.toLocaleString()} - Rs ${max.toLocaleString()}`;
+  const val = min ?? max;
+  if (!val || val === 0) return "Contact for pricing";
+  return `Rs ${val.toLocaleString()}+`;
 }
 
 function range(min?: number | null, max?: number | null, fallback = "Contact venue") {
