@@ -2,7 +2,11 @@ import fs from "node:fs";
 import path from "node:path";
 import { unstable_cache } from "next/cache";
 import { prisma } from "./prisma";
-import { applyBranding, getHomepageFooter } from "../homepage-shell";
+import {
+  applyBranding,
+  applyHomepageHeaderFooter,
+  injectHomepageShellSupport
+} from "../homepage-shell";
 
 // Mirrors theweddingcompany.com's own photographer detail page: the captured
 // compiled HTML + vendored JS/CSS/fonts/media are served entirely from the
@@ -135,29 +139,6 @@ const BRAND_RUNTIME_SCRIPT = `
   [120, 400, 1000, 2500, 5000].forEach((t) => setTimeout(sweep, t));
 })();
 </script>`;
-
-// Swap the captured page's own footer for the shared homepage footer so the
-// whole site uses one consistent (branded) footer.
-function useHomepageFooter(html: string): string {
-  const marker = html.indexOf('id="footer_section"');
-  if (marker === -1) return html;
-  const start = html.lastIndexOf("<footer", marker);
-  if (start === -1) return html;
-  const re = /<\/?footer\b[^>]*>/gi;
-  re.lastIndex = html.indexOf(">", start) + 1;
-  let depth = 1;
-  let m: RegExpExecArray | null;
-  let end = -1;
-  while ((m = re.exec(html))) {
-    depth += m[0].startsWith("</footer") ? -1 : 1;
-    if (depth === 0) {
-      end = re.lastIndex;
-      break;
-    }
-  }
-  if (end === -1) return html;
-  return html.slice(0, start) + getHomepageFooter() + html.slice(end);
-}
 
 function aliasLocalAssetPaths(value: string) {
   let next = value;
@@ -327,9 +308,10 @@ async function getMirrorHtmlUncached(citySlug: string, slug: string): Promise<st
 
   let html = getTemplate();
   html = injectNextData(html, base);
-  html = useHomepageFooter(html);
+  html = applyHomepageHeaderFooter(html);
   html = localizeAssetPaths(html);
   html = applyBranding(html);
+  html = injectHomepageShellSupport(html);
   return html.replace("</body>", `${BRAND_RUNTIME_SCRIPT}</body>`);
 }
 
