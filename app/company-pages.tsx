@@ -30,9 +30,13 @@ const legacyPages = new Set<CompanySlug>([
   "careers",
   "contact-us",
   "partner-onboarding-form",
-  "privacy-policy",
   "wedding-invitation-card"
 ]);
+
+const legalDocumentTitles: Partial<Record<CompanySlug, string>> = {
+  "about-us": "About Us",
+  "privacy-policy": "Privacy Policy"
+};
 
 const legacyStylesheet =
   "https://cdn.prod.website-files.com/60222e72b5a2043efe117253/css/betterhalf-ai-landing-page.webflow.shared.4c23e6735.css";
@@ -43,6 +47,89 @@ const legacyWebflowScripts = [
   "https://cdn.prod.website-files.com/60222e72b5a2043efe117253/js/webflow.65c80910.3b625490ee957430.js"
 ];
 
+function extractBalancedDiv(markup: string, marker: string) {
+  const start = markup.indexOf(marker);
+
+  if (start === -1) {
+    return "";
+  }
+
+  const divTag = /<\/?div\b[^>]*>/gi;
+  divTag.lastIndex = start;
+
+  let depth = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = divTag.exec(markup))) {
+    depth += match[0].startsWith("</") ? -1 : 1;
+
+    if (depth === 0) {
+      return markup.slice(start, divTag.lastIndex);
+    }
+  }
+
+  return "";
+}
+
+function innerHtml(markup: string, tagName: string) {
+  const contentStart = markup.indexOf(">");
+  const contentEnd = markup.lastIndexOf(`</${tagName}>`);
+
+  if (contentStart === -1 || contentEnd === -1 || contentEnd <= contentStart) {
+    return "";
+  }
+
+  return markup.slice(contentStart + 1, contentEnd).trim();
+}
+
+function stripCapturedDocumentClasses(markup: string) {
+  return markup
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<h1\b[^>]*>[\s\S]*?<\/h1>/i, "")
+    .replace(/\s(?:class|style)="[^"]*"/gi, "")
+    .replace(/\sdata-[\w-]+="[^"]*"/gi, "")
+    .replace(/\s(?:width|height)="[^"]*"/gi, "")
+    .replaceAll('href="https://www.theweddingcompany.com/', 'href="/')
+    .replaceAll('href="https://wf.betterhalf.ai/', 'href="/')
+    .trim();
+}
+
+function extractLegalDocumentBody(slug: CompanySlug, html: string) {
+  if (slug === "privacy-policy") {
+    const privacyBody = extractBalancedDiv(html, '<div class="div-block-26">');
+
+    if (!privacyBody) {
+      throw new Error("Could not locate the captured privacy policy document.");
+    }
+
+    return innerHtml(privacyBody, "div");
+  }
+
+  if (slug === "about-us") {
+    const article = html.match(/<article\b[^>]*>([\s\S]*?)<\/article>/i);
+
+    if (!article) {
+      throw new Error("Could not locate the captured about us document.");
+    }
+
+    return article[1].trim();
+  }
+
+  return "";
+}
+
+function renderLegalDocument(title: string, body: string) {
+  const content = stripCapturedDocumentClasses(body);
+
+  return applyBranding(`
+    <div class="flex h-11 items-center justify-center bg-[#A1285E] font-plus-jakarata-sans font-semibold text-white md:h-20 md:text-xl">${title}</div>
+    <article class="twc-legal-document mx-auto max-w-screen-lg px-6 py-10 font-plus-jakarata-sans text-[14px] leading-relaxed text-[#2E394A] md:px-10 md:py-14">
+      <div class="space-y-6">${content}</div>
+    </article>
+  `);
+}
+
 function readCapture(slug: CompanySlug) {
   const file = path.join(
     process.cwd(),
@@ -51,6 +138,14 @@ function readCapture(slug: CompanySlug) {
     `${captureFileBySlug[slug]}.html`
   );
   const html = fs.readFileSync(file, "utf8");
+  const legalDocumentTitle = legalDocumentTitles[slug];
+
+  if (legalDocumentTitle) {
+    return renderLegalDocument(
+      legalDocumentTitle,
+      extractLegalDocumentBody(slug, html)
+    );
+  }
 
   if (legacyPages.has(slug)) {
     const bodyStart = html.indexOf("<body");

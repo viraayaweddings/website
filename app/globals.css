@@ -142,6 +142,48 @@ main {
   box-sizing: border-box;
 }
 
+.twc-legal-document {
+  color: #2e394a;
+}
+
+.twc-legal-document :where(h2, h3, h4) {
+  color: #2e394a;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.65;
+  margin: 2rem 0 0.75rem;
+}
+
+.twc-legal-document :where(p, div, li) {
+  color: inherit;
+}
+
+.twc-legal-document p {
+  margin: 0 0 1.5rem;
+}
+
+.twc-legal-document p:last-child {
+  margin-bottom: 0;
+}
+
+.twc-legal-document :where(ul, ol) {
+  margin: 0 0 1.5rem 1.25rem;
+  padding-left: 1.25rem;
+}
+
+.twc-legal-document ul {
+  list-style: disc;
+}
+
+.twc-legal-document ol {
+  list-style: decimal;
+}
+
+.twc-legal-document a {
+  color: #a1285e;
+  text-decoration: underline;
+}
+
 .twc-js .twc-reveal {
   opacity: 1;
   transform: translate3d(0, 34px, 0);
