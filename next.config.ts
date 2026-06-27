@@ -51,6 +51,12 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   distDir: process.env.NEXT_DIST_DIR || ".next",
+  // The mirrored TWC listing bundle calls its API with trailing slashes
+  // (e.g. /twc-api/v1/decor/vendors/filters/?...). Next's default trailing-slash
+  // 308 redirect breaks those XHR/ky requests (they fail with status 0), which
+  // blanks the decorators listing (filters fetch fails -> FilterAccordian crash).
+  // Disabling the redirect lets the route handlers serve both forms directly.
+  skipTrailingSlashRedirect: true,
   // Route handlers read the captured HTML from data/ at runtime via fs; Vercel's
   // file tracer must bundle these into the serverless functions.
   outputFileTracingIncludes: {

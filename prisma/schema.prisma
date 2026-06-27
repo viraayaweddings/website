@@ -7,52 +7,52 @@ datasource db {
 }
 
 model City {
-  id              String   @id @default(cuid())
-  name            String
-  slug            String   @unique
-  sourceCount     Int
-  importedCount   Int
-  seoPayload       Json?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  venues          Venue[]
+  id            String   @id @default(cuid())
+  name          String
+  slug          String   @unique
+  sourceCount   Int
+  importedCount Int
+  seoPayload    Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  venues        Venue[]
 }
 
 model Venue {
-  id                  String       @id @default(cuid())
-  vendorId            String       @unique
-  name                String
-  slug                String
-  citySlug            String
-  shortAddress        String?
-  formattedAddress    String?
-  userRating          Float?
-  userRatingCount     Int?
-  isBhPartner         Boolean      @default(false)
-  bhPartnerDealText   String?
-  minPerPlateCost     Int?
-  maxPerPlateCost     Int?
-  minPerDayCost       Int?
-  maxPerDayCost       Int?
-  minRoomCount        Int?
-  maxRoomCount        Int?
-  minAreaCapacity     Int?
-  maxAreaCapacity     Int?
-  parkingCount        Int?
-  latitude            Float?
-  longitude           Float?
-  listingOrder        Int
-  listingPayload      Json
-  detailPayload       Json?
-  searchText          String
-  createdAt           DateTime     @default(now())
-  updatedAt           DateTime     @updatedAt
-  city                City         @relation(fields: [citySlug], references: [slug])
-  media               VenueMedia[]
-  tags                VenueTag[]
-  areas               VenueArea[]
-  amenities           VenueAmenity[]
-  facilities          VenueFacility[]
+  id                String          @id @default(cuid())
+  vendorId          String          @unique
+  name              String
+  slug              String
+  citySlug          String
+  shortAddress      String?
+  formattedAddress  String?
+  userRating        Float?
+  userRatingCount   Int?
+  isBhPartner       Boolean         @default(false)
+  bhPartnerDealText String?
+  minPerPlateCost   Int?
+  maxPerPlateCost   Int?
+  minPerDayCost     Int?
+  maxPerDayCost     Int?
+  minRoomCount      Int?
+  maxRoomCount      Int?
+  minAreaCapacity   Int?
+  maxAreaCapacity   Int?
+  parkingCount      Int?
+  latitude          Float?
+  longitude         Float?
+  listingOrder      Int
+  listingPayload    Json
+  detailPayload     Json?
+  searchText        String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  city              City            @relation(fields: [citySlug], references: [slug])
+  media             VenueMedia[]
+  tags              VenueTag[]
+  areas             VenueArea[]
+  amenities         VenueAmenity[]
+  facilities        VenueFacility[]
 
   @@index([citySlug, listingOrder])
   @@index([citySlug, slug])
@@ -88,13 +88,13 @@ model VenueTag {
 }
 
 model VenueArea {
-  id               String @id @default(cuid())
+  id               String  @id @default(cuid())
   venueId          String
   name             String
   areaType         String?
   seatingCapacity  Int?
   floatingCapacity Int?
-  venue            Venue  @relation(fields: [venueId], references: [vendorId], onDelete: Cascade)
+  venue            Venue   @relation(fields: [venueId], references: [vendorId], onDelete: Cascade)
 
   @@index([venueId])
 }
@@ -120,15 +120,15 @@ model VenueFacility {
 }
 
 model PhotographerCity {
-  id              String         @id @default(cuid())
-  name            String
-  slug            String         @unique
-  sourceCount     Int
-  importedCount   Int
-  seoPayload      Json?
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  photographers   Photographer[]
+  id            String         @id @default(cuid())
+  name          String
+  slug          String         @unique
+  sourceCount   Int
+  importedCount Int
+  seoPayload    Json?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  photographers Photographer[]
 }
 
 model Photographer {
@@ -185,5 +185,76 @@ model PhotographerTag {
   photographer   Photographer @relation(fields: [photographerId], references: [vendorId], onDelete: Cascade)
 
   @@unique([photographerId, label])
+  @@index([label])
+}
+
+model DecoratorCity {
+  id            String      @id @default(cuid())
+  name          String
+  slug          String      @unique
+  sourceCount   Int
+  importedCount Int
+  seoPayload    Json?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  decorators    Decorator[]
+}
+
+model Decorator {
+  id                String           @id @default(cuid())
+  vendorId          String           @unique
+  name              String
+  slug              String
+  citySlug          String
+  shortAddress      String?
+  formattedAddress  String?
+  userRating        Float?
+  userRatingCount   Int?
+  isBhPartner       Boolean          @default(false)
+  bhPartnerDealText String?
+  minDecorCost      Int?
+  indoorPrice       Int?
+  outdoorPrice      Int?
+  listingOrder      Int
+  listingPayload    Json
+  detailPayload     Json?
+  seoPayload        Json?
+  searchText        String
+  longitude         Float?
+  latitude          Float?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  city              DecoratorCity    @relation(fields: [citySlug], references: [slug])
+  media             DecoratorMedia[]
+  tags              DecoratorTag[]
+
+  @@index([citySlug, listingOrder])
+  @@index([citySlug, slug])
+  @@index([citySlug, isBhPartner(sort: Desc), userRating(sort: Desc), listingOrder(sort: Asc)], map: "Decorator_city_partner_rating_order_idx")
+  @@index([userRating])
+  @@index([minDecorCost])
+}
+
+model DecoratorMedia {
+  id          String    @id @default(cuid())
+  decoratorId String
+  originalUrl String
+  localPath   String?
+  mimeType    String?
+  mediaId     String?
+  source      String
+  position    Int
+  decorator   Decorator @relation(fields: [decoratorId], references: [vendorId], onDelete: Cascade)
+
+  @@index([decoratorId, position])
+}
+
+model DecoratorTag {
+  id          String    @id @default(cuid())
+  decoratorId String
+  label       String
+  decorator   Decorator @relation(fields: [decoratorId], references: [vendorId], onDelete: Cascade)
+
+  @@unique([decoratorId, label])
   @@index([label])
 }

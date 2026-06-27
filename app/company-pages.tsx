@@ -1,7 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import Script from "next/script";
-import { applyBranding, stripCapturedHeaderFooter } from "./homepage-shell";
+import {
+  aboutViraayaWeddingsArticleMarkup,
+  applyBranding,
+  stripCapturedHeaderFooter
+} from "./homepage-shell";
 
 // Public URL slug -> captured HTML file (under data/captured-company). The legal
 // pages keep their original capture file names but are served on Viraaya-branded
@@ -34,7 +38,7 @@ const legacyPages = new Set<CompanySlug>([
 ]);
 
 const legalDocumentTitles: Partial<Record<CompanySlug, string>> = {
-  "about-us": "About Us",
+  "about-us": "About Viraaya Weddings",
   "privacy-policy": "Privacy Policy"
 };
 
@@ -107,13 +111,7 @@ function extractLegalDocumentBody(slug: CompanySlug, html: string) {
   }
 
   if (slug === "about-us") {
-    const article = html.match(/<article\b[^>]*>([\s\S]*?)<\/article>/i);
-
-    if (!article) {
-      throw new Error("Could not locate the captured about us document.");
-    }
-
-    return article[1].trim();
+    return aboutViraayaWeddingsArticleMarkup;
   }
 
   return "";

@@ -9,6 +9,16 @@ const brandAssets = {
   url: "https://viraayaweddings.com"
 };
 
+const publicContactDetails = {
+  addressLabel: "Delhi - Business address/operating address",
+  addressHtml:
+    "Chattarpur Mandir Rd, Ansal Villas,<br/>Satbari, New Delhi,<br/>Delhi &ndash; 110074",
+  phoneDisplay: "+91 81302 22141",
+  phoneHref: "tel:+918130222141",
+  phoneDigits: "918130222141",
+  linkedInUrl: "https://www.linkedin.com/company/viraaya-weddings/"
+};
+
 export const homepageShellCss = `
 <style id="twc-shared-shell-css">
   #twc-homepage-shared-header {
@@ -142,6 +152,90 @@ const ideaCategoryMarkup = [
   )
   .join("");
 
+export const aboutViraayaWeddingsArticleMarkup = `
+  <h2>About Viraaya Weddings</h2>
+  <h3>Luxury Wedding Planning Services Across India</h3>
+  <p>At Viraaya Weddings, we believe every celebration deserves to be extraordinary. Whether you&apos;re planning an intimate ceremony or a grand destination wedding, our team transforms your ideas into beautifully curated experiences that reflect your personality, traditions, and style.</p>
+  <p>With a trusted network of premium venues and experienced wedding professionals across India, we simplify the planning process from start to finish. From your first consultation to the final farewell, our experts ensure every detail is thoughtfully managed, allowing you and your family to focus on creating unforgettable memories.</p>
+
+  <h3>Our Wedding Planning Services</h3>
+  <p>Planning a wedding involves countless decisions, and we&apos;re here to make each one easier. Our personalized approach helps you select the right services, vendors, and experiences while staying aligned with your budget and vision.</p>
+
+  <h3>Wedding Venue Selection</h3>
+  <p>Finding the perfect venue is the foundation of a memorable wedding. Viraaya Weddings offers access to an extensive collection of banquet halls, luxury hotels, resorts, farmhouses, palaces, and destination wedding venues across India.</p>
+  <p>Our consultants help you shortlist venues based on your preferred city, guest count, budget, style, and event requirements, making the booking process simple and hassle-free.</p>
+
+  <h3>Wedding D&eacute;cor &amp; Styling</h3>
+  <p>Every wedding tells a unique story through its d&eacute;cor. Whether your style is timeless, royal, floral, minimalist, or contemporary, our creative d&eacute;cor partners design breathtaking spaces that perfectly complement your celebration.</p>
+  <p>From elegant mandaps and stage d&eacute;cor to themed functions and bespoke floral installations, we ensure every event leaves a lasting impression.</p>
+
+  <h3>Photography &amp; Cinematography</h3>
+  <p>Your wedding deserves to be remembered forever. We connect you with talented photographers and filmmakers who specialize in capturing authentic emotions, candid moments, and cinematic wedding stories.</p>
+  <p>Whether you prefer traditional photography, modern storytelling, drone coverage, or luxury wedding films, we&apos;ll help you find professionals that match your style and budget.</p>
+
+  <h3>Bridal Beauty &amp; Wedding Essentials</h3>
+  <p>From bridal makeup artists and mehendi specialists to entertainment, hospitality, catering, and wedding logistics, Viraaya Weddings helps you book trusted professionals for every aspect of your celebration.</p>
+  <p>Our goal is to ensure every service works seamlessly together for a flawless wedding experience.</p>
+
+  <h3>Wedding Inspiration</h3>
+  <p>Looking for fresh ideas for your big day?</p>
+  <p>Explore our carefully curated collection of wedding inspiration featuring d&eacute;cor concepts, bridal fashion, groom styling, jewellery trends, invitation designs, pre-wedding shoots, mehendi ideas, and much more.</p>
+  <p>Save your favourite inspirations and use them to build the wedding you&apos;ve always imagined.</p>
+
+  <h3>Why Choose Viraaya Weddings?</h3>
+  <h4>Personalized Wedding Planning</h4>
+  <p>Every couple has a unique story, and every wedding should reflect it. Our dedicated wedding specialists take the time to understand your expectations, preferences, traditions, and budget before recommending the most suitable options.</p>
+
+  <h4>Trusted Vendor Network</h4>
+  <p>We collaborate with carefully selected venues and wedding professionals known for their quality, reliability, and exceptional service. This allows us to deliver premium experiences while helping you make informed decisions.</p>
+
+  <h4>Transparent Pricing</h4>
+  <p>We believe wedding planning should be exciting&mdash;not confusing. Our team provides clear recommendations and works within your budget to maximize value without compromising quality.</p>
+
+  <h4>End-to-End Coordination</h4>
+  <p>From venue selection and vendor management to guest coordination and on-ground execution, we oversee every stage of your wedding journey so you can celebrate stress-free with your loved ones.</p>
+
+  <h3>Creating Weddings You&apos;ll Always Remember</h3>
+  <p>At Viraaya Weddings, we don&apos;t simply organize weddings&mdash;we craft meaningful celebrations filled with beautiful moments, thoughtful details, and unforgettable experiences. No matter where your dream wedding takes place, we&apos;re committed to making it elegant, seamless, and truly one of a kind.</p>
+`;
+
+const homepageAboutViraayaWeddingsSection = `
+  <section class="bg-[#fffaf0] px-5 py-14 text-primaryTextColor md:px-10 md:py-20" id="more_about_betterhalf_section">
+    <style>
+      #more_about_betterhalf_section .twc-about-viraaya-content h3 {
+        color: #1a1a1a;
+        font-family: var(--font-playfair-display, serif);
+        font-size: clamp(1.35rem, 2vw, 2rem);
+        font-weight: 700;
+        line-height: 1.25;
+        margin-top: 2.25rem;
+      }
+      #more_about_betterhalf_section .twc-about-viraaya-content h4 {
+        color: #A9804E;
+        font-size: 1.05rem;
+        font-weight: 700;
+        line-height: 1.35;
+        margin-top: 1.25rem;
+      }
+      #more_about_betterhalf_section .twc-about-viraaya-content p {
+        margin-top: 0.75rem;
+      }
+    </style>
+    <div class="mx-auto max-w-screen-lg space-y-8 font-plus-jakarata-sans text-sm leading-relaxed text-secondary md:text-base">
+      <div class="space-y-3 text-center">
+        <p class="font-playfair text-3xl font-semibold text-primaryTextColor md:text-[44px]">About Viraaya Weddings</p>
+        <p class="text-lg font-semibold text-[#A9804E] md:text-2xl">Luxury Wedding Planning Services Across India</p>
+      </div>
+      <div class="twc-about-viraaya-content space-y-5">
+        ${aboutViraayaWeddingsArticleMarkup.replace(
+          "<h2>About Viraaya Weddings</h2>\n  <h3>Luxury Wedding Planning Services Across India</h3>",
+          ""
+        )}
+      </div>
+    </div>
+  </section>
+`;
+
 function elementEnd(html: string, start: number, tag: string) {
   const pattern = new RegExp(`<\\/?${tag}\\b[^>]*>`, "gi");
   pattern.lastIndex = start;
@@ -185,6 +279,34 @@ function replaceFirstElement(
 
   const end = elementEnd(html, start, tag);
   return end === -1 ? html : html.slice(0, start) + replacement + html.slice(end);
+}
+
+function removeElementById(html: string, id: string, tag = "a") {
+  const marker = `id="${id}"`;
+  const markerIndex = html.indexOf(marker);
+  const singleQuoteMarker = `id='${id}'`;
+  const index =
+    markerIndex === -1 ? html.indexOf(singleQuoteMarker) : markerIndex;
+
+  if (index === -1) {
+    return html;
+  }
+
+  const start = findElementStartBefore(html, index, tag);
+  const end = start === -1 ? -1 : elementEnd(html, start, tag);
+
+  return start === -1 || end === -1
+    ? html
+    : html.slice(0, start) + html.slice(end);
+}
+
+function normalizeAboutContent(markup: string) {
+  return replaceFirstElement(
+    markup,
+    '<section class="mb-8 " id="more_about_betterhalf_section"',
+    "section",
+    homepageAboutViraayaWeddingsSection
+  );
 }
 
 function transformHomepageContent(markup: string) {
@@ -293,6 +415,46 @@ function normalizeBrandColors(markup: string) {
     .replaceAll("rgba(255,91,145", "rgba(169,128,78");
 }
 
+function normalizeContactDetails(markup: string) {
+  const removedSocialLinks = [
+    "footer_facebook_icon_link",
+    "footer_youtube_icon_link",
+    "footer_x_icon_link",
+    "footer_twitter_icon_link",
+    "footer_pinterest_icon_link"
+  ].reduce((html, id) => removeElementById(html, id), markup);
+
+  return removedSocialLinks
+    .replaceAll(
+      "https://www.linkedin.com/company/the-wedding-company-twc/",
+      publicContactDetails.linkedInUrl
+    )
+    .replaceAll(
+      "https://www.linkedin.com/company/the-wedding-company-twc",
+      publicContactDetails.linkedInUrl
+    )
+    .replaceAll(
+      "href=\"tel:8884090499\"",
+      `href="${publicContactDetails.phoneHref}"`
+    )
+    .replaceAll(
+      "href='tel:8884090499'",
+      `href='${publicContactDetails.phoneHref}'`
+    )
+    .replaceAll("+918884090499", publicContactDetails.phoneDisplay)
+    .replaceAll("+91 88840 90499", publicContactDetails.phoneDisplay)
+    .replaceAll("8884090499", publicContactDetails.phoneDigits)
+    .replaceAll("919916434754", publicContactDetails.phoneDigits)
+    .replaceAll(
+      "Bangalore - Business address/operating address",
+      publicContactDetails.addressLabel
+    )
+    .replaceAll(
+      "Ground Floor, 375, <br/>5th Main Rd, <br/>HSR Layout Sector 6,<br/>Bengaluru, Karnataka 560102",
+      publicContactDetails.addressHtml
+    );
+}
+
 export function applyBranding(markup: string) {
   const branded = sanitizePublicDetails(applyBrandAssets(markup))
     // Route captured CDN image hosts through the local asset proxy so no
@@ -328,7 +490,9 @@ export function applyBranding(markup: string) {
     // Any residual theweddingcompany.com host/text -> brand domain.
     .replaceAll("theweddingcompany.com", "viraayaweddings.com");
 
-  return normalizeBrandColors(branded);
+  return normalizeBrandColors(
+    normalizeContactDetails(normalizeAboutContent(branded))
+  );
 }
 
 function getHomepageParts() {
