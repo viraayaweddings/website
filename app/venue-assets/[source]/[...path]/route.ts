@@ -38,6 +38,12 @@ const NOT_FOUND_HEADERS = {
   "cache-control": "no-store",
   "x-content-type-options": "nosniff"
 };
+const UPSTREAM_HEADERS = {
+  accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+  referer: "https://www.theweddingcompany.com/",
+  "user-agent":
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+};
 
 function isSafePath(pathParts: string[]) {
   try {
@@ -55,6 +61,10 @@ function isSafePath(pathParts: string[]) {
   } catch {
     return false;
   }
+}
+
+function safeMimeTypeForPath(pathParts: string[]) {
+  return mimeTypes[path.extname(pathParts[pathParts.length - 1] ?? "").toLowerCase()];
 }
 
 export async function GET(
@@ -90,8 +100,14 @@ export async function GET(
   // 2) Fall back to the upstream CDN.
   const target = entry.host + "/" + pathParts.map(encodeURIComponent).join("/") + new URL(request.url).search;
   try {
-    const upstream = await fetch(target, { headers: { referer: "https://www.theweddingcompany.com/" } });
-    const contentType = upstream.headers.get("content-type")?.split(";")[0].trim().toLowerCase();
+    const upstream = await fetch(target, { headers: UPSTREAM_HEADERS });
+    const upstreamContentType = upstream.headers.get("content-type")?.split(";")[0].trim().toLowerCase();
+    const contentType = upstreamContentType && allowedContentTypes.has(upstreamContentType)
+      ? upstreamContentType
+      : upstreamContentType === "application/octet-stream"
+        ? safeMimeTypeForPath(pathParts)
+        : undefined;
+
     if (!upstream.ok || !contentType || !allowedContentTypes.has(contentType)) {
       return new Response("Not found", {
         status: upstream.ok ? 404 : upstream.status,
@@ -101,7 +117,7 @@ export async function GET(
     const body = await upstream.arrayBuffer();
     return new Response(body, {
       headers: {
-        "content-type": upstream.headers.get("content-type") || "application/octet-stream",
+        "content-type": contentType,
         "cache-control": IMMUTABLE,
         "x-content-type-options": "nosniff"
       }

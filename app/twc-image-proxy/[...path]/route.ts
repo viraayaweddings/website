@@ -10,6 +10,12 @@ const allowedContentTypes = new Set([
   "video/mp4",
   "video/webm"
 ]);
+const upstreamHeaders = {
+  accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+  referer: "https://www.theweddingcompany.com/",
+  "user-agent":
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+};
 
 function isSafePath(pathParts: string[]) {
   try {
@@ -39,11 +45,7 @@ export async function GET(
   const target = new URL(path.join("/"), `${imageOrigin}/`);
   target.search = new URL(request.url).search;
 
-  const response = await fetch(target, {
-    headers: {
-      referer: "https://www.theweddingcompany.com/"
-    }
-  });
+  const response = await fetch(target, { headers: upstreamHeaders });
   const contentType = response.headers.get("content-type")?.split(";")[0].trim().toLowerCase();
   if (!response.ok || !contentType || !allowedContentTypes.has(contentType)) {
     return new Response("Not found", {
