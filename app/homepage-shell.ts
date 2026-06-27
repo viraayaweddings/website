@@ -207,6 +207,11 @@ export const aboutViraayaWeddingsArticleMarkup = `
   <p>At Viraaya Weddings, we don&apos;t simply organize weddings&mdash;we craft meaningful celebrations filled with beautiful moments, thoughtful details, and unforgettable experiences. No matter where your dream wedding takes place, we&apos;re committed to making it elegant, seamless, and truly one of a kind.</p>
 `;
 
+const homepageAboutViraayaWeddingsIntroMarkup = `
+  <p>At Viraaya Weddings, we believe every celebration deserves to be extraordinary. Whether you&apos;re planning an intimate ceremony or a grand destination wedding, our team transforms your ideas into beautifully curated experiences that reflect your personality, traditions, and style.</p>
+  <p>With a trusted network of premium venues and experienced wedding professionals across India, we simplify the planning process from start to finish. From your first consultation to the final farewell, our experts ensure every detail is thoughtfully managed, allowing you and your family to focus on creating unforgettable memories.</p>
+`;
+
 const homepageAboutViraayaWeddingsSection = `
   <section class="bg-[#fffaf0] px-5 py-14 text-primaryTextColor md:px-10 md:py-20" id="more_about_betterhalf_section">
     <style>
@@ -235,10 +240,7 @@ const homepageAboutViraayaWeddingsSection = `
         <p class="text-lg font-semibold text-[#A9804E] md:text-2xl">Luxury Wedding Planning Services Across India</p>
       </div>
       <div class="twc-about-viraaya-content space-y-5">
-        ${aboutViraayaWeddingsArticleMarkup.replace(
-          "<h2>About Viraaya Weddings</h2>\n  <h3>Luxury Wedding Planning Services Across India</h3>",
-          ""
-        )}
+        ${homepageAboutViraayaWeddingsIntroMarkup}
       </div>
     </div>
   </section>
