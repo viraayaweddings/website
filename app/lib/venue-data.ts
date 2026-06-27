@@ -80,7 +80,41 @@ export type VenueCard = {
   lng: number | null;
 };
 
+export type VenueQueryResult = {
+  size: number;
+  page: number;
+  limit: number;
+  nextPage: number | null;
+  nextPageUrl: string | null;
+  results: VenueCard[];
+};
+
 export const supportedVenueCities = ["delhi", "gurugram", "noida", "jaipur", "udaipur"];
+
+const fallbackVenueCities = supportedVenueCities.map((slug) => ({
+  slug,
+  name: slug.slice(0, 1).toUpperCase() + slug.slice(1),
+  sourceCount: 0,
+  importedCount: 0
+}));
+
+function emptyVenueQuery(params: URLSearchParams): VenueQueryResult {
+  const page = Math.max(1, Number(params.get("page") || 1));
+  const limit = Math.min(48, Math.max(1, Number(params.get("limit") || 24)));
+
+  return {
+    size: 0,
+    page,
+    limit,
+    nextPage: null,
+    nextPageUrl: null,
+    results: []
+  };
+}
+
+function logVenueDataError(operation: string, error: unknown) {
+  console.error(`[venue-data] ${operation} failed`, error);
+}
 
 const VENUE_CARD_SELECT = {
   vendorId: true,
@@ -390,7 +424,7 @@ function stableParams(params: URLSearchParams) {
     .join("&");
 }
 
-async function queryVenuesUncached(queryString: string) {
+async function queryVenuesUncached(queryString: string): Promise<VenueQueryResult> {
   const params = new URLSearchParams(queryString);
   const citySlug = labelKey(params.get("city") || params.get("citySlug") || "");
   const page = Math.max(1, Number(params.get("page") || 1));
@@ -472,7 +506,14 @@ const queryVenuesCached = unstable_cache(queryVenuesUncached, ["venue-list-query
 });
 
 export async function queryVenues(input: URLSearchParams | Record<string, string | string[] | undefined>) {
-  return queryVenuesCached(stableParams(venueParams(input)));
+  const params = venueParams(input);
+
+  try {
+    return await queryVenuesCached(stableParams(params));
+  } catch (error) {
+    logVenueDataError("queryVenues", error);
+    return emptyVenueQuery(params);
+  }
 }
 
 async function getVenueBySlugUncached(citySlug: string, venueSlug: string) {
@@ -522,7 +563,12 @@ const getVenueBySlugCached = unstable_cache(getVenueBySlugUncached, ["venue-by-s
 });
 
 export async function getVenueBySlug(citySlug: string, venueSlug: string) {
-  return getVenueBySlugCached(citySlug, venueSlug);
+  try {
+    return await getVenueBySlugCached(citySlug, venueSlug);
+  } catch (error) {
+    logVenueDataError("getVenueBySlug", error);
+    return null;
+  }
 }
 
 async function getCityBySlugUncached(citySlug: string) {
@@ -538,7 +584,12 @@ const getCityBySlugCached = unstable_cache(getCityBySlugUncached, ["venue-city-b
 });
 
 export async function getCityBySlug(citySlug: string) {
-  return getCityBySlugCached(citySlug);
+  try {
+    return await getCityBySlugCached(citySlug);
+  } catch (error) {
+    logVenueDataError("getCityBySlug", error);
+    return fallbackVenueCities.find((city) => city.slug === citySlug) || null;
+  }
 }
 
 async function getVenueCitiesUncached() {
@@ -554,7 +605,12 @@ const getVenueCitiesCached = unstable_cache(getVenueCitiesUncached, ["venue-citi
 });
 
 export async function getVenueCities() {
-  return getVenueCitiesCached();
+  try {
+    return await getVenueCitiesCached();
+  } catch (error) {
+    logVenueDataError("getVenueCities", error);
+    return fallbackVenueCities;
+  }
 }
 
 async function getSimilarVenuesUncached(citySlug: string, vendorId: string, tags: string[], limit: number) {
@@ -588,5 +644,10 @@ const getSimilarVenuesCached = unstable_cache(getSimilarVenuesUncached, ["simila
 });
 
 export async function getSimilarVenues(venue: VenueRecord, limit = 10) {
-  return getSimilarVenuesCached(venue.citySlug, venue.vendorId, venue.tags || [], limit);
+  try {
+    return await getSimilarVenuesCached(venue.citySlug, venue.vendorId, venue.tags || [], limit);
+  } catch (error) {
+    logVenueDataError("getSimilarVenues", error);
+    return [];
+  }
 }

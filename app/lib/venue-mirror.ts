@@ -376,7 +376,12 @@ const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["venue-mirror
 });
 
 export async function getMirrorHtml(citySlug: string, slug: string): Promise<string | null> {
-  return getMirrorHtmlCached(citySlug, slug);
+  try {
+    return await getMirrorHtmlCached(citySlug, slug);
+  } catch (error) {
+    console.error("[venue-mirror] getMirrorHtml failed", error);
+    return null;
+  }
 }
 
 function injectAssetPrefix(html: string): string {
