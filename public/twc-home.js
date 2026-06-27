@@ -88,7 +88,7 @@
         <a href="/wedding-services">Wedding Services</a>
       </nav>
       <div class="twc-mobile-menu-actions">
-        <a href="https://wa.me/918884090499">Whatsapp</a>
+        <a href="https://wa.me/918130222141">Whatsapp</a>
         <button type="button" data-scroll-planning>Get free Quote</button>
       </div>
     `;
@@ -325,22 +325,24 @@
     const getVideoSrc = (item) =>
       window.matchMedia("(max-width: 768px)").matches ? item.mobile : item.desktop;
 
-    const syncVideoSources = () => {
-      heroSlides.forEach((item, index) => {
-        const video = slides[index].querySelector("video");
-        const source = getVideoSrc(item);
-        if (video && video.dataset.twcSrc !== source) {
-          video.dataset.twcSrc = source;
-          video.src = source;
-          video.load();
-        }
-      });
+    const syncVideoSource = (index) => {
+      const video = slides[index]?.querySelector("video");
+      const item = heroSlides[index];
+      if (!video || !item) {
+        return;
+      }
+
+      const source = getVideoSrc(item);
+      if (video.dataset.twcSrc !== source) {
+        video.dataset.twcSrc = source;
+        video.src = source;
+        video.load();
+      }
     };
 
     heroSlides.forEach((item, index) => {
-      slides[index].innerHTML = `<video class="h-full w-full object-cover" playsinline autoplay muted loop preload="metadata" poster="${item.poster}"></video>`;
+      slides[index].innerHTML = `<video class="h-full w-full object-cover" playsinline muted loop preload="metadata" poster="${item.poster}"></video>`;
     });
-    syncVideoSources();
 
     if (dotContainer) {
       dotContainer.innerHTML = heroSlides
@@ -357,7 +359,7 @@
 
     const showSlide = (nextIndex) => {
       active = nextIndex;
-      syncVideoSources();
+      syncVideoSource(active);
       slides.forEach((slide, index) => {
         slide.classList.toggle("twc-hero-active", index === active);
         slide.style.display = "flex";
@@ -371,7 +373,7 @@
             video.autoplay = true;
             video.loop = true;
             video.muted = true;
-            video.preload = "auto";
+            video.preload = "metadata";
             video.playsInline = true;
             void video.play().catch(() => {});
           }
@@ -411,7 +413,7 @@
     showSlide(0);
     restartTimer();
 
-    const onResize = () => syncVideoSources();
+    const onResize = () => syncVideoSource(active);
     window.addEventListener("resize", onResize, { passive: true });
 
     return () => {
@@ -632,11 +634,41 @@
       return () => {};
     }
 
-    const script = document.createElement("script");
-    script.src = "https://widget.tagembed.com/embed.min.js";
-    script.async = true;
-    document.body.appendChild(script);
-    return () => script.remove();
+    let script = null;
+    let loaded = false;
+    const widget = document.querySelector(".tagembed-widget");
+
+    const load = () => {
+      if (loaded) {
+        return;
+      }
+      loaded = true;
+      script = document.createElement("script");
+      script.src = "https://widget.tagembed.com/embed.min.js";
+      script.async = true;
+      document.body.appendChild(script);
+    };
+
+    if (!("IntersectionObserver" in window) || !widget) {
+      load();
+      return () => script?.remove();
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          load();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" }
+    );
+    observer.observe(widget);
+
+    return () => {
+      observer.disconnect();
+      script?.remove();
+    };
   }
 
   function updateHowItWorks() {

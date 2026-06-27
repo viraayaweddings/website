@@ -120,7 +120,7 @@ const VENUE_CARD_SELECT = {
   city: { select: { slug: true, name: true } },
   media: {
     orderBy: { position: "asc" },
-    take: 8,
+    take: 4,
     select: {
       originalUrl: true,
       localPath: true,
@@ -244,7 +244,7 @@ export function toVenueCard(venue: VenueRecord): VenueCard {
     maxGuests: venue.capacity?.maxValue != null ? String(venue.capacity.maxValue) : "",
     badges: venue.tags || [],
     isPartner: venue.isBhPartner,
-    images: venue.images.slice(0, 8).map(resolveVenueImage),
+    images: venue.images.slice(0, 4).map(resolveVenueImage),
     lat: venue.coordinates ? venue.coordinates[1] : null,
     lng: venue.coordinates ? venue.coordinates[0] : null
   };

@@ -16,6 +16,8 @@ const homepageStylesheets = [
   "/twc-next/static/css/61dbd837b13489b4.css"
 ];
 
+const fullCaptureCache = new Map<string, string>();
+
 function rewriteAssetUrls(html: string) {
   return html
     .replaceAll('href="/_next/static/', 'href="/twc-next/static/')
@@ -56,22 +58,23 @@ const imageProxyScript = `
       root.querySelectorAll("img,source").forEach(patchElement);
     }
   };
-  patchTree(document);
-  new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-      if (mutation.type === "attributes") patchElement(mutation.target);
-      for (const node of mutation.addedNodes) patchTree(node);
-    }
-  }).observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ["src", "srcset"],
-    childList: true,
-    subtree: true
-  });
+  const sweep = () => patchTree(document);
+  sweep();
+  [120, 400, 1000, 2500].forEach((delay) => setTimeout(sweep, delay));
 })();
 </script>`;
 
 export function fullCaptureResponse(slug: string) {
+  const cached = fullCaptureCache.get(slug);
+  if (cached) {
+    return new Response(cached, {
+      headers: {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400"
+      }
+    });
+  }
+
   const file = path.join(
     process.cwd(),
     "data",
@@ -81,10 +84,12 @@ export function fullCaptureResponse(slug: string) {
   const html = applyBranding(applyHomepageHeaderFooter(
     injectHomepageAssets(rewriteAssetUrls(fs.readFileSync(file, "utf8")))
   )).replace("</body>", `${imageProxyScript}${homepageShellScript()}</body>`);
+  fullCaptureCache.set(slug, html);
 
   return new Response(html, {
     headers: {
-      "content-type": "text/html; charset=utf-8"
+      "content-type": "text/html; charset=utf-8",
+      "cache-control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400"
     }
   });
 }

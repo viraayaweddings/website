@@ -57,13 +57,13 @@ export async function GET(
     });
   }
 
-  const body = await response.arrayBuffer();
-
-  return new Response(body, {
+  return new Response(response.body, {
     status: response.status,
     headers: {
       "cache-control": "public, max-age=31536000, immutable",
-      "content-length": String(body.byteLength),
+      ...(response.headers.get("content-length")
+        ? { "content-length": response.headers.get("content-length") as string }
+        : {}),
       "content-type": response.headers.get("content-type") ?? "image/webp",
       "x-content-type-options": "nosniff"
     }

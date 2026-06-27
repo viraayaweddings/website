@@ -114,11 +114,14 @@ export async function GET(
         headers: NOT_FOUND_HEADERS
       });
     }
-    const body = await upstream.arrayBuffer();
-    return new Response(body, {
+    return new Response(upstream.body, {
+      status: upstream.status,
       headers: {
         "content-type": contentType,
         "cache-control": IMMUTABLE,
+        ...(upstream.headers.get("content-length")
+          ? { "content-length": upstream.headers.get("content-length") as string }
+          : {}),
         "x-content-type-options": "nosniff"
       }
     });

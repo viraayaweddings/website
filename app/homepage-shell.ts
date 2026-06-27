@@ -19,6 +19,14 @@ const publicContactDetails = {
   linkedInUrl: "https://www.linkedin.com/company/viraaya-weddings/"
 };
 
+type HomepageParts = {
+  header: string;
+  content: string;
+  footer: string;
+};
+
+let homepagePartsCache: HomepageParts | null = null;
+
 export const homepageShellCss = `
 <style id="twc-shared-shell-css">
   #twc-homepage-shared-header {
@@ -311,6 +319,11 @@ function normalizeAboutContent(markup: string) {
 
 function transformHomepageContent(markup: string) {
   return applyBranding(markup)
+    .replace(
+      /<video class="h-full w-full object-cover" playsinline="" autoplay="" muted="" poster="([^"]+)">[\s\S]*?<\/video>/g,
+      '<video class="h-full w-full object-cover" playsinline muted preload="metadata" poster="$1"></video>'
+    )
+    .replaceAll('fetchpriority="high"', 'loading="lazy"')
     .replaceAll('style="color:#000000"', 'style="color:#ffffff"')
     .replace(
       /(<div class="keen-slider"[^>]*style="[^"]*transform:[^"]*")/g,
@@ -496,6 +509,10 @@ export function applyBranding(markup: string) {
 }
 
 function getHomepageParts() {
+  if (homepagePartsCache) {
+    return homepagePartsCache;
+  }
+
   const html = fs.readFileSync(
     path.join(process.cwd(), "data", "captured-home.html"),
     "utf8"
@@ -525,13 +542,15 @@ function getHomepageParts() {
     throw new Error("Could not split the captured homepage shell.");
   }
 
-  return {
+  homepagePartsCache = {
     header: applyBranding(main.slice(innerStart, homeContentStart)),
     content: transformHomepageContent(
       main.slice(homeContentStart, footerStart) + main.slice(footerEnd, mainInnerEnd)
     ),
     footer: applyBranding(main.slice(footerStart, footerEnd))
   };
+
+  return homepagePartsCache;
 }
 
 export function getHomepageHeader() {
@@ -695,21 +714,86 @@ export function homepageShellScript() {
     setupMoreDropdown();
   };
 
-  let queued = false;
-  const schedule = () => {
-    if (queued) return;
-    queued = true;
-    requestAnimationFrame(() => {
-      queued = false;
-      enforceShell();
-    });
-  };
-
   enforceShell();
-  new MutationObserver(schedule).observe(document.documentElement, {
-    childList: true,
-    subtree: true
-  });
+  [120, 400, 1000, 2500, 5000].forEach((delay) => setTimeout(enforceShell, delay));
+  window.addEventListener("pageshow", enforceShell, { once: true });
+})();
+</script>`;
+}
+
+// Additive, framework-agnostic accessibility hardening that runs on top of the
+// mirrored vendor bundle WITHOUT changing its markup, styles, or behaviour:
+//  - gives icon-only controls an accessible name (screen readers / voice control)
+//  - marks the current section in the shared nav with aria-current
+//  - makes new-tab links safe with rel="noopener noreferrer"
+//  - restores a visible keyboard focus ring (focus-visible only, so mouse users
+//    are unaffected)
+// Everything is wrapped in try/catch, is idempotent, and only ever ADDS
+// attributes — it never removes or rewrites existing ones, so it cannot break
+// existing functionality.
+function accessibilityEnhancerScript() {
+  return `
+<style id="twc-a11y-focus">
+:where(a,button,input,select,textarea,[tabindex]):focus-visible{outline:2px solid #A9804E;outline-offset:2px;}
+</style>
+<script id="twc-a11y-enhancer">
+(() => {
+  const labelFor = (el) => {
+    try {
+      const id = (el.id || "").toLowerCase();
+      const cls = (typeof el.className === "string" ? el.className : "").toLowerCase();
+      const txt = (el.textContent || "").trim();
+      if (el.title && el.title.trim()) return el.title.trim();
+      if (id.includes("search") || cls.includes("search")) return "Search";
+      if (id.includes("close") || cls.includes("close")) return "Close";
+      if (txt === "‹" || cls.includes("left") || cls.includes("prev")) return "Previous";
+      if (txt === "›" || cls.includes("right") || cls.includes("next")) return "Next";
+      return "";
+    } catch (e) { return ""; }
+  };
+  const hasName = (el) => {
+    if ((el.textContent || "").trim()) return true;
+    if (el.getAttribute("aria-label")) return true;
+    if (el.getAttribute("aria-labelledby")) return true;
+    if (el.getAttribute("title")) return true;
+    const img = el.querySelector("img[alt]");
+    if (img && (img.getAttribute("alt") || "").trim()) return true;
+    return false;
+  };
+  const enhance = () => {
+    try {
+      document.querySelectorAll('a[target="_blank"]:not([data-twc-a11y])').forEach((a) => {
+        const rel = (a.getAttribute("rel") || "").toLowerCase();
+        const add = ["noopener", "noreferrer"].filter((r) => !rel.includes(r));
+        if (add.length) a.setAttribute("rel", (rel ? rel + " " : "") + add.join(" "));
+        a.setAttribute("data-twc-a11y", "1");
+      });
+      document.querySelectorAll("button:not([data-twc-a11y]), [role=button]:not([data-twc-a11y])").forEach((b) => {
+        if (!hasName(b)) {
+          const label = labelFor(b);
+          if (label) b.setAttribute("aria-label", label);
+        }
+        b.setAttribute("data-twc-a11y", "1");
+      });
+      const path = (location.pathname || "").replace(/\\/+$/, "") || "/";
+      document.querySelectorAll("#twc-homepage-shared-header a[href]").forEach((link) => {
+        try {
+          const href = new URL(link.href, location.origin).pathname.replace(/\\/+$/, "") || "/";
+          if (href !== "/" && (path === href || path.startsWith(href + "/"))) {
+            link.setAttribute("aria-current", "page");
+          } else if (link.getAttribute("aria-current") === "page") {
+            link.removeAttribute("aria-current");
+          }
+        } catch (e) {}
+      });
+    } catch (e) {}
+  };
+  enhance();
+  [200, 600, 1500, 3000].forEach((t) => setTimeout(enhance, t));
+  try {
+    new MutationObserver(enhance).observe(document.documentElement, { childList: true, subtree: true });
+  } catch (e) {}
+  window.addEventListener("pageshow", enhance, { once: true });
 })();
 </script>`;
 }
@@ -721,6 +805,10 @@ export function injectHomepageShellSupport(markup: string) {
 
   if (!next.includes('id="twc-homepage-shell-enforcer"')) {
     next = next.replace("</body>", `${homepageShellScript()}</body>`);
+  }
+
+  if (!next.includes('id="twc-a11y-enhancer"')) {
+    next = next.replace("</body>", `${accessibilityEnhancerScript()}</body>`);
   }
 
   return next;

@@ -276,20 +276,10 @@ const BRAND_RUNTIME_SCRIPT = `
 
   const sweep = () => patchTree(document.documentElement);
   sweep();
-  new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-      if (mutation.type === "attributes" || mutation.type === "characterData") patchNode(mutation.target);
-      mutation.addedNodes.forEach(patchTree);
-    }
-  }).observe(document.documentElement, {
-    attributes: true,
-    childList: true,
-    subtree: true,
-    characterData: true
-  });
   // React hydrates the captured bundle after this script runs and re-renders its
   // own header/footer; sweep again as it settles so branding always wins.
   [120, 400, 1000, 2500, 5000].forEach((t) => setTimeout(sweep, t));
+  window.addEventListener("pageshow", sweep, { once: true });
 })();
 </script>`;
 
@@ -346,7 +336,7 @@ async function getMirrorHtmlUncached(citySlug: string, slug: string): Promise<st
 
 // Cache the rendered detail HTML so hot pages never touch Neon. Cloned data is
 // static, so a long revalidate keeps DB hits to ~once/day/page.
-const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["venue-mirror-html-brand-gold-v2"], {
+const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["venue-mirror-html-brand-gold-v3"], {
   revalidate: 86400,
   tags: ["venues"]
 });

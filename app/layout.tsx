@@ -44,34 +44,6 @@ export default function RootLayout({
         <link rel="icon" href="/brand/favicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/brand/favicon.png" />
         <link rel="preload" href="/brand/viraaya-logo-header.png" as="image" />
-        <link
-          rel="preload"
-          href="/twc-next/static/media/eaead17c7dbfcd5d-s.p.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/twc-next/static/media/55c20a7790588da9-s.p.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/twc-next/static/media/155cae559bbd1a77-s.p.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/twc-next/static/media/636a5ac981f94f8b-s.p.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
         <link rel="stylesheet" href="/twc-next/static/css/5baa3d17e8de8438.css" />
         <link rel="stylesheet" href="/twc-next/static/css/c8c1bcda263ddb1a.css" />
         <link rel="stylesheet" href="/twc-next/static/css/ef46db3751d8e999.css" />

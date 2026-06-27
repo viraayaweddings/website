@@ -79,13 +79,8 @@ const BRAND_RUNTIME_SCRIPT = `
   };
   const sweep = () => patchTree(document.documentElement);
   sweep();
-  new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-      if (mutation.type === "attributes" || mutation.type === "characterData") patchNode(mutation.target);
-      mutation.addedNodes.forEach(patchTree);
-    }
-  }).observe(document.documentElement, { attributes: true, childList: true, subtree: true, characterData: true });
   [120, 400, 1000, 2500, 5000].forEach((t) => setTimeout(sweep, t));
+  window.addEventListener("pageshow", sweep, { once: true });
 })();
 </script>`;
 
@@ -199,7 +194,22 @@ function buildDecoratorDetails(base: any, row: any) {
   if (row.longitude != null && row.latitude != null) vd.coordinates = [row.longitude, row.latitude];
 
   const media = [...(row.media || [])].sort((a: any, b: any) => a.position - b.position);
-  if (media.length) vd.coverMedia = coverMediaFor(media);
+  // The detail bundle reads these fields unconditionally:
+  //  - coverMedia -> passed to the photo section as `imageUrls` (indexes [0])
+  //  - services   -> Object.entries(services) and services[tab] in the info tabs
+  //  - reviews    -> mapped by the reviews section
+  // Vendors imported without a rich detailPayload would otherwise have these
+  // undefined, which crashes the page to a blank screen. Default them so the
+  // page always renders (empty sections collapse on their own).
+  vd.coverMedia = media.length
+    ? coverMediaFor(media)
+    : Array.isArray(vd.coverMedia)
+      ? vd.coverMedia
+      : [];
+  if (!vd.services || typeof vd.services !== "object" || Array.isArray(vd.services)) {
+    vd.services = {};
+  }
+  if (!Array.isArray(vd.reviews)) vd.reviews = [];
   return vd;
 }
 
@@ -316,13 +326,13 @@ async function getDetailHtmlUncached(citySlug: string, slug: string): Promise<st
 
 const getListingHtmlCached = unstable_cache(
   getListingHtmlUncached,
-  ["decorator-listing-html-brand-gold-v4"],
+  ["decorator-listing-html-brand-gold-v6"],
   { revalidate: 86400, tags: ["decorators"] }
 );
 
 const getDetailHtmlCached = unstable_cache(
   getDetailHtmlUncached,
-  ["decorator-detail-html-brand-gold-v2"],
+  ["decorator-detail-html-brand-gold-v6"],
   { revalidate: 86400, tags: ["decorators"] }
 );
 

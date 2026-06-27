@@ -114,15 +114,14 @@ function VenueCard({ venue }: { venue: VenueCardData }) {
     <a className="venue-card" href={venue.href}>
       {venue.isPartner ? <div className="venue-partner">Viraaya Partner</div> : null}
       <div className="venue-photo-wrap">
-        {visibleImages.map((image, index) => (
-          <img
-            className={index === activeImage ? "venue-photo active" : "venue-photo"}
-            src={image}
-            alt=""
-            key={`${image}-${index}`}
-            loading="lazy"
-          />
-        ))}
+        <img
+          className="venue-photo active"
+          src={visibleImages[activeImage]}
+          alt=""
+          key={`${visibleImages[activeImage]}-${activeImage}`}
+          loading="lazy"
+          decoding="async"
+        />
         {hasCarousel ? (
           <>
             <button

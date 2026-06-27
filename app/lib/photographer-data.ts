@@ -130,7 +130,7 @@ const PHOTOGRAPHER_CARD_SELECT = {
   city: { select: { slug: true, name: true } },
   media: {
     orderBy: { position: "asc" as const },
-    take: 8,
+    take: 4,
     select: {
       originalUrl: true,
       localPath: true,

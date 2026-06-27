@@ -51,6 +51,8 @@ const legacyWebflowScripts = [
   "https://cdn.prod.website-files.com/60222e72b5a2043efe117253/js/webflow.65c80910.3b625490ee957430.js"
 ];
 
+const renderedCaptureCache = new Map<CompanySlug, string>();
+
 function extractBalancedDiv(markup: string, marker: string) {
   const start = markup.indexOf(marker);
 
@@ -99,6 +101,46 @@ function stripCapturedDocumentClasses(markup: string) {
     .trim();
 }
 
+function removeBalancedElement(markup: string, marker: string) {
+  let next = markup;
+  let start = next.indexOf(marker);
+  const tag = marker.match(/^<([a-z0-9-]+)/i)?.[1] || "div";
+  const tagPattern = new RegExp(`<\\/?${tag}\\b[^>]*>`, "gi");
+
+  while (start !== -1) {
+    tagPattern.lastIndex = start;
+    let depth = 0;
+    let match: RegExpExecArray | null;
+    let end = -1;
+
+    while ((match = tagPattern.exec(next))) {
+      depth += match[0].startsWith(`</${tag}`) ? -1 : 1;
+      if (depth === 0) {
+        end = tagPattern.lastIndex;
+        break;
+      }
+    }
+
+    if (end === -1) {
+      break;
+    }
+    next = next.slice(0, start) + next.slice(end);
+    start = next.indexOf(marker);
+  }
+
+  return next;
+}
+
+function stripLegacyWebflowChrome(markup: string) {
+  return [
+    '<div class="navbar-mobile',
+    '<div class="mobile-sub-menu-wrapper',
+    '<div class="parent-div is--nav_new',
+    '<footer',
+    '<div class="parent-div is--footer'
+  ].reduce((html, marker) => removeBalancedElement(html, marker), markup);
+}
+
 function extractLegalDocumentBody(slug: CompanySlug, html: string) {
   if (slug === "privacy-policy") {
     const privacyBody = extractBalancedDiv(html, '<div class="div-block-26">');
@@ -129,6 +171,11 @@ function renderLegalDocument(title: string, body: string) {
 }
 
 function readCapture(slug: CompanySlug) {
+  const cached = renderedCaptureCache.get(slug);
+  if (cached) {
+    return cached;
+  }
+
   const file = path.join(
     process.cwd(),
     "data",
@@ -139,10 +186,12 @@ function readCapture(slug: CompanySlug) {
   const legalDocumentTitle = legalDocumentTitles[slug];
 
   if (legalDocumentTitle) {
-    return renderLegalDocument(
+    const rendered = renderLegalDocument(
       legalDocumentTitle,
       extractLegalDocumentBody(slug, html)
     );
+    renderedCaptureCache.set(slug, rendered);
+    return rendered;
   }
 
   if (legacyPages.has(slug)) {
@@ -150,11 +199,13 @@ function readCapture(slug: CompanySlug) {
     const contentStart = html.indexOf(">", bodyStart) + 1;
     const contentEnd = html.lastIndexOf("</body>");
 
-    return applyBranding(stripCapturedHeaderFooter(html
+    const rendered = applyBranding(stripLegacyWebflowChrome(stripCapturedHeaderFooter(html
       .slice(contentStart, contentEnd)
       .replace(/<script[\s\S]*?<\/script>/gi, "")
       .replaceAll('href="https://www.theweddingcompany.com/', 'href="/')
-      .replaceAll('href="https://wf.betterhalf.ai/', 'href="/')));
+      .replaceAll('href="https://wf.betterhalf.ai/', 'href="/'))));
+    renderedCaptureCache.set(slug, rendered);
+    return rendered;
   }
 
   const appStart = html.indexOf('<div id="__next">');
@@ -165,13 +216,15 @@ function readCapture(slug: CompanySlug) {
     throw new Error(`Could not locate the captured app markup for ${slug}.`);
   }
 
-  return applyBranding(stripCapturedHeaderFooter(html
+  const rendered = applyBranding(stripCapturedHeaderFooter(html
     .slice(appStart, portalStart === -1 ? bodyEnd : portalStart)
     .replace(/<script[\s\S]*?<\/script>/gi, "")
     .replaceAll('src="/_next/static/', 'src="/twc-next/static/')
     .replaceAll('srcset="/_next/static/', 'srcset="/twc-next/static/')
     .replaceAll('href="/_next/static/', 'href="/twc-next/static/')
     .replaceAll('href="https://www.theweddingcompany.com/', 'href="/')));
+  renderedCaptureCache.set(slug, rendered);
+  return rendered;
 }
 
 export function CompanyPage({ slug }: { slug: CompanySlug }) {
