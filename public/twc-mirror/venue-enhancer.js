@@ -74,7 +74,7 @@
       var bounds = [];
       if (center) {
         bounds.push(center);
-        L.marker(center, { icon: pin(L, "#FF5B91", 18) }).addTo(map).bindPopup("<strong>" + (vd.name || "") + "</strong>").openPopup();
+        L.marker(center, { icon: pin(L, "#A9804E", 18) }).addTo(map).bindPopup("<strong>" + (vd.name || "") + "</strong>").openPopup();
       }
       (pp.similarVenueList || []).forEach(function (v) {
         var c = v.coordinates; if (!c || c.length !== 2) return;
@@ -87,7 +87,7 @@
           '<div style="font-weight:700;margin-top:4px">' + (v.venueName || "") + '</div>' +
           '<div style="color:#666;font-size:12px">' + (v.shortAddress || "") + '</div>' +
           '<div style="color:#666;font-size:12px">Per plate ₹' + pr + '+</div>' +
-          '<a href="' + href + '" style="color:#FF5B91;font-size:12px">View venue →</a></div>';
+          '<a href="' + href + '" style="color:#A9804E;font-size:12px">View venue →</a></div>';
         L.marker(ll, { icon: pin(L, "#6B70E8", 14) }).addTo(map).bindPopup(html);
       });
       if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [40, 40], maxZoom: 13 }); } catch (e) {} }

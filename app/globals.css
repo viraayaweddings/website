@@ -180,7 +180,7 @@ main {
 }
 
 .twc-legal-document a {
-  color: #a1285e;
+  color: #a9804e;
   text-decoration: underline;
 }
 
@@ -552,8 +552,8 @@ div.relative.flex.flex-col.items-center.pt-10:has(#venues_in_different_cities_se
 }
 
 .twc-more-menu a:hover {
-  background: #fff1f6;
-  color: #9a2157;
+  background: #EFE8DF;
+  color: #a6804f;
 }
 
 .twc-more-open .twc-more-menu {
@@ -644,8 +644,8 @@ div.relative.flex.flex-col.items-center.pt-10:has(#venues_in_different_cities_se
 }
 
 .twc-mobile-menu nav a:hover {
-  background: #fff1f6;
-  color: #9a2157;
+  background: #EFE8DF;
+  color: #a6804f;
 }
 
 .twc-mobile-menu-actions {
@@ -671,7 +671,7 @@ div.relative.flex.flex-col.items-center.pt-10:has(#venues_in_different_cities_se
 }
 
 .twc-mobile-menu-actions button {
-  background: #9a2157;
+  background: #a6804f;
   color: #fff;
 }
 
@@ -1638,7 +1638,7 @@ div.relative.flex.flex-col.items-center.pt-10:has(#venues_in_different_cities_se
 
 .venues-hero-band {
   align-items: center;
-  background: #a1285e;
+  background: #a9804e;
   display: flex;
   gap: 32px;
   height: 120px;
@@ -2334,7 +2334,7 @@ div.relative.flex.flex-col.items-center.pt-10:has(#venues_in_different_cities_se
   align-items: center;
   border: 1px solid #c3c3c3;
   border-radius: 12px;
-  color: #ff5b91;
+  color: #a9804e;
   display: flex;
   gap: 12px;
   height: 45px;

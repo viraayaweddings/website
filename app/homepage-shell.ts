@@ -114,8 +114,8 @@ export const homepageShellCss = `
     text-decoration: none;
   }
   #twc-homepage-shared-header .twc-more-menu a:hover {
-    background: #fff1f6;
-    color: #9a2157;
+    background: #EFE8DF;
+    color: #a6804f;
   }
   #twc-homepage-shared-header .twc-more-open .twc-more-menu {
     display: block;
@@ -269,8 +269,32 @@ export function sanitizePublicDetails(markup: string) {
     .replaceAll("NEXT_PUBLIC_MOCK_BASE_API_URL", "DISABLED_PUBLIC_CAPTURE_API_URL");
 }
 
+function normalizeBrandColors(markup: string) {
+  return markup
+    .replaceAll("#A1285E", "#A9804E")
+    .replaceAll("#a1285e", "#a9804e")
+    .replaceAll("#9A2157", "#A6804F")
+    .replaceAll("#9a2157", "#a6804f")
+    .replaceAll("#BC2D6D", "#A9804E")
+    .replaceAll("#bc2d6d", "#a9804e")
+    .replaceAll("#FF5B91", "#A9804E")
+    .replaceAll("#ff5b91", "#a9804e")
+    .replaceAll("#FC558C", "#A9804E")
+    .replaceAll("#fc558c", "#a9804e")
+    .replaceAll("#E5097F", "#A9804E")
+    .replaceAll("#e5097f", "#a9804e")
+    .replaceAll("#fff1f6", "#EFE8DF")
+    .replaceAll("#FFF1F6", "#EFE8DF")
+    .replaceAll("rgb(161 40 94", "rgb(169 128 78")
+    .replaceAll("rgb(255 91 149", "rgb(169 128 78")
+    .replaceAll("rgb(255 91 145", "rgb(169 128 78")
+    .replaceAll("rgba(161,40,94", "rgba(169,128,78")
+    .replaceAll("rgba(255,91,149", "rgba(169,128,78")
+    .replaceAll("rgba(255,91,145", "rgba(169,128,78");
+}
+
 export function applyBranding(markup: string) {
-  return sanitizePublicDetails(applyBrandAssets(markup))
+  const branded = sanitizePublicDetails(applyBrandAssets(markup))
     // Route captured CDN image hosts through the local asset proxy so no
     // theweddingcompany.com host appears in any img src (images still load via
     // the proxy's upstream fallback).
@@ -303,6 +327,8 @@ export function applyBranding(markup: string) {
     .replaceAll("/twc-refund-policy", "/refund-policy")
     // Any residual theweddingcompany.com host/text -> brand domain.
     .replaceAll("theweddingcompany.com", "viraayaweddings.com");
+
+  return normalizeBrandColors(branded);
 }
 
 function getHomepageParts() {

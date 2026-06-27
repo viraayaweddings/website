@@ -123,7 +123,7 @@ function renderLegalDocument(title: string, body: string) {
   const content = stripCapturedDocumentClasses(body);
 
   return applyBranding(`
-    <div class="flex h-11 items-center justify-center bg-[#A1285E] font-plus-jakarata-sans font-semibold text-white md:h-20 md:text-xl">${title}</div>
+    <div class="flex h-11 items-center justify-center bg-[#A9804E] font-plus-jakarata-sans font-semibold text-white md:h-20 md:text-xl">${title}</div>
     <article class="twc-legal-document mx-auto max-w-screen-lg px-6 py-10 font-plus-jakarata-sans text-[14px] leading-relaxed text-[#2E394A] md:px-10 md:py-14">
       <div class="space-y-6">${content}</div>
     </article>
