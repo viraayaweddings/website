@@ -9,14 +9,7 @@
     "postinstall": "prisma generate",
     "start": "next start",
     "lint": "tsc --noEmit",
-    "venues:import": "node scripts/import-venues.mjs",
-    "venues:import:no-assets": "set DOWNLOAD_ASSETS=false&& node scripts/import-venues.mjs",
-    "venues:assets": "node scripts/download-venue-assets.mjs",
-    "venues:database": "node scripts/build-venue-database.mjs",
-    "photographers:import": "node scripts/import-photographers.mjs",
-    "photographers:seed": "node scripts/seed-photographers.mjs",
-    "prisma:generate": "prisma generate",
-    "prisma:seed": "node scripts/seed-prisma.mjs"
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",

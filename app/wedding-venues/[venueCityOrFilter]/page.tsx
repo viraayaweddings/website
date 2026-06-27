@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import VenuesClient from "../venues-client";
-import { getCityBySlug, getVenueCities, queryVenues, supportedVenueCities } from "../../lib/venue-data";
+import { getCityBySlug, getVenueCities, queryVenues } from "../../lib/venue-data";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 900;
@@ -12,7 +12,7 @@ export default async function WeddingVenuesCityPage({
 }) {
   const { venueCityOrFilter } = await params;
   const citySlug = venueCityOrFilter.toLowerCase();
-  if (!supportedVenueCities.includes(citySlug) || !(await getCityBySlug(citySlug))) {
+  if (!(await getCityBySlug(citySlug))) {
     notFound();
   }
   const initial = await queryVenues({ city: citySlug, limit: "24", page: "1" });

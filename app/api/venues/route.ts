@@ -15,7 +15,9 @@ export async function GET(request: NextRequest) {
     },
     {
       headers: {
-        "cache-control": "private, max-age=60, stale-while-revalidate=300"
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive"
       }
     }
   );

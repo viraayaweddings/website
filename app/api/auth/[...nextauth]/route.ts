@@ -7,6 +7,12 @@ function endpoint(pathname: string): string {
   return pathname.split("/").filter(Boolean).pop() || "";
 }
 
+const authHeaders = {
+  "cache-control": "private, no-store",
+  "x-content-type-options": "nosniff",
+  "x-robots-tag": "noindex, nofollow, noarchive"
+};
+
 export function GET(_req: Request, ctx: { params: Promise<{ nextauth: string[] }> }) {
   return resolve(_req, ctx);
 }
@@ -21,14 +27,14 @@ async function resolve(req: Request, ctx: { params: Promise<{ nextauth: string[]
 
   switch (last) {
     case "session":
-      return Response.json({}); // unauthenticated session (must be an object)
+      return Response.json({}, { headers: authHeaders }); // unauthenticated session (must be an object)
     case "csrf":
-      return Response.json({ csrfToken: "" });
+      return Response.json({ csrfToken: "" }, { headers: authHeaders });
     case "providers":
-      return Response.json({});
+      return Response.json({}, { headers: authHeaders });
     case "_log":
-      return new Response(null, { status: 204 });
+      return new Response(null, { status: 204, headers: authHeaders });
     default:
-      return Response.json({});
+      return Response.json({}, { headers: authHeaders });
   }
 }

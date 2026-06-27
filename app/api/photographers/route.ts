@@ -7,7 +7,9 @@ export async function GET(request: Request) {
   const result = await queryPhotographers(searchParams);
   return Response.json(result, {
     headers: {
-      "cache-control": "public, max-age=60, s-maxage=300, stale-while-revalidate=900"
+      "cache-control": "private, no-store",
+      "x-content-type-options": "nosniff",
+      "x-robots-tag": "noindex, nofollow, noarchive"
     }
   });
 }

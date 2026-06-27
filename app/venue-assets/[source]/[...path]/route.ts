@@ -22,7 +22,40 @@ const mimeTypes: Record<string, string> = {
   ".webp": "image/webp"
 };
 
+const allowedContentTypes = new Set([
+  "image/avif",
+  "image/gif",
+  "image/jpeg",
+  "image/png",
+  "image/svg+xml",
+  "image/webp",
+  "video/mp4",
+  "video/webm"
+]);
+
 const IMMUTABLE = "public, max-age=31536000, immutable";
+const NOT_FOUND_HEADERS = {
+  "cache-control": "no-store",
+  "x-content-type-options": "nosniff"
+};
+
+function isSafePath(pathParts: string[]) {
+  try {
+    return pathParts.length > 0 && pathParts.every((part) => {
+      const decoded = decodeURIComponent(part);
+      return (
+        decoded.length > 0 &&
+        decoded !== "." &&
+        decoded !== ".." &&
+        !decoded.includes("/") &&
+        !decoded.includes("\\") &&
+        !decoded.includes("\0")
+      );
+    });
+  } catch {
+    return false;
+  }
+}
 
 export async function GET(
   request: Request,
@@ -30,7 +63,9 @@ export async function GET(
 ) {
   const { source, path: pathParts } = await params;
   const entry = sources[source];
-  if (!entry) return new Response("Not found", { status: 404 });
+  if (!entry || !isSafePath(pathParts)) {
+    return new Response("Not found", { status: 404, headers: NOT_FOUND_HEADERS });
+  }
 
   // 1) Serve the locally-vendored file when present in dev.
   if (process.env.NODE_ENV !== "production") {
@@ -42,7 +77,8 @@ export async function GET(
         return new Response(body, {
           headers: {
             "content-type": mimeTypes[path.extname(file).toLowerCase()] || "application/octet-stream",
-            "cache-control": IMMUTABLE
+            "cache-control": IMMUTABLE,
+            "x-content-type-options": "nosniff"
           }
         });
       } catch {
@@ -55,15 +91,22 @@ export async function GET(
   const target = entry.host + "/" + pathParts.map(encodeURIComponent).join("/") + new URL(request.url).search;
   try {
     const upstream = await fetch(target, { headers: { referer: "https://www.theweddingcompany.com/" } });
-    if (!upstream.ok) return new Response("Not found", { status: upstream.status });
+    const contentType = upstream.headers.get("content-type")?.split(";")[0].trim().toLowerCase();
+    if (!upstream.ok || !contentType || !allowedContentTypes.has(contentType)) {
+      return new Response("Not found", {
+        status: upstream.ok ? 404 : upstream.status,
+        headers: NOT_FOUND_HEADERS
+      });
+    }
     const body = await upstream.arrayBuffer();
     return new Response(body, {
       headers: {
         "content-type": upstream.headers.get("content-type") || "application/octet-stream",
-        "cache-control": IMMUTABLE
+        "cache-control": IMMUTABLE,
+        "x-content-type-options": "nosniff"
       }
     });
   } catch {
-    return new Response("Not found", { status: 404 });
+    return new Response("Not found", { status: 404, headers: NOT_FOUND_HEADERS });
   }
 }

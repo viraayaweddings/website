@@ -258,8 +258,19 @@ function applyBrandAssets(markup: string) {
     .replaceAll("The Wedding Company Logo", brandAssets.logoAlt);
 }
 
+export function sanitizePublicDetails(markup: string) {
+  return markup
+    .replaceAll("https://api.betterhalf.ai/v2", "/twc-api/disabled/v2")
+    .replaceAll("https:\\/\\/api.betterhalf.ai\\/v2", "/twc-api/disabled/v2")
+    .replaceAll("https://gcpstaging1.betterhalf.ai", "/twc-api/disabled/staging")
+    .replaceAll("https:\\/\\/gcpstaging1.betterhalf.ai", "/twc-api/disabled/staging")
+    .replaceAll("https://weddingconsumerapi.betterhalf.ai", "/twc-api/disabled/consumer")
+    .replaceAll("https:\\/\\/weddingconsumerapi.betterhalf.ai", "/twc-api/disabled/consumer")
+    .replaceAll("NEXT_PUBLIC_MOCK_BASE_API_URL", "DISABLED_PUBLIC_CAPTURE_API_URL");
+}
+
 export function applyBranding(markup: string) {
-  return applyBrandAssets(markup)
+  return sanitizePublicDetails(applyBrandAssets(markup))
     // Route captured CDN image hosts through the local asset proxy so no
     // theweddingcompany.com host appears in any img src (images still load via
     // the proxy's upstream fallback).

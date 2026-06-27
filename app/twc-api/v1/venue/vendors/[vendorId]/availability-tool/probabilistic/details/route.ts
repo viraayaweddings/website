@@ -17,5 +17,11 @@ export async function GET() {
     const seed = (d.getFullYear() * 372 + d.getMonth() * 31 + d.getDate()) % 17;
     out[key] = { showIsAvailable: seed !== 3 && seed !== 11, countOfPeople: 0 };
   }
-  return Response.json(out);
+  return Response.json(out, {
+    headers: {
+      "cache-control": "private, no-store",
+      "x-content-type-options": "nosniff",
+      "x-robots-tag": "noindex, nofollow, noarchive"
+    }
+  });
 }

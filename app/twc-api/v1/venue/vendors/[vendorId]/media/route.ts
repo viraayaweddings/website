@@ -45,7 +45,9 @@ export async function GET(
     { nextPageUrl: null, results },
     {
       headers: {
-        "cache-control": "private, max-age=300, stale-while-revalidate=3600"
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive"
       }
     }
   );

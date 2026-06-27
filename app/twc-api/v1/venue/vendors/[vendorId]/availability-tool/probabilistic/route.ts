@@ -32,5 +32,11 @@ export async function GET() {
     const key = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
     out[key] = demandFor(d);
   }
-  return Response.json(out);
+  return Response.json(out, {
+    headers: {
+      "cache-control": "private, no-store",
+      "x-content-type-options": "nosniff",
+      "x-robots-tag": "noindex, nofollow, noarchive"
+    }
+  });
 }

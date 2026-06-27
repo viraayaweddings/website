@@ -59,14 +59,6 @@ export type PhotographerQueryResult = {
   results: PhotographerCard[];
 };
 
-export const supportedPhotographerCities = [
-  "delhi",
-  "gurugram",
-  "noida",
-  "jaipur",
-  "udaipur"
-];
-
 const photographerImageFallback = "/twc-next/static/media/hotel-taj.cca019c4.webp";
 
 function brandedLabel(label: string) {
@@ -254,6 +246,17 @@ function stableParams(params: URLSearchParams) {
     .join("&");
 }
 
+function emptyPhotographerQuery(params: URLSearchParams): PhotographerQueryResult {
+  return {
+    size: 0,
+    page: Math.max(1, Number(params.get("page") || 1)),
+    limit: Math.min(48, Math.max(1, Number(params.get("limit") || 24))),
+    nextPage: null,
+    nextPageUrl: null,
+    results: []
+  };
+}
+
 function selectedTabTag(tab: string): string | null {
   const selected = labelKey(tab || "all");
   if (!selected || selected === "all") return null;
@@ -333,14 +336,7 @@ export async function queryPhotographers(
     return await queryPhotographersCached(stableParams(params));
   } catch (error) {
     logPhotographerDataError("queryPhotographers", error);
-    return {
-      size: 0,
-      page: 1,
-      limit: 24,
-      nextPage: null,
-      nextPageUrl: null,
-      results: []
-    };
+    return emptyPhotographerQuery(params);
   }
 }
 
@@ -417,11 +413,12 @@ async function getPhotographerCitiesUncached() {
   const db = prisma as any;
   const rows: Array<{ citySlug: string }> = await db.photographer.findMany({
     select: { citySlug: true },
+    orderBy: { citySlug: "asc" },
     distinct: ["citySlug"]
   });
   return rows
     .map((row) => row.citySlug)
-    .filter((slug) => supportedPhotographerCities.includes(slug))
+    .filter(Boolean)
     .map((slug) => ({
       slug,
       name: slug.slice(0, 1).toUpperCase() + slug.slice(1)
@@ -439,10 +436,7 @@ export async function getPhotographerCities() {
     return await getPhotographerCitiesCached();
   } catch (error) {
     logPhotographerDataError("getPhotographerCities", error);
-    return supportedPhotographerCities.map((slug) => ({
-      slug,
-      name: slug.slice(0, 1).toUpperCase() + slug.slice(1)
-    }));
+    return [];
   }
 }
 
