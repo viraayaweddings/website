@@ -88,15 +88,31 @@ function logPhotographerDataError(operation: string, error: unknown) {
   console.error(`[photographer-data] ${operation} failed`, error);
 }
 
+// Route every photographer image through the local /venue-assets proxy so no
+// theweddingcompany.com host leaks into card/img src (the proxy falls back to
+// the upstream CDN in production).
+function photographerAssetAlias(url: string) {
+  return url
+    .replace("https://gcpimages.theweddingcompany.com", "/venue-assets/gcpimages")
+    .replace("https://imageswedding.theweddingcompany.com", "/venue-assets/imageswedding")
+    .replace("https://weddingimage.betterhalf.ai", "/venue-assets/weddingimage")
+    .replace("/twc-venues-local/gcpimages.theweddingcompany.com", "/venue-assets/gcpimages")
+    .replace("/twc-venues-local/imageswedding.theweddingcompany.com", "/venue-assets/imageswedding")
+    .replace("/twc-venues-local/weddingimage.betterhalf.ai", "/venue-assets/weddingimage");
+}
+
 export function resolvePhotographerImage(
   image?: { originalUrl: string; localPath: string | null } | string | null
 ): string {
   if (!image) return photographerImageFallback;
-  if (typeof image === "string") {
-    return image.startsWith("/") ? image : image || photographerImageFallback;
-  }
-  if (image.localPath && image.localPath.startsWith("/")) return image.localPath;
-  return image.originalUrl || photographerImageFallback;
+  const raw =
+    typeof image === "string"
+      ? image
+      : image.localPath && image.localPath.startsWith("/")
+        ? image.localPath
+        : image.originalUrl;
+  if (!raw) return photographerImageFallback;
+  return photographerAssetAlias(raw);
 }
 
 export function photographerHref(citySlug: string, slug: string) {

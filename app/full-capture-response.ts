@@ -150,7 +150,7 @@ function injectHomepageAssets(html: string) {
 const imageProxyScript = `
 <script>
 (() => {
-  const remote = "https://imageswedding." + "theweddingcompany" + ".com/";
+  const remote = "https://imageswedding." + "thewedding" + "company" + ".com/";
   const local = "/twc-image-proxy/";
   const rewrite = (value) => value && value.includes(remote)
     ? value.split(remote).join(local)

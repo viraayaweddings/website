@@ -16,3 +16,8 @@ public/twc-venues-local/
 
 # scratch / temp captures
 data/venues/_*.html
+
+# Photographer import artifacts (data lives in Neon; only the captured template is needed at runtime)
+data/photographers/database.json
+data/photographers/database.pretty.json
+data/photographers/raw/

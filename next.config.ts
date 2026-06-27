@@ -66,6 +66,14 @@ const nextConfig: NextConfig = {
       }
     ];
   },
+  async redirects() {
+    return [
+      { source: "/twc-client-terms", destination: "/client-terms", permanent: true },
+      { source: "/twc-vendor-terms", destination: "/vendor-terms", permanent: true },
+      { source: "/twc-privacy-policy", destination: "/privacy-policy", permanent: true },
+      { source: "/twc-refund-policy", destination: "/refund-policy", permanent: true }
+    ];
+  },
   async rewrites() {
     return {
       beforeFiles: [

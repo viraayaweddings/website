@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { unstable_cache } from "next/cache";
 import { prisma } from "./prisma";
+import { applyBranding, getHomepageFooter } from "../homepage-shell";
 
 // Mirrors theweddingcompany.com's own photographer detail page: the captured
 // compiled HTML + vendored JS/CSS/fonts/media are served entirely from the
@@ -42,6 +43,121 @@ const LOCAL_ALIASES: Array<[string, string]> = [
   ["/twc-venues-local/weddingimage.betterhalf.ai", "/venue-assets/weddingimage"],
   ["/twc-venues-local/maps.gstatic.com", "/venue-assets/maps"]
 ];
+
+// Client-side branding pass: rewrites any residual "The Wedding Company" name,
+// logos, links and favicon to Viraaya Weddings after the page hydrates.
+const BRAND_RUNTIME_SCRIPT = `
+<script id="viraaya-runtime-branding">
+(() => {
+  const oldName = "The Wedding " + "Company";
+  const oldHost = "www." + "thewedding" + "company" + ".com";
+  const oldDomain = "thewedding" + "company" + ".com";
+  const oldSite = "https://" + oldHost;
+  const oldAbbr = "TW" + "C";
+  const replacements = [
+    [oldName + " logo", "Viraaya Weddings logo"],
+    [oldName + " Logo", "Viraaya Weddings logo"],
+    [oldName, "Viraaya Weddings"],
+    ["support@" + oldDomain, "support@viraayaweddings.com"],
+    ["@TheWeddingCmpny", "@viraayaweddings"],
+    [oldAbbr + " Client Terms", "Viraaya Client Terms"],
+    [oldAbbr + " Vendor Terms", "Viraaya Vendor Terms"],
+    [oldAbbr + " Partner", "Viraaya Partner"],
+    [oldAbbr + "'s choice", "Viraaya's choice"],
+    [oldAbbr + "’s choice", "Viraaya’s choice"],
+    ["/twc-client-terms", "/client-terms"],
+    ["/twc-vendor-terms", "/vendor-terms"],
+    ["/twc-privacy-policy", "/privacy-policy"],
+    ["/twc-refund-policy", "/refund-policy"],
+    [oldSite, "https://viraayaweddings.com"],
+    ["http://" + oldHost, "https://viraayaweddings.com"],
+    [oldHost, "viraayaweddings.com"],
+    ["/twc-mirror/_next/static/media/TheWedding" + "CompanyLogo_Low_Res.88e6d171.webp", "/brand/viraaya-logo-header.png"],
+    ["/_next/static/media/TheWedding" + "CompanyLogo_Low_Res.88e6d171.webp", "/brand/viraaya-logo-header.png"],
+    ["/twc-mirror/_next/static/media/TheWedding" + "CompanyLogoVertical.b80524ce.webp", "/brand/viraaya-logo-full.png"],
+    ["/_next/static/media/TheWedding" + "CompanyLogoVertical.b80524ce.webp", "/brand/viraaya-logo-full.png"],
+    ["/twc-venues-local/gcpimages." + oldDomain, "/venue-assets/gcpimages"],
+    ["/twc-venues-local/imageswedding." + oldDomain, "/venue-assets/imageswedding"]
+  ];
+
+  const rewrite = (value) => {
+    if (!value || typeof value !== "string") return value;
+    let next = value;
+    for (const [from, to] of replacements) {
+      next = next.split(from).join(to);
+    }
+    return next;
+  };
+
+  const patchNode = (node) => {
+    if (!node) return;
+    if (node.nodeType === Node.TEXT_NODE) {
+      const next = rewrite(node.nodeValue);
+      if (next !== node.nodeValue) node.nodeValue = next;
+      return;
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+    for (const attr of Array.from(node.attributes || [])) {
+      const next = rewrite(attr.value);
+      if (next !== attr.value) node.setAttribute(attr.name, next);
+    }
+    if (node.matches && node.matches('link[rel="icon"],link[rel="shortcut icon"],link[rel="apple-touch-icon"]')) {
+      if (node.getAttribute("href") !== "/brand/favicon.png") node.setAttribute("href", "/brand/favicon.png");
+      if (node.getAttribute("rel") === "icon" && node.getAttribute("type") !== "image/png") node.setAttribute("type", "image/png");
+    }
+  };
+
+  const patchTree = (root) => {
+    patchNode(root);
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll("*").forEach(patchNode);
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    while (walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(patchNode);
+  };
+
+  const sweep = () => patchTree(document.documentElement);
+  sweep();
+  new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "attributes" || mutation.type === "characterData") patchNode(mutation.target);
+      mutation.addedNodes.forEach(patchTree);
+    }
+  }).observe(document.documentElement, {
+    attributes: true,
+    childList: true,
+    subtree: true,
+    characterData: true
+  });
+  // React hydrates the captured bundle after this script runs and re-renders its
+  // own header/footer; sweep again as it settles so branding always wins.
+  [120, 400, 1000, 2500, 5000].forEach((t) => setTimeout(sweep, t));
+})();
+</script>`;
+
+// Swap the captured page's own footer for the shared homepage footer so the
+// whole site uses one consistent (branded) footer.
+function useHomepageFooter(html: string): string {
+  const marker = html.indexOf('id="footer_section"');
+  if (marker === -1) return html;
+  const start = html.lastIndexOf("<footer", marker);
+  if (start === -1) return html;
+  const re = /<\/?footer\b[^>]*>/gi;
+  re.lastIndex = html.indexOf(">", start) + 1;
+  let depth = 1;
+  let m: RegExpExecArray | null;
+  let end = -1;
+  while ((m = re.exec(html))) {
+    depth += m[0].startsWith("</footer") ? -1 : 1;
+    if (depth === 0) {
+      end = re.lastIndex;
+      break;
+    }
+  }
+  if (end === -1) return html;
+  return html.slice(0, start) + getHomepageFooter() + html.slice(end);
+}
 
 function aliasLocalAssetPaths(value: string) {
   let next = value;
@@ -211,8 +327,10 @@ async function getMirrorHtmlUncached(citySlug: string, slug: string): Promise<st
 
   let html = getTemplate();
   html = injectNextData(html, base);
+  html = useHomepageFooter(html);
   html = localizeAssetPaths(html);
-  return html;
+  html = applyBranding(html);
+  return html.replace("</body>", `${BRAND_RUNTIME_SCRIPT}</body>`);
 }
 
 // Cache the fully-rendered detail HTML so a hot page never touches Neon. The

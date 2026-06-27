@@ -3,29 +3,34 @@ import path from "node:path";
 import Script from "next/script";
 import { applyBranding, stripCapturedHeaderFooter } from "./homepage-shell";
 
-export const companyPageSlugs = [
-  "careers",
-  "contact-us",
-  "partner-onboarding-form",
-  "twc-client-terms",
-  "twc-vendor-terms",
-  "twc-privacy-policy",
-  "twc-refund-policy",
-  "wedding-payment-plan",
-  "about-us",
-  "price-beat-challenge",
-  "wedding-invitation-card",
-  "wedding",
-  "wedding-services"
-] as const;
+// Public URL slug -> captured HTML file (under data/captured-company). The legal
+// pages keep their original capture file names but are served on Viraaya-branded
+// slugs with no "twc-" prefix.
+const captureFileBySlug = {
+  "careers": "careers",
+  "contact-us": "contact-us",
+  "partner-onboarding-form": "partner-onboarding-form",
+  "client-terms": "twc-client-terms",
+  "vendor-terms": "twc-vendor-terms",
+  "privacy-policy": "twc-privacy-policy",
+  "refund-policy": "twc-refund-policy",
+  "wedding-payment-plan": "wedding-payment-plan",
+  "about-us": "about-us",
+  "price-beat-challenge": "price-beat-challenge",
+  "wedding-invitation-card": "wedding-invitation-card",
+  "wedding": "wedding",
+  "wedding-services": "wedding-services"
+} as const;
 
-export type CompanySlug = (typeof companyPageSlugs)[number];
+export type CompanySlug = keyof typeof captureFileBySlug;
+
+export const companyPageSlugs = Object.keys(captureFileBySlug) as CompanySlug[];
 
 const legacyPages = new Set<CompanySlug>([
   "careers",
   "contact-us",
   "partner-onboarding-form",
-  "twc-privacy-policy",
+  "privacy-policy",
   "wedding-invitation-card"
 ]);
 
@@ -43,7 +48,7 @@ function readCapture(slug: CompanySlug) {
     process.cwd(),
     "data",
     "captured-company",
-    `${slug}.html`
+    `${captureFileBySlug[slug]}.html`
   );
   const html = fs.readFileSync(file, "utf8");
 

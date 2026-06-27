@@ -147,6 +147,15 @@ function applyBrandAssets(markup: string) {
 
 export function applyBranding(markup: string) {
   return applyBrandAssets(markup)
+    // Route captured CDN image hosts through the local asset proxy so no
+    // theweddingcompany.com host appears in any img src (images still load via
+    // the proxy's upstream fallback).
+    .replaceAll("https://gcpimages.theweddingcompany.com", "/venue-assets/gcpimages")
+    .replaceAll("https://imageswedding.theweddingcompany.com", "/venue-assets/imageswedding")
+    .replaceAll("/twc-venues-local/gcpimages.theweddingcompany.com", "/venue-assets/gcpimages")
+    .replaceAll("/twc-venues-local/imageswedding.theweddingcompany.com", "/venue-assets/imageswedding")
+    // Social handles.
+    .replaceAll("theweddingcompanyofficial", "viraayaweddings")
     .replaceAll("https://www.theweddingcompany.com", brandAssets.url)
     .replaceAll("http://www.theweddingcompany.com", brandAssets.url)
     .replaceAll("www.theweddingcompany.com", "viraayaweddings.com")
@@ -154,12 +163,22 @@ export function applyBranding(markup: string) {
     .replaceAll("@TheWeddingCmpny", "@viraayaweddings")
     .replaceAll("The Wedding Company", brandAssets.name)
     .replaceAll("the wedding company", "Viraaya Weddings")
+    .replaceAll("TheWeddingCompany", brandAssets.name)
     .replaceAll("TWC's choice", "Viraaya's choice")
     .replaceAll("TWC&rsquo;s choice", "Viraaya&rsquo;s choice")
     .replaceAll("TWC’s choice", "Viraaya’s choice")
     .replaceAll("TWC Partner", "Viraaya Partner")
     .replaceAll("TWC Client Terms", "Viraaya Client Terms")
-    .replaceAll("TWC Vendor Terms", "Viraaya Vendor Terms");
+    .replaceAll("TWC Vendor Terms", "Viraaya Vendor Terms")
+    // Any standalone "TWC" (legal copy, FAQs) -> brand name.
+    .replace(/\bTWC\b/g, brandAssets.name)
+    // Legal page links: drop the twc- prefix from the public URL.
+    .replaceAll("/twc-client-terms", "/client-terms")
+    .replaceAll("/twc-vendor-terms", "/vendor-terms")
+    .replaceAll("/twc-privacy-policy", "/privacy-policy")
+    .replaceAll("/twc-refund-policy", "/refund-policy")
+    // Any residual theweddingcompany.com host/text -> brand domain.
+    .replaceAll("theweddingcompany.com", "viraayaweddings.com");
 }
 
 function getHomepageParts() {

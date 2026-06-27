@@ -203,22 +203,32 @@ const BRAND_RUNTIME_SCRIPT = `
 <script id="viraaya-runtime-branding">
 (() => {
   const oldName = "The Wedding " + "Company";
-  const oldHost = "www." + "theweddingcompany" + ".com";
-  const oldDomain = "theweddingcompany" + ".com";
+  const oldHost = "www." + "thewedding" + "company" + ".com";
+  const oldDomain = "thewedding" + "company" + ".com";
   const oldSite = "https://" + oldHost;
+  const oldAbbr = "TW" + "C";
   const replacements = [
     [oldName + " logo", "Viraaya Weddings logo"],
     [oldName + " Logo", "Viraaya Weddings logo"],
     [oldName, "Viraaya Weddings"],
     ["support@" + oldDomain, "support@viraayaweddings.com"],
     ["@TheWeddingCmpny", "@viraayaweddings"],
+    [oldAbbr + " Client Terms", "Viraaya Client Terms"],
+    [oldAbbr + " Vendor Terms", "Viraaya Vendor Terms"],
+    [oldAbbr + " Partner", "Viraaya Partner"],
+    [oldAbbr + "'s choice", "Viraaya's choice"],
+    [oldAbbr + "’s choice", "Viraaya’s choice"],
+    ["/twc-client-terms", "/client-terms"],
+    ["/twc-vendor-terms", "/vendor-terms"],
+    ["/twc-privacy-policy", "/privacy-policy"],
+    ["/twc-refund-policy", "/refund-policy"],
     [oldSite, "https://viraayaweddings.com"],
     ["http://" + oldHost, "https://viraayaweddings.com"],
     [oldHost, "viraayaweddings.com"],
-    ["/twc-mirror/_next/static/media/TheWeddingCompanyLogo_Low_Res.88e6d171.webp", "/brand/viraaya-logo-header.png"],
-    ["/_next/static/media/TheWeddingCompanyLogo_Low_Res.88e6d171.webp", "/brand/viraaya-logo-header.png"],
-    ["/twc-mirror/_next/static/media/TheWeddingCompanyLogoVertical.b80524ce.webp", "/brand/viraaya-logo-full.png"],
-    ["/_next/static/media/TheWeddingCompanyLogoVertical.b80524ce.webp", "/brand/viraaya-logo-full.png"],
+    ["/twc-mirror/_next/static/media/TheWedding" + "CompanyLogo_Low_Res.88e6d171.webp", "/brand/viraaya-logo-header.png"],
+    ["/_next/static/media/TheWedding" + "CompanyLogo_Low_Res.88e6d171.webp", "/brand/viraaya-logo-header.png"],
+    ["/twc-mirror/_next/static/media/TheWedding" + "CompanyLogoVertical.b80524ce.webp", "/brand/viraaya-logo-full.png"],
+    ["/_next/static/media/TheWedding" + "CompanyLogoVertical.b80524ce.webp", "/brand/viraaya-logo-full.png"],
     ["/twc-venues-local/gcpimages." + oldDomain, "/venue-assets/gcpimages"],
     ["/twc-venues-local/imageswedding." + oldDomain, "/venue-assets/imageswedding"]
   ];
@@ -260,17 +270,22 @@ const BRAND_RUNTIME_SCRIPT = `
     textNodes.forEach(patchNode);
   };
 
-  patchTree(document.documentElement);
+  const sweep = () => patchTree(document.documentElement);
+  sweep();
   new MutationObserver((mutations) => {
     for (const mutation of mutations) {
-      if (mutation.type === "attributes") patchNode(mutation.target);
+      if (mutation.type === "attributes" || mutation.type === "characterData") patchNode(mutation.target);
       mutation.addedNodes.forEach(patchTree);
     }
   }).observe(document.documentElement, {
     attributes: true,
     childList: true,
-    subtree: true
+    subtree: true,
+    characterData: true
   });
+  // React hydrates the captured bundle after this script runs and re-renders its
+  // own header/footer; sweep again as it settles so branding always wins.
+  [120, 400, 1000, 2500, 5000].forEach((t) => setTimeout(sweep, t));
 })();
 </script>`;
 
