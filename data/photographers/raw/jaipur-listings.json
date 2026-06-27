@@ -1,0 +1,288 @@
+{
+  "listings": [
+    {
+      "vendorId": "178ba3af-523f-4d44-85f2-d2d4e8e3f327",
+      "urlSlug": "candid-studio-jaipur-anand-puri-bees-dukan-adarsh-nagar",
+      "media": [
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/178ba3af-523f-4d44-85f2-d2d4e8e3f327/admin_uploads/865dde79-0431-4d01-88ad-2afc8d4cc287.webp",
+          "mimeType": "image/webp",
+          "mediaId": "865dde79-0431-4d01-88ad-2afc8d4cc287"
+        },
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/178ba3af-523f-4d44-85f2-d2d4e8e3f327/admin_uploads/16250d56-c8f9-4a62-88ae-15c125b0f797.webp",
+          "mimeType": "image/webp",
+          "mediaId": "16250d56-c8f9-4a62-88ae-15c125b0f797"
+        },
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/178ba3af-523f-4d44-85f2-d2d4e8e3f327/admin_uploads/2902d3f2-d88d-4a44-bba6-d6c32b91e797.webp",
+          "mimeType": "image/webp",
+          "mediaId": "2902d3f2-d88d-4a44-bba6-d6c32b91e797"
+        },
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/178ba3af-523f-4d44-85f2-d2d4e8e3f327/admin_uploads/78463010-6693-445d-9bc8-5ec36de9d702.webp",
+          "mimeType": "image/webp",
+          "mediaId": "78463010-6693-445d-9bc8-5ec36de9d702"
+        }
+      ],
+      "venueName": "Candid Studio Jaipur",
+      "meta": {
+        "startsAt": 99999999,
+        "services": null,
+        "experience": {
+          "maxValue": 10,
+          "minValue": 8
+        },
+        "areasAvailable": null
+      },
+      "formattedAddress": "E-58, Anand Puri, Bees Dukan, Adarsh Nagar, Jaipur, 302004, Jaipur, Rajasthan",
+      "city": "Jaipur",
+      "citySlug": "jaipur",
+      "shortAddress": "Anand Puri, Bees Dukan, Adarsh Nagar, Jaipur",
+      "userRating": 5,
+      "businessCategory": "PHOTOGRAPHY",
+      "specialTags": [],
+      "isBhPartner": false,
+      "bhPartnerDealText": null,
+      "userRatingCount": 3,
+      "coordinates": [
+        75.8228544,
+        26.9014822
+      ]
+    },
+    {
+      "vendorId": "0b661305-4770-4a25-8203-0d00637dac07",
+      "urlSlug": "tpf-film-city",
+      "media": [
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/0b661305-4770-4a25-8203-0d00637dac07/admin_uploads/a6600240-8d52-4b25-b85e-0c0e0b48728a.webp",
+          "mimeType": "image/webp",
+          "mediaId": "a6600240-8d52-4b25-b85e-0c0e0b48728a"
+        },
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/0b661305-4770-4a25-8203-0d00637dac07/admin_uploads/9cf1126e-82a7-454d-9ad2-85f34ca9f015.webp",
+          "mimeType": "image/webp",
+          "mediaId": "9cf1126e-82a7-454d-9ad2-85f34ca9f015"
+        },
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/0b661305-4770-4a25-8203-0d00637dac07/admin_uploads/0aa13cb7-df08-4062-a84d-5e5cae996125.webp",
+          "mimeType": "image/webp",
+          "mediaId": "0aa13cb7-df08-4062-a84d-5e5cae996125"
+        },
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/0b661305-4770-4a25-8203-0d00637dac07/admin_uploads/b73faa22-9b10-432e-ba23-147784372674.webp",
+          "mimeType": "image/webp",
+          "mediaId": "b73faa22-9b10-432e-ba23-147784372674"
+        }
+      ],
+      "venueName": "TPF Film City",
+      "meta": {
+        "startsAt": 99999999,
+        "services": null,
+        "experience": {
+          "maxValue": 8,
+          "minValue": 6
+        },
+        "areasAvailable": null
+      },
+      "formattedAddress": "Near, Neota Lake, Mahindra Sez Road, Jaipur Ring Road, 302029, Jaipur, Rajasthan",
+      "city": "Jaipur",
+      "citySlug": "jaipur",
+      "shortAddress": ", Jaipur",
+      "userRating": 4.6,
+      "businessCategory": "PHOTOGRAPHY",
+      "specialTags": [],
+      "isBhPartner": false,
+      "bhPartnerDealText": null,
+      "userRatingCount": 338,
+      "coordinates": [
+        75.69187459999999,
+        26.7969276
+      ]
+    },
+    {
+      "vendorId": "c6fa6f3f-ac55-4eff-a216-1950ec461d65",
+      "urlSlug": "mayur-studio-jaipur-gurunanakpura-raja-park",
+      "media": [
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/c6fa6f3f-ac55-4eff-a216-1950ec461d65/admin_uploads/76ad99fb-9273-480b-b970-d81fa6c78b00.webp",
+          "mimeType": "image/webp",
+          "mediaId": "76ad99fb-9273-480b-b970-d81fa6c78b00"
+        },
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/c6fa6f3f-ac55-4eff-a216-1950ec461d65/admin_uploads/3fb15d3d-c340-4c62-a31a-b91860038865.webp",
+          "mimeType": "image/webp",
+          "mediaId": "3fb15d3d-c340-4c62-a31a-b91860038865"
+        },
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/c6fa6f3f-ac55-4eff-a216-1950ec461d65/admin_uploads/076e3466-28c2-4275-9273-e4cb49af1582.webp",
+          "mimeType": "image/webp",
+          "mediaId": "076e3466-28c2-4275-9273-e4cb49af1582"
+        },
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/c6fa6f3f-ac55-4eff-a216-1950ec461d65/admin_uploads/62bd2652-fb0c-4963-8115-cfd4331c3474.webp",
+          "mimeType": "image/webp",
+          "mediaId": "62bd2652-fb0c-4963-8115-cfd4331c3474"
+        }
+      ],
+      "venueName": "Mayur Studio Jaipur",
+      "meta": {
+        "startsAt": 99999999,
+        "services": null,
+        "experience": {
+          "maxValue": 6,
+          "minValue": 4
+        },
+        "areasAvailable": null
+      },
+      "formattedAddress": "194-195, Arya Samaj Road, Gurunanakpura, Raja Park, Jaipur, 302004, Jaipur, Rajasthan",
+      "city": "Jaipur",
+      "citySlug": "jaipur",
+      "shortAddress": "Gurunanakpura, Raja Park, Jaipur",
+      "userRating": 4,
+      "businessCategory": "PHOTOGRAPHY",
+      "specialTags": [],
+      "isBhPartner": false,
+      "bhPartnerDealText": null,
+      "userRatingCount": 263,
+      "coordinates": [
+        75.8256182,
+        26.8963786
+      ]
+    },
+    {
+      "vendorId": "645bcb9f-efc3-4604-ac8d-6c2394d66d7e",
+      "urlSlug": "firsthalffilms-sanganer-area",
+      "media": [],
+      "venueName": "FirstHalfFilms",
+      "meta": {
+        "startsAt": 99999999,
+        "services": null,
+        "experience": null,
+        "areasAvailable": null
+      },
+      "formattedAddress": "Ground Floor, Plot. No. 75, near Hotel Flyview, Sanganer, Area, Jaipur, Rajasthan 302029, India",
+      "city": "Jaipur",
+      "citySlug": "jaipur",
+      "shortAddress": "Sanganer, Area, Jaipur",
+      "userRating": 4.9,
+      "businessCategory": "PHOTOGRAPHY",
+      "specialTags": [],
+      "isBhPartner": false,
+      "bhPartnerDealText": null,
+      "userRatingCount": 32,
+      "coordinates": [
+        75.806591,
+        26.8190562
+      ]
+    },
+    {
+      "vendorId": "07cc8a69-d03f-477f-8f8a-d9650d23a4ad",
+      "urlSlug": "the-wedding-tellers-teachers-colony-ktr-colony-dcm",
+      "media": [],
+      "venueName": "The Wedding Tellers",
+      "meta": {
+        "startsAt": 99999999,
+        "services": null,
+        "experience": null,
+        "areasAvailable": null
+      },
+      "formattedAddress": "Plot 1 & 2, near Rohit Hospital, Teachers Colony, kTR colony, DCM, Jaipur, Rajasthan 302021, India",
+      "city": "Jaipur",
+      "citySlug": "jaipur",
+      "shortAddress": "Teachers Colony, kTR colony, DCM, Jaipur",
+      "userRating": 4.7,
+      "businessCategory": "PHOTOGRAPHY",
+      "specialTags": [],
+      "isBhPartner": false,
+      "bhPartnerDealText": null,
+      "userRatingCount": 52,
+      "coordinates": [
+        75.74753079999999,
+        26.894617
+      ]
+    },
+    {
+      "vendorId": "1015d8cf-0084-4b1e-8d97-321c31aa688b",
+      "urlSlug": "raman-sharma-photography-brijlalpura",
+      "media": [
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/1015d8cf-0084-4b1e-8d97-321c31aa688b/gmap/6cb27890-b0be-4909-ba20-69c9667a71e5_photography.jpg",
+          "mimeType": "image/jpeg",
+          "alt": "",
+          "mediaId": "fb7e28e6-4cf9-4b96-8b66-d9045c782cf8"
+        },
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/1015d8cf-0084-4b1e-8d97-321c31aa688b/gmap/d749af9c-3909-474f-a8a1-c4928467d69f_photography.jpg",
+          "mimeType": "image/jpeg",
+          "alt": "",
+          "mediaId": "82571f5c-c7f3-49ed-9007-59642b96bebb"
+        },
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/1015d8cf-0084-4b1e-8d97-321c31aa688b/gmap/fea6276f-7504-4b23-adc7-97bf9c1093c6_photography.jpg",
+          "mimeType": "image/jpeg",
+          "alt": "",
+          "mediaId": "97d8e1dd-daa2-47c0-9ef0-ccf1e288ed03"
+        },
+        {
+          "url": "https://gcpimages.theweddingcompany.com/weddings/1015d8cf-0084-4b1e-8d97-321c31aa688b/gmap/1d93b1c3-f8e5-4e9a-a81f-30672f78d0b5_photography.jpg",
+          "mimeType": "image/jpeg",
+          "alt": "",
+          "mediaId": "9308fde7-bb41-4a4d-90f8-9624e77b26d8"
+        }
+      ],
+      "venueName": "Raman Sharma Photography",
+      "meta": {
+        "startsAt": 99999999,
+        "services": {
+          "isPhotography": false,
+          "isVideography": false
+        },
+        "experience": null,
+        "areasAvailable": null
+      },
+      "formattedAddress": "82, Basement, Padmavti Colony, Nirman Nagar, Brijlalpura, Jaipur, Rajasthan 302019, India",
+      "city": "Jaipur",
+      "citySlug": "jaipur",
+      "shortAddress": "Brijlalpura, Jaipur",
+      "userRating": 4.5,
+      "businessCategory": "PHOTOGRAPHY",
+      "specialTags": [],
+      "isBhPartner": false,
+      "bhPartnerDealText": null,
+      "userRatingCount": 4,
+      "coordinates": [
+        75.7527147,
+        26.8808622
+      ]
+    },
+    {
+      "vendorId": "3962241a-38f9-4dd0-b72c-804bd84cc3c7",
+      "urlSlug": "ritkriti-production-gokulpura",
+      "media": [],
+      "venueName": "Ritkriti Production",
+      "meta": {
+        "startsAt": 99999999,
+        "services": null,
+        "experience": null,
+        "areasAvailable": null
+      },
+      "formattedAddress": "Govind Vatika, 34-B, Gokulpura - Kalwar Rd, Gokulpura, Jaipur, Rajasthan 302012, India",
+      "city": "Jaipur",
+      "citySlug": "jaipur",
+      "shortAddress": "Gokulpura, Jaipur",
+      "userRating": 4.4,
+      "businessCategory": "PHOTOGRAPHY",
+      "specialTags": [],
+      "isBhPartner": false,
+      "bhPartnerDealText": null,
+      "userRatingCount": 26,
+      "coordinates": [
+        75.7056151,
+        26.9369936
+      ]
+    }
+  ],
+  "sourceCount": 7,
+  "cityName": "Jaipur"
+}

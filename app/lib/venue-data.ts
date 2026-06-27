@@ -800,7 +800,7 @@ async function getVenueBySlugUncached(citySlug: string, venueSlug: string) {
 }
 
 const getVenueBySlugCached = unstable_cache(getVenueBySlugUncached, ["venue-by-slug"], {
-  revalidate: 3600,
+  revalidate: 86400,
   tags: ["venues"]
 });
 
@@ -821,7 +821,7 @@ async function getCityBySlugUncached(citySlug: string) {
 }
 
 const getCityBySlugCached = unstable_cache(getCityBySlugUncached, ["venue-city-by-slug"], {
-  revalidate: 3600,
+  revalidate: 86400,
   tags: ["venues"]
 });
 
@@ -842,7 +842,7 @@ async function getVenueCitiesUncached() {
 }
 
 const getVenueCitiesCached = unstable_cache(getVenueCitiesUncached, ["venue-cities"], {
-  revalidate: 3600,
+  revalidate: 86400,
   tags: ["venues"]
 });
 
@@ -881,7 +881,7 @@ async function getSimilarVenuesUncached(citySlug: string, vendorId: string, tags
 }
 
 const getSimilarVenuesCached = unstable_cache(getSimilarVenuesUncached, ["similar-venues"], {
-  revalidate: 3600,
+  revalidate: 86400,
   tags: ["venues"]
 });
 

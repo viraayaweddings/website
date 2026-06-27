@@ -1,0 +1,1150 @@
+{
+  "178ba3af-523f-4d44-85f2-d2d4e8e3f327": {
+    "vendorDetails": {
+      "businessCategory": "PHOTOGRAPHY",
+      "vendorId": "178ba3af-523f-4d44-85f2-d2d4e8e3f327",
+      "name": "Candid Studio Jaipur",
+      "userRating": 5,
+      "formattedAddress": "E-58, Anand Puri, Bees Dukan, Adarsh Nagar, Jaipur, 302004, Jaipur, Rajasthan",
+      "displayPic": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "coverMedia": [
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/178ba3af-523f-4d44-85f2-d2d4e8e3f327/admin_uploads/865dde79-0431-4d01-88ad-2afc8d4cc287.webp",
+          "alt": "",
+          "mediaId": "865dde79-0431-4d01-88ad-2afc8d4cc287",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/178ba3af-523f-4d44-85f2-d2d4e8e3f327/admin_uploads/16250d56-c8f9-4a62-88ae-15c125b0f797.webp",
+          "alt": "",
+          "mediaId": "16250d56-c8f9-4a62-88ae-15c125b0f797",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/178ba3af-523f-4d44-85f2-d2d4e8e3f327/admin_uploads/2902d3f2-d88d-4a44-bba6-d6c32b91e797.webp",
+          "alt": "",
+          "mediaId": "2902d3f2-d88d-4a44-bba6-d6c32b91e797",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/178ba3af-523f-4d44-85f2-d2d4e8e3f327/admin_uploads/78463010-6693-445d-9bc8-5ec36de9d702.webp",
+          "alt": "",
+          "mediaId": "78463010-6693-445d-9bc8-5ec36de9d702",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/178ba3af-523f-4d44-85f2-d2d4e8e3f327/admin_uploads/c21ff119-b27d-43c3-89bd-b34fb9e0682e.webp",
+          "alt": "",
+          "mediaId": "c21ff119-b27d-43c3-89bd-b34fb9e0682e",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        }
+      ],
+      "website": "",
+      "meta": {
+        "experience": "8 - 10 years",
+        "startsAt": 50000,
+        "hasPhotography": true,
+        "hasVideography": true
+      },
+      "about": {
+        "ops": [
+          {
+            "insert": "Candid Studio - Wedding Photographers in Adarsh Nagar, Jaipur"
+          },
+          {
+            "attributes": {
+              "header": 2
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "When it comes to "
+          },
+          {
+            "attributes": {
+              "link": "https://www.theweddingcompany.com/wedding-photographers/jaipur"
+            },
+            "insert": "wedding photography in Jaipur"
+          },
+          {
+            "insert": ", Candid Studio knows exactly how to steal the spotlight. From royal palaces to dreamy destinations, their lens has traveled far and wide, capturing love stories in Thailand, Sri Lanka, and all across India. Their team is all about fun vibes, epic moments, and zero dull frames. Whether you're striking a pose or stealing a glance, they'll capture it all in frame-worthy style.\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Services offered by Candid Studio"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Candid Photography\nTraditional Photography\nCinematic Videos\nTraditional Videos\nPre-Wedding Shoots\nAlbum\nMaternity Shoot\nFashion Shoot\n"
+          },
+          {
+            "attributes": {
+              "header": 2
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Wedding Photography Packages & Pricing of Candid Studio"
+          },
+          {
+            "attributes": {
+              "header": 2
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Travel & Accommodation Costs"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Outstation Stay and Travel charges borne by the client\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Budget Photo Package"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "₹65,000 for 1 day\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Photo + Video Packages"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "₹95,000 per day\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Most Booked Package"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "₹3,00,000\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Pricing for Small Functions"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "₹1,50,000 for 4 hrs.\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Deliver Timelines"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "1 week\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Is Candid Studio open to Travel for Weddings?"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Yes, they can travel for weddings.\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Address of Candid Studio"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Candid Studio is a "
+          },
+          {
+            "attributes": {
+              "link": "https://www.theweddingcompany.com/wedding-photographers"
+            },
+            "insert": "wedding photographer"
+          },
+          {
+            "insert": " based in Adarsh Nagar, Jaipur.\n\nFAQs"
+          },
+          {
+            "attributes": {
+              "header": 2
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "What is the price for a 1-day pre-wedding shoot in Jaipur?"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "The 1-day pre-wedding shoot in Jaipur is priced at ₹50,000.\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "What’s included in a 2-day package for 300 guests?"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "The two-day package, designed for 300 guests, includes both candid and traditional Photography and videography for all major events, such as engagements and weddings.\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "What’s the cost of a 3-day wedding shoot, including all events?"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "The cost of a 3-day wedding shoot, including all the events, is priced between ₹1,50,000 and ₹1,99,999.\n"
+          }
+        ]
+      },
+      "albums": [],
+      "services": {
+        "skills": [
+          {
+            "title": "Drone shoot",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/skills/6101.webp",
+            "id": "6101"
+          },
+          {
+            "title": "Crane photo/video",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/skills/6102.webp",
+            "id": "6102"
+          },
+          {
+            "title": "Traditional",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/skills/6103.webp",
+            "id": "6103"
+          },
+          {
+            "title": "Cinematic",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/skills/6104.webp",
+            "id": "6104"
+          },
+          {
+            "title": "Candid",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/skills/6105.webp",
+            "id": "6105"
+          }
+        ],
+        "occasions": [
+          {
+            "title": "Pre wedding",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5101.webp",
+            "id": "5101"
+          },
+          {
+            "title": "Wedding",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5102.webp",
+            "id": "5102"
+          },
+          {
+            "title": "Haldi",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5103.webp",
+            "id": "5103"
+          },
+          {
+            "title": "Sangeet",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5104.webp",
+            "id": "5104"
+          },
+          {
+            "title": "Mehandi",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5105.webp",
+            "id": "5105"
+          },
+          {
+            "title": "Reception",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5106.webp",
+            "id": "5106"
+          },
+          {
+            "title": "Engagement",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5108.webp",
+            "id": "5108"
+          }
+        ]
+      },
+      "urlSlug": "candid-studio-jaipur-anand-puri-bees-dukan-adarsh-nagar",
+      "userRatingCount": 3,
+      "specialTags": [],
+      "bhPartnerStatus": null,
+      "bhPartnerDealText": null,
+      "coordinates": [
+        75.8228544,
+        26.9014822
+      ]
+    },
+    "seoMetaData": null,
+    "isLocalitySlug": false
+  },
+  "0b661305-4770-4a25-8203-0d00637dac07": {
+    "vendorDetails": {
+      "businessCategory": "PHOTOGRAPHY",
+      "vendorId": "0b661305-4770-4a25-8203-0d00637dac07",
+      "name": "TPF Film City",
+      "userRating": 4.6,
+      "formattedAddress": "Near, Neota Lake, Mahindra Sez Road, Jaipur Ring Road, 302029, Jaipur, Rajasthan",
+      "displayPic": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "coverMedia": [
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/0b661305-4770-4a25-8203-0d00637dac07/admin_uploads/a6600240-8d52-4b25-b85e-0c0e0b48728a.webp",
+          "alt": "",
+          "mediaId": "a6600240-8d52-4b25-b85e-0c0e0b48728a",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/0b661305-4770-4a25-8203-0d00637dac07/admin_uploads/9cf1126e-82a7-454d-9ad2-85f34ca9f015.webp",
+          "alt": "",
+          "mediaId": "9cf1126e-82a7-454d-9ad2-85f34ca9f015",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/0b661305-4770-4a25-8203-0d00637dac07/admin_uploads/0aa13cb7-df08-4062-a84d-5e5cae996125.webp",
+          "alt": "",
+          "mediaId": "0aa13cb7-df08-4062-a84d-5e5cae996125",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/0b661305-4770-4a25-8203-0d00637dac07/admin_uploads/b73faa22-9b10-432e-ba23-147784372674.webp",
+          "alt": "",
+          "mediaId": "b73faa22-9b10-432e-ba23-147784372674",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/0b661305-4770-4a25-8203-0d00637dac07/admin_uploads/20dd3e85-d2ca-413e-a844-42c25ac1bbfc.webp",
+          "alt": "",
+          "mediaId": "20dd3e85-d2ca-413e-a844-42c25ac1bbfc",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        }
+      ],
+      "website": "http://www.thephotoframe.in/",
+      "meta": {
+        "experience": "6 - 8 years",
+        "startsAt": 25000,
+        "hasPhotography": true,
+        "hasVideography": true
+      },
+      "about": {},
+      "albums": [],
+      "services": {
+        "skills": [
+          {
+            "title": "Drone shoot",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/skills/6101.webp",
+            "id": "6101"
+          },
+          {
+            "title": "Traditional",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/skills/6103.webp",
+            "id": "6103"
+          },
+          {
+            "title": "Cinematic",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/skills/6104.webp",
+            "id": "6104"
+          },
+          {
+            "title": "Candid",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/skills/6105.webp",
+            "id": "6105"
+          }
+        ],
+        "occasions": [
+          {
+            "title": "Pre wedding",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5101.webp",
+            "id": "5101"
+          },
+          {
+            "title": "Engagement",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5108.webp",
+            "id": "5108"
+          }
+        ]
+      },
+      "urlSlug": "tpf-film-city",
+      "userRatingCount": 338,
+      "specialTags": [],
+      "bhPartnerStatus": null,
+      "bhPartnerDealText": null,
+      "coordinates": [
+        75.69187459999999,
+        26.7969276
+      ]
+    },
+    "seoMetaData": null,
+    "isLocalitySlug": false
+  },
+  "c6fa6f3f-ac55-4eff-a216-1950ec461d65": {
+    "vendorDetails": {
+      "businessCategory": "PHOTOGRAPHY",
+      "vendorId": "c6fa6f3f-ac55-4eff-a216-1950ec461d65",
+      "name": "Mayur Studio Jaipur",
+      "userRating": 4,
+      "formattedAddress": "194-195, Arya Samaj Road, Gurunanakpura, Raja Park, Jaipur, 302004, Jaipur, Rajasthan",
+      "displayPic": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "coverMedia": [
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/c6fa6f3f-ac55-4eff-a216-1950ec461d65/admin_uploads/76ad99fb-9273-480b-b970-d81fa6c78b00.webp",
+          "alt": "",
+          "mediaId": "76ad99fb-9273-480b-b970-d81fa6c78b00",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/c6fa6f3f-ac55-4eff-a216-1950ec461d65/admin_uploads/3fb15d3d-c340-4c62-a31a-b91860038865.webp",
+          "alt": "",
+          "mediaId": "3fb15d3d-c340-4c62-a31a-b91860038865",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/c6fa6f3f-ac55-4eff-a216-1950ec461d65/admin_uploads/076e3466-28c2-4275-9273-e4cb49af1582.webp",
+          "alt": "",
+          "mediaId": "076e3466-28c2-4275-9273-e4cb49af1582",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/c6fa6f3f-ac55-4eff-a216-1950ec461d65/admin_uploads/62bd2652-fb0c-4963-8115-cfd4331c3474.webp",
+          "alt": "",
+          "mediaId": "62bd2652-fb0c-4963-8115-cfd4331c3474",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/c6fa6f3f-ac55-4eff-a216-1950ec461d65/admin_uploads/06a53f2b-c39b-4723-bae5-6e8e7177edb7.webp",
+          "alt": "",
+          "mediaId": "06a53f2b-c39b-4723-bae5-6e8e7177edb7",
+          "mimeType": "image/webp",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        }
+      ],
+      "website": "http://wwwmayurstudio.com/",
+      "meta": {
+        "experience": "4 - 6 years",
+        "startsAt": 25000,
+        "hasPhotography": true,
+        "hasVideography": true
+      },
+      "about": {
+        "ops": [
+          {
+            "insert": "Mayur Studio - Wedding Photographers in Raja Park, Jaipur"
+          },
+          {
+            "attributes": {
+              "header": 2
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Looking for magical "
+          },
+          {
+            "attributes": {
+              "link": "https://www.theweddingcompany.com/wedding-photographers/jaipur"
+            },
+            "insert": "wedding photography in Jaipur"
+          },
+          {
+            "insert": "? Mayur Studio has been capturing hearts for over 40 years! From royal vibes to raw emotions, their team turns every moment into a cinematic dream. With 1300+ weddings and 100+ dreamy destinations in their kitty, these pros don’t just click—they create. Whether you're tying the knot in Jaipur or jetting off to Goa, they’ll be there with lenses ready and creativity flowing. Trust them to make your love story picture-perfect!\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Services offered by Mayur Studio"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Candid Photography\nTraditional Photography\nCinematic Videos\nTraditional Videos\nPre-Wedding Shoots\nAlbum\nMaternity Shoot\nFashion Shoot\n"
+          },
+          {
+            "attributes": {
+              "header": 2
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Wedding Photography Packages & Pricing of Mayur Studio"
+          },
+          {
+            "attributes": {
+              "header": 2
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Travel & Accommodation Costs"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Outstation Stay and Travel charges borne by the client\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Budget Photo Package"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "₹25,000 for 1 day\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Photo + Video Packages"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "₹60,000 per day\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Most Booked Package"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "₹2,50,000\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Pricing for Small Functions"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "₹35,000 for 4 hrs.\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Deliver Timelines"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "4 weeks\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Is Mayur Studio open to Travel for Weddings?"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Yes, they can travel for weddings.\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Address of Mayur Studio"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "Mayur Studio is a "
+          },
+          {
+            "attributes": {
+              "link": "https://www.theweddingcompany.com/wedding-photographers"
+            },
+            "insert": "wedding photographer"
+          },
+          {
+            "insert": " based in Raja Park, Jaipur.\n\nFAQs"
+          },
+          {
+            "attributes": {
+              "header": 2
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "What is the price for a 1-day pre-wedding shoot in Jaipur?"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "The 1-day pre-wedding shoot in Jaipur is priced at ₹50,000.\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "What’s included in a 2-day package for 300 guests?"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "The two-day package, designed for 300 guests, includes both candid and traditional Photography and videography for all major events, such as engagements and weddings.\n"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "What’s the cost of a 3-day wedding shoot, including all events?"
+          },
+          {
+            "attributes": {
+              "header": 3
+            },
+            "insert": "\n"
+          },
+          {
+            "insert": "For the specific cost of a 3-day wedding shoot, including all the events, contact the vendor.\n"
+          }
+        ]
+      },
+      "albums": [],
+      "services": {
+        "skills": [
+          {
+            "title": "Drone shoot",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/skills/6101.webp",
+            "id": "6101"
+          },
+          {
+            "title": "Crane photo/video",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/skills/6102.webp",
+            "id": "6102"
+          },
+          {
+            "title": "Traditional",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/skills/6103.webp",
+            "id": "6103"
+          },
+          {
+            "title": "Cinematic",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/skills/6104.webp",
+            "id": "6104"
+          },
+          {
+            "title": "Candid",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/skills/6105.webp",
+            "id": "6105"
+          }
+        ],
+        "occasions": [
+          {
+            "title": "Pre wedding",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5101.webp",
+            "id": "5101"
+          },
+          {
+            "title": "Wedding",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5102.webp",
+            "id": "5102"
+          },
+          {
+            "title": "Haldi",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5103.webp",
+            "id": "5103"
+          },
+          {
+            "title": "Sangeet",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5104.webp",
+            "id": "5104"
+          },
+          {
+            "title": "Mehandi",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5105.webp",
+            "id": "5105"
+          },
+          {
+            "title": "Reception",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5106.webp",
+            "id": "5106"
+          },
+          {
+            "title": "Muhurtham",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5107.webp",
+            "id": "5107"
+          },
+          {
+            "title": "Engagement",
+            "url": "https://storage.googleapis.com/bh_dev_bucket/weddings/photography/occasions/5108.webp",
+            "id": "5108"
+          }
+        ]
+      },
+      "urlSlug": "mayur-studio-jaipur-gurunanakpura-raja-park",
+      "userRatingCount": 263,
+      "specialTags": [],
+      "bhPartnerStatus": null,
+      "bhPartnerDealText": null,
+      "coordinates": [
+        75.8256182,
+        26.8963786
+      ]
+    },
+    "seoMetaData": null,
+    "isLocalitySlug": false
+  },
+  "645bcb9f-efc3-4604-ac8d-6c2394d66d7e": {
+    "vendorDetails": {
+      "businessCategory": "PHOTOGRAPHY",
+      "vendorId": "645bcb9f-efc3-4604-ac8d-6c2394d66d7e",
+      "name": "FirstHalfFilms",
+      "userRating": 4.9,
+      "formattedAddress": "Ground Floor, Plot. No. 75, near Hotel Flyview, Sanganer, Area, Jaipur, Rajasthan 302029, India",
+      "displayPic": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "coverMedia": [],
+      "website": "http://firsthalffilms.com/",
+      "meta": {
+        "experience": null,
+        "startsAt": null,
+        "hasPhotography": null,
+        "hasVideography": null
+      },
+      "about": {},
+      "albums": [],
+      "services": {
+        "skills": [],
+        "occasions": []
+      },
+      "urlSlug": "firsthalffilms-sanganer-area",
+      "userRatingCount": 32,
+      "specialTags": [],
+      "bhPartnerStatus": null,
+      "bhPartnerDealText": null,
+      "coordinates": [
+        75.806591,
+        26.8190562
+      ]
+    },
+    "seoMetaData": null,
+    "isLocalitySlug": false
+  },
+  "07cc8a69-d03f-477f-8f8a-d9650d23a4ad": {
+    "vendorDetails": {
+      "businessCategory": "PHOTOGRAPHY",
+      "vendorId": "07cc8a69-d03f-477f-8f8a-d9650d23a4ad",
+      "name": "The Wedding Tellers",
+      "userRating": 4.7,
+      "formattedAddress": "Plot 1 & 2, near Rohit Hospital, Teachers Colony, kTR colony, DCM, Jaipur, Rajasthan 302021, India",
+      "displayPic": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "coverMedia": [],
+      "website": "",
+      "meta": {
+        "experience": null,
+        "startsAt": null,
+        "hasPhotography": null,
+        "hasVideography": null
+      },
+      "about": {},
+      "albums": [],
+      "services": {
+        "skills": [],
+        "occasions": []
+      },
+      "urlSlug": "the-wedding-tellers-teachers-colony-ktr-colony-dcm",
+      "userRatingCount": 52,
+      "specialTags": [],
+      "bhPartnerStatus": null,
+      "bhPartnerDealText": null,
+      "coordinates": [
+        75.74753079999999,
+        26.894617
+      ]
+    },
+    "seoMetaData": null,
+    "isLocalitySlug": false
+  },
+  "1015d8cf-0084-4b1e-8d97-321c31aa688b": {
+    "vendorDetails": {
+      "businessCategory": "PHOTOGRAPHY",
+      "vendorId": "1015d8cf-0084-4b1e-8d97-321c31aa688b",
+      "name": "Raman Sharma Photography",
+      "userRating": 4.5,
+      "formattedAddress": "82, Basement, Padmavti Colony, Nirman Nagar, Brijlalpura, Jaipur, Rajasthan 302019, India",
+      "displayPic": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "coverMedia": [
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/1015d8cf-0084-4b1e-8d97-321c31aa688b/gmap/6cb27890-b0be-4909-ba20-69c9667a71e5_photography.jpg",
+          "alt": "",
+          "mediaId": "fb7e28e6-4cf9-4b96-8b66-d9045c782cf8",
+          "mimeType": "image/jpeg",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/1015d8cf-0084-4b1e-8d97-321c31aa688b/gmap/d749af9c-3909-474f-a8a1-c4928467d69f_photography.jpg",
+          "alt": "",
+          "mediaId": "82571f5c-c7f3-49ed-9007-59642b96bebb",
+          "mimeType": "image/jpeg",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/1015d8cf-0084-4b1e-8d97-321c31aa688b/gmap/fea6276f-7504-4b23-adc7-97bf9c1093c6_photography.jpg",
+          "alt": "",
+          "mediaId": "97d8e1dd-daa2-47c0-9ef0-ccf1e288ed03",
+          "mimeType": "image/jpeg",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/1015d8cf-0084-4b1e-8d97-321c31aa688b/gmap/1d93b1c3-f8e5-4e9a-a81f-30672f78d0b5_photography.jpg",
+          "alt": "",
+          "mediaId": "9308fde7-bb41-4a4d-90f8-9624e77b26d8",
+          "mimeType": "image/jpeg",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        },
+        {
+          "mediaUrl": "https://gcpimages.theweddingcompany.com/weddings/1015d8cf-0084-4b1e-8d97-321c31aa688b/gmap/9fb3a559-ec2d-4ada-9df4-ff8794959a4f_photography.jpg",
+          "alt": "",
+          "mediaId": "af1add88-9aa6-43df-964a-739e01eaee75",
+          "mimeType": "image/jpeg",
+          "compressedMediaUrl": null,
+          "videoThumbnailUrl": null
+        }
+      ],
+      "website": "https://www.ramansharmaphotography.in/",
+      "meta": {
+        "experience": null,
+        "startsAt": null,
+        "hasPhotography": null,
+        "hasVideography": null
+      },
+      "about": {},
+      "albums": [],
+      "services": {
+        "skills": [],
+        "occasions": []
+      },
+      "urlSlug": "raman-sharma-photography-brijlalpura",
+      "userRatingCount": 4,
+      "specialTags": [],
+      "bhPartnerStatus": null,
+      "bhPartnerDealText": null,
+      "coordinates": [
+        75.7527147,
+        26.8808622
+      ]
+    },
+    "seoMetaData": {
+      "head": {
+        "title": {
+          "value": "Raman Sharma Photography Photographer, Jaipur - Price & Reviews"
+        },
+        "metaDescription": {
+          "value": "Raman Sharma Photography is a Wedding Photographer in Brijlalpura, Jaipur. Check Raman Sharma Photography price details, latest photo albums & reviews. Book photographer for Wedding, Engagement, Reception and other events now."
+        },
+        "metaRobot": {
+          "value": ""
+        },
+        "canonicalTag": {
+          "value": "",
+          "isSameAsChecked": false
+        }
+      },
+      "openGraph": {
+        "url": {
+          "value": "",
+          "isSameAsChecked": false
+        },
+        "type": {
+          "value": ""
+        },
+        "title": {
+          "value": "Raman Sharma Photography Photographer, Jaipur - Price & Reviews",
+          "isSameAsChecked": true
+        },
+        "description": {
+          "value": "Raman Sharma Photography is a Wedding Photographer in Brijlalpura, Jaipur. Check Raman Sharma Photography price details, latest photo albums & reviews. Book photographer for Wedding, Engagement, Reception and other events now.",
+          "isSameAsChecked": true
+        },
+        "image": {
+          "value": "",
+          "isSameAsChecked": false
+        }
+      },
+      "twitterCard": {
+        "card": {
+          "value": ""
+        },
+        "site": {
+          "value": "@TheWeddingCmpny"
+        },
+        "title": {
+          "value": "Raman Sharma Photography Photographer, Jaipur - Price & Reviews",
+          "isSameAsChecked": true
+        },
+        "description": {
+          "value": "Raman Sharma Photography is a Wedding Photographer in Brijlalpura, Jaipur. Check Raman Sharma Photography price details, latest photo albums & reviews. Book photographer for Wedding, Engagement, Reception and other events now.",
+          "isSameAsChecked": true
+        },
+        "image": {
+          "value": "",
+          "isSameAsChecked": false
+        }
+      },
+      "seoExtra": {
+        "vendorName": "Raman Sharma Photography",
+        "locality": "Brijlalpura",
+        "city": "Jaipur"
+      }
+    },
+    "isLocalitySlug": false
+  },
+  "3962241a-38f9-4dd0-b72c-804bd84cc3c7": {
+    "vendorDetails": {
+      "businessCategory": "PHOTOGRAPHY",
+      "vendorId": "3962241a-38f9-4dd0-b72c-804bd84cc3c7",
+      "name": "Ritkriti Production",
+      "userRating": 4.4,
+      "formattedAddress": "Govind Vatika, 34-B, Gokulpura - Kalwar Rd, Gokulpura, Jaipur, Rajasthan 302012, India",
+      "displayPic": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "coverMedia": [],
+      "website": "",
+      "meta": {
+        "experience": null,
+        "startsAt": null,
+        "hasPhotography": null,
+        "hasVideography": null
+      },
+      "about": {},
+      "albums": [],
+      "services": {
+        "skills": [],
+        "occasions": []
+      },
+      "urlSlug": "ritkriti-production-gokulpura",
+      "userRatingCount": 26,
+      "specialTags": [],
+      "bhPartnerStatus": null,
+      "bhPartnerDealText": null,
+      "coordinates": [
+        75.7056151,
+        26.9369936
+      ]
+    },
+    "seoMetaData": null,
+    "isLocalitySlug": false
+  }
+}

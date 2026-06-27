@@ -118,3 +118,72 @@ model VenueFacility {
   @@unique([venueId, label])
   @@index([label])
 }
+
+model PhotographerCity {
+  id              String         @id @default(cuid())
+  name            String
+  slug            String         @unique
+  sourceCount     Int
+  importedCount   Int
+  seoPayload      Json?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  photographers   Photographer[]
+}
+
+model Photographer {
+  id                String              @id @default(cuid())
+  vendorId          String              @unique
+  name              String
+  slug              String
+  citySlug          String
+  shortAddress      String?
+  formattedAddress  String?
+  userRating        Float?
+  userRatingCount   Int?
+  isBhPartner       Boolean             @default(false)
+  bhPartnerDealText String?
+  minPackageCost    Int?
+  maxPackageCost    Int?
+  listingOrder      Int
+  listingPayload    Json
+  detailPayload     Json?
+  searchText        String
+  longitude         Float?
+  latitude          Float?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  city              PhotographerCity    @relation(fields: [citySlug], references: [slug])
+  media             PhotographerMedia[]
+  tags              PhotographerTag[]
+
+  @@index([citySlug, listingOrder])
+  @@index([citySlug, slug])
+  @@index([citySlug, isBhPartner(sort: Desc), userRating(sort: Desc), listingOrder(sort: Asc)], map: "Photographer_city_partner_rating_order_idx")
+  @@index([userRating])
+  @@index([minPackageCost])
+}
+
+model PhotographerMedia {
+  id             String       @id @default(cuid())
+  photographerId String
+  originalUrl    String
+  localPath      String?
+  mimeType       String?
+  mediaId        String?
+  source         String
+  position       Int
+  photographer   Photographer @relation(fields: [photographerId], references: [vendorId], onDelete: Cascade)
+
+  @@index([photographerId, position])
+}
+
+model PhotographerTag {
+  id             String       @id @default(cuid())
+  photographerId String
+  label          String
+  photographer   Photographer @relation(fields: [photographerId], references: [vendorId], onDelete: Cascade)
+
+  @@unique([photographerId, label])
+  @@index([label])
+}

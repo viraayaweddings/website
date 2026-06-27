@@ -25,13 +25,24 @@ function getPrismaPgConfig() {
   parsed.searchParams.delete("sslmode");
   parsed.searchParams.delete("channel_binding");
 
+  // Keep Neon usage minimal: cap the per-instance pool small and let it drop
+  // idle connections quickly + fully (allowExitOnIdle) so Neon's compute can
+  // scale to zero when there's no traffic instead of being held awake.
+  const poolTuning = {
+    max: 3,
+    idleTimeoutMillis: 10_000,
+    connectionTimeoutMillis: 15_000,
+    allowExitOnIdle: true
+  };
+
   if (!usesSsl) {
-    return { connectionString: parsed.toString() };
+    return { connectionString: parsed.toString(), ...poolTuning };
   }
 
   return {
     connectionString: parsed.toString(),
-    ssl: { rejectUnauthorized: process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== "false" }
+    ssl: { rejectUnauthorized: process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== "false" },
+    ...poolTuning
   };
 }
 

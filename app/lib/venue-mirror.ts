@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { unstable_cache } from "next/cache";
 import { prisma } from "./prisma";
 import { applyBranding, getHomepageFooter } from "../homepage-shell";
 
@@ -318,7 +319,7 @@ function injectNextData(html: string, nextData: any): string {
   return html.slice(0, contentStart) + json + html.slice(end);
 }
 
-export async function getMirrorHtml(citySlug: string, slug: string): Promise<string | null> {
+async function getMirrorHtmlUncached(citySlug: string, slug: string): Promise<string | null> {
   const row = await findVenue(citySlug, slug);
   if (!row) return null;
 
@@ -344,6 +345,22 @@ export async function getMirrorHtml(citySlug: string, slug: string): Promise<str
   html = applyBranding(html);
   html = injectEnhancer(html);
   return html.replace("</body>", `${BRAND_RUNTIME_SCRIPT}</body>`);
+}
+
+// Cache the rendered detail HTML so hot pages never touch Neon. Cloned data is
+// static, so a long revalidate keeps DB hits to ~once/day/page.
+const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["venue-mirror-html"], {
+  revalidate: 86400,
+  tags: ["venues"]
+});
+
+export async function getMirrorHtml(citySlug: string, slug: string): Promise<string | null> {
+  try {
+    return await getMirrorHtmlCached(citySlug, slug);
+  } catch (error) {
+    console.error("[venue-mirror] getMirrorHtml failed", error);
+    return null;
+  }
 }
 
 // Exported for potential reuse / tests.
