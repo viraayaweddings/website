@@ -29,6 +29,9 @@ let homepagePartsCache: HomepageParts | null = null;
 
 export const homepageShellCss = `
 <style id="twc-shared-shell-css">
+  :root {
+    --viraaya-page-rail: clamp(18px, 7vw, 56px);
+  }
   #twc-homepage-shared-header {
     position: sticky;
     top: 0;
@@ -49,6 +52,14 @@ export const homepageShellCss = `
     margin-right: auto !important;
     background: #fff;
     color: #000;
+  }
+  section[class*="max-w-screen-2xl"][class*="md:px-12"]:has([data-virtuoso-scroller]) {
+    margin-left: var(--viraaya-page-rail) !important;
+    margin-right: var(--viraaya-page-rail) !important;
+    max-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: auto !important;
   }
   #twc-homepage-shared-header img[src="/brand/viraaya-logo-header.png"] {
     display: block;
@@ -100,6 +111,9 @@ export const homepageShellCss = `
     }
   }
   @media (max-width: 760px) {
+    :root {
+      --viraaya-page-rail: 18px;
+    }
     #twc-homepage-shared-header > * {
       min-height: 62px !important;
     }
@@ -197,8 +211,8 @@ export const aboutViraayaWeddingsArticleMarkup = `
   <h4>Trusted Vendor Network</h4>
   <p>We collaborate with carefully selected venues and wedding professionals known for their quality, reliability, and exceptional service. This allows us to deliver premium experiences while helping you make informed decisions.</p>
 
-  <h4>Transparent Pricing</h4>
-  <p>We believe wedding planning should be exciting&mdash;not confusing. Our team provides clear recommendations and works within your budget to maximize value without compromising quality.</p>
+  <h4>Clear Planning Guidance</h4>
+  <p>We believe wedding planning should be exciting&mdash;not confusing. Our team provides clear recommendations tailored to your celebration priorities without compromising quality.</p>
 
   <h4>End-to-End Coordination</h4>
   <p>From venue selection and vendor management to guest coordination and on-ground execution, we oversee every stage of your wedding journey so you can celebrate stress-free with your loved ones.</p>
@@ -495,6 +509,10 @@ export function applyBranding(markup: string) {
     .replaceAll("TWC Partner", "Viraaya Partner")
     .replaceAll("TWC Client Terms", "Viraaya Client Terms")
     .replaceAll("TWC Vendor Terms", "Viraaya Vendor Terms")
+    .replaceAll("/price-beat-challenge", "/wedding-services")
+    .replaceAll("/wedding-payment-plan", "/wedding-services")
+    .replaceAll("Price Beat Challenge", "Wedding Services")
+    .replaceAll("Service Payment Plan", "Service Details")
     // Any standalone "TWC" (legal copy, FAQs) -> brand name.
     .replace(/\bTWC\b/g, brandAssets.name)
     // Legal page links: drop the twc- prefix from the public URL.

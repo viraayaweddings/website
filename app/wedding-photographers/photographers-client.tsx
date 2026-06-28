@@ -12,7 +12,6 @@ type PhotographerCard = {
   place: string;
   rating: string;
   ratingValue: number | null;
-  price: string;
   badges: string[];
   isPartner: boolean;
   images: string[];
@@ -35,7 +34,7 @@ type QueryResult = {
 
 const popularCities = ["Delhi", "Gurugram", "Noida", "Jaipur", "Udaipur"];
 const modalCities = ["Delhi", "Gurugram", "Noida", "Jaipur", "Udaipur"];
-const tabs = ["All", "Bestsellers", "Premium", "Budget Friendly", "Viraaya's choice"];
+const tabs = ["All", "Bestsellers", "Premium", "Viraaya's choice"];
 
 const filterGroups = [
   {
@@ -146,9 +145,6 @@ function PhotographerCardComponent({ photographer }: { photographer: Photographe
         <h2>{photographer.name}</h2>
         <p className="venue-rating"><span>&#9733;</span>{photographer.rating}</p>
         <p className="venue-place">{photographer.place}</p>
-        <div className="venue-meta">
-          <span>{photographer.price}</span>
-        </div>
       </div>
     </a>
   );
@@ -159,16 +155,16 @@ function SeoContent({ citySlug }: { citySlug?: string | null }) {
   return (
     <section className="venues-seo">
       <p>
-        Looking for the perfect wedding photographer in {cityName}? Your wedding photographs are memories you will treasure forever. Browse curated wedding photographers, compare styles, pricing, ratings, and experience, then shortlist the one who truly captures your story.
+        Looking for the perfect wedding photographer in {cityName}? Your wedding photographs are memories you will treasure forever. Browse curated wedding photographers, compare styles, ratings, and experience, then shortlist the one who truly captures your story.
       </p>
       <h2>Popular Wedding Photography Styles in {cityName}</h2>
-      <p>Couples usually choose between candid photography, traditional photography, cinematic videography, and pre-wedding shoots depending on their style and budget. Many photographers offer packages that combine multiple styles.</p>
+      <p>Couples usually choose between candid photography, traditional photography, cinematic videography, and pre-wedding shoots depending on their style and event needs. Many photographers combine multiple styles.</p>
       <h2>Candid vs Traditional Wedding Photography</h2>
       <p>Candid photography captures natural, unposed moments and emotions as they unfold. Traditional photography focuses on formal portraits and group shots with posed setups. Most couples opt for a blend of both to have a complete wedding album.</p>
       <h2>What should we check before booking a wedding photographer?</h2>
       <ul>
         <li>Portfolio and photography style</li>
-        <li>Package inclusions (albums, prints, raw files)</li>
+        <li>Deliverables such as albums, prints, and raw files</li>
         <li>Number of photographers and videographers</li>
         <li>Turnaround time for edited photos and videos</li>
         <li>Availability for your wedding date</li>

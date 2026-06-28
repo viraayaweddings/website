@@ -22,7 +22,6 @@ export async function GET() {
           filters: [
             { id: "1004", key: "1004", groupKey: "specialTags", label: "Bestsellers", labelSlug: "bestsellers", filters: [] },
             { id: "1002", key: "1002", groupKey: "specialTags", label: "Premium", labelSlug: "premium", filters: [] },
-            { id: "1003", key: "1003", groupKey: "specialTags", label: "Budget Friendly", labelSlug: "budget-friendly", filters: [] },
             { id: "1005", key: "1005", groupKey: "specialTags", label: "Viraaya's choice", labelSlug: "viraayas-choice", filters: [] }
           ]
         }

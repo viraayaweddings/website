@@ -11,8 +11,6 @@ export type PhotographerCard = {
   rating: string;
   ratingValue: number | null;
   ratingCount: number | null;
-  price: string;
-  priceValue: number | null;
   badges: string[];
   isPartner: boolean;
   images: string[];
@@ -60,6 +58,7 @@ export type PhotographerQueryResult = {
 };
 
 const photographerImageFallback = "/twc-next/static/media/hotel-taj.cca019c4.webp";
+const renderableImagePathPattern = /\.(?:avif|gif|jpe?g|png|svg|webp)(?:\?|$)/i;
 
 function brandedLabel(label: string) {
   return label
@@ -105,6 +104,12 @@ export function resolvePhotographerImage(
         : image.originalUrl;
   if (!raw) return photographerImageFallback;
   return photographerAssetAlias(raw);
+}
+
+function isRenderablePhotographerImage(
+  image?: { originalUrl: string; localPath: string | null } | string | null
+) {
+  return renderableImagePathPattern.test(resolvePhotographerImage(image));
 }
 
 export function photographerHref(citySlug: string, slug: string) {
@@ -181,9 +186,6 @@ function dbPhotographerToRecord(row: any): PhotographerRecord {
 }
 
 export function toPhotographerCard(row: PhotographerRecord): PhotographerCard {
-  const priceValue = row.minPrice ?? null;
-  const price =
-    priceValue != null ? `Starting Rs ${priceValue.toLocaleString("en-IN")}` : "Contact for pricing";
   const rating = row.userRating
     ? `${row.userRating}${row.userRatingCount ? ` (${row.userRatingCount} users)` : ""}`
     : "5";
@@ -197,11 +199,10 @@ export function toPhotographerCard(row: PhotographerRecord): PhotographerCard {
     rating,
     ratingValue: row.userRating,
     ratingCount: row.userRatingCount,
-    price,
-    priceValue,
     badges: row.tags || [],
     isPartner: row.isPartner,
     images: row.images
+      .filter(isRenderablePhotographerImage)
       .slice(0, 4)
       .map((img) => resolvePhotographerImage(img)),
     lat: row.latitude,
@@ -264,7 +265,6 @@ function selectedTabTag(tab: string): string | null {
   if (selected === "twcs choice" || selected === "viraayas choice")
     return "Viraaya's choice";
   if (selected === "premium") return "Premium";
-  if (selected === "budget friendly") return "Budget Friendly";
   return tab;
 }
 
@@ -324,7 +324,7 @@ async function queryPhotographersUncached(
 
 const queryPhotographersCached = unstable_cache(
   queryPhotographersUncached,
-  ["photographer-list-query"],
+  ["photographer-list-query-v2-renderable-images"],
   { revalidate: 86400, tags: ["photographers"] }
 );
 

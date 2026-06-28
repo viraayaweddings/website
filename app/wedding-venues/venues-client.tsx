@@ -12,7 +12,6 @@ type VenueCardData = {
   place: string;
   rating: string;
   ratingValue: number | null;
-  price: string;
   guests: string;
   badges: string[];
   isPartner: boolean;
@@ -36,11 +35,10 @@ type QueryResult = {
 
 const popularCities = ["Delhi", "Gurugram", "Noida", "Jaipur", "Udaipur"];
 const modalCities = ["Delhi", "Gurugram", "Noida", "Jaipur", "Udaipur"];
-const tabs = ["All", "Bestsellers", "Premium", "Budget Friendly", "Viraaya's choice"];
+const tabs = ["All", "Bestsellers", "Premium", "Viraaya's choice"];
 
 const filterGroups = [
   { title: "No of guests", param: "guests", items: ["< 100", "100 - 250", "250 - 500", "500 - 1000", "> 1000"] },
-  { title: "Pricing Type", param: "pricingType", type: "pricing", items: ["Per plate", "Per day"] },
   { title: "Food preference", param: "food", items: ["Vegetarian", "Non - Vegetarian", "Vegan"] },
   {
     title: "Venue Type",
@@ -170,7 +168,6 @@ function VenueCard({ venue }: { venue: VenueCardData }) {
         <p className="venue-rating"><span>&#9733;</span>{venue.rating}</p>
         <p className="venue-place">{venue.place}</p>
         <div className="venue-meta">
-          <span>{venue.price}</span>
           <span>{venue.guests}</span>
         </div>
       </div>
@@ -183,16 +180,15 @@ function SeoContent({ citySlug }: { citySlug?: string | null }) {
   return (
     <section className="venues-seo">
       <p>
-        Planning a wedding in {cityName}? The venue you choose sets the stage for everything - from your mehndi to your big reception night. Browse curated wedding venues, compare pricing, capacity, rooms, ratings, and policies, then shortlist the perfect venue for your celebration.
+        Planning a wedding in {cityName}? The venue you choose sets the stage for everything - from your mehndi to your big reception night. Browse curated wedding venues, compare capacity, rooms, ratings, and policies, then shortlist the perfect venue for your celebration.
       </p>
       <h2>Popular Types of Wedding Venues in {cityName}</h2>
-      <p>Couples usually choose between luxury hotels, banquet halls, resorts, heritage venues, farmhouses, lawns, and poolside venues depending on guest count, budget, and event style.</p>
+      <p>Couples usually choose between luxury hotels, banquet halls, resorts, heritage venues, farmhouses, lawns, and poolside venues depending on guest count and event style.</p>
       <h2>Indoor vs Outdoor Wedding Venues</h2>
       <p>Indoor venues work well for reliable weather control and formal receptions. Outdoor venues are ideal for open-air decor, grand entries, poolside events, and destination-style celebrations.</p>
       <h2>What should we check before booking a venue?</h2>
       <ul>
         <li>Guest capacity and floating capacity</li>
-        <li>Per plate or per day pricing</li>
         <li>Food, alcohol, decor, and DJ policies</li>
         <li>Room availability and parking</li>
         <li>Availability for your wedding date</li>
@@ -215,7 +211,6 @@ export default function VenuesClient({
   const [nextPageUrl, setNextPageUrl] = useState(initial.nextPageUrl);
   const [activeTab, setActiveTab] = useState("All");
   const [search, setSearch] = useState("");
-  const [pricingType, setPricingType] = useState("Per plate");
   const [selected, setSelected] = useState<Record<string, string[]>>({});
   const [loading, setLoading] = useState(false);
   const didMount = useRef(false);
@@ -229,7 +224,6 @@ export default function VenuesClient({
     params.set("page", String(page));
     params.set("tab", tab);
     if (search.trim()) params.set("search", search.trim());
-    params.set("pricingType", pricingType);
     Object.entries(selected).forEach(([key, values]) => {
       values.forEach((value) => params.append(key, value));
     });
@@ -281,7 +275,7 @@ export default function VenuesClient({
       void runSearch(1, false, activeTab);
     }, 300);
     return () => window.clearTimeout(timeout);
-  }, [search, pricingType, selected, activeTab]);
+  }, [search, selected, activeTab]);
 
   return (
     <main className="venues-page">
@@ -333,24 +327,7 @@ export default function VenuesClient({
             <section className="venues-filter-section" key={group.title}>
               <details open>
                 <summary>{group.title}<span>^</span></summary>
-                {group.type === "pricing" ? (
-                  <>
-                    <div className="venues-pricing-toggle">
-                      {group.items?.map((item) => (
-                        <button
-                          className={pricingType === item ? "active" : ""}
-                          type="button"
-                          key={item}
-                          onClick={() => setPricingType(item)}
-                        >
-                          {item}
-                        </button>
-                      ))}
-                    </div>
-                    <div className="venues-range"><i /><i /></div>
-                    <div className="venues-range-labels"><span>₹ 0</span><span>₹ 20,000+</span></div>
-                  </>
-                ) : group.grouped ? (
+                {group.grouped ? (
                   <div className="venues-checks">
                     {group.grouped.flatMap((items, groupIndex) =>
                       items.map((item, index) =>

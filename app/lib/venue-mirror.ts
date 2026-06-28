@@ -7,6 +7,11 @@ import {
   applyHomepageHeaderFooter,
   injectHomepageShellSupport
 } from "../homepage-shell";
+import {
+  PRICING_RUNTIME_SCRIPT,
+  sanitizePricingData,
+  sanitizePricingMarkup
+} from "./pricing-sanitizer";
 
 // Mirrors theweddingcompany.com's own venue page: the original compiled HTML +
 // vendored JS/CSS/fonts/media are served entirely from the local server, and
@@ -70,8 +75,8 @@ function num(v: unknown): number | null {
 
 function metaFor(row: any) {
   return {
-    perPlateCost: { maxValue: row.maxPerPlateCost ?? 0, minValue: row.minPerPlateCost ?? 0 },
-    perDayCost: { maxValue: row.maxPerDayCost ?? 0, minValue: row.minPerDayCost ?? 0 },
+    perPlateCost: { maxValue: null, minValue: null },
+    perDayCost: { maxValue: null, minValue: null },
     parkingCount: row.parkingCount ?? 0,
     roomCount: { maxValue: row.maxRoomCount ?? 0, minValue: row.minRoomCount ?? 0 },
     areasAvailable: { minValue: row.minAreaCapacity ?? 0, maxValue: row.maxAreaCapacity ?? 0 }
@@ -325,18 +330,19 @@ async function getMirrorHtmlUncached(citySlug: string, slug: string): Promise<st
   base.assetPrefix = "/twc-mirror";
 
   let html = getTemplate();
-  html = injectNextData(html, base);
+  html = injectNextData(html, sanitizePricingData(base));
   html = applyHomepageHeaderFooter(html);
   html = localizeAssetPaths(html);
   html = applyBranding(html);
   html = injectEnhancer(html);
   html = injectHomepageShellSupport(html);
-  return html.replace("</body>", `${BRAND_RUNTIME_SCRIPT}</body>`);
+  html = sanitizePricingMarkup(html);
+  return html.replace("</body>", `${PRICING_RUNTIME_SCRIPT}${BRAND_RUNTIME_SCRIPT}</body>`);
 }
 
 // Cache the rendered detail HTML so hot pages never touch Neon. Cloned data is
 // static, so a long revalidate keeps DB hits to ~once/day/page.
-const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["venue-mirror-html-brand-gold-v3"], {
+const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["venue-mirror-html-brand-gold-v8-logo-rail"], {
   revalidate: 86400,
   tags: ["venues"]
 });

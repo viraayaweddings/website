@@ -18,9 +18,7 @@ const captureFileBySlug = {
   "vendor-terms": "twc-vendor-terms",
   "privacy-policy": "twc-privacy-policy",
   "refund-policy": "twc-refund-policy",
-  "wedding-payment-plan": "wedding-payment-plan",
   "about-us": "about-us",
-  "price-beat-challenge": "price-beat-challenge",
   "wedding-invitation-card": "wedding-invitation-card",
   "wedding": "wedding",
   "wedding-services": "wedding-services"

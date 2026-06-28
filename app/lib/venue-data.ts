@@ -68,8 +68,6 @@ export type VenueCard = {
   rating: string;
   ratingValue: number | null;
   ratingCount: number | null;
-  price: string;
-  priceValue: number;
   guests: string;
   minGuests: string;
   maxGuests: string;
@@ -219,10 +217,6 @@ export function venueHref(venue: Pick<VenueRecord, "citySlug" | "slug">) {
 }
 
 export function toVenueCard(venue: VenueRecord): VenueCard {
-  const perPlate = venue.price?.perPlate;
-  const perDay = venue.price?.perDay;
-  const priceValue = perPlate?.minValue ?? perDay?.minValue ?? 0;
-  const pricePrefix = perPlate?.minValue !== undefined && perPlate?.minValue !== null ? "Per plate" : "Per day";
   const capacity = minMaxLabel(venue.capacity);
   const rating = venue.userRating
     ? `${venue.userRating}${venue.userRatingCount ? ` (${venue.userRatingCount} users)` : ""}`
@@ -237,8 +231,6 @@ export function toVenueCard(venue: VenueRecord): VenueCard {
     rating,
     ratingValue: venue.userRating,
     ratingCount: venue.userRatingCount,
-    price: `${pricePrefix} ₹${priceValue}+`,
-    priceValue,
     guests: capacity || "Contact venue",
     minGuests: venue.capacity?.minValue != null ? String(venue.capacity.minValue) : "",
     maxGuests: venue.capacity?.maxValue != null ? String(venue.capacity.maxValue) : "",
@@ -369,11 +361,6 @@ async function queryVenuesUncached(queryString: string): Promise<VenueQueryResul
     "100 - 200": [100, 200],
     "200 - 1000": [200, 1000]
   };
-  const pricingType = labelKey(params.get("pricingType") || "per plate");
-  const minPrice = Number(params.get("minPrice") || 0);
-  const maxPrice = Number(params.get("maxPrice") || 20000);
-  const priceMinField = pricingType.includes("day") ? "minPerDayCost" : "minPerPlateCost";
-  const priceMaxField = pricingType.includes("day") ? "maxPerDayCost" : "maxPerPlateCost";
   const tabTag = selectedTabTag(tab);
   const minRating = minRatingFromLabels(ratings);
   const whereParts: any[] = [
@@ -381,7 +368,6 @@ async function queryVenuesUncached(queryString: string): Promise<VenueQueryResul
     search ? { searchText: { contains: search, mode: "insensitive" } } : undefined,
     tabTag ? { tags: { some: { label: tabTag } } } : undefined,
     minRating !== null ? { userRating: { gte: minRating } } : undefined,
-    rangeWhere(priceMinField, priceMaxField, [[minPrice, maxPrice]]),
     rangeWhere("minAreaCapacity", "maxAreaCapacity", guests.map((value) => guestBuckets[value]).filter(Boolean)),
     rangeWhere("minRoomCount", "maxRoomCount", rooms.map((value) => roomBuckets[value]).filter(Boolean)),
     textWhere(venueTypes),

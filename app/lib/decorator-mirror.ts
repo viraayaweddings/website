@@ -8,6 +8,11 @@ import {
   applyHomepageHeaderFooter,
   injectHomepageShellSupport
 } from "../homepage-shell";
+import {
+  PRICING_RUNTIME_SCRIPT,
+  sanitizePricingData,
+  sanitizePricingMarkup
+} from "./pricing-sanitizer";
 
 let cachedListingTemplate: string | null = null;
 let cachedDetailTemplate: string | null = null;
@@ -27,6 +32,9 @@ const LOCAL_ALIASES: Array<[string, string]> = [
   ["/twc-venues-local/weddingimage.betterhalf.ai", "/venue-assets/weddingimage"],
   ["/twc-venues-local/maps.gstatic.com", "/venue-assets/maps"]
 ];
+
+const DECORATOR_IMAGE_FALLBACK = "/twc-next/static/media/Mandap.d8d5d35e.webp";
+const RENDERABLE_IMAGE_PATH_PATTERN = /\.(?:avif|gif|jpe?g|png|svg|webp)(?:\?|$)/i;
 
 const BRAND_RUNTIME_SCRIPT = `
 <script id="viraaya-runtime-branding">
@@ -150,8 +158,26 @@ function num(v: unknown): number | null {
 }
 
 function coverMediaFor(media: any[]) {
-  return media.map((m) => ({
-    mediaUrl: localizeUrl(m.localPath && m.localPath.startsWith("/") ? m.localPath : m.originalUrl),
+  const items = media
+    .map((m) => ({
+      ...m,
+      mediaUrl: localizeUrl(m.localPath && m.localPath.startsWith("/") ? m.localPath : m.originalUrl)
+    }))
+    .filter((m) => RENDERABLE_IMAGE_PATH_PATTERN.test(m.mediaUrl));
+
+  if (!items.length) {
+    return [{
+      mediaUrl: DECORATOR_IMAGE_FALLBACK,
+      alt: "",
+      mediaId: null,
+      mimeType: "image/webp",
+      compressedMediaUrl: null,
+      videoThumbnailUrl: null
+    }];
+  }
+
+  return items.map((m) => ({
+    mediaUrl: m.mediaUrl,
     alt: "",
     mediaId: m.mediaId,
     mimeType: m.mimeType || "image/webp",
@@ -174,7 +200,7 @@ function buildDecoratorDetails(base: any, row: any) {
   const lp = row.listingPayload && typeof row.listingPayload === "object" ? row.listingPayload : {};
   const baseVd = (base.props?.pageProps?.vendorDetails || {}) as Record<string, any>;
   const hasDetail = !!(dp && (dp.name || dp.coverMedia || dp.about || dp.meta));
-  const vd = localizeDeep(hasDetail ? { ...baseVd, ...dp } : { ...lp });
+  const vd = sanitizePricingData(localizeDeep(hasDetail ? { ...baseVd, ...dp } : { ...lp }));
 
   vd.businessCategory = "DECORATION";
   vd.vendorId = row.vendorId;
@@ -187,8 +213,9 @@ function buildDecoratorDetails(base: any, row: any) {
   vd.bhPartnerDealText = row.bhPartnerDealText ?? null;
   vd.meta = {
     ...(vd.meta || {}),
-    indoorPrice: row.indoorPrice ?? vd.meta?.indoorPrice ?? row.minDecorCost ?? null,
-    outdoorPrice: row.outdoorPrice ?? vd.meta?.outdoorPrice ?? row.minDecorCost ?? null
+    indoorPrice: null,
+    outdoorPrice: null,
+    startsAt: null
   };
   if (!vd.about) vd.about = emptyAbout(row);
   if (row.longitude != null && row.latitude != null) vd.coordinates = [row.longitude, row.latitude];
@@ -201,11 +228,7 @@ function buildDecoratorDetails(base: any, row: any) {
   // Vendors imported without a rich detailPayload would otherwise have these
   // undefined, which crashes the page to a blank screen. Default them so the
   // page always renders (empty sections collapse on their own).
-  vd.coverMedia = media.length
-    ? coverMediaFor(media)
-    : Array.isArray(vd.coverMedia)
-      ? vd.coverMedia
-      : [];
+  vd.coverMedia = coverMediaFor(media);
   if (!vd.services || typeof vd.services !== "object" || Array.isArray(vd.services)) {
     vd.services = {};
   }
@@ -216,7 +239,7 @@ function buildDecoratorDetails(base: any, row: any) {
 function buildSeoMeta(base: any, row: any) {
   const seo = row.seoPayload && typeof row.seoPayload === "object" ? row.seoPayload : base.props?.pageProps?.seoMetaData || {};
   const title = `${row.name} - Wedding Decorators in ${row.city?.name || row.citySlug} | Viraaya Weddings`;
-  const description = `${row.name} wedding decorator details, prices, photos and address.`;
+  const description = `${row.name} wedding decorator details, photos and address.`;
   const next = JSON.parse(JSON.stringify(seo));
   next.head = next.head || {};
   next.openGraph = next.openGraph || {};
@@ -227,7 +250,7 @@ function buildSeoMeta(base: any, row: any) {
   next.openGraph.description = { value: description };
   next.twitterCard.title = { value: title };
   next.twitterCard.description = { value: description };
-  return localizeDeep(next);
+  return sanitizePricingData(localizeDeep(next));
 }
 
 function injectNextData(html: string, nextData: any): string {
@@ -251,7 +274,8 @@ function finalizeHtml(html: string) {
   html = localizeAssetPaths(html);
   html = applyBranding(html);
   html = injectHomepageShellSupport(html);
-  return html.replace("</body>", `${BRAND_RUNTIME_SCRIPT}</body>`);
+  html = sanitizePricingMarkup(html);
+  return html.replace("</body>", `${PRICING_RUNTIME_SCRIPT}${BRAND_RUNTIME_SCRIPT}</body>`);
 }
 
 async function getListingHtmlUncached(citySlug?: string): Promise<string> {
@@ -269,7 +293,7 @@ async function getListingHtmlUncached(citySlug?: string): Promise<string> {
     base.query = { decorCity: citySlug };
   }
 
-  let html = finalizeHtml(injectNextData(getListingTemplate(), base));
+  let html = finalizeHtml(injectNextData(getListingTemplate(), sanitizePricingData(base)));
 
   // City routes reuse the base listing template, whose page-chunk <script>/<link>
   // points at the /wedding-decorators page bundle. With page set to
@@ -321,18 +345,18 @@ async function getDetailHtmlUncached(citySlug: string, slug: string): Promise<st
   base.query = { decorCity: row.citySlug, decorLocalityOrCategorySlug: row.slug };
   base.assetPrefix = "/twc-mirror";
 
-  return finalizeHtml(injectNextData(getDetailTemplate(), base));
+  return finalizeHtml(injectNextData(getDetailTemplate(), sanitizePricingData(base)));
 }
 
 const getListingHtmlCached = unstable_cache(
   getListingHtmlUncached,
-  ["decorator-listing-html-brand-gold-v6"],
+  ["decorator-listing-html-brand-gold-v12-logo-rail"],
   { revalidate: 86400, tags: ["decorators"] }
 );
 
 const getDetailHtmlCached = unstable_cache(
   getDetailHtmlUncached,
-  ["decorator-detail-html-brand-gold-v6"],
+  ["decorator-detail-html-brand-gold-v11-logo-rail"],
   { revalidate: 86400, tags: ["decorators"] }
 );
 

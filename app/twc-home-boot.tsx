@@ -84,7 +84,6 @@ function setupSharedHeader() {
       <nav>
         <a href="/">Home</a>
         <a href="/wedding-venues">Wedding Venues</a>
-        <a href="/price-beat-challenge">Price Beat Challenge</a>
         <a href="/wedding-ideas">Wedding Ideas</a>
         <a href="/wedding-photography">Wedding Photographers</a>
         <a href="/wedding-decorators">Wedding Decorators</a>

@@ -72,7 +72,8 @@ export type DecoratorRecord = {
   seoPayload: Record<string, unknown> | null;
 };
 
-const decoratorImageFallback = "/twc-next/static/media/hotel-taj.cca019c4.webp";
+const decoratorImageFallback = "/twc-next/static/media/Mandap.d8d5d35e.webp";
+const renderableImagePathPattern = /\.(?:avif|gif|jpe?g|png|svg|webp)(?:\?|$)/i;
 
 function brandedLabel(label: string) {
   return label
@@ -124,6 +125,12 @@ export function resolveDecoratorImage(
         ? image.localPath
         : image.originalUrl;
   return raw ? decoratorAssetAlias(raw) : decoratorImageFallback;
+}
+
+function isRenderableDecoratorImage(
+  image?: { originalUrl: string; localPath: string | null } | string | null
+) {
+  return renderableImagePathPattern.test(resolveDecoratorImage(image));
 }
 
 export function decoratorHref(citySlug: string, slug: string) {
@@ -206,20 +213,32 @@ function dbDecoratorToRecord(row: any): DecoratorRecord {
 }
 
 export function toDecoratorVendorPayload(row: DecoratorRecord): DecoratorVendorPayload {
+  const images = row.images.filter(isRenderableDecoratorImage).slice(0, 8);
+  const media = images.length
+    ? images.map((img) => ({
+        url: resolveDecoratorImage(img),
+        mimeType: img.mimeType || "image/webp",
+        mediaId: img.mediaId,
+        compressedMediaUrl: null
+      }))
+    : [
+        {
+          url: decoratorImageFallback,
+          mimeType: "image/webp",
+          mediaId: null,
+          compressedMediaUrl: null
+        }
+      ];
+
   return {
     vendorId: row.vendorId,
     urlSlug: row.slug,
-    media: row.images.slice(0, 8).map((img) => ({
-      url: resolveDecoratorImage(img),
-      mimeType: img.mimeType || "image/webp",
-      mediaId: img.mediaId,
-      compressedMediaUrl: null
-    })),
+    media,
     venueName: row.name,
     meta: {
-      startsAt: row.minDecorCost,
-      indoorPrice: row.indoorPrice,
-      outdoorPrice: row.outdoorPrice,
+      startsAt: null,
+      indoorPrice: null,
+      outdoorPrice: null,
       areasAvailable: null
     },
     formattedAddress: row.formattedAddress,
@@ -280,7 +299,6 @@ function selectedTag(value: string | null): string | null {
     return "Viraaya's choice";
   }
   if (selected === "1002" || selected === "premium") return "Premium";
-  if (selected === "1003" || selected === "budget friendly") return "Budget Friendly";
   return value;
 }
 
@@ -334,7 +352,7 @@ async function queryDecoratorsUncached(queryString: string): Promise<DecoratorQu
   };
 }
 
-const queryDecoratorsCached = unstable_cache(queryDecoratorsUncached, ["decorator-list-query-v3"], {
+const queryDecoratorsCached = unstable_cache(queryDecoratorsUncached, ["decorator-list-query-v4-renderable-images"], {
   revalidate: 86400,
   tags: ["decorators"]
 });

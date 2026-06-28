@@ -7,6 +7,11 @@ import {
   applyHomepageHeaderFooter,
   injectHomepageShellSupport
 } from "../homepage-shell";
+import {
+  PRICING_RUNTIME_SCRIPT,
+  sanitizePricingData,
+  sanitizePricingMarkup
+} from "./pricing-sanitizer";
 
 // Mirrors theweddingcompany.com's own photographer detail page: the captured
 // compiled HTML + vendored JS/CSS/fonts/media are served entirely from the
@@ -47,6 +52,9 @@ const LOCAL_ALIASES: Array<[string, string]> = [
   ["/twc-venues-local/weddingimage.betterhalf.ai", "/venue-assets/weddingimage"],
   ["/twc-venues-local/maps.gstatic.com", "/venue-assets/maps"]
 ];
+
+const PHOTOGRAPHER_IMAGE_FALLBACK = "/twc-next/static/media/hotel-taj.cca019c4.webp";
+const RENDERABLE_IMAGE_PATH_PATTERN = /\.(?:avif|gif|jpe?g|png|svg|webp)(?:\?|$)/i;
 
 // Client-side branding pass: rewrites any residual "The Wedding Company" name,
 // logos, links and favicon to Viraaya Weddings after the page hydrates.
@@ -152,8 +160,26 @@ function num(v: unknown): number | null {
 }
 
 function coverMediaFor(media: any[]) {
-  return media.map((m) => ({
-    mediaUrl: localizeUrl(m.localPath && m.localPath.startsWith("/") ? m.localPath : m.originalUrl),
+  const items = media
+    .map((m) => ({
+      ...m,
+      mediaUrl: localizeUrl(m.localPath && m.localPath.startsWith("/") ? m.localPath : m.originalUrl)
+    }))
+    .filter((m) => RENDERABLE_IMAGE_PATH_PATTERN.test(m.mediaUrl));
+
+  if (!items.length) {
+    return [{
+      mediaUrl: PHOTOGRAPHER_IMAGE_FALLBACK,
+      alt: "",
+      mediaId: null,
+      mimeType: "image/webp",
+      compressedMediaUrl: null,
+      videoThumbnailUrl: null
+    }];
+  }
+
+  return items.map((m) => ({
+    mediaUrl: m.mediaUrl,
     alt: "",
     mediaId: m.mediaId,
     mimeType: m.mimeType || "image/webp",
@@ -183,7 +209,7 @@ function buildPhotographerDetails(base: any, row: any) {
   const lp = row.listingPayload && typeof row.listingPayload === "object" ? row.listingPayload : {};
   const baseVd = (base.props?.pageProps?.vendorDetails || {}) as Record<string, any>;
   const hasDetail = dp && (dp.name || dp.coverMedia || dp.about || dp.meta);
-  const vd = localizeDeep({ ...baseVd, ...(hasDetail ? dp : lp) });
+  const vd = sanitizePricingData(localizeDeep({ ...baseVd, ...(hasDetail ? dp : lp) }));
 
   vd.vendorId = row.vendorId;
   vd.name = row.name;
@@ -199,7 +225,7 @@ function buildPhotographerDetails(base: any, row: any) {
 
   // Prefer DB media (ordered, deduped at import) for the gallery when present.
   const media = [...(row.media || [])].sort((a: any, b: any) => a.position - b.position);
-  if (media.length) vd.coverMedia = coverMediaFor(media);
+  vd.coverMedia = coverMediaFor(media);
 
   return vd;
 }
@@ -297,17 +323,18 @@ async function getMirrorHtmlUncached(citySlug: string, slug: string): Promise<st
   base.assetPrefix = "/twc-mirror";
 
   let html = getTemplate();
-  html = injectNextData(html, base);
+  html = injectNextData(html, sanitizePricingData(base));
   html = applyHomepageHeaderFooter(html);
   html = localizeAssetPaths(html);
   html = applyBranding(html);
   html = injectHomepageShellSupport(html);
-  return html.replace("</body>", `${BRAND_RUNTIME_SCRIPT}</body>`);
+  html = sanitizePricingMarkup(html);
+  return html.replace("</body>", `${PRICING_RUNTIME_SCRIPT}${BRAND_RUNTIME_SCRIPT}</body>`);
 }
 
 // Cache the fully-rendered detail HTML so a hot page never touches Neon. The
 // cloned data is static, so a long revalidate keeps DB hits to ~once/day/page.
-const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["photographer-mirror-html-brand-gold-v3"], {
+const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["photographer-mirror-html-brand-gold-v8-logo-rail"], {
   revalidate: 86400,
   tags: ["photographers"]
 });
