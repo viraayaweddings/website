@@ -1,21 +1,30 @@
-const imageOrigin = "https://imageswedding.theweddingcompany.com";
+import fs from "node:fs/promises";
+import path from "node:path";
 
-const allowedContentTypes = new Set([
-  "image/avif",
-  "image/gif",
-  "image/jpeg",
-  "image/png",
-  "image/svg+xml",
-  "image/webp",
-  "video/mp4",
-  "video/webm"
-]);
-const upstreamHeaders = {
-  accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-  referer: "https://www.theweddingcompany.com/",
-  "user-agent":
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+const mimeTypes: Record<string, string> = {
+  ".avif": "image/avif",
+  ".gif": "image/gif",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".svg": "image/svg+xml",
+  ".webm": "video/webm",
+  ".webp": "image/webp"
 };
+
+const IMMUTABLE = "public, max-age=31536000, immutable";
+const NOT_FOUND_HEADERS = {
+  "cache-control": "no-store",
+  "x-content-type-options": "nosniff"
+};
+const FALLBACK_IMAGE_PATH = path.join(
+  process.cwd(),
+  "public",
+  "twc-next",
+  "static",
+  "media",
+  "Mandap.d8d5d35e.webp"
+);
 
 function isSafePath(pathParts: string[]) {
   try {
@@ -35,37 +44,49 @@ function isSafePath(pathParts: string[]) {
   }
 }
 
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ path: string[] }> }
-) {
-  const { path } = await params;
-  if (!isSafePath(path)) return new Response("Not found", { status: 404 });
-
-  const target = new URL(path.join("/"), `${imageOrigin}/`);
-  target.search = new URL(request.url).search;
-
-  const response = await fetch(target, { headers: upstreamHeaders });
-  const contentType = response.headers.get("content-type")?.split(";")[0].trim().toLowerCase();
-  if (!response.ok || !contentType || !allowedContentTypes.has(contentType)) {
-    return new Response("Not found", {
-      status: response.ok ? 404 : response.status,
-      headers: {
-        "cache-control": "no-store",
-        "x-content-type-options": "nosniff"
-      }
-    });
-  }
-
-  return new Response(response.body, {
-    status: response.status,
+async function fallbackImageResponse() {
+  const body = await fs.readFile(FALLBACK_IMAGE_PATH);
+  return new Response(body, {
     headers: {
-      "cache-control": "public, max-age=31536000, immutable",
-      ...(response.headers.get("content-length")
-        ? { "content-length": response.headers.get("content-length") as string }
-        : {}),
-      "content-type": response.headers.get("content-type") ?? "image/webp",
+      "cache-control": IMMUTABLE,
+      "content-type": "image/webp",
       "x-content-type-options": "nosniff"
     }
   });
+}
+
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ path: string[] }> }
+) {
+  const { path: pathParts } = await params;
+  if (!isSafePath(pathParts)) return new Response("Not found", { status: 404 });
+
+  const root = path.resolve(
+    process.cwd(),
+    "public",
+    "twc-venues-local",
+    "imageswedding.theweddingcompany.com"
+  );
+  const file = path.resolve(root, ...pathParts);
+  const ext = path.extname(pathParts[pathParts.length - 1] ?? "").toLowerCase();
+  const contentType = mimeTypes[ext];
+
+  if (file.startsWith(root + path.sep)) {
+    try {
+      const body = await fs.readFile(file);
+      return new Response(body, {
+        headers: {
+          "cache-control": IMMUTABLE,
+          "content-type": contentType || "application/octet-stream",
+          "x-content-type-options": "nosniff"
+        }
+      });
+    } catch {
+      if (contentType?.startsWith("image/")) return fallbackImageResponse();
+    }
+  }
+
+  if (contentType?.startsWith("image/")) return fallbackImageResponse();
+  return new Response("Not found", { status: 404, headers: NOT_FOUND_HEADERS });
 }

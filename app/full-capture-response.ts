@@ -7,7 +7,14 @@ import {
   homepageShellScript
 } from "./homepage-shell";
 
-const imageOrigin = "https://imageswedding.theweddingcompany.com";
+const localAssetOrigins: Array<[string, string]> = [
+  ["https://gcpimages.theweddingcompany.com/", "/venue-assets/gcpimages/"],
+  ["https://imageswedding.theweddingcompany.com/", "/venue-assets/imageswedding/"],
+  ["https://weddingimage.betterhalf.ai/", "/venue-assets/weddingimage/"],
+  ["https://maps.gstatic.com/", "/venue-assets/maps/"],
+  ["https://cdn.prod.website-files.com/", "/venue-assets/webflowcdn/"],
+  ["https://assets-global.website-files.com/", "/venue-assets/webflowassets/"]
+];
 const homepageStylesheets = [
   "/twc-next/static/css/5baa3d17e8de8438.css",
   "/twc-next/static/css/c8c1bcda263ddb1a.css",
@@ -19,11 +26,31 @@ const homepageStylesheets = [
 const fullCaptureCache = new Map<string, string>();
 
 function rewriteAssetUrls(html: string) {
-  return html
+  let next = html
     .replaceAll('href="/_next/static/', 'href="/twc-next/static/')
     .replaceAll('src="/_next/static/', 'src="/twc-next/static/')
-    .replaceAll('srcset="/_next/static/', 'srcset="/twc-next/static/')
-    .replaceAll(`${imageOrigin}/`, "/twc-image-proxy/");
+    .replaceAll('srcset="/_next/static/', 'srcset="/twc-next/static/');
+
+  for (const [remote, local] of localAssetOrigins) {
+    next = next.replaceAll(remote, local);
+  }
+
+  return next;
+}
+
+function stripExternalRuntime(html: string) {
+  const trackingPattern = /googletagmanager|clarity\.ms|posthog/i;
+
+  return html
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, (tag) => {
+      const src = tag.match(/\bsrc=["']([^"']+)["']/i)?.[1] || "";
+      if (/^https?:\/\//i.test(src)) return "";
+      return !src && trackingPattern.test(tag) ? "" : tag;
+    })
+    .replace(/<noscript\b[^>]*>[\s\S]*?<\/noscript>/gi, (tag) =>
+      trackingPattern.test(tag) ? "" : tag
+    )
+    .replace(/<iframe\b[^>]*\bsrc=["']https?:\/\/[^"']+["'][\s\S]*?<\/iframe>/gi, "");
 }
 
 function injectHomepageAssets(html: string) {
@@ -39,14 +66,24 @@ function injectHomepageAssets(html: string) {
 const imageProxyScript = `
 <script>
 (() => {
-  const remote = "https://imageswedding." + "thewedding" + "company" + ".com/";
-  const local = "/twc-image-proxy/";
-  const rewrite = (value) => value && value.includes(remote)
-    ? value.split(remote).join(local)
-    : value;
+  const oldDomain = "thewedding" + "company" + ".com";
+  const replacements = [
+    ["https://gcpimages." + oldDomain + "/", "/venue-assets/gcpimages/"],
+    ["https://imageswedding." + oldDomain + "/", "/venue-assets/imageswedding/"],
+    ["https://weddingimage.betterhalf.ai/", "/venue-assets/weddingimage/"],
+    ["https://maps.gstatic.com/", "/venue-assets/maps/"],
+    ["https://cdn.prod.website-files.com/", "/venue-assets/webflowcdn/"],
+    ["https://assets-global.website-files.com/", "/venue-assets/webflowassets/"]
+  ];
+  const rewrite = (value) => {
+    if (!value || typeof value !== "string") return value;
+    let next = value;
+    for (const [remote, local] of replacements) next = next.split(remote).join(local);
+    return next;
+  };
   const patchElement = (element) => {
     if (!element || !element.getAttribute) return;
-    for (const attr of ["src", "srcset"]) {
+    for (const attr of ["src", "srcset", "poster"]) {
       const value = element.getAttribute(attr);
       const nextValue = rewrite(value);
       if (nextValue && nextValue !== value) element.setAttribute(attr, nextValue);
@@ -55,7 +92,7 @@ const imageProxyScript = `
   const patchTree = (root) => {
     patchElement(root);
     if (root && root.querySelectorAll) {
-      root.querySelectorAll("img,source").forEach(patchElement);
+      root.querySelectorAll("img,source,video").forEach(patchElement);
     }
   };
   const sweep = () => patchTree(document);
@@ -82,7 +119,7 @@ export function fullCaptureResponse(slug: string) {
     `${slug}.html`
   );
   const html = applyBranding(applyHomepageHeaderFooter(
-    injectHomepageAssets(rewriteAssetUrls(fs.readFileSync(file, "utf8")))
+    injectHomepageAssets(stripExternalRuntime(rewriteAssetUrls(fs.readFileSync(file, "utf8"))))
   )).replace("</body>", `${imageProxyScript}${homepageShellScript()}</body>`);
   fullCaptureCache.set(slug, html);
 

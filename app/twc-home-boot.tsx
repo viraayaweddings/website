@@ -9,14 +9,21 @@ export default function TwcHomeBoot() {
   useEffect(() => {
     const legacyHomepage = Boolean(document.querySelector("#home-page-revamp"));
     const sharedCleanup = setupSharedHeader();
+    const cityPopupCleanup = setupCityPopupRemoval();
 
     if (!legacyHomepage) {
-      return sharedCleanup;
+      return () => {
+        cityPopupCleanup();
+        sharedCleanup();
+      };
     }
 
     const existing = document.querySelector('script[data-twc-home="1"]');
     if (existing) {
-      return sharedCleanup;
+      return () => {
+        cityPopupCleanup();
+        sharedCleanup();
+      };
     }
 
     const script = document.createElement("script");
@@ -25,40 +32,156 @@ export default function TwcHomeBoot() {
     script.dataset.twcHome = "1";
     document.body.appendChild(script);
 
-    return sharedCleanup;
+    return () => {
+      cityPopupCleanup();
+      sharedCleanup();
+    };
   }, [pathname]);
 
   return null;
 }
 
+function setupCityPopupRemoval() {
+  const popupMarkers = [
+    "Get wedding services curated for your city",
+    "Use my current location"
+  ];
+
+  const unlockBody = () => {
+    document.body.classList.remove("twc-modal-open");
+    document.body.classList.remove("block-scroll");
+    document.body.style.overflow = "";
+  };
+
+  const findPopupShell = (element: Element) => {
+    let current: Element | null = element;
+    while (current && current !== document.body) {
+      const style = window.getComputedStyle(current);
+      const className = typeof current.className === "string" ? current.className : "";
+      const id = current.id || "";
+      if (
+        current.getAttribute("role") === "dialog" ||
+        current.getAttribute("aria-modal") === "true" ||
+        /modal|dialog|portal/i.test(`${className} ${id}`) ||
+        (style.position === "fixed" && Number(style.zIndex || 0) >= 20)
+      ) {
+        return current;
+      }
+      current = current.parentElement;
+    }
+    return element.parentElement || element;
+  };
+
+  const removeCityPopup = () => {
+    document.querySelectorAll<HTMLElement>("#portal, #modal-wrapper, #modal-content, #drawer-portal").forEach((element) => {
+      const text = element.textContent || "";
+      if (popupMarkers.some((marker) => text.includes(marker))) element.remove();
+    });
+
+    const matches = Array.from(document.body.querySelectorAll("*")).filter((element) => {
+      if (["SCRIPT", "STYLE", "NOSCRIPT"].includes(element.tagName)) return false;
+      const text = element.textContent || "";
+      return popupMarkers.some((marker) => text.includes(marker));
+    });
+
+    matches.forEach((element) => findPopupShell(element)?.remove());
+
+    document.querySelectorAll<HTMLElement>("body > div, body > section").forEach((element) => {
+      const text = element.textContent || "";
+      if (popupMarkers.some((marker) => text.includes(marker))) element.remove();
+    });
+
+    if (matches.length) unlockBody();
+    if (document.body.classList.contains("twc-modal-open") || document.body.classList.contains("block-scroll")) {
+      unlockBody();
+    }
+  };
+
+  removeCityPopup();
+  [100, 400, 1000, 2500, 5000].forEach((delay) => window.setTimeout(removeCityPopup, delay));
+  const interval = window.setInterval(removeCityPopup, 250);
+  window.setTimeout(() => window.clearInterval(interval), 10000);
+
+  const observer = new MutationObserver(removeCityPopup);
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  return () => {
+    window.clearInterval(interval);
+    observer.disconnect();
+    unlockBody();
+  };
+}
+
 function setupSharedHeader() {
   const cleanups: Array<() => void> = [];
 
-  const trigger = document.querySelector("#other_services_dropdown_container");
-  if (trigger && !trigger.querySelector(".twc-more-menu")) {
-    const menu = document.createElement("div");
-    menu.className = "twc-more-menu";
-    menu.innerHTML = `
-      <a href="/wedding-ideas">Wedding Ideas</a>
-      <a href="/wedding-photography">Wedding Photographers</a>
-      <a href="/wedding-decorators">Wedding Decorators</a>
-      <a href="/wedding-services">Wedding Services</a>
-      <a href="/wedding-invitation-card">Wedding Invitation Card</a>
-    `;
-    trigger.appendChild(menu);
+  const trigger = document.querySelector<HTMLElement>("#other_services_dropdown_container");
+  if (trigger && trigger.dataset.twcDropdownReady !== "1") {
+    let menu = trigger.querySelector<HTMLElement>(".twc-more-menu");
+    let createdMoreMenu = false;
 
-    const open = () => trigger.classList.add("twc-more-open");
-    const close = () => trigger.classList.remove("twc-more-open");
-    const toggle = () => trigger.classList.toggle("twc-more-open");
+    if (!menu) {
+      menu = document.createElement("div");
+      menu.className = "twc-more-menu";
+      menu.setAttribute("role", "menu");
+      menu.innerHTML = `
+        <a href="/wedding-ideas" role="menuitem">Wedding Ideas</a>
+        <a href="/wedding-photography" role="menuitem">Wedding Photographers</a>
+        <a href="/wedding-decorators" role="menuitem">Wedding Decorators</a>
+        <a href="/wedding-services" role="menuitem">Wedding Services</a>
+        <a href="/wedding-invitation-card" role="menuitem">Wedding Invitation Card</a>
+      `;
+      trigger.appendChild(menu);
+      createdMoreMenu = true;
+    }
 
-    trigger.addEventListener("mouseenter", open);
-    trigger.addEventListener("mouseleave", close);
+    let closeTimer: number | undefined;
+    const clearCloseTimer = () => {
+      if (!closeTimer) return;
+      window.clearTimeout(closeTimer);
+      closeTimer = undefined;
+    };
+    const open = () => {
+      clearCloseTimer();
+      trigger.classList.add("twc-more-open");
+    };
+    const close = () => {
+      clearCloseTimer();
+      trigger.classList.remove("twc-more-open");
+    };
+    const scheduleClose = () => {
+      clearCloseTimer();
+      closeTimer = window.setTimeout(close, 180);
+    };
+    const toggle = (event: MouseEvent) => {
+      if (event.target instanceof Element && event.target.closest(".twc-more-menu")) return;
+      event.preventDefault();
+      clearCloseTimer();
+      trigger.classList.toggle("twc-more-open");
+    };
+    const closeFromOutside = (event: MouseEvent) => {
+      if (event.target instanceof Node && trigger.contains(event.target)) return;
+      close();
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close();
+    };
+
+    trigger.addEventListener("pointerenter", open);
+    trigger.addEventListener("pointerleave", scheduleClose);
     trigger.addEventListener("click", toggle);
+    document.addEventListener("click", closeFromOutside);
+    document.addEventListener("keydown", closeOnEscape);
+    trigger.dataset.twcDropdownReady = "1";
     cleanups.push(() => {
-      trigger.removeEventListener("mouseenter", open);
-      trigger.removeEventListener("mouseleave", close);
+      close();
+      trigger.removeEventListener("pointerenter", open);
+      trigger.removeEventListener("pointerleave", scheduleClose);
       trigger.removeEventListener("click", toggle);
-      menu.remove();
+      document.removeEventListener("click", closeFromOutside);
+      document.removeEventListener("keydown", closeOnEscape);
+      delete trigger.dataset.twcDropdownReady;
+      if (createdMoreMenu) menu.remove();
     });
   }
 

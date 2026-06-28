@@ -37,6 +37,14 @@ export const homepageShellCss = `
     top: 0;
     z-index: 10000;
   }
+  body.twc-modal-open #twc-homepage-shared-header {
+    display: none !important;
+  }
+  #portal #modal-wrapper:has(#modal-content #modal-header),
+  #drawer-portal:has(input[placeholder="Search your event city"]),
+  #drawer-portal:has(input[placeholder="Enter city of the event"]) {
+    display: none !important;
+  }
   #twc-homepage-shared-header > * {
     align-items: center !important;
     min-height: 76px !important;
@@ -126,19 +134,27 @@ export const homepageShellCss = `
   #twc-homepage-shared-header .twc-more-menu {
     position: absolute;
     right: 0;
-    top: calc(100% + 10px);
+    top: 100%;
     z-index: 10001;
-    display: none;
+    display: grid;
+    gap: 4px;
     min-width: 230px;
     border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.08);
     background: #fff;
     box-shadow: 0 18px 45px rgba(0, 0, 0, 0.14);
-    overflow: hidden;
+    opacity: 0;
+    padding: 10px;
+    pointer-events: none;
+    transform: translate3d(0, 8px, 0);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease;
   }
   #twc-homepage-shared-header .twc-more-menu a {
-    display: block;
-    padding: 12px 16px;
+    border-radius: 8px;
+    display: grid;
+    padding: 10px 12px;
     color: #1a1a1a;
     font-size: 14px;
     line-height: 1.35;
@@ -150,7 +166,9 @@ export const homepageShellCss = `
     color: #a6804f;
   }
   #twc-homepage-shared-header .twc-more-open .twc-more-menu {
-    display: block;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate3d(0, 0, 0);
   }
 </style>`;
 
@@ -486,13 +504,21 @@ function normalizeContactDetails(markup: string) {
 
 export function applyBranding(markup: string) {
   const branded = sanitizePublicDetails(applyBrandAssets(markup))
-    // Route captured CDN image hosts through the local asset proxy so no
-    // theweddingcompany.com host appears in any img src (images still load via
-    // the proxy's upstream fallback).
+    // Route captured CDN image hosts through local vendored asset handlers.
     .replaceAll("https://gcpimages.theweddingcompany.com", "/venue-assets/gcpimages")
     .replaceAll("https://imageswedding.theweddingcompany.com", "/venue-assets/imageswedding")
+    .replaceAll("https://weddingimage.betterhalf.ai", "/venue-assets/weddingimage")
+    .replaceAll("https://storage.googleapis.com", "/venue-assets/storage")
+    .replaceAll("https://maps.gstatic.com", "/venue-assets/maps")
+    .replaceAll("https://cdn.prod.website-files.com", "/venue-assets/webflowcdn")
+    .replaceAll("https://assets-global.website-files.com", "/venue-assets/webflowassets")
     .replaceAll("/twc-venues-local/gcpimages.theweddingcompany.com", "/venue-assets/gcpimages")
     .replaceAll("/twc-venues-local/imageswedding.theweddingcompany.com", "/venue-assets/imageswedding")
+    .replaceAll("/twc-venues-local/weddingimage.betterhalf.ai", "/venue-assets/weddingimage")
+    .replaceAll("/twc-venues-local/storage.googleapis.com", "/venue-assets/storage")
+    .replaceAll("/twc-venues-local/maps.gstatic.com", "/venue-assets/maps")
+    .replaceAll("/twc-venues-local/cdn.prod.website-files.com", "/venue-assets/webflowcdn")
+    .replaceAll("/twc-venues-local/assets-global.website-files.com", "/venue-assets/webflowassets")
     // Social handles.
     .replaceAll("theweddingcompanyofficial", "viraayaweddings")
     .replaceAll("https://www.theweddingcompany.com", brandAssets.url)
@@ -659,27 +685,177 @@ export function homepageShellScript() {
     if (!menu) {
       menu = document.createElement("div");
       menu.className = "twc-more-menu";
+      menu.setAttribute("role", "menu");
       menu.innerHTML = \`
-        <a href="/wedding-ideas">Wedding Ideas</a>
-        <a href="/wedding-photography">Wedding Photographers</a>
-        <a href="/wedding-decorators">Wedding Decorators</a>
-        <a href="/wedding-services">Wedding Services</a>
-        <a href="/wedding-invitation-card">Wedding Invitation Card</a>
+        <a href="/wedding-ideas" role="menuitem">Wedding Ideas</a>
+        <a href="/wedding-photographers" role="menuitem">Wedding Photographers</a>
+        <a href="/wedding-decorators" role="menuitem">Wedding Decorators</a>
+        <a href="/wedding-services" role="menuitem">Wedding Services</a>
+        <a href="/wedding-invitation-card" role="menuitem">Wedding Invitation Card</a>
       \`;
       trigger.appendChild(menu);
     }
 
-    const open = () => trigger.classList.add("twc-more-open");
-    const close = () => trigger.classList.remove("twc-more-open");
+    let closeTimer;
+    const clearCloseTimer = () => {
+      if (!closeTimer) return;
+      window.clearTimeout(closeTimer);
+      closeTimer = undefined;
+    };
+    const open = () => {
+      clearCloseTimer();
+      trigger.classList.add("twc-more-open");
+    };
+    const close = () => {
+      clearCloseTimer();
+      trigger.classList.remove("twc-more-open");
+    };
+    const scheduleClose = () => {
+      clearCloseTimer();
+      closeTimer = window.setTimeout(close, 180);
+    };
     const toggle = (event) => {
+      if (event.target && event.target.closest && event.target.closest(".twc-more-menu")) return;
       event.preventDefault();
+      clearCloseTimer();
       trigger.classList.toggle("twc-more-open");
     };
+    const closeFromOutside = (event) => {
+      if (event.target && trigger.contains(event.target)) return;
+      close();
+    };
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") close();
+    };
 
-    trigger.addEventListener("mouseenter", open);
-    trigger.addEventListener("mouseleave", close);
+    trigger.addEventListener("pointerenter", open);
+    trigger.addEventListener("pointerleave", scheduleClose);
     trigger.addEventListener("click", toggle);
+    document.addEventListener("click", closeFromOutside);
+    document.addEventListener("keydown", closeOnEscape);
     trigger.dataset.twcDropdownReady = "1";
+  };
+
+  const syncOverlayState = () => {
+    if (!document.body) return;
+    let hasGalleryOverlay = false;
+    document.querySelectorAll('[role="dialog"], .fixed, [class*="fixed"]').forEach((element) => {
+      if (hasGalleryOverlay || element.closest("#twc-homepage-shared-header")) return;
+      const style = window.getComputedStyle(element);
+      if (style.display === "none" || style.visibility === "hidden" || style.opacity === "0") return;
+      const rect = element.getBoundingClientRect();
+      const className = typeof element.className === "string" ? element.className : "";
+      const looksFullscreen = rect.width >= window.innerWidth * 0.5 && rect.height >= window.innerHeight * 0.5;
+      const looksLikeGallery = /gallery|modal|dialog|swiper|photo/i.test(className + " " + (element.id || ""));
+      if (looksFullscreen && (looksLikeGallery || element.querySelector("img"))) {
+        hasGalleryOverlay = true;
+      }
+    });
+    document.body.classList.toggle("twc-modal-open", hasGalleryOverlay);
+  };
+
+  const removeCitySelectionPopup = () => {
+    if (!document.body) return;
+    const markers = [
+      "Get wedding services curated for your city",
+      "Use my current location"
+    ];
+    const unlockBody = () => {
+      document.body.classList.remove("twc-modal-open");
+      document.body.classList.remove("block-scroll");
+      document.body.style.overflow = "";
+    };
+    document.querySelectorAll("#portal, #modal-wrapper, #modal-content, #drawer-portal").forEach((element) => {
+      const text = element.textContent || "";
+      if (markers.some((marker) => text.includes(marker))) {
+        element.remove();
+        unlockBody();
+      }
+    });
+    const popupNodes = Array.from(document.body.querySelectorAll("*")).filter((element) => {
+      if (["SCRIPT", "STYLE", "NOSCRIPT"].includes(element.tagName)) return false;
+      const text = element.textContent || "";
+      return markers.some((marker) => text.includes(marker));
+    });
+    popupNodes.forEach((element) => {
+      let current = element;
+      while (current && current !== document.body) {
+        const style = window.getComputedStyle(current);
+        const className = typeof current.className === "string" ? current.className : "";
+        const id = current.id || "";
+        if (
+          current.getAttribute("role") === "dialog" ||
+          current.getAttribute("aria-modal") === "true" ||
+          /modal|dialog|portal/i.test(className + " " + id) ||
+          (style.position === "fixed" && Number(style.zIndex || 0) >= 20)
+        ) {
+          current.remove();
+          unlockBody();
+          return;
+        }
+        current = current.parentElement;
+      }
+      if (element.parentElement && element.parentElement !== document.body) {
+        element.parentElement.remove();
+      } else {
+        element.remove();
+      }
+      unlockBody();
+    });
+  };
+
+  const venueMediaAliases = {
+    "Calendar.d19ed62a.webp": "/twc-mirror/_next/static/media/Calendar.d19ed62a.webp",
+    "Promotion.757e6a61.webp": "/twc-mirror/_next/static/media/Promotion.757e6a61.webp",
+    "TestimonialBorder.22703fa1.png": "/twc-mirror/_next/static/media/TestimonialBorder.22703fa1.png",
+    "WeddingRing.04acaeb5.webp": "/twc-mirror/_next/static/media/WeddingRing.04acaeb5.webp",
+    "GoldenBorder.18b3e3aa.svg": "/twc-mirror/_next/static/media/GoldenBorder.18b3e3aa.svg",
+    "successCheck.4ac15663.png": "/twc-mirror/_next/static/media/successCheck.4ac15663.png",
+    "pinkCheckIcon.fad964b8.webp": "/twc-mirror/_next/static/media/pinkCheckIcon.fad964b8.webp",
+    "point.ac316946.png": "/twc-mirror/_next/static/media/point.ac316946.png",
+    "golden-icon-left.8794ea31.webp": "/twc-mirror/_next/static/media/golden-icon-left.8794ea31.webp",
+    "golden-icon-right.e81179aa.webp": "/twc-mirror/_next/static/media/golden-icon-right.e81179aa.webp"
+  };
+
+  const normalizeMirroredAssetPath = (value) => {
+    if (!value || typeof value !== "string") return value;
+    let next = value;
+    while (next.includes("/twc-mirror/twc-mirror/")) {
+      next = next.split("/twc-mirror/twc-mirror/").join("/twc-mirror/");
+    }
+    if (next.startsWith("/_next/static/media/")) next = "/twc-mirror" + next;
+    return next;
+  };
+
+  const normalizeMirroredAssetPaths = () => {
+    document.querySelectorAll("[src], [srcset], [href], [data-src]").forEach((node) => {
+      ["src", "srcset", "href", "data-src"].forEach((attr) => {
+        const value = node.getAttribute && node.getAttribute(attr);
+        if (!value) return;
+        const next = normalizeMirroredAssetPath(value);
+        if (next !== value) node.setAttribute(attr, next);
+      });
+    });
+  };
+
+  const repairVenueMediaImages = () => {
+    normalizeMirroredAssetPaths();
+    document.querySelectorAll("img").forEach((img) => {
+      const markup = [
+        img.currentSrc,
+        img.src,
+        img.getAttribute("src"),
+        img.getAttribute("srcset"),
+        img.getAttribute("data-src"),
+        img.getAttribute("alt")
+      ].filter(Boolean).join(" ");
+      const match = Object.entries(venueMediaAliases).find(([file]) => markup.includes(file));
+      if (!match) return;
+      const [, localSrc] = match;
+      if (img.getAttribute("src") !== localSrc) img.setAttribute("src", localSrc);
+      if (img.getAttribute("srcset")) img.removeAttribute("srcset");
+      if (img.getAttribute("data-src")) img.setAttribute("data-src", localSrc);
+    });
   };
 
   const removeAlternateHeader = (element) => {
@@ -704,6 +880,11 @@ export function homepageShellScript() {
   };
 
   const enforceShell = () => {
+    if (!document.body) {
+      window.setTimeout(enforceShell, 30);
+      return;
+    }
+
     const container =
       document.querySelector("#parent-container") ||
       document.querySelector("#__next") ||
@@ -732,11 +913,32 @@ export function homepageShellScript() {
 
     document.querySelectorAll("footer, .parent-div.is--footer, .venues-footer, .twc-company-footer, .twc-legacy-footer").forEach(removeAlternateFooter);
     setupMoreDropdown();
+    removeCitySelectionPopup();
+    repairVenueMediaImages();
+    syncOverlayState();
   };
 
   enforceShell();
   [120, 400, 1000, 2500, 5000].forEach((delay) => setTimeout(enforceShell, delay));
+  const cityPopupInterval = window.setInterval(removeCitySelectionPopup, 250);
+  window.setTimeout(() => window.clearInterval(cityPopupInterval), 10000);
+  try {
+    new MutationObserver(() => {
+      removeCitySelectionPopup();
+      repairVenueMediaImages();
+      syncOverlayState();
+    }).observe(document.documentElement, {
+      attributes: true,
+      childList: true,
+      subtree: true,
+      attributeFilter: ["class", "style", "aria-hidden", "role", "src", "srcset", "data-src"]
+    });
+  } catch (e) {}
+  document.addEventListener("error", (event) => {
+    if (event.target && event.target.tagName === "IMG") repairVenueMediaImages();
+  }, true);
   window.addEventListener("pageshow", enforceShell, { once: true });
+  window.addEventListener("resize", syncOverlayState);
 })();
 </script>`;
 }
@@ -824,11 +1026,19 @@ export function injectHomepageShellSupport(markup: string) {
     : markup.replace("</head>", `${homepageShellCss}</head>`);
 
   if (!next.includes('id="twc-homepage-shell-enforcer"')) {
-    next = next.replace("</body>", `${homepageShellScript()}</body>`);
+    const insertAt = next.lastIndexOf("</body>");
+    next =
+      insertAt === -1
+        ? `${next}${homepageShellScript()}`
+        : `${next.slice(0, insertAt)}${homepageShellScript()}${next.slice(insertAt)}`;
   }
 
   if (!next.includes('id="twc-a11y-enhancer"')) {
-    next = next.replace("</body>", `${accessibilityEnhancerScript()}</body>`);
+    const insertAt = next.lastIndexOf("</body>");
+    next =
+      insertAt === -1
+        ? `${next}${accessibilityEnhancerScript()}`
+        : `${next.slice(0, insertAt)}${accessibilityEnhancerScript()}${next.slice(insertAt)}`;
   }
 
   return next;

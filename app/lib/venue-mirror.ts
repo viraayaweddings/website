@@ -42,14 +42,20 @@ const LOCAL_HOSTS: Array<[string, string]> = [
   ["https://gcpimages.theweddingcompany.com", "/venue-assets/gcpimages"],
   ["https://imageswedding.theweddingcompany.com", "/venue-assets/imageswedding"],
   ["https://weddingimage.betterhalf.ai", "/venue-assets/weddingimage"],
-  ["https://maps.gstatic.com", "/venue-assets/maps"]
+  ["https://storage.googleapis.com", "/venue-assets/storage"],
+  ["https://maps.gstatic.com", "/venue-assets/maps"],
+  ["https://cdn.prod.website-files.com", "/venue-assets/webflowcdn"],
+  ["https://assets-global.website-files.com", "/venue-assets/webflowassets"]
 ];
 
 const LOCAL_ALIASES: Array<[string, string]> = [
   ["/twc-venues-local/gcpimages.theweddingcompany.com", "/venue-assets/gcpimages"],
   ["/twc-venues-local/imageswedding.theweddingcompany.com", "/venue-assets/imageswedding"],
   ["/twc-venues-local/weddingimage.betterhalf.ai", "/venue-assets/weddingimage"],
-  ["/twc-venues-local/maps.gstatic.com", "/venue-assets/maps"]
+  ["/twc-venues-local/storage.googleapis.com", "/venue-assets/storage"],
+  ["/twc-venues-local/maps.gstatic.com", "/venue-assets/maps"],
+  ["/twc-venues-local/cdn.prod.website-files.com", "/venue-assets/webflowcdn"],
+  ["/twc-venues-local/assets-global.website-files.com", "/venue-assets/webflowassets"]
 ];
 
 function aliasLocalAssetPaths(value: string) {
@@ -208,6 +214,47 @@ function localizeAssetPaths(html: string): string {
   return aliasLocalAssetPaths(out);
 }
 
+const VENUE_STATIC_ASSET_ALIASES: Array<[string, string]> = [
+  [
+    "/venue-assets/gcpimages/weddings/assets/vendor_promotion.webp",
+    "/twc-mirror/_next/static/media/Promotion.757e6a61.webp"
+  ],
+  [
+    "/venue-assets/gcpimages/weddings/assets/testimonial_border.png",
+    "/twc-mirror/_next/static/media/TestimonialBorder.22703fa1.png"
+  ]
+];
+
+function normalizeVenueStaticAssets(html: string): string {
+  let out = html;
+  for (const [from, to] of VENUE_STATIC_ASSET_ALIASES) {
+    out = out.split(from).join(to);
+  }
+  return out;
+}
+
+function stripExternalRuntime(html: string) {
+  const trackingPattern = /googletagmanager|clarity\.ms|posthog/i;
+
+  return html
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, (tag) => {
+      const src = tag.match(/\bsrc=["']([^"']+)["']/i)?.[1] || "";
+      if (/^https?:\/\//i.test(src)) return "";
+      return !src && trackingPattern.test(tag) ? "" : tag;
+    })
+    .replace(/<noscript\b[^>]*>[\s\S]*?<\/noscript>/gi, (tag) =>
+      trackingPattern.test(tag) ? "" : tag
+    )
+    .replace(/<iframe\b[^>]*\bsrc=["']https?:\/\/[^"']+["'][\s\S]*?<\/iframe>/gi, "");
+}
+
+function insertBeforeClosingBody(html: string, snippet: string) {
+  const index = html.lastIndexOf("</body>");
+  return index === -1
+    ? `${html}${snippet}`
+    : `${html.slice(0, index)}${snippet}${html.slice(index)}`;
+}
+
 const BRAND_RUNTIME_SCRIPT = `
 <script id="viraaya-runtime-branding">
 (() => {
@@ -238,6 +285,13 @@ const BRAND_RUNTIME_SCRIPT = `
     ["/_next/static/media/TheWedding" + "CompanyLogo_Low_Res.88e6d171.webp", "/brand/viraaya-logo-header.png"],
     ["/twc-mirror/_next/static/media/TheWedding" + "CompanyLogoVertical.b80524ce.webp", "/brand/viraaya-logo-full.png"],
     ["/_next/static/media/TheWedding" + "CompanyLogoVertical.b80524ce.webp", "/brand/viraaya-logo-full.png"],
+    ["https://gcpimages." + oldDomain, "/venue-assets/gcpimages"],
+    ["https://imageswedding." + oldDomain, "/venue-assets/imageswedding"],
+    ["https://weddingimage.betterhalf.ai", "/venue-assets/weddingimage"],
+    ["https://storage.googleapis.com", "/venue-assets/storage"],
+    ["https://maps.gstatic.com", "/venue-assets/maps"],
+    ["https://cdn.prod.website-files.com", "/venue-assets/webflowcdn"],
+    ["https://assets-global.website-files.com", "/venue-assets/webflowassets"],
     ["/twc-venues-local/gcpimages." + oldDomain, "/venue-assets/gcpimages"],
     ["/twc-venues-local/imageswedding." + oldDomain, "/venue-assets/imageswedding"]
   ];
@@ -248,6 +302,10 @@ const BRAND_RUNTIME_SCRIPT = `
     for (const [from, to] of replacements) {
       next = next.split(from).join(to);
     }
+    while (next.includes("/twc-mirror/twc-mirror/")) {
+      next = next.split("/twc-mirror/twc-mirror/").join("/twc-mirror/");
+    }
+    if (next.startsWith("/_next/static/media/")) next = "/twc-mirror" + next;
     return next;
   };
 
@@ -295,8 +353,7 @@ function injectEnhancer(html: string): string {
     '<link rel="stylesheet" href="/twc-mirror/vendor/leaflet/leaflet.css"/>';
   const script = '<script src="/twc-mirror/venue-enhancer.js" defer></script>';
   let out = html.includes("</head>") ? html.replace("</head>", head + "</head>") : html;
-  out = out.includes("</body>") ? out.replace("</body>", script + "</body>") : out;
-  return out;
+  return insertBeforeClosingBody(out, script);
 }
 
 // Replace the captured __NEXT_DATA__ block with DB-driven data for `row`.
@@ -333,16 +390,18 @@ async function getMirrorHtmlUncached(citySlug: string, slug: string): Promise<st
   html = injectNextData(html, sanitizePricingData(base));
   html = applyHomepageHeaderFooter(html);
   html = localizeAssetPaths(html);
+  html = normalizeVenueStaticAssets(html);
+  html = stripExternalRuntime(html);
   html = applyBranding(html);
   html = injectEnhancer(html);
   html = injectHomepageShellSupport(html);
   html = sanitizePricingMarkup(html);
-  return html.replace("</body>", `${PRICING_RUNTIME_SCRIPT}${BRAND_RUNTIME_SCRIPT}</body>`);
+  return insertBeforeClosingBody(html, `${PRICING_RUNTIME_SCRIPT}${BRAND_RUNTIME_SCRIPT}`);
 }
 
 // Cache the rendered detail HTML so hot pages never touch Neon. Cloned data is
 // static, so a long revalidate keeps DB hits to ~once/day/page.
-const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["venue-mirror-html-brand-gold-v8-logo-rail"], {
+const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["venue-mirror-html-brand-gold-v19-remove-city-popup"], {
   revalidate: 86400,
   tags: ["venues"]
 });

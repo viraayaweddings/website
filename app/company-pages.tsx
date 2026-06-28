@@ -1,6 +1,5 @@
 import fs from "node:fs";
 import path from "node:path";
-import Script from "next/script";
 import {
   aboutViraayaWeddingsArticleMarkup,
   applyBranding,
@@ -39,15 +38,6 @@ const legalDocumentTitles: Partial<Record<CompanySlug, string>> = {
   "about-us": "About Viraaya Weddings",
   "privacy-policy": "Privacy Policy"
 };
-
-const legacyStylesheet =
-  "https://cdn.prod.website-files.com/60222e72b5a2043efe117253/css/betterhalf-ai-landing-page.webflow.shared.4c23e6735.css";
-const legacyWebflowScripts = [
-  "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=60222e72b5a2043efe117253",
-  "https://cdn.prod.website-files.com/60222e72b5a2043efe117253/js/webflow.schunk.f2efb3c5440a81cf.js",
-  "https://cdn.prod.website-files.com/60222e72b5a2043efe117253/js/webflow.schunk.9b8ec8d47c25ad70.js",
-  "https://cdn.prod.website-files.com/60222e72b5a2043efe117253/js/webflow.65c80910.3b625490ee957430.js"
-];
 
 const renderedCaptureCache = new Map<CompanySlug, string>();
 
@@ -97,6 +87,21 @@ function stripCapturedDocumentClasses(markup: string) {
     .replaceAll('href="https://www.theweddingcompany.com/', 'href="/')
     .replaceAll('href="https://wf.betterhalf.ai/', 'href="/')
     .trim();
+}
+
+function stripExternalRuntime(markup: string) {
+  const trackingPattern = /googletagmanager|clarity\.ms|posthog/i;
+
+  return markup
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, (tag) => {
+      const src = tag.match(/\bsrc=["']([^"']+)["']/i)?.[1] || "";
+      if (/^https?:\/\//i.test(src)) return "";
+      return !src && trackingPattern.test(tag) ? "" : tag;
+    })
+    .replace(/<noscript\b[^>]*>[\s\S]*?<\/noscript>/gi, (tag) =>
+      trackingPattern.test(tag) ? "" : tag
+    )
+    .replace(/<iframe\b[^>]*\bsrc=["']https?:\/\/[^"']+["'][\s\S]*?<\/iframe>/gi, "");
 }
 
 function removeBalancedElement(markup: string, marker: string) {
@@ -197,11 +202,11 @@ function readCapture(slug: CompanySlug) {
     const contentStart = html.indexOf(">", bodyStart) + 1;
     const contentEnd = html.lastIndexOf("</body>");
 
-    const rendered = applyBranding(stripLegacyWebflowChrome(stripCapturedHeaderFooter(html
+    const rendered = applyBranding(stripExternalRuntime(stripLegacyWebflowChrome(stripCapturedHeaderFooter(html
       .slice(contentStart, contentEnd)
       .replace(/<script[\s\S]*?<\/script>/gi, "")
       .replaceAll('href="https://www.theweddingcompany.com/', 'href="/')
-      .replaceAll('href="https://wf.betterhalf.ai/', 'href="/'))));
+      .replaceAll('href="https://wf.betterhalf.ai/', 'href="/')))));
     renderedCaptureCache.set(slug, rendered);
     return rendered;
   }
@@ -231,16 +236,10 @@ export function CompanyPage({ slug }: { slug: CompanySlug }) {
 
   return (
     <>
-      {legacy ? <link rel="stylesheet" href={legacyStylesheet} /> : null}
       <div
         className={legacy ? "twc-captured-webflow" : "twc-captured-next"}
         dangerouslySetInnerHTML={{ __html: markup }}
       />
-      {legacy
-        ? legacyWebflowScripts.map((src) => (
-            <Script key={src} src={src} strategy="afterInteractive" />
-          ))
-        : null}
     </>
   );
 }

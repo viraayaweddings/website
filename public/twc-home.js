@@ -36,7 +36,7 @@
       location: "Udaipur",
       date: "Feb '25",
       poster:
-        "https://gcpimages.theweddingcompany.com/weddings/574a86ee-cc45-4a2c-bfb1-d23ef44b7ec2/admin_uploads/64fcf724-1472-4c08-afe3-d3167091920d.webp",
+        "/gcpimages/weddings/574a86ee-cc45-4a2c-bfb1-d23ef44b7ec2/admin_uploads/8a77d481-66fd-443a-a8f5-e9833d9bb536.webp",
       mobile: "/gcpimages/weddings/assets/hero-3-mobile.mp4#t=0.01",
       desktop: "/gcpimages/weddings/assets/hero-3-desktop.mp4#t=0.01"
     },
@@ -45,7 +45,7 @@
       location: "Jaipur",
       date: "Feb '25",
       poster:
-        "https://gcpimages.theweddingcompany.com/weddings/574a86ee-cc45-4a2c-bfb1-d23ef44b7ec2/admin_uploads/0d828b4b-34a0-4f32-88b7-01790e6e33a1.webp",
+        "/gcpimages/weddings/574a86ee-cc45-4a2c-bfb1-d23ef44b7ec2/admin_uploads/8a77d481-66fd-443a-a8f5-e9833d9bb536.webp",
       mobile: "/gcpimages/weddings/assets/hero-4-mobile.mp4#t=0.01",
       desktop: "/gcpimages/weddings/assets/hero-4-desktop.mp4#t=0.01"
     },
@@ -54,7 +54,7 @@
       location: "Delhi",
       date: "Dec '24",
       poster:
-        "https://gcpimages.theweddingcompany.com/weddings/574a86ee-cc45-4a2c-bfb1-d23ef44b7ec2/admin_uploads/f26a4b3a-ef43-47e2-9822-e56d3fc3ff70.webp",
+        "/gcpimages/weddings/574a86ee-cc45-4a2c-bfb1-d23ef44b7ec2/admin_uploads/8a77d481-66fd-443a-a8f5-e9833d9bb536.webp",
       mobile: "/gcpimages/weddings/assets/hero-5-mobile.mp4#t=0.01",
       desktop: "/gcpimages/weddings/assets/hero-5-desktop.mp4#t=0.01"
     }
@@ -627,48 +627,10 @@
   }
 
   function setupTagembedWidgets() {
-    if (
-      !document.querySelector(".tagembed-widget") ||
-      document.querySelector('script[src="https://widget.tagembed.com/embed.min.js"]')
-    ) {
-      return () => {};
-    }
-
-    let script = null;
-    let loaded = false;
-    const widget = document.querySelector(".tagembed-widget");
-
-    const load = () => {
-      if (loaded) {
-        return;
-      }
-      loaded = true;
-      script = document.createElement("script");
-      script.src = "https://widget.tagembed.com/embed.min.js";
-      script.async = true;
-      document.body.appendChild(script);
-    };
-
-    if (!("IntersectionObserver" in window) || !widget) {
-      load();
-      return () => script?.remove();
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          load();
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "600px 0px" }
-    );
-    observer.observe(widget);
-
-    return () => {
-      observer.disconnect();
-      script?.remove();
-    };
+    document.querySelectorAll(".tagembed-widget").forEach((widget) => {
+      widget.setAttribute("aria-hidden", "true");
+    });
+    return () => {};
   }
 
   function updateHowItWorks() {

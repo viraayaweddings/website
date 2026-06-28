@@ -20,7 +20,6 @@ export async function GET() {
           label: "Special Tags",
           type: "checkbox",
           filters: [
-            { id: "1004", key: "1004", groupKey: "specialTags", label: "Bestsellers", labelSlug: "bestsellers", filters: [] },
             { id: "1002", key: "1002", groupKey: "specialTags", label: "Premium", labelSlug: "premium", filters: [] },
             { id: "1005", key: "1005", groupKey: "specialTags", label: "Viraaya's choice", labelSlug: "viraayas-choice", filters: [] }
           ]

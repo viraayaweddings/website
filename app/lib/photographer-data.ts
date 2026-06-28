@@ -1,4 +1,6 @@
 import { unstable_cache } from "next/cache";
+import fs from "node:fs";
+import path from "node:path";
 import { prisma } from "./prisma";
 
 export type PhotographerCard = {
@@ -57,7 +59,20 @@ export type PhotographerQueryResult = {
   results: PhotographerCard[];
 };
 
-const photographerImageFallback = "/twc-next/static/media/hotel-taj.cca019c4.webp";
+const photographerImageFallbacks = [
+  "/twc-photographers/cards/11e42d27-2a7c-4b31-bdd7-f1c7014ff273.jpg",
+  "/twc-photographers/cards/1bc661d9-014c-445b-bccc-6e14a42bca7e.jpg",
+  "/twc-photographers/cards/3ce9cf86-72a6-4851-9fc8-7f0f154c1ba3.jpg",
+  "/twc-photographers/cards/413eac7b-e7e7-4373-97cf-88b9c046bd11.webp",
+  "/twc-photographers/cards/51f63f4e-f65c-49c1-8258-6f45fb25125b.jpg",
+  "/twc-photographers/cards/53b9fc12-e4ea-42e6-b34e-910fc36cf30f.png",
+  "/twc-photographers/cards/6feaa4c0-c37a-4bca-8661-5ebb956b21cc.jpg",
+  "/twc-photographers/cards/818423a9-c75a-47a1-a7e4-4d41e5ea032d.webp",
+  "/twc-photographers/cards/88502113-16cd-44a4-a8a9-e3b2864779f5.jpg",
+  "/twc-photographers/cards/a2c2896a-f018-49e0-957b-193ac74615a2.jpg",
+  "/twc-photographers/cards/d0a8633e-48cf-482e-aa01-f68079f1169f.webp",
+  "/twc-photographers/cards/ee6b561f-c3e6-4abb-86c9-9e9a4c354555.webp"
+];
 const renderableImagePathPattern = /\.(?:avif|gif|jpe?g|png|svg|webp)(?:\?|$)/i;
 
 function brandedLabel(label: string) {
@@ -79,30 +94,94 @@ function logPhotographerDataError(operation: string, error: unknown) {
   console.error(`[photographer-data] ${operation} failed`, error);
 }
 
-// Route every photographer image through the local /venue-assets proxy so no
-// theweddingcompany.com host leaks into card/img src (the proxy falls back to
-// the upstream CDN in production).
+// Route every photographer image through local vendored asset handlers so no
+// theweddingcompany.com host leaks into card/img src.
 function photographerAssetAlias(url: string) {
   return url
     .replace("https://gcpimages.theweddingcompany.com", "/venue-assets/gcpimages")
     .replace("https://imageswedding.theweddingcompany.com", "/venue-assets/imageswedding")
     .replace("https://weddingimage.betterhalf.ai", "/venue-assets/weddingimage")
+    .replace("https://storage.googleapis.com", "/venue-assets/storage")
     .replace("/twc-venues-local/gcpimages.theweddingcompany.com", "/venue-assets/gcpimages")
     .replace("/twc-venues-local/imageswedding.theweddingcompany.com", "/venue-assets/imageswedding")
-    .replace("/twc-venues-local/weddingimage.betterhalf.ai", "/venue-assets/weddingimage");
+    .replace("/twc-venues-local/weddingimage.betterhalf.ai", "/venue-assets/weddingimage")
+    .replace("/twc-venues-local/storage.googleapis.com", "/venue-assets/storage");
+}
+
+function hashString(value: string) {
+  let hash = 0;
+  for (let i = 0; i < value.length; i += 1) {
+    hash = (hash * 31 + value.charCodeAt(i)) >>> 0;
+  }
+  return hash;
+}
+
+function fallbackPhotographerImages(seed: string, count = 4) {
+  const start = hashString(seed) % photographerImageFallbacks.length;
+  return Array.from({ length: Math.min(count, photographerImageFallbacks.length) }, (_, index) =>
+    photographerImageFallbacks[(start + index) % photographerImageFallbacks.length]
+  );
+}
+
+function localFileForPublicPath(publicPath: string) {
+  if (publicPath.startsWith("/venue-assets/gcpimages/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-venues-local",
+      "gcpimages.theweddingcompany.com",
+      ...publicPath.replace("/venue-assets/gcpimages/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/venue-assets/imageswedding/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-venues-local",
+      "imageswedding.theweddingcompany.com",
+      ...publicPath.replace("/venue-assets/imageswedding/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/venue-assets/weddingimage/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-venues-local",
+      "weddingimage.betterhalf.ai",
+      ...publicPath.replace("/venue-assets/weddingimage/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/venue-assets/storage/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-venues-local",
+      "storage.googleapis.com",
+      ...publicPath.replace("/venue-assets/storage/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/")) {
+    return path.join(process.cwd(), "public", ...publicPath.slice(1).split("/"));
+  }
+  return null;
+}
+
+function hasLocalImage(publicPath: string) {
+  const file = localFileForPublicPath(publicPath);
+  return Boolean(file && fs.existsSync(file));
 }
 
 export function resolvePhotographerImage(
   image?: { originalUrl: string; localPath: string | null } | string | null
 ): string {
-  if (!image) return photographerImageFallback;
+  if (!image) return photographerImageFallbacks[0];
   const raw =
     typeof image === "string"
       ? image
       : image.localPath && image.localPath.startsWith("/")
         ? image.localPath
         : image.originalUrl;
-  if (!raw) return photographerImageFallback;
+  if (!raw) return photographerImageFallbacks[0];
   return photographerAssetAlias(raw);
 }
 
@@ -201,10 +280,12 @@ export function toPhotographerCard(row: PhotographerRecord): PhotographerCard {
     ratingCount: row.userRatingCount,
     badges: row.tags || [],
     isPartner: row.isPartner,
-    images: row.images
+    images: (row.images
       .filter(isRenderablePhotographerImage)
+      .map((img) => resolvePhotographerImage(img))
+      .filter(hasLocalImage)
       .slice(0, 4)
-      .map((img) => resolvePhotographerImage(img)),
+    ).concat(fallbackPhotographerImages(row.vendorId)).slice(0, 4),
     lat: row.latitude,
     lng: row.longitude
   };
@@ -324,7 +405,7 @@ async function queryPhotographersUncached(
 
 const queryPhotographersCached = unstable_cache(
   queryPhotographersUncached,
-  ["photographer-list-query-v2-renderable-images"],
+  ["photographer-list-query-v3-local-card-fallbacks"],
   { revalidate: 86400, tags: ["photographers"] }
 );
 
@@ -393,7 +474,7 @@ async function getPhotographerBySlugUncached(
 
 const getPhotographerBySlugCached = unstable_cache(
   getPhotographerBySlugUncached,
-  ["photographer-by-slug"],
+  ["photographer-by-slug-v2-local-card-fallbacks"],
   { revalidate: 86400, tags: ["photographers"] }
 );
 
@@ -485,7 +566,7 @@ async function getSimilarPhotographersUncached(
 
 const getSimilarPhotographersCached = unstable_cache(
   getSimilarPhotographersUncached,
-  ["similar-photographers"],
+  ["similar-photographers-v2-local-card-fallbacks"],
   { revalidate: 86400, tags: ["photographers"] }
 );
 

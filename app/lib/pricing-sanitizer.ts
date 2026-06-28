@@ -23,7 +23,9 @@ function isPricingFilterOption(value: any) {
 export function stripPriceText(value: string) {
   return value
     .replace(priceAmountPattern, "")
+    .replace(/\u20b9\s*(?:<!--\s*-->)?\s*[\d,]+(?:\s*(?:<!--\s*-->)?\s*(?:\+|\/-?|\/\s*(?:day|plate)))?/gi, "")
     .replace(pricingLinePattern, "")
+    .replace(/(?:Lowest price guaranteed|Never overpay[^<\n"]*|Unlock Best Price[^<\n"]*)/gi, "")
     .replace(/\s+-\s+Price\s*&amp;\s*Reviews/gi, " - Reviews")
     .replace(/\s+-\s+Price\s+&\s+Reviews/gi, " - Reviews")
     .replace(/\s+-\s+Wedding Venue Cost, Photos/gi, " - Wedding Venue Photos")
@@ -80,14 +82,17 @@ export function sanitizePricingMarkup(markup: string) {
     .replace(/"priceRange"\s*:\s*"[^"]*"\s*,?/gi, "")
     .replace(/<(button|li|div|span)\b[^>]*>\s*(?:Pricing|Budget Friendly)\s*<\/\1>/gi, "")
     .replace(priceAmountPattern, "")
+    .replace(/\u20b9\s*(?:<!--\s*-->)?\s*[\d,]+(?:\s*(?:<!--\s*-->)?\s*(?:\+|\/-?|\/\s*(?:day|plate)))?/gi, "")
     .replace(pricingLinePattern, "")
-    .replace(/\b(?:Per plate|Per day|Total Saving|Budget Friendly)\b/gi, "");
+    .replace(/(?:Lowest price guaranteed|Never overpay[^<\n"]*|Unlock Best Price[^<\n"]*)/gi, "")
+    .replace(/\b(?:Per plate|Per day|Total Saving|Budget Friendly|Lowest price guaranteed|Unlock Best Price)\b/gi, "");
 }
 
 export const PRICING_RUNTIME_SCRIPT = `
 <script id="viraaya-pricing-sanitizer">
 (() => {
   const priceText = /(₹\\s*[\\d,]+|Rs\\.?\\s*[\\d,]+|Starting\\s+Rs|Per\\s+(?:plate|day)\\s*₹?|Total\\s+Saving|Price\\s+Range|Budget\\s*(?:Friendly|\\()|Travel\\s+Costs|Payment\\s+On\\s+Booking|cost\\s+of\\s+booking|How\\s+much\\s+does\\s+.*?\\s+cost\\?|What\\s+is\\s+the\\s+price\\s+for)/i;
+  const unicodePriceText = /(\\u20b9\\s*[\\d,]+|Lowest\\s+price\\s+guaranteed|Never\\s+overpay|Unlock\\s+Best\\s+Price)/i;
   const metadataText = /(Price\\s*&\\s*Reviews|Wedding\\s+Venue\\s+Cost|price\\s+details|prices,\\s*photos|pricing)/i;
   const filterText = /^(?:Pricing|Budget Friendly)$/i;
 
@@ -99,12 +104,16 @@ export const PRICING_RUNTIME_SCRIPT = `
       .replace(/price details/gi, "details")
       .replace(/prices,\\s*photos/gi, "photos")
       .replace(/pricing,?\\s*/gi, "")
+      .replace(/\\u20b9\\s*[\\d,]+(?:\\s*(?:\\+|\\/-?|\\/\\s*(?:day|plate)))?/gi, "")
       .replace(/₹\\s*[\\d,]+(?:\\s*(?:\\+|\\/-?|\\/\\s*(?:day|plate)))?/gi, "")
       .replace(/Rs\\.?\\s*[\\d,]+/gi, "")
       .replace(/Starting\\s+Rs\\.?\\s*[\\d,]+/gi, "")
       .replace(/Per\\s+(?:plate|day)\\s*₹?\\s*[\\d,]*\\+?/gi, "")
       .replace(/Total\\s+Saving\\s*₹?\\s*[\\d,]+(?:\\/-?)?/gi, "")
       .replace(/Budget\\s+Friendly/gi, "")
+      .replace(/Lowest\\s+price\\s+guaranteed/gi, "")
+      .replace(/Never\\s+overpay[^.?!]*(?:[.?!]|$)/gi, "")
+      .replace(/Unlock\\s+Best\\s+Price[^.?!]*(?:[.?!]|$)/gi, "")
       .replace(/\\s{2,}/g, " ")
       .trim();
   };
@@ -138,7 +147,7 @@ export const PRICING_RUNTIME_SCRIPT = `
     while (walker.nextNode()) nodes.push(walker.currentNode);
     nodes.forEach((node) => {
       const text = node.nodeValue || "";
-      if (priceText.test(text) || filterText.test(text.trim())) removePricingNode(node);
+      if (priceText.test(text) || unicodePriceText.test(text) || filterText.test(text.trim())) removePricingNode(node);
       else if (metadataText.test(text)) node.nodeValue = scrubString(text);
     });
   };

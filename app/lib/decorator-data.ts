@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { unstable_cache } from "next/cache";
 import { prisma } from "./prisma";
 
@@ -72,7 +74,14 @@ export type DecoratorRecord = {
   seoPayload: Record<string, unknown> | null;
 };
 
-const decoratorImageFallback = "/twc-next/static/media/Mandap.d8d5d35e.webp";
+const decoratorImageFallbacks = [
+  "/images/HomePage/new/vendor-2.webp",
+  "/twc-next/static/media/weddingTestimonial.2d6627ae.webp",
+  "/twc-next/static/media/Mandap.d8d5d35e.webp",
+  "/twc-assets/ideabook/decor.webp",
+  "/images/HomePage/new/vendor-1.webp"
+];
+const decoratorImageFallback = decoratorImageFallbacks[0];
 const renderableImagePathPattern = /\.(?:avif|gif|jpe?g|png|svg|webp)(?:\?|$)/i;
 
 function brandedLabel(label: string) {
@@ -98,6 +107,21 @@ function slugKey(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
+function hashString(value: string) {
+  let hash = 0;
+  for (let i = 0; i < value.length; i += 1) {
+    hash = (hash * 31 + value.charCodeAt(i)) >>> 0;
+  }
+  return hash;
+}
+
+function fallbackDecoratorImages(seed: string, count = 8) {
+  const start = hashString(seed) % decoratorImageFallbacks.length;
+  return Array.from({ length: Math.min(count, decoratorImageFallbacks.length) }, (_, index) =>
+    decoratorImageFallbacks[(start + index) % decoratorImageFallbacks.length]
+  );
+}
+
 function logDecoratorDataError(operation: string, error: unknown) {
   console.error(`[decorator-data] ${operation} failed`, error);
 }
@@ -107,11 +131,61 @@ function decoratorAssetAlias(url: string) {
     .replace("https://gcpimages.theweddingcompany.com", "/venue-assets/gcpimages")
     .replace("https://imageswedding.theweddingcompany.com", "/venue-assets/imageswedding")
     .replace("https://weddingimage.betterhalf.ai", "/venue-assets/weddingimage")
+    .replace("https://storage.googleapis.com", "/venue-assets/storage")
     .replace("https://maps.gstatic.com", "/venue-assets/maps")
     .replace("/twc-venues-local/gcpimages.theweddingcompany.com", "/venue-assets/gcpimages")
     .replace("/twc-venues-local/imageswedding.theweddingcompany.com", "/venue-assets/imageswedding")
     .replace("/twc-venues-local/weddingimage.betterhalf.ai", "/venue-assets/weddingimage")
+    .replace("/twc-venues-local/storage.googleapis.com", "/venue-assets/storage")
     .replace("/twc-venues-local/maps.gstatic.com", "/venue-assets/maps");
+}
+
+function localFileForPublicPath(publicPath: string) {
+  if (publicPath.startsWith("/venue-assets/gcpimages/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-venues-local",
+      "gcpimages.theweddingcompany.com",
+      ...publicPath.replace("/venue-assets/gcpimages/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/venue-assets/imageswedding/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-venues-local",
+      "imageswedding.theweddingcompany.com",
+      ...publicPath.replace("/venue-assets/imageswedding/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/venue-assets/weddingimage/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-venues-local",
+      "weddingimage.betterhalf.ai",
+      ...publicPath.replace("/venue-assets/weddingimage/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/venue-assets/storage/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-venues-local",
+      "storage.googleapis.com",
+      ...publicPath.replace("/venue-assets/storage/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/")) {
+    return path.join(process.cwd(), "public", ...publicPath.slice(1).split("/"));
+  }
+  return null;
+}
+
+function hasLocalImage(publicPath: string) {
+  const file = localFileForPublicPath(publicPath);
+  return Boolean(file && fs.existsSync(file));
 }
 
 export function resolveDecoratorImage(
@@ -130,7 +204,8 @@ export function resolveDecoratorImage(
 function isRenderableDecoratorImage(
   image?: { originalUrl: string; localPath: string | null } | string | null
 ) {
-  return renderableImagePathPattern.test(resolveDecoratorImage(image));
+  const src = resolveDecoratorImage(image);
+  return renderableImagePathPattern.test(src) && hasLocalImage(src);
 }
 
 export function decoratorHref(citySlug: string, slug: string) {
@@ -221,14 +296,12 @@ export function toDecoratorVendorPayload(row: DecoratorRecord): DecoratorVendorP
         mediaId: img.mediaId,
         compressedMediaUrl: null
       }))
-    : [
-        {
-          url: decoratorImageFallback,
-          mimeType: "image/webp",
-          mediaId: null,
-          compressedMediaUrl: null
-        }
-      ];
+    : fallbackDecoratorImages(row.vendorId).map((url) => ({
+        url,
+        mimeType: /\.jpe?g(?:\?|$)/i.test(url) ? "image/jpeg" : "image/webp",
+        mediaId: null,
+        compressedMediaUrl: null
+      }));
 
   return {
     vendorId: row.vendorId,
@@ -294,8 +367,14 @@ function emptyDecoratorQuery(params: URLSearchParams): DecoratorQueryResult {
 function selectedTag(value: string | null): string | null {
   const selected = labelKey(value || "");
   if (!selected || selected === "all" || selected === "default") return null;
-  if (selected === "1004" || selected === "bestsellers") return "Bestseller";
-  if (selected === "1005" || selected === "twcs choice" || selected === "viraayas choice") {
+  if (selected === "1004" || selected === "bestsellers") return null;
+  if (
+    selected === "1005" ||
+    selected === "twcs choice" ||
+    selected === "twcs-choice" ||
+    selected === "viraayas choice" ||
+    selected === "viraayas-choice"
+  ) {
     return "Viraaya's choice";
   }
   if (selected === "1002" || selected === "premium") return "Premium";
@@ -352,7 +431,7 @@ async function queryDecoratorsUncached(queryString: string): Promise<DecoratorQu
   };
 }
 
-const queryDecoratorsCached = unstable_cache(queryDecoratorsUncached, ["decorator-list-query-v4-renderable-images"], {
+const queryDecoratorsCached = unstable_cache(queryDecoratorsUncached, ["decorator-list-query-v7-local-decor-fallbacks"], {
   revalidate: 86400,
   tags: ["decorators"]
 });

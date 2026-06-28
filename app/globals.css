@@ -620,7 +620,7 @@ div.relative.flex.flex-col.items-center.pt-10:has(#venues_in_different_cities_se
   pointer-events: none;
   position: absolute;
   right: 0;
-  top: calc(100% + 8px);
+  top: 100%;
   transform: translate3d(0, 8px, 0);
   transition:
     opacity 180ms ease,
@@ -2389,6 +2389,12 @@ section[class*="max-w-screen-2xl"][class*="md:px-12"]:has([data-virtuoso-scrolle
   left: -9999px;
   position: absolute;
   top: -9999px;
+}
+
+#portal #modal-wrapper:has(#modal-content #modal-header),
+#drawer-portal:has(input[placeholder="Search your event city"]),
+#drawer-portal:has(input[placeholder="Enter city of the event"]) {
+  display: none !important;
 }
 
 .venues-modal-layer {

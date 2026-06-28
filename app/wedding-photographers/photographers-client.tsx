@@ -35,6 +35,20 @@ type QueryResult = {
 const popularCities = ["Delhi", "Gurugram", "Noida", "Jaipur", "Udaipur"];
 const modalCities = ["Delhi", "Gurugram", "Noida", "Jaipur", "Udaipur"];
 const tabs = ["All", "Bestsellers", "Premium", "Viraaya's choice"];
+const photographerFallbackImages = [
+  "/twc-photographers/cards/11e42d27-2a7c-4b31-bdd7-f1c7014ff273.jpg",
+  "/twc-photographers/cards/1bc661d9-014c-445b-bccc-6e14a42bca7e.jpg",
+  "/twc-photographers/cards/3ce9cf86-72a6-4851-9fc8-7f0f154c1ba3.jpg",
+  "/twc-photographers/cards/413eac7b-e7e7-4373-97cf-88b9c046bd11.webp",
+  "/twc-photographers/cards/51f63f4e-f65c-49c1-8258-6f45fb25125b.jpg",
+  "/twc-photographers/cards/53b9fc12-e4ea-42e6-b34e-910fc36cf30f.png",
+  "/twc-photographers/cards/6feaa4c0-c37a-4bca-8661-5ebb956b21cc.jpg",
+  "/twc-photographers/cards/818423a9-c75a-47a1-a7e4-4d41e5ea032d.webp",
+  "/twc-photographers/cards/88502113-16cd-44a4-a8a9-e3b2864779f5.jpg",
+  "/twc-photographers/cards/a2c2896a-f018-49e0-957b-193ac74615a2.jpg",
+  "/twc-photographers/cards/d0a8633e-48cf-482e-aa01-f68079f1169f.webp",
+  "/twc-photographers/cards/ee6b561f-c3e6-4abb-86c9-9e9a4c354555.webp"
+];
 
 const filterGroups = [
   {
@@ -68,8 +82,25 @@ function titleCity(slug?: string | null) {
   return `Wedding Photographers in ${slug.slice(0, 1).toUpperCase()}${slug.slice(1)}`;
 }
 
+function hashString(value: string) {
+  let hash = 0;
+  for (let i = 0; i < value.length; i += 1) {
+    hash = (hash * 31 + value.charCodeAt(i)) >>> 0;
+  }
+  return hash;
+}
+
+function fallbackImagesForPhotographer(vendorId: string) {
+  const start = hashString(vendorId) % photographerFallbackImages.length;
+  return Array.from({ length: 4 }, (_, index) =>
+    photographerFallbackImages[(start + index) % photographerFallbackImages.length]
+  );
+}
+
 function PhotographerCardComponent({ photographer }: { photographer: PhotographerCard }) {
-  const images = photographer.images.length ? photographer.images : ["/twc-next/static/media/hotel-taj.cca019c4.webp"];
+  const images = photographer.images.length
+    ? photographer.images
+    : fallbackImagesForPhotographer(photographer.vendorId);
   const visibleImages = images.slice(0, Math.max(1, Math.min(images.length, 4)));
   const [activeImage, setActiveImage] = useState(0);
   const hasCarousel = visibleImages.length > 1;

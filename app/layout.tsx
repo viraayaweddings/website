@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     url: "https://viraayaweddings.com/",
     siteName: "Viraaya Weddings",
     images: [
-      "https://viraayaweddings.com/brand/viraaya-logo-full.png"
+      "/brand/viraaya-logo-full.png"
     ],
     type: "website"
   },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     description:
       "Viraaya Weddings provides the best wedding services in India. Book end-to-end wedding planning services online with us and grab the best deals for your wedding, engagement, reception, and other events.",
     images: [
-      "https://viraayaweddings.com/brand/viraaya-logo-full.png"
+      "/brand/viraaya-logo-full.png"
     ]
   }
 };

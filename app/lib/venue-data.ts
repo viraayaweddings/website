@@ -8,6 +8,8 @@ function venueAssetAlias(url: string) {
     .replace("/twc-venues-local/gcpimages.theweddingcompany.com", "/venue-assets/gcpimages")
     .replace("/twc-venues-local/imageswedding.theweddingcompany.com", "/venue-assets/imageswedding")
     .replace("/twc-venues-local/weddingimage.betterhalf.ai", "/venue-assets/weddingimage")
+    .replace("/twc-venues-local/storage.googleapis.com", "/venue-assets/storage")
+    .replace("https://storage.googleapis.com", "/venue-assets/storage")
     .replace("/twc-venues-local/maps.gstatic.com", "/venue-assets/maps");
 }
 
