@@ -1,7 +1,24 @@
 import { unstable_cache } from "next/cache";
+import fs from "node:fs";
+import path from "node:path";
 import { prisma } from "./prisma";
 
-const venueImageFallback = "/twc-next/static/media/hotel-taj.cca019c4.webp";
+const venueImageFallbacks = [
+  "/twc-venues/cards/riva-1.jpg",
+  "/twc-venues/cards/riva-2.jpg",
+  "/twc-venues/cards/riva-3.webp",
+  "/twc-venues/cards/riva-4.jpg",
+  "/twc-venues/cards/goldfinch-1.jpg",
+  "/twc-venues/cards/goldfinch-2.jpg",
+  "/twc-venues/cards/goldfinch-3.jpg",
+  "/twc-venues/cards/goldfinch-4.jpg",
+  "/twc-venues/cards/amita-1.webp",
+  "/twc-venues/cards/amita-2.webp",
+  "/twc-venues/cards/amita-3.webp",
+  "/twc-venues/cards/amita-4.webp"
+];
+const venueImageFallback = venueImageFallbacks[0];
+const renderableImagePathPattern = /\.(?:avif|gif|jpe?g|png|svg|webp)(?:\?|$)/i;
 
 function venueAssetAlias(url: string) {
   return url
@@ -18,6 +35,73 @@ function brandedLabel(label: string) {
     .replaceAll("The Wedding Company", "Viraaya Weddings")
     .replaceAll("TWC's choice", "Viraaya's choice")
     .replaceAll("TWC’s choice", "Viraaya’s choice");
+}
+
+function hashString(value: string) {
+  let hash = 0;
+  for (let i = 0; i < value.length; i += 1) {
+    hash = (hash * 31 + value.charCodeAt(i)) >>> 0;
+  }
+  return hash;
+}
+
+function fallbackVenueImages(seed: string, count = 4) {
+  const start = hashString(seed) % venueImageFallbacks.length;
+  return Array.from({ length: Math.min(count, venueImageFallbacks.length) }, (_, index) =>
+    venueImageFallbacks[(start + index) % venueImageFallbacks.length]
+  );
+}
+
+function localFileForDeployablePublicPath(publicPath: string) {
+  if (publicPath.startsWith("/venue-assets/gcpimages/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-company-assets",
+      "gcpimages.theweddingcompany.com",
+      ...publicPath.replace("/venue-assets/gcpimages/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/venue-assets/imageswedding/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-company-assets",
+      "imageswedding.theweddingcompany.com",
+      ...publicPath.replace("/venue-assets/imageswedding/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/venue-assets/weddingimage/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-company-assets",
+      "weddingimage.betterhalf.ai",
+      ...publicPath.replace("/venue-assets/weddingimage/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/venue-assets/storage/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-company-assets",
+      "storage.googleapis.com",
+      ...publicPath.replace("/venue-assets/storage/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/")) {
+    return path.join(process.cwd(), "public", ...publicPath.slice(1).split("/"));
+  }
+  return null;
+}
+
+function hasDeployableImage(publicPath: string) {
+  const file = localFileForDeployablePublicPath(publicPath);
+  return Boolean(
+    renderableImagePathPattern.test(publicPath) &&
+    file &&
+    fs.existsSync(file)
+  );
 }
 
 export type VenueImage = {
@@ -182,17 +266,18 @@ function dbVenueToRecord(row: any): VenueRecord {
     facilities: (row.facilities || []).map((facility: { label: string }) => facility.label),
     about: payload.about || null,
     detailPayload: row.detailPayload || null,
-    images: media.map((image: any) => {
+    images: media.flatMap((image: any) => {
       const localPath = typeof image.localPath === "string" && image.localPath.startsWith("/")
         ? venueAssetAlias(image.localPath)
         : venueImageFallback;
-      return {
+      if (!hasDeployableImage(localPath)) return [];
+      return [{
         originalUrl: image.originalUrl,
         url: localPath,
         mimeType: image.mimeType,
         mediaId: image.mediaId,
         source: image.source
-      };
+      }];
     }),
     searchText: row.searchText || ""
   };
@@ -238,7 +323,7 @@ export function toVenueCard(venue: VenueRecord): VenueCard {
     maxGuests: venue.capacity?.maxValue != null ? String(venue.capacity.maxValue) : "",
     badges: venue.tags || [],
     isPartner: venue.isBhPartner,
-    images: venue.images.slice(0, 4).map(resolveVenueImage),
+    images: venue.images.slice(0, 4).map(resolveVenueImage).concat(fallbackVenueImages(venue.vendorId)).slice(0, 4),
     lat: venue.coordinates ? venue.coordinates[1] : null,
     lng: venue.coordinates ? venue.coordinates[0] : null
   };
@@ -405,7 +490,7 @@ async function queryVenuesUncached(queryString: string): Promise<VenueQueryResul
   };
 }
 
-const queryVenuesCached = unstable_cache(queryVenuesUncached, ["venue-list-query"], {
+const queryVenuesCached = unstable_cache(queryVenuesUncached, ["venue-list-query-v2-deployable-image-fallbacks"], {
   revalidate: 900,
   tags: ["venues"]
 });
@@ -462,7 +547,7 @@ async function getVenueBySlugUncached(citySlug: string, venueSlug: string) {
   );
 }
 
-const getVenueBySlugCached = unstable_cache(getVenueBySlugUncached, ["venue-by-slug"], {
+const getVenueBySlugCached = unstable_cache(getVenueBySlugUncached, ["venue-by-slug-v2-deployable-image-fallbacks"], {
   revalidate: 86400,
   tags: ["venues"]
 });
@@ -543,7 +628,7 @@ async function getSimilarVenuesUncached(citySlug: string, vendorId: string, tags
     .map((item) => toVenueCard(item.venue));
 }
 
-const getSimilarVenuesCached = unstable_cache(getSimilarVenuesUncached, ["similar-venues"], {
+const getSimilarVenuesCached = unstable_cache(getSimilarVenuesUncached, ["similar-venues-v2-deployable-image-fallbacks"], {
   revalidate: 86400,
   tags: ["venues"]
 });

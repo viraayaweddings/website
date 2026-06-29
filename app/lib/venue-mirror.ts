@@ -57,6 +57,21 @@ const LOCAL_ALIASES: Array<[string, string]> = [
   ["/twc-venues-local/cdn.prod.website-files.com", "/venue-assets/webflowcdn"],
   ["/twc-venues-local/assets-global.website-files.com", "/venue-assets/webflowassets"]
 ];
+const VENUE_IMAGE_FALLBACKS = [
+  "/twc-venues/cards/riva-1.jpg",
+  "/twc-venues/cards/riva-2.jpg",
+  "/twc-venues/cards/riva-3.webp",
+  "/twc-venues/cards/riva-4.jpg",
+  "/twc-venues/cards/goldfinch-1.jpg",
+  "/twc-venues/cards/goldfinch-2.jpg",
+  "/twc-venues/cards/goldfinch-3.jpg",
+  "/twc-venues/cards/goldfinch-4.jpg",
+  "/twc-venues/cards/amita-1.webp",
+  "/twc-venues/cards/amita-2.webp",
+  "/twc-venues/cards/amita-3.webp",
+  "/twc-venues/cards/amita-4.webp"
+];
+const RENDERABLE_IMAGE_PATH_PATTERN = /\.(?:avif|gif|jpe?g|png|svg|webp)(?:\?|$)/i;
 
 function aliasLocalAssetPaths(value: string) {
   let next = value;
@@ -75,6 +90,73 @@ function localizeUrl(url: string | null | undefined): string {
   return url;
 }
 
+function hashString(value: string) {
+  let hash = 0;
+  for (let i = 0; i < value.length; i += 1) {
+    hash = (hash * 31 + value.charCodeAt(i)) >>> 0;
+  }
+  return hash;
+}
+
+function fallbackVenueImages(seed: string, count = 8) {
+  const start = hashString(seed) % VENUE_IMAGE_FALLBACKS.length;
+  return Array.from({ length: Math.min(count, VENUE_IMAGE_FALLBACKS.length) }, (_, index) =>
+    VENUE_IMAGE_FALLBACKS[(start + index) % VENUE_IMAGE_FALLBACKS.length]
+  );
+}
+
+function localFileForDeployablePublicPath(publicPath: string) {
+  if (publicPath.startsWith("/venue-assets/gcpimages/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-company-assets",
+      "gcpimages.theweddingcompany.com",
+      ...publicPath.replace("/venue-assets/gcpimages/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/venue-assets/imageswedding/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-company-assets",
+      "imageswedding.theweddingcompany.com",
+      ...publicPath.replace("/venue-assets/imageswedding/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/venue-assets/weddingimage/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-company-assets",
+      "weddingimage.betterhalf.ai",
+      ...publicPath.replace("/venue-assets/weddingimage/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/venue-assets/storage/")) {
+    return path.join(
+      process.cwd(),
+      "public",
+      "twc-company-assets",
+      "storage.googleapis.com",
+      ...publicPath.replace("/venue-assets/storage/", "").split("/")
+    );
+  }
+  if (publicPath.startsWith("/")) {
+    return path.join(process.cwd(), "public", ...publicPath.slice(1).split("/"));
+  }
+  return null;
+}
+
+function hasDeployableImage(publicPath: string) {
+  const file = localFileForDeployablePublicPath(publicPath);
+  return Boolean(
+    RENDERABLE_IMAGE_PATH_PATTERN.test(publicPath) &&
+    file &&
+    fs.existsSync(file)
+  );
+}
+
 function num(v: unknown): number | null {
   return typeof v === "number" ? v : v == null ? null : Number(v) || 0;
 }
@@ -89,9 +171,24 @@ function metaFor(row: any) {
   };
 }
 
-function coverMediaFor(media: any[]) {
-  return media.map((m) => ({
-    mediaUrl: localizeUrl(m.localPath && m.localPath.startsWith("/") ? m.localPath : m.originalUrl),
+function coverMediaFor(media: any[], seed: string) {
+  const items = media
+    .map((m) => ({
+      ...m,
+      mediaUrl: localizeUrl(m.localPath && m.localPath.startsWith("/") ? m.localPath : m.originalUrl)
+    }))
+    .filter((m) => hasDeployableImage(m.mediaUrl));
+
+  const mediaItems = items.length
+    ? items
+    : fallbackVenueImages(seed).map((url) => ({
+        mediaUrl: url,
+        mediaId: null,
+        mimeType: /\.jpe?g(?:\?|$)/i.test(url) ? "image/jpeg" : "image/webp"
+      }));
+
+  return mediaItems.map((m) => ({
+    mediaUrl: m.mediaUrl,
     alt: "",
     mediaId: m.mediaId,
     mimeType: m.mimeType || "image/webp",
@@ -121,7 +218,7 @@ function buildVendorDetails(base: any, row: any) {
   vd.formattedAddress = row.formattedAddress || "";
   vd.imagesCount = media.filter((m) => (m.mimeType || "").startsWith("image")).length || media.length;
   vd.videosCount = 0;
-  vd.coverMedia = coverMediaFor(media);
+  vd.coverMedia = coverMediaFor(media, row.vendorId);
   vd.meta = metaFor(row);
   vd.about = dp.about ?? lp.about ?? { ops: [] };
   vd.areasAvailable = dp.areasAvailable ?? lp.areasAvailable ?? [];
@@ -149,15 +246,25 @@ function buildVendorDetails(base: any, row: any) {
 function buildSimilar(rows: any[]) {
   return rows.map((row) => {
     const media = [...(row.media || [])].sort((a, b) => a.position - b.position).slice(0, 4);
-    return {
-      vendorId: row.vendorId,
-      urlSlug: row.slug,
-      media: media.map((m) => ({
+    const deployableMedia = media
+      .map((m) => ({
         url: localizeUrl(m.localPath && m.localPath.startsWith("/") ? m.localPath : m.originalUrl),
         mimeType: m.mimeType || "image/webp",
         mediaId: m.mediaId,
         compressedMediaUrl: null
-      })),
+      }))
+      .filter((m) => hasDeployableImage(m.url));
+    return {
+      vendorId: row.vendorId,
+      urlSlug: row.slug,
+      media: deployableMedia.length
+        ? deployableMedia
+        : fallbackVenueImages(row.vendorId, 4).map((url) => ({
+            url,
+            mimeType: /\.jpe?g(?:\?|$)/i.test(url) ? "image/jpeg" : "image/webp",
+            mediaId: null,
+            compressedMediaUrl: null
+          })),
       venueName: row.name,
       formattedAddress: row.formattedAddress || "",
       city: row.city?.name || row.citySlug,
@@ -401,7 +508,7 @@ async function getMirrorHtmlUncached(citySlug: string, slug: string): Promise<st
 
 // Cache the rendered detail HTML so hot pages never touch Neon. Cloned data is
 // static, so a long revalidate keeps DB hits to ~once/day/page.
-const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["venue-mirror-html-brand-gold-v19-remove-city-popup"], {
+const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["venue-mirror-html-brand-gold-v20-deployable-image-fallbacks"], {
   revalidate: 86400,
   tags: ["venues"]
 });

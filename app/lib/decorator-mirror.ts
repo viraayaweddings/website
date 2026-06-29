@@ -701,13 +701,13 @@ async function getDetailHtmlUncached(citySlug: string, slug: string): Promise<st
 
 const getListingHtmlCached = unstable_cache(
   getListingHtmlUncached,
-  ["decorator-listing-html-brand-gold-v24-local-decor-fallbacks"],
+  ["decorator-listing-html-brand-gold-v25-local-decor-fallbacks"],
   { revalidate: 86400, tags: ["decorators"] }
 );
 
 const getDetailHtmlCached = unstable_cache(
   getDetailHtmlUncached,
-  ["decorator-detail-html-brand-gold-v23-local-decor-fallbacks"],
+  ["decorator-detail-html-brand-gold-v24-local-decor-fallbacks"],
   { revalidate: 86400, tags: ["decorators"] }
 );
 

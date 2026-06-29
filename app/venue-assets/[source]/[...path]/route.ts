@@ -27,14 +27,13 @@ const NOT_FOUND_HEADERS = {
   "cache-control": "no-store",
   "x-content-type-options": "nosniff"
 };
-const FALLBACK_IMAGE_PATH = path.join(
-  process.cwd(),
-  "public",
-  "twc-next",
-  "static",
-  "media",
-  "NoVenueImageFound.c5374eba.webp"
-);
+const assetRoots = ["twc-company-assets", "twc-venues-local"];
+const fallbackImages = {
+  default: ["twc-next", "static", "media", "hotel-taj.cca019c4.webp"],
+  decor: ["twc-assets", "ideabook", "decor.webp"],
+  photographer: ["twc-photographers", "cards", "11e42d27-2a7c-4b31-bdd7-f1c7014ff273.jpg"],
+  map: ["brand", "favicon.png"]
+};
 
 function isSafePath(pathParts: string[]) {
   try {
@@ -62,11 +61,27 @@ function isImageRequest(pathParts: string[]) {
   return Boolean(safeMimeTypeForPath(pathParts)?.startsWith("image/"));
 }
 
-async function fallbackImageResponse() {
-  const body = await fs.readFile(FALLBACK_IMAGE_PATH);
+function fallbackImageParts(source: string, pathParts: string[]) {
+  const requestPath = `${source}/${pathParts.join("/")}`.toLowerCase();
+  if (source === "maps" || requestPath.includes("mapfiles/place_api/icons")) {
+    return fallbackImages.map;
+  }
+  if (requestPath.includes("decor")) {
+    return fallbackImages.decor;
+  }
+  if (requestPath.includes("photography") || requestPath.includes("photographer")) {
+    return fallbackImages.photographer;
+  }
+  return fallbackImages.default;
+}
+
+async function fallbackImageResponse(source: string, pathParts: string[]) {
+  const fallbackParts = fallbackImageParts(source, pathParts);
+  const fallbackPath = path.join(process.cwd(), "public", ...fallbackParts);
+  const body = await fs.readFile(fallbackPath);
   return new Response(body, {
     headers: {
-      "content-type": "image/webp",
+      "content-type": safeMimeTypeForPath(fallbackParts) || "image/webp",
       "cache-control": IMMUTABLE,
       "x-content-type-options": "nosniff"
     }
@@ -83,9 +98,11 @@ export async function GET(
     return new Response("Not found", { status: 404, headers: NOT_FOUND_HEADERS });
   }
 
-  const root = path.resolve(process.cwd(), "public", "twc-venues-local", entry.dir);
-  const file = path.resolve(root, ...pathParts);
-  if (file.startsWith(root + path.sep)) {
+  for (const assetRoot of assetRoots) {
+    const root = path.resolve(process.cwd(), "public", assetRoot, entry.dir);
+    const file = path.resolve(root, ...pathParts);
+    if (!file.startsWith(root + path.sep)) continue;
+
     try {
       const body = await fs.readFile(file);
       return new Response(body, {
@@ -96,10 +113,10 @@ export async function GET(
         }
       });
     } catch {
-      if (isImageRequest(pathParts)) return fallbackImageResponse();
+      // Try the next mirror root before falling back to a placeholder.
     }
   }
 
-  if (isImageRequest(pathParts)) return fallbackImageResponse();
+  if (isImageRequest(pathParts)) return fallbackImageResponse(source, pathParts);
   return new Response("Not found", { status: 404, headers: NOT_FOUND_HEADERS });
 }
