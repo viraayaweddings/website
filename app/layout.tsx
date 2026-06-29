@@ -8,6 +8,10 @@ export const metadata: Metadata = {
     "Viraaya Weddings - Book Venues, End to End Wedding Services, Planners in India",
   description:
     "Viraaya Weddings provides the best wedding services in India. Book end-to-end wedding planning services online with us and grab the best deals for your wedding, engagement, reception, and other events.",
+  icons: {
+    icon: "/brand/favicon.png",
+    apple: "/brand/favicon.png"
+  },
   openGraph: {
     title:
       "Viraaya Weddings - Book Venues, End to End Wedding Services, Planners in India",

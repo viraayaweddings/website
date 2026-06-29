@@ -699,7 +699,7 @@ async function getMirrorHtmlUncached(citySlug: string, slug: string): Promise<st
 
 // Cache the fully-rendered detail HTML so a hot page never touches Neon. The
 // cloned data is static, so a long revalidate keeps DB hits to ~once/day/page.
-const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["photographer-mirror-html-brand-gold-v22-allowed-cities"], {
+const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["photographer-mirror-html-brand-gold-v24-single-favicon"], {
   revalidate: 86400,
   tags: ["photographers"]
 });

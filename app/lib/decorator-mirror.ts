@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { unstable_cache } from "next/cache";
-import { isAllowedCitySlug, normalizeCitySlug } from "./allowed-cities";
+import { allowedCities, isAllowedCitySlug, normalizeCitySlug } from "./allowed-cities";
 import { prisma } from "./prisma";
 import { queryDecorators } from "./decorator-data";
 import {
@@ -41,13 +41,13 @@ const LOCAL_ALIASES: Array<[string, string]> = [
 ];
 
 const DECORATOR_IMAGE_FALLBACKS = [
-  "/images/HomePage/new/vendor-2.webp",
-  "/twc-next/static/media/weddingTestimonial.2d6627ae.webp",
-  "/twc-next/static/media/Mandap.d8d5d35e.webp",
   "/twc-assets/ideabook/decor.webp",
-  "/images/HomePage/new/vendor-1.webp"
+  "/gcpimages/weddings/d0e26332-36c0-4d65-b839-b18d17c0494e/admin_uploads/d2bfa004-e6c1-41e5-830e-16ce72835de5_thumbnail.jpg",
+  "/gcpimages/weddings/574a86ee-cc45-4a2c-bfb1-d23ef44b7ec2/admin_uploads/8a77d481-66fd-443a-a8f5-e9833d9bb536.webp"
 ];
 const RENDERABLE_IMAGE_PATH_PATTERN = /\.(?:avif|gif|jpe?g|png|svg|webp)(?:\?|$)/i;
+const LEGACY_DECORATOR_FALLBACK_PATTERN =
+  /\/(?:images\/HomePage\/new\/vendor-[12]\.webp|twc-next\/static\/media\/(?:Mandap|weddingTestimonial)\.)/i;
 
 const BRAND_RUNTIME_SCRIPT = `
 <script id="viraaya-runtime-branding">
@@ -68,6 +68,7 @@ const BRAND_RUNTIME_SCRIPT = `
     [oldSite, "https://viraayaweddings.com"],
     [oldHost, "viraayaweddings.com"],
     ["/twc-mirror/_next/static/media/TheWedding" + "CompanyLogo_Low_Res.88e6d171.webp", "/brand/viraaya-logo-header.png"],
+    ["/twc-mirror/_next/static/media/TheWedding" + "CompanyLogo.b048b49d.webp", "/brand/viraaya-logo-header.png"],
     ["/twc-mirror/_next/static/media/TheWedding" + "CompanyLogoVertical.b80524ce.webp", "/brand/viraaya-logo-full.png"],
     ["https://gcpimages." + oldDomain, "/venue-assets/gcpimages"],
     ["https://imageswedding." + oldDomain, "/venue-assets/imageswedding"],
@@ -255,14 +256,24 @@ function mediaItemFromUrl(mediaUrl: string, mediaId: string | null = null, mimeT
   };
 }
 
+function uniqueByMediaUrl<T extends { mediaUrl: string }>(items: T[]) {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    if (seen.has(item.mediaUrl)) return false;
+    seen.add(item.mediaUrl);
+    return true;
+  });
+}
+
 function coverMediaFor(media: any[], seed: string) {
-  const items = media
+  const items = uniqueByMediaUrl(media
     .map((m) => ({
       ...m,
       mediaUrl: localizeUrl(m.localPath && m.localPath.startsWith("/") ? m.localPath : m.originalUrl)
     }))
     .filter((m) => RENDERABLE_IMAGE_PATH_PATTERN.test(m.mediaUrl))
-    .filter((m) => hasLocalImage(m.mediaUrl));
+    .filter((m) => !LEGACY_DECORATOR_FALLBACK_PATTERN.test(m.mediaUrl))
+    .filter((m) => hasLocalImage(m.mediaUrl)));
 
   if (!items.length) {
     return fallbackDecoratorImages(seed).map((url) =>
@@ -430,12 +441,13 @@ function decoratorImageRuntimeScript(mediaUrls: string[]) {
   const stalePattern = /\\/venue-assets\\/(?:gcpimages|imageswedding|weddingimage|storage)\\//i;
   const storagePattern = /\\/venue-assets\\/storage\\/bh_dev_bucket\\/weddings\\/decor/i;
   const mapsIconPattern = /\\/venue-assets\\/maps\\/mapfiles\\/place_api\\/icons\\//i;
+  const legacyFallbackPattern = /\\/(?:images\\/HomePage\\/new\\/vendor-[12]\\.webp|twc-next\\/static\\/media\\/(?:Mandap|weddingTestimonial)\\.)/i;
   const nextImage = () => images[index++ % images.length];
   const fix = (img) => {
     if (!img || !img.getAttribute) return;
     const src = img.getAttribute("src") || "";
     const srcset = img.getAttribute("srcset") || "";
-    if (!stalePattern.test(src) && !storagePattern.test(src) && !mapsIconPattern.test(src) && !stalePattern.test(srcset) && !storagePattern.test(srcset) && !mapsIconPattern.test(srcset)) return;
+    if (!stalePattern.test(src) && !storagePattern.test(src) && !mapsIconPattern.test(src) && !legacyFallbackPattern.test(src) && !stalePattern.test(srcset) && !storagePattern.test(srcset) && !mapsIconPattern.test(srcset) && !legacyFallbackPattern.test(srcset)) return;
     img.onerror = null;
     img.setAttribute("src", mapsIconPattern.test(src) || mapsIconPattern.test(srcset) ? "/brand/favicon.png" : nextImage());
     img.removeAttribute("srcset");
@@ -454,6 +466,109 @@ function decoratorImageRuntimeScript(mediaUrls: string[]) {
       if (mutation.type === "attributes" && mutation.target?.matches?.("img")) fix(mutation.target);
     }
   }).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["src", "srcset"] });
+})();
+</script>`;
+}
+
+function decoratorCityFilterRuntimeScript() {
+  const citiesJson = JSON.stringify(allowedCities).replace(/</g, "\\u003c");
+  return `
+<script id="viraaya-decorator-city-filter">
+(() => {
+  const cities = ${citiesJson};
+  const allowed = new Set(cities.map((city) => city.name.toLowerCase()));
+  const knownCityLabels = new Set([
+    ...allowed,
+    "bengaluru",
+    "bangalore",
+    "mumbai",
+    "goa",
+    "jodhpur",
+    "jaisalmer"
+  ]);
+  const normalize = (value) => (value || "").replace(/\\s+/g, " ").trim().toLowerCase();
+  const isCityChip = (element) => {
+    const label = normalize(element.textContent);
+    if (!knownCityLabels.has(label)) return false;
+    return !Array.from(element.children || []).some((child) => knownCityLabels.has(normalize(child.textContent)));
+  };
+  const findPopularCitiesRoot = () => {
+    const headings = Array.from(document.querySelectorAll("body *")).filter(
+      (element) => normalize(element.textContent) === "popular cities"
+    );
+    return headings[0] || null;
+  };
+  const patch = () => {
+    const heading = findPopularCitiesRoot();
+    const section = heading?.parentElement;
+    if (!heading || !section) return;
+    let cleanupScope = section;
+    while (cleanupScope.parentElement && cleanupScope.parentElement !== document.body) {
+      const cityChipCount = Array.from(cleanupScope.querySelectorAll("button,a,span,div")).filter(isCityChip).length;
+      if (cityChipCount >= 3) break;
+      cleanupScope = cleanupScope.parentElement;
+    }
+
+    const existingGrid = section.querySelector(".viraaya-decorator-city-grid");
+    const existingLabels = existingGrid
+      ? Array.from(existingGrid.querySelectorAll("[data-viraaya-city]")).map((node) => normalize(node.textContent))
+      : [];
+    const oldCityNodes = Array.from(cleanupScope.querySelectorAll("button,a,span,div")).filter(
+      (node) => !existingGrid?.contains(node) && isCityChip(node)
+    );
+    const oldCityWrappers = Array.from(cleanupScope.children).filter((child) => {
+      if (child === heading || child === existingGrid) return false;
+      const text = normalize(child.textContent);
+      const hasCityText = Array.from(knownCityLabels).some((label) => text.includes(label));
+      const hasProtectedText = /popular cities|search your event city|special tags/.test(text);
+      return hasCityText && !hasProtectedText;
+    });
+    if (
+      existingGrid &&
+      existingLabels.length === cities.length &&
+      cities.every((city, index) => existingLabels[index] === city.name.toLowerCase()) &&
+      oldCityNodes.length === 0 &&
+      oldCityWrappers.length === 0
+    ) {
+      return;
+    }
+
+    section.querySelectorAll(".viraaya-decorator-city-grid").forEach((node) => node.remove());
+    oldCityWrappers.forEach((node) => node.remove());
+    oldCityNodes.forEach((node) => node.remove());
+
+    const container = document.createElement("div");
+    container.className = "viraaya-decorator-city-grid";
+    container.style.display = "flex";
+    container.style.flexWrap = "wrap";
+    container.style.gap = "14px 16px";
+    container.style.alignItems = "center";
+    container.style.marginTop = "18px";
+    cities.forEach((city) => {
+      const chip = document.createElement("a");
+      chip.textContent = city.name;
+      chip.href = "/wedding-decorators?citySlug=" + encodeURIComponent(city.slug);
+      chip.setAttribute("data-viraaya-city", city.slug);
+      chip.style.display = "inline-flex";
+      chip.style.alignItems = "center";
+      chip.style.justifyContent = "center";
+      chip.style.minHeight = "44px";
+      chip.style.padding = "0 22px";
+      chip.style.borderRadius = "8px";
+      chip.style.background = "#f3f4f6";
+      chip.style.color = "#111827";
+      chip.style.fontSize = "20px";
+      chip.style.lineHeight = "1";
+      chip.style.textDecoration = "none";
+      chip.style.whiteSpace = "nowrap";
+      container.appendChild(chip);
+    });
+    heading.insertAdjacentElement("afterend", container);
+  };
+  const schedulePatch = () => window.requestAnimationFrame(patch);
+  schedulePatch();
+  [100, 300, 800, 1600, 3200].forEach((delay) => setTimeout(schedulePatch, delay));
+  new MutationObserver(schedulePatch).observe(document.documentElement, { childList: true, subtree: true });
 })();
 </script>`;
 }
@@ -617,7 +732,7 @@ function finalizeHtml(html: string, mediaUrls: string[] = [], vendorName = "") {
   html = sanitizePricingMarkup(html);
   return html.replace(
     "</body>",
-    `${PRICING_RUNTIME_SCRIPT}${decoratorImageRuntimeScript(mediaUrls)}${decoratorGalleryRuntimeScript(mediaUrls, vendorName)}${BRAND_RUNTIME_SCRIPT}</body>`
+    `${PRICING_RUNTIME_SCRIPT}${decoratorImageRuntimeScript(mediaUrls)}${decoratorCityFilterRuntimeScript()}${decoratorGalleryRuntimeScript(mediaUrls, vendorName)}${BRAND_RUNTIME_SCRIPT}</body>`
   );
 }
 
@@ -704,13 +819,13 @@ async function getDetailHtmlUncached(citySlug: string, slug: string): Promise<st
 
 const getListingHtmlCached = unstable_cache(
   getListingHtmlUncached,
-  ["decorator-listing-html-brand-gold-v26-allowed-cities"],
+  ["decorator-listing-html-brand-gold-v32-single-favicon"],
   { revalidate: 86400, tags: ["decorators"] }
 );
 
 const getDetailHtmlCached = unstable_cache(
   getDetailHtmlUncached,
-  ["decorator-detail-html-brand-gold-v25-allowed-cities"],
+  ["decorator-detail-html-brand-gold-v29-single-favicon"],
   { revalidate: 86400, tags: ["decorators"] }
 );
 

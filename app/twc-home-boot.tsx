@@ -50,52 +50,89 @@ function setupSupportedCityPruning() {
   const allowedCitySlugs = new Set(["delhi", "gurugram", "noida", "jaipur", "udaipur"]);
   const blockedCityNames = new Set(["bengaluru", "bangalore", "mumbai", "goa", "jodhpur", "jaisalmer"]);
   const normalize = (value: string | null | undefined) => (value || "").trim().toLowerCase();
+  let observer: MutationObserver | null = null;
+  let scheduled = false;
 
   const removeUnsupportedCities = () => {
-    const section = document.querySelector("#venues_in_different_cities_section");
-    if (section) {
-      section.querySelectorAll<HTMLElement>("a, button, p").forEach((node) => {
-        const text = normalize(node.textContent);
-        const href = normalize(node.getAttribute("href"));
-        const isBlocked = Array.from(blockedCityNames).some(
-          (city) => text === city || href.includes(`/${city}`)
-        );
-        if (!isBlocked) return;
-        (node.closest(".z-50.w-fit") || node.closest("li") || node.closest("article") || node.parentElement || node).remove();
-      });
-      const grid = section.querySelector<HTMLElement>(".grid");
-      const cityCards = Array.from(section.querySelectorAll<HTMLElement>(".z-50.w-fit"));
-      const cardsByCity = new Map(
-        cityCards.map((card) => [normalize(card.textContent), card])
-      );
-      allowedCityOrder.forEach((city) => {
-        const card = cardsByCity.get(city);
-        if (grid && card) grid.appendChild(card);
-      });
-    }
+    observer?.disconnect();
 
-    document
-      .querySelectorAll<HTMLAnchorElement>('a[href*="/wedding-venues/"], a[href*="/wedding-photographers/"], a[href*="/wedding-decorators/"]')
-      .forEach((link) => {
-        const cityMatch = normalize(link.getAttribute("href")).match(/\/wedding-(?:venues|photographers|decorators)\/([^/?#]+)/);
-        const citySlug = cityMatch ? cityMatch[1] : "";
-        if (citySlug && !allowedCitySlugs.has(citySlug)) link.remove();
-      });
+    const section = document.querySelector("#venues_in_different_cities_section");
+    try {
+      if (section) {
+        section.querySelectorAll<HTMLElement>("a, button, p").forEach((node) => {
+          const text = normalize(node.textContent);
+          const href = normalize(node.getAttribute("href"));
+          const isBlocked = Array.from(blockedCityNames).some(
+            (city) => text === city || href.includes(`/${city}`)
+          );
+          if (!isBlocked) return;
+          (node.closest(".z-50.w-fit") || node.closest("li") || node.closest("article") || node.parentElement || node).remove();
+        });
+        const grid = section.querySelector<HTMLElement>(".grid");
+        const cityCards = Array.from(section.querySelectorAll<HTMLElement>(".z-50.w-fit"));
+        const cardsByCity = new Map(
+          cityCards.map((card) => [normalize(card.textContent), card])
+        );
+        if (grid) {
+          const orderedCards = allowedCityOrder
+            .map((city) => cardsByCity.get(city))
+            .filter((card): card is HTMLElement => Boolean(card));
+          const currentCards = Array.from(grid.children).filter((child) =>
+            orderedCards.includes(child as HTMLElement)
+          );
+          const alreadyOrdered =
+            currentCards.length === orderedCards.length &&
+            orderedCards.every((card, index) => currentCards[index] === card);
+
+          if (!alreadyOrdered) {
+            orderedCards.forEach((card) => grid.appendChild(card));
+          }
+        }
+      }
+
+      document
+        .querySelectorAll<HTMLAnchorElement>('a[href*="/wedding-venues/"], a[href*="/wedding-photographers/"], a[href*="/wedding-decorators/"]')
+        .forEach((link) => {
+          const cityMatch = normalize(link.getAttribute("href")).match(/\/wedding-(?:venues|photographers|decorators)\/([^/?#]+)/);
+          const citySlug = cityMatch ? cityMatch[1] : "";
+          if (citySlug && !allowedCitySlugs.has(citySlug)) link.remove();
+        });
+    } finally {
+      if (observer) {
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ["href"]
+        });
+      }
+    }
+  };
+
+  const schedulePrune = () => {
+    if (scheduled) return;
+    scheduled = true;
+    window.setTimeout(() => {
+      scheduled = false;
+      removeUnsupportedCities();
+    }, 0);
   };
 
   removeUnsupportedCities();
   [100, 400, 1000, 2500, 5000].forEach((delay) => window.setTimeout(removeUnsupportedCities, delay));
-  const observer = new MutationObserver(removeUnsupportedCities);
+  observer = new MutationObserver(schedulePrune);
   observer.observe(document.body, {
     childList: true,
     subtree: true,
     attributes: true,
-    attributeFilter: ["href", "class"]
+    attributeFilter: ["href"]
   });
 
-  return () => observer.disconnect();
+  return () => {
+    scheduled = false;
+    observer?.disconnect();
+  };
 }
-
 function setupCityPopupRemoval() {
   const popupMarkers = [
     "Get wedding services curated for your city",

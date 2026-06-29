@@ -39,7 +39,8 @@ const legalDocumentTitles: Partial<Record<CompanySlug, string>> = {
   "privacy-policy": "Privacy Policy"
 };
 
-const renderedCaptureCache = new Map<CompanySlug, string>();
+const renderedCaptureCache = new Map<string, string>();
+const renderedCaptureShellVersion = "single-shell-v3-favicon";
 
 function extractBalancedDiv(markup: string, marker: string) {
   const start = markup.indexOf(marker);
@@ -174,7 +175,8 @@ function renderLegalDocument(title: string, body: string) {
 }
 
 function readCapture(slug: CompanySlug) {
-  const cached = renderedCaptureCache.get(slug);
+  const cacheKey = `${renderedCaptureShellVersion}:${slug}`;
+  const cached = renderedCaptureCache.get(cacheKey);
   if (cached) {
     return cached;
   }
@@ -193,7 +195,7 @@ function readCapture(slug: CompanySlug) {
       legalDocumentTitle,
       extractLegalDocumentBody(slug, html)
     );
-    renderedCaptureCache.set(slug, rendered);
+    renderedCaptureCache.set(cacheKey, rendered);
     return rendered;
   }
 
@@ -207,7 +209,7 @@ function readCapture(slug: CompanySlug) {
       .replace(/<script[\s\S]*?<\/script>/gi, "")
       .replaceAll('href="https://www.theweddingcompany.com/', 'href="/')
       .replaceAll('href="https://wf.betterhalf.ai/', 'href="/')))));
-    renderedCaptureCache.set(slug, rendered);
+    renderedCaptureCache.set(cacheKey, rendered);
     return rendered;
   }
 
@@ -226,7 +228,7 @@ function readCapture(slug: CompanySlug) {
     .replaceAll('srcset="/_next/static/', 'srcset="/twc-next/static/')
     .replaceAll('href="/_next/static/', 'href="/twc-next/static/')
     .replaceAll('href="https://www.theweddingcompany.com/', 'href="/')));
-  renderedCaptureCache.set(slug, rendered);
+  renderedCaptureCache.set(cacheKey, rendered);
   return rendered;
 }
 

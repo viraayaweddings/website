@@ -24,6 +24,7 @@ const homepageStylesheets = [
 ];
 
 const fullCaptureCache = new Map<string, string>();
+const fullCaptureShellVersion = "single-shell-v3-favicon";
 
 function rewriteAssetUrls(html: string) {
   let next = html
@@ -102,7 +103,8 @@ const imageProxyScript = `
 </script>`;
 
 export function fullCaptureResponse(slug: string) {
-  const cached = fullCaptureCache.get(slug);
+  const cacheKey = `${fullCaptureShellVersion}:${slug}`;
+  const cached = fullCaptureCache.get(cacheKey);
   if (cached) {
     return new Response(cached, {
       headers: {
@@ -121,7 +123,7 @@ export function fullCaptureResponse(slug: string) {
   const html = applyBranding(applyHomepageHeaderFooter(
     injectHomepageAssets(stripExternalRuntime(rewriteAssetUrls(fs.readFileSync(file, "utf8"))))
   )).replace("</body>", `${imageProxyScript}${homepageShellScript()}</body>`);
-  fullCaptureCache.set(slug, html);
+  fullCaptureCache.set(cacheKey, html);
 
   return new Response(html, {
     headers: {

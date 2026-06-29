@@ -76,14 +76,14 @@ export type DecoratorRecord = {
 };
 
 const decoratorImageFallbacks = [
-  "/images/HomePage/new/vendor-2.webp",
-  "/twc-next/static/media/weddingTestimonial.2d6627ae.webp",
-  "/twc-next/static/media/Mandap.d8d5d35e.webp",
   "/twc-assets/ideabook/decor.webp",
-  "/images/HomePage/new/vendor-1.webp"
+  "/gcpimages/weddings/d0e26332-36c0-4d65-b839-b18d17c0494e/admin_uploads/d2bfa004-e6c1-41e5-830e-16ce72835de5_thumbnail.jpg",
+  "/gcpimages/weddings/574a86ee-cc45-4a2c-bfb1-d23ef44b7ec2/admin_uploads/8a77d481-66fd-443a-a8f5-e9833d9bb536.webp"
 ];
 const decoratorImageFallback = decoratorImageFallbacks[0];
 const renderableImagePathPattern = /\.(?:avif|gif|jpe?g|png|svg|webp)(?:\?|$)/i;
+const legacyDecoratorFallbackPattern =
+  /\/(?:images\/HomePage\/new\/vendor-[12]\.webp|twc-next\/static\/media\/(?:Mandap|weddingTestimonial)\.)/i;
 
 function brandedLabel(label: string) {
   return label
@@ -206,7 +206,17 @@ function isRenderableDecoratorImage(
   image?: { originalUrl: string; localPath: string | null } | string | null
 ) {
   const src = resolveDecoratorImage(image);
-  return renderableImagePathPattern.test(src) && hasLocalImage(src);
+  return renderableImagePathPattern.test(src) && !legacyDecoratorFallbackPattern.test(src) && hasLocalImage(src);
+}
+
+function uniqueDecoratorImages(images: DecoratorRecord["images"]) {
+  const seen = new Set<string>();
+  return images.filter((image) => {
+    const src = resolveDecoratorImage(image);
+    if (seen.has(src)) return false;
+    seen.add(src);
+    return true;
+  });
 }
 
 export function decoratorHref(citySlug: string, slug: string) {
@@ -289,7 +299,7 @@ function dbDecoratorToRecord(row: any): DecoratorRecord {
 }
 
 export function toDecoratorVendorPayload(row: DecoratorRecord): DecoratorVendorPayload {
-  const images = row.images.filter(isRenderableDecoratorImage).slice(0, 8);
+  const images = uniqueDecoratorImages(row.images.filter(isRenderableDecoratorImage)).slice(0, 8);
   const media = images.length
     ? images.map((img) => ({
         url: resolveDecoratorImage(img),
@@ -435,7 +445,7 @@ async function queryDecoratorsUncached(queryString: string): Promise<DecoratorQu
   };
 }
 
-const queryDecoratorsCached = unstable_cache(queryDecoratorsUncached, ["decorator-list-query-v8-allowed-cities"], {
+const queryDecoratorsCached = unstable_cache(queryDecoratorsUncached, ["decorator-list-query-v9-decor-media-cities"], {
   revalidate: 86400,
   tags: ["decorators"]
 });

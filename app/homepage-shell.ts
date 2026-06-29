@@ -4,6 +4,7 @@ import path from "node:path";
 const brandAssets = {
   headerLogo: "/brand/viraaya-logo-header.png",
   footerLogo: "/brand/viraaya-logo-full.png",
+  favicon: "/brand/favicon.png",
   logoAlt: "Viraaya Weddings logo",
   name: "Viraaya Weddings",
   url: "https://viraayaweddings.com"
@@ -75,6 +76,20 @@ export const homepageShellCss = `
     max-width: min(92px, 18vw);
     object-fit: contain;
     width: 92px !important;
+  }
+  img[src*="TheWeddingCompanyLogo_Low_Res"],
+  img[src*="TheWeddingCompanyLogo.b048b49d"] {
+    content: url("/brand/viraaya-logo-header.png") !important;
+    height: auto !important;
+    max-width: min(92px, 18vw) !important;
+    object-fit: contain !important;
+    width: 92px !important;
+  }
+  img[src*="TheWeddingCompanyLogoVertical"] {
+    content: url("/brand/viraaya-logo-full.png") !important;
+    height: auto !important;
+    object-fit: contain !important;
+    width: min(300px, 78vw) !important;
   }
   #twc-homepage-shared-footer img[src="/brand/viraaya-logo-full.png"] {
     height: auto !important;
@@ -169,6 +184,21 @@ export const homepageShellCss = `
     opacity: 1;
     pointer-events: auto;
     transform: translate3d(0, 0, 0);
+  }
+  body > nav.sticky.top-0,
+  body > .parent-div.is--nav_new,
+  body > .navbar-mobile,
+  body > .mobile-sub-menu-wrapper,
+  body > footer,
+  body > .parent-div.is--footer,
+  #parent-container > .scrollbar-hide > .shadow-header,
+  #parent-container > .scrollbar-hide > footer,
+  #parent-container > .scrollbar-hide > #footer_section,
+  #__next > nav.sticky.top-0,
+  #__next > .parent-div.is--nav_new,
+  #__next > footer,
+  #__next > #footer_section {
+    display: none !important;
   }
 </style>`;
 
@@ -269,7 +299,7 @@ const homepageAboutViraayaWeddingsSection = `
     <div class="mx-auto max-w-screen-lg space-y-8 font-plus-jakarata-sans text-sm leading-relaxed text-secondary md:text-base">
       <div class="space-y-3 text-center">
         <p class="font-playfair text-3xl font-semibold text-primaryTextColor md:text-[44px]">About Viraaya Weddings</p>
-        <p class="text-lg font-semibold text-[#A9804E] md:text-2xl">Luxury Wedding Planning Services Across India</p>
+        <p class="font-playfair text-2xl font-semibold text-[#A9804E] md:text-4xl">Luxury Wedding Planning Services Across India</p>
       </div>
       <div class="twc-about-viraaya-content space-y-5">
         ${homepageAboutViraayaWeddingsIntroMarkup}
@@ -306,6 +336,18 @@ function removeFirstElement(html: string, needle: string, tag: string) {
 
   const end = elementEnd(html, start, tag);
   return end === -1 ? html : html.slice(0, start) + html.slice(end);
+}
+
+function removeAllElements(html: string, needle: string, tag: string) {
+  let next = html;
+  let previous = "";
+
+  while (next !== previous) {
+    previous = next;
+    next = removeFirstElement(next, needle, tag);
+  }
+
+  return next;
 }
 
 function replaceFirstElement(
@@ -348,6 +390,29 @@ function normalizeAboutContent(markup: string) {
     '<section class="mb-8 " id="more_about_betterhalf_section"',
     "section",
     homepageAboutViraayaWeddingsSection
+  );
+}
+
+const capturedHeaderChromeMarkers = [
+  { needle: '<nav class="sticky top-0 z-30', tag: "nav" },
+  { needle: '<div class="z-[100]', tag: "div" },
+  { needle: '<div class="flex h-14 translate-y-0', tag: "div" },
+  { needle: '<div class="flex translate-y-0', tag: "div" },
+  { needle: '<div class="parent-div is--nav_new"', tag: "div" },
+  { needle: '<div class="navbar-mobile', tag: "div" },
+  { needle: '<div class="mobile-sub-menu-wrapper', tag: "div" }
+] as const;
+
+const capturedFooterChromeMarkers = [
+  { needle: '<footer', tag: "footer" },
+  { needle: '<div class="parent-div is--footer', tag: "div" },
+  { needle: '<div id="footer_section"', tag: "div" }
+] as const;
+
+function removeCapturedChrome(markup: string) {
+  return [...capturedHeaderChromeMarkers, ...capturedFooterChromeMarkers].reduce(
+    (html, marker) => removeAllElements(html, marker.needle, marker.tag),
+    markup
   );
 }
 
@@ -412,6 +477,18 @@ function applyBrandAssets(markup: string) {
       brandAssets.headerLogo
     )
     .replaceAll(
+      "/twc-next/static/media/TheWeddingCompanyLogo.b048b49d.webp",
+      brandAssets.headerLogo
+    )
+    .replaceAll(
+      "/_next/static/media/TheWeddingCompanyLogo.b048b49d.webp",
+      brandAssets.headerLogo
+    )
+    .replaceAll(
+      "/twc-mirror/_next/static/media/TheWeddingCompanyLogo.b048b49d.webp",
+      brandAssets.headerLogo
+    )
+    .replaceAll(
       "/twc-next/static/media/TheWeddingCompanyLogoVertical.b80524ce.webp",
       brandAssets.footerLogo
     )
@@ -425,6 +502,20 @@ function applyBrandAssets(markup: string) {
     )
     .replaceAll("The Wedding Company logo", brandAssets.logoAlt)
     .replaceAll("The Wedding Company Logo", brandAssets.logoAlt);
+}
+
+function normalizeFavicons(markup: string) {
+  const withoutCapturedIcons = markup.replace(
+    /<link\b(?=[^>]*\brel=["'][^"']*(?:shortcut\s+icon|apple-touch-icon|\bicon\b)[^"']*["'])[^>]*>/gi,
+    ""
+  );
+
+  if (!/<\/head>/i.test(withoutCapturedIcons)) {
+    return withoutCapturedIcons;
+  }
+
+  const faviconMarkup = `<link rel="icon" href="${brandAssets.favicon}" type="image/png" /><link rel="apple-touch-icon" href="${brandAssets.favicon}" />`;
+  return withoutCapturedIcons.replace(/<\/head>/i, `${faviconMarkup}</head>`);
 }
 
 export function sanitizePublicDetails(markup: string) {
@@ -549,9 +640,9 @@ export function applyBranding(markup: string) {
     // Any residual theweddingcompany.com host/text -> brand domain.
     .replaceAll("theweddingcompany.com", "viraayaweddings.com");
 
-  return normalizeBrandColors(
+  return normalizeFavicons(normalizeBrandColors(
     normalizeContactDetails(normalizeAboutContent(branded))
-  );
+  ));
 }
 
 function getHomepageParts() {
@@ -612,30 +703,13 @@ export function getHomepageContent() {
 }
 
 export function stripCapturedHeaderFooter(markup: string) {
-  let next = applyBranding(markup);
-
-  next = removeFirstElement(next, '<nav class="sticky top-0 z-30', "nav");
-  next = removeFirstElement(next, '<div class="z-[100]', "div");
-  next = removeFirstElement(next, '<div class="parent-div is--nav_new"', "div");
-  next = replaceFirstElement(next, '<footer', "footer", "");
-
-  return next;
+  return removeCapturedChrome(applyBranding(markup));
 }
 
 export function applyHomepageHeaderFooter(markup: string) {
-  let next = applyBranding(markup);
+  let next = removeCapturedChrome(applyBranding(markup));
   const header = `<div id="twc-homepage-shared-header">${getHomepageHeader()}</div>`;
   const footer = `<div id="twc-homepage-shared-footer">${getHomepageFooter()}</div>`;
-
-  next = replaceFirstElement(next, '<nav class="sticky top-0 z-30', "nav", header);
-  next = replaceFirstElement(next, '<div class="z-[100]', "div", header);
-  next = replaceFirstElement(
-    next,
-    '<div class="parent-div is--nav_new"',
-    "div",
-    header
-  );
-  next = replaceFirstElement(next, '<footer', "footer", footer);
 
   if (!next.includes(header)) {
     const parentIndex = next.indexOf('id="parent-container"');
@@ -676,6 +750,7 @@ export function homepageShellScript() {
 (() => {
   const headerHtml = ${JSON.stringify(header)};
   const footerHtml = ${JSON.stringify(footer)};
+  const faviconHref = ${JSON.stringify(brandAssets.favicon)};
 
   const setupMoreDropdown = () => {
     const trigger = document.querySelector("#twc-homepage-shared-header #other_services_dropdown_container");
@@ -898,6 +973,30 @@ export function homepageShellScript() {
     return null;
   };
 
+  const enforceFavicon = () => {
+    if (!document.head) return;
+    document.querySelectorAll('link[rel~="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]').forEach((link) => {
+      const rel = (link.getAttribute("rel") || "").toLowerCase();
+      const href = link.getAttribute("href") || "";
+      if ((rel.includes("icon") || rel.includes("apple-touch-icon")) && href !== faviconHref) {
+        link.remove();
+      }
+    });
+    if (!document.querySelector('link[rel="icon"][href="' + faviconHref + '"]')) {
+      const icon = document.createElement("link");
+      icon.rel = "icon";
+      icon.type = "image/png";
+      icon.href = faviconHref;
+      document.head.appendChild(icon);
+    }
+    if (!document.querySelector('link[rel="apple-touch-icon"][href="' + faviconHref + '"]')) {
+      const apple = document.createElement("link");
+      apple.rel = "apple-touch-icon";
+      apple.href = faviconHref;
+      document.head.appendChild(apple);
+    }
+  };
+
   const enforceShell = () => {
     if (!document.body) {
       window.setTimeout(enforceShell, 30);
@@ -908,12 +1007,22 @@ export function homepageShellScript() {
       document.querySelector("#parent-container") ||
       document.querySelector("#__next") ||
       document.body;
+    enforceFavicon();
 
     if (!document.querySelector("#twc-homepage-shared-header")) {
       container.insertAdjacentHTML("afterbegin", headerHtml);
     }
 
-    document.querySelectorAll("nav.sticky.top-0, .parent-div.is--nav_new, .venues-header, .twc-company-header, .twc-legacy-header").forEach(removeAlternateHeader);
+    document.querySelectorAll([
+      "nav.sticky.top-0",
+      ".parent-div.is--nav_new",
+      ".navbar-mobile",
+      ".mobile-sub-menu-wrapper",
+      ".shadow-header",
+      ".venues-header",
+      ".twc-company-header",
+      ".twc-legacy-header"
+    ].join(",")).forEach(removeAlternateHeader);
     document.querySelectorAll("#link_wedding_venues_container").forEach((marker) => {
       removeAlternateHeader(findHomeLikeHeader(marker));
     });
@@ -930,12 +1039,29 @@ export function homepageShellScript() {
       }
     }
 
-    document.querySelectorAll("footer, .parent-div.is--footer, .venues-footer, .twc-company-footer, .twc-legacy-footer").forEach(removeAlternateFooter);
+    document.querySelectorAll([
+      "footer",
+      "#footer_section",
+      ".parent-div.is--footer",
+      ".venues-footer",
+      ".twc-company-footer",
+      ".twc-legacy-footer"
+    ].join(",")).forEach(removeAlternateFooter);
     setupMoreDropdown();
     removeCitySelectionPopup();
     removeUnsupportedCities();
     repairVenueMediaImages();
     syncOverlayState();
+  };
+
+  let shellScheduled = false;
+  const scheduleShell = () => {
+    if (shellScheduled) return;
+    shellScheduled = true;
+    window.requestAnimationFrame(() => {
+      shellScheduled = false;
+      enforceShell();
+    });
   };
 
   enforceShell();
@@ -944,15 +1070,12 @@ export function homepageShellScript() {
   window.setTimeout(() => window.clearInterval(cityPopupInterval), 10000);
   try {
     new MutationObserver(() => {
-      removeCitySelectionPopup();
-      removeUnsupportedCities();
-      repairVenueMediaImages();
-      syncOverlayState();
+      scheduleShell();
     }).observe(document.documentElement, {
       attributes: true,
       childList: true,
       subtree: true,
-      attributeFilter: ["class", "style", "aria-hidden", "role", "src", "srcset", "data-src"]
+      attributeFilter: ["class", "style", "aria-hidden", "role", "src", "srcset", "data-src", "href", "rel"]
     });
   } catch (e) {}
   document.addEventListener("error", (event) => {
