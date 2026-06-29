@@ -434,11 +434,17 @@ div.relative.flex.flex-col.items-center.pt-10:has(#venues_in_different_cities_se
   width: 100%;
 }
 
+div.relative.flex.flex-col.items-center.pt-10:has(#venues_in_different_cities_section) > svg.absolute,
+#venues_in_different_cities_section > svg.absolute {
+  display: none !important;
+  pointer-events: none;
+}
+
 #venues_in_different_cities_section {
   background-color: #fff !important;
   background-image: none !important;
   box-shadow: rgba(100, 100, 111, 0.2) 1px 25px 50px -25px !important;
-  overflow: visible !important;
+  overflow: hidden !important;
   position: relative !important;
 }
 
@@ -471,7 +477,8 @@ div.relative.flex.flex-col.items-center.pt-10:has(#venues_in_different_cities_se
 }
 
 #venues_in_different_cities_section > img {
-  opacity: 0.62;
+  display: none !important;
+  pointer-events: none;
 }
 
 #industry_partners_section {

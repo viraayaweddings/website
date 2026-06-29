@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { unstable_cache } from "next/cache";
+import { isAllowedCitySlug, normalizeCitySlug } from "./allowed-cities";
 import { prisma } from "./prisma";
 import { queryDecorators } from "./decorator-data";
 import {
@@ -621,18 +622,19 @@ function finalizeHtml(html: string, mediaUrls: string[] = [], vendorName = "") {
 }
 
 async function getListingHtmlUncached(citySlug?: string): Promise<string> {
+  const normalizedCitySlug = citySlug ? normalizeCitySlug(citySlug) : "";
   const base = getListingBaseNextData();
   const params: Record<string, string> = { limit: "24", page: "1" };
-  if (citySlug) params.citySlug = citySlug;
+  if (normalizedCitySlug) params.citySlug = normalizedCitySlug;
   const initialVendorList = await queryDecorators(params);
 
   base.props = base.props || {};
   base.props.pageProps = base.props.pageProps || {};
   base.props.pageProps.initialVendorList = initialVendorList;
   base.assetPrefix = "/twc-mirror";
-  if (citySlug) {
+  if (normalizedCitySlug) {
     base.page = "/wedding-decorators/[decorCity]";
-    base.query = { decorCity: citySlug };
+    base.query = { decorCity: normalizedCitySlug };
   }
 
   const listingMediaUrls = (initialVendorList.results || [])
@@ -648,7 +650,7 @@ async function getListingHtmlUncached(citySlug?: string): Promise<string> {
   // bundle instead, otherwise the route never hydrates (the count/filters stay
   // frozen on the captured static HTML). Swap the page-chunk reference so the
   // correct bundle loads. Hashes are pinned to the mirrored build.
-  if (citySlug) {
+  if (normalizedCitySlug) {
     html = html
       .split(LISTING_PAGE_CHUNK)
       .join(CITY_PAGE_CHUNK);
@@ -666,7 +668,8 @@ const DECORATOR_INCLUDE = {
 } as const;
 
 async function findDecorator(citySlug: string, slug: string) {
-  const c = decodeURIComponent(citySlug || "").trim().toLowerCase();
+  const c = normalizeCitySlug(citySlug);
+  if (!isAllowedCitySlug(c)) return null;
   const s = decodeURIComponent(slug).trim().toLowerCase();
   const exact = await (prisma as any).decorator.findFirst({
     where: { citySlug: { equals: c, mode: "insensitive" }, slug: { equals: s, mode: "insensitive" } },
@@ -674,7 +677,7 @@ async function findDecorator(citySlug: string, slug: string) {
   });
   if (exact) return exact;
   return (prisma as any).decorator.findFirst({
-    where: { slug: { equals: s, mode: "insensitive" } },
+    where: { citySlug: { equals: c, mode: "insensitive" }, slug: { equals: s, mode: "insensitive" } },
     include: DECORATOR_INCLUDE
   });
 }
@@ -701,13 +704,13 @@ async function getDetailHtmlUncached(citySlug: string, slug: string): Promise<st
 
 const getListingHtmlCached = unstable_cache(
   getListingHtmlUncached,
-  ["decorator-listing-html-brand-gold-v25-local-decor-fallbacks"],
+  ["decorator-listing-html-brand-gold-v26-allowed-cities"],
   { revalidate: 86400, tags: ["decorators"] }
 );
 
 const getDetailHtmlCached = unstable_cache(
   getDetailHtmlUncached,
-  ["decorator-detail-html-brand-gold-v24-local-decor-fallbacks"],
+  ["decorator-detail-html-brand-gold-v25-allowed-cities"],
   { revalidate: 86400, tags: ["decorators"] }
 );
 

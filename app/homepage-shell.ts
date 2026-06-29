@@ -804,6 +804,25 @@ export function homepageShellScript() {
     });
   };
 
+  const removeUnsupportedCities = () => {
+    const allowed = new Set(["delhi", "gurugram", "noida", "jaipur", "udaipur"]);
+    const blockedNames = new Set(["bengaluru", "bangalore", "mumbai", "goa", "jodhpur", "jaisalmer"]);
+    const cityNameOf = (value) => (value || "").trim().toLowerCase();
+    document.querySelectorAll("#venues_in_different_cities_section a, #venues_in_different_cities_section button, #venues_in_different_cities_section p").forEach((node) => {
+      const text = cityNameOf(node.textContent);
+      const href = cityNameOf(node.getAttribute && node.getAttribute("href"));
+      const citySlug = [...blockedNames].find((name) => text === name || href.includes("/" + name));
+      if (!citySlug) return;
+      (node.closest(".z-50.w-fit") || node.closest("li") || node.closest("article") || node.parentElement || node).remove();
+    });
+    document.querySelectorAll('a[href*="/wedding-venues/"], a[href*="/wedding-photographers/"], a[href*="/wedding-decorators/"]').forEach((link) => {
+      const href = cityNameOf(link.getAttribute("href"));
+      const cityMatch = href.match(/\/wedding-(?:venues|photographers|decorators)\/([^/?#]+)/);
+      const citySlug = cityMatch ? cityMatch[1] : "";
+      if (citySlug && !allowed.has(citySlug)) link.remove();
+    });
+  };
+
   const venueMediaAliases = {
     "Calendar.d19ed62a.webp": "/twc-mirror/_next/static/media/Calendar.d19ed62a.webp",
     "Promotion.757e6a61.webp": "/twc-mirror/_next/static/media/Promotion.757e6a61.webp",
@@ -914,6 +933,7 @@ export function homepageShellScript() {
     document.querySelectorAll("footer, .parent-div.is--footer, .venues-footer, .twc-company-footer, .twc-legacy-footer").forEach(removeAlternateFooter);
     setupMoreDropdown();
     removeCitySelectionPopup();
+    removeUnsupportedCities();
     repairVenueMediaImages();
     syncOverlayState();
   };
@@ -925,6 +945,7 @@ export function homepageShellScript() {
   try {
     new MutationObserver(() => {
       removeCitySelectionPopup();
+      removeUnsupportedCities();
       repairVenueMediaImages();
       syncOverlayState();
     }).observe(document.documentElement, {

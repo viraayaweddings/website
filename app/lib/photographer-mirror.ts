@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { unstable_cache } from "next/cache";
+import { isAllowedCitySlug, normalizeCitySlug } from "./allowed-cities";
 import { prisma } from "./prisma";
 import {
   applyBranding,
@@ -600,7 +601,8 @@ const PHOTOGRAPHER_INCLUDE = {
 } as const;
 
 async function findPhotographer(citySlug: string, slug: string) {
-  const c = decodeURIComponent(citySlug).trim().toLowerCase();
+  const c = normalizeCitySlug(citySlug);
+  if (!isAllowedCitySlug(c)) return null;
   const s = decodeURIComponent(slug).trim().toLowerCase();
   const exact = await (prisma as any).photographer.findFirst({
     where: { citySlug: { equals: c, mode: "insensitive" }, slug: { equals: s, mode: "insensitive" } },
@@ -697,7 +699,7 @@ async function getMirrorHtmlUncached(citySlug: string, slug: string): Promise<st
 
 // Cache the fully-rendered detail HTML so a hot page never touches Neon. The
 // cloned data is static, so a long revalidate keeps DB hits to ~once/day/page.
-const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["photographer-mirror-html-brand-gold-v21-local-gallery"], {
+const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["photographer-mirror-html-brand-gold-v22-allowed-cities"], {
   revalidate: 86400,
   tags: ["photographers"]
 });

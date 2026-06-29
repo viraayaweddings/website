@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { unstable_cache } from "next/cache";
+import { allowedCityName, allowedCitySlugs, isAllowedCitySlug, normalizeCitySlug } from "./allowed-cities";
 import { prisma } from "./prisma";
 
 export type DecoratorQueryResult = {
@@ -209,7 +210,7 @@ function isRenderableDecoratorImage(
 }
 
 export function decoratorHref(citySlug: string, slug: string) {
-  return `/wedding-decorators/${citySlug || "bengaluru"}/${slug}`;
+  return `/wedding-decorators/${citySlug || "delhi"}/${slug}`;
 }
 
 const DECORATOR_CARD_SELECT = {
@@ -386,13 +387,16 @@ async function queryDecoratorsUncached(queryString: string): Promise<DecoratorQu
   const citySlug = slugKey(
     params.get("citySlug") || params.get("city") || params.get("decorCity") || ""
   );
+  if (citySlug && !isAllowedCitySlug(citySlug)) return emptyDecoratorQuery(params);
   const page = Math.max(1, Number(params.get("page") || 1));
   const limit = Math.min(48, Math.max(1, Number(params.get("limit") || 24)));
   const search = labelKey(params.get("search") || params.get("q") || params.get("vendorName") || "");
   const tag = selectedTag(params.get("specialTags") || params.get("tab"));
 
   const whereParts: any[] = [
-    citySlug ? { citySlug: { equals: citySlug, mode: "insensitive" } } : undefined,
+    citySlug
+      ? { citySlug: { equals: citySlug, mode: "insensitive" } }
+      : { citySlug: { in: allowedCitySlugs } },
     search ? { searchText: { contains: search, mode: "insensitive" } } : undefined,
     tag ? { tags: { some: { label: { equals: tag, mode: "insensitive" } } } } : undefined
   ].filter(Boolean);
@@ -431,7 +435,7 @@ async function queryDecoratorsUncached(queryString: string): Promise<DecoratorQu
   };
 }
 
-const queryDecoratorsCached = unstable_cache(queryDecoratorsUncached, ["decorator-list-query-v7-local-decor-fallbacks"], {
+const queryDecoratorsCached = unstable_cache(queryDecoratorsUncached, ["decorator-list-query-v8-allowed-cities"], {
   revalidate: 86400,
   tags: ["decorators"]
 });
@@ -452,7 +456,8 @@ async function getDecoratorBySlugUncached(
   citySlug: string,
   slug: string
 ): Promise<DecoratorRecord | null> {
-  const normalizedCitySlug = slugKey(citySlug);
+  const normalizedCitySlug = normalizeCitySlug(citySlug);
+  if (!isAllowedCitySlug(normalizedCitySlug)) return null;
   const normalizedSlug = decodeURIComponent(slug).trim().toLowerCase();
   const includeRelations = { city: true, media: true, tags: true };
   const db = prisma as any;
@@ -468,6 +473,7 @@ async function getDecoratorBySlugUncached(
 
   const candidates = await db.decorator.findMany({
     where: {
+      citySlug: { equals: normalizedCitySlug, mode: "insensitive" },
       OR: [
         { slug: { equals: normalizedSlug, mode: "insensitive" } },
         { slug: { contains: normalizedSlug, mode: "insensitive" } },
@@ -493,7 +499,7 @@ async function getDecoratorBySlugUncached(
 
 const getDecoratorBySlugCached = unstable_cache(
   getDecoratorBySlugUncached,
-  ["decorator-by-slug-v2"],
+  ["decorator-by-slug-v3-allowed-cities"],
   { revalidate: 86400, tags: ["decorators"] }
 );
 
@@ -509,15 +515,17 @@ export async function getDecoratorBySlug(citySlug: string, slug: string) {
 async function getDecoratorCitiesUncached() {
   const db = prisma as any;
   const rows = await db.decoratorCity.findMany({
+    where: { slug: { in: allowedCitySlugs } },
     select: { slug: true, name: true },
-    orderBy: { name: "asc" }
   });
-  return rows;
+  return rows
+    .sort((a: { slug: string }, b: { slug: string }) => allowedCitySlugs.indexOf(a.slug) - allowedCitySlugs.indexOf(b.slug))
+    .map((row: { slug: string; name: string }) => ({ ...row, name: allowedCityName(row.slug) }));
 }
 
 const getDecoratorCitiesCached = unstable_cache(
   getDecoratorCitiesUncached,
-  ["decorator-cities-v2"],
+  ["decorator-cities-v3-allowed-cities"],
   { revalidate: 86400, tags: ["decorators"] }
 );
 

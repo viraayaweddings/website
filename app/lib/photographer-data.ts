@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import fs from "node:fs";
 import path from "node:path";
+import { allowedCityName, allowedCitySlugs, isAllowedCitySlug, normalizeCitySlug } from "./allowed-cities";
 import { prisma } from "./prisma";
 
 export type PhotographerCard = {
@@ -353,9 +354,8 @@ async function queryPhotographersUncached(
   queryString: string
 ): Promise<PhotographerQueryResult> {
   const params = new URLSearchParams(queryString);
-  const citySlug = labelKey(
-    params.get("city") || params.get("citySlug") || ""
-  );
+  const citySlug = normalizeCitySlug(params.get("city") || params.get("citySlug") || "");
+  if (citySlug && !isAllowedCitySlug(citySlug)) return emptyPhotographerQuery(params);
   const page = Math.max(1, Number(params.get("page") || 1));
   const limit = Math.min(48, Math.max(1, Number(params.get("limit") || 24)));
   const search = labelKey(params.get("search") || "");
@@ -363,7 +363,7 @@ async function queryPhotographersUncached(
   const tabTag = selectedTabTag(tab);
 
   const whereParts: any[] = [
-    citySlug ? { citySlug } : undefined,
+    citySlug ? { citySlug } : { citySlug: { in: allowedCitySlugs } },
     search
       ? { searchText: { contains: search, mode: "insensitive" } }
       : undefined,
@@ -405,7 +405,7 @@ async function queryPhotographersUncached(
 
 const queryPhotographersCached = unstable_cache(
   queryPhotographersUncached,
-  ["photographer-list-query-v3-local-card-fallbacks"],
+  ["photographer-list-query-v4-allowed-cities"],
   { revalidate: 86400, tags: ["photographers"] }
 );
 
@@ -425,7 +425,8 @@ async function getPhotographerBySlugUncached(
   citySlug: string,
   slug: string
 ): Promise<PhotographerRecord | null> {
-  const normalizedCitySlug = decodeURIComponent(citySlug).trim().toLowerCase();
+  const normalizedCitySlug = normalizeCitySlug(citySlug);
+  if (!isAllowedCitySlug(normalizedCitySlug)) return null;
   const normalizedSlug = decodeURIComponent(slug).trim().toLowerCase();
 
   const includeRelations = {
@@ -474,7 +475,7 @@ async function getPhotographerBySlugUncached(
 
 const getPhotographerBySlugCached = unstable_cache(
   getPhotographerBySlugUncached,
-  ["photographer-by-slug-v2-local-card-fallbacks"],
+  ["photographer-by-slug-v3-allowed-cities"],
   { revalidate: 86400, tags: ["photographers"] }
 );
 
@@ -494,21 +495,22 @@ async function getPhotographerCitiesUncached() {
   const db = prisma as any;
   const rows: Array<{ citySlug: string }> = await db.photographer.findMany({
     select: { citySlug: true },
-    orderBy: { citySlug: "asc" },
+    where: { citySlug: { in: allowedCitySlugs } },
     distinct: ["citySlug"]
   });
   return rows
     .map((row) => row.citySlug)
     .filter(Boolean)
+    .sort((a, b) => allowedCitySlugs.indexOf(a) - allowedCitySlugs.indexOf(b))
     .map((slug) => ({
       slug,
-      name: slug.slice(0, 1).toUpperCase() + slug.slice(1)
+      name: allowedCityName(slug)
     }));
 }
 
 const getPhotographerCitiesCached = unstable_cache(
   getPhotographerCitiesUncached,
-  ["photographer-cities"],
+  ["photographer-cities-v2-allowed-cities"],
   { revalidate: 86400, tags: ["photographers"] }
 );
 
@@ -527,11 +529,12 @@ async function getSimilarPhotographersUncached(
   tags: string[],
   limit: number
 ): Promise<PhotographerCard[]> {
+  if (!isAllowedCitySlug(citySlug)) return [];
   const tagSet = new Set((tags || []).map(labelKey));
   const db = prisma as any;
   const candidates = await db.photographer.findMany({
     where: {
-      citySlug,
+      citySlug: normalizeCitySlug(citySlug),
       NOT: { vendorId }
     },
     select: PHOTOGRAPHER_CARD_SELECT,
@@ -566,7 +569,7 @@ async function getSimilarPhotographersUncached(
 
 const getSimilarPhotographersCached = unstable_cache(
   getSimilarPhotographersUncached,
-  ["similar-photographers-v2-local-card-fallbacks"],
+  ["similar-photographers-v3-allowed-cities"],
   { revalidate: 86400, tags: ["photographers"] }
 );
 

@@ -1,4 +1,5 @@
 import { getDecoratorListingHtml } from "../../lib/decorator-mirror";
+import { isAllowedCitySlug } from "../../lib/allowed-cities";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 3600;
@@ -12,6 +13,7 @@ export async function GET(
   }
 ) {
   const { decorCity } = await params;
+  if (!isAllowedCitySlug(decorCity)) return new Response("Not found", { status: 404 });
   const html = await getDecoratorListingHtml(decorCity);
   return new Response(html, {
     headers: {

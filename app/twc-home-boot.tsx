@@ -10,9 +10,11 @@ export default function TwcHomeBoot() {
     const legacyHomepage = Boolean(document.querySelector("#home-page-revamp"));
     const sharedCleanup = setupSharedHeader();
     const cityPopupCleanup = setupCityPopupRemoval();
+    const cityPruningCleanup = setupSupportedCityPruning();
 
     if (!legacyHomepage) {
       return () => {
+        cityPruningCleanup();
         cityPopupCleanup();
         sharedCleanup();
       };
@@ -21,6 +23,7 @@ export default function TwcHomeBoot() {
     const existing = document.querySelector('script[data-twc-home="1"]');
     if (existing) {
       return () => {
+        cityPruningCleanup();
         cityPopupCleanup();
         sharedCleanup();
       };
@@ -33,12 +36,64 @@ export default function TwcHomeBoot() {
     document.body.appendChild(script);
 
     return () => {
+      cityPruningCleanup();
       cityPopupCleanup();
       sharedCleanup();
     };
   }, [pathname]);
 
   return null;
+}
+
+function setupSupportedCityPruning() {
+  const allowedCityOrder = ["delhi", "gurugram", "noida", "jaipur", "udaipur"];
+  const allowedCitySlugs = new Set(["delhi", "gurugram", "noida", "jaipur", "udaipur"]);
+  const blockedCityNames = new Set(["bengaluru", "bangalore", "mumbai", "goa", "jodhpur", "jaisalmer"]);
+  const normalize = (value: string | null | undefined) => (value || "").trim().toLowerCase();
+
+  const removeUnsupportedCities = () => {
+    const section = document.querySelector("#venues_in_different_cities_section");
+    if (section) {
+      section.querySelectorAll<HTMLElement>("a, button, p").forEach((node) => {
+        const text = normalize(node.textContent);
+        const href = normalize(node.getAttribute("href"));
+        const isBlocked = Array.from(blockedCityNames).some(
+          (city) => text === city || href.includes(`/${city}`)
+        );
+        if (!isBlocked) return;
+        (node.closest(".z-50.w-fit") || node.closest("li") || node.closest("article") || node.parentElement || node).remove();
+      });
+      const grid = section.querySelector<HTMLElement>(".grid");
+      const cityCards = Array.from(section.querySelectorAll<HTMLElement>(".z-50.w-fit"));
+      const cardsByCity = new Map(
+        cityCards.map((card) => [normalize(card.textContent), card])
+      );
+      allowedCityOrder.forEach((city) => {
+        const card = cardsByCity.get(city);
+        if (grid && card) grid.appendChild(card);
+      });
+    }
+
+    document
+      .querySelectorAll<HTMLAnchorElement>('a[href*="/wedding-venues/"], a[href*="/wedding-photographers/"], a[href*="/wedding-decorators/"]')
+      .forEach((link) => {
+        const cityMatch = normalize(link.getAttribute("href")).match(/\/wedding-(?:venues|photographers|decorators)\/([^/?#]+)/);
+        const citySlug = cityMatch ? cityMatch[1] : "";
+        if (citySlug && !allowedCitySlugs.has(citySlug)) link.remove();
+      });
+  };
+
+  removeUnsupportedCities();
+  [100, 400, 1000, 2500, 5000].forEach((delay) => window.setTimeout(removeUnsupportedCities, delay));
+  const observer = new MutationObserver(removeUnsupportedCities);
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["href", "class"]
+  });
+
+  return () => observer.disconnect();
 }
 
 function setupCityPopupRemoval() {

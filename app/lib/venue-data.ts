@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import fs from "node:fs";
 import path from "node:path";
+import { allowedCitySlugs, isAllowedCitySlug, normalizeCitySlug } from "./allowed-cities";
 import { prisma } from "./prisma";
 
 const venueImageFallbacks = [
@@ -423,6 +424,7 @@ function emptyVenueQuery(params: URLSearchParams): VenueQueryResult {
 async function queryVenuesUncached(queryString: string): Promise<VenueQueryResult> {
   const params = new URLSearchParams(queryString);
   const citySlug = labelKey(params.get("city") || params.get("citySlug") || "");
+  if (citySlug && !isAllowedCitySlug(citySlug)) return emptyVenueQuery(params);
   const page = Math.max(1, Number(params.get("page") || 1));
   const limit = Math.min(48, Math.max(1, Number(params.get("limit") || 24)));
   const search = labelKey(params.get("search") || "");
@@ -451,7 +453,7 @@ async function queryVenuesUncached(queryString: string): Promise<VenueQueryResul
   const tabTag = selectedTabTag(tab);
   const minRating = minRatingFromLabels(ratings);
   const whereParts: any[] = [
-    citySlug ? { citySlug } : undefined,
+    citySlug ? { citySlug } : { citySlug: { in: allowedCitySlugs } },
     search ? { searchText: { contains: search, mode: "insensitive" } } : undefined,
     tabTag ? { tags: { some: { label: tabTag } } } : undefined,
     minRating !== null ? { userRating: { gte: minRating } } : undefined,
@@ -490,7 +492,7 @@ async function queryVenuesUncached(queryString: string): Promise<VenueQueryResul
   };
 }
 
-const queryVenuesCached = unstable_cache(queryVenuesUncached, ["venue-list-query-v2-deployable-image-fallbacks"], {
+const queryVenuesCached = unstable_cache(queryVenuesUncached, ["venue-list-query-v3-allowed-cities"], {
   revalidate: 900,
   tags: ["venues"]
 });
@@ -507,7 +509,8 @@ export async function queryVenues(input: URLSearchParams | Record<string, string
 }
 
 async function getVenueBySlugUncached(citySlug: string, venueSlug: string) {
-  const normalizedCitySlug = decodeURIComponent(citySlug).trim().toLowerCase();
+  const normalizedCitySlug = normalizeCitySlug(citySlug);
+  if (!isAllowedCitySlug(normalizedCitySlug)) return null;
   const normalizedVenueSlug = decodeURIComponent(venueSlug).trim().toLowerCase();
   const includeVenueRelations = {
     city: true,
@@ -547,7 +550,7 @@ async function getVenueBySlugUncached(citySlug: string, venueSlug: string) {
   );
 }
 
-const getVenueBySlugCached = unstable_cache(getVenueBySlugUncached, ["venue-by-slug-v2-deployable-image-fallbacks"], {
+const getVenueBySlugCached = unstable_cache(getVenueBySlugUncached, ["venue-by-slug-v3-allowed-cities"], {
   revalidate: 86400,
   tags: ["venues"]
 });
@@ -562,13 +565,14 @@ export async function getVenueBySlug(citySlug: string, venueSlug: string) {
 }
 
 async function getCityBySlugUncached(citySlug: string) {
+  if (!isAllowedCitySlug(citySlug)) return null;
   return prisma.city.findUnique({
-    where: { slug: citySlug },
+    where: { slug: normalizeCitySlug(citySlug) },
     select: { slug: true, name: true, sourceCount: true, importedCount: true }
   });
 }
 
-const getCityBySlugCached = unstable_cache(getCityBySlugUncached, ["venue-city-by-slug"], {
+const getCityBySlugCached = unstable_cache(getCityBySlugUncached, ["venue-city-by-slug-v2-allowed-cities"], {
   revalidate: 86400,
   tags: ["venues"]
 });
@@ -583,13 +587,14 @@ export async function getCityBySlug(citySlug: string) {
 }
 
 async function getVenueCitiesUncached() {
-  return prisma.city.findMany({
-    orderBy: { name: "asc" },
+  const rows = await prisma.city.findMany({
+    where: { slug: { in: allowedCitySlugs } },
     select: { slug: true, name: true, sourceCount: true, importedCount: true }
   });
+  return rows.sort((a, b) => allowedCitySlugs.indexOf(a.slug) - allowedCitySlugs.indexOf(b.slug));
 }
 
-const getVenueCitiesCached = unstable_cache(getVenueCitiesUncached, ["venue-cities"], {
+const getVenueCitiesCached = unstable_cache(getVenueCitiesUncached, ["venue-cities-v2-allowed-cities"], {
   revalidate: 86400,
   tags: ["venues"]
 });
@@ -604,10 +609,11 @@ export async function getVenueCities() {
 }
 
 async function getSimilarVenuesUncached(citySlug: string, vendorId: string, tags: string[], limit: number) {
+  if (!isAllowedCitySlug(citySlug)) return [];
   const tagSet = new Set((tags || []).map(labelKey));
   const candidates = await prisma.venue.findMany({
     where: {
-      citySlug,
+      citySlug: normalizeCitySlug(citySlug),
       NOT: { vendorId }
     },
     select: VENUE_CARD_SELECT,
@@ -628,7 +634,7 @@ async function getSimilarVenuesUncached(citySlug: string, vendorId: string, tags
     .map((item) => toVenueCard(item.venue));
 }
 
-const getSimilarVenuesCached = unstable_cache(getSimilarVenuesUncached, ["similar-venues-v2-deployable-image-fallbacks"], {
+const getSimilarVenuesCached = unstable_cache(getSimilarVenuesUncached, ["similar-venues-v3-allowed-cities"], {
   revalidate: 86400,
   tags: ["venues"]
 });
