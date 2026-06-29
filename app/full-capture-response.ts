@@ -24,7 +24,7 @@ const homepageStylesheets = [
 ];
 
 const fullCaptureCache = new Map<string, string>();
-const fullCaptureShellVersion = "single-shell-v3-favicon";
+const fullCaptureShellVersion = "single-shell-v7-global-header-footer";
 
 function rewriteAssetUrls(html: string) {
   let next = html

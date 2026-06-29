@@ -62,6 +62,35 @@ main {
   z-index: 10001;
 }
 
+body nav.sticky,
+body .shadow-header,
+body .venues-header,
+body .twc-company-header,
+body .twc-legacy-header,
+body .parent-div.is--nav_new,
+body .navbar-mobile,
+body .mobile-sub-menu-wrapper {
+  display: none !important;
+}
+
+#__next [class*="z-[100]"]:has(#link_wedding_venues_container),
+#__next [class*="translate-y-0"]:has(#link_wedding_venues_container),
+#parent-container > main [class*="z-[100]"]:has(#link_wedding_venues_container),
+#parent-container > main [class*="translate-y-0"]:has(#link_wedding_venues_container) {
+  display: none !important;
+}
+
+#twc-homepage-shared-header nav,
+#twc-homepage-shared-header .shadow-header,
+#twc-homepage-shared-header .venues-header,
+#twc-homepage-shared-header .twc-company-header,
+#twc-homepage-shared-header .twc-legacy-header,
+#twc-homepage-shared-header .parent-div.is--nav_new,
+#twc-homepage-shared-header .navbar-mobile,
+#twc-homepage-shared-header .mobile-sub-menu-wrapper {
+  display: revert !important;
+}
+
 #twc-homepage-shared-header img[src="/brand/viraaya-logo-header.png"] {
   display: block;
   height: auto !important;
@@ -132,6 +161,20 @@ main {
   #twc-homepage-shared-footer #footer_section > section.grid {
     grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   }
+}
+
+body footer,
+body #footer_section,
+body .parent-div.is--footer,
+body .twc-company-footer,
+body .twc-legacy-footer,
+body .venues-footer {
+  display: none !important;
+}
+
+#twc-homepage-shared-footer footer,
+#twc-homepage-shared-footer #footer_section {
+  display: block !important;
 }
 
 .tagembed-widget,

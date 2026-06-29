@@ -185,19 +185,51 @@ export const homepageShellCss = `
     pointer-events: auto;
     transform: translate3d(0, 0, 0);
   }
+  body nav.sticky,
+  body .shadow-header,
+  body .venues-header,
+  body .twc-company-header,
+  body .twc-legacy-header,
+  body .parent-div.is--nav_new,
+  body .navbar-mobile,
+  body .mobile-sub-menu-wrapper {
+    display: none !important;
+  }
+  #__next [class*="z-[100]"]:has(#link_wedding_venues_container),
+  #__next [class*="translate-y-0"]:has(#link_wedding_venues_container),
+  #parent-container > main [class*="z-[100]"]:has(#link_wedding_venues_container),
+  #parent-container > main [class*="translate-y-0"]:has(#link_wedding_venues_container) {
+    display: none !important;
+  }
+  #twc-homepage-shared-header nav,
+  #twc-homepage-shared-header .shadow-header,
+  #twc-homepage-shared-header .venues-header,
+  #twc-homepage-shared-header .twc-company-header,
+  #twc-homepage-shared-header .twc-legacy-header,
+  #twc-homepage-shared-header .parent-div.is--nav_new,
+  #twc-homepage-shared-header .navbar-mobile,
+  #twc-homepage-shared-header .mobile-sub-menu-wrapper {
+    display: revert !important;
+  }
+  body footer,
+  body #footer_section,
+  body .parent-div.is--footer,
+  body .twc-company-footer,
+  body .twc-legacy-footer,
+  body .venues-footer {
+    display: none !important;
+  }
+  #twc-homepage-shared-footer footer,
+  #twc-homepage-shared-footer #footer_section {
+    display: block !important;
+  }
   body > nav.sticky.top-0,
   body > .parent-div.is--nav_new,
   body > .navbar-mobile,
   body > .mobile-sub-menu-wrapper,
-  body > footer,
-  body > .parent-div.is--footer,
   #parent-container > .scrollbar-hide > .shadow-header,
-  #parent-container > .scrollbar-hide > footer,
-  #parent-container > .scrollbar-hide > #footer_section,
   #__next > nav.sticky.top-0,
-  #__next > .parent-div.is--nav_new,
-  #__next > footer,
-  #__next > #footer_section {
+  #__next > .parent-div.is--nav_new {
     display: none !important;
   }
 </style>`;
@@ -222,12 +254,12 @@ const ideaCategoryMarkup = [
   )
   .join("");
 
-export const aboutViraayaWeddingsArticleMarkup = `
-  <h2>About Viraaya Weddings</h2>
-  <h3>Luxury Wedding Planning Services Across India</h3>
+const homepageAboutViraayaWeddingsIntroMarkup = `
   <p>At Viraaya Weddings, we believe every celebration deserves to be extraordinary. Whether you&apos;re planning an intimate ceremony or a grand destination wedding, our team transforms your ideas into beautifully curated experiences that reflect your personality, traditions, and style.</p>
   <p>With a trusted network of premium venues and experienced wedding professionals across India, we simplify the planning process from start to finish. From your first consultation to the final farewell, our experts ensure every detail is thoughtfully managed, allowing you and your family to focus on creating unforgettable memories.</p>
+`;
 
+const homepageAboutViraayaWeddingsExpandedMarkup = `
   <h3>Our Wedding Planning Services</h3>
   <p>Planning a wedding involves countless decisions, and we&apos;re here to make each one easier. Our personalized approach helps you select the right services, vendors, and experiences while staying aligned with your budget and vision.</p>
 
@@ -259,8 +291,8 @@ export const aboutViraayaWeddingsArticleMarkup = `
   <h4>Trusted Vendor Network</h4>
   <p>We collaborate with carefully selected venues and wedding professionals known for their quality, reliability, and exceptional service. This allows us to deliver premium experiences while helping you make informed decisions.</p>
 
-  <h4>Clear Planning Guidance</h4>
-  <p>We believe wedding planning should be exciting&mdash;not confusing. Our team provides clear recommendations tailored to your celebration priorities without compromising quality.</p>
+  <h4>Transparent Pricing</h4>
+  <p>We believe wedding planning should be exciting&mdash;not confusing. Our team provides clear recommendations and works within your budget to maximize value without compromising quality.</p>
 
   <h4>End-to-End Coordination</h4>
   <p>From venue selection and vendor management to guest coordination and on-ground execution, we oversee every stage of your wedding journey so you can celebrate stress-free with your loved ones.</p>
@@ -269,9 +301,11 @@ export const aboutViraayaWeddingsArticleMarkup = `
   <p>At Viraaya Weddings, we don&apos;t simply organize weddings&mdash;we craft meaningful celebrations filled with beautiful moments, thoughtful details, and unforgettable experiences. No matter where your dream wedding takes place, we&apos;re committed to making it elegant, seamless, and truly one of a kind.</p>
 `;
 
-const homepageAboutViraayaWeddingsIntroMarkup = `
-  <p>At Viraaya Weddings, we believe every celebration deserves to be extraordinary. Whether you&apos;re planning an intimate ceremony or a grand destination wedding, our team transforms your ideas into beautifully curated experiences that reflect your personality, traditions, and style.</p>
-  <p>With a trusted network of premium venues and experienced wedding professionals across India, we simplify the planning process from start to finish. From your first consultation to the final farewell, our experts ensure every detail is thoughtfully managed, allowing you and your family to focus on creating unforgettable memories.</p>
+export const aboutViraayaWeddingsArticleMarkup = `
+  <h2>About Viraaya Weddings</h2>
+  <h3>Luxury Wedding Planning Services Across India</h3>
+  ${homepageAboutViraayaWeddingsIntroMarkup}
+  ${homepageAboutViraayaWeddingsExpandedMarkup}
 `;
 
 const homepageAboutViraayaWeddingsSection = `
@@ -295,14 +329,42 @@ const homepageAboutViraayaWeddingsSection = `
       #more_about_betterhalf_section .twc-about-viraaya-content p {
         margin-top: 0.75rem;
       }
+      #more_about_betterhalf_section .twc-about-viraaya-expanded[hidden] {
+        display: none;
+      }
+      #more_about_betterhalf_section .twc-about-viraaya-expanded {
+        padding-top: 0.5rem;
+      }
+      #more_about_betterhalf_section .twc-about-viraaya-toggle {
+        align-self: flex-start;
+        background: transparent;
+        border: 0;
+        border-bottom: 1.5px solid #A9804E;
+        color: #A9804E;
+        cursor: pointer;
+        display: inline-flex;
+        font: inherit;
+        line-height: 1.3;
+        margin-top: 0.5rem;
+        padding: 0.25rem 0 0.1rem;
+      }
+      #more_about_betterhalf_section .twc-about-viraaya-toggle:hover,
+      #more_about_betterhalf_section .twc-about-viraaya-toggle:focus-visible {
+        color: #8A693F;
+        border-bottom-color: #8A693F;
+      }
     </style>
     <div class="mx-auto max-w-screen-lg space-y-8 font-plus-jakarata-sans text-sm leading-relaxed text-secondary md:text-base">
       <div class="space-y-3 text-center">
         <p class="font-playfair text-3xl font-semibold text-primaryTextColor md:text-[44px]">About Viraaya Weddings</p>
         <p class="font-playfair text-2xl font-semibold text-[#A9804E] md:text-4xl">Luxury Wedding Planning Services Across India</p>
       </div>
-      <div class="twc-about-viraaya-content space-y-5">
+      <div class="twc-about-viraaya-content flex flex-col space-y-5">
         ${homepageAboutViraayaWeddingsIntroMarkup}
+        <div class="twc-about-viraaya-expanded" id="twc-about-viraaya-expanded" hidden>
+          ${homepageAboutViraayaWeddingsExpandedMarkup}
+        </div>
+        <button class="twc-about-viraaya-toggle" type="button" aria-expanded="false" aria-controls="twc-about-viraaya-expanded">Read more</button>
       </div>
     </div>
   </section>
@@ -395,17 +457,25 @@ function normalizeAboutContent(markup: string) {
 
 const capturedHeaderChromeMarkers = [
   { needle: '<nav class="sticky top-0 z-30', tag: "nav" },
+  { needle: '<nav class="sticky top-[-1px]', tag: "nav" },
+  { needle: '<nav class="sticky top-', tag: "nav" },
   { needle: '<div class="z-[100]', tag: "div" },
   { needle: '<div class="flex h-14 translate-y-0', tag: "div" },
   { needle: '<div class="flex translate-y-0', tag: "div" },
   { needle: '<div class="parent-div is--nav_new"', tag: "div" },
   { needle: '<div class="navbar-mobile', tag: "div" },
-  { needle: '<div class="mobile-sub-menu-wrapper', tag: "div" }
+  { needle: '<div class="mobile-sub-menu-wrapper', tag: "div" },
+  { needle: '<div class="twc-company-header', tag: "div" },
+  { needle: '<div class="twc-legacy-header', tag: "div" },
+  { needle: '<div class="venues-header', tag: "div" }
 ] as const;
 
 const capturedFooterChromeMarkers = [
   { needle: '<footer', tag: "footer" },
   { needle: '<div class="parent-div is--footer', tag: "div" },
+  { needle: '<div class="twc-company-footer', tag: "div" },
+  { needle: '<div class="twc-legacy-footer', tag: "div" },
+  { needle: '<div class="venues-footer', tag: "div" },
   { needle: '<div id="footer_section"', tag: "div" }
 ] as const;
 
@@ -712,12 +782,16 @@ export function applyHomepageHeaderFooter(markup: string) {
   const footer = `<div id="twc-homepage-shared-footer">${getHomepageFooter()}</div>`;
 
   if (!next.includes(header)) {
+    const bodyIndex = next.indexOf("<body");
+    const bodyOpenEnd = bodyIndex === -1 ? -1 : next.indexOf(">", bodyIndex) + 1;
     const parentIndex = next.indexOf('id="parent-container"');
     const parentStart = findElementStartBefore(next, parentIndex, "div");
     const parentOpenEnd = parentStart === -1 ? -1 : next.indexOf(">", parentStart) + 1;
     const nextStart = next.indexOf('<div id="__next">');
     const insertAt =
-      parentOpenEnd > 0
+      bodyOpenEnd > 0
+        ? bodyOpenEnd
+        : parentOpenEnd > 0
         ? parentOpenEnd
         : nextStart === -1
           ? next.indexOf("<body") === -1
@@ -732,9 +806,12 @@ export function applyHomepageHeaderFooter(markup: string) {
 
   if (!next.includes(footer)) {
     const insertAt = next.indexOf('<div class="Toastify"');
+    const bodyEnd = next.lastIndexOf("</body>");
     next =
-      insertAt === -1
-        ? next.replace("</body>", `${footer}</body>`)
+      bodyEnd !== -1
+        ? next.slice(0, bodyEnd) + footer + next.slice(bodyEnd)
+        : insertAt === -1
+        ? `${next}${footer}`
         : next.slice(0, insertAt) + footer + next.slice(insertAt);
   }
 
@@ -1003,18 +1080,14 @@ export function homepageShellScript() {
       return;
     }
 
-    const container =
-      document.querySelector("#parent-container") ||
-      document.querySelector("#__next") ||
-      document.body;
     enforceFavicon();
 
     if (!document.querySelector("#twc-homepage-shared-header")) {
-      container.insertAdjacentHTML("afterbegin", headerHtml);
+      document.body.insertAdjacentHTML("afterbegin", headerHtml);
     }
 
     document.querySelectorAll([
-      "nav.sticky.top-0",
+      "nav.sticky",
       ".parent-div.is--nav_new",
       ".navbar-mobile",
       ".mobile-sub-menu-wrapper",
@@ -1023,7 +1096,11 @@ export function homepageShellScript() {
       ".twc-company-header",
       ".twc-legacy-header"
     ].join(",")).forEach(removeAlternateHeader);
-    document.querySelectorAll("#link_wedding_venues_container").forEach((marker) => {
+    document.querySelectorAll([
+      "#link_wedding_venues_container",
+      "#other_services_dropdown_container",
+      "#link_refund_policy_container"
+    ].join(",")).forEach((marker) => {
       removeAlternateHeader(findHomeLikeHeader(marker));
     });
 
@@ -1035,7 +1112,7 @@ export function homepageShellScript() {
       if (before && before.parentElement) {
         before.insertAdjacentHTML("beforebegin", footerHtml);
       } else {
-        container.insertAdjacentHTML("beforeend", footerHtml);
+        document.body.insertAdjacentHTML("beforeend", footerHtml);
       }
     }
 
@@ -1066,6 +1143,8 @@ export function homepageShellScript() {
 
   enforceShell();
   [120, 400, 1000, 2500, 5000].forEach((delay) => setTimeout(enforceShell, delay));
+  const shellRepairInterval = window.setInterval(enforceShell, 1000);
+  window.setTimeout(() => window.clearInterval(shellRepairInterval), 30000);
   const cityPopupInterval = window.setInterval(removeCitySelectionPopup, 250);
   window.setTimeout(() => window.clearInterval(cityPopupInterval), 10000);
   try {
@@ -1082,6 +1161,7 @@ export function homepageShellScript() {
     if (event.target && event.target.tagName === "IMG") repairVenueMediaImages();
   }, true);
   window.addEventListener("pageshow", enforceShell, { once: true });
+  window.addEventListener("load", enforceShell, { once: true });
   window.addEventListener("resize", syncOverlayState);
 })();
 </script>`;

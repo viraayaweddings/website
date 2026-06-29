@@ -11,9 +11,15 @@ export default function TwcHomeBoot() {
     const sharedCleanup = setupSharedHeader();
     const cityPopupCleanup = setupCityPopupRemoval();
     const cityPruningCleanup = setupSupportedCityPruning();
+    const aboutToggleCleanup = setupAboutViraayaToggle();
+    const headerCleanup = setupGlobalHeaderCleanup();
+    const footerCleanup = setupGlobalFooterCleanup();
 
     if (!legacyHomepage) {
       return () => {
+        footerCleanup();
+        headerCleanup();
+        aboutToggleCleanup();
         cityPruningCleanup();
         cityPopupCleanup();
         sharedCleanup();
@@ -23,6 +29,9 @@ export default function TwcHomeBoot() {
     const existing = document.querySelector('script[data-twc-home="1"]');
     if (existing) {
       return () => {
+        footerCleanup();
+        headerCleanup();
+        aboutToggleCleanup();
         cityPruningCleanup();
         cityPopupCleanup();
         sharedCleanup();
@@ -36,6 +45,9 @@ export default function TwcHomeBoot() {
     document.body.appendChild(script);
 
     return () => {
+      footerCleanup();
+      headerCleanup();
+      aboutToggleCleanup();
       cityPruningCleanup();
       cityPopupCleanup();
       sharedCleanup();
@@ -43,6 +55,140 @@ export default function TwcHomeBoot() {
   }, [pathname]);
 
   return null;
+}
+
+function setupGlobalHeaderCleanup() {
+  let scheduled = false;
+  let observer: MutationObserver | null = null;
+
+  const removeCapturedHeaders = () => {
+    document
+      .querySelectorAll<HTMLElement>(
+        [
+          "nav.sticky",
+          ".shadow-header",
+          ".venues-header",
+          ".twc-company-header",
+          ".twc-legacy-header",
+          ".parent-div.is--nav_new",
+          ".navbar-mobile",
+          ".mobile-sub-menu-wrapper"
+        ].join(",")
+      )
+      .forEach((header) => {
+        if (header.closest("#twc-homepage-shared-header")) return;
+        header.remove();
+      });
+
+    document
+      .querySelectorAll<HTMLElement>(
+        "#link_wedding_venues_container, #other_services_dropdown_container, #link_refund_policy_container"
+      )
+      .forEach((marker) => {
+        if (marker.closest("#twc-homepage-shared-header")) return;
+        let current: HTMLElement | null = marker;
+        while (current && current.parentElement && current !== document.body) {
+          const className = typeof current.className === "string" ? current.className : "";
+          const isHeaderShell =
+            className.includes("z-[100]") ||
+            className.includes("translate-y-0") ||
+            className.includes("shadow-header") ||
+            current.tagName === "NAV";
+          if (isHeaderShell) {
+            current.remove();
+            return;
+          }
+          current = current.parentElement;
+        }
+      });
+  };
+
+  const scheduleCleanup = () => {
+    if (scheduled) return;
+    scheduled = true;
+    window.requestAnimationFrame(() => {
+      scheduled = false;
+      removeCapturedHeaders();
+    });
+  };
+
+  removeCapturedHeaders();
+  observer = new MutationObserver(scheduleCleanup);
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  return () => {
+    scheduled = false;
+    observer?.disconnect();
+  };
+}
+
+function setupGlobalFooterCleanup() {
+  let scheduled = false;
+  let observer: MutationObserver | null = null;
+
+  const removeCapturedFooters = () => {
+    document
+      .querySelectorAll<HTMLElement>(
+        [
+          "footer",
+          "#footer_section",
+          ".parent-div.is--footer",
+          ".twc-company-footer",
+          ".twc-legacy-footer",
+          ".venues-footer"
+        ].join(",")
+      )
+      .forEach((footer) => {
+        if (footer.closest("#twc-homepage-shared-footer")) return;
+        footer.remove();
+      });
+  };
+
+  const scheduleCleanup = () => {
+    if (scheduled) return;
+    scheduled = true;
+    window.requestAnimationFrame(() => {
+      scheduled = false;
+      removeCapturedFooters();
+    });
+  };
+
+  removeCapturedFooters();
+  observer = new MutationObserver(scheduleCleanup);
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  return () => {
+    scheduled = false;
+    observer?.disconnect();
+  };
+}
+
+function setupAboutViraayaToggle() {
+  const button = document.querySelector<HTMLButtonElement>(".twc-about-viraaya-toggle");
+  const expandedContent = document.querySelector<HTMLElement>("#twc-about-viraaya-expanded");
+
+  if (!button || !expandedContent || button.dataset.twcAboutToggleReady === "1") {
+    return () => {};
+  }
+
+  const update = (isExpanded: boolean) => {
+    expandedContent.hidden = !isExpanded;
+    button.setAttribute("aria-expanded", String(isExpanded));
+    button.textContent = isExpanded ? "Read less" : "Read more";
+  };
+
+  const toggle = () => {
+    update(button.getAttribute("aria-expanded") !== "true");
+  };
+
+  update(false);
+  button.addEventListener("click", toggle);
+  button.dataset.twcAboutToggleReady = "1";
+
+  return () => {
+    button.removeEventListener("click", toggle);
+    delete button.dataset.twcAboutToggleReady;
+  };
 }
 
 function setupSupportedCityPruning() {

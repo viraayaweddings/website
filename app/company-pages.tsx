@@ -40,7 +40,7 @@ const legalDocumentTitles: Partial<Record<CompanySlug, string>> = {
 };
 
 const renderedCaptureCache = new Map<string, string>();
-const renderedCaptureShellVersion = "single-shell-v3-favicon";
+const renderedCaptureShellVersion = "single-shell-v5-global-header-footer";
 
 function extractBalancedDiv(markup: string, marker: string) {
   const start = markup.indexOf(marker);
