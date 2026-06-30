@@ -1,8 +1,8 @@
 import { unstable_cache } from "next/cache";
-import fs from "node:fs";
 import path from "node:path";
-import { allowedCityName, allowedCitySlugs, isAllowedCitySlug, normalizeCitySlug } from "./allowed-cities";
+import { allowedCityName, allowedCitySlugs, isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
 import { prisma } from "./prisma";
+import { publicFileExists } from "./safe-public-path";
 
 export type PhotographerCard = {
   vendorId: string;
@@ -168,8 +168,7 @@ function localFileForPublicPath(publicPath: string) {
 }
 
 function hasLocalImage(publicPath: string) {
-  const file = localFileForPublicPath(publicPath);
-  return Boolean(file && fs.existsSync(file));
+  return publicFileExists(localFileForPublicPath(publicPath));
 }
 
 export function resolvePhotographerImage(
@@ -427,7 +426,7 @@ async function getPhotographerBySlugUncached(
 ): Promise<PhotographerRecord | null> {
   const normalizedCitySlug = normalizeCitySlug(citySlug);
   if (!isAllowedCitySlug(normalizedCitySlug)) return null;
-  const normalizedSlug = decodeURIComponent(slug).trim().toLowerCase();
+  const normalizedSlug = safeDecodeURIComponent(slug).trim().toLowerCase();
 
   const includeRelations = {
     city: true,

@@ -1,10 +1,16 @@
-import fs from "node:fs";
 import path from "node:path";
 import { unstable_cache } from "next/cache";
 import { prisma } from "../../../../../../lib/prisma";
+import { publicFileExists } from "../../../../../../lib/safe-public-path";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 3600;
+
+// Vendor IDs in the DB are UUID-shaped tokens. Bound the accepted shape so an
+// attacker can't mint unbounded distinct cache keys (each unique value spawns
+// its own unstable_cache entry + DB fan-out). Anything outside this shape is
+// rejected before touching the cache or the database.
+const VENDOR_ID_PATTERN = /^[A-Za-z0-9._:-]{1,128}$/;
 
 const getVenueMedia = unstable_cache(
   async (vendorId: string) =>
@@ -137,8 +143,7 @@ function localFileForPublicPath(publicPath: string) {
 }
 
 function hasLocalImage(publicPath: string) {
-  const file = localFileForPublicPath(publicPath);
-  return Boolean(file && fs.existsSync(file));
+  return publicFileExists(localFileForPublicPath(publicPath));
 }
 
 function mimeTypeFor(mediaUrl: string, fallback?: string | null) {
@@ -187,6 +192,18 @@ export async function GET(
   { params }: { params: Promise<{ vendorId: string }> }
 ) {
   const { vendorId } = await params;
+  if (!VENDOR_ID_PATTERN.test(vendorId)) {
+    return Response.json(
+      { nextPageUrl: null, results: [] },
+      {
+        headers: {
+          "cache-control": "private, no-store",
+          "x-content-type-options": "nosniff",
+          "x-robots-tag": "noindex, nofollow, noarchive"
+        }
+      }
+    );
+  }
   const venueResults = localResultsForMedia(await getVenueMedia(vendorId), vendorId);
   const photographerResults = venueResults.length ? [] : localResultsForMedia(await getPhotographerMedia(vendorId), vendorId);
   const decoratorResults =

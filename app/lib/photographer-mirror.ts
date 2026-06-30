@@ -1,8 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import { unstable_cache } from "next/cache";
-import { isAllowedCitySlug, normalizeCitySlug } from "./allowed-cities";
+import { isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
 import { prisma } from "./prisma";
+import { publicFileExists } from "./safe-public-path";
+import { serializeForScript } from "./script-json";
 import {
   applyBranding,
   applyHomepageHeaderFooter,
@@ -246,8 +248,7 @@ function localFileForPublicPath(publicPath: string) {
 }
 
 function hasLocalImage(publicPath: string) {
-  const file = localFileForPublicPath(publicPath);
-  return Boolean(file && fs.existsSync(file));
+  return publicFileExists(localFileForPublicPath(publicPath));
 }
 
 function num(v: unknown): number | null {
@@ -372,7 +373,7 @@ function rewriteInitialPhotographerImages(html: string, mediaUrls: string[]) {
 
 function photographerImageRuntimeScript(mediaUrls: string[]) {
   if (!mediaUrls.length) return "";
-  const json = JSON.stringify(mediaUrls).replace(/</g, "\\u003c");
+  const json = serializeForScript(mediaUrls);
   return `
 <script id="viraaya-photographer-image-fallbacks">
 (() => {
@@ -410,8 +411,8 @@ function photographerImageRuntimeScript(mediaUrls: string[]) {
 
 function photographerGalleryRuntimeScript(mediaUrls: string[], vendorName: string) {
   if (!mediaUrls.length) return "";
-  const imagesJson = JSON.stringify(mediaUrls).replace(/</g, "\\u003c");
-  const nameJson = JSON.stringify(vendorName || "Gallery").replace(/</g, "\\u003c");
+  const imagesJson = serializeForScript(mediaUrls);
+  const nameJson = serializeForScript(vendorName || "Gallery");
   return `
 <script id="viraaya-photographer-gallery">
 (() => {
@@ -603,7 +604,7 @@ const PHOTOGRAPHER_INCLUDE = {
 async function findPhotographer(citySlug: string, slug: string) {
   const c = normalizeCitySlug(citySlug);
   if (!isAllowedCitySlug(c)) return null;
-  const s = decodeURIComponent(slug).trim().toLowerCase();
+  const s = safeDecodeURIComponent(slug).trim().toLowerCase();
   const exact = await (prisma as any).photographer.findFirst({
     where: { citySlug: { equals: c, mode: "insensitive" }, slug: { equals: s, mode: "insensitive" } },
     include: PHOTOGRAPHER_INCLUDE
@@ -653,7 +654,7 @@ function injectNextData(html: string, nextData: any): string {
   if (start === -1) return html;
   const contentStart = start + open.length;
   const end = html.indexOf("</script>", contentStart);
-  const json = JSON.stringify(nextData).replace(/</g, "\\u003c");
+  const json = serializeForScript(nextData);
   return html.slice(0, contentStart) + json + html.slice(end);
 }
 

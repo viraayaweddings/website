@@ -1,8 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import { unstable_cache } from "next/cache";
-import { isAllowedCitySlug, normalizeCitySlug } from "./allowed-cities";
+import { isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
 import { prisma } from "./prisma";
+import { publicFileExists } from "./safe-public-path";
+import { serializeForScript } from "./script-json";
 import {
   applyBranding,
   applyHomepageHeaderFooter,
@@ -153,8 +155,7 @@ function hasDeployableImage(publicPath: string) {
   const file = localFileForDeployablePublicPath(publicPath);
   return Boolean(
     RENDERABLE_IMAGE_PATH_PATTERN.test(publicPath) &&
-    file &&
-    fs.existsSync(file)
+    publicFileExists(file)
   );
 }
 
@@ -295,7 +296,7 @@ const VENUE_INCLUDE = {
 async function findVenue(citySlug: string, slug: string) {
   const c = normalizeCitySlug(citySlug);
   if (!isAllowedCitySlug(c)) return null;
-  const s = decodeURIComponent(slug).trim().toLowerCase();
+  const s = safeDecodeURIComponent(slug).trim().toLowerCase();
   const exact = await prisma.venue.findFirst({
     where: { citySlug: { equals: c, mode: "insensitive" }, slug: { equals: s, mode: "insensitive" } },
     include: VENUE_INCLUDE
@@ -472,7 +473,7 @@ function injectNextData(html: string, nextData: any): string {
   if (start === -1) return html;
   const contentStart = start + open.length;
   const end = html.indexOf("</script>", contentStart);
-  const json = JSON.stringify(nextData).replace(/</g, "\\u003c");
+  const json = serializeForScript(nextData);
   return html.slice(0, contentStart) + json + html.slice(end);
 }
 

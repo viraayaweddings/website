@@ -1,8 +1,8 @@
-import fs from "node:fs";
 import path from "node:path";
 import { unstable_cache } from "next/cache";
-import { allowedCityName, allowedCitySlugs, isAllowedCitySlug, normalizeCitySlug } from "./allowed-cities";
+import { allowedCityName, allowedCitySlugs, isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
 import { prisma } from "./prisma";
+import { publicFileExists } from "./safe-public-path";
 
 export type DecoratorQueryResult = {
   size: number;
@@ -102,7 +102,7 @@ function labelKey(value: string) {
 }
 
 function slugKey(value: string) {
-  return decodeURIComponent(value || "")
+  return safeDecodeURIComponent(value || "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
@@ -185,8 +185,7 @@ function localFileForPublicPath(publicPath: string) {
 }
 
 function hasLocalImage(publicPath: string) {
-  const file = localFileForPublicPath(publicPath);
-  return Boolean(file && fs.existsSync(file));
+  return publicFileExists(localFileForPublicPath(publicPath));
 }
 
 export function resolveDecoratorImage(
@@ -468,7 +467,7 @@ async function getDecoratorBySlugUncached(
 ): Promise<DecoratorRecord | null> {
   const normalizedCitySlug = normalizeCitySlug(citySlug);
   if (!isAllowedCitySlug(normalizedCitySlug)) return null;
-  const normalizedSlug = decodeURIComponent(slug).trim().toLowerCase();
+  const normalizedSlug = safeDecodeURIComponent(slug).trim().toLowerCase();
   const includeRelations = { city: true, media: true, tags: true };
   const db = prisma as any;
 

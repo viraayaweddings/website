@@ -1,8 +1,8 @@
 import { unstable_cache } from "next/cache";
-import fs from "node:fs";
 import path from "node:path";
-import { allowedCitySlugs, isAllowedCitySlug, normalizeCitySlug } from "./allowed-cities";
+import { allowedCitySlugs, isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
 import { prisma } from "./prisma";
+import { publicFileExists } from "./safe-public-path";
 
 const venueImageFallbacks = [
   "/twc-venues/cards/riva-1.jpg",
@@ -100,8 +100,7 @@ function hasDeployableImage(publicPath: string) {
   const file = localFileForDeployablePublicPath(publicPath);
   return Boolean(
     renderableImagePathPattern.test(publicPath) &&
-    file &&
-    fs.existsSync(file)
+    publicFileExists(file)
   );
 }
 
@@ -511,7 +510,7 @@ export async function queryVenues(input: URLSearchParams | Record<string, string
 async function getVenueBySlugUncached(citySlug: string, venueSlug: string) {
   const normalizedCitySlug = normalizeCitySlug(citySlug);
   if (!isAllowedCitySlug(normalizedCitySlug)) return null;
-  const normalizedVenueSlug = decodeURIComponent(venueSlug).trim().toLowerCase();
+  const normalizedVenueSlug = safeDecodeURIComponent(venueSlug).trim().toLowerCase();
   const includeVenueRelations = {
     city: true,
     media: true,
