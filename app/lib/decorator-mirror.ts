@@ -1,10 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import { unstable_cache } from "next/cache";
-import { allowedCities, isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
+import { allowedCities, allowedCityName, isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
 import { prisma } from "./prisma";
 import { publicFileExists } from "./safe-public-path";
 import { serializeForScript } from "./script-json";
+import { rewriteHeadSeo } from "./head-seo";
 import { queryDecorators } from "./decorator-data";
 import {
   applyBranding,
@@ -793,7 +794,7 @@ async function findDecorator(citySlug: string, slug: string) {
   });
   if (exact) return exact;
   return (prisma as any).decorator.findFirst({
-    where: { citySlug: { equals: c, mode: "insensitive" }, slug: { equals: s, mode: "insensitive" } },
+    where: { citySlug: { equals: c, mode: "insensitive" }, slug: { contains: s, mode: "insensitive" } },
     include: DECORATOR_INCLUDE
   });
 }
@@ -815,7 +816,12 @@ async function getDetailHtmlUncached(citySlug: string, slug: string): Promise<st
   base.query = { decorCity: row.citySlug, decorLocalityOrCategorySlug: row.slug };
   base.assetPrefix = "/twc-mirror";
 
-  return finalizeHtml(injectNextData(getDetailTemplate(), sanitizePricingData(base)), detailMediaUrls, vendorDetails.name);
+  const finalHtml = finalizeHtml(injectNextData(getDetailTemplate(), sanitizePricingData(base)), detailMediaUrls, vendorDetails.name);
+  const cityName = row.city?.name || allowedCityName(row.citySlug);
+  return rewriteHeadSeo(finalHtml, {
+    title: `${vendorDetails.name}, ${cityName} - Wedding Decorator`,
+    description: `${vendorDetails.name} in ${cityName}. View decor portfolio, photos, reviews and details, and enquire online with Viraaya Weddings.`
+  });
 }
 
 const getListingHtmlCached = unstable_cache(
@@ -826,7 +832,7 @@ const getListingHtmlCached = unstable_cache(
 
 const getDetailHtmlCached = unstable_cache(
   getDetailHtmlUncached,
-  ["decorator-detail-html-brand-gold-v35-shared-home-shell-footer"],
+  ["decorator-detail-html-brand-gold-v36-per-vendor-seo"],
   { revalidate: 86400, tags: ["decorators"] }
 );
 

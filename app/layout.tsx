@@ -4,6 +4,12 @@ import TwcHomeBoot from "./twc-home-boot";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  // Resolves relative OG/canonical URLs to absolute. Override via
+  // NEXT_PUBLIC_SITE_URL when hosting on a different domain.
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://viraayaweddings.com"
+  ),
+  alternates: { canonical: "/" },
   title:
     "Viraaya Weddings - Book Venues, End to End Wedding Services, Planners in India",
   description:

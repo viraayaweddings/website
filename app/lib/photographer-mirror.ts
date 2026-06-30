@@ -1,10 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import { unstable_cache } from "next/cache";
-import { isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
+import { allowedCityName, isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
 import { prisma } from "./prisma";
 import { publicFileExists } from "./safe-public-path";
 import { serializeForScript } from "./script-json";
+import { rewriteHeadSeo } from "./head-seo";
 import {
   applyBranding,
   applyHomepageHeaderFooter,
@@ -692,6 +693,11 @@ async function getMirrorHtmlUncached(citySlug: string, slug: string): Promise<st
   html = applyBranding(html);
   html = injectHomepageShellSupport(html);
   html = sanitizePricingMarkup(html);
+  const cityName = allowedCityName(row.citySlug);
+  html = rewriteHeadSeo(html, {
+    title: `${vendorDetails.name}, ${cityName} - Wedding Photographer`,
+    description: `${vendorDetails.name} in ${cityName}. View portfolio, photos, reviews and details, and enquire online with Viraaya Weddings.`
+  });
   return html.replace(
     "</body>",
     `${PRICING_RUNTIME_SCRIPT}${photographerImageRuntimeScript(detailMediaUrls)}${photographerGalleryRuntimeScript(detailMediaUrls, vendorDetails.name)}${BRAND_RUNTIME_SCRIPT}</body>`
@@ -700,7 +706,7 @@ async function getMirrorHtmlUncached(citySlug: string, slug: string): Promise<st
 
 // Cache the fully-rendered detail HTML so a hot page never touches Neon. The
 // cloned data is static, so a long revalidate keeps DB hits to ~once/day/page.
-const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["photographer-mirror-html-brand-gold-v30-shared-home-shell-footer"], {
+const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["photographer-mirror-html-brand-gold-v31-per-vendor-seo"], {
   revalidate: 86400,
   tags: ["photographers"]
 });

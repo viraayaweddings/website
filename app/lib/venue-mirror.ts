@@ -5,6 +5,7 @@ import { isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./
 import { prisma } from "./prisma";
 import { publicFileExists } from "./safe-public-path";
 import { serializeForScript } from "./script-json";
+import { rewriteHeadSeo } from "./head-seo";
 import {
   applyBranding,
   applyHomepageHeaderFooter,
@@ -506,12 +507,17 @@ async function getMirrorHtmlUncached(citySlug: string, slug: string): Promise<st
   html = injectEnhancer(html);
   html = injectHomepageShellSupport(html);
   html = sanitizePricingMarkup(html);
+  const cityName = row.city?.name || row.citySlug;
+  html = rewriteHeadSeo(html, {
+    title: `${row.name}, ${cityName} - Wedding Venue Photos`,
+    description: `${row.name} in ${cityName}. View photos, seating capacity, amenities and details, and enquire online with Viraaya Weddings.`
+  });
   return insertBeforeClosingBody(html, `${PRICING_RUNTIME_SCRIPT}${BRAND_RUNTIME_SCRIPT}`);
 }
 
 // Cache the rendered detail HTML so hot pages never touch Neon. Cloned data is
 // static, so a long revalidate keeps DB hits to ~once/day/page.
-const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["venue-mirror-html-brand-gold-v29-shared-home-shell-footer"], {
+const getMirrorHtmlCached = unstable_cache(getMirrorHtmlUncached, ["venue-mirror-html-brand-gold-v30-per-vendor-seo"], {
   revalidate: 86400,
   tags: ["venues"]
 });
