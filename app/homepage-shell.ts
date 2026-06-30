@@ -94,20 +94,6 @@ export const homepageShellCss = `
     object-fit: contain;
     width: 92px !important;
   }
-  img[src*="TheWeddingCompanyLogo_Low_Res"],
-  img[src*="TheWeddingCompanyLogo.b048b49d"] {
-    content: url("/brand/viraaya-logo-header.png") !important;
-    height: auto !important;
-    max-width: min(92px, 18vw) !important;
-    object-fit: contain !important;
-    width: 92px !important;
-  }
-  img[src*="TheWeddingCompanyLogoVertical"] {
-    content: url("/brand/viraaya-logo-full.png") !important;
-    height: auto !important;
-    object-fit: contain !important;
-    width: min(300px, 78vw) !important;
-  }
   #twc-homepage-shared-footer img[src="/brand/viraaya-logo-full.png"] {
     height: auto !important;
     max-height: none !important;
@@ -761,8 +747,10 @@ export function applyBranding(markup: string) {
     .replaceAll("www.theweddingcompany.com", "viraayaweddings.com")
     .replaceAll("support@theweddingcompany.com", "support@viraayaweddings.com")
     .replaceAll("@TheWeddingCmpny", "@viraayaweddings")
-    .replaceAll("The Wedding Company", brandAssets.name)
-    .replaceAll("the wedding company", "Viraaya Weddings")
+    // Case-insensitive, whitespace-tolerant: catches "THE WEDDING COMPANY",
+    // "The wedding company", etc. \s+ requires a gap so it never touches the
+    // no-space asset-filename form handled on the next line.
+    .replace(/the\s+wedding\s+company/gi, brandAssets.name)
     .replaceAll("TheWeddingCompany", brandAssets.name)
     .replaceAll("TWC's choice", "Viraaya's choice")
     .replaceAll("TWC&rsquo;s choice", "Viraaya&rsquo;s choice")
