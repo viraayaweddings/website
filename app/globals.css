@@ -58,6 +58,14 @@ main {
   position: static !important;
 }
 
+#twc-homepage-shared-header,
+#twc-homepage-shared-header > *,
+#twc-homepage-shared-header ul,
+#twc-homepage-shared-header li,
+#twc-homepage-shared-header #other_services_dropdown_container {
+  overflow: visible !important;
+}
+
 #twc-homepage-shared-header .twc-more-menu {
   z-index: 10001;
 }
@@ -708,7 +716,14 @@ div.relative.flex.flex-col.items-center.pt-10:has(#venues_in_different_cities_se
   transition:
     opacity 180ms ease,
     transform 180ms ease;
-  z-index: 120;
+  z-index: 10001;
+}
+
+#other_services_dropdown_container,
+#twc-homepage-shared-header #other_services_dropdown_container,
+.twc-more-trigger {
+  overflow: visible !important;
+  position: relative !important;
 }
 
 .twc-more-menu a {
@@ -728,6 +743,20 @@ div.relative.flex.flex-col.items-center.pt-10:has(#venues_in_different_cities_se
   opacity: 1;
   pointer-events: auto;
   transform: translate3d(0, 0, 0);
+}
+
+#twc-homepage-shared-header #other_services_dropdown_container:hover .twc-more-menu,
+#twc-homepage-shared-header #other_services_dropdown_container:focus-within .twc-more-menu,
+#twc-homepage-shared-header:has(#other_services_dropdown:hover) #other_services_dropdown_container .twc-more-menu,
+#twc-homepage-shared-header:has(#other_services_dropdown_container:hover) #other_services_dropdown_container .twc-more-menu,
+#other_services_dropdown_container:hover .twc-more-menu,
+#other_services_dropdown_container:focus-within .twc-more-menu,
+.twc-more-trigger:hover .twc-more-menu,
+.twc-more-trigger:focus-within .twc-more-menu {
+  display: grid !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translate3d(0, 0, 0) !important;
 }
 
 .szh-accordion__item-content {

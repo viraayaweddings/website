@@ -40,7 +40,7 @@ const legalDocumentTitles: Partial<Record<CompanySlug, string>> = {
 };
 
 const renderedCaptureCache = new Map<string, string>();
-const renderedCaptureShellVersion = "single-shell-v5-global-header-footer";
+const renderedCaptureShellVersion = "single-shell-v6-shared-home-header-footer";
 
 function extractBalancedDiv(markup: string, marker: string) {
   const start = markup.indexOf(marker);
@@ -177,7 +177,7 @@ function renderLegalDocument(title: string, body: string) {
 function readCapture(slug: CompanySlug) {
   const cacheKey = `${renderedCaptureShellVersion}:${slug}`;
   const cached = renderedCaptureCache.get(cacheKey);
-  if (cached) {
+  if (cached && process.env.NODE_ENV !== "development") {
     return cached;
   }
 

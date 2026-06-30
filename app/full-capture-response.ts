@@ -24,7 +24,7 @@ const homepageStylesheets = [
 ];
 
 const fullCaptureCache = new Map<string, string>();
-const fullCaptureShellVersion = "single-shell-v7-global-header-footer";
+const fullCaptureShellVersion = "single-shell-v12-shared-home-header-footer";
 
 function rewriteAssetUrls(html: string) {
   let next = html
@@ -105,7 +105,7 @@ const imageProxyScript = `
 export function fullCaptureResponse(slug: string) {
   const cacheKey = `${fullCaptureShellVersion}:${slug}`;
   const cached = fullCaptureCache.get(cacheKey);
-  if (cached) {
+  if (cached && process.env.NODE_ENV !== "development") {
     return new Response(cached, {
       headers: {
         "content-type": "text/html; charset=utf-8",

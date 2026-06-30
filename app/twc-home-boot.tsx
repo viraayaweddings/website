@@ -39,7 +39,7 @@ export default function TwcHomeBoot() {
     }
 
     const script = document.createElement("script");
-    script.src = "/twc-home.js?v=13";
+    script.src = "/twc-home.js?v=15";
     script.defer = true;
     script.dataset.twcHome = "1";
     document.body.appendChild(script);
@@ -352,9 +352,10 @@ function setupCityPopupRemoval() {
 
 function setupSharedHeader() {
   const cleanups: Array<() => void> = [];
+  const dropdownCleanups = new Map<HTMLElement, () => void>();
 
-  const trigger = document.querySelector<HTMLElement>("#other_services_dropdown_container");
-  if (trigger && trigger.dataset.twcDropdownReady !== "1") {
+  const bindMoreDropdown = (trigger: HTMLElement) => {
+    if (dropdownCleanups.has(trigger) || trigger.dataset.twcDropdownReady === "1") return;
     let menu = trigger.querySelector<HTMLElement>(".twc-more-menu");
     let createdMoreMenu = false;
 
@@ -364,7 +365,7 @@ function setupSharedHeader() {
       menu.setAttribute("role", "menu");
       menu.innerHTML = `
         <a href="/wedding-ideas" role="menuitem">Wedding Ideas</a>
-        <a href="/wedding-photography" role="menuitem">Wedding Photographers</a>
+        <a href="/wedding-photographers" role="menuitem">Wedding Photographers</a>
         <a href="/wedding-decorators" role="menuitem">Wedding Decorators</a>
         <a href="/wedding-services" role="menuitem">Wedding Services</a>
         <a href="/wedding-invitation-card" role="menuitem">Wedding Invitation Card</a>
@@ -407,21 +408,44 @@ function setupSharedHeader() {
 
     trigger.addEventListener("pointerenter", open);
     trigger.addEventListener("pointerleave", scheduleClose);
+    trigger.addEventListener("mouseenter", open);
+    trigger.addEventListener("mouseleave", scheduleClose);
+    trigger.addEventListener("focusin", open);
+    trigger.addEventListener("focusout", scheduleClose);
     trigger.addEventListener("click", toggle);
     document.addEventListener("click", closeFromOutside);
     document.addEventListener("keydown", closeOnEscape);
     trigger.dataset.twcDropdownReady = "1";
-    cleanups.push(() => {
+    const cleanup = () => {
       close();
       trigger.removeEventListener("pointerenter", open);
       trigger.removeEventListener("pointerleave", scheduleClose);
+      trigger.removeEventListener("mouseenter", open);
+      trigger.removeEventListener("mouseleave", scheduleClose);
+      trigger.removeEventListener("focusin", open);
+      trigger.removeEventListener("focusout", scheduleClose);
       trigger.removeEventListener("click", toggle);
       document.removeEventListener("click", closeFromOutside);
       document.removeEventListener("keydown", closeOnEscape);
       delete trigger.dataset.twcDropdownReady;
       if (createdMoreMenu) menu.remove();
-    });
-  }
+      dropdownCleanups.delete(trigger);
+    };
+    dropdownCleanups.set(trigger, cleanup);
+    cleanups.push(cleanup);
+  };
+
+  const bindMoreDropdowns = () => {
+    document
+      .querySelectorAll<HTMLElement>("#twc-homepage-shared-header #other_services_dropdown_container")
+      .forEach(bindMoreDropdown);
+  };
+
+  bindMoreDropdowns();
+
+  const dropdownObserver = new MutationObserver(bindMoreDropdowns);
+  dropdownObserver.observe(document.body, { childList: true, subtree: true });
+  cleanups.push(() => dropdownObserver.disconnect());
 
   let overlay = document.querySelector<HTMLElement>(".twc-mobile-overlay");
   let menu = document.querySelector<HTMLElement>(".twc-mobile-menu");
@@ -446,7 +470,7 @@ function setupSharedHeader() {
         <a href="/">Home</a>
         <a href="/wedding-venues">Wedding Venues</a>
         <a href="/wedding-ideas">Wedding Ideas</a>
-        <a href="/wedding-photography">Wedding Photographers</a>
+        <a href="/wedding-photographers">Wedding Photographers</a>
         <a href="/wedding-decorators">Wedding Decorators</a>
         <a href="/wedding-services">Wedding Services</a>
       </nav>

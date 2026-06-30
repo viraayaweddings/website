@@ -20,6 +20,16 @@ const publicContactDetails = {
   linkedInUrl: "https://www.linkedin.com/company/viraaya-weddings/"
 };
 
+const sharedMoreMenuMarkup = `
+  <div class="twc-more-menu" role="menu">
+    <a href="/wedding-ideas" role="menuitem">Wedding Ideas</a>
+    <a href="/wedding-photographers" role="menuitem">Wedding Photographers</a>
+    <a href="/wedding-decorators" role="menuitem">Wedding Decorators</a>
+    <a href="/wedding-services" role="menuitem">Wedding Services</a>
+    <a href="/wedding-invitation-card" role="menuitem">Wedding Invitation Card</a>
+  </div>
+`;
+
 type HomepageParts = {
   header: string;
   content: string;
@@ -52,6 +62,13 @@ export const homepageShellCss = `
   }
   #twc-homepage-shared-header > .sticky {
     position: static !important;
+  }
+  #twc-homepage-shared-header,
+  #twc-homepage-shared-header > *,
+  #twc-homepage-shared-header ul,
+  #twc-homepage-shared-header li,
+  #twc-homepage-shared-header #other_services_dropdown_container {
+    overflow: visible !important;
   }
   #twc-homepage-shared-footer #footer_section {
     box-sizing: border-box;
@@ -166,6 +183,12 @@ export const homepageShellCss = `
       opacity 180ms ease,
       transform 180ms ease;
   }
+  #other_services_dropdown_container,
+  #twc-homepage-shared-header #other_services_dropdown_container,
+  .twc-more-trigger {
+    overflow: visible !important;
+    position: relative !important;
+  }
   #twc-homepage-shared-header .twc-more-menu a {
     border-radius: 8px;
     display: grid;
@@ -184,6 +207,19 @@ export const homepageShellCss = `
     opacity: 1;
     pointer-events: auto;
     transform: translate3d(0, 0, 0);
+  }
+  #twc-homepage-shared-header #other_services_dropdown_container:hover .twc-more-menu,
+  #twc-homepage-shared-header #other_services_dropdown_container:focus-within .twc-more-menu,
+  #twc-homepage-shared-header:has(#other_services_dropdown:hover) #other_services_dropdown_container .twc-more-menu,
+  #twc-homepage-shared-header:has(#other_services_dropdown_container:hover) #other_services_dropdown_container .twc-more-menu,
+  #other_services_dropdown_container:hover .twc-more-menu,
+  #other_services_dropdown_container:focus-within .twc-more-menu,
+  .twc-more-trigger:hover .twc-more-menu,
+  .twc-more-trigger:focus-within .twc-more-menu {
+    display: grid !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translate3d(0, 0, 0) !important;
   }
   body nav.sticky,
   body .shadow-header,
@@ -663,6 +699,44 @@ function normalizeContactDetails(markup: string) {
     );
 }
 
+function ensureSharedMoreDropdown(markup: string) {
+  const markerIndex = markup.includes('id="other_services_dropdown_container"')
+    ? markup.indexOf('id="other_services_dropdown_container"')
+    : markup.indexOf("id='other_services_dropdown_container'");
+
+  if (markerIndex === -1) {
+    return markup;
+  }
+
+  const liStart = findElementStartBefore(markup, markerIndex, "li");
+  const liEnd = liStart === -1 ? -1 : elementEnd(markup, liStart, "li");
+
+  if (liStart === -1 || liEnd === -1) {
+    return markup;
+  }
+
+  const liOpenEnd = markup.indexOf(">", liStart);
+  const liOpenTag = markup.slice(liStart, liOpenEnd + 1);
+  const taggedLiOpenTag = liOpenTag.includes("twc-more-trigger")
+    ? liOpenTag
+    : liOpenTag.includes("class=")
+      ? liOpenTag.replace(/class=(["'])(.*?)\1/, 'class=$1$2 twc-more-trigger$1')
+      : liOpenTag.replace("<li", '<li class="twc-more-trigger"');
+  const withTriggerClass =
+    markup.slice(0, liStart) + taggedLiOpenTag + markup.slice(liOpenEnd + 1);
+
+  if (withTriggerClass.includes("twc-more-menu")) {
+    return withTriggerClass;
+  }
+
+  const closeTag = "</li>";
+  const insertAt = withTriggerClass.lastIndexOf(closeTag, liEnd);
+
+  return insertAt === -1
+    ? withTriggerClass
+    : withTriggerClass.slice(0, insertAt) + sharedMoreMenuMarkup + withTriggerClass.slice(insertAt);
+}
+
 export function applyBranding(markup: string) {
   const branded = sanitizePublicDetails(applyBrandAssets(markup))
     // Route captured CDN image hosts through local vendored asset handlers.
@@ -716,7 +790,7 @@ export function applyBranding(markup: string) {
 }
 
 function getHomepageParts() {
-  if (homepagePartsCache) {
+  if (homepagePartsCache && process.env.NODE_ENV !== "development") {
     return homepagePartsCache;
   }
 
@@ -750,7 +824,7 @@ function getHomepageParts() {
   }
 
   homepagePartsCache = {
-    header: applyBranding(main.slice(innerStart, homeContentStart)),
+    header: ensureSharedMoreDropdown(applyBranding(main.slice(innerStart, homeContentStart))),
     content: transformHomepageContent(
       main.slice(homeContentStart, footerStart) + main.slice(footerEnd, mainInnerEnd)
     ),
@@ -830,62 +904,70 @@ export function homepageShellScript() {
   const faviconHref = ${JSON.stringify(brandAssets.favicon)};
 
   const setupMoreDropdown = () => {
-    const trigger = document.querySelector("#twc-homepage-shared-header #other_services_dropdown_container");
-    if (!trigger || trigger.dataset.twcDropdownReady === "1") return;
+    const triggers = document.querySelectorAll("#twc-homepage-shared-header #other_services_dropdown_container");
+    if (!triggers.length) return;
 
-    let menu = trigger.querySelector(".twc-more-menu");
-    if (!menu) {
-      menu = document.createElement("div");
-      menu.className = "twc-more-menu";
-      menu.setAttribute("role", "menu");
-      menu.innerHTML = \`
-        <a href="/wedding-ideas" role="menuitem">Wedding Ideas</a>
-        <a href="/wedding-photographers" role="menuitem">Wedding Photographers</a>
-        <a href="/wedding-decorators" role="menuitem">Wedding Decorators</a>
-        <a href="/wedding-services" role="menuitem">Wedding Services</a>
-        <a href="/wedding-invitation-card" role="menuitem">Wedding Invitation Card</a>
-      \`;
-      trigger.appendChild(menu);
-    }
+    triggers.forEach((trigger) => {
+      if (trigger.dataset.twcDropdownReady === "1") return;
 
-    let closeTimer;
-    const clearCloseTimer = () => {
-      if (!closeTimer) return;
-      window.clearTimeout(closeTimer);
-      closeTimer = undefined;
-    };
-    const open = () => {
-      clearCloseTimer();
-      trigger.classList.add("twc-more-open");
-    };
-    const close = () => {
-      clearCloseTimer();
-      trigger.classList.remove("twc-more-open");
-    };
-    const scheduleClose = () => {
-      clearCloseTimer();
-      closeTimer = window.setTimeout(close, 180);
-    };
-    const toggle = (event) => {
-      if (event.target && event.target.closest && event.target.closest(".twc-more-menu")) return;
-      event.preventDefault();
-      clearCloseTimer();
-      trigger.classList.toggle("twc-more-open");
-    };
-    const closeFromOutside = (event) => {
-      if (event.target && trigger.contains(event.target)) return;
-      close();
-    };
-    const closeOnEscape = (event) => {
-      if (event.key === "Escape") close();
-    };
+      let menu = trigger.querySelector(".twc-more-menu");
+      if (!menu) {
+        menu = document.createElement("div");
+        menu.className = "twc-more-menu";
+        menu.setAttribute("role", "menu");
+        menu.innerHTML = \`
+          <a href="/wedding-ideas" role="menuitem">Wedding Ideas</a>
+          <a href="/wedding-photographers" role="menuitem">Wedding Photographers</a>
+          <a href="/wedding-decorators" role="menuitem">Wedding Decorators</a>
+          <a href="/wedding-services" role="menuitem">Wedding Services</a>
+          <a href="/wedding-invitation-card" role="menuitem">Wedding Invitation Card</a>
+        \`;
+        trigger.appendChild(menu);
+      }
 
-    trigger.addEventListener("pointerenter", open);
-    trigger.addEventListener("pointerleave", scheduleClose);
-    trigger.addEventListener("click", toggle);
-    document.addEventListener("click", closeFromOutside);
-    document.addEventListener("keydown", closeOnEscape);
-    trigger.dataset.twcDropdownReady = "1";
+      let closeTimer;
+      const clearCloseTimer = () => {
+        if (!closeTimer) return;
+        window.clearTimeout(closeTimer);
+        closeTimer = undefined;
+      };
+      const open = () => {
+        clearCloseTimer();
+        trigger.classList.add("twc-more-open");
+      };
+      const close = () => {
+        clearCloseTimer();
+        trigger.classList.remove("twc-more-open");
+      };
+      const scheduleClose = () => {
+        clearCloseTimer();
+        closeTimer = window.setTimeout(close, 180);
+      };
+      const toggle = (event) => {
+        if (event.target && event.target.closest && event.target.closest(".twc-more-menu")) return;
+        event.preventDefault();
+        clearCloseTimer();
+        trigger.classList.toggle("twc-more-open");
+      };
+      const closeFromOutside = (event) => {
+        if (event.target && trigger.contains(event.target)) return;
+        close();
+      };
+      const closeOnEscape = (event) => {
+        if (event.key === "Escape") close();
+      };
+
+      trigger.addEventListener("pointerenter", open);
+      trigger.addEventListener("pointerleave", scheduleClose);
+      trigger.addEventListener("mouseenter", open);
+      trigger.addEventListener("mouseleave", scheduleClose);
+      trigger.addEventListener("focusin", open);
+      trigger.addEventListener("focusout", scheduleClose);
+      trigger.addEventListener("click", toggle);
+      document.addEventListener("click", closeFromOutside);
+      document.addEventListener("keydown", closeOnEscape);
+      trigger.dataset.twcDropdownReady = "1";
+    });
   };
 
   const syncOverlayState = () => {
@@ -969,7 +1051,7 @@ export function homepageShellScript() {
     });
     document.querySelectorAll('a[href*="/wedding-venues/"], a[href*="/wedding-photographers/"], a[href*="/wedding-decorators/"]').forEach((link) => {
       const href = cityNameOf(link.getAttribute("href"));
-      const cityMatch = href.match(/\/wedding-(?:venues|photographers|decorators)\/([^/?#]+)/);
+      const cityMatch = href.match(/\\/wedding-(?:venues|photographers|decorators)\\/([^/?#]+)/);
       const citySlug = cityMatch ? cityMatch[1] : "";
       if (citySlug && !allowed.has(citySlug)) link.remove();
     });

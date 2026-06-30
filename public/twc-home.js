@@ -83,7 +83,7 @@
         <a href="/wedding-venues">Wedding Venues</a>
         <a href="/price-beat-challenge">Price Beat Challenge</a>
         <a href="/wedding-ideas">Wedding Ideas</a>
-        <a href="/wedding-photography">Wedding Photographers</a>
+        <a href="/wedding-photographers">Wedding Photographers</a>
         <a href="/wedding-decorators">Wedding Decorators</a>
         <a href="/wedding-services">Wedding Services</a>
       </nav>
@@ -594,21 +594,27 @@
   }
 
   function setupMoreDropdown() {
-    const trigger = document.querySelector("#other_services_dropdown_container");
-    if (!trigger) {
+    const trigger = document.querySelector("#twc-homepage-shared-header #other_services_dropdown_container");
+    if (!trigger || trigger.dataset.twcDropdownReady === "1") {
       return () => {};
     }
 
-    const menu = document.createElement("div");
-    menu.className = "twc-more-menu";
-    menu.innerHTML = `
-      <a href="/wedding-ideas">Wedding Ideas</a>
-      <a href="/wedding-photography">Wedding Photographers</a>
-      <a href="/wedding-decorators">Wedding Decorators</a>
-      <a href="/wedding-services">Wedding Services</a>
-      <a href="/wedding-invitation-card">Wedding Invitation Card</a>
-    `;
-    trigger.appendChild(menu);
+    let menu = trigger.querySelector(".twc-more-menu");
+    let createdMoreMenu = false;
+
+    if (!menu) {
+      menu = document.createElement("div");
+      menu.className = "twc-more-menu";
+      menu.innerHTML = `
+        <a href="/wedding-ideas">Wedding Ideas</a>
+        <a href="/wedding-photographers">Wedding Photographers</a>
+        <a href="/wedding-decorators">Wedding Decorators</a>
+        <a href="/wedding-services">Wedding Services</a>
+        <a href="/wedding-invitation-card">Wedding Invitation Card</a>
+      `;
+      trigger.appendChild(menu);
+      createdMoreMenu = true;
+    }
 
     const open = () => trigger.classList.add("twc-more-open");
     const close = () => trigger.classList.remove("twc-more-open");
@@ -616,13 +622,24 @@
 
     trigger.addEventListener("mouseenter", open);
     trigger.addEventListener("mouseleave", close);
+    trigger.addEventListener("pointerenter", open);
+    trigger.addEventListener("pointerleave", close);
+    trigger.addEventListener("focusin", open);
+    trigger.addEventListener("focusout", close);
     trigger.addEventListener("click", toggle);
+    trigger.dataset.twcDropdownReady = "1";
 
     return () => {
+      close();
       trigger.removeEventListener("mouseenter", open);
       trigger.removeEventListener("mouseleave", close);
+      trigger.removeEventListener("pointerenter", open);
+      trigger.removeEventListener("pointerleave", close);
+      trigger.removeEventListener("focusin", open);
+      trigger.removeEventListener("focusout", close);
       trigger.removeEventListener("click", toggle);
-      menu.remove();
+      delete trigger.dataset.twcDropdownReady;
+      if (createdMoreMenu) menu.remove();
     };
   }
 
