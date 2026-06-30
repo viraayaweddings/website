@@ -3,6 +3,7 @@ import path from "node:path";
 import { allowedCityName, allowedCitySlugs, isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
 import { prisma } from "./prisma";
 import { publicFileExists } from "./safe-public-path";
+import { parsePositiveInt } from "./query-params";
 
 export type PhotographerCard = {
   vendorId: string;
@@ -331,8 +332,8 @@ function stableParams(params: URLSearchParams) {
 function emptyPhotographerQuery(params: URLSearchParams): PhotographerQueryResult {
   return {
     size: 0,
-    page: Math.max(1, Number(params.get("page") || 1)),
-    limit: Math.min(48, Math.max(1, Number(params.get("limit") || 24))),
+    page: parsePositiveInt(params.get("page"), 1),
+    limit: parsePositiveInt(params.get("limit"), 24, { max: 48 }),
     nextPage: null,
     nextPageUrl: null,
     results: []
@@ -355,8 +356,8 @@ async function queryPhotographersUncached(
   const params = new URLSearchParams(queryString);
   const citySlug = normalizeCitySlug(params.get("city") || params.get("citySlug") || "");
   if (citySlug && !isAllowedCitySlug(citySlug)) return emptyPhotographerQuery(params);
-  const page = Math.max(1, Number(params.get("page") || 1));
-  const limit = Math.min(48, Math.max(1, Number(params.get("limit") || 24)));
+  const page = parsePositiveInt(params.get("page"), 1);
+  const limit = parsePositiveInt(params.get("limit"), 24, { max: 48 });
   const search = labelKey(params.get("search") || "");
   const tab = params.get("tab") || "All";
   const tabTag = selectedTabTag(tab);

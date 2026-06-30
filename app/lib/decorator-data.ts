@@ -3,6 +3,7 @@ import { unstable_cache } from "next/cache";
 import { allowedCityName, allowedCitySlugs, isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
 import { prisma } from "./prisma";
 import { publicFileExists } from "./safe-public-path";
+import { parsePositiveInt } from "./query-params";
 
 export type DecoratorQueryResult = {
   size: number;
@@ -366,8 +367,8 @@ function stableParams(params: URLSearchParams) {
 function emptyDecoratorQuery(params: URLSearchParams): DecoratorQueryResult {
   return {
     size: 0,
-    page: Math.max(1, Number(params.get("page") || 1)),
-    limit: Math.min(48, Math.max(1, Number(params.get("limit") || 24))),
+    page: parsePositiveInt(params.get("page"), 1),
+    limit: parsePositiveInt(params.get("limit"), 24, { max: 48 }),
     nextPage: null,
     nextPageUrl: null,
     results: []
@@ -397,8 +398,8 @@ async function queryDecoratorsUncached(queryString: string): Promise<DecoratorQu
     params.get("citySlug") || params.get("city") || params.get("decorCity") || ""
   );
   if (citySlug && !isAllowedCitySlug(citySlug)) return emptyDecoratorQuery(params);
-  const page = Math.max(1, Number(params.get("page") || 1));
-  const limit = Math.min(48, Math.max(1, Number(params.get("limit") || 24)));
+  const page = parsePositiveInt(params.get("page"), 1);
+  const limit = parsePositiveInt(params.get("limit"), 24, { max: 48 });
   const search = labelKey(params.get("search") || params.get("q") || params.get("vendorName") || "");
   const tag = selectedTag(params.get("specialTags") || params.get("tab"));
 

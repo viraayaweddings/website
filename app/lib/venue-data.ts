@@ -3,6 +3,7 @@ import path from "node:path";
 import { allowedCitySlugs, isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
 import { prisma } from "./prisma";
 import { publicFileExists } from "./safe-public-path";
+import { parsePositiveInt } from "./query-params";
 
 const venueImageFallbacks = [
   "/twc-venues/cards/riva-1.jpg",
@@ -412,8 +413,8 @@ function stableParams(params: URLSearchParams) {
 function emptyVenueQuery(params: URLSearchParams): VenueQueryResult {
   return {
     size: 0,
-    page: Math.max(1, Number(params.get("page") || 1)),
-    limit: Math.min(48, Math.max(1, Number(params.get("limit") || 24))),
+    page: parsePositiveInt(params.get("page"), 1),
+    limit: parsePositiveInt(params.get("limit"), 24, { max: 48 }),
     nextPage: null,
     nextPageUrl: null,
     results: []
@@ -424,8 +425,8 @@ async function queryVenuesUncached(queryString: string): Promise<VenueQueryResul
   const params = new URLSearchParams(queryString);
   const citySlug = labelKey(params.get("city") || params.get("citySlug") || "");
   if (citySlug && !isAllowedCitySlug(citySlug)) return emptyVenueQuery(params);
-  const page = Math.max(1, Number(params.get("page") || 1));
-  const limit = Math.min(48, Math.max(1, Number(params.get("limit") || 24)));
+  const page = parsePositiveInt(params.get("page"), 1);
+  const limit = parsePositiveInt(params.get("limit"), 24, { max: 48 });
   const search = labelKey(params.get("search") || "");
   const tab = params.get("tab") || "All";
   const guests = parseList(params, "guests");

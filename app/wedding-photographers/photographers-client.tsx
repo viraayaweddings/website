@@ -221,6 +221,8 @@ export default function PhotographersClient({
   const [selected, setSelected] = useState<Record<string, string[]>>({});
   const [loading, setLoading] = useState(false);
   const didMount = useRef(false);
+  // Monotonic id so a slow earlier response can't overwrite a newer one.
+  const requestSeq = useRef(0);
 
   const cityName = useMemo(() => titleCity(citySlug), [citySlug]);
 
@@ -238,14 +240,22 @@ export default function PhotographersClient({
   }
 
   async function runSearch(page = 1, append = false, tab = activeTab) {
+    const seq = ++requestSeq.current;
     setLoading(true);
-    const params = buildParams(page, tab);
-    const response = await fetch(`/api/photographers?${params.toString()}`);
-    const data = (await response.json()) as QueryResult;
-    setPhotographers((current) => (append ? [...current, ...data.results] : data.results));
-    setTotal(data.size);
-    setNextPageUrl(data.nextPageUrl);
-    setLoading(false);
+    try {
+      const params = buildParams(page, tab);
+      const response = await fetch(`/api/photographers?${params.toString()}`);
+      if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+      const data = (await response.json()) as QueryResult;
+      if (seq !== requestSeq.current) return; // superseded by a newer request
+      setPhotographers((current) => (append ? [...current, ...data.results] : data.results));
+      setTotal(data.size);
+      setNextPageUrl(data.nextPageUrl);
+    } catch {
+      // Leave the current results in place; just stop the spinner below.
+    } finally {
+      if (seq === requestSeq.current) setLoading(false);
+    }
   }
 
   function toggleValue(param: string, item: string) {
@@ -263,14 +273,20 @@ export default function PhotographersClient({
   }
 
   async function showMore() {
-    if (!nextPageUrl) return;
+    if (!nextPageUrl || loading) return;
     setLoading(true);
-    const response = await fetch(nextPageUrl);
-    const data = (await response.json()) as QueryResult;
-    setPhotographers((current) => [...current, ...data.results]);
-    setTotal(data.size);
-    setNextPageUrl(data.nextPageUrl);
-    setLoading(false);
+    try {
+      const response = await fetch(nextPageUrl);
+      if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+      const data = (await response.json()) as QueryResult;
+      setPhotographers((current) => [...current, ...data.results]);
+      setTotal(data.size);
+      setNextPageUrl(data.nextPageUrl);
+    } catch {
+      // Keep the list as-is on failure; stop the spinner below.
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
