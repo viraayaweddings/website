@@ -5,7 +5,6 @@ import { getPhotographerCities, queryPhotographers } from "../../lib/photographe
 import { allowedCityName, isAllowedCitySlug } from "../../lib/allowed-cities";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 900;
 
 export async function generateMetadata({
   params

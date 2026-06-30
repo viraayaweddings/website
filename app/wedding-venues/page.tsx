@@ -3,7 +3,6 @@ import VenuesClient from "./venues-client";
 import { getVenueCities, queryVenues } from "../lib/venue-data";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 900;
 
 export const metadata: Metadata = {
   title: "Wedding Venues in India - Banquet Halls, Hotels & Resorts | Viraaya Weddings",

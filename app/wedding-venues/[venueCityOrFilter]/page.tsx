@@ -5,7 +5,6 @@ import { getCityBySlug, getVenueCities, queryVenues } from "../../lib/venue-data
 import { allowedCityName, isAllowedCitySlug } from "../../lib/allowed-cities";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 900;
 
 export async function generateMetadata({
   params

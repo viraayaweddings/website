@@ -3,7 +3,6 @@ import PhotographersClient from "./photographers-client";
 import { getPhotographerCities, queryPhotographers } from "../lib/photographer-data";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 900;
 
 export const metadata: Metadata = {
   title: "Wedding Photographers in India - Candid & Cinematic | Viraaya Weddings",
