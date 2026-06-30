@@ -3,7 +3,7 @@ import path from "node:path";
 import { unstable_cache } from "next/cache";
 import { isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
 import { prisma } from "./prisma";
-import { publicFileExists } from "./safe-public-path";
+import { localPublicImageExists } from "./asset-resolver";
 import { serializeForScript } from "./script-json";
 import { rewriteHeadSeo } from "./head-seo";
 import {
@@ -109,55 +109,8 @@ function fallbackVenueImages(seed: string, count = 8) {
   );
 }
 
-function localFileForDeployablePublicPath(publicPath: string) {
-  if (publicPath.startsWith("/venue-assets/gcpimages/")) {
-    return path.join(
-      process.cwd(),
-      "public",
-      "twc-company-assets",
-      "gcpimages.theweddingcompany.com",
-      ...publicPath.replace("/venue-assets/gcpimages/", "").split("/")
-    );
-  }
-  if (publicPath.startsWith("/venue-assets/imageswedding/")) {
-    return path.join(
-      process.cwd(),
-      "public",
-      "twc-company-assets",
-      "imageswedding.theweddingcompany.com",
-      ...publicPath.replace("/venue-assets/imageswedding/", "").split("/")
-    );
-  }
-  if (publicPath.startsWith("/venue-assets/weddingimage/")) {
-    return path.join(
-      process.cwd(),
-      "public",
-      "twc-company-assets",
-      "weddingimage.betterhalf.ai",
-      ...publicPath.replace("/venue-assets/weddingimage/", "").split("/")
-    );
-  }
-  if (publicPath.startsWith("/venue-assets/storage/")) {
-    return path.join(
-      process.cwd(),
-      "public",
-      "twc-company-assets",
-      "storage.googleapis.com",
-      ...publicPath.replace("/venue-assets/storage/", "").split("/")
-    );
-  }
-  if (publicPath.startsWith("/")) {
-    return path.join(process.cwd(), "public", ...publicPath.slice(1).split("/"));
-  }
-  return null;
-}
-
 function hasDeployableImage(publicPath: string) {
-  const file = localFileForDeployablePublicPath(publicPath);
-  return Boolean(
-    RENDERABLE_IMAGE_PATH_PATTERN.test(publicPath) &&
-    publicFileExists(file)
-  );
+  return RENDERABLE_IMAGE_PATH_PATTERN.test(publicPath) && localPublicImageExists(publicPath);
 }
 
 function num(v: unknown): number | null {

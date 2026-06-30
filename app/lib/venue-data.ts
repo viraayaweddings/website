@@ -1,8 +1,7 @@
 import { unstable_cache } from "next/cache";
-import path from "node:path";
 import { allowedCitySlugs, isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
 import { prisma } from "./prisma";
-import { publicFileExists } from "./safe-public-path";
+import { localPublicImageExists } from "./asset-resolver";
 import { parsePositiveInt } from "./query-params";
 
 const venueImageFallbacks = [
@@ -54,55 +53,8 @@ function fallbackVenueImages(seed: string, count = 4) {
   );
 }
 
-function localFileForDeployablePublicPath(publicPath: string) {
-  if (publicPath.startsWith("/venue-assets/gcpimages/")) {
-    return path.join(
-      process.cwd(),
-      "public",
-      "twc-company-assets",
-      "gcpimages.theweddingcompany.com",
-      ...publicPath.replace("/venue-assets/gcpimages/", "").split("/")
-    );
-  }
-  if (publicPath.startsWith("/venue-assets/imageswedding/")) {
-    return path.join(
-      process.cwd(),
-      "public",
-      "twc-company-assets",
-      "imageswedding.theweddingcompany.com",
-      ...publicPath.replace("/venue-assets/imageswedding/", "").split("/")
-    );
-  }
-  if (publicPath.startsWith("/venue-assets/weddingimage/")) {
-    return path.join(
-      process.cwd(),
-      "public",
-      "twc-company-assets",
-      "weddingimage.betterhalf.ai",
-      ...publicPath.replace("/venue-assets/weddingimage/", "").split("/")
-    );
-  }
-  if (publicPath.startsWith("/venue-assets/storage/")) {
-    return path.join(
-      process.cwd(),
-      "public",
-      "twc-company-assets",
-      "storage.googleapis.com",
-      ...publicPath.replace("/venue-assets/storage/", "").split("/")
-    );
-  }
-  if (publicPath.startsWith("/")) {
-    return path.join(process.cwd(), "public", ...publicPath.slice(1).split("/"));
-  }
-  return null;
-}
-
 function hasDeployableImage(publicPath: string) {
-  const file = localFileForDeployablePublicPath(publicPath);
-  return Boolean(
-    renderableImagePathPattern.test(publicPath) &&
-    publicFileExists(file)
-  );
+  return renderableImagePathPattern.test(publicPath) && localPublicImageExists(publicPath);
 }
 
 export type VenueImage = {

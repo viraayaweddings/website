@@ -1,7 +1,6 @@
-import path from "node:path";
 import { unstable_cache } from "next/cache";
 import { prisma } from "../../../../../../lib/prisma";
-import { publicFileExists } from "../../../../../../lib/safe-public-path";
+import { localPublicImageExists } from "../../../../../../lib/asset-resolver";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 3600;
@@ -123,27 +122,8 @@ function fallbackImages(seed: string, images: string[], count = 8) {
   return Array.from({ length: Math.min(count, images.length) }, (_, index) => images[(start + index) % images.length]);
 }
 
-function localFileForPublicPath(publicPath: string) {
-  if (publicPath.startsWith("/venue-assets/gcpimages/")) {
-    return path.join(process.cwd(), "public", "twc-venues-local", "gcpimages.theweddingcompany.com", ...publicPath.replace("/venue-assets/gcpimages/", "").split("/"));
-  }
-  if (publicPath.startsWith("/venue-assets/imageswedding/")) {
-    return path.join(process.cwd(), "public", "twc-venues-local", "imageswedding.theweddingcompany.com", ...publicPath.replace("/venue-assets/imageswedding/", "").split("/"));
-  }
-  if (publicPath.startsWith("/venue-assets/weddingimage/")) {
-    return path.join(process.cwd(), "public", "twc-venues-local", "weddingimage.betterhalf.ai", ...publicPath.replace("/venue-assets/weddingimage/", "").split("/"));
-  }
-  if (publicPath.startsWith("/venue-assets/storage/")) {
-    return path.join(process.cwd(), "public", "twc-venues-local", "storage.googleapis.com", ...publicPath.replace("/venue-assets/storage/", "").split("/"));
-  }
-  if (publicPath.startsWith("/")) {
-    return path.join(process.cwd(), "public", ...publicPath.slice(1).split("/"));
-  }
-  return null;
-}
-
 function hasLocalImage(publicPath: string) {
-  return publicFileExists(localFileForPublicPath(publicPath));
+  return localPublicImageExists(publicPath);
 }
 
 function mimeTypeFor(mediaUrl: string, fallback?: string | null) {

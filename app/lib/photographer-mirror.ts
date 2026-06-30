@@ -3,7 +3,7 @@ import path from "node:path";
 import { unstable_cache } from "next/cache";
 import { allowedCityName, isAllowedCitySlug, normalizeCitySlug, safeDecodeURIComponent } from "./allowed-cities";
 import { prisma } from "./prisma";
-import { publicFileExists } from "./safe-public-path";
+import { localPublicImageExists } from "./asset-resolver";
 import { serializeForScript } from "./script-json";
 import { rewriteHeadSeo } from "./head-seo";
 import {
@@ -205,51 +205,8 @@ function fallbackPhotographerImages(seed: string, count = 5) {
   );
 }
 
-function localFileForPublicPath(publicPath: string) {
-  if (publicPath.startsWith("/venue-assets/gcpimages/")) {
-    return path.join(
-      process.cwd(),
-      "public",
-      "twc-venues-local",
-      "gcpimages.theweddingcompany.com",
-      ...publicPath.replace("/venue-assets/gcpimages/", "").split("/")
-    );
-  }
-  if (publicPath.startsWith("/venue-assets/imageswedding/")) {
-    return path.join(
-      process.cwd(),
-      "public",
-      "twc-venues-local",
-      "imageswedding.theweddingcompany.com",
-      ...publicPath.replace("/venue-assets/imageswedding/", "").split("/")
-    );
-  }
-  if (publicPath.startsWith("/venue-assets/weddingimage/")) {
-    return path.join(
-      process.cwd(),
-      "public",
-      "twc-venues-local",
-      "weddingimage.betterhalf.ai",
-      ...publicPath.replace("/venue-assets/weddingimage/", "").split("/")
-    );
-  }
-  if (publicPath.startsWith("/venue-assets/storage/")) {
-    return path.join(
-      process.cwd(),
-      "public",
-      "twc-venues-local",
-      "storage.googleapis.com",
-      ...publicPath.replace("/venue-assets/storage/", "").split("/")
-    );
-  }
-  if (publicPath.startsWith("/")) {
-    return path.join(process.cwd(), "public", ...publicPath.slice(1).split("/"));
-  }
-  return null;
-}
-
 function hasLocalImage(publicPath: string) {
-  return publicFileExists(localFileForPublicPath(publicPath));
+  return localPublicImageExists(publicPath);
 }
 
 function num(v: unknown): number | null {
