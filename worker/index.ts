@@ -6,8 +6,8 @@ import { handleLeadRequest, type LeadEmailEnv } from "./lead-email";
 
 interface Env extends LeadEmailEnv {
   ASSETS?: Fetcher;
-  DB: D1Database;
-  IMAGES: {
+  DB?: D1Database;
+  IMAGES?: {
     input(stream: ReadableStream): {
       transform(options: Record<string, unknown>): {
         output(options: { format: string; quality: number }): Promise<{ response(): Response }>;
@@ -64,6 +64,10 @@ const SECURITY_HEADERS = {
   "x-permitted-cross-domain-policies": "none",
   "x-xss-protection": "0",
 };
+const FALLBACK_EXECUTION_CONTEXT: ExecutionContext = {
+  waitUntil() {},
+  passThroughOnException() {},
+};
 
 // Image security config. SVG sources with .svg extension auto-skip the
 // optimization endpoint on the client side (served directly, no proxy).
@@ -72,7 +76,11 @@ const SECURITY_HEADERS = {
 // const imageConfig: ImageConfig = { dangerouslyAllowSVG: true };
 
 const worker = {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(
+    request: Request,
+    env: Env = {} as Env,
+    ctx: ExecutionContext = FALLBACK_EXECUTION_CONTEXT,
+  ): Promise<Response> {
     const url = new URL(request.url);
     const localJsonHeaders = {
       "content-type": "application/json; charset=utf-8",
@@ -87,6 +95,14 @@ const worker = {
           return env.ASSETS.fetch(new Request(new URL(path, request.url)));
         },
         transformImage: async (body, { width, format, quality }) => {
+          if (!env.IMAGES) {
+            return new Response(body, {
+              headers: {
+                "content-type": `image/${format === "jpeg" ? "jpeg" : format}`,
+              },
+            });
+          }
+
           const result = await env.IMAGES.input(body).transform(width > 0 ? { width } : {}).output({ format, quality });
           return result.response();
         },
@@ -99,6 +115,9 @@ const worker = {
 
     if (request.method === "GET" || request.method === "HEAD") {
       if (!env.ASSETS) {
+        const nodeStaticResponse = await getNodeStaticResponse(request, url);
+        if (nodeStaticResponse) return withCacheHeaders(nodeStaticResponse, url);
+
         if (!url.pathname.includes(".")) {
           const indexPath = url.pathname.endsWith("/")
             ? `${url.pathname}index.html`
@@ -280,6 +299,64 @@ function isStaticAssetPath(pathname: string) {
 
 function isHtmlPath(pathname: string) {
   return pathname.endsWith(".html") || !pathname.includes(".");
+}
+
+async function getNodeStaticResponse(request: Request, url: URL): Promise<Response | null> {
+  const nodeProcess = globalThis.process;
+  if (!nodeProcess?.versions?.node) return null;
+
+  const [{ readFile }, { resolve, sep }] = await Promise.all([
+    import("node:fs/promises"),
+    import("node:path"),
+  ]);
+  const publicRoot = resolve(nodeProcess.cwd(), "dist", "client");
+  const requestedPath = decodeURIComponent(url.pathname).replace(/^\/+/, "");
+  const candidates = requestedPath.includes(".")
+    ? [requestedPath]
+    : [
+        `${requestedPath.replace(/\/$/, "")}/index.html`,
+        `${requestedPath.replace(/\/$/, "")}.html`,
+      ];
+
+  for (const candidate of candidates) {
+    const filePath = resolve(publicRoot, candidate || "index.html");
+    if (filePath !== publicRoot && !filePath.startsWith(`${publicRoot}${sep}`)) continue;
+
+    try {
+      const body = await readFile(filePath);
+      return new Response(request.method === "HEAD" ? null : body, {
+        headers: {
+          "content-type": contentTypeFor(filePath),
+        },
+      });
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    }
+  }
+
+  return null;
+}
+
+function contentTypeFor(filePath: string) {
+  const extension = filePath.split(".").pop()?.toLowerCase();
+  const types: Record<string, string> = {
+    css: "text/css; charset=utf-8",
+    gif: "image/gif",
+    html: "text/html; charset=utf-8",
+    ico: "image/x-icon",
+    jpeg: "image/jpeg",
+    jpg: "image/jpeg",
+    js: "text/javascript; charset=utf-8",
+    json: "application/json; charset=utf-8",
+    png: "image/png",
+    svg: "image/svg+xml",
+    ttf: "font/ttf",
+    webp: "image/webp",
+    woff: "font/woff",
+    woff2: "font/woff2",
+  };
+
+  return types[extension || ""] || "application/octet-stream";
 }
 
 function getHotelsForCity(cityId: string) {
