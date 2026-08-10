@@ -343,6 +343,343 @@
         color: #631755 !important;
             text-decoration: underline !important;
 }
+
+/* Homepage-only gold theme trial sampled from Presentation1.pdf */
+:root {
+    --vw-ivory: #FFF8F3;
+    --vw-cream: #FBF3E8;
+    --vw-gold: #B98230;
+    --vw-gold-light: #D0AF73;
+    --vw-gold-soft: #E2C89C;
+    --vw-gold-dark: #936C35;
+    --vw-brown: #4A3C33;
+    --vw-brown-deep: #3A2D25;
+    --vw-text: #50443B;
+    --vw-muted: #8A7358;
+    --vw-border: #D6C9B7;
+}
+
+body {
+    color: var(--vw-text);
+    background: var(--vw-ivory);
+}
+
+a:hover,
+button:hover,
+input[type=submit]:hover {
+    color: var(--vw-gold) !important;
+}
+
+.text-primary,
+.text-mulberry {
+    color: var(--vw-gold) !important;
+}
+
+.text-maroon-900,
+.text-royal-wine {
+    color: var(--vw-brown) !important;
+}
+
+.text-deep-maroon-80,
+.text-deep-maroon-80 *,
+.text-maroon-900-80,
+.text-maroon-900-80 * {
+    color: rgb(80 68 59 / 80%) !important;
+}
+
+.text-maroon-900-50 {
+    color: rgb(80 68 59 / 50%) !important;
+}
+
+.bg-primary {
+    background-color: var(--vw-brown) !important;
+}
+
+.bg-primary-light,
+.bg-plum-800 {
+    background-color: var(--vw-gold) !important;
+}
+
+.bg-lavender-50,
+.bg-rose-50,
+.luxury-feedback,
+.consultation-wrapper,
+.bg-all-wrapper {
+    background-color: var(--vw-cream) !important;
+    background: linear-gradient(57deg, var(--vw-ivory), var(--vw-cream)) !important;
+}
+
+.btn {
+    background-color: var(--vw-gold);
+    color: #fff !important;
+}
+
+.btn:hover {
+    background-color: var(--vw-gold-dark) !important;
+    color: #fff !important;
+}
+
+.white-btn {
+    background-color: var(--vw-ivory) !important;
+    color: var(--vw-brown) !important;
+}
+
+.white-btn:hover {
+    background-color: var(--vw-gold) !important;
+    color: #fff !important;
+}
+
+.js-header .navbar .main-menu .nav-item .nav-link {
+    color: var(--vw-brown) !important;
+}
+
+.js-header .navbar .main-menu .dropdown-menu li a:hover,
+.js-header .navbar .main-menu .dropdown-menu li a:focus {
+    background-color: var(--vw-gold) !important;
+    color: #fff !important;
+}
+
+.js-header .search-btn,
+.js-header .search-btn img,
+.js-header .fa-search,
+.js-header [class*="fa-search"],
+.custom-arrow,
+.text-prime,
+.text-prime-dark,
+.view-link,
+.view-link:hover {
+    color: var(--vw-gold) !important;
+}
+
+.js-header .search-btn img,
+.partners-wrapper .icon img,
+.testimonials-slider .item .outline .user-details p img,
+.venue-location img,
+.map-icon,
+img[src*="map-icon.svg"],
+img[src*="f-icon"],
+img[src*="quote"] {
+    filter: sepia(68%) saturate(796%) hue-rotate(357deg) brightness(78%) contrast(91%) !important;
+}
+
+.CostSummary .offcanvas-header,
+.disclaimer-note,
+.estimator-wrapper {
+    background: linear-gradient(57deg, var(--vw-ivory), var(--vw-cream)) !important;
+}
+
+.disclaimer-cta a {
+    color: var(--vw-gold-dark) !important;
+}
+
+.home-search-item:hover {
+    background: var(--vw-cream) !important;
+    color: var(--vw-gold-dark) !important;
+}
+
+.banner-bottom-list {
+    border-top: 4px solid var(--vw-gold);
+}
+
+.luxury-venues-wrapper .pill-tabs {
+    background: var(--vw-cream) !important;
+}
+
+.luxury-venues-wrapper .tab-btn.active,
+.btn-availability,
+ul#hotelTabs .nav-link.active,
+.close-btn {
+    background: var(--vw-gold) !important;
+    color: #fff !important;
+}
+
+.btn-availability:hover,
+.btn-details {
+    background: var(--vw-cream) !important;
+    color: var(--vw-brown) !important;
+}
+
+.luxury-venues-wrapper .widget .search-box input::placeholder,
+.estimator-wrapper .cost-calculator-widget .form-group input::placeholder {
+    color: rgb(80 68 59 / 50%) !important;
+}
+
+.estimator-wrapper .cost-calculator-widget {
+    border-color: rgb(185 130 48 / 24%) !important;
+}
+
+.estimator-wrapper .cost-calculator-widget .form-group label,
+.estimator-wrapper .cost-calculator-widget p,
+.estimator-wrapper .widget ul li .content p {
+    color: rgb(80 68 59 / 80%) !important;
+}
+
+.estimator-wrapper .cost-calculator-widget .form-group .form-control:focus,
+.select2-container--default .select2-selection--single:hover,
+.select2-container--default.select2-container--open .select2-selection--single {
+    border-color: var(--vw-gold) !important;
+    box-shadow: 0 0 0 3px rgb(185 130 48 / 12%) !important;
+}
+
+.select2-results__option--highlighted,
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-months .flatpickr-month,
+.flatpickr-current-month,
+.flatpickr-monthDropdown-months,
+.flatpickr-weekdays,
+span.flatpickr-weekday {
+    background: var(--vw-gold) !important;
+    border-color: var(--vw-gold) !important;
+    color: #fff !important;
+}
+
+.flatpickr-day:hover,
+.flatpickr-day.inRange {
+    background: var(--vw-gold-soft) !important;
+    border-color: var(--vw-gold-soft) !important;
+}
+
+.service-wrapper,
+.testimonials-wrapper,
+.deal-season-wrapper {
+    background-color: var(--vw-brown) !important;
+}
+
+.service-wrapper::before,
+.deal-season-wrapper:before,
+.questions-wrapper .widget::before,
+.testimonials-slider .item .outline .user::before {
+    background-image: none !important;
+    background: linear-gradient(135deg, rgb(74 60 51 / 96%), rgb(58 45 37 / 92%)) !important;
+    opacity: 1 !important;
+}
+
+.testimonials-wrapper .section-heading span {
+    color: var(--vw-gold-light) !important;
+    background: none !important;
+    -webkit-text-fill-color: currentColor !important;
+}
+
+.testimonials-slider .item .outline .user .img .quote {
+    background: linear-gradient(180deg, var(--vw-gold-light), var(--vw-gold)) !important;
+}
+
+.testimonials-slider .item .outline .content p,
+.testimonials-slider .item .outline .user-details p {
+    color: rgb(80 68 59 / 70%) !important;
+}
+
+.testimonials-slider .item .outline .content h5,
+.testimonials-slider .item .outline .user-details h5,
+.partners-wrapper .widget h4,
+.partners-wrapper .widget p,
+.viv-custom-modal .modal-dialog .modal-header .modal-title,
+.modal-title {
+    color: var(--vw-brown) !important;
+    border-color: var(--vw-border) !important;
+}
+
+.partners-wrapper .widget .item h5 {
+    color: rgb(80 68 59 / 70%) !important;
+}
+
+.service-wrapper .widget .wodget-heading {
+    background-color: var(--vw-cream) !important;
+}
+
+.service-wrapper .widget .widget-content .pill {
+    background-color: var(--vw-cream) !important;
+    color: var(--vw-text) !important;
+}
+
+.service-wrapper .widget .widget-content .btn-price .starts-from {
+    color: rgb(80 68 59 / 60%) !important;
+}
+
+.packages-wrapper .elite-card .elite-top {
+    background-color: var(--vw-brown) !important;
+    border-top: 4px solid var(--vw-gold);
+}
+
+.packages-wrapper .elite-card .elite-top .explore-btn.btn {
+    background-color: var(--vw-gold) !important;
+    color: #fff !important;
+}
+
+.packages-wrapper .elite-card .elite-top .explore-btn.btn:hover {
+    background-color: var(--vw-gold-dark) !important;
+}
+
+.packages-wrapper .elite-card .elite-bottom {
+    border-color: rgb(185 130 48 / 24%) !important;
+}
+
+.packages-wrapper .elite-card .elite-bottom .included-title,
+.packages-wrapper .elite-card .elite-bottom .Includes-title,
+a.region-card:hover .region-name,
+.faq-wrapper .accordion-item.active .accordion-header .accordion-button:after,
+.partners-wrapper .widget h4 .highlight,
+.questions-wrapper .section-heading h3 .highlight {
+    color: var(--vw-gold) !important;
+}
+
+.packages-wrapper .elite-card .elite-bottom .check-item strong {
+    color: var(--vw-brown) !important;
+}
+
+.packages-wrapper .elite-card .elite-bottom .check-item span {
+    color: rgb(80 68 59 / 80%) !important;
+}
+
+.faq-wrapper .accordion-item:has(.active),
+.faq-wrapper .accordion-item.active,
+.blog-details-wrapper .blog-details-content blockquote {
+    background: linear-gradient(57deg, var(--vw-ivory), var(--vw-cream)) !important;
+}
+
+.faq-wrapper .accordion-button::after,
+.faq-wrapper .accordion-item.active .accordion-header .accordion-button:after,
+.booking-Confirm-wrapper .booking-card .close-btn,
+.booking-Confirm-wrapper .flatpickr-day.selected,
+.booking-Confirm-wrapper .time-slot.active,
+.Coupletestimonials .slick-dots li.slick-active button,
+.product-slider2 .slick-dots li.slick-active button {
+    background-color: var(--vw-gold) !important;
+    border-color: var(--vw-gold) !important;
+}
+
+.booking-Confirm-wrapper .booking-card .selected-info .icon {
+    background-color: var(--vw-cream) !important;
+    color: var(--vw-gold) !important;
+}
+
+.booking-Confirm-wrapper .time-slot:hover {
+    color: var(--vw-gold) !important;
+}
+
+.main-footer {
+    background-color: var(--vw-brown-deep) !important;
+}
+
+.main-footer .widget a.btn:hover,
+.main-footer .go-to-top:hover {
+    background-color: var(--vw-gold) !important;
+    color: #fff !important;
+}
+
+.slick-dots li button,
+.feature-items .slick-dots li button,
+.product-slider2 .slick-dots li.slick-active+li+li button {
+    background-color: var(--vw-gold-soft) !important;
+}
+
+.slick-dots li.slick-active button,
+.feature-items .slick-dots li.slick-active button {
+    background-color: var(--vw-gold) !important;
+}
 </style>
   <link href="/vendor/fontawesome/css/all.min.css" rel="stylesheet" />
   <link href="/vendor/fontawesome/css/local-icon-fixes.css" rel="stylesheet" />
