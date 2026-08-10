@@ -1,5 +1,5 @@
 /* Homepage-only gold theme trial sampled from Presentation1.pdf.
-   Loaded last with a version query so cached purple styles do not win. */
+   Loaded last with a version query so cached legacy styles do not win. */
 .homepage-gold-theme {
     --vw-ivory: #FFF8F3;
     --vw-cream: #FBF3E8;
@@ -32,6 +32,7 @@
 .homepage-gold-theme .text-maroon-900,
 .homepage-gold-theme .text-royal-wine,
 .homepage-gold-theme .venue-title,
+.homepage-gold-theme .venue-card .venue-title,
 .homepage-gold-theme .main-navbar .nav-link {
     color: var(--vw-brown) !important;
 }
@@ -47,6 +48,17 @@
 .homepage-gold-theme .luxury-venues-wrapper .widget .search-box input::placeholder,
 .homepage-gold-theme .estimator-wrapper .cost-calculator-widget .form-group input::placeholder {
     color: rgb(80 68 59 / 50%) !important;
+}
+
+.homepage-gold-theme .luxury-venues-wrapper .tab-btn,
+.homepage-gold-theme .luxury-venues-wrapper .tab-btn:not(.active),
+.homepage-gold-theme ul#hotelTabs li button:hover,
+.homepage-gold-theme #hotelTabsContent .megamenu-links ul li a:hover,
+.homepage-gold-theme .booking-Confirm-wrapper .time-slot:hover,
+.homepage-gold-theme .consultation-wrapper .booking-right .time-slot-list h5,
+.homepage-gold-theme .consultation-wrapper .widget .heading-highlight,
+.homepage-gold-theme .process-section .circle-widget span {
+    color: var(--vw-gold) !important;
 }
 
 .homepage-gold-theme .bg-primary,
@@ -71,7 +83,10 @@
 .homepage-gold-theme .close-btn,
 .homepage-gold-theme .booking-Confirm-wrapper .booking-card .close-btn,
 .homepage-gold-theme .booking-Confirm-wrapper .flatpickr-day.selected,
-.homepage-gold-theme .booking-Confirm-wrapper .time-slot.active {
+.homepage-gold-theme .booking-Confirm-wrapper .time-slot.active,
+.homepage-gold-theme .process-section .circle-widget .arrow-icon span,
+.homepage-gold-theme .HowItWork .process-count,
+.homepage-gold-theme .check-hotal-aval-wrapper .order-summary .summary-badge {
     background: var(--vw-gold) !important;
     background-color: var(--vw-gold) !important;
     border-color: var(--vw-gold) !important;
@@ -130,12 +145,37 @@
 }
 
 .homepage-gold-theme .luxury-venues-wrapper .pill-tabs,
+.homepage-gold-theme .luxury-venues-wrapper .widget .search-box,
+.homepage-gold-theme .luxury-venues-wrapper .widget .search-box input,
 .homepage-gold-theme .home-search-item:hover,
 .homepage-gold-theme .service-wrapper .widget .wodget-heading,
 .homepage-gold-theme .service-wrapper .widget .widget-content .pill,
-.homepage-gold-theme .booking-Confirm-wrapper .booking-card .selected-info .icon {
+.homepage-gold-theme .booking-Confirm-wrapper .booking-card .selected-info .icon,
+.homepage-gold-theme .consultation-wrapper .booking-layout .booking-right,
+.homepage-gold-theme .consultation-wrapper .booking-layout .booking-left .flatpickr-months .flatpickr-current-month .flatpickr-monthDropdown-months,
+.homepage-gold-theme .process-section .circle-widget,
+.homepage-gold-theme .arrow-icon,
+.homepage-gold-theme .blog-wrapper .widget .blog-content .blog-category {
     background: var(--vw-cream) !important;
     background-color: var(--vw-cream) !important;
+}
+
+.homepage-gold-theme .venue-card,
+.homepage-gold-theme .post-wedding-wrapper .wedding-card,
+.homepage-gold-theme .consultation-card,
+.homepage-gold-theme .consultation-wrapper .booking-layout,
+.homepage-gold-theme .process-section .circle-widget,
+.homepage-gold-theme .outline-btn {
+    border-color: rgb(185 130 48 / 20%) !important;
+}
+
+.homepage-gold-theme .venue-card .venue-location,
+.homepage-gold-theme .venue-card .venue-location *,
+.homepage-gold-theme .luxury-venues-wrapper .widget .search-box input,
+.homepage-gold-theme .consultation-wrapper .widget ul li .content p,
+.homepage-gold-theme .consultation-card .widget p.dis,
+.homepage-gold-theme .process-section .process-content p {
+    color: rgb(80 68 59 / 70%) !important;
 }
 
 .homepage-gold-theme .banner-bottom-list {
