@@ -150,7 +150,7 @@ ul {list-style: none;padding: 0;margin: 0;}
  */
 body {font-family: "Inter", sans-serif;}
 
-.form-control:focus {color: #212529;background-color: #fff;border-color: rgba(165, 39, 142, 0.25);outline: 0;box-shadow: 0 0 0 .25rem rgba(165, 39, 142, 0.25);}
+.form-control:focus {color: #212529;background-color: #fff;border-color: rgba(185, 130, 48, 0.25);outline: 0;box-shadow: 0 0 0 .25rem rgba(185, 130, 48, 0.25);}
 
 p {font-family: "Inter", sans-serif;font-size: 1rem;font-weight: normal;color: #ffffff;line-height: 1.5;}
 
@@ -324,7 +324,7 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .all-heading {line-height: 41px;margin-top: -7px;}
 
 .luxury-venues-wrapper .content-widget .content p {margin-top: 14px;line-height: 1.60;}
-.venue-card {border-radius: 20px;border: 1px solid rgba(99, 23, 85, 0.16);overflow: hidden;}
+.venue-card {border-radius: 20px;border: 1px solid rgba(74, 60, 51, 0.16);overflow: hidden;}
 .venue-card .venue-title {line-height: 1.6;}
  .venue-card .venue-location {color: rgb(58 45 37 / 70%);gap: 5px;line-height: 1.6;letter-spacing: 0.02em;}
 .venue-card .venue-img {overflow: hidden;border-radius: 20px; height: 170px;}
@@ -836,7 +836,7 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .package-details-wrapper .faq-wrapper .accordion-collapse {background-color: #fff;padding: 35px;}
 .package-details-wrapper .faq-wrapper .accordion-collapse .accordion-body {padding: 0px;}
 .package-details-wrapper .faq-wrapper .accordion-collapse .accordion .accordion-item {background: transparent;}
-.package-details-wrapper .faq-wrapper .accordion-collapse .accordion .accordion-item .accordion-button {text-transform: uppercase; font-size: 15px; background-color: rgb(201 161 194 / 15%);border-radius: 50px;padding: 7px 15px;height: 45px;color: #936C35;font-weight: 600;}
+.package-details-wrapper .faq-wrapper .accordion-collapse .accordion .accordion-item .accordion-button {text-transform: uppercase; font-size: 15px; background-color: rgb(214 201 183 / 25%);border-radius: 50px;padding: 7px 15px;height: 45px;color: #936C35;font-weight: 600;}
 .package-details-wrapper .faq-wrapper .accordion-collapse .accordion .accordion-item .accordion-button::after {width: 21px;height: 21px;background-size: 10px;}
 .package-details-wrapper 
 .faq-wrapper 
@@ -893,7 +893,7 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .pricing-widget .pricing-card .badge {position: absolute;top: -10px;margin: 0 auto;text-align: center;width: 75px;border-radius: 30px;right: 0;left: 0;}
 .pricing-widget .pricing-card .price {font-size: 16px;color: #4A3C33;font-weight: 600;}
 .pricing-widget .pricing-card:hover:after,
-.pricing-widget .pricing-card.active:after {position: absolute;content: '';border: solid rgb(141 25 122 / 60%);width: calc(100% - 8px);height: calc(100% - 8px);border-radius: 12px;left: 4px;top: 4px;}
+.pricing-widget .pricing-card.active:after {position: absolute;content: '';border: solid rgb(185 130 48 / 60%);width: calc(100% - 8px);height: calc(100% - 8px);border-radius: 12px;left: 4px;top: 4px;}
 .check-hotal-aval-wrapper .form-widget label {color: rgb(80 68 59 / 80%);font-size: 12px;font-weight: 700;margin-bottom: 10px;}
 .check-hotal-aval-wrapper .form-widget {padding: 21px 48px;}
 .check-hotal-aval-wrapper .form-widget .pricing-widget {gap: 6px;}
@@ -943,7 +943,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 .hero {min-height: 94vh;background: linear-gradient(170deg, rgba(14,12,9,.35) 0%, rgba(14,12,9,.72) 55%, rgba(14,12,9,.90) 100%);display: grid; place-items: center;text-align: center; padding: 130px 28px 90px;position: relative; overflow: hidden;}
      
 .hero-inner { position: relative; z-index: 1; }
-.hero-crumb { display: inline-flex; align-items: center; gap: 8px; background: rgba(165,39,142,.12); border: 1px solid rgba(165,39,142,.35); border-radius: 100px; padding: 6px 20px; font-size: 10.5px; letter-spacing: 2.5px; text-transform: uppercase; color: #fff; margin-bottom: 28px; }
+.hero-crumb { display: inline-flex; align-items: center; gap: 8px; background: rgba(185,130,48,.14); border: 1px solid rgba(185,130,48,.35); border-radius: 100px; padding: 6px 20px; font-size: 10.5px; letter-spacing: 2.5px; text-transform: uppercase; color: #fff; margin-bottom: 28px; }
 .hero-crumb span { opacity: .5; }
 .hero h1 { max-width: 860px; margin: 0 auto 14px; }
     
@@ -957,10 +957,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 .stat-content h3 {font-size: 1.4rem;margin: 0;line-height: 1.2;}
 .stat-content p {font-size: 0.65rem;text-transform: uppercase;letter-spacing: 1px;margin: 0;opacity: 0.6;}
 .eyebrow {display: inline-block;font-size: 10.5px;font-weight: 600;letter-spacing: 3.5px;text-transform: uppercase;margin-bottom: 14px}
-.af { padding: 18px 15px;background: #F7F2E8;border: 1px solid rgba(165, 39, 142, .2);border-radius:4px;}
+.af { padding: 18px 15px;background: #F7F2E8;border: 1px solid rgba(185, 130, 48, .22);border-radius:4px;}
 .af strong { display: block;font-size: 1.1rem; line-height: 1; margin-bottom: 4px;}
 .af span { font-size: .78rem; letter-spacing: .5px; }
-.about-img-badge {position: absolute; bottom: 24px; left: 24px;background: rgba(14,12,9,.85); backdrop-filter: blur(8px);border: 1px solid rgba(165,39,142,.35); border-radius:6px;padding: 16px 22px; color: var(--white);}
+.about-img-badge {position: absolute; bottom: 24px; left: 24px;background: rgba(14,12,9,.85); backdrop-filter: blur(8px);border: 1px solid rgba(185,130,48,.35); border-radius:6px;padding: 16px 22px; color: var(--white);}
 .about-img-badge strong { display: block; font-size: 2rem;  line-height: 1; }
 .about-img-badge span { font-size: .72rem; letter-spacing: 2px; text-transform: uppercase; color:rgba(255,255,255,.8);}
 .bg-all-wrapper{background: linear-gradient(57deg, #FFF8F0, #FBF3E8); }
@@ -977,12 +977,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 .gi:hover .gi-lbl { opacity: 1; }
  
 
-.Coupletestimonials .slick-dots li:has(+ .slick-active) button {background: rgb(165 35 140 ) !important;}
+.Coupletestimonials .slick-dots li:has(+ .slick-active) button {background: rgb(185 130 48) !important;}
 .Coupletestimonials .slick-dots li.slick-active button {background:#B98230;}
 
-.lf {background: rgba(255,255,255,.04);backdrop-filter: blur(12px); border: 1px solid rgba(165,39,142,.2); border-radius: 8px; padding: 36px}
+.lf {background: rgba(255,255,255,.04);backdrop-filter: blur(12px); border: 1px solid rgba(185,130,48,.22); border-radius: 8px; padding: 36px}
 .fg label { font-size: 9.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;margin-bottom: 5px;}
-.fg input, .fg select { background: rgba(255,255,255,.06); border: 1px solid rgba(165,39,142,.22); border-radius: 2px; padding: 12px 15px; font-size: .88rem; color: #FDFAF4;; outline: none; transition: border-color .2s; }
+.fg input, .fg select { background: rgba(255,255,255,.06); border: 1px solid rgba(185,130,48,.24); border-radius: 2px; padding: 12px 15px; font-size: .88rem; color: #FDFAF4;; outline: none; transition: border-color .2s; }
 .fg input::placeholder { color: rgba(255,255,255,.28); }
 .fg input:focus, .fg select:focus {border-color: #E2C89C;background: transparent;box-shadow: none; color:#fff}
 .fg select option { background: #000; }
@@ -990,7 +990,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 
 
 .city-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
-.city-a { display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; border: 1.5px solid rgba(165, 39, 142, .2); border-radius: 6px; text-decoration: none; color: #000; font-weight: 500; font-size: .92rem; background: #fff; transition: all .25s; }
+.city-a { display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; border: 1.5px solid rgba(185, 130, 48, .22); border-radius: 6px; text-decoration: none; color: #000; font-weight: 500; font-size: .92rem; background: #fff; transition: all .25s; }
 .city-a:hover { border-color:#B98230; background:#B98230; color: #fff; }
 
 
