@@ -181,11 +181,17 @@ async function getLocalEndpointResponse(
 
   if (url.pathname.startsWith("/hotel-search")) {
     const query = (url.searchParams.get("q") || "").trim().toLowerCase();
-    if (query.length < 2) return Response.json([], { headers });
+    if (!query) return Response.json([], { headers });
 
     const results = calculatorData.searchIndex
       .filter((hotel) => hotel.hotel_name.toLowerCase().includes(query))
-      .slice(0, 20);
+      .sort((a, b) => a.hotel_name.localeCompare(b.hotel_name, "en", { sensitivity: "base" }))
+      .slice(0, 8)
+      .map((hotel) => ({
+        id: hotel.id,
+        hotel_name: hotel.hotel_name,
+        city: null,
+      }));
 
     return Response.json(results, { headers });
   }
