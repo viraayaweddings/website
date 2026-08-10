@@ -619,7 +619,6 @@ span.flatpickr-weekday {
 
 .packages-wrapper .elite-card .elite-bottom .included-title,
 .packages-wrapper .elite-card .elite-bottom .Includes-title,
-a.region-card:hover .region-name,
 .faq-wrapper .accordion-item.active .accordion-header .accordion-button:after,
 .partners-wrapper .widget h4 .highlight,
 .questions-wrapper .section-heading h3 .highlight {
@@ -3253,18 +3252,6 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                     <div class="col-lg-9 col-md-12" data-aos="fade-up">
                         <div class="widget">
                             <div class="d-flex justify-content-between align-items-center mb-31 flex-wrap gap-3">
-                                <div class="d-flex gap-5 align-items-center">
-                                    <ul class="nav pill-tabs" role="tablist">
-                                        <li class="nav-item">
-                                            <button class="font-family02 position-relative fs-12 fw-600 d-flex align-items-center bg-transparent border-0 text-primary nav-link tab-btn active" data-country="india" data-bs-toggle="tab" data-bs-target="#india" type="button">
-                                                INDIA
-                                                <span class="icon">
-                                                    <img src="/user/assets/images/arrow.svg" alt="INDIA" decoding="async" loading="lazy">
-                                                </span>
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
                                 <div class="search-box d-flex align-items-center bg-lavender-50" style="position: relative;">
                                     <input
                                         class="font-family02 text-maroon-900-50 fs-13 w-100"
@@ -3427,7 +3414,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                     </div>
                 </div>
                 <div class="text-end mt-3">
-                    <a href="/hotel-listing?country=india"
+                    <a href="/hotel-listing"
                        id="venueLink"
                        class="view-link text-decoration-underline text-mulberry font-family02 fs-12">
                         View All Venues
@@ -3436,24 +3423,6 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             </div>
         </section>
 
-        <section class="region-wrapper" data-aos="fade-up">
-            <div class="container">
-                <div class="d-flex gap-4 align-items-end justify-content-lg-start justify-content-between mb-4">
-                    <h2 class="section-title fs-28 fw-100 text-maroon-900">
-                        Venues Across <span class="fw-600 text-primary">India</span>
-                    </h2>
-                    <a href="/hotel-listing?country=india" class="view-link text-mulberry fs-12 text-decoration-underline font-family02 fw-500">View All Indian Venues</a>
-                </div>
-                <div class="region-slider">
-                                        <div class="item">
-                        <a class="region-card d-block" href="/hotel-listing?countries%5B%5D=2">
-                            <figure class="overflow-hidden"><img src="/storage/country/oO5zJNKRhTjRJjTiUuTHDGgjqEjnMxhnMyzelBD9.jpg" class="img-fluid" alt="India" decoding="async" loading="lazy"></figure>
-                            <div class="region-name text-center font-family03 fs-14 fw-500 text-maroon-900">India</div>
-                        </a>
-                    </div>
-                                    </div>
-            </div>
-        </section>
 
         <section class="estimator-wrapper">
             <div class="container">
@@ -4503,7 +4472,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                       <a href="/hotel-cost-calculator">Hotel Cost Calculator</a>
                     </li>
                     <li>
-                      <a href="/hotel-listing?country=india">Indian Venues</a>
+                      <a href="/hotel-listing">Indian Venues</a>
                     </li>
                     <li>
                       <a href="/faqs">Faq's</a>
@@ -5101,12 +5070,6 @@ offcanvasBodyHtml += `
         });
     })();
 
-    $('.tab-btn').on('click', function () {
-        var target = $(this).attr('data-bs-target');
-        var url    = '/hotel-listing';
-        if (target === '#india') {
-            $('#venueLink').attr('href', url + '?country=india');
-    });
 
 });
 </script>

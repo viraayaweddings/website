@@ -440,56 +440,6 @@ $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
   initProductSlider($slider);
 });
 
-  /*===============================
-  =   7. Region                   =
-  =================================*/
-
-  $('.region-slider').slick({
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    dots: false,
-    arrows: true,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    centerMode: false,
-    prevArrow:"<button type='button' class='prev custom-arrow'><i class='fa-light fa-angle-left'></i></button>",
-    nextArrow: "<button type='button' class='next custom-arrow'><i class='fa-light fa-angle-right'></i></button>",
-    responsive: [
-    {
-      breakpoint: 1200, // mobile
-      settings: {
-        slidesToShow: 4,
-        dots: true
-      }
-    },
-    {
-      breakpoint: 992, // mobile
-      settings: {
-        slidesToShow: 3,
-        dots: true
-      }
-    },
-    {
-      breakpoint: 767, // mobile
-      settings: {
-        slidesToShow: 2,
-        dots: true,
-        centerMode: true,
-        centerPadding: '30px'
-      }
-    },
-      {
-      breakpoint: 460, // mobile
-      settings: {
-        slidesToShow: 1,
-        dots: true,
-        centerMode: true,
-        centerPadding: '40px'
-      }
-    }
-  ]
-  });
-
 /*===============================
   =    3. Deal Season Slider      =
   =================================*/
