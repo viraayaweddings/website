@@ -1111,7 +1111,7 @@ a.region-card:hover .region-name {color: #B98230;}
 .thank-widget p {color: #252525;margin-bottom: 0;font-size: 16px;}
 .thank-widget a.btn {margin-top: 20px;}
 .form-group .select2-container--default .select2-selection--single {padding: 0px 55px !important;}
-.cost-row.total {border-top: 2px solid #b88a5c;margin-top: 15px;padding-top: 15px;font-size: 18px;font-weight: 700;color: #28a745;border-bottom: none;}
+.cost-row.total {border-top: 2px solid #b88a5c;margin-top: 15px;padding-top: 15px;font-size: 18px;font-weight: 700;color: #B98230;border-bottom: none;}
 #calculateCost:hover:not(:disabled) {background: #936C35;transform: translateY(-2px);box-shadow: 0 10px 25px rgba(184, 138, 92, 0.3);}
 .packages-wrapper .elite-card .elite-top {display: flex;align-items: center;flex-direction: column;justify-content: space-between;}
 .offcanvas-body .days-box {border-bottom: solid 1px #fae8e9;padding-bottom: 15px;margin-bottom: 15px;}
@@ -1545,4 +1545,93 @@ body .offcanvas.offcanvas-start {height: 100dvh;}
     .consultation-wrapper .booking-layout {border-radius: 16px;}
     .consultation-card {padding-left: 12px;padding-right: 12px;}
     .form-group .select2-container--default .select2-selection--single {padding-right: 24px !important;}
+}
+
+/* Final brand polish: menu states, gold-tinted icons, and stable check marks */
+.js-header .navbar .main-menu .nav-item .nav-link {
+    color: #4A3C33 !important;
+}
+.js-header .navbar .main-menu .nav-item .nav-link:hover,
+.js-header .navbar .main-menu .nav-item .nav-link:focus,
+.js-header .navbar .main-menu .nav-item .nav-link.active,
+.js-header .navbar .main-menu .nav-item.show > .nav-link {
+    color: #B98230 !important;
+}
+.js-header .navbar .main-menu .dropdown-menu li a,
+#hotelTabsContent .megamenu-links ul li a {
+    color: #50443B !important;
+}
+.js-header .navbar .main-menu .dropdown-menu li a:hover,
+.js-header .navbar .main-menu .dropdown-menu li a:focus,
+#hotelTabsContent .megamenu-links ul li a:hover,
+#hotelTabsContent .megamenu-links ul li a:focus {
+    color: #B98230 !important;
+    background-color: transparent !important;
+}
+ul#hotelTabs li button {
+    color: #4A3C33 !important;
+}
+ul#hotelTabs li button:hover {
+    color: #B98230 !important;
+    background: #FFF8F3 !important;
+}
+ul#hotelTabs .nav-link.active {
+    color: #fff !important;
+    background-color: #B98230 !important;
+}
+.megamenulink-wrapper h1,
+.megamenulink-wrapper h2,
+.megamenulink-wrapper h3,
+.megamenulink-wrapper h4,
+.megamenulink-wrapper h5,
+.megamenulink-wrapper h6 {
+    color: #B98230 !important;
+}
+
+.estimator-wrapper .widget ul li > .icon {
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 2px;
+}
+.estimator-wrapper .widget ul li > .icon img[src*="/storage/hotel-cost-checker/steps/"] {
+    width: 34px !important;
+    height: 34px !important;
+    object-fit: contain;
+    filter: brightness(0) saturate(100%) invert(54%) sepia(34%) saturate(930%) hue-rotate(359deg) brightness(91%) contrast(87%);
+}
+
+.packages-wrapper .elite-card .elite-bottom .check-item {
+    align-items: flex-start !important;
+    gap: 14px;
+}
+.packages-wrapper .elite-card .elite-bottom .check-icon {
+    position: relative;
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+    border-radius: 50%;
+    background: #B98230;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 35%);
+}
+.packages-wrapper .elite-card .elite-bottom .check-icon img {
+    display: none !important;
+}
+.packages-wrapper .elite-card .elite-bottom .check-icon::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 5px;
+    width: 9px;
+    height: 6px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg);
+}
+.packages-wrapper .elite-card .elite-bottom .check-item > .d-flex {
+    min-width: 0;
 }

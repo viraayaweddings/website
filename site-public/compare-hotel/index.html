@@ -3550,12 +3550,12 @@ function renderTable(hotelsData, selectedHotels) {
         const grandVal = grandTotals[h.id] || 0;
         const isBest   = minGrandTotal !== null && grandVal === minGrandTotal && grandVal > 0;
         const badgeHtml = isBest
-            ? `<span class="badge ms-2" style="background:#16a34a;color:#fff;font-size:10px;padding:3px 8px;border-radius:4px;vertical-align:middle;">✓ Best</span>`
+            ? `<span class="badge ms-2" style="background:#B98230;color:#fff;font-size:10px;padding:3px 8px;border-radius:4px;vertical-align:middle;">✓ Best</span>`
             : '';
 
         bodyHtml += `
         <td class="px-3 py-3" style="text-align:right;">
-            <span class="total-val" style="${isBest ? 'color:#16a34a;' : ''}">${grandVal > 0 ? formatINR(grandVal) : '—'}</span>${badgeHtml}
+            <span class="total-val" style="${isBest ? 'color:#B98230;' : ''}">${grandVal > 0 ? formatINR(grandVal) : '—'}</span>${badgeHtml}
         </td>`;
     });
 
