@@ -2514,7 +2514,6 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 </script>     
      
 <head>
-    <meta name="csrf-token" content="KDSucZOYqCCplcr8bGK9GX01CxTwz7DKiAIN4xAQ">
 </head>
 
 <style>
@@ -3366,7 +3365,7 @@ const fp = flatpickr("#calendar", {
         const formData = new FormData(document.getElementById('paymentForm'));
         let res;
         try {
-            res = await fetch('/appointment/pay', { method:'POST', headers:{ 'X-CSRF-TOKEN':'KDSucZOYqCCplcr8bGK9GX01CxTwz7DKiAIN4xAQ', 'Accept':'application/json' }, body: formData });
+            res = await fetch('/appointment/pay', { method:'POST', headers:{ 'Accept':'application/json' }, body: formData });
         } catch (err) {
             topErrors.innerHTML = '<p>Network error. Please check your connection.</p>'; topErrors.classList.remove('d-none');
             payBtn.disabled = false; btnText.classList.remove('d-none'); btnLoader.classList.add('d-none'); return;
@@ -3400,7 +3399,7 @@ const fp = flatpickr("#calendar", {
             name: "Viraaya Weddings", description: "Appointment Booking", order_id: data.order_id,
             handler: function (response) {
                 fetch('/appointment/verify', {
-                    method:'POST', headers:{ 'X-CSRF-TOKEN':'KDSucZOYqCCplcr8bGK9GX01CxTwz7DKiAIN4xAQ', 'Accept':'application/json', 'Content-Type':'application/json' },
+                    method:'POST', headers:{ 'Accept':'application/json', 'Content-Type':'application/json' },
                     body: JSON.stringify(response)
                 }).then(r => r.json()).then(r => {
                     if (r.status === 'success') { window.location.href = "/appointment/payment-success"; }
