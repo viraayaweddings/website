@@ -3360,8 +3360,7 @@ function fetchHotelPrices(hotels) {
         type: 'POST',
         data: {
             hotel_ids: hotels.map(h => h.id),
-            checkin: $('#checkin').val(),
-            _token: "TKmVO40gO4We718L36zHLCWgm4PrJytvATUv0qJP"
+            checkin: $('#checkin').val()
         },
         success: function (res) {
             renderTable(res, hotels);
