@@ -137,22 +137,22 @@
     min-width: 600px;
 }
 .comparison-card .table thead th {
-    background-color: #f8fafc;
-    border-bottom: 1px solid #e2e8f0;
+    background-color: #FFF8F3;
+    border-bottom: 1px solid #D6C9B7;
     padding: 16px 15px;
     font-size: 0.75rem;
     letter-spacing: 0.05em;
-    color: #64748b;
-    border-left: 1px solid #e2e8f0;
+    color: #8A7358;
+    border-left: 1px solid #D6C9B7;
     vertical-align: top;
 }
 .comparison-card .table td {
-    border-left: 1px solid #e2e8f0;
+    border-left: 1px solid #D6C9B7;
     padding: 12px 15px;
     vertical-align: top;
 }
 .comparison-card .hotel-title {
-    color: #1e3a8a;
+    color: #4A3C33;
     font-size: 0.95rem;
     font-weight: 600;
     display: block;
@@ -162,13 +162,13 @@
     white-space: nowrap;
 }
 .comparison-card .hotel-sub {
-    color: #64748b;
+    color: #8A7358;
     font-size: 0.78rem;
     font-weight: 400;
     display: block;
 }
 .comparison-card .date-cell {
-    color: #a5278e;
+    color: #B98230;
     font-weight: 700;
     font-size: 14px;
     white-space: nowrap;
@@ -184,14 +184,14 @@
     font-size: 14px;
 }
 .comparison-card .total-row {
-    border-top: 2px solid #e2e8f0;
+    border-top: 2px solid #D6C9B7;
     font-weight: 700;
-    background-color: #f8f3f7;
+    background-color: #FFF8F3;
 }
 .comparison-card .total-label {
     text-transform: uppercase;
     font-size: 0.9rem;
-    color: #1e293b;
+    color: #3A2D25;
 }
 .comparison-card .total-val {
     font-size: 1.1rem;
@@ -244,7 +244,7 @@
 }
 .day-block strong {
     font-size: 13px;
-    color: #1e293b;
+    color: #3A2D25;
 }
 .day-block small {
     font-size: 12px;
@@ -253,7 +253,7 @@
 }
 
 .comparison-card .hotel-title {
-    color: #1e3a8a;
+    color: #4A3C33;
     font-size: 0.95rem;
     font-weight: 600;
     display: block;
@@ -3385,8 +3385,8 @@ function renderTable(hotelsData, selectedHotels) {
     const totals = {};
 
     let headerHtml = `<tr>
-        <th class="day-fst text-uppercase" style="font-size:11px;color:#64748b;">Days</th>
-        <th style="font-size:11px;color:#64748b;text-transform:uppercase;min-width:130px;">Breakdown</th>`;
+        <th class="day-fst text-uppercase" style="font-size:11px;color:#8A7358;">Days</th>
+        <th style="font-size:11px;color:#8A7358;text-transform:uppercase;min-width:130px;">Breakdown</th>`;
 
     selectedHotels.forEach(function (h) {
         const hotelData   = hotelsData.find(x => String(x.id) === String(h.id));
@@ -3458,7 +3458,7 @@ function renderTable(hotelsData, selectedHotels) {
                 ? `<td class="date-cell" rowspan="${labels.length}" style="vertical-align:middle;">Day ${i}</td>`
                 : '';
 
-            let rowHtml = `<tr style="${isLast ? 'border-bottom:2px solid #e2e8f0;' : ''}">
+            let rowHtml = `<tr style="${isLast ? 'border-bottom:2px solid #D6C9B7;' : ''}">
                 ${dayLabel}
                 <td style="font-size:12px;color:#8e99a7;padding:6px 12px;white-space:nowrap;background:#fafafa;">${row.label}</td>`;
 
@@ -3507,30 +3507,30 @@ function renderTable(hotelsData, selectedHotels) {
     const totalValues = selectedHotels.map(h => totals[h.id] || 0).filter(v => v > 0);
     const minTotal    = totalValues.length ? Math.min(...totalValues) : null;
 
-    bodyHtml += `<tr style="background:#f8fafc;border-top:2px solid #e2e8f0;">
-        <td class="px-3 py-2" style="font-size:12px;color:#64748b;font-weight:600;text-transform:uppercase;">Subtotal</td>
+    bodyHtml += `<tr style="background:#FFF8F3;border-top:2px solid #D6C9B7;">
+        <td class="px-3 py-2" style="font-size:12px;color:#8A7358;font-weight:600;text-transform:uppercase;">Subtotal</td>
         <td style="background:#fafafa;"></td>`;
     selectedHotels.forEach(function (h) {
         const val = totals[h.id] || 0;
-        bodyHtml += `<td class="px-3 py-2" style="font-size:13px;color:#64748b;font-weight:600;text-align:right;">${val > 0 ? formatINR(val) : '—'}</td>`;
+        bodyHtml += `<td class="px-3 py-2" style="font-size:13px;color:#8A7358;font-weight:600;text-align:right;">${val > 0 ? formatINR(val) : '—'}</td>`;
     });
     bodyHtml += `</tr>`;
 
-    bodyHtml += `<tr style="background:#f8fafc;">
-        <td class="px-3 py-2" style="font-size:12px;color:#64748b;">CGST (9%)</td>
+    bodyHtml += `<tr style="background:#FFF8F3;">
+        <td class="px-3 py-2" style="font-size:12px;color:#8A7358;">CGST (9%)</td>
         <td style="background:#fafafa;"></td>`;
     selectedHotels.forEach(function (h) {
         const val  = totals[h.id] || 0;
-        bodyHtml += `<td class="px-3 py-2" style="font-size:13px;color:#64748b;text-align:right;">${val > 0 ? formatINR(val * 0.09) : '—'}</td>`;
+        bodyHtml += `<td class="px-3 py-2" style="font-size:13px;color:#8A7358;text-align:right;">${val > 0 ? formatINR(val * 0.09) : '—'}</td>`;
     });
     bodyHtml += `</tr>`;
 
-    bodyHtml += `<tr style="background:#f8fafc;">
-        <td class="px-3 py-2" style="font-size:12px;color:#64748b;">SGST (9%)</td>
+    bodyHtml += `<tr style="background:#FFF8F3;">
+        <td class="px-3 py-2" style="font-size:12px;color:#8A7358;">SGST (9%)</td>
         <td style="background:#fafafa;"></td>`;
     selectedHotels.forEach(function (h) {
         const val  = totals[h.id] || 0;
-        bodyHtml += `<td class="px-3 py-2" style="font-size:13px;color:#64748b;text-align:right;">${val > 0 ? formatINR(val * 0.09) : '—'}</td>`;
+        bodyHtml += `<td class="px-3 py-2" style="font-size:13px;color:#8A7358;text-align:right;">${val > 0 ? formatINR(val * 0.09) : '—'}</td>`;
     });
     bodyHtml += `</tr>`;
 
@@ -3544,7 +3544,7 @@ function renderTable(hotelsData, selectedHotels) {
             <span class="total-label">Total</span>
             <small class="d-block" style="font-size:10px;color:#94a3b8;font-weight:400;">(incl. 18% GST)</small>
         </td>
-        <td style="background:#f8f3f7;"></td>`;
+        <td style="background:#FFF8F3;"></td>`;
 
     selectedHotels.forEach(function (h) {
         const grandVal = grandTotals[h.id] || 0;
