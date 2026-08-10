@@ -11,12 +11,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
    <title>Luxury Wedding Hotels in Indore | Viraaya Weddings</title>
 
-<meta name="description" content="Browse luxury destination wedding hotels and venues across India and abroad. Filter by city, country, rooms and guest capacity.">
+<meta name="description" content="Browse luxury destination wedding hotels and venues across India. Filter by city, rooms and guest capacity.">
 <meta name="keywords" content="destination wedding hotels, wedding venues india, luxury wedding resorts">
 
 
 <meta property="og:title" content="Luxury Wedding Hotels &amp; Venues | Viraaya Weddings">
-<meta property="og:description" content="Browse luxury destination wedding hotels and venues across India and abroad. Filter by city, country, rooms and guest capacity.">
+<meta property="og:description" content="Browse luxury destination wedding hotels and venues across India. Filter by city, rooms and guest capacity.">
 <meta property="og:image" content="/admin/images/favicon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="/hotel-listing">
@@ -26,7 +26,7 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Luxury Wedding Hotels &amp; Venues | Viraaya Weddings">
-<meta name="twitter:description" content="Browse luxury destination wedding hotels and venues across India and abroad. Filter by city, country, rooms and guest capacity.">
+<meta name="twitter:description" content="Browse luxury destination wedding hotels and venues across India. Filter by city, rooms and guest capacity.">
 <meta name="twitter:image" content="/admin/images/favicon.png">
 <meta name="google-site-verification" content="ydB7h9Qd_UIkEWpYTUby9ZqApwL_3btRIDjVjanKfBA" />
 
@@ -3438,7 +3438,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                       <a href="/hotel-cost-calculator">Hotel Cost Calculator</a>
                     </li>
                     <li>
-                      <a href="/hotel-listing?country=india">Indian Venues</a>
+                      <a href="/hotel-listing">Indian Venues</a>
                     </li>
                     <li>
                       <a href="/faqs">Faq's</a>
@@ -3525,76 +3525,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
 <script src="/vendor/select2/select2.min.js"></script>
 <script src="/js/currency-switcher.js" defer></script>
-
-  
-<script>
-$(document).ready(function () {
-
-    $('#cityMultiSelect').select2({
-        placeholder: 'Search By City',
-        allowClear: true,
-        width: '100%',
-        dropdownParent: $('body'), 
-        language: {
-            noResults: function () { return 'No cities found'; }
-        }
-    });
-
-    function syncCityInputs() {
-        var selected = $('#cityMultiSelect').val() || [];
-        var $container = $('#cityHiddenInputs');
-
-        $container.find('input[name="city_ids[]"]').remove();
-
-        selected.forEach(function (id) {
-            $container.append(
-                $('<input>').attr({ type: 'hidden', name: 'city_ids[]', form: 'filterForm', value: id })
-            );
-        });
-    }
-
-    $('#cityMultiSelect').on('change', function () {
-        syncCityInputs();
-        document.getElementById('filterForm').submit();
-    });
-
-    syncCityInputs();
-
-    var searchTimeout;
-    $('#hotelSearch').on('keyup', function () {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(function () {
-            document.getElementById('filterForm').submit();
-        }, 800);
-    });
-
-    document.querySelectorAll('.filter-checkbox').forEach(function (checkbox) {
-        checkbox.addEventListener('change', function () {
-            document.getElementById('filterForm').submit();
-        });
-    });
-
-//   const container = document.querySelector('.change-colm');
-
-    // document.getElementById('gridView')?.addEventListener('click', function () {
-    //     if (container) {
-    //         container.classList.remove('list-view');
-    //         localStorage.setItem('viewMode', 'grid');
-    //     }
-    // });
-
-    // document.getElementById('listView')?.addEventListener('click', function () {
-    //     if (container) {
-    //     container.classList.add('list-view');
-    //     localStorage.setItem('viewMode', 'list');
-    //     }
-    // });
-
-// if (localStorage.getItem('viewMode') === 'grid' && container) {
-//     container.classList.add('gridView');
-// }
-});
-</script>
+<script src="/js/hotel-listing.js" defer></script>
 
 </body>
 
