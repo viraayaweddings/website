@@ -1,0 +1,84 @@
+/* Local compatibility layer for the removed Font Awesome kit. */
+.fa-jelly,
+.fa-light,
+.fa-sharp,
+.fa-sharp-duotone,
+.fa-duotone {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: var(--fa-display, inline-block);
+  font-family: "Font Awesome 6 Free";
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 900;
+  line-height: 1;
+  text-rendering: auto;
+}
+
+.fa-jelly::before,
+.fa-light::before,
+.fa-sharp::before,
+.fa-sharp-duotone::before,
+.fa-duotone::before {
+  content: var(--fa);
+}
+
+.fa-jelly.fa-brands,
+.fa-light.fa-brands,
+.fa-sharp.fa-brands,
+.fa-sharp-duotone.fa-brands,
+.fa-duotone.fa-brands {
+  font-family: "Font Awesome 6 Brands";
+  font-weight: 400;
+}
+
+/* The original kit allowed regular/light styles for icons that are solid-only in Free. */
+.fa-regular.fa-angle-down,
+.fa-regular.fa-angle-left,
+.fa-regular.fa-angle-right,
+.fa-regular.fa-bed,
+.fa-regular.fa-building,
+.fa-regular.fa-chevron-down,
+.fa-regular.fa-filter,
+.fa-regular.fa-grid,
+.fa-regular.fa-list,
+.fa-regular.fa-lock,
+.fa-regular.fa-magnifying-glass-plus,
+.fa-regular.fa-mug-hot,
+.fa-regular.fa-plate-utensils,
+.fa-regular.fa-sparkles,
+.fa-regular.fa-users,
+.fa-regular.fa-utensils,
+.fa-regular.fa-xmark,
+.fa-light.fa-angle-down,
+.fa-light.fa-angle-left,
+.fa-light.fa-angle-right,
+.fa-light.fa-bed,
+.fa-light.fa-building,
+.fa-light.fa-chevron-down,
+.fa-light.fa-filter,
+.fa-light.fa-grid,
+.fa-light.fa-list,
+.fa-light.fa-lock,
+.fa-light.fa-magnifying-glass-plus,
+.fa-light.fa-mug-hot,
+.fa-light.fa-plate-utensils,
+.fa-light.fa-sparkles,
+.fa-light.fa-users,
+.fa-light.fa-utensils,
+.fa-light.fa-xmark {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+}
+
+.fa-grid {
+  --fa: "\f00a";
+}
+
+.fa-plate-utensils {
+  --fa: "\f2e7";
+}
+
+.fa-sparkles {
+  --fa: "\f005";
+}

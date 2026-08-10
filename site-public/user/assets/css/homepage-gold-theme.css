@@ -1,0 +1,316 @@
+/* Homepage-only gold theme trial sampled from Presentation1.pdf.
+   Loaded last with a version query so cached legacy styles do not win. */
+.homepage-gold-theme {
+    --vw-ivory: #FFF8F3;
+    --vw-cream: #FBF3E8;
+    --vw-gold: #B98230;
+    --vw-gold-light: #D0AF73;
+    --vw-gold-soft: #E2C89C;
+    --vw-gold-dark: #936C35;
+    --vw-brown: #4A3C33;
+    --vw-brown-deep: #3A2D25;
+    --vw-text: #50443B;
+    --vw-muted: #8A7358;
+    --vw-border: #D6C9B7;
+    color: var(--vw-text);
+    background: var(--vw-ivory);
+}
+
+.homepage-gold-theme .text-primary,
+.homepage-gold-theme .text-mulberry,
+.homepage-gold-theme .text-prime,
+.homepage-gold-theme .text-prime-dark,
+.homepage-gold-theme .view-link,
+.homepage-gold-theme .view-link:hover,
+.homepage-gold-theme .custom-arrow,
+.homepage-gold-theme .js-header .search-btn,
+.homepage-gold-theme .js-header .fa-search,
+.homepage-gold-theme .js-header [class*="fa-search"] {
+    color: var(--vw-gold) !important;
+}
+
+.homepage-gold-theme .text-maroon-900,
+.homepage-gold-theme .text-royal-wine,
+.homepage-gold-theme .venue-title,
+.homepage-gold-theme .venue-card .venue-title,
+.homepage-gold-theme .main-navbar .nav-link {
+    color: var(--vw-brown) !important;
+}
+
+.homepage-gold-theme .text-deep-maroon-80,
+.homepage-gold-theme .text-deep-maroon-80 *,
+.homepage-gold-theme .text-maroon-900-80,
+.homepage-gold-theme .text-maroon-900-80 * {
+    color: rgb(80 68 59 / 80%) !important;
+}
+
+.homepage-gold-theme .text-maroon-900-50,
+.homepage-gold-theme .luxury-venues-wrapper .widget .search-box input::placeholder,
+.homepage-gold-theme .estimator-wrapper .cost-calculator-widget .form-group input::placeholder {
+    color: rgb(80 68 59 / 50%) !important;
+}
+
+.homepage-gold-theme .luxury-venues-wrapper .tab-btn,
+.homepage-gold-theme .luxury-venues-wrapper .tab-btn:not(.active),
+.homepage-gold-theme ul#hotelTabs li button:hover,
+.homepage-gold-theme #hotelTabsContent .megamenu-links ul li a:hover,
+.homepage-gold-theme .booking-Confirm-wrapper .time-slot:hover,
+.homepage-gold-theme .consultation-wrapper .booking-right .time-slot-list h5,
+.homepage-gold-theme .consultation-wrapper .widget .heading-highlight,
+.homepage-gold-theme .process-section .circle-widget span {
+    color: var(--vw-gold) !important;
+}
+
+.homepage-gold-theme .bg-primary,
+.homepage-gold-theme .banner-bottom-list.bg-primary,
+.homepage-gold-theme .service-wrapper,
+.homepage-gold-theme .testimonials-wrapper,
+.homepage-gold-theme .deal-season-wrapper {
+    background-color: var(--vw-brown) !important;
+}
+
+.homepage-gold-theme .main-footer {
+    background-color: var(--vw-brown-deep) !important;
+}
+
+.homepage-gold-theme .bg-primary-light,
+.homepage-gold-theme .bg-plum-800,
+.homepage-gold-theme .btn,
+.homepage-gold-theme .btn.btn-availability,
+.homepage-gold-theme .btn-availability,
+.homepage-gold-theme .luxury-venues-wrapper .tab-btn.active,
+.homepage-gold-theme ul#hotelTabs .nav-link.active,
+.homepage-gold-theme .close-btn,
+.homepage-gold-theme .booking-Confirm-wrapper .booking-card .close-btn,
+.homepage-gold-theme .booking-Confirm-wrapper .flatpickr-day.selected,
+.homepage-gold-theme .booking-Confirm-wrapper .time-slot.active,
+.homepage-gold-theme .process-section .circle-widget .arrow-icon span,
+.homepage-gold-theme .HowItWork .process-count,
+.homepage-gold-theme .check-hotal-aval-wrapper .order-summary .summary-badge {
+    background: var(--vw-gold) !important;
+    background-color: var(--vw-gold) !important;
+    border-color: var(--vw-gold) !important;
+    color: #fff !important;
+}
+
+.homepage-gold-theme .btn:hover,
+.homepage-gold-theme .btn.btn-availability:hover,
+.homepage-gold-theme .btn-availability:hover {
+    background: var(--vw-gold-dark) !important;
+    background-color: var(--vw-gold-dark) !important;
+    border-color: var(--vw-gold-dark) !important;
+    color: #fff !important;
+}
+
+.homepage-gold-theme .js-header .nav-link.btn {
+    background: var(--vw-gold) !important;
+    background-color: var(--vw-gold) !important;
+    border-color: var(--vw-gold) !important;
+    color: #fff !important;
+}
+
+.homepage-gold-theme .js-header .nav-link.btn:hover {
+    background: var(--vw-gold-dark) !important;
+    background-color: var(--vw-gold-dark) !important;
+    color: #fff !important;
+}
+
+.homepage-gold-theme .white-btn,
+.homepage-gold-theme .btn-details,
+.homepage-gold-theme .btn.btn-details {
+    background: var(--vw-cream) !important;
+    background-color: var(--vw-cream) !important;
+    color: var(--vw-brown) !important;
+}
+
+.homepage-gold-theme .white-btn:hover {
+    background: var(--vw-gold) !important;
+    background-color: var(--vw-gold) !important;
+    color: #fff !important;
+}
+
+.homepage-gold-theme .bg-lavender-50,
+.homepage-gold-theme .bg-rose-50,
+.homepage-gold-theme .luxury-feedback,
+.homepage-gold-theme .consultation-wrapper,
+.homepage-gold-theme .bg-all-wrapper,
+.homepage-gold-theme .estimator-wrapper,
+.homepage-gold-theme .disclaimer-note,
+.homepage-gold-theme .CostSummary .offcanvas-header,
+.homepage-gold-theme .faq-wrapper .accordion-item:has(.active),
+.homepage-gold-theme .faq-wrapper .accordion-item.active,
+.homepage-gold-theme .blog-details-wrapper .blog-details-content blockquote {
+    background: linear-gradient(57deg, var(--vw-ivory), var(--vw-cream)) !important;
+    background-color: var(--vw-cream) !important;
+}
+
+.homepage-gold-theme .luxury-venues-wrapper .pill-tabs,
+.homepage-gold-theme .luxury-venues-wrapper .widget .search-box,
+.homepage-gold-theme .luxury-venues-wrapper .widget .search-box input,
+.homepage-gold-theme .home-search-item:hover,
+.homepage-gold-theme .service-wrapper .widget .wodget-heading,
+.homepage-gold-theme .service-wrapper .widget .widget-content .pill,
+.homepage-gold-theme .booking-Confirm-wrapper .booking-card .selected-info .icon,
+.homepage-gold-theme .consultation-wrapper .booking-layout .booking-right,
+.homepage-gold-theme .consultation-wrapper .booking-layout .booking-left .flatpickr-months .flatpickr-current-month .flatpickr-monthDropdown-months,
+.homepage-gold-theme .process-section .circle-widget,
+.homepage-gold-theme .arrow-icon,
+.homepage-gold-theme .blog-wrapper .widget .blog-content .blog-category {
+    background: var(--vw-cream) !important;
+    background-color: var(--vw-cream) !important;
+}
+
+.homepage-gold-theme .venue-card,
+.homepage-gold-theme .post-wedding-wrapper .wedding-card,
+.homepage-gold-theme .consultation-card,
+.homepage-gold-theme .consultation-wrapper .booking-layout,
+.homepage-gold-theme .process-section .circle-widget,
+.homepage-gold-theme .outline-btn {
+    border-color: rgb(185 130 48 / 20%) !important;
+}
+
+.homepage-gold-theme .venue-card .venue-location,
+.homepage-gold-theme .venue-card .venue-location *,
+.homepage-gold-theme .luxury-venues-wrapper .widget .search-box input,
+.homepage-gold-theme .consultation-wrapper .widget ul li .content p,
+.homepage-gold-theme .consultation-card .widget p.dis,
+.homepage-gold-theme .process-section .process-content p {
+    color: rgb(80 68 59 / 70%) !important;
+}
+
+.homepage-gold-theme .banner-bottom-list {
+    border-top: 4px solid var(--vw-gold) !important;
+}
+
+.homepage-gold-theme .js-header .navbar .main-menu .dropdown-menu li a:hover,
+.homepage-gold-theme .js-header .navbar .main-menu .dropdown-menu li a:focus,
+.homepage-gold-theme .select2-results__option--highlighted,
+.homepage-gold-theme .flatpickr-day.selected,
+.homepage-gold-theme .flatpickr-day.selected:hover,
+.homepage-gold-theme .flatpickr-day.startRange,
+.homepage-gold-theme .flatpickr-day.endRange,
+.homepage-gold-theme .flatpickr-months .flatpickr-month,
+.homepage-gold-theme .flatpickr-current-month,
+.homepage-gold-theme .flatpickr-monthDropdown-months,
+.homepage-gold-theme .flatpickr-weekdays,
+.homepage-gold-theme span.flatpickr-weekday {
+    background: var(--vw-gold) !important;
+    background-color: var(--vw-gold) !important;
+    border-color: var(--vw-gold) !important;
+    color: #fff !important;
+}
+
+.homepage-gold-theme .flatpickr-day:hover,
+.homepage-gold-theme .flatpickr-day.inRange,
+.homepage-gold-theme .slick-dots li button,
+.homepage-gold-theme .feature-items .slick-dots li button,
+.homepage-gold-theme .product-slider2 .slick-dots li.slick-active+li+li button {
+    background: var(--vw-gold-soft) !important;
+    background-color: var(--vw-gold-soft) !important;
+    border-color: var(--vw-gold-soft) !important;
+}
+
+.homepage-gold-theme .slick-dots li.slick-active button,
+.homepage-gold-theme .feature-items .slick-dots li.slick-active button,
+.homepage-gold-theme .faq-wrapper .accordion-button::after,
+.homepage-gold-theme .faq-wrapper .accordion-item.active .accordion-header .accordion-button:after,
+.homepage-gold-theme .Coupletestimonials .slick-dots li.slick-active button,
+.homepage-gold-theme .product-slider2 .slick-dots li.slick-active button {
+    background: var(--vw-gold) !important;
+    background-color: var(--vw-gold) !important;
+    border-color: var(--vw-gold) !important;
+}
+
+.homepage-gold-theme .packages-wrapper .elite-card .elite-top {
+    background-color: var(--vw-brown) !important;
+    border-top: 4px solid var(--vw-gold) !important;
+}
+
+.homepage-gold-theme .packages-wrapper .elite-card .elite-top .explore-btn.btn {
+    background-color: var(--vw-gold) !important;
+    color: #fff !important;
+}
+
+.homepage-gold-theme .packages-wrapper .elite-card .elite-top .explore-btn.btn:hover {
+    background-color: var(--vw-gold-dark) !important;
+}
+
+.homepage-gold-theme .packages-wrapper .elite-card .elite-bottom {
+    border-color: rgb(185 130 48 / 24%) !important;
+}
+
+.homepage-gold-theme .packages-wrapper .elite-card .elite-bottom .included-title,
+.homepage-gold-theme .packages-wrapper .elite-card .elite-bottom .Includes-title,
+.homepage-gold-theme a.region-card:hover .region-name,
+.homepage-gold-theme .partners-wrapper .widget h4 .highlight,
+.homepage-gold-theme .questions-wrapper .section-heading h3 .highlight,
+.homepage-gold-theme .disclaimer-cta a {
+    color: var(--vw-gold) !important;
+}
+
+.homepage-gold-theme .packages-wrapper .elite-card .elite-bottom .check-item strong,
+.homepage-gold-theme .testimonials-slider .item .outline .content h5,
+.homepage-gold-theme .testimonials-slider .item .outline .user-details h5,
+.homepage-gold-theme .partners-wrapper .widget h4,
+.homepage-gold-theme .partners-wrapper .widget p,
+.homepage-gold-theme .viv-custom-modal .modal-dialog .modal-header .modal-title,
+.homepage-gold-theme .modal-title {
+    color: var(--vw-brown) !important;
+    border-color: var(--vw-border) !important;
+}
+
+.homepage-gold-theme .packages-wrapper .elite-card .elite-bottom .check-item span,
+.homepage-gold-theme .estimator-wrapper .cost-calculator-widget .form-group label,
+.homepage-gold-theme .estimator-wrapper .cost-calculator-widget p,
+.homepage-gold-theme .estimator-wrapper .widget ul li .content p,
+.homepage-gold-theme .testimonials-slider .item .outline .content p,
+.homepage-gold-theme .testimonials-slider .item .outline .user-details p,
+.homepage-gold-theme .partners-wrapper .widget .item h5 {
+    color: rgb(80 68 59 / 70%) !important;
+}
+
+.homepage-gold-theme .estimator-wrapper .cost-calculator-widget {
+    border-color: rgb(185 130 48 / 24%) !important;
+}
+
+.homepage-gold-theme .estimator-wrapper .cost-calculator-widget .form-group .form-control:focus,
+.homepage-gold-theme .select2-container--default .select2-selection--single:hover,
+.homepage-gold-theme .select2-container--default.select2-container--open .select2-selection--single {
+    border-color: var(--vw-gold) !important;
+    box-shadow: 0 0 0 3px rgb(185 130 48 / 12%) !important;
+}
+
+.homepage-gold-theme .service-wrapper::before,
+.homepage-gold-theme .deal-season-wrapper:before,
+.homepage-gold-theme .questions-wrapper .widget::before,
+.homepage-gold-theme .testimonials-slider .item .outline .user::before {
+    background-image: none !important;
+    background: linear-gradient(135deg, rgb(74 60 51 / 96%), rgb(58 45 37 / 92%)) !important;
+    opacity: 1 !important;
+}
+
+.homepage-gold-theme .testimonials-wrapper .section-heading span {
+    color: var(--vw-gold-light) !important;
+    background: none !important;
+    -webkit-text-fill-color: currentColor !important;
+}
+
+.homepage-gold-theme .testimonials-slider .item .outline .user .img .quote {
+    background: linear-gradient(180deg, var(--vw-gold-light), var(--vw-gold)) !important;
+}
+
+.homepage-gold-theme .js-header .search-btn img,
+.homepage-gold-theme .partners-wrapper .icon img,
+.homepage-gold-theme .testimonials-slider .item .outline .user-details p img,
+.homepage-gold-theme .venue-location img,
+.homepage-gold-theme .map-icon,
+.homepage-gold-theme img[src*="map-icon.svg"],
+.homepage-gold-theme img[src*="f-icon"],
+.homepage-gold-theme img[src*="quote"] {
+    filter: sepia(68%) saturate(796%) hue-rotate(357deg) brightness(78%) contrast(91%) !important;
+}
+
+.homepage-gold-theme .js-header .search-btn img,
+.homepage-gold-theme #homeSearchBtn {
+    filter: none !important;
+}

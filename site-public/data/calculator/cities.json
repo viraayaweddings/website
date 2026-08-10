@@ -1,0 +1,294 @@
+[
+  {
+    "id": 39,
+    "name": "Abu Dhabi"
+  },
+  {
+    "id": 8,
+    "name": "Agra"
+  },
+  {
+    "id": 28,
+    "name": "Ahmedabad"
+  },
+  {
+    "id": 70,
+    "name": "Ajabgarh"
+  },
+  {
+    "id": 32,
+    "name": "Ajmer"
+  },
+  {
+    "id": 31,
+    "name": "Amritsar"
+  },
+  {
+    "id": 69,
+    "name": "Andaman"
+  },
+  {
+    "id": 63,
+    "name": "Antalya"
+  },
+  {
+    "id": 53,
+    "name": "Aswan"
+  },
+  {
+    "id": 48,
+    "name": "Bangkok"
+  },
+  {
+    "id": 34,
+    "name": "Barwara"
+  },
+  {
+    "id": 23,
+    "name": "Bengal"
+  },
+  {
+    "id": 17,
+    "name": "Bengaluru"
+  },
+  {
+    "id": 40,
+    "name": "Bhopal"
+  },
+  {
+    "id": 67,
+    "name": "Bhubaneswar"
+  },
+  {
+    "id": 64,
+    "name": "Bodrum"
+  },
+  {
+    "id": 52,
+    "name": "Cairo"
+  },
+  {
+    "id": 13,
+    "name": "Chandigarh"
+  },
+  {
+    "id": 18,
+    "name": "Chennai"
+  },
+  {
+    "id": 74,
+    "name": "Colombo"
+  },
+  {
+    "id": 59,
+    "name": "Da Nang"
+  },
+  {
+    "id": 46,
+    "name": "Daman"
+  },
+  {
+    "id": 15,
+    "name": "Dehradun"
+  },
+  {
+    "id": 4,
+    "name": "Delhi NCR"
+  },
+  {
+    "id": 66,
+    "name": "Doha"
+  },
+  {
+    "id": 37,
+    "name": "Dubai"
+  },
+  {
+    "id": 7,
+    "name": "Goa"
+  },
+  {
+    "id": 36,
+    "name": "Guwahati"
+  },
+  {
+    "id": 43,
+    "name": "Gwalior"
+  },
+  {
+    "id": 57,
+    "name": "Hanoi"
+  },
+  {
+    "id": 44,
+    "name": "Haridwar"
+  },
+  {
+    "id": 58,
+    "name": "Ho Chi Minh City"
+  },
+  {
+    "id": 54,
+    "name": "Hurghada"
+  },
+  {
+    "id": 27,
+    "name": "Hyderabad"
+  },
+  {
+    "id": 47,
+    "name": "Indore"
+  },
+  {
+    "id": 65,
+    "name": "Istanbul"
+  },
+  {
+    "id": 5,
+    "name": "Jaipur"
+  },
+  {
+    "id": 9,
+    "name": "Jaisalmer"
+  },
+  {
+    "id": 12,
+    "name": "Jim Corbett"
+  },
+  {
+    "id": 6,
+    "name": "Jodhpur"
+  },
+  {
+    "id": 71,
+    "name": "Karjat"
+  },
+  {
+    "id": 55,
+    "name": "Karnal"
+  },
+  {
+    "id": 24,
+    "name": "Karnataka"
+  },
+  {
+    "id": 51,
+    "name": "kasauli"
+  },
+  {
+    "id": 21,
+    "name": "kerala"
+  },
+  {
+    "id": 56,
+    "name": "khimsar"
+  },
+  {
+    "id": 72,
+    "name": "Khopoli"
+  },
+  {
+    "id": 19,
+    "name": "kochi"
+  },
+  {
+    "id": 25,
+    "name": "Kolkata"
+  },
+  {
+    "id": 20,
+    "name": "Kovalam"
+  },
+  {
+    "id": 68,
+    "name": "Lakshadweep"
+  },
+  {
+    "id": 73,
+    "name": "Lonavala"
+  },
+  {
+    "id": 1,
+    "name": "Lucknow"
+  },
+  {
+    "id": 26,
+    "name": "Mumbai"
+  },
+  {
+    "id": 61,
+    "name": "Muscat"
+  },
+  {
+    "id": 10,
+    "name": "Mussoorie"
+  },
+  {
+    "id": 2,
+    "name": "Noida"
+  },
+  {
+    "id": 50,
+    "name": "Phang Nga"
+  },
+  {
+    "id": 60,
+    "name": "Phu Quoc"
+  },
+  {
+    "id": 49,
+    "name": "Phuket"
+  },
+  {
+    "id": 16,
+    "name": "Pune"
+  },
+  {
+    "id": 30,
+    "name": "Pushkar"
+  },
+  {
+    "id": 35,
+    "name": "Raipur"
+  },
+  {
+    "id": 33,
+    "name": "Ranthambore"
+  },
+  {
+    "id": 38,
+    "name": "Ras Al Khaimah"
+  },
+  {
+    "id": 11,
+    "name": "Rishikesh"
+  },
+  {
+    "id": 42,
+    "name": "Sakleshpur"
+  },
+  {
+    "id": 62,
+    "name": "Salalah"
+  },
+  {
+    "id": 14,
+    "name": "Shimla"
+  },
+  {
+    "id": 29,
+    "name": "Surat"
+  },
+  {
+    "id": 22,
+    "name": "Trivandrum"
+  },
+  {
+    "id": 3,
+    "name": "Udaipur"
+  },
+  {
+    "id": 41,
+    "name": "Vrindavan"
+  }
+]

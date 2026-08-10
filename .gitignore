@@ -1,24 +1,56 @@
-node_modules
-.next
-.next-preview
-.next-build
-out
-.env*
-.scrape/
-tsconfig.tsbuildinfo
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# typescript
+*.tsbuildinfo
+
+# next.js
+/.next/
+/.vinext/
+/out/
+
+# misc
+.DS_Store
+*.pem
+
+# debug
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
-# local dev artifacts
-*.log
-.local-postgres/
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
 
-# vendored venue images (9.7GB) — served via CDN/proxy at runtime, never committed
-public/twc-venues-local/
+# vercel
+.vercel
 
-# scratch / temp captures
-data/venues/_*.html
+/dist/
+/.wrangler/
+/outputs/
+/work/
 
-# Photographer import artifacts (data lives in Neon; only the captured template is needed at runtime)
-data/photographers/database.json
-data/photographers/database.pretty.json
-data/photographers/raw/
+# Generated full-size recovery crawl; deployment uses /site-public instead.
+/public/
+.dev-server*.log
+.dev-server*.err.log
+responsive-dev*.log
+/build/responsive-dev*.log
+.dev-server.pid
+.keep-awake.pid
+/site-public/mirror-report.json
+__pycache__/
+/.tmp/
