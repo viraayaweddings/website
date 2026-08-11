@@ -237,6 +237,76 @@
     }
   }
 
+  function fallbackBackdrop() {
+    var backdrop = document.querySelector(".modal-backdrop[data-fallback-modal]");
+    if (backdrop) return backdrop;
+
+    backdrop = document.createElement("div");
+    backdrop.className = "modal-backdrop fade show";
+    backdrop.setAttribute("data-fallback-modal", "true");
+    document.body.appendChild(backdrop);
+    return backdrop;
+  }
+
+  function hideFallbackModal(modal) {
+    if (!modal || modal.dataset.fallbackOpen !== "true") return;
+    modal.classList.remove("show");
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", "true");
+    modal.removeAttribute("aria-modal");
+    modal.removeAttribute("role");
+    delete modal.dataset.fallbackOpen;
+
+    var backdrop = document.querySelector(".modal-backdrop[data-fallback-modal]");
+    if (backdrop) backdrop.remove();
+    document.body.classList.remove("modal-open");
+    document.body.style.removeProperty("overflow");
+    document.body.style.removeProperty("padding-right");
+  }
+
+  function showFallbackModal(modal) {
+    if (!modal) return;
+    fallbackBackdrop();
+    modal.dataset.fallbackOpen = "true";
+    modal.style.display = "block";
+    modal.removeAttribute("aria-hidden");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("role", "dialog");
+    modal.classList.add("show");
+    document.body.classList.add("modal-open");
+    document.body.style.overflow = "hidden";
+
+    var focusTarget = modal.querySelector("input, select, textarea, button, a[href]");
+    if (focusTarget) focusTarget.focus({ preventScroll: true });
+  }
+
+  document.addEventListener("click", function (event) {
+    if (window.bootstrap && window.bootstrap.Modal) return;
+
+    var trigger = event.target.closest('[data-bs-toggle="modal"][data-bs-target="#BookConsultation"]');
+    if (trigger) {
+      var modal = document.querySelector("#BookConsultation");
+      if (!modal) return;
+      event.preventDefault();
+      event.stopPropagation();
+      showFallbackModal(modal);
+      return;
+    }
+
+    var openModal = document.querySelector("#BookConsultation[data-fallback-open='true']");
+    if (!openModal) return;
+
+    if (event.target.closest('[data-bs-dismiss="modal"]') || event.target === openModal) {
+      event.preventDefault();
+      hideFallbackModal(openModal);
+    }
+  }, true);
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key !== "Escape") return;
+    hideFallbackModal(document.querySelector("#BookConsultation[data-fallback-open='true']"));
+  });
+
   document.addEventListener("submit", function (event) {
     var form = event.target;
     if (!(form instanceof HTMLFormElement) || !isLeadForm(form)) return;

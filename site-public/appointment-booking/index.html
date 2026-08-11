@@ -2475,10 +2475,6 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 </head>
 
 <style>
-.time-slot { padding:8px 14px; margin:4px; border:1px solid #ccc; background:#fff; cursor:pointer; border-radius:4px; font-size:13px; transition:background 0.15s,border-color 0.15s,color 0.15s; }
-.time-slot:hover:not(.disabled) { border-color:#b5893a; background:#fdf7ee; }
-.time-slot.active { background:#b5893a; color:#fff; border-color:#b5893a; }
-.time-slot.disabled { background:#ebebeb; color:#b0b0b0; border-color:#d6d6d6; cursor:not-allowed; pointer-events:none; opacity:0.6; text-decoration:line-through; }
 .booking-Confirm-wrapper { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:1050; align-items:center; justify-content:center; }
 .booking-Confirm-wrapper.active { display:flex; }
 .booking-Confirm-wrapper .booking-card { background:#fff; border-radius:12px; padding:0px; width:100%; max-width:480px; position:relative; box-shadow:0 20px 60px rgba(0,0,0,0.25); max-height:90vh; overflow-y:auto; }
@@ -2497,8 +2493,9 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 .invalid-feedback[data-error].visible { display:block; }
 .form-control.is-invalid { border-color:#dc3545; }
 #topErrors { margin-bottom:12px; font-size:13px; }
-.secure-payment { text-align:center; color:#888; margin-top:8px; margin-bottom:0; }
-.no-slots-msg { color:#dc3545; font-size:13px; padding:8px 0; }
+.consultation-form-note { text-align:center; color:#888; margin-top:8px; margin-bottom:0; }
+.consultation-cta-panel { background:#fff8ef; border:1px solid #eadfce; border-radius:12px; padding:32px 28px; text-align:center; }
+.consultation-cta-panel p { max-width:420px; margin:0 auto 22px; color:#6e625a; }
 .booking-Confirm-wrapper .booking-card .modal-body {
     padding: 40px 20px 30px 20px;
 }
@@ -2530,13 +2527,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                     <div class="widget aos-init aos-animate" data-aos="fade-right">
                                                                                 <h1 class="font-family01 fs-40 fw-200 text-white">Book a Private <br><span class="fw-600">Consultation</span></h1>
                                                                             <p class="text-white"><p>Stop guessing and start planning with clarity. In this one-on-one call, a senior wedding expert helps you lock in the right strategy, shortlist destinations, and get a realistic budget in place. You’ll leave knowing exactly what to do next.</p></p>
-                        <p class="fs-12 fw-300">
-    <span class="fs-20 fw-600 converted-price" 
-          data-price-inr="3100.00">
-        ₹ 3,100
-    </span> 
-    (Inclusive of consultation planning)
-</p>                        <a class="btn white-btn text-uppercase fw-600" href="#slot">Speak to our expert</a>
+                                                <a class="btn white-btn text-uppercase fw-600" href="#consultationForm" data-open-consultation-form>Book a Consultation</a>
                     </div>
                 </div>
             </div>
@@ -2568,7 +2559,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 <section class="section-padding consultation-wrapper" id="slot">
     <div class="container">
         <div class="section-hrading text-center mb-4">
-            <h2 class="all-heading font-family01 fs-37 fw-100 text-maroon-900">Book Your <span class="fw-600 text-primary">Consultation Slot</span></h2>
+            <h2 class="all-heading font-family01 fs-37 fw-100 text-maroon-900">Book Your <span class="fw-600 text-primary">Consultation</span></h2>
         </div>
         <div class="row consultation-card position-relative">
             <div class="col-xl-6" data-aos="fade-up">
@@ -2611,25 +2602,13 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 <div class="widget">
                     <div class="text-center">
                         <span class="heading-highlight bg-primary-light fw-600 font-family01 fs-12 d-inline-block text-white">BOOK PRIVATE CONSULTATION</span>
-                        <h3 class="mt-3 all-heading fs-30 fw-200 font-family01 text-maroon-900">Choose Your <span class="fw-600 text-primary">Date & Time</span></h3>
+                        <h3 class="mt-3 all-heading fs-30 fw-200 font-family01 text-maroon-900">Start With a <span class="fw-600 text-primary">Private Consultation</span></h3>
                     </div>
-                    <div class="booking-layout">
-                        <div class="booking-left">
-                            <div class="calendar-box">
-                                <input type="text" id="calendar" class="form-control d-none">
-                            </div>
-                        </div>
-                        <div class="booking-right">
-                            <div class="time-slot-list" id="time-slots">
-                                <h5 class="font-family03">Time-Slot</h5>
-                                <p class="font-family03 text-muted" style="font-size:13px;">Please select a date first</p>
-                            </div>
-                        </div>
+                    <div class="consultation-cta-panel mt-4">
+                        <p class="font-family03">Share your details and our wedding specialist will connect with you to plan the next step.</p>
+                        <a class="btn w-100 text-uppercase fw-600 fs-17 h-auto" href="#consultationForm" data-open-consultation-form>Book a Consultation</a>
                     </div>
-<button type="button" class="btn w-100 text-uppercase fw-600 fs-17 h-auto mt-3" id="goNext">
-    Pay <span class="converted-price" data-price-inr="3100.00">₹ 3,100</span> &amp; Book Consultation
-</button>
-                    <p class="secure-payment fs-12 font-family03">Secure payment &bull; Confirmation shared instantly</p>
+                    <p class="consultation-form-note fs-12 font-family03">Confirmation will be shared by our team.</p>
                 </div>
             </div>
         </div>
@@ -2639,7 +2618,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
 <section class="what-cons-wrapper py-5">
     <div class="container">
-                                <h2 class="all-heading font-family01 fs-37 fw-100 text-maroon-900 text-center mb-md-4 mb-3">Book Your Consultation <span class="fw-600 text-primary">Slot</span></h2>
+                                <h2 class="all-heading font-family01 fs-37 fw-100 text-maroon-900 text-center mb-md-4 mb-3">Book Your <span class="fw-600 text-primary">Consultation</span></h2>
         
         <div class="row g-md-3 mt-4 mt-md-5">
                                             <div class="col-md-6 mb-2" data-aos="fade-up">
@@ -2689,7 +2668,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                     </div>
 
         <div class="text-center" data-aos="fade-up">
-            <a href="#slot" class="btn fw-600 mt-md-2 mt-2">Book Your Slot</a>
+            <a href="#consultationForm" class="btn fw-600 mt-md-2 mt-2" data-open-consultation-form>Book a Consultation</a>
         </div>
     </div>
 </section>
@@ -2728,7 +2707,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                         <p><p>This is a big day, and it comes with some big decisions. You want it to be perfect, magical, everything you’ve imagined, but you also worry about getting carried away or missing something important.<br><br>Our expert gives you an objective, experienced perspective from within the industry. You tell us what you like, what you don’t and what you’re already set on, and we help you understand if you’re making the right choices, both financially and for your guests.</p></p>
                     </div>
                 </div>
-                            <div class="text-center" data-aos="fade-up"><a href="#slot" class="btn fw-600 mt-md-2 mt-2">Book Your Slot</a></div>
+                            <div class="text-center" data-aos="fade-up"><a href="#consultationForm" class="btn fw-600 mt-md-2 mt-2" data-open-consultation-form>Book a Consultation</a></div>
     </div>
 </section>
 
@@ -2742,8 +2721,8 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                     <div class="circle-widget first-box">
                         <img src="/storage/appointment/WJ2QcRZbaGHoyozd4G3CqVU90SRsXrnispcjTsy3.png" width="56" alt="" decoding="async" loading="lazy">
                                                 <span class="font-family01">Step - 01</span>
-                        <h4 class="text-maroon-900 fs-17 font-family01">Select Your Slot</h4>
-                        <p class="font-family03"><p>Choose a date and time that works for you and complete the payment to secure your slot.</p></p>
+                        <h4 class="text-maroon-900 fs-17 font-family01">Share Your Details</h4>
+                        <p class="font-family03"><p>Share your details through the form and our team will connect with you to schedule the consultation.</p></p>
                                                 <div class="arrow-icon"><span><img src="/user/assets/images/awrro.png" width="19" alt="" decoding="async" loading="lazy"></span></div>
                                             </div>
                 </div>
@@ -2816,7 +2795,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                     </div>
 
         <div class="text-center mt-md-4 mt-2" data-aos="fade-up">
-            <a href="#slot" class="btn fw-600">Book Your Slot</a>
+            <a href="#consultationForm" class="btn fw-600" data-open-consultation-form>Book a Consultation</a>
         </div>
     </div>
 </section>
@@ -2921,7 +2900,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                     </div>
             </div>
         </div>
-        <div class="text-center" data-aos="fade-up"><a href="#slot" class="btn">Let&#039;s Plan This Together</a></div>
+        <div class="text-center" data-aos="fade-up"><a href="#consultationForm" class="btn" data-open-consultation-form>Let&#039;s Plan This Together</a></div>
     </div>
 </section>
 
@@ -2969,9 +2948,8 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     </div>
     <div class="modal-body">
         <div id="topErrors" class="alert alert-danger d-none"></div>
-        <form id="paymentForm" class="MuiInputLabel-shrink" action="/appointment/pay" method="post">
-            <input type="hidden" name="appointment_date" id="appointmentDate" value="">
-            <input type="hidden" name="appointment_time" id="appointmentTime" value="">
+        <form id="consultationForm" class="MuiInputLabel-shrink" action="/contact/save" method="post" data-form-name="Wedding Consultation">
+            <input type="hidden" name="enquiry_type" value="Wedding Consultation">
             <div class="form-group mb-3">
                 <label class="form-label fw500 text-dark mb-2">Name</label>
                 <input type="text" class="form-control " value="" name="name" placeholder="Your Name" required>
@@ -2992,21 +2970,11 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 <input type="text" class="form-control " value="" name="city" placeholder="City" required>
                 <div class="invalid-feedback" data-error="city"></div>
             </div>
-            <div class="selected-info">
-                <div class="d-flex align-items-start">
-                    <div class="icon"><i class="fa-regular fa-calendar"></i></div>
-                    <div class="content"><p>Date</p><h5 id="showDate"></h5></div>
-                </div>
-                <div class="d-flex align-items-start">
-                    <div class="icon"><i class="fa-regular fa-clock"></i></div>
-                    <div class="content"><p>Time</p><h5 id="showTime"></h5></div>
-                </div>
-            </div>
             <div class="d-flex gap-2 mb-3">
                 <!--<button type="button" id="backBtn" class="btn btn-outline-secondary fs-13 w-50">Back</button>-->
-                <button type="button" id="payBtn" class="btn w-100 py-2 btn-primary w-50 fs-13">
-                    <span id="btnText">Pay & Confirm Booking</span>
-                    <span id="btnLoader" class="d-none"><i class="fa fa-spinner fa-spin"></i> Processing...</span>
+                <button type="submit" id="consultationSubmitBtn" class="btn w-100 py-2 btn-primary w-50 fs-13">
+                    <span id="btnText">Submit Consultation Request</span>
+                    <span id="btnLoader" class="d-none"><i class="fa fa-spinner fa-spin"></i> Sending...</span>
                 </button>
             </div>
         </form>
@@ -3188,115 +3156,16 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-
-    let selectedDate = "";
-    let selectedTime = "";
-
-    const allowedDays    = [1,2,3,4,5,6,0];
-    const singleOffDates = ["2026-02-06","2026-02-10"];
-    const rangeOffs      = [{"from":"2026-02-22","to":"2026-02-27"},{"from":"2026-03-02","to":"2026-03-15"}];
-    const LEAD_TIME      = 120;
-
-function loadSlotsForDate(d, LEAD_TIME) {
-    const yyyy = d.getFullYear();
-    const mm   = String(d.getMonth() + 1).padStart(2, '0');
-    const dd   = String(d.getDate()).padStart(2, '0');
- 
-    selectedDate = `${yyyy}-${mm}-${dd}`;
-    selectedTime = "";
- 
-    const container = document.getElementById('time-slots');
-    container.innerHTML = '<p class="font-family03 text-muted" style="font-size:13px;">Loading slots...</p>';
- 
-    fetch(`/appointment/slots?date=${selectedDate}`)
-        .then(res => res.json())
-        .then(slots => {
-            if (!slots.length) {
-                container.innerHTML = '<p class="no-slots-msg">No slots available for this date.</p>';
-                return;
-            }
-            const now    = new Date();
-            const cutoff = new Date(now.getTime() + LEAD_TIME * 60000);
-            let html     = '<h5 class="font-family03 mb-2">Time-Slot</h5>';
-            slots.forEach(time => {
-                const [h, m]   = time.split(':');
-                const slotTime = new Date(yyyy, d.getMonth(), dd, parseInt(h), parseInt(m));
-                const disabled = slotTime < cutoff;
-                html += `<button type="button" class="time-slot${disabled ? ' disabled' : ''}">${time}</button>`;
-            });
-            container.innerHTML = html;
-        })
-        .catch(() => {
-            container.innerHTML = '<p class="no-slots-msg">Could not load slots. Please try again.</p>';
-        });
-}
- 
-const fp = flatpickr("#calendar", {
-    inline:        true,
-    disableMobile: true,
-    defaultDate:   "2026-08-09",
-    minDate:       "2026-08-09",
- 
-    disable: [
-        function (date) {
-            const ymd = date.getFullYear() + '-'
-                      + String(date.getMonth() + 1).padStart(2, '0') + '-'
-                      + String(date.getDate()).padStart(2, '0');
-            if (!allowedDays.includes(date.getDay())) return true;
-            if (singleOffDates.includes(ymd))         return true;
-            for (let off of rangeOffs) {
-                const from    = new Date(off.from + 'T00:00:00').getTime();
-                const to      = new Date(off.to   + 'T23:59:59').getTime();
-                const clicked = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
-                if (clicked >= from && clicked <= to) return true;
-            }
-            return false;
-        }
-    ],
- 
-    onChange: function (selectedDates) {
-        if (!selectedDates.length) return;
-        loadSlotsForDate(selectedDates[0], LEAD_TIME);
-    },
- 
-    onReady: function (selectedDates, dateStr, instance) {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
- 
-        let candidate = new Date(today);
-        let firstAvailable = null;
- 
-        for (let i = 0; i < 60; i++) {
-            const isDisabled = instance.config.disable.some(fn => fn(candidate));
-            if (!isDisabled) {
-                firstAvailable = new Date(candidate);
-                break;
-            }
-            candidate.setDate(candidate.getDate() + 1);
-        }
- 
-        if (firstAvailable) {
-            instance.setDate(firstAvailable, true);
-        }
-    }
-});
-
-    document.getElementById('time-slots').addEventListener('click', function (e) {
-        if (e.target.classList.contains('time-slot') && !e.target.classList.contains('disabled')) {
-            document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('active'));
-            e.target.classList.add('active');
-            selectedTime = e.target.innerText.trim();
-        }
-    });
-
-    document.getElementById('goNext').addEventListener('click', function () {
-        if (!selectedDate || !selectedTime) { alert('Please select a date and time slot first.'); return; }
-        document.getElementById('showDate').innerText    = selectedDate;
-        document.getElementById('showTime').innerText    = selectedTime;
-        document.getElementById('appointmentDate').value = selectedDate;
-        document.getElementById('appointmentTime').value = selectedTime;
+    function openConsultationForm(event) {
+        if (event) event.preventDefault();
         document.getElementById('bookingModal').classList.add('active');
         document.body.style.overflow = 'hidden';
+        const firstField = document.querySelector('#consultationForm [name="name"]');
+        if (firstField) setTimeout(() => firstField.focus(), 150);
+    }
+
+    document.querySelectorAll('[data-open-consultation-form]').forEach(function (button) {
+        button.addEventListener('click', openConsultationForm);
     });
 
     function closeModal() {
@@ -3306,67 +3175,6 @@ const fp = flatpickr("#calendar", {
     document.getElementById('closeModal').addEventListener('click', closeModal);
     // document.getElementById('backBtn').addEventListener('click', closeModal);
     document.getElementById('bookingModal').addEventListener('click', function (e) { if (e.target === this) closeModal(); });
-
-    
-    document.getElementById('payBtn').addEventListener('click', async function () {
-        const payBtn    = this;
-        const btnText   = document.getElementById('btnText');
-        const btnLoader = document.getElementById('btnLoader');
-        payBtn.disabled = true; btnText.classList.add('d-none'); btnLoader.classList.remove('d-none');
-        document.querySelectorAll('.invalid-feedback[data-error]').forEach(el => { el.innerText = ''; el.classList.remove('visible'); });
-        document.querySelectorAll('.form-control').forEach(el => el.classList.remove('is-invalid'));
-        const topErrors = document.getElementById('topErrors');
-        topErrors.classList.add('d-none'); topErrors.innerHTML = '';
-        const formData = new FormData(document.getElementById('paymentForm'));
-        let res;
-        try {
-            res = await fetch('/appointment/pay', { method:'POST', headers:{ 'Accept':'application/json' }, body: formData });
-        } catch (err) {
-            topErrors.innerHTML = '<p>Network error. Please check your connection.</p>'; topErrors.classList.remove('d-none');
-            payBtn.disabled = false; btnText.classList.remove('d-none'); btnLoader.classList.add('d-none'); return;
-        }
-        if (res.status === 422) {
-            const errorData = await res.json();
-            let allErrors = '<ul class="mb-0">';
-            Object.keys(errorData.errors).forEach(field => {
-                const message  = errorData.errors[field][0];
-                const input    = document.querySelector(`[name="${field}"]`);
-                const errorDiv = document.querySelector(`[data-error="${field}"]`);
-                if (input)    input.classList.add('is-invalid');
-                if (errorDiv) { errorDiv.innerText = message; errorDiv.classList.add('visible'); }
-                allErrors += `<li>${message}</li>`;
-            });
-            allErrors += '</ul>'; topErrors.innerHTML = allErrors; topErrors.classList.remove('d-none');
-            payBtn.disabled = false; btnText.classList.remove('d-none'); btnLoader.classList.add('d-none'); return;
-        }
-        const data = await res.json();
-        if (!res.ok || data.ok === false) {
-            topErrors.innerHTML = `<p>${data.message || 'Could not send your appointment request right now.'}</p>`;
-            topErrors.classList.remove('d-none');
-            payBtn.disabled = false; btnText.classList.remove('d-none'); btnLoader.classList.add('d-none'); return;
-        }
-        if (data.status === 'success' || typeof Razorpay === 'undefined') {
-            window.location.href = "/appointment/payment-success";
-            return;
-        }
-        const options = {
-            key: data.key, amount: data.amount, currency: "INR",
-            name: "Viraaya Weddings", description: "Appointment Booking", order_id: data.order_id,
-            handler: function (response) {
-                fetch('/appointment/verify', {
-                    method:'POST', headers:{ 'Accept':'application/json', 'Content-Type':'application/json' },
-                    body: JSON.stringify(response)
-                }).then(r => r.json()).then(r => {
-                    if (r.status === 'success') { window.location.href = "/appointment/payment-success"; }
-                    else { window.location.href = "/appointment/payment-failed"; }
-                });
-            },
-            prefill: { name: document.querySelector('[name="name"]').value, email: document.querySelector('[name="email"]').value, contact: document.querySelector('[name="number"]').value },
-            theme: { color: "#b5893a" },
-            modal: { ondismiss: function () { payBtn.disabled = false; btnText.classList.remove('d-none'); btnLoader.classList.add('d-none'); } }
-        };
-        const rzp = new Razorpay(options); rzp.open();
-    });
 
     setTimeout(() => { const alert = document.getElementById('pageAlert'); if (alert) alert.remove(); }, 5000);
 });

@@ -737,9 +737,9 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .listing-details-wrapper .hotel-amenities .item img {border-radius: 14px;}
 .listing-details-wrapper .hotel-amenities .item h4 {margin-top: 0px;color: #4A3C33;}
 .listing-details-wrapper .hotel-amenities .item {margin-bottom: 25px;}
-.listing-details-wrapper .hotel-amenities .item img {transition: transform 0.4s ease;}
+.listing-details-wrapper .hotel-amenities .item img {transition: transform 0.4s ease;width: 100%;height: 100%;object-fit: cover;display: block;}
 .listing-details-wrapper .hotel-amenities .item:hover img {transform: scale(1.1);}
-.listing-details-wrapper .hotel-amenities .item .img-widget {border-radius: 14px;margin-bottom: 10px;}
+.listing-details-wrapper .hotel-amenities .item .img-widget {border-radius: 14px;margin-bottom: 10px;aspect-ratio: 16 / 9;}
 .listing-details-wrapper .listing-heading .title-highlight {font-weight: 600;}
 .listing-details-wrapper .listing-heading a {font-size: 13px;color: rgb(58 45 37 / 80%);}
 .listing-details-wrapper .listing-heading {margin-bottom: 20px;margin-top: 60px;}
@@ -748,8 +748,10 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .listing-details-wrapper .product-images .content-widget a i {color: #fff;}
 .listing-details-wrapper .slider-thumbnails {margin-left: -6px;margin-right: -6px;}
 .listing-details-wrapper .slider-thumbnails .slick-slide {overflow: hidden;padding: 0px 6px;cursor: pointer;}
-.listing-details-wrapper .slider-thumbnails .slick-slide img {border-radius: 10px;}
-.listing-details-wrapper .product-images figure img {border-radius: 14px;}
+.listing-details-wrapper .slider-thumbnails figure {aspect-ratio: 16 / 9;overflow: hidden;border-radius: 10px;margin: 0;}
+.listing-details-wrapper .slider-thumbnails .slick-slide img {border-radius: 10px;width: 100%;height: 100%;object-fit: cover;display: block;}
+.listing-details-wrapper .product-images .main-slider figure {aspect-ratio: 16 / 9;overflow: hidden;border-radius: 14px;margin: 0;}
+.listing-details-wrapper .product-images figure img {border-radius: 14px;width: 100%;height: 100%;object-fit: cover;display: block;}
 .listing-details-wrapper .product-images .prev.custom-arrow {left: 20px;}
 .listing-details-wrapper .product-images .next.custom-arrow {right: 20px;}
 .listing-details-wrapper .slider-thumbnails .slick-slide.slick-current.slick-active {position: relative;}
