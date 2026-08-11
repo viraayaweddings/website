@@ -2,7 +2,7 @@
   {
     "name": "Indian Rupee",
     "code": "INR",
-    "symbol": "?",
+    "symbol": "₹",
     "rate_to_usd": 94.15,
     "is_default": true
   }

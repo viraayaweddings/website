@@ -518,7 +518,12 @@ $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
 
 
   $(document).on('click', '.date-input', function () {
-    this.showPicker(); // pure input pe click karte hi calendar open
+    if (this.readOnly || this.disabled || typeof this.showPicker !== 'function') return;
+    try {
+      this.showPicker();
+    } catch (error) {
+      // Flatpickr and readonly inputs provide their own picker UI.
+    }
   });
 
 
