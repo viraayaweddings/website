@@ -2780,29 +2780,43 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                             <div class="form-group">
                                 <label class="font-family01 fs-13 fw-500 position-absolute bg-white text-maroon-900">City</label>
                                 <select class="form-control font-family01 fs-14 select2-city" id="citySelect">
-                                    <option value="">Select a City</option>
+<option value="">Select a City</option>
+                                                                            <option value="39">Abu Dhabi</option>
                                                                             <option value="8">Agra</option>
                                                                             <option value="28">Ahmedabad</option>
                                                                             <option value="70">Ajabgarh</option>
                                                                             <option value="32">Ajmer</option>
                                                                             <option value="31">Amritsar</option>
                                                                             <option value="69">Andaman</option>
+                                                                            <option value="63">Antalya</option>
+                                                                            <option value="53">Aswan</option>
+                                                                            <option value="48">Bangkok</option>
                                                                             <option value="34">Barwara</option>
                                                                             <option value="23">Bengal</option>
                                                                             <option value="17">Bengaluru</option>
                                                                             <option value="40">Bhopal</option>
                                                                             <option value="67">Bhubaneswar</option>
+                                                                            <option value="64">Bodrum</option>
+                                                                            <option value="52">Cairo</option>
                                                                             <option value="13">Chandigarh</option>
                                                                             <option value="18">Chennai</option>
+                                                                            <option value="74">Colombo</option>
+                                                                            <option value="59">Da Nang</option>
                                                                             <option value="46">Daman</option>
                                                                             <option value="15">Dehradun</option>
                                                                             <option value="4">Delhi NCR</option>
+                                                                            <option value="66">Doha</option>
+                                                                            <option value="37">Dubai</option>
                                                                             <option value="7">Goa</option>
                                                                             <option value="36">Guwahati</option>
                                                                             <option value="43">Gwalior</option>
+                                                                            <option value="57">Hanoi</option>
                                                                             <option value="44">Haridwar</option>
+                                                                            <option value="58">Ho Chi Minh City</option>
+                                                                            <option value="54">Hurghada</option>
                                                                             <option value="27">Hyderabad</option>
                                                                             <option value="47">Indore</option>
+                                                                            <option value="65">Istanbul</option>
                                                                             <option value="5">Jaipur</option>
                                                                             <option value="9">Jaisalmer</option>
                                                                             <option value="12">Jim Corbett</option>
@@ -2821,14 +2835,20 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                                                             <option value="73">Lonavala</option>
                                                                             <option value="1">Lucknow</option>
                                                                             <option value="26">Mumbai</option>
+                                                                            <option value="61">Muscat</option>
                                                                             <option value="10">Mussoorie</option>
                                                                             <option value="2">Noida</option>
+                                                                            <option value="50">Phang Nga</option>
+                                                                            <option value="60">Phu Quoc</option>
+                                                                            <option value="49">Phuket</option>
                                                                             <option value="16">Pune</option>
                                                                             <option value="30">Pushkar</option>
                                                                             <option value="35">Raipur</option>
                                                                             <option value="33">Ranthambore</option>
+                                                                            <option value="38">Ras Al Khaimah</option>
                                                                             <option value="11">Rishikesh</option>
                                                                             <option value="42">Sakleshpur</option>
+                                                                            <option value="62">Salalah</option>
                                                                             <option value="14">Shimla</option>
                                                                             <option value="29">Surat</option>
                                                                             <option value="22">Trivandrum</option>
@@ -3020,7 +3040,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                     </li>
                     <li>
                     <!--  <li>-->
-                    <!--    <a href="/check-hotel-availability">Venue Availability</a>-->
+                    <a href="/check-hotel-availability">Venue Availability</a>
                     <!--  </li>-->
                     <!--</li>-->
                   </ul>
@@ -3106,10 +3126,45 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 <script>
 $(document).ready(function () {
     
+    window.__calculatorDataPromise = null;
     window.__currencies = [];
-fetch('/api/currencies')
-    .then(r => r.json())
-    .then(data => { window.__currencies = data; });
+
+    function loadCalculatorData() {
+        if (!window.__calculatorDataPromise) {
+            window.__calculatorDataPromise = fetch('/data/calculator/calculator-data.json')
+                .then(function (response) { return response.json(); })
+                .catch(function () { return { hotelsByCity: {}, prices: {}, currencies: [] }; });
+        }
+        return window.__calculatorDataPromise;
+    }
+
+    fetch('/api/currencies')
+        .then(function (r) { if (!r.ok) throw new Error('Currencies unavailable'); return r.json(); })
+        .catch(function () { return loadCalculatorData().then(function (data) { return data.currencies || []; }); })
+        .then(function (data) { window.__currencies = data; });
+
+    function getHotelsByCity(cityId) {
+        return $.ajax({
+            url: '/get-hotels-by-city/cityId'.replace('cityId', cityId),
+            type: 'GET',
+            dataType: 'json'
+        }).catch(function () {
+            return loadCalculatorData().then(function (data) { return (data.hotelsByCity || {})[String(cityId)] || []; });
+        });
+    }
+
+    function getHotelPrice(hotelId, month) {
+        return $.ajax({
+            url: '/get-hotel-price/hotelId/month'.replace('hotelId', hotelId).replace('month', month),
+            type: 'GET',
+            dataType: 'json'
+        }).catch(function () {
+            return loadCalculatorData().then(function (data) {
+                var prices = ((data.prices || {})[String(hotelId)] || {})[month];
+                return prices || { room_price: 0, lunch_price: 0, hitea_price: 0, dinner_price: 0 };
+            });
+        });
+    }
 
     var hotelRoomLimits = {};
 
@@ -3218,12 +3273,8 @@ var checkInPicker = flatpickr('#checkIn', {
             hotelSelect.empty().prop('disabled', true);
             hotelSelect.append('<option value="">Loading hotels...</option>');
             hotelSelect.trigger('change');
-
-            $.ajax({
-                url: '/get-hotels-by-city/cityId'.replace('cityId', cityId),
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
+            getHotelsByCity(cityId)
+                .then(function (data) {
                     hotelSelect.empty().prop('disabled', false);
                     hotelSelect.append('<option value="">Select a Hotel</option>');
 
@@ -3238,13 +3289,12 @@ var checkInPicker = flatpickr('#checkIn', {
                     });
 
                     hotelSelect.trigger('change');
-                },
-                error: function () {
+                })
+                .catch(function () {
                     hotelSelect.empty().prop('disabled', true);
                     hotelSelect.append('<option value="">Error loading hotels</option>');
                     hotelSelect.trigger('change');
-                }
-            });
+                });
         } else {
             resetCalculator();
         }
@@ -3395,28 +3445,16 @@ var checkInPicker = flatpickr('#checkIn', {
         var $btn         = $(this);
         var originalText = $btn.text();
         $btn.text('Calculating...').prop('disabled', true);
-
-        $.ajax({
-            url: '/get-hotel-price/hotelId/month'
-                    .replace('hotelId', hotelId)
-                    .replace('month', month),
-            type: 'GET',
-            dataType: 'json',
-            success: function (priceData) {
+        Promise.resolve(getHotelPrice(hotelId, month))
+            .then(function (priceData) {
                 renderOffcanvas(priceData, hotelName);
-            },
-            error: function () {
-                renderOffcanvas({
-                    room_price:   0,
-                    lunch_price:  0,
-                    hitea_price:  0,
-                    dinner_price: 0
-                }, hotelName);
-            },
-            complete: function () {
+            })
+            .catch(function () {
+                renderOffcanvas({ room_price: 0, lunch_price: 0, hitea_price: 0, dinner_price: 0 }, hotelName);
+            })
+            .finally(function () {
                 $btn.text(originalText).prop('disabled', false);
-            }
-        });
+            });
     });
 
   function renderOffcanvas(prices, hotelName) {

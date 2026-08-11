@@ -4,6 +4,20 @@
     "code": "INR",
     "symbol": "₹",
     "rate_to_usd": 94.15,
-    "is_default": true
+    "is_default": false
+  },
+  {
+    "name": "US Dollar",
+    "code": "USD",
+    "symbol": "$",
+    "rate_to_usd": 1,
+    "is_default": false
+  },
+  {
+    "name": "UAE Dirham",
+    "code": "AED",
+    "symbol": "د.إ",
+    "rate_to_usd": 3.67,
+    "is_default": false
   }
 ]

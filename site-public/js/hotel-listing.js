@@ -1,5 +1,5 @@
 (function () {
-    const PAGE_SIZE = 9;
+    const PAGE_SIZE = 12;
     const DATA_URL = '/data/hotel-listing-data.json';
 
     const qs = (selector, root = document) => root.querySelector(selector);
@@ -132,7 +132,6 @@
     }
 
     function cardHtml(hotel) {
-        const availabilityUrl = `/check-hotel-availability?hotel_search=${encodeURIComponent(hotel.name)}`;
         return `
             <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-6">
                 <div class="hotel-card">
@@ -153,7 +152,7 @@
                         </div>
                         <div class="d-flex gap-2">
                             <a href="${esc(hotel.url)}" class="btn sm-btn font-family02 fw-600 fs-10 btn-details">DETAILS</a>
-                            <a href="${availabilityUrl}" class="btn sm-btn font-family02 fw-600 fs-10 btn-availability">CHECK AVAILABILITY</a>
+                            <a href="/check-hotel-availability" class="btn sm-btn font-family02 fw-600 fs-10 btn-availability">CHECK AVAILABILITY</a>
                         </div>
                     </div>
                 </div>

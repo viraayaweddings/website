@@ -1,5 +1,9 @@
 [
   {
+    "id": 39,
+    "name": "Abu Dhabi"
+  },
+  {
     "id": 8,
     "name": "Agra"
   },
@@ -24,6 +28,18 @@
     "name": "Andaman"
   },
   {
+    "id": 63,
+    "name": "Antalya"
+  },
+  {
+    "id": 53,
+    "name": "Aswan"
+  },
+  {
+    "id": 48,
+    "name": "Bangkok"
+  },
+  {
     "id": 34,
     "name": "Barwara"
   },
@@ -44,12 +60,28 @@
     "name": "Bhubaneswar"
   },
   {
+    "id": 64,
+    "name": "Bodrum"
+  },
+  {
+    "id": 52,
+    "name": "Cairo"
+  },
+  {
     "id": 13,
     "name": "Chandigarh"
   },
   {
     "id": 18,
     "name": "Chennai"
+  },
+  {
+    "id": 74,
+    "name": "Colombo"
+  },
+  {
+    "id": 59,
+    "name": "Da Nang"
   },
   {
     "id": 46,
@@ -64,6 +96,14 @@
     "name": "Delhi NCR"
   },
   {
+    "id": 66,
+    "name": "Doha"
+  },
+  {
+    "id": 37,
+    "name": "Dubai"
+  },
+  {
     "id": 7,
     "name": "Goa"
   },
@@ -76,8 +116,20 @@
     "name": "Gwalior"
   },
   {
+    "id": 57,
+    "name": "Hanoi"
+  },
+  {
     "id": 44,
     "name": "Haridwar"
+  },
+  {
+    "id": 58,
+    "name": "Ho Chi Minh City"
+  },
+  {
+    "id": 54,
+    "name": "Hurghada"
   },
   {
     "id": 27,
@@ -86,6 +138,10 @@
   {
     "id": 47,
     "name": "Indore"
+  },
+  {
+    "id": 65,
+    "name": "Istanbul"
   },
   {
     "id": 5,
@@ -160,12 +216,28 @@
     "name": "Mumbai"
   },
   {
+    "id": 61,
+    "name": "Muscat"
+  },
+  {
     "id": 10,
     "name": "Mussoorie"
   },
   {
     "id": 2,
     "name": "Noida"
+  },
+  {
+    "id": 50,
+    "name": "Phang Nga"
+  },
+  {
+    "id": 60,
+    "name": "Phu Quoc"
+  },
+  {
+    "id": 49,
+    "name": "Phuket"
   },
   {
     "id": 16,
@@ -184,12 +256,20 @@
     "name": "Ranthambore"
   },
   {
+    "id": 38,
+    "name": "Ras Al Khaimah"
+  },
+  {
     "id": 11,
     "name": "Rishikesh"
   },
   {
     "id": 42,
     "name": "Sakleshpur"
+  },
+  {
+    "id": 62,
+    "name": "Salalah"
   },
   {
     "id": 14,
