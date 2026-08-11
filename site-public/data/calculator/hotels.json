@@ -5,16 +5,6 @@
     "total_rooms": 70
   },
   {
-    "id": 398,
-    "name": "Al Bustan Palace a Ritz Carlton Hotel",
-    "total_rooms": 250
-  },
-  {
-    "id": 432,
-    "name": "Al Messila a Luxury Collection Resort And Spa Doha",
-    "total_rooms": 152
-  },
-  {
     "id": 17,
     "name": "Alila Diwa Goa",
     "total_rooms": 153
@@ -35,34 +25,9 @@
     "total_rooms": 230
   },
   {
-    "id": 328,
-    "name": "Anantara Mai Khao Phuket Villas",
-    "total_rooms": 183
-  },
-  {
-    "id": 208,
-    "name": "Anantara Mina Ras Al Khaimah Resort",
-    "total_rooms": 174
-  },
-  {
-    "id": 337,
-    "name": "Anantara Riverside Bangkok Resort",
-    "total_rooms": 376
-  },
-  {
     "id": 230,
     "name": "Andaz New delhi",
     "total_rooms": 401
-  },
-  {
-    "id": 331,
-    "name": "Angsana Laguna Phuket",
-    "total_rooms": 382
-  },
-  {
-    "id": 203,
-    "name": "Atlantis The Palm Dubai",
-    "total_rooms": 1544
   },
   {
     "id": 149,
@@ -73,21 +38,6 @@
     "id": 353,
     "name": "Azaya Beach Resort Goa",
     "total_rooms": 114
-  },
-  {
-    "id": 323,
-    "name": "Bangkok Marriott Marquis Queens Park",
-    "total_rooms": 1388
-  },
-  {
-    "id": 433,
-    "name": "Banyan Tree Doha",
-    "total_rooms": 212
-  },
-  {
-    "id": 326,
-    "name": "Banyan Tree Phuket",
-    "total_rooms": 218
   },
   {
     "id": 148,
@@ -105,11 +55,6 @@
     "total_rooms": 201
   },
   {
-    "id": 325,
-    "name": "Centara Grand at CentralWorld",
-    "total_rooms": 505
-  },
-  {
     "id": 197,
     "name": "Chomu Palace Hotel Jaipur",
     "total_rooms": 100
@@ -118,11 +63,6 @@
     "id": 342,
     "name": "Chunda Palace Udaipur",
     "total_rooms": 50
-  },
-  {
-    "id": 227,
-    "name": "Conrad Abu Dhabi Etihad Towers",
-    "total_rooms": 377
   },
   {
     "id": 72,
@@ -185,26 +125,6 @@
     "total_rooms": 151
   },
   {
-    "id": 218,
-    "name": "Dusit Thani Abu Dhabi",
-    "total_rooms": 402
-  },
-  {
-    "id": 215,
-    "name": "Emirates Palace Mandarin Oriental Abu Dhabi",
-    "total_rooms": 394
-  },
-  {
-    "id": 223,
-    "name": "Fairmont Bab Al Bahr Abu Dhabi",
-    "total_rooms": 366
-  },
-  {
-    "id": 204,
-    "name": "Fairmont Dubai",
-    "total_rooms": 394
-  },
-  {
     "id": 42,
     "name": "Fairmont Jaipur",
     "total_rooms": 245
@@ -213,11 +133,6 @@
     "id": 376,
     "name": "Fairmont Mumbai",
     "total_rooms": 446
-  },
-  {
-    "id": 408,
-    "name": "Fairmont Nile City Cairo",
-    "total_rooms": 562
   },
   {
     "id": 9,
@@ -235,24 +150,9 @@
     "total_rooms": 75
   },
   {
-    "id": 221,
-    "name": "Four Seasons Hotel Abu Dhabi at Al Maryah Island",
-    "total_rooms": 200
-  },
-  {
-    "id": 426,
-    "name": "Four Seasons Hotel Doha",
-    "total_rooms": 232
-  },
-  {
     "id": 109,
     "name": "Four Seasons Hotel Mumbai",
     "total_rooms": 202
-  },
-  {
-    "id": 202,
-    "name": "Four Seasons Resort Dubai at Jumeirah Beach",
-    "total_rooms": 237
   },
   {
     "id": 305,
@@ -268,16 +168,6 @@
     "id": 161,
     "name": "Gobindgarh Jaisalmer",
     "total_rooms": 45
-  },
-  {
-    "id": 431,
-    "name": "Grand Hyatt Doha Hotel And Villas",
-    "total_rooms": 340
-  },
-  {
-    "id": 340,
-    "name": "Grand Hyatt Erawan Bangkok",
-    "total_rooms": 380
   },
   {
     "id": 23,
@@ -305,11 +195,6 @@
     "total_rooms": 157
   },
   {
-    "id": 226,
-    "name": "Hilton Abu Dhabi Yas Island",
-    "total_rooms": 545
-  },
-  {
     "id": 388,
     "name": "Hilton Bangalore Embassy GolfLinks",
     "total_rooms": 247
@@ -320,19 +205,9 @@
     "total_rooms": 202
   },
   {
-    "id": 434,
-    "name": "Hilton Doha The Pearl",
-    "total_rooms": 359
-  },
-  {
     "id": 381,
     "name": "Hilton Garden Inn Bengaluru Embassy Manyata Business Park",
     "total_rooms": 353
-  },
-  {
-    "id": 214,
-    "name": "Hilton Garden Inn Ras Al Khaimah",
-    "total_rooms": 240
   },
   {
     "id": 282,
@@ -343,11 +218,6 @@
     "id": 89,
     "name": "Hilton Garden Inn Trivandrum",
     "total_rooms": 132
-  },
-  {
-    "id": 405,
-    "name": "Hilton Salalah Resort",
-    "total_rooms": 147
   },
   {
     "id": 144,
@@ -430,16 +300,6 @@
     "total_rooms": 218
   },
   {
-    "id": 217,
-    "name": "InterContinental Abu Dhabi by IHG",
-    "total_rooms": 390
-  },
-  {
-    "id": 397,
-    "name": "InterContinental Danang Sun Peninsula Resort",
-    "total_rooms": 197
-  },
-  {
     "id": 192,
     "name": "InterContinental Jaipur Tonk Road by IHG",
     "total_rooms": 218
@@ -448,16 +308,6 @@
     "id": 272,
     "name": "InterContinental Marine Drive Mumbai by IHG",
     "total_rooms": 59
-  },
-  {
-    "id": 404,
-    "name": "InterContinental Muscat",
-    "total_rooms": 270
-  },
-  {
-    "id": 213,
-    "name": "InterContinental Ras Al Khaimah Mina Al Arab Resort And Spa an IHG Hotel",
-    "total_rooms": 351
   },
   {
     "id": 81,
@@ -555,11 +405,6 @@
     "total_rooms": 135
   },
   {
-    "id": 198,
-    "name": "Jumeirah Burj Al Arab Dubai",
-    "total_rooms": 202
-  },
-  {
     "id": 343,
     "name": "Justa Sajjangarh Resort And Spa Udaipur",
     "total_rooms": 96
@@ -575,16 +420,6 @@
     "total_rooms": 151
   },
   {
-    "id": 338,
-    "name": "JW Marriott Hotel Bangkok",
-    "total_rooms": 441
-  },
-  {
-    "id": 360,
-    "name": "JW Marriott Hotel Cairo",
-    "total_rooms": 445
-  },
-  {
     "id": 60,
     "name": "JW Marriott Hotel Chandigarh",
     "total_rooms": 164
@@ -595,11 +430,6 @@
     "total_rooms": 281
   },
   {
-    "id": 403,
-    "name": "JW Marriott Hotel Muscat",
-    "total_rooms": 304
-  },
-  {
     "id": 357,
     "name": "JW Marriott Hotel New Delhi Aerocity",
     "total_rooms": 511
@@ -608,16 +438,6 @@
     "id": 386,
     "name": "JW Marriott Hotel Pune",
     "total_rooms": 414
-  },
-  {
-    "id": 335,
-    "name": "JW Marriott Khao Lak Resort And Spa",
-    "total_rooms": 424
-  },
-  {
-    "id": 199,
-    "name": "JW Marriott Marquis Hotel Dubai",
-    "total_rooms": 1608
   },
   {
     "id": 273,
@@ -635,29 +455,9 @@
     "total_rooms": 115
   },
   {
-    "id": 389,
-    "name": "JW Marriott Phu Quoc Emerald Bay Resort And Spa",
-    "total_rooms": 244
-  },
-  {
-    "id": 330,
-    "name": "JW Marriott Phuket Resort And Spa",
-    "total_rooms": 262
-  },
-  {
     "id": 369,
     "name": "Karma Lakelands Gurugram",
     "total_rooms": 95
-  },
-  {
-    "id": 399,
-    "name": "Kempinski Hotel Muscat",
-    "total_rooms": 310
-  },
-  {
-    "id": 363,
-    "name": "Kempinski Nile Hotel Cairo",
-    "total_rooms": 191
   },
   {
     "id": 341,
@@ -668,11 +468,6 @@
     "id": 170,
     "name": "Laxmi Vilas Palace bharatpur",
     "total_rooms": 75
-  },
-  {
-    "id": 228,
-    "name": "Le Meridien Abu Dhabi Resort",
-    "total_rooms": 248
   },
   {
     "id": 137,
@@ -690,19 +485,9 @@
     "total_rooms": 126
   },
   {
-    "id": 336,
-    "name": "Le Meridien Khao Lak Resort And Spa",
-    "total_rooms": 269
-  },
-  {
     "id": 277,
     "name": "Le Meridien Kochi",
     "total_rooms": 223
-  },
-  {
-    "id": 334,
-    "name": "Le Meridien Phuket Beach Resort",
-    "total_rooms": 470
   },
   {
     "id": 90,
@@ -713,26 +498,6 @@
     "id": 54,
     "name": "Lemon Tree Premier Jim Corbett",
     "total_rooms": 68
-  },
-  {
-    "id": 320,
-    "name": "Mandarin Oriental Bangkok",
-    "total_rooms": 331
-  },
-  {
-    "id": 436,
-    "name": "Mandarin Oriental Doha",
-    "total_rooms": 249
-  },
-  {
-    "id": 220,
-    "name": "Marriott Hotel Downtown Abu Dhabi",
-    "total_rooms": 315
-  },
-  {
-    "id": 413,
-    "name": "Maxx Royal Belek Golf Resort",
-    "total_rooms": 530
   },
   {
     "id": 173,
@@ -815,11 +580,6 @@
     "total_rooms": 204
   },
   {
-    "id": 201,
-    "name": "Palazzo Versace Dubai",
-    "total_rooms": 215
-  },
-  {
     "id": 351,
     "name": "Planet Hollywood Beach Resort Goa",
     "total_rooms": 115
@@ -858,11 +618,6 @@
     "id": 344,
     "name": "RAAS Devigarh Udaipur",
     "total_rooms": 39
-  },
-  {
-    "id": 229,
-    "name": "Radisson Blu Hotel And Resort Abu Dhabi Corniche",
-    "total_rooms": 346
   },
   {
     "id": 287,
@@ -930,11 +685,6 @@
     "total_rooms": 50
   },
   {
-    "id": 207,
-    "name": "Raffles The Palm Dubai",
-    "total_rooms": 340
-  },
-  {
     "id": 19,
     "name": "Raffles Udaipur",
     "total_rooms": 137
@@ -980,39 +730,9 @@
     "total_rooms": 90
   },
   {
-    "id": 209,
-    "name": "Rixos Al Mairid Ras Al Khaimah",
-    "total_rooms": 466
-  },
-  {
-    "id": 222,
-    "name": "Rixos Marina Abu Dhabi",
-    "total_rooms": 563
-  },
-  {
-    "id": 412,
-    "name": "Rixos Premium Belek Turkey",
-    "total_rooms": 700
-  },
-  {
-    "id": 231,
-    "name": "Rixos Premium Saadiyat Island Abu Dhabi",
-    "total_rooms": 378
-  },
-  {
-    "id": 410,
-    "name": "Rixos Premium Seagate",
-    "total_rooms": 938
-  },
-  {
     "id": 249,
     "name": "Royal Orchid Fort Resort Mussoorie",
     "total_rooms": 91
-  },
-  {
-    "id": 332,
-    "name": "SAii Laguna Phuket",
-    "total_rooms": 255
   },
   {
     "id": 246,
@@ -1020,24 +740,9 @@
     "total_rooms": 44
   },
   {
-    "id": 324,
-    "name": "Shangri La Bangkok",
-    "total_rooms": 802
-  },
-  {
     "id": 284,
     "name": "Shangri La Bengaluru",
     "total_rooms": 397
-  },
-  {
-    "id": 391,
-    "name": "Sheraton Grand Danang Resort And Convention Center",
-    "total_rooms": 258
-  },
-  {
-    "id": 428,
-    "name": "Sheraton Grand Doha Resort And Convention Hotel",
-    "total_rooms": 371
   },
   {
     "id": 299,
@@ -1060,11 +765,6 @@
     "total_rooms": 220
   },
   {
-    "id": 402,
-    "name": "Sheraton Oman Hotel",
-    "total_rooms": 230
-  },
-  {
     "id": 182,
     "name": "Shiv Vilas Jaipur",
     "total_rooms": 125
@@ -1080,29 +780,9 @@
     "total_rooms": 48
   },
   {
-    "id": 212,
-    "name": "Sofitel Al Hamra Beach Resort",
-    "total_rooms": 292
-  },
-  {
-    "id": 205,
-    "name": "Sofitel Dubai The Palm",
-    "total_rooms": 546
-  },
-  {
-    "id": 361,
-    "name": "Sofitel Legend Old Cataract Aswan",
-    "total_rooms": 138
-  },
-  {
     "id": 380,
     "name": "Sofitel Mumbai BKC",
     "total_rooms": 302
-  },
-  {
-    "id": 327,
-    "name": "Sri Panwa Phuket Luxury Pool Villa Hotel",
-    "total_rooms": 120
   },
   {
     "id": 127,
@@ -1188,11 +868,6 @@
     "id": 20,
     "name": "Taj Exotica Resort And Spa Goa",
     "total_rooms": 140
-  },
-  {
-    "id": 200,
-    "name": "Taj Exotica Resort And Spa The Palm Dubai",
-    "total_rooms": 325
   },
   {
     "id": 112,
@@ -1340,11 +1015,6 @@
     "total_rooms": 244
   },
   {
-    "id": 364,
-    "name": "The Chedi El Gouna Egypt",
-    "total_rooms": 82
-  },
-  {
     "id": 439,
     "name": "The Deltin Daman",
     "total_rooms": 176
@@ -1425,18 +1095,8 @@
     "total_rooms": 89
   },
   {
-    "id": 362,
-    "name": "The Nile Ritz Carlton Cairo",
-    "total_rooms": 331
-  },
-  {
     "id": 45,
     "name": "The Oberoi Amarvilas Agra",
-    "total_rooms": 102
-  },
-  {
-    "id": 409,
-    "name": "The Oberoi Beach Resort Sahl Hasheesh",
     "total_rooms": 102
   },
   {
@@ -1480,16 +1140,6 @@
     "total_rooms": 99
   },
   {
-    "id": 321,
-    "name": "The Peninsula Bangkok",
-    "total_rooms": 370
-  },
-  {
-    "id": 216,
-    "name": "The Ritz Carlton Abu Dhabi Grand Canal",
-    "total_rooms": 532
-  },
-  {
     "id": 80,
     "name": "The Ritz Carlton Bangalore",
     "total_rooms": 277
@@ -1498,11 +1148,6 @@
     "id": 70,
     "name": "The Ritz Carlton Pune",
     "total_rooms": 199
-  },
-  {
-    "id": 211,
-    "name": "The Ritz Carlton Ras Al Khaimah Al Wadi Desert",
-    "total_rooms": 109
   },
   {
     "id": 234,
@@ -1515,21 +1160,6 @@
     "total_rooms": 65
   },
   {
-    "id": 406,
-    "name": "The St Regis Al Mouj Muscat Resort",
-    "total_rooms": 250
-  },
-  {
-    "id": 339,
-    "name": "The St Regis Bangkok",
-    "total_rooms": 228
-  },
-  {
-    "id": 429,
-    "name": "The St Regis Doha",
-    "total_rooms": 335
-  },
-  {
     "id": 14,
     "name": "The St Regis Goa Resort",
     "total_rooms": 160
@@ -1538,11 +1168,6 @@
     "id": 96,
     "name": "The St Regis Mumbai",
     "total_rooms": 395
-  },
-  {
-    "id": 224,
-    "name": "The St Regis Saadiyat Island Resort Abu Dhabi",
-    "total_rooms": 376
   },
   {
     "id": 99,
@@ -1580,11 +1205,6 @@
     "total_rooms": 154
   },
   {
-    "id": 411,
-    "name": "Titanic Mardan Palace Antalya",
-    "total_rooms": 543
-  },
-  {
     "id": 166,
     "name": "Trident Agra",
     "total_rooms": 135
@@ -1620,44 +1240,9 @@
     "total_rooms": 71
   },
   {
-    "id": 219,
-    "name": "W Abu Dhabi Yas Island",
-    "total_rooms": 499
-  },
-  {
-    "id": 322,
-    "name": "W Bangkok",
-    "total_rooms": 403
-  },
-  {
-    "id": 435,
-    "name": "W Doha",
-    "total_rooms": 289
-  },
-  {
     "id": 21,
     "name": "W Goa",
     "total_rooms": 121
-  },
-  {
-    "id": 401,
-    "name": "W Muscat",
-    "total_rooms": 279
-  },
-  {
-    "id": 407,
-    "name": "Waldorf Astoria Cairo Heliopolis Egypt",
-    "total_rooms": 252
-  },
-  {
-    "id": 206,
-    "name": "Waldorf Astoria Dubai Palm Jumeirah",
-    "total_rooms": 319
-  },
-  {
-    "id": 210,
-    "name": "Waldorf Astoria Ras Al Khaimah",
-    "total_rooms": 203
   },
   {
     "id": 346,

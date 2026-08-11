@@ -1,0 +1,140 @@
+
+        .form-control { text-transform: none !important; }
+        .gst-box { background:#fdf6f0; border-radius:12px; padding:14px 16px; margin-top:10px; }
+        .gst-box .gst-row { display:flex; justify-content:space-between; font-size:13px; color:#555; padding:4px 0; }
+        .gst-box .gst-row.base-row { border-bottom:1px dashed #d4c3b2; padding-bottom:8px; margin-bottom:4px; }
+        .gst-box .gst-row.grand-row { font-size:16px; font-weight:700; color:#8B2C2C; padding-top:8px; border-top:2px solid #d4c3b2; margin-top:4px; }
+        .c-h-a .form-group { position:relative; margin-top:28px; }
+        .c-h-a .form-group label { padding:0 6px; color:#35122E; top:-9px; left:11px; position:absolute; background:#fff; font-size:13px; z-index:5; pointer-events:none; }
+        .c-h-a .form-group .form-control { height:56px; border:solid 1px rgb(0 0 0 / 16%); border-radius:12px; padding:3px 0 0 52px; color:rgb(53 18 46 / 80%); }
+        .c-h-a .form-group input::placeholder { color:rgb(53 18 46 / 50%); }
+        .c-h-a .form-group img { position:absolute; bottom:16px; width:20px; left:18px; pointer-events:none; z-index:0; }
+        .c-h-a .form-group.dropdown-icon:after { position:absolute; content:''; right:20px; bottom:23px; width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-top:6px solid #C3C3C3; pointer-events:none; }
+        .c-h-a .form-group select.form-control { padding-left:52px; }
+        .c-h-a .form-group .flatpickr-input { padding-left:52px !important; cursor:pointer !important; background:#fff !important; }
+        .c-h-a .form-group input.flatpickr-input[readonly] { color:rgb(53 18 46 / 80%) !important; background:#fff !important; }
+        .alt-date-auto { background-color:#f5f0ee !important; color:rgb(53 18 46 / 60%) !important; pointer-events:none !important; cursor:not-allowed !important; }
+        .rooms-pax-row { border-left:3px solid #8B2C2C; padding-left:10px; margin-bottom:4px; }
+        .hotel-row { border:1px dashed #d4c3b2; border-radius:12px; padding:10px 14px 0; margin-bottom:12px; }
+        .nights-badge { display:inline-block; background:#8B2C2C; color:#fff; font-size:11px; font-weight:600; border-radius:20px; padding:2px 10px; margin-left:8px; vertical-align:middle; }
+        #booking-form-section .card-box { border:1px solid #f0e6dd; border-radius:14px; padding:20px; }
+        #booking-form-section .form-group { margin-bottom:18px; }
+        #booking-form-section label { font-weight:500; color:#35122E; margin-bottom:4px; display:block; }
+        #booking-form-section .form-control { border-radius:10px; height:48px; border:1px solid rgb(0 0 0/16%); padding:0 14px; }
+        #booking-form-section .selected-summary { background:#fdf6f0; border-radius:12px; }
+        #top-alert { border-radius:10px; }
+        .flatpickr-calendar { z-index:99999 !important; }
+
+        /* ── Select2 custom styling to match the existing form design ── */
+
+        /* Plan select — sits inside .c-h-a .form-group with icon */
+        #plan-select + .select2-container,
+        .city-select  + .select2-container,
+        .hotel-select + .select2-container {
+            width: 100% !important;
+        }
+
+        .select2-container--default .select2-selection--single {
+            height: 56px;
+            border: 1px solid rgb(0 0 0 / 16%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            padding-left: 52px;
+            background: #fff;
+        }
+        .select2-container--default .select2-selection--single {
+    height: 52px !important;
+    border-radius: 14px !important;
+    border: 1px solid #e8d9cc !important;
+    background: #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 18px !important;
+    transition: all 0.3s ease !important;
+}
+.select2-container--default .select2-selection__arrow {
+    height: 52px !important;
+    right: 15px !important;
+}
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: normal;
+            color: rgb(53 18 46 / 80%);
+            font-size: 14px;
+            font-family: inherit;
+            padding-left: 0;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__placeholder {
+            color: rgb(53 18 46 / 50%);
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 56px;
+            right: 14px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: #C3C3C3 transparent transparent transparent;
+        }
+
+        .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+            border-color: transparent transparent #C3C3C3 transparent;
+        }
+
+        .select2-dropdown {
+            border: 1px solid rgb(0 0 0 / 16%);
+            border-radius: 10px;
+            overflow: hidden;
+            z-index: 99999;
+        }
+
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #8B2C2C;
+            color: #fff;
+        }
+
+        .select2-container--default .select2-results__option[aria-selected=true] {
+            background-color: #fdf6f0;
+            color: #35122E;
+        }
+
+        .select2-search--dropdown .select2-search__field {
+            border: 1px solid rgb(0 0 0 / 16%);
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .select2-results__option {
+            font-size: 13px;
+            padding: 8px 14px;
+            color: #35122E;
+        }
+
+        /* disabled hotel select styling */
+        .select2-container--default.select2-container--disabled .select2-selection--single {
+            background-color: #f5f0ee;
+            cursor: not-allowed;
+        }
+        .feature-items .slick-slide {
+    padding: 0px 10px;
+}
+.feature-items .slick-track {
+    display: flex !important;
+}
+
+.feature-items .slick-slide {
+    height: auto !important;
+}
+
+.feature-items .slick-slide > div {
+    height: 100%;
+}
+
+.feature-items .item { /* tumhare inner card ka class */
+    height: 100%;
+}
+    
