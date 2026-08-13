@@ -1,0 +1,2602 @@
+{
+  "checkedAt": "2026-08-13T08:16:14.887Z",
+  "routes": [
+    {
+      "route": "/wedding-packages",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 1688,
+        "local": 1688
+      },
+      "counts": {
+        "sections": {
+          "original": 4,
+          "local": 4
+        },
+        "headings": {
+          "original": 8,
+          "local": 8
+        },
+        "ctas": {
+          "original": 5,
+          "local": 5
+        },
+        "buttons": {
+          "original": 0,
+          "local": 0
+        },
+        "images": {
+          "original": 23,
+          "local": 23
+        },
+        "forms": {
+          "original": 0,
+          "local": 0
+        }
+      },
+      "diffs": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "missingCtas": [
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [],
+        "extraForms": [],
+        "missingImages": [],
+        "extraImages": []
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/package",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 1688,
+        "local": 1688
+      },
+      "counts": {
+        "sections": {
+          "original": 4,
+          "local": 4
+        },
+        "headings": {
+          "original": 8,
+          "local": 8
+        },
+        "ctas": {
+          "original": 5,
+          "local": 5
+        },
+        "buttons": {
+          "original": 0,
+          "local": 0
+        },
+        "images": {
+          "original": 23,
+          "local": 23
+        },
+        "forms": {
+          "original": 0,
+          "local": 0
+        }
+      },
+      "diffs": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "missingCtas": [
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [],
+        "extraForms": [],
+        "missingImages": [],
+        "extraImages": []
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/wedding-packages/siddhi",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 12204,
+        "local": 12335
+      },
+      "counts": {
+        "sections": {
+          "original": 29,
+          "local": 29
+        },
+        "headings": {
+          "original": 48,
+          "local": 48
+        },
+        "ctas": {
+          "original": 15,
+          "local": 15
+        },
+        "buttons": {
+          "original": 17,
+          "local": 16
+        },
+        "images": {
+          "original": 25,
+          "local": 25
+        },
+        "forms": {
+          "original": 1,
+          "local": 1
+        }
+      },
+      "diffs": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "missingCtas": [
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [
+          {
+            "action": "/get_in_touch/store",
+            "method": "post",
+            "id": "consultationForm",
+            "fields": [
+              {
+                "tag": "input",
+                "name": "_token",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "name",
+                "id": "",
+                "type": "text",
+                "placeholder": "Enter Name",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "email",
+                "id": "",
+                "type": "email",
+                "placeholder": "Enter Email",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "source_page",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "number",
+                "id": "",
+                "type": "tel",
+                "placeholder": "Enter Mobile Number",
+                "required": false
+              },
+              {
+                "tag": "textarea",
+                "name": "subject",
+                "id": "",
+                "type": "",
+                "placeholder": "Write your enquiry...",
+                "required": false
+              }
+            ]
+          }
+        ],
+        "extraForms": [
+          {
+            "action": "/get_in_touch/store",
+            "method": "post",
+            "id": "consultationForm",
+            "fields": [
+              {
+                "tag": "input",
+                "name": "name",
+                "id": "",
+                "type": "text",
+                "placeholder": "Enter Name",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "email",
+                "id": "",
+                "type": "email",
+                "placeholder": "Enter Email",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "source_page",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "number",
+                "id": "",
+                "type": "tel",
+                "placeholder": "Enter Mobile Number",
+                "required": false
+              },
+              {
+                "tag": "textarea",
+                "name": "subject",
+                "id": "",
+                "type": "",
+                "placeholder": "Write your enquiry...",
+                "required": false
+              }
+            ]
+          }
+        ],
+        "missingImages": [
+          {
+            "src": "/user/assets/images/f-icon03.svg",
+            "alt": "30+ Global Destinations"
+          }
+        ],
+        "extraImages": [
+          {
+            "src": "/user/assets/images/f-icon03.svg",
+            "alt": "30+ Indian Destinations"
+          }
+        ]
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/wedding-packages/shresht",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 11427,
+        "local": 11557
+      },
+      "counts": {
+        "sections": {
+          "original": 28,
+          "local": 28
+        },
+        "headings": {
+          "original": 57,
+          "local": 57
+        },
+        "ctas": {
+          "original": 15,
+          "local": 15
+        },
+        "buttons": {
+          "original": 20,
+          "local": 19
+        },
+        "images": {
+          "original": 24,
+          "local": 24
+        },
+        "forms": {
+          "original": 1,
+          "local": 1
+        }
+      },
+      "diffs": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "missingCtas": [
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [
+          {
+            "action": "/get_in_touch/store",
+            "method": "post",
+            "id": "consultationForm",
+            "fields": [
+              {
+                "tag": "input",
+                "name": "_token",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "name",
+                "id": "",
+                "type": "text",
+                "placeholder": "Enter Name",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "email",
+                "id": "",
+                "type": "email",
+                "placeholder": "Enter Email",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "source_page",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "number",
+                "id": "",
+                "type": "tel",
+                "placeholder": "Enter Mobile Number",
+                "required": false
+              },
+              {
+                "tag": "textarea",
+                "name": "subject",
+                "id": "",
+                "type": "",
+                "placeholder": "Write your enquiry...",
+                "required": false
+              }
+            ]
+          }
+        ],
+        "extraForms": [
+          {
+            "action": "/get_in_touch/store",
+            "method": "post",
+            "id": "consultationForm",
+            "fields": [
+              {
+                "tag": "input",
+                "name": "name",
+                "id": "",
+                "type": "text",
+                "placeholder": "Enter Name",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "email",
+                "id": "",
+                "type": "email",
+                "placeholder": "Enter Email",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "source_page",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "number",
+                "id": "",
+                "type": "tel",
+                "placeholder": "Enter Mobile Number",
+                "required": false
+              },
+              {
+                "tag": "textarea",
+                "name": "subject",
+                "id": "",
+                "type": "",
+                "placeholder": "Write your enquiry...",
+                "required": false
+              }
+            ]
+          }
+        ],
+        "missingImages": [
+          {
+            "src": "/user/assets/images/f-icon03.svg",
+            "alt": "30+ Global Destinations"
+          }
+        ],
+        "extraImages": [
+          {
+            "src": "/user/assets/images/f-icon03.svg",
+            "alt": "30+ Indian Destinations"
+          }
+        ]
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/wedding-packages/shobhana",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 10975,
+        "local": 11106
+      },
+      "counts": {
+        "sections": {
+          "original": 30,
+          "local": 30
+        },
+        "headings": {
+          "original": 49,
+          "local": 49
+        },
+        "ctas": {
+          "original": 15,
+          "local": 15
+        },
+        "buttons": {
+          "original": 18,
+          "local": 17
+        },
+        "images": {
+          "original": 25,
+          "local": 25
+        },
+        "forms": {
+          "original": 1,
+          "local": 1
+        }
+      },
+      "diffs": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "missingCtas": [
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [
+          {
+            "action": "/get_in_touch/store",
+            "method": "post",
+            "id": "consultationForm",
+            "fields": [
+              {
+                "tag": "input",
+                "name": "_token",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "name",
+                "id": "",
+                "type": "text",
+                "placeholder": "Enter Name",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "email",
+                "id": "",
+                "type": "email",
+                "placeholder": "Enter Email",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "source_page",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "number",
+                "id": "",
+                "type": "tel",
+                "placeholder": "Enter Mobile Number",
+                "required": false
+              },
+              {
+                "tag": "textarea",
+                "name": "subject",
+                "id": "",
+                "type": "",
+                "placeholder": "Write your enquiry...",
+                "required": false
+              }
+            ]
+          }
+        ],
+        "extraForms": [
+          {
+            "action": "/get_in_touch/store",
+            "method": "post",
+            "id": "consultationForm",
+            "fields": [
+              {
+                "tag": "input",
+                "name": "name",
+                "id": "",
+                "type": "text",
+                "placeholder": "Enter Name",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "email",
+                "id": "",
+                "type": "email",
+                "placeholder": "Enter Email",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "source_page",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "number",
+                "id": "",
+                "type": "tel",
+                "placeholder": "Enter Mobile Number",
+                "required": false
+              },
+              {
+                "tag": "textarea",
+                "name": "subject",
+                "id": "",
+                "type": "",
+                "placeholder": "Write your enquiry...",
+                "required": false
+              }
+            ]
+          }
+        ],
+        "missingImages": [
+          {
+            "src": "/user/assets/images/f-icon03.svg",
+            "alt": "30+ Global Destinations"
+          }
+        ],
+        "extraImages": [
+          {
+            "src": "/user/assets/images/f-icon03.svg",
+            "alt": "30+ Indian Destinations"
+          }
+        ]
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/hotel-listing",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 2063,
+        "local": 1861
+      },
+      "counts": {
+        "sections": {
+          "original": 51,
+          "local": 42
+        },
+        "headings": {
+          "original": 18,
+          "local": 17
+        },
+        "ctas": {
+          "original": 57,
+          "local": 57
+        },
+        "buttons": {
+          "original": 5,
+          "local": 4
+        },
+        "images": {
+          "original": 26,
+          "local": 26
+        },
+        "forms": {
+          "original": 2,
+          "local": 2
+        }
+      },
+      "diffs": {
+        "missingHeadings": [
+          {
+            "tag": "h2",
+            "text": "Country",
+            "comparable": "h2:Country"
+          },
+          {
+            "tag": "h4",
+            "text": "Atlantis The Palm Dubai",
+            "comparable": "h4:Atlantis The Palm Dubai"
+          },
+          {
+            "tag": "h4",
+            "text": "Fairmont Dubai",
+            "comparable": "h4:Fairmont Dubai"
+          },
+          {
+            "tag": "h4",
+            "text": "JW Marriott Phuket Resort",
+            "comparable": "h4:JW Marriott Phuket Resort"
+          },
+          {
+            "tag": "h4",
+            "text": "Raffles The Palm Dubai",
+            "comparable": "h4:Raffles The Palm Dubai"
+          },
+          {
+            "tag": "h4",
+            "text": "The Ritz Carlton Ras Al",
+            "comparable": "h4:The Ritz Carlton Ras Al"
+          },
+          {
+            "tag": "h4",
+            "text": "Aahana Resort Luxury resorts",
+            "comparable": "h4:Aahana Resort Luxury resorts"
+          }
+        ],
+        "extraHeadings": [
+          {
+            "tag": "h4",
+            "text": "Aahana Resort Luxury resorts in Jim Corbett",
+            "comparable": "h4:Aahana Resort Luxury resorts in Jim Corbett"
+          },
+          {
+            "tag": "h4",
+            "text": "Courtyard by Marriott Agra",
+            "comparable": "h4:Courtyard by Marriott Agra"
+          },
+          {
+            "tag": "h4",
+            "text": "DoubleTree by Hilton Hotel Agra",
+            "comparable": "h4:DoubleTree by Hilton Hotel Agra"
+          },
+          {
+            "tag": "h4",
+            "text": "ITC Mughal Agra",
+            "comparable": "h4:ITC Mughal Agra"
+          },
+          {
+            "tag": "h4",
+            "text": "Jaypee Palace Hotel And Convention Centre Agra",
+            "comparable": "h4:Jaypee Palace Hotel And Convention Centre Agra"
+          },
+          {
+            "tag": "h4",
+            "text": "Laxmi Vilas Palace bharatpur",
+            "comparable": "h4:Laxmi Vilas Palace bharatpur"
+          }
+        ],
+        "missingCtas": [
+          {
+            "text": "",
+            "href": "/destination-wedding/dubai/atlantis-the-palm-dubai",
+            "key": " -> /destination-wedding/dubai/atlantis-the-palm-dubai"
+          },
+          {
+            "text": "Atlantis The Palm Dubai",
+            "href": "/destination-wedding/dubai/atlantis-the-palm-dubai",
+            "key": "Atlantis The Palm Dubai -> /destination-wedding/dubai/atlantis-the-palm-dubai"
+          },
+          {
+            "text": "DETAILS",
+            "href": "/destination-wedding/dubai/atlantis-the-palm-dubai",
+            "key": "DETAILS -> /destination-wedding/dubai/atlantis-the-palm-dubai"
+          },
+          {
+            "text": "",
+            "href": "/destination-wedding/dubai/fairmont-dubai",
+            "key": " -> /destination-wedding/dubai/fairmont-dubai"
+          },
+          {
+            "text": "Fairmont Dubai",
+            "href": "/destination-wedding/dubai/fairmont-dubai",
+            "key": "Fairmont Dubai -> /destination-wedding/dubai/fairmont-dubai"
+          },
+          {
+            "text": "DETAILS",
+            "href": "/destination-wedding/dubai/fairmont-dubai",
+            "key": "DETAILS -> /destination-wedding/dubai/fairmont-dubai"
+          },
+          {
+            "text": "",
+            "href": "/destination-wedding/phuket/jw-marriott-phuket-resort-and-spa",
+            "key": " -> /destination-wedding/phuket/jw-marriott-phuket-resort-and-spa"
+          },
+          {
+            "text": "JW Marriott Phuket Resort",
+            "href": "/destination-wedding/phuket/jw-marriott-phuket-resort-and-spa",
+            "key": "JW Marriott Phuket Resort -> /destination-wedding/phuket/jw-marriott-phuket-resort-and-spa"
+          },
+          {
+            "text": "DETAILS",
+            "href": "/destination-wedding/phuket/jw-marriott-phuket-resort-and-spa",
+            "key": "DETAILS -> /destination-wedding/phuket/jw-marriott-phuket-resort-and-spa"
+          },
+          {
+            "text": "",
+            "href": "/destination-wedding/dubai/raffles-the-palm-dubai",
+            "key": " -> /destination-wedding/dubai/raffles-the-palm-dubai"
+          },
+          {
+            "text": "Raffles The Palm Dubai",
+            "href": "/destination-wedding/dubai/raffles-the-palm-dubai",
+            "key": "Raffles The Palm Dubai -> /destination-wedding/dubai/raffles-the-palm-dubai"
+          },
+          {
+            "text": "DETAILS",
+            "href": "/destination-wedding/dubai/raffles-the-palm-dubai",
+            "key": "DETAILS -> /destination-wedding/dubai/raffles-the-palm-dubai"
+          },
+          {
+            "text": "",
+            "href": "/destination-wedding/ras-al-khaimah/the-ritz-carlton-ras-al-khaimah-al-wadi-desert",
+            "key": " -> /destination-wedding/ras-al-khaimah/the-ritz-carlton-ras-al-khaimah-al-wadi-desert"
+          },
+          {
+            "text": "The Ritz Carlton Ras Al",
+            "href": "/destination-wedding/ras-al-khaimah/the-ritz-carlton-ras-al-khaimah-al-wadi-desert",
+            "key": "The Ritz Carlton Ras Al -> /destination-wedding/ras-al-khaimah/the-ritz-carlton-ras-al-khaimah-al-wadi-desert"
+          },
+          {
+            "text": "DETAILS",
+            "href": "/destination-wedding/ras-al-khaimah/the-ritz-carlton-ras-al-khaimah-al-wadi-desert",
+            "key": "DETAILS -> /destination-wedding/ras-al-khaimah/the-ritz-carlton-ras-al-khaimah-al-wadi-desert"
+          },
+          {
+            "text": "Aahana Resort Luxury resorts",
+            "href": "/destination-wedding/jim-corbett/aahana-resort-luxury-resorts-in-jim-corbett",
+            "key": "Aahana Resort Luxury resorts -> /destination-wedding/jim-corbett/aahana-resort-luxury-resorts-in-jim-corbett"
+          },
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "Aahana Resort Luxury resorts in Jim Corbett",
+            "href": "/destination-wedding/jim-corbett/aahana-resort-luxury-resorts-in-jim-corbett",
+            "key": "Aahana Resort Luxury resorts in Jim Corbett -> /destination-wedding/jim-corbett/aahana-resort-luxury-resorts-in-jim-corbett"
+          },
+          {
+            "text": "",
+            "href": "/destination-wedding/agra/courtyard-by-marriott-agra",
+            "key": " -> /destination-wedding/agra/courtyard-by-marriott-agra"
+          },
+          {
+            "text": "Courtyard by Marriott Agra",
+            "href": "/destination-wedding/agra/courtyard-by-marriott-agra",
+            "key": "Courtyard by Marriott Agra -> /destination-wedding/agra/courtyard-by-marriott-agra"
+          },
+          {
+            "text": "DETAILS",
+            "href": "/destination-wedding/agra/courtyard-by-marriott-agra",
+            "key": "DETAILS -> /destination-wedding/agra/courtyard-by-marriott-agra"
+          },
+          {
+            "text": "",
+            "href": "/destination-wedding/agra/doubletree-by-hilton-hotel-agra",
+            "key": " -> /destination-wedding/agra/doubletree-by-hilton-hotel-agra"
+          },
+          {
+            "text": "DoubleTree by Hilton Hotel Agra",
+            "href": "/destination-wedding/agra/doubletree-by-hilton-hotel-agra",
+            "key": "DoubleTree by Hilton Hotel Agra -> /destination-wedding/agra/doubletree-by-hilton-hotel-agra"
+          },
+          {
+            "text": "DETAILS",
+            "href": "/destination-wedding/agra/doubletree-by-hilton-hotel-agra",
+            "key": "DETAILS -> /destination-wedding/agra/doubletree-by-hilton-hotel-agra"
+          },
+          {
+            "text": "",
+            "href": "/destination-wedding/agra/itc-mughal-agra",
+            "key": " -> /destination-wedding/agra/itc-mughal-agra"
+          },
+          {
+            "text": "ITC Mughal Agra",
+            "href": "/destination-wedding/agra/itc-mughal-agra",
+            "key": "ITC Mughal Agra -> /destination-wedding/agra/itc-mughal-agra"
+          },
+          {
+            "text": "DETAILS",
+            "href": "/destination-wedding/agra/itc-mughal-agra",
+            "key": "DETAILS -> /destination-wedding/agra/itc-mughal-agra"
+          },
+          {
+            "text": "",
+            "href": "/destination-wedding/agra/jaypee-palace-hotel-and-convention-centre-agra",
+            "key": " -> /destination-wedding/agra/jaypee-palace-hotel-and-convention-centre-agra"
+          },
+          {
+            "text": "Jaypee Palace Hotel And Convention Centre Agra",
+            "href": "/destination-wedding/agra/jaypee-palace-hotel-and-convention-centre-agra",
+            "key": "Jaypee Palace Hotel And Convention Centre Agra -> /destination-wedding/agra/jaypee-palace-hotel-and-convention-centre-agra"
+          },
+          {
+            "text": "DETAILS",
+            "href": "/destination-wedding/agra/jaypee-palace-hotel-and-convention-centre-agra",
+            "key": "DETAILS -> /destination-wedding/agra/jaypee-palace-hotel-and-convention-centre-agra"
+          },
+          {
+            "text": "",
+            "href": "/destination-wedding/agra/laxmi-vilas-palace-bharatpur",
+            "key": " -> /destination-wedding/agra/laxmi-vilas-palace-bharatpur"
+          },
+          {
+            "text": "Laxmi Vilas Palace bharatpur",
+            "href": "/destination-wedding/agra/laxmi-vilas-palace-bharatpur",
+            "key": "Laxmi Vilas Palace bharatpur -> /destination-wedding/agra/laxmi-vilas-palace-bharatpur"
+          },
+          {
+            "text": "DETAILS",
+            "href": "/destination-wedding/agra/laxmi-vilas-palace-bharatpur",
+            "key": "DETAILS -> /destination-wedding/agra/laxmi-vilas-palace-bharatpur"
+          },
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [
+          {
+            "action": "/hotel-listing",
+            "method": "get",
+            "id": "filterForm",
+            "fields": [
+              {
+                "tag": "input",
+                "name": "countries[]",
+                "id": "country_8",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "countries[]",
+                "id": "country_2",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "countries[]",
+                "id": "country_9",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "countries[]",
+                "id": "country_10",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "countries[]",
+                "id": "country_11",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "countries[]",
+                "id": "country_7",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "countries[]",
+                "id": "country_5",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "countries[]",
+                "id": "country_4",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "countries[]",
+                "id": "country_6",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "room_ranges[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "room_ranges[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "room_ranges[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "room_ranges[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "room_ranges[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "guest_capacities[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "guest_capacities[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "guest_capacities[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "guest_capacities[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "guest_capacities[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "guest_capacities[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "guest_capacities[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "wedding_types[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "wedding_types[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "wedding_types[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "wedding_types[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "wedding_types[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "wedding_types[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              }
+            ]
+          },
+          {
+            "action": "/get_in_touch/store",
+            "method": "post",
+            "id": "",
+            "fields": [
+              {
+                "tag": "input",
+                "name": "_token",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "name",
+                "id": "",
+                "type": "text",
+                "placeholder": "Type your Name*",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "email",
+                "id": "",
+                "type": "email",
+                "placeholder": "Type your Email*",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "number",
+                "id": "",
+                "type": "text",
+                "placeholder": "Type your Mobile No.*",
+                "required": false
+              },
+              {
+                "tag": "textarea",
+                "name": "message",
+                "id": "",
+                "type": "",
+                "placeholder": "Type your Message*",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "subject",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              }
+            ]
+          }
+        ],
+        "extraForms": [
+          {
+            "action": "/hotel-listing",
+            "method": "get",
+            "id": "filterForm",
+            "fields": [
+              {
+                "tag": "input",
+                "name": "room_ranges[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "room_ranges[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "room_ranges[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "room_ranges[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "room_ranges[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "guest_capacities[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "guest_capacities[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "guest_capacities[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "guest_capacities[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "guest_capacities[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "guest_capacities[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "guest_capacities[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "wedding_types[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "wedding_types[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "wedding_types[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "wedding_types[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "wedding_types[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "wedding_types[]",
+                "id": "",
+                "type": "checkbox",
+                "placeholder": "",
+                "required": false
+              }
+            ]
+          },
+          {
+            "action": "/get_in_touch/store",
+            "method": "post",
+            "id": "",
+            "fields": [
+              {
+                "tag": "input",
+                "name": "name",
+                "id": "",
+                "type": "text",
+                "placeholder": "Type your Name*",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "email",
+                "id": "",
+                "type": "email",
+                "placeholder": "Type your Email*",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "number",
+                "id": "",
+                "type": "text",
+                "placeholder": "Type your Mobile No.*",
+                "required": false
+              },
+              {
+                "tag": "textarea",
+                "name": "message",
+                "id": "",
+                "type": "",
+                "placeholder": "Type your Message*",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "subject",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              }
+            ]
+          }
+        ],
+        "missingImages": [
+          {
+            "src": "/storage/hotels/thumbnails/qeCLoxOIzazgZD9itz3IAb88Autf66k4ylnnpZ5v.png",
+            "alt": "Atlantis The Palm Dubai"
+          },
+          {
+            "src": "/storage/hotels/thumbnails/CujhjYKnC9opTDDCrNz5S6ysCuwY5zeQGfwv1Q6P.png",
+            "alt": "Fairmont Dubai"
+          },
+          {
+            "src": "/storage/hotels/thumbnails/pq1aKvLUAVDxCXatthkQoRY9ce2NgCIagLJbGOpU.jpg",
+            "alt": "JW Marriott Phuket Resort And Spa"
+          },
+          {
+            "src": "/storage/hotels/thumbnails/yypRacz5N4CE8JesO6r4lCMqh9Vfh90r1jGD6cW3.png",
+            "alt": "Raffles The Palm Dubai"
+          },
+          {
+            "src": "/storage/hotels/thumbnails/wrjSYVjLFw08CjBJVCmu9HERrUoIoyIWDxSwUSF2.png",
+            "alt": "The Ritz Carlton Ras Al Khaimah Al Wadi Desert"
+          }
+        ],
+        "extraImages": [
+          {
+            "src": "/storage/hotels/thumbnails/Rob4BYlR1qTHbnZQMalclcoeVRhhluhNjMzaEjAr.png",
+            "alt": "Courtyard by Marriott Agra"
+          },
+          {
+            "src": "/storage/hotels/thumbnails/5wvjuaSJ5XAW36KphI6PCG7WEUDmn8YhvY2k5MPs.png",
+            "alt": "DoubleTree by Hilton Hotel Agra"
+          },
+          {
+            "src": "/storage/hotels/thumbnails/h1Z8z1uFUxEDbat7mTLug8WnklTWR82L5pQB1OCk.jpg",
+            "alt": "ITC Mughal Agra"
+          },
+          {
+            "src": "/storage/hotels/thumbnails/LemBaHF1SXhvTwlEIZ0K3X9FVLUIeVLTEcOSmkK2.jpg",
+            "alt": "Jaypee Palace Hotel And Convention Centre Agra"
+          },
+          {
+            "src": "/storage/hotels/thumbnails/5wYd5zvBzwnChemd1aQ74zYb8iPsxb1VdtNOrWVl.png",
+            "alt": "Laxmi Vilas Palace bharatpur"
+          }
+        ]
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/hotel-cost-calculator",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 2652,
+        "local": 2499
+      },
+      "counts": {
+        "sections": {
+          "original": 11,
+          "local": 11
+        },
+        "headings": {
+          "original": 7,
+          "local": 7
+        },
+        "ctas": {
+          "original": 3,
+          "local": 3
+        },
+        "buttons": {
+          "original": 1,
+          "local": 1
+        },
+        "images": {
+          "original": 9,
+          "local": 9
+        },
+        "forms": {
+          "original": 0,
+          "local": 0
+        }
+      },
+      "diffs": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "missingCtas": [
+          {
+            "text": "Book an expert consultation",
+            "href": "/appointment-booking",
+            "key": "Book an expert consultation -> /appointment-booking"
+          },
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "Book an expert consultation",
+            "href": "/wedding-consultation",
+            "key": "Book an expert consultation -> /wedding-consultation"
+          },
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [],
+        "extraForms": [],
+        "missingImages": [],
+        "extraImages": []
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/check-hotel-availability",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 4333,
+        "local": 4412
+      },
+      "counts": {
+        "sections": {
+          "original": 31,
+          "local": 31
+        },
+        "headings": {
+          "original": 27,
+          "local": 27
+        },
+        "ctas": {
+          "original": 3,
+          "local": 3
+        },
+        "buttons": {
+          "original": 6,
+          "local": 6
+        },
+        "images": {
+          "original": 30,
+          "local": 30
+        },
+        "forms": {
+          "original": 0,
+          "local": 0
+        }
+      },
+      "diffs": {
+        "missingHeadings": [
+          {
+            "tag": "h4",
+            "text": "Complete Booking",
+            "comparable": "h4:Complete Booking"
+          },
+          {
+            "tag": "h4",
+            "text": "Choose 500+ Hotels",
+            "comparable": "h4:Choose 500+ Hotels"
+          },
+          {
+            "tag": "h5",
+            "text": "30+ Global Destinations",
+            "comparable": "h5:30+ Global Destinations"
+          }
+        ],
+        "extraHeadings": [
+          {
+            "tag": "h4",
+            "text": "Submit Availability Request",
+            "comparable": "h4:Submit Availability Request"
+          },
+          {
+            "tag": "h4",
+            "text": "Choose 250+ Indian Hotels",
+            "comparable": "h4:Choose 250+ Indian Hotels"
+          },
+          {
+            "tag": "h5",
+            "text": "30+ Indian Destinations",
+            "comparable": "h5:30+ Indian Destinations"
+          }
+        ],
+        "missingCtas": [
+          {
+            "text": "Browse Our 500+ Venues",
+            "href": "#",
+            "key": "Browse Our 500+ Venues -> #"
+          },
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "Browse Our Indian Venues",
+            "href": "/hotel-listing",
+            "key": "Browse Our Indian Venues -> /hotel-listing"
+          },
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [],
+        "extraForms": [],
+        "missingImages": [
+          {
+            "src": "/user/assets/images/f-icon03.svg",
+            "alt": "30+ Global Destinations"
+          }
+        ],
+        "extraImages": [
+          {
+            "src": "/user/assets/images/f-icon03.svg",
+            "alt": "30+ Indian Destinations"
+          }
+        ]
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/wedding-consultation",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 10272,
+        "local": 10317
+      },
+      "counts": {
+        "sections": {
+          "original": 32,
+          "local": 30
+        },
+        "headings": {
+          "original": 42,
+          "local": 41
+        },
+        "ctas": {
+          "original": 7,
+          "local": 8
+        },
+        "buttons": {
+          "original": 11,
+          "local": 10
+        },
+        "images": {
+          "original": 26,
+          "local": 26
+        },
+        "forms": {
+          "original": 1,
+          "local": 1
+        }
+      },
+      "diffs": {
+        "missingHeadings": [
+          {
+            "tag": "h2",
+            "text": "Book Your Consultation Slot",
+            "comparable": "h2:Book Your Consultation Slot"
+          },
+          {
+            "tag": "h3",
+            "text": "Choose Your Date & Time",
+            "comparable": "h3:Choose Your Date & Time"
+          },
+          {
+            "tag": "h5",
+            "text": "Time-Slot",
+            "comparable": "h5:Time-Slot"
+          },
+          {
+            "tag": "h2",
+            "text": "Book Your Consultation Slot",
+            "comparable": "h2:Book Your Consultation Slot"
+          },
+          {
+            "tag": "h4",
+            "text": "Select Your Slot",
+            "comparable": "h4:Select Your Slot"
+          },
+          {
+            "tag": "h5",
+            "text": "Global Destination Portfolio",
+            "comparable": "h5:Global Destination Portfolio"
+          }
+        ],
+        "extraHeadings": [
+          {
+            "tag": "h2",
+            "text": "Book Your Consultation",
+            "comparable": "h2:Book Your Consultation"
+          },
+          {
+            "tag": "h3",
+            "text": "Start With a Private Consultation",
+            "comparable": "h3:Start With a Private Consultation"
+          },
+          {
+            "tag": "h2",
+            "text": "Book Your Consultation",
+            "comparable": "h2:Book Your Consultation"
+          },
+          {
+            "tag": "h4",
+            "text": "Share Your Details",
+            "comparable": "h4:Share Your Details"
+          },
+          {
+            "tag": "h5",
+            "text": "Indian Destination Portfolio",
+            "comparable": "h5:Indian Destination Portfolio"
+          }
+        ],
+        "missingCtas": [
+          {
+            "text": "Speak to our expert",
+            "href": "#slot",
+            "key": "Speak to our expert -> #slot"
+          },
+          {
+            "text": "Book Your Slot",
+            "href": "#slot",
+            "key": "Book Your Slot -> #slot"
+          },
+          {
+            "text": "Book Your Slot",
+            "href": "#slot",
+            "key": "Book Your Slot -> #slot"
+          },
+          {
+            "text": "Book Your Slot",
+            "href": "#slot",
+            "key": "Book Your Slot -> #slot"
+          },
+          {
+            "text": "Let's Plan This Together",
+            "href": "#slot",
+            "key": "Let's Plan This Together -> #slot"
+          },
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "Book a Consultation",
+            "href": "#consultationForm",
+            "key": "Book a Consultation -> #consultationForm"
+          },
+          {
+            "text": "Book a Consultation",
+            "href": "#consultationForm",
+            "key": "Book a Consultation -> #consultationForm"
+          },
+          {
+            "text": "Book a Consultation",
+            "href": "#consultationForm",
+            "key": "Book a Consultation -> #consultationForm"
+          },
+          {
+            "text": "Book a Consultation",
+            "href": "#consultationForm",
+            "key": "Book a Consultation -> #consultationForm"
+          },
+          {
+            "text": "Book a Consultation",
+            "href": "#consultationForm",
+            "key": "Book a Consultation -> #consultationForm"
+          },
+          {
+            "text": "Let's Plan This Together",
+            "href": "#consultationForm",
+            "key": "Let's Plan This Together -> #consultationForm"
+          },
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [
+          {
+            "action": "",
+            "method": "get",
+            "id": "paymentForm",
+            "fields": [
+              {
+                "tag": "input",
+                "name": "appointment_date",
+                "id": "appointmentDate",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "appointment_time",
+                "id": "appointmentTime",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "name",
+                "id": "",
+                "type": "text",
+                "placeholder": "Your Name",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "email",
+                "id": "",
+                "type": "email",
+                "placeholder": "Email Address",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "number",
+                "id": "",
+                "type": "text",
+                "placeholder": "Phone Number",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "city",
+                "id": "",
+                "type": "text",
+                "placeholder": "City",
+                "required": false
+              }
+            ]
+          }
+        ],
+        "extraForms": [
+          {
+            "action": "/contact/save",
+            "method": "post",
+            "id": "consultationForm",
+            "fields": [
+              {
+                "tag": "input",
+                "name": "enquiry_type",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "name",
+                "id": "",
+                "type": "text",
+                "placeholder": "Your Name",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "email",
+                "id": "",
+                "type": "email",
+                "placeholder": "Email Address",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "number",
+                "id": "",
+                "type": "text",
+                "placeholder": "Phone Number",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "city",
+                "id": "",
+                "type": "text",
+                "placeholder": "City",
+                "required": false
+              }
+            ]
+          }
+        ],
+        "missingImages": [
+          {
+            "src": "/storage/appointment/ns0wJwf4VqiabGIvSw1Lr6p5sCWUrimvSZC8bSVl.jpg",
+            "alt": ""
+          },
+          {
+            "src": "/storage/appointment/MCmzATmFSD5rHx8zjuyn2vtt9AZvXF2AygPY8P8R.jpg",
+            "alt": ""
+          },
+          {
+            "src": "/storage/appointment/S4MDf30OOOEueBXndLEwwaKYM1FFw5KPYbuQUATE.jpg",
+            "alt": ""
+          },
+          {
+            "src": "/storage/appointment/S9QmHIu2Rac9DfQeMqlzkxSoohry9Aqzuc41TKwt.jpg",
+            "alt": ""
+          },
+          {
+            "src": "/storage/appointment/mfVqY5MFUjnCgQ21bmNSlRnmmj6eelI4kumpUCFr.jpg",
+            "alt": ""
+          },
+          {
+            "src": "/storage/appointment/4PKw3vH6ZIRhphqfdn53EBFXqfpT10IV0I3Dbwdy.jpg",
+            "alt": ""
+          },
+          {
+            "src": "/storage/appointment/ef4o6pKR6J7QgukHaK1fyDgcAqOen2Q3y9ye4zJS.jpg",
+            "alt": ""
+          },
+          {
+            "src": "/storage/appointment/JfYj1yiYYc7s4Fwa33qVmxk5t4r8tB1XfsqpyZJy.png",
+            "alt": "Global Destination Portfolio"
+          }
+        ],
+        "extraImages": [
+          {
+            "src": "/storage/appointment/ns0wJwf4VqiabGIvSw1Lr6p5sCWUrimvSZC8bSVl.jpg",
+            "alt": "Wedding consultation planning"
+          },
+          {
+            "src": "/storage/appointment/MCmzATmFSD5rHx8zjuyn2vtt9AZvXF2AygPY8P8R.jpg",
+            "alt": "Wedding consultation planning"
+          },
+          {
+            "src": "/storage/appointment/S4MDf30OOOEueBXndLEwwaKYM1FFw5KPYbuQUATE.jpg",
+            "alt": "Wedding consultation planning"
+          },
+          {
+            "src": "/storage/appointment/S9QmHIu2Rac9DfQeMqlzkxSoohry9Aqzuc41TKwt.jpg",
+            "alt": "Wedding consultation planning"
+          },
+          {
+            "src": "/storage/appointment/mfVqY5MFUjnCgQ21bmNSlRnmmj6eelI4kumpUCFr.jpg",
+            "alt": "Wedding consultation planning"
+          },
+          {
+            "src": "/storage/appointment/4PKw3vH6ZIRhphqfdn53EBFXqfpT10IV0I3Dbwdy.jpg",
+            "alt": "Wedding consultation planning"
+          },
+          {
+            "src": "/storage/appointment/ef4o6pKR6J7QgukHaK1fyDgcAqOen2Q3y9ye4zJS.jpg",
+            "alt": "Wedding consultation planning"
+          },
+          {
+            "src": "/storage/appointment/JfYj1yiYYc7s4Fwa33qVmxk5t4r8tB1XfsqpyZJy.png",
+            "alt": "Indian Destination Portfolio"
+          }
+        ]
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/real-weddings",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 253,
+        "local": 253
+      },
+      "counts": {
+        "sections": {
+          "original": 15,
+          "local": 15
+        },
+        "headings": {
+          "original": 1,
+          "local": 1
+        },
+        "ctas": {
+          "original": 6,
+          "local": 6
+        },
+        "buttons": {
+          "original": 0,
+          "local": 0
+        },
+        "images": {
+          "original": 14,
+          "local": 14
+        },
+        "forms": {
+          "original": 0,
+          "local": 0
+        }
+      },
+      "diffs": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "missingCtas": [
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [],
+        "extraForms": [],
+        "missingImages": [],
+        "extraImages": []
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/real-weddings/aarav-meera",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 1601,
+        "local": 1625
+      },
+      "counts": {
+        "sections": {
+          "original": 10,
+          "local": 10
+        },
+        "headings": {
+          "original": 10,
+          "local": 10
+        },
+        "ctas": {
+          "original": 15,
+          "local": 15
+        },
+        "buttons": {
+          "original": 0,
+          "local": 0
+        },
+        "images": {
+          "original": 20,
+          "local": 20
+        },
+        "forms": {
+          "original": 0,
+          "local": 0
+        }
+      },
+      "diffs": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "missingCtas": [
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [],
+        "extraForms": [],
+        "missingImages": [],
+        "extraImages": []
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/real-weddings/kashyap-prachi",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 1727,
+        "local": 1743
+      },
+      "counts": {
+        "sections": {
+          "original": 10,
+          "local": 10
+        },
+        "headings": {
+          "original": 10,
+          "local": 10
+        },
+        "ctas": {
+          "original": 12,
+          "local": 12
+        },
+        "buttons": {
+          "original": 0,
+          "local": 0
+        },
+        "images": {
+          "original": 17,
+          "local": 17
+        },
+        "forms": {
+          "original": 0,
+          "local": 0
+        }
+      },
+      "diffs": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "missingCtas": [
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [],
+        "extraForms": [],
+        "missingImages": [],
+        "extraImages": []
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/real-weddings/ramneek-harleen",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 1509,
+        "local": 1533
+      },
+      "counts": {
+        "sections": {
+          "original": 10,
+          "local": 10
+        },
+        "headings": {
+          "original": 10,
+          "local": 10
+        },
+        "ctas": {
+          "original": 20,
+          "local": 20
+        },
+        "buttons": {
+          "original": 0,
+          "local": 0
+        },
+        "images": {
+          "original": 25,
+          "local": 25
+        },
+        "forms": {
+          "original": 0,
+          "local": 0
+        }
+      },
+      "diffs": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "missingCtas": [
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [],
+        "extraForms": [],
+        "missingImages": [],
+        "extraImages": []
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/real-weddings/rohan-aanya",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 1527,
+        "local": 1551
+      },
+      "counts": {
+        "sections": {
+          "original": 10,
+          "local": 10
+        },
+        "headings": {
+          "original": 10,
+          "local": 10
+        },
+        "ctas": {
+          "original": 14,
+          "local": 14
+        },
+        "buttons": {
+          "original": 0,
+          "local": 0
+        },
+        "images": {
+          "original": 19,
+          "local": 19
+        },
+        "forms": {
+          "original": 0,
+          "local": 0
+        }
+      },
+      "diffs": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "missingCtas": [
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [],
+        "extraForms": [],
+        "missingImages": [],
+        "extraImages": []
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/about-us",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 4162,
+        "local": 4194
+      },
+      "counts": {
+        "sections": {
+          "original": 20,
+          "local": 20
+        },
+        "headings": {
+          "original": 10,
+          "local": 10
+        },
+        "ctas": {
+          "original": 3,
+          "local": 3
+        },
+        "buttons": {
+          "original": 0,
+          "local": 0
+        },
+        "images": {
+          "original": 14,
+          "local": 14
+        },
+        "forms": {
+          "original": 0,
+          "local": 0
+        }
+      },
+      "diffs": {
+        "missingHeadings": [
+          {
+            "tag": "h3",
+            "text": "Why Choose Why Choose Vivahnam",
+            "comparable": "h3:Why Choose Why Choose BRAND"
+          }
+        ],
+        "extraHeadings": [
+          {
+            "tag": "h3",
+            "text": "Why Choose Viraaya Weddings",
+            "comparable": "h3:Why Choose BRAND"
+          }
+        ],
+        "missingCtas": [
+          {
+            "text": "Book an Expert Consultation",
+            "href": "/appointment-booking",
+            "key": "Book an Expert Consultation -> /appointment-booking"
+          },
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "Book an Expert Consultation",
+            "href": "/wedding-consultation",
+            "key": "Book an Expert Consultation -> /wedding-consultation"
+          },
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [],
+        "extraForms": [],
+        "missingImages": [],
+        "extraImages": []
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    },
+    {
+      "route": "/contact",
+      "originalStatus": 200,
+      "localStatus": 200,
+      "textLength": {
+        "original": 360,
+        "local": 374
+      },
+      "counts": {
+        "sections": {
+          "original": 11,
+          "local": 11
+        },
+        "headings": {
+          "original": 6,
+          "local": 6
+        },
+        "ctas": {
+          "original": 2,
+          "local": 2
+        },
+        "buttons": {
+          "original": 1,
+          "local": 1
+        },
+        "images": {
+          "original": 2,
+          "local": 2
+        },
+        "forms": {
+          "original": 1,
+          "local": 1
+        }
+      },
+      "diffs": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "missingCtas": [
+          {
+            "text": "",
+            "href": "https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0",
+            "key": " -> https://api.whatsapp.com/send/?phone=%2B919540005658&text&type=phone_number&app_absent=0"
+          }
+        ],
+        "extraCtas": [
+          {
+            "text": "",
+            "href": "https://wa.me/918130222141",
+            "key": " -> https://wa.me/918130222141"
+          }
+        ],
+        "missingForms": [
+          {
+            "action": "/contact/save",
+            "method": "post",
+            "id": "contactForm",
+            "fields": [
+              {
+                "tag": "input",
+                "name": "_token",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "name",
+                "id": "",
+                "type": "text",
+                "placeholder": "Enter your name",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "email",
+                "id": "",
+                "type": "email",
+                "placeholder": "Enter your email",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "source_page",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "number",
+                "id": "",
+                "type": "number",
+                "placeholder": "Enter your phone",
+                "required": false
+              },
+              {
+                "tag": "select",
+                "name": "subject",
+                "id": "",
+                "type": "",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "textarea",
+                "name": "message",
+                "id": "",
+                "type": "",
+                "placeholder": "Message",
+                "required": false
+              }
+            ]
+          }
+        ],
+        "extraForms": [
+          {
+            "action": "/contact/save",
+            "method": "post",
+            "id": "contactForm",
+            "fields": [
+              {
+                "tag": "input",
+                "name": "name",
+                "id": "",
+                "type": "text",
+                "placeholder": "Enter your name",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "email",
+                "id": "",
+                "type": "email",
+                "placeholder": "Enter your email",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "source_page",
+                "id": "",
+                "type": "hidden",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "input",
+                "name": "number",
+                "id": "",
+                "type": "number",
+                "placeholder": "Enter your phone",
+                "required": false
+              },
+              {
+                "tag": "select",
+                "name": "subject",
+                "id": "",
+                "type": "",
+                "placeholder": "",
+                "required": false
+              },
+              {
+                "tag": "textarea",
+                "name": "message",
+                "id": "",
+                "type": "",
+                "placeholder": "Message",
+                "required": false
+              }
+            ]
+          }
+        ],
+        "missingImages": [],
+        "extraImages": []
+      },
+      "localHealth": {
+        "brokenLinks": [],
+        "brokenImages": []
+      }
+    }
+  ],
+  "summary": {
+    "routesChecked": 16,
+    "routesNotOk": [],
+    "routesWithBrokenLocalLinks": [],
+    "routesWithBrokenLocalImages": [],
+    "routesWithFormDiffs": [
+      "/wedding-packages/siddhi",
+      "/wedding-packages/shresht",
+      "/wedding-packages/shobhana",
+      "/hotel-listing",
+      "/wedding-consultation",
+      "/contact"
+    ],
+    "routesWithHeadingDiffs": [
+      "/hotel-listing",
+      "/check-hotel-availability",
+      "/wedding-consultation",
+      "/about-us"
+    ],
+    "routesWithCtaDiffs": [
+      "/wedding-packages",
+      "/package",
+      "/wedding-packages/siddhi",
+      "/wedding-packages/shresht",
+      "/wedding-packages/shobhana",
+      "/hotel-listing",
+      "/hotel-cost-calculator",
+      "/check-hotel-availability",
+      "/wedding-consultation",
+      "/real-weddings",
+      "/real-weddings/aarav-meera",
+      "/real-weddings/kashyap-prachi",
+      "/real-weddings/ramneek-harleen",
+      "/real-weddings/rohan-aanya",
+      "/about-us",
+      "/contact"
+    ],
+    "routesWithImageDiffs": [
+      "/wedding-packages/siddhi",
+      "/wedding-packages/shresht",
+      "/wedding-packages/shobhana",
+      "/hotel-listing",
+      "/check-hotel-availability",
+      "/wedding-consultation"
+    ]
+  }
+}

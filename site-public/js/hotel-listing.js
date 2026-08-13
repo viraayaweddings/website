@@ -53,6 +53,13 @@
         return '';
     }
 
+    function routeCityId(data) {
+        const pathCity = currentCitySlug();
+        if (!pathCity) return '';
+        const city = data.cities.find((item) => slug(item.name) === pathCity);
+        return city ? String(city.id) : '';
+    }
+
     function readState(data) {
         const params = new URLSearchParams(window.location.search);
         const cityIds = new Set(params.getAll('city_ids[]').concat(params.getAll('city_ids')));
@@ -180,9 +187,13 @@
         return items.join('');
     }
 
-    function updateUrl(state) {
+    function updateUrl(state, baseCityId) {
         const params = new URLSearchParams();
-        state.cityIds.forEach((id) => params.append('city_ids[]', id));
+        state.cityIds.forEach((id) => {
+            if (!baseCityId || String(id) !== String(baseCityId)) {
+                params.append('city_ids[]', id);
+            }
+        });
         selectedValues('room_ranges[]').forEach((value) => params.append('room_ranges[]', value));
         selectedValues('guest_capacities[]').forEach((value) => params.append('guest_capacities[]', value));
         selectedValues('wedding_types[]').forEach((value) => params.append('wedding_types[]', value));
@@ -196,9 +207,10 @@
         const form = qs('#filterForm');
         const grid = qs('.change-colm');
         const pagination = qs('.custom-pagination');
-        const summary = qs('#cityHiddenInputs')?.nextElementSibling?.querySelector('.text-muted') || qs('.filter-widget + #cityHiddenInputs + .row .text-muted');
+        const summary = qs('#hotelResultsSummary') || qs('#cityHiddenInputs')?.nextElementSibling?.querySelector('.text-muted') || qs('.filter-widget + #cityHiddenInputs + .row .text-muted');
         if (!form || !grid) return;
 
+        const baseCityId = routeCityId(data);
         let state = readState(data);
         syncControls(state);
 
@@ -230,7 +242,7 @@
                 });
             }
 
-            updateUrl(state);
+            updateUrl(state, baseCityId);
         }
 
         form.addEventListener('submit', (event) => {
@@ -252,11 +264,11 @@
             qsa('input[type="checkbox"]', form).forEach((input) => { input.checked = false; });
             const citySelect = qs('#cityMultiSelect');
             if (citySelect) {
-                Array.from(citySelect.options).forEach((option) => { option.selected = false; });
-                if (window.jQuery && window.jQuery.fn && window.jQuery.fn.select2) window.jQuery(citySelect).val(null).trigger('change.select2');
+                Array.from(citySelect.options).forEach((option) => { option.selected = baseCityId ? option.value === baseCityId : false; });
+                if (window.jQuery && window.jQuery.fn && window.jQuery.fn.select2) window.jQuery(citySelect).val(baseCityId ? [baseCityId] : null).trigger('change.select2');
             }
             if (qs('#hotelSearch')) qs('#hotelSearch').value = '';
-            render({ cityIds: [], query: '', page: 1 });
+            render({ cityIds: baseCityId ? [baseCityId] : [], query: '', page: 1 });
         });
 
         render(state);

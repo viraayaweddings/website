@@ -2,9 +2,7 @@
   var leadActions = new Set([
     "/api/lead",
     "/contact/save",
-    "/get_in_touch/store",
     "/blog-form-submit",
-    "/appointment/pay",
     "#",
     "",
   ]);
@@ -169,6 +167,7 @@
       metadata: {
         "Page Title": document.title,
         "Page URL": pageUrl,
+        "Source Page": fields.source_page || "",
         "Submission Endpoint": normalizeAction(form),
         "Referrer": document.referrer || "",
         "Browser": navigator.userAgent,
@@ -283,9 +282,10 @@
   document.addEventListener("click", function (event) {
     if (window.bootstrap && window.bootstrap.Modal) return;
 
-    var trigger = event.target.closest('[data-bs-toggle="modal"][data-bs-target="#BookConsultation"]');
+    var trigger = event.target.closest('[data-bs-toggle="modal"][data-bs-target="#BookConsultation"], [data-bs-toggle="modal"][data-bs-target="#enquiryModal"]');
     if (trigger) {
-      var modal = document.querySelector("#BookConsultation");
+      var target = trigger.getAttribute("data-bs-target") || "#BookConsultation";
+      var modal = document.querySelector(target);
       if (!modal) return;
       event.preventDefault();
       event.stopPropagation();
@@ -293,7 +293,7 @@
       return;
     }
 
-    var openModal = document.querySelector("#BookConsultation[data-fallback-open='true']");
+    var openModal = document.querySelector("#BookConsultation[data-fallback-open='true'], #enquiryModal[data-fallback-open='true']");
     if (!openModal) return;
 
     if (event.target.closest('[data-bs-dismiss="modal"]') || event.target === openModal) {
@@ -304,7 +304,7 @@
 
   document.addEventListener("keydown", function (event) {
     if (event.key !== "Escape") return;
-    hideFallbackModal(document.querySelector("#BookConsultation[data-fallback-open='true']"));
+    hideFallbackModal(document.querySelector("#BookConsultation[data-fallback-open='true'], #enquiryModal[data-fallback-open='true']"));
   });
 
   document.addEventListener("submit", function (event) {

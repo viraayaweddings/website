@@ -1,0 +1,182 @@
+
+ ⛅️ wrangler 4.120.0
+────────────────────
+[wrangler:warn] Unable to fetch the `Request.cf` object! Falling back to a default placeholder...
+Error: self-signed certificate in certificate chain
+    at TLSSocket.onConnectSecure (node:internal/tls/wrap:1649:34)
+    at TLSSocket.emit (node:events:508:28)
+    at TLSSocket.emit (node:domain:489:12)
+    at TLSSocket._finishInit (node:internal/tls/wrap:1095:8)
+    at ssl.onhandshakedone (node:internal/tls/wrap:881:12)
+Attaching additional modules:
+┌─────────────────────────────────────┬──────┬────────────┐
+│ Name                                │ Type │ Size       │
+├─────────────────────────────────────┼──────┼────────────┤
+│ ssr/assets/worker-entry-BhhNTXFX.js │ esm  │ 5.14 KiB   │
+├─────────────────────────────────────┼──────┼────────────┤
+│ ssr/index.js                        │ esm  │ 537.72 KiB │
+├─────────────────────────────────────┼──────┼────────────┤
+│ ssr/__vite_rsc_assets_manifest.js   │ esm  │ 0.94 KiB   │
+├─────────────────────────────────────┼──────┼────────────┤
+│ __vite_rsc_assets_manifest.js       │ esm  │ 0.94 KiB   │
+├─────────────────────────────────────┼──────┼────────────┤
+│ Total (4 modules)                   │      │ 544.74 KiB │
+└─────────────────────────────────────┴──────┴────────────┘
+⎔ Starting local server...
+[wrangler:warn] Unable to fetch the `Request.cf` object! Falling back to a default placeholder...
+Error: self-signed certificate in certificate chain
+    at TLSSocket.onConnectSecure (node:internal/tls/wrap:1649:34)
+    at TLSSocket.emit (node:events:508:28)
+    at TLSSocket.emit (node:domain:489:12)
+    at TLSSocket._finishInit (node:internal/tls/wrap:1095:8)
+    at ssl.onhandshakedone (node:internal/tls/wrap:881:12)
+Wrangler detected this dev session is running in an AI agent.
+The Local Explorer API is available at http://127.0.0.1:3002/cdn-cgi/local/explorer/api
+Useful routes:
+  GET http://127.0.0.1:3002/cdn-cgi/local/explorer/api/local/workers - local Workers and bindings
+  GET http://127.0.0.1:3002/cdn-cgi/local/explorer/api/storage/kv/namespaces - KV namespaces
+  GET http://127.0.0.1:3002/cdn-cgi/local/explorer/api/d1/database - D1 databases
+  GET http://127.0.0.1:3002/cdn-cgi/local/explorer/api/r2/buckets - R2 buckets
+  GET http://127.0.0.1:3002/cdn-cgi/local/explorer/api/workers/durable_objects/namespaces - Durable Object namespaces
+  GET http://127.0.0.1:3002/cdn-cgi/local/explorer/api/workflows - Workflows
+  POST http://127.0.0.1:3002/cdn-cgi/local/explorer/api/local/observability/query - run a read-only SQL query (SELECT/WITH only) over captured request traces and console logs. Tables: spans, logs (read attributes via json(attributes)). Example:
+    curl -X POST http://127.0.0.1:3002/cdn-cgi/local/explorer/api/local/observability/query -H 'Content-Type: application/json' -d '{"sql":"SELECT service, name, outcome, duration_ms FROM spans WHERE parent_id IS NULL LIMIT 20"}'
+If the routes above don't cover what you need, fetch the full OpenAPI schema (large - use only as a last resort):
+  GET http://127.0.0.1:3002/cdn-cgi/local/explorer/api - OpenAPI schema
+[wrangler:info] ✨ Parsed 1 valid header rule.
+[wrangler:info] Ready on http://127.0.0.1:3002
+[wrangler:info] GET / 200 OK (88ms)
+[wrangler:info] GET / 200 OK (19ms)
+[wrangler:info] GET /vendor/flatpickr/flatpickr.min.css 200 OK (27ms)
+[wrangler:info] GET /user/assets/vendor/bootstrap/css/bootstrap.min.css 200 OK (21ms)
+[wrangler:info] GET /user/assets/vendor/slick/css/slick.css 200 OK (23ms)
+[wrangler:info] GET /user/assets/vendor/slick/css/slick-theme.css 200 OK (26ms)
+[wrangler:info] GET /user/assets/vendor/aos/aos.css 200 OK (28ms)
+[wrangler:info] GET /vendor/google-fonts/google-fonts.css 200 OK (32ms)
+[wrangler:info] GET /user/assets/css/style.css 200 OK (18ms)
+[wrangler:info] GET /vendor/select2/select2.min.css 200 OK (24ms)
+[wrangler:info] GET /vendor/fontawesome/css/all.min.css 200 OK (17ms)
+[wrangler:info] GET /vendor/fontawesome/css/local-icon-fixes.css 200 OK (20ms)
+[wrangler:info] GET /user/assets/css/homepage-gold-theme.css 200 OK (20ms)
+[wrangler:info] GET /js/mutation-observer-guard.js 200 OK (17ms)
+[wrangler:info] GET /user/assets/images/logo.png 200 OK (19ms)
+[wrangler:info] GET /user/assets/vendor/jquery.min.js 200 OK (18ms)
+[wrangler:info] GET /user/assets/vendor/bootstrap/js/bootstrap.min.js 200 OK (14ms)
+[wrangler:info] GET /vendor/flatpickr/flatpickr.min.js 200 OK (12ms)
+[wrangler:info] GET /user/assets/vendor/slick/js/slick.min.js 200 OK (13ms)
+[wrangler:info] GET /user/assets/vendor/aos/aos.js 200 OK (18ms)
+[wrangler:info] GET /user/assets/js/custom.js 200 OK (14ms)
+[wrangler:info] GET /vendor/select2/select2.min.js 200 OK (10ms)
+[wrangler:info] GET /js/lead-forms.js 200 OK (16ms)
+[wrangler:info] GET /js/currency-switcher.js 200 OK (10ms)
+[wrangler:info] GET /js/site-search.js 200 OK (28ms)
+[wrangler:info] GET /user/assets/images/search.svg 200 OK (15ms)
+[wrangler:info] GET /vendor/google-fonts/font-32.ttf 200 OK (26ms)
+[wrangler:info] GET /vendor/google-fonts/font-12.ttf 200 OK (20ms)
+[wrangler:info] GET /vendor/google-fonts/font-15.ttf 200 OK (29ms)
+[wrangler:info] GET /storage/banners/4SkVYWKvY2RlANzTzq5Rh0jvzu28T6jdZ5ujG9kY.jpg 200 OK (17ms)
+[wrangler:info] GET /storage/banners/1N5vZk6PJa0CZfwK1MvMNRbzzlNCJ3qaM5wXFMig.jpg 200 OK (17ms)
+[wrangler:info] GET /storage/banners/zDU6MEA4ANapeel8MSyOa2BsYjxmLOsd3zd7CX48.jpg 200 OK (20ms)
+[wrangler:info] GET /storage/banners/X2NsD8x7byP3Uw0ckRe7GYx6c6MvfIostCeXnl94.jpg 200 OK (21ms)
+[wrangler:info] GET /vendor/google-fonts/font-36.ttf 200 OK (15ms)
+[wrangler:info] GET /vendor/google-fonts/font-40.ttf 200 OK (26ms)
+[wrangler:info] GET /vendor/google-fonts/font-29.ttf 200 OK (27ms)
+[wrangler:info] GET /vendor/google-fonts/font-38.ttf 200 OK (12ms)
+[wrangler:info] GET /vendor/google-fonts/font-39.ttf 200 OK (17ms)
+[wrangler:info] GET /vendor/google-fonts/font-37.ttf 200 OK (20ms)
+[wrangler:info] GET /vendor/google-fonts/font-11.ttf 200 OK (11ms)
+[wrangler:info] GET /vendor/google-fonts/font-30.ttf 200 OK (16ms)
+[wrangler:info] GET /vendor/google-fonts/font-33.ttf 200 OK (32ms)
+[wrangler:info] GET /vendor/google-fonts/font-14.ttf 200 OK (24ms)
+[wrangler:info] GET /vendor/fontawesome/webfonts/fa-brands-400.woff2 200 OK (36ms)
+[wrangler:info] GET /vendor/google-fonts/font-2.ttf 200 OK (22ms)
+[wrangler:info] GET /user/assets/fonts/FelixTitlingMT.woff2 200 OK (22ms)
+[wrangler:info] GET /vendor/google-fonts/font-45.ttf 200 OK (10ms)
+[wrangler:info] GET /vendor/google-fonts/font-31.ttf 200 OK (11ms)
+[wrangler:info] GET /vendor/google-fonts/font-10.ttf 200 OK (10ms)
+[wrangler:info] GET /user/assets/images/img-icon02.png 200 OK (17ms)
+[wrangler:info] GET /user/assets/images/img-icon01.png 200 OK (9ms)
+[wrangler:info] GET /user/assets/images/close-menu.svg 200 OK (8ms)
+[wrangler:info] GET /vendor/fontawesome/webfonts/fa-solid-900.woff2 200 OK (11ms)
+[wrangler:info] GET /user/assets/images/img-icon03.png 200 OK (7ms)
+[wrangler:info] GET /api/currencies 200 OK (111ms)
+[wrangler:info] GET /user/assets/vendor/slick/css/ajax-loader.gif 200 OK (60ms)
+[wrangler:info] GET /storage/recent-weddings/covers/xBSKQ3gNQAAv7Db39yG2vRWtq0yY0hPKiwHYE28G.jpg 200 OK (32ms)
+[wrangler:info] GET /storage/recent-weddings/gallery/cKLLOAszeVHIfoXgE3pwAXLGE0X50XuaZ36bAqcL.jpg 200 OK (38ms)
+[wrangler:info] GET /storage/recent-weddings/gallery/qWbyIOHWMEGkCHsfowAL3pXFGynPQagg65Gt12sV.jpg 200 OK (28ms)
+[wrangler:info] GET /storage/recent-weddings/gallery/AhOBPuElnkoQ9h8fpnmiGKCmXmQXPBoWsxZfq8FV.jpg 200 OK (9ms)
+[wrangler:info] GET /user/assets/images/map-icon.svg 200 OK (14ms)
+[wrangler:info] GET /user/assets/images/icon02.png 200 OK (12ms)
+[wrangler:info] GET /storage/recent-weddings/covers/qoDTDRcxIvksG7ocB44ekdeC0iio9QfzCKyitsnM.webp 200 OK (6ms)
+[wrangler:info] GET /storage/recent-weddings/gallery/Cb4wBs5Cj29JLWDQCEHmNkxCoTEjzAMwUSniWDBr.jpg 200 OK (13ms)
+[wrangler:info] GET /storage/recent-weddings/gallery/m719ZcmFUO7GiyRNalHzrBu5U35ztMCIHJWOafFp.jpg 200 OK (10ms)
+[wrangler:info] GET /storage/recent-weddings/gallery/AjhuqINByciH0v3emNZo4U3IRdrZ74nV43WR2PCi.jpg 200 OK (14ms)
+[wrangler:info] GET /storage/recent-weddings/covers/YHce9bdW97bDBMzcGKFO4bxlUwtADz0SOCgUvTFY.jpg 200 OK (18ms)
+[wrangler:info] GET /storage/recent-weddings/gallery/RT9mLE1xgROUZv97PnbYrlngMSiJPf1Fw18xYGDo.jpg 200 OK (19ms)
+[wrangler:info] GET /storage/recent-weddings/gallery/Rj3p3JJcjdaFqRxSenW3dqwSkVxp7JYUmvq4IinH.jpg 200 OK (19ms)
+[wrangler:info] GET /storage/recent-weddings/gallery/fjLJ82OACoVeSMIhcoAegtI0e6p0TJRkTxE5FMQV.jpg 200 OK (15ms)
+[wrangler:info] GET /storage/recent-weddings/covers/jiTcbMKNScY9RTRsJknBLLHdKcDdCxkJlEBFl6w6.jpg 200 OK (15ms)
+[wrangler:info] GET /storage/recent-weddings/gallery/Y5CY23qnwN3AKtmHzw6HFUQu4GWMa1OYPj0XECyj.jpg 200 OK (15ms)
+[wrangler:info] GET /storage/recent-weddings/gallery/uvMqI0CLGOeXpEQVPQOlW7nYnDxdlKrShedtUAvH.jpg 200 OK (14ms)
+[wrangler:info] GET /storage/recent-weddings/gallery/xGMJCxRq8S3vAFp3or3kBhnaxeRY7QGkETNRano1.jpg 200 OK (15ms)
+[wrangler:info] GET /storage/hotels/thumbnails/86qXi7kzbuwiVPRF5S5a4sh0HIacTgtRmeysQtM2.jpg 200 OK (20ms)
+[wrangler:info] GET /storage/hotels/thumbnails/bzULEIXQdp8mcmdXpNVWrWjNJsxGJrlrnF79DBfq.jpg 200 OK (9ms)
+[wrangler:info] GET /storage/hotels/thumbnails/9ZaNAwFNK07JfijoREalO82ViH2KpymwuWNkhM6J.jpg 200 OK (14ms)
+[wrangler:info] GET /storage/hotels/thumbnails/tnBVu1iPZHgWixBkuWF5oseJWAdDWebP3kJXN7DT.jpg 200 OK (13ms)
+[wrangler:info] GET /storage/hotels/thumbnails/Sv9kRxzHCCBMEwLTMyk7OcZGt8GxG9wqavPFvJpZ.jpg 200 OK (14ms)
+[wrangler:info] GET /storage/hotels/thumbnails/Pbax7yLGvRiIt8FJDEwQLtBKKMDib24NIuw79Y3g.jpg 200 OK (18ms)
+[wrangler:info] GET /user/assets/images/star.svg 200 OK (27ms)
+[wrangler:info] GET /user/assets/images/city.png 200 OK (46ms)
+[wrangler:info] GET /user/assets/images/hotel.png 200 OK (121ms)
+[wrangler:info] GET /favicon.ico 200 OK (9ms)
+[wrangler:info] GET /admin/images/favicon.png 200 OK (8ms)
+[wrangler:info] HEAD /user/assets/images/menu.svg 200 OK (8ms)
+[wrangler:info] HEAD /storage/hotel-cost-checker/steps/OTS7ztrCFNqYGF5VxjcZQXTo6cqpu9j8hZLVdh5Z.png 200 OK (7ms)
+[wrangler:info] HEAD /storage/services/QVgbTakXiv3TdQ8PovHt7It6QbYFk14iYRfDY9ec.jpg 200 OK (7ms)
+[wrangler:info] HEAD /uploads/deals/1777442808_img.jpg 200 OK (5ms)
+[wrangler:info] HEAD /user/assets/images/logo-footer.png 200 OK (5ms)
+[wrangler:info] GET /user/assets/images/input02.png 200 OK (9ms)
+[wrangler:info] GET /storage/hotel-cost-checker/steps/OTS7ztrCFNqYGF5VxjcZQXTo6cqpu9j8hZLVdh5Z.png 200 OK (8ms)
+[wrangler:info] GET /storage/hotel-cost-checker/steps/AIpeBfLHgzJsF54d9yORtCm34IatNsNA93o2En18.png 200 OK (10ms)
+[wrangler:info] GET /storage/hotel-cost-checker/steps/502TXgxD3DpvKJ1i8oQPPtORFknMtnZjQVkfsa92.png 200 OK (15ms)
+[wrangler:info] GET /storage/hotel-cost-checker/steps/THzzJrfi1orDoPcbxblcCblcIseBx4KQgYgxidqN.png 200 OK (8ms)
+[wrangler:info] GET /user/assets/images/start-y.svg 200 OK (11ms)
+[wrangler:info] GET /storage/services/QVgbTakXiv3TdQ8PovHt7It6QbYFk14iYRfDY9ec.jpg 200 OK (11ms)
+[wrangler:info] GET /storage/services/xXZwUQ881KxorgZDpEDuBy8mGG8vaoHlPWkxyi9a.jpg 200 OK (15ms)
+[wrangler:info] GET /storage/packages/brand-images/zvNAbBDvoakJGy0zSyvJmq3ZhFvLYulkODJVOVf2.jpg 200 OK (7ms)
+[wrangler:info] GET /storage/packages/brand-images/CuPG86uglcycdVaAr8p0QSeqVULz887h2mmq0skv.jpg 200 OK (12ms)
+[wrangler:info] GET /storage/packages/brand-images/pov0sa3Ibp1iHN2AErgXWqok5GoGgjE7GwmTPKbS.jpg 200 OK (17ms)
+[wrangler:info] GET /storage/packages/brand-images/1IxxdqY3sdp7FBffbSYXmqThFqdjTFOlF4tBATAY.jpg 200 OK (17ms)
+[wrangler:info] GET /storage/packages/brand-images/at1PY1p6OWmXiJfqzunZPJ2swdCF2RboEYJprAyd.jpg 200 OK (13ms)
+[wrangler:info] GET /storage/packages/brand-images/5I1E1omMlCUAbBvst3HExoLNh9T3y5b529IwXjsZ.jpg 200 OK (17ms)
+[wrangler:info] GET /storage/packages/brand-images/1W9nYcR2XibkquSuownJuZmM7Vaytg3qL4sJ01qW.jpg 200 OK (15ms)
+[wrangler:info] GET /storage/packages/brand-images/v6pBGpfnbPAKVao2CzT6gpW9U3auH5A4Yjm7nkGF.jpg 200 OK (26ms)
+[wrangler:info] GET /storage/packages/brand-images/frIT0Jbo7jsro32sw9KTB1CvzFulVWbCb0UBgKfH.jpg 200 OK (15ms)
+[wrangler:info] GET /uploads/deals/1777442808_img.jpg 200 OK (24ms)
+[wrangler:info] GET /uploads/deals/1777443211_img.jpg 200 OK (20ms)
+[wrangler:info] GET /uploads/deals/1777443598_img.jpg 200 OK (17ms)
+[wrangler:info] GET /uploads/deals/1777443023_logo.png 200 OK (11ms)
+[wrangler:info] GET /uploads/deals/1775646886_logo.png 200 OK (16ms)
+[wrangler:info] GET /uploads/deals/1775646894_logo.png 200 OK (24ms)
+[wrangler:info] GET /user/assets/images/quote.svg 200 OK (11ms)
+[wrangler:info] GET /storage/testimonials/4kEKQ3Bb00PweyK8aSiqBtuHs2oiFRECClhpEhqQ.jpg 200 OK (12ms)
+[wrangler:info] GET /storage/testimonials/AVeBeB7xOSVT0Amfux6AaPuBjEif6mtIEmIlSWsJ.png 200 OK (18ms)
+[wrangler:info] GET /user/assets/images/map01.svg 200 OK (7ms)
+[wrangler:info] GET /storage/hospitality-partners/eDLJVZmam8xH77ej7cwaOHiW89EfGLV6aUYvikYi.png 200 OK (8ms)
+[wrangler:info] GET /storage/hospitality-partner-logos/W1S89bE78hnuwf8fVPuRXAWbWq7d8QN7lENTMnJa.png 200 OK (9ms)
+[wrangler:info] GET /storage/hospitality-partner-logos/U1RrqmSDAN32ytMbOnXvpqAHiJnPPPW7acdCHErA.png 200 OK (12ms)
+[wrangler:info] GET /storage/hospitality-partner-logos/XeoyIj4yg8vQeSMqM7P6vnBh2z7kViOaPBuktUe6.png 200 OK (16ms)
+[wrangler:info] GET /storage/hospitality-partner-logos/A86rQI9BxfBYPKIlmRxyZFFbZDRL01UeVUtU4dUD.png 200 OK (25ms)
+[wrangler:info] GET /user/assets/images/f-icon01.svg 200 OK (11ms)
+[wrangler:info] GET /user/assets/images/f-icon02.svg 200 OK (15ms)
+[wrangler:info] GET /user/assets/images/f-icon03.svg 200 OK (27ms)
+[wrangler:info] GET /user/assets/images/f-icon04.svg 200 OK (30ms)
+[wrangler:info] GET /user/assets/images/logo-footer.png 200 OK (12ms)
+[wrangler:info] POST /api/lead 502 Bad Gateway (383ms)
+[wrangler:info] POST /api/lead 500 Internal Server Error (104ms)
+[wrangler:info] POST /api/lead 502 Bad Gateway (12ms)
+[wrangler:info] GET /user/assets/images/menu.svg 200 OK (15ms)
+[wrangler:info] GET /user/assets/images/map-icon.svg 304 Not Modified (10ms)
+[wrangler:info] GET /storage/hotels/thumbnails/86qXi7kzbuwiVPRF5S5a4sh0HIacTgtRmeysQtM2.jpg 304 Not Modified (12ms)
+[wrangler:info] GET /storage/hotels/thumbnails/bzULEIXQdp8mcmdXpNVWrWjNJsxGJrlrnF79DBfq.jpg 304 Not Modified (16ms)
+[wrangler:info] GET /storage/hotels/thumbnails/9ZaNAwFNK07JfijoREalO82ViH2KpymwuWNkhM6J.jpg 304 Not Modified (18ms)

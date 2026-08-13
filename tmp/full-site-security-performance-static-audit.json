@@ -1,0 +1,55 @@
+{
+  "pages": 367,
+  "oversizedPages": [
+    {
+      "route": "/blogs/vijay-rashmika-udaipur-wedding-cost",
+      "size": 1704768
+    },
+    {
+      "route": "/blogs/traditional-vs-destination-wedding",
+      "size": 1352438
+    },
+    {
+      "route": "/blogs/nupur-sanon-stebin-ben-wedding-cost",
+      "size": 1184925
+    },
+    {
+      "route": "/blogs/plan-luxury-destination-wedding-like-nupur-sanon-stebin-ben",
+      "size": 1173382
+    },
+    {
+      "route": "/blogs/arjun-kapoor-sister-anshula-wedding-cost",
+      "size": 1100518
+    },
+    {
+      "route": "/blogs/when-to-book-a-wedding-venue",
+      "size": 904103
+    }
+  ],
+  "inlineScriptHeavy": [],
+  "missingAssetRefs": [],
+  "missingAssetRefCount": 0,
+  "externalHostCounts": [
+    [
+      "www.instagram.com",
+      371
+    ],
+    [
+      "www.linkedin.com",
+      367
+    ],
+    [
+      "wa.me",
+      365
+    ],
+    [
+      "maps.app.goo.gl",
+      3
+    ],
+    [
+      "share.google",
+      1
+    ]
+  ],
+  "largeAssets": []
+}

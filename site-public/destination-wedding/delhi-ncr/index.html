@@ -3132,7 +3132,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 <div class="estimator-wrapper request-callback p-2 mt-4">
                     <div class="cost-calculator-widget mt-0">
                         <span class="bg-peach-50 d-block text-center font-family01 fs-11 fw-600 text-primary sub-title">REQUEST A CALLBACK</span>
-                        <form action="/get_in_touch/store" method="POST"><div class="row gx-2 mb-3">
+                        <form action="/api/lead" method="POST"><div class="row gx-2 mb-3">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="font-family01 fs-13 fw-500 position-absolute bg-white text-maroon-900" for="name">Name*</label>
@@ -3193,7 +3193,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
                 <div class="row">
                     <div class="col-12">
-                        <p class="text-muted">Showing 1 – 12 of 25 hotels</p>
+                        <p id="hotelResultsSummary" class="text-muted">Showing 1 – 12 of 25 hotels</p>
                     </div>
                 </div>
 
@@ -3727,7 +3727,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                       <a href="/real-weddings">Real Weddings</a>
                     </li>
                     <li>
-                      <a href="/wedding-packages">Wedding Packages</a>
+                      <a href="/package">Wedding Packages</a>
                     </li>
                     <li>
                       <a href="/blogs">Blogs</a>
@@ -3751,16 +3751,11 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                       <a href="/hotel-cost-calculator">Hotel Cost Calculator</a>
                     </li>
                     <li>
-                      <a href="/hotel-listing">Indian Venues</a>
+                      <a href="/hotel-listing?country=india">Indian Venues</a>
                     </li>
                     <li>
                       <a href="/faqs">Faq's</a>
                     </li>
-                    <li>
-                    <!--  <li>-->
-                    <a href="/check-hotel-availability">Venue Availability</a>
-                    <!--  </li>-->
-                    <!--</li>-->
                   </ul>
                 </div>
               </div>
@@ -3838,6 +3833,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
 <script src="/vendor/select2/select2.min.js"></script>
 <script src="/js/currency-switcher.js" defer></script>
+  <script src="/js/site-search.js" defer></script>
 <script src="/js/hotel-listing.js" defer></script>
 
 </body>

@@ -1,0 +1,111 @@
+{
+  "totalAll": 368,
+  "totalAudited": 336,
+  "totalRemaining": 33,
+  "remaining": [
+    "/appointment-booking",
+    "/appointment/payment-failed",
+    "/appointment/payment-success",
+    "/blog-form-submit",
+    "/blogs/arjun-kapoor-sister-anshula-wedding-cost",
+    "/blogs/category/bridal-styling",
+    "/blogs/category/weeding-planning",
+    "/blogs/destination-wedding-venue-checklist",
+    "/blogs/new-luxury-wedding-hotels-in-india",
+    "/blogs/nupur-sanon-stebin-ben-wedding-cost",
+    "/blogs/plan-luxury-destination-wedding-like-nupur-sanon-stebin-ben",
+    "/blogs/questions-to-ask-destination-wedding-planner",
+    "/blogs/tag/bride",
+    "/blogs/tag/groom",
+    "/blogs/top-beachside-wedding-venues-goa",
+    "/blogs/top-destination-wedding-places-rajasthan",
+    "/blogs/traditional-vs-destination-wedding",
+    "/blogs/vijay-rashmika-udaipur-wedding-cost",
+    "/blogs/when-to-book-a-wedding-venue",
+    "/contact/save",
+    "/country",
+    "/destination-wedding-in-agra",
+    "/destination-wedding-in-dehradun",
+    "/destination-wedding-in-delhi",
+    "/destination-wedding-in-goa",
+    "/destination-wedding-in-jaipur",
+    "/destination-wedding-in-jim-corbett",
+    "/destination-wedding-in-jodhpur",
+    "/destination-wedding-in-mussoorie",
+    "/destination-wedding-in-rishikesh",
+    "/destination-wedding-in-udaipur",
+    "/get_in_touch/store",
+    "/index.html"
+  ],
+  "grouped": {
+    "appointment-booking": [
+      "/appointment-booking"
+    ],
+    "appointment": [
+      "/appointment/payment-failed",
+      "/appointment/payment-success"
+    ],
+    "blog-form-submit": [
+      "/blog-form-submit"
+    ],
+    "blogs": [
+      "/blogs/arjun-kapoor-sister-anshula-wedding-cost",
+      "/blogs/category/bridal-styling",
+      "/blogs/category/weeding-planning",
+      "/blogs/destination-wedding-venue-checklist",
+      "/blogs/new-luxury-wedding-hotels-in-india",
+      "/blogs/nupur-sanon-stebin-ben-wedding-cost",
+      "/blogs/plan-luxury-destination-wedding-like-nupur-sanon-stebin-ben",
+      "/blogs/questions-to-ask-destination-wedding-planner",
+      "/blogs/tag/bride",
+      "/blogs/tag/groom",
+      "/blogs/top-beachside-wedding-venues-goa",
+      "/blogs/top-destination-wedding-places-rajasthan",
+      "/blogs/traditional-vs-destination-wedding",
+      "/blogs/vijay-rashmika-udaipur-wedding-cost",
+      "/blogs/when-to-book-a-wedding-venue"
+    ],
+    "contact": [
+      "/contact/save"
+    ],
+    "country": [
+      "/country"
+    ],
+    "destination-wedding-in-agra": [
+      "/destination-wedding-in-agra"
+    ],
+    "destination-wedding-in-dehradun": [
+      "/destination-wedding-in-dehradun"
+    ],
+    "destination-wedding-in-delhi": [
+      "/destination-wedding-in-delhi"
+    ],
+    "destination-wedding-in-goa": [
+      "/destination-wedding-in-goa"
+    ],
+    "destination-wedding-in-jaipur": [
+      "/destination-wedding-in-jaipur"
+    ],
+    "destination-wedding-in-jim-corbett": [
+      "/destination-wedding-in-jim-corbett"
+    ],
+    "destination-wedding-in-jodhpur": [
+      "/destination-wedding-in-jodhpur"
+    ],
+    "destination-wedding-in-mussoorie": [
+      "/destination-wedding-in-mussoorie"
+    ],
+    "destination-wedding-in-rishikesh": [
+      "/destination-wedding-in-rishikesh"
+    ],
+    "destination-wedding-in-udaipur": [
+      "/destination-wedding-in-udaipur"
+    ],
+    "get_in_touch": [
+      "/get_in_touch/store"
+    ],
+    "index.html": [
+      "/index.html"
+    ]
+  }
+}

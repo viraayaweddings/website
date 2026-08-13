@@ -39,6 +39,26 @@ const STATIC_ASSET_EXTENSIONS = new Set([
   "woff",
   "woff2",
 ]);
+const INDIA_CITY_IDS = new Set([
+  "8", "28", "70", "32", "31", "69", "34", "23", "17", "40", "67", "13", "18", "46", "15", "4",
+  "7", "36", "43", "44", "27", "47", "5", "9", "12", "6", "71", "55", "24", "51", "21", "56",
+  "72", "19", "25", "20", "68", "73", "1", "26", "10", "2", "16", "30", "35", "33", "11",
+  "42", "14", "29", "22", "3", "41",
+]);
+const INDIA_HOTEL_IDS = new Set(
+  Object.entries(calculatorData.hotelsByCity)
+    .filter(([cityId]) => INDIA_CITY_IDS.has(String(cityId)))
+    .flatMap(([, hotels]) => hotels.map((hotel) => String(hotel.id))),
+);
+const INDIA_COMPARE_HOTEL_IDS = new Set(
+  Object.entries(calculatorData.compareHotelsByCity)
+    .filter(([cityId]) => INDIA_CITY_IDS.has(String(cityId)))
+    .flatMap(([, hotels]) => hotels.map((hotel) => String(hotel.id))),
+);
+const BLOCKED_PUBLIC_DATA_PATHS = new Set([
+  "/data/calculator/calculator-data.json",
+  "/data/calculator/availability-data.json",
+]);
 const SECURITY_HEADERS = {
   "content-security-policy": [
     "default-src 'self'",
@@ -57,7 +77,7 @@ const SECURITY_HEADERS = {
   ].join("; "),
   "cross-origin-opener-policy": "same-origin",
   "cross-origin-resource-policy": "same-origin",
-  "permissions-policy": "accelerometer=(), autoplay=(), camera=(), encrypted-media=(), fullscreen=(self), geolocation=(self), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), usb=()",
+  "permissions-policy": "accelerometer=(), autoplay=(), camera=(), encrypted-media=(), fullscreen=(self), geolocation=(self), gyroscope=(), magnetometer=(), microphone=(), midi=(), picture-in-picture=(), usb=()",
   "referrer-policy": "strict-origin-when-cross-origin",
   "x-content-type-options": "nosniff",
   "x-frame-options": "SAMEORIGIN",
@@ -158,12 +178,22 @@ async function getLocalEndpointResponse(
   url: URL,
   headers: HeadersInit,
 ): Promise<Response | null> {
+  if (BLOCKED_PUBLIC_DATA_PATHS.has(url.pathname)) {
+    return new Response("Not found", {
+      status: 404,
+      headers: {
+        "content-type": "text/plain; charset=utf-8",
+        "cache-control": "no-store",
+      },
+    });
+  }
+
   if (url.pathname === "/api/lead") {
     return handleLeadRequest(request, env, url);
   }
 
   if (url.pathname === "/api/currencies") {
-    return Response.json(calculatorData.currencies, { headers });
+    return Response.json(calculatorData.currencies.filter((currency) => currency.code === "INR"), { headers });
   }
 
   if (url.pathname === "/api/currencies/select") {
@@ -184,6 +214,7 @@ async function getLocalEndpointResponse(
     if (!query) return Response.json([], { headers });
 
     const results = calculatorData.searchIndex
+      .filter((hotel) => INDIA_HOTEL_IDS.has(String(hotel.id)))
       .filter((hotel) => hotel.hotel_name.toLowerCase().includes(query))
       .sort((a, b) => a.hotel_name.localeCompare(b.hotel_name, "en", { sensitivity: "base" }))
       .slice(0, 8)
@@ -197,40 +228,50 @@ async function getLocalEndpointResponse(
   }
 
   if (url.pathname === "/get-cities") {
+    if (!isSameOriginBrowserRequest(request, url)) return blockedDataResponse(headers);
     const query = (url.searchParams.get("search") || "").trim().toLowerCase();
     const cities = calculatorData.cities
-      .filter((city) => city.name.toLowerCase().includes(query))
-      .slice(0, 50);
+      .filter((city) => INDIA_CITY_IDS.has(String(city.id)))
+      .filter((city) => city.name.toLowerCase().includes(query));
 
     return Response.json(cities, { headers });
   }
 
+  if (url.pathname === "/api/calculator/availability-data") {
+    if (!isSameOriginBrowserRequest(request, url)) return blockedDataResponse(headers);
+    return Response.json(getAvailabilityData(), { headers });
+  }
+
   if (url.pathname === "/get-hotels-by-city") {
+    if (!isSameOriginBrowserRequest(request, url)) return blockedDataResponse(headers);
     const cityId = url.searchParams.get("city") || "";
-    return Response.json(getHotelsForCity(cityId), { headers });
+    return Response.json(getCompareHotelsForCity(cityId), { headers });
   }
 
   if (url.pathname.startsWith("/get-hotels-by-city/")) {
+    if (!isSameOriginBrowserRequest(request, url)) return blockedDataResponse(headers);
     const cityId = decodeURIComponent(url.pathname.split("/").filter(Boolean)[1] || "");
     return Response.json(getHotelsForCity(cityId), { headers });
   }
 
   if (url.pathname.startsWith("/get-hotel-price/")) {
+    if (!isSameOriginBrowserRequest(request, url)) return blockedDataResponse(headers);
     const [, hotelId = "", month = ""] = url.pathname
       .split("/")
       .filter(Boolean)
       .map(decodeURIComponent);
-    const hotelPrices = calculatorData.prices[hotelId as keyof typeof calculatorData.prices];
+    const hotelPrices = (INDIA_HOTEL_IDS.has(String(hotelId)) || INDIA_COMPARE_HOTEL_IDS.has(String(hotelId)))
+      ? calculatorData.prices[hotelId as keyof typeof calculatorData.prices]
+      : undefined;
     const price = normalizePrice(hotelPrices?.[month as keyof typeof hotelPrices]);
     return Response.json(price, { headers });
   }
 
   if (url.pathname === "/get-hotel-prices") {
-    const formData = request.method === "POST" ? await request.formData() : null;
-    const hotelIds = formData
-      ? formData.getAll("hotel_ids[]").concat(formData.getAll("hotel_ids")).map(String)
-      : [];
-    const checkin = formData?.get("checkin")?.toString() || "";
+    if (!isSameOriginBrowserRequest(request, url)) return blockedDataResponse(headers);
+    const payload = request.method === "POST" ? await readHotelPricesPayload(request) : { hotelIds: [], checkin: "" };
+    const hotelIds = payload.hotelIds;
+    const checkin = payload.checkin;
     const month = getMonthName(checkin) || "January";
     const hotels = hotelIds
       .map((hotelId) => getComparableHotel(hotelId, month))
@@ -241,14 +282,6 @@ async function getLocalEndpointResponse(
 
   if (url.pathname === "/appointment/slots") {
     return Response.json(["10:00", "11:00", "12:00", "14:00", "15:00", "16:00"], { headers });
-  }
-
-  if (url.pathname === "/appointment/pay") {
-    return handleLeadRequest(request, env, url, "appointment");
-  }
-
-  if (url.pathname === "/appointment/verify") {
-    return Response.json({ status: "success" }, { headers });
   }
 
   if (
@@ -366,11 +399,80 @@ function contentTypeFor(filePath: string) {
 }
 
 function getHotelsForCity(cityId: string) {
+  if (!INDIA_CITY_IDS.has(String(cityId))) return [];
   const hotels = calculatorData.hotelsByCity[cityId as keyof typeof calculatorData.hotelsByCity] || [];
   return hotels.map((hotel) => ({
     ...hotel,
     hotel_name: hotel.name,
   }));
+}
+
+function getCompareHotelsForCity(cityId: string) {
+  if (!INDIA_CITY_IDS.has(String(cityId))) return [];
+  const hotels = calculatorData.compareHotelsByCity[cityId as keyof typeof calculatorData.compareHotelsByCity]
+    || calculatorData.hotelsByCity[cityId as keyof typeof calculatorData.hotelsByCity]
+    || [];
+
+  return hotels.map((hotel) => ({
+    id: hotel.id,
+    name: hotel.name,
+    hotel_name: hotel.hotel_name || hotel.name,
+    total_rooms: hotel.total_rooms,
+  }));
+}
+
+function getAvailabilityData() {
+  const cities = calculatorData.cities
+    .filter((city) => INDIA_CITY_IDS.has(String(city.id)))
+    .map((city) => ({
+      id: city.id,
+      name: city.name,
+    }));
+
+  const hotelsByCity = Object.fromEntries(
+    cities.map((city) => [
+      String(city.id),
+      (calculatorData.hotelsByCity[String(city.id) as keyof typeof calculatorData.hotelsByCity] || []).map((hotel) => ({
+        id: hotel.id,
+        name: hotel.name,
+      })),
+    ]),
+  );
+
+  return {
+    generated_at: calculatorData.generated_at,
+    cities,
+    hotelsByCity,
+  };
+}
+
+function isSameOriginBrowserRequest(request: Request, url: URL) {
+  const secFetchSite = request.headers.get("sec-fetch-site");
+  if (secFetchSite && !["same-origin", "none"].includes(secFetchSite)) return false;
+
+  const origin = request.headers.get("origin");
+  if (origin && origin !== url.origin) return false;
+
+  const referer = request.headers.get("referer");
+  if (referer) {
+    try {
+      if (new URL(referer).origin !== url.origin) return false;
+    } catch {
+      return false;
+    }
+  }
+
+  return Boolean(origin || referer || secFetchSite === "same-origin");
+}
+
+function blockedDataResponse(headers: HeadersInit) {
+  return Response.json({ error: "Not found" }, {
+    status: 404,
+    headers: {
+      ...headers,
+      "cache-control": "no-store",
+    },
+  });
 }
 
 function normalizePrice(
@@ -401,8 +503,40 @@ function getMonthName(value: string) {
   return date.toLocaleString("en-US", { month: "long" });
 }
 
+async function readHotelPricesPayload(request: Request) {
+  const contentType = request.headers.get("content-type") || "";
+
+  if (contentType.includes("application/json")) {
+    const body = (await request.json().catch(() => ({}))) as {
+      hotel_ids?: unknown;
+      hotelIds?: unknown;
+      checkin?: unknown;
+      month?: unknown;
+    };
+    const rawHotelIds = body.hotel_ids ?? body.hotelIds ?? [];
+    const hotelIds = Array.isArray(rawHotelIds) ? rawHotelIds.map(String) : [String(rawHotelIds)];
+    return {
+      hotelIds: hotelIds.filter(Boolean),
+      checkin: typeof body.checkin === "string" ? body.checkin : "",
+    };
+  }
+
+  const formData = await request.formData().catch(() => null);
+  if (!formData) return { hotelIds: [], checkin: "" };
+
+  return {
+    hotelIds: formData
+      .getAll("hotel_ids[]")
+      .concat(formData.getAll("hotel_ids"))
+      .map(String)
+      .filter(Boolean),
+    checkin: formData.get("checkin")?.toString() || "",
+  };
+}
+
 function getComparableHotel(hotelId: string, month: string) {
-  for (const [cityId, hotels] of Object.entries(calculatorData.hotelsByCity)) {
+  for (const [cityId, hotels] of Object.entries(calculatorData.compareHotelsByCity)) {
+    if (!INDIA_CITY_IDS.has(String(cityId))) continue;
     const hotel = hotels.find((candidate) => String(candidate.id) === String(hotelId));
     if (!hotel) continue;
 
@@ -412,7 +546,7 @@ function getComparableHotel(hotelId: string, month: string) {
 
     return {
       id: hotel.id,
-      hotel_name: hotel.name,
+      hotel_name: hotel.hotel_name || hotel.name,
       total_rooms: hotel.total_rooms,
       prices: [
         {

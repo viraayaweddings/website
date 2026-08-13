@@ -1,0 +1,2147 @@
+{
+  "summary": {
+    "cities": {
+      "status": 200,
+      "count": 53
+    },
+    "compareJaipur": {
+      "status": 200,
+      "count": 38
+    },
+    "activeJaipur": {
+      "status": 200,
+      "count": 30
+    },
+    "availability": {
+      "status": 200,
+      "cities": 53,
+      "hotels": 259
+    },
+    "compareOnlyPrice": {
+      "status": 200,
+      "room_price": "21500.00"
+    },
+    "comparePostForm": {
+      "status": 200,
+      "count": 2,
+      "first": "Hyatt Regency Ahmedabad"
+    },
+    "rawCalculatorPublic": {
+      "status": 404,
+      "cacheControl": "no-store",
+      "length": 9
+    },
+    "rawAvailabilityPublic": {
+      "status": 404,
+      "cacheControl": "no-store",
+      "length": 9
+    },
+    "crossSiteCities": {
+      "status": 404,
+      "length": 21
+    }
+  },
+  "results": {
+    "cities": {
+      "path": "/get-cities",
+      "status": 200,
+      "cacheControl": "public, max-age=300",
+      "contentType": "application/json; charset=utf-8",
+      "length": 1442,
+      "json": [
+        {
+          "id": 8,
+          "name": "Agra"
+        },
+        {
+          "id": 28,
+          "name": "Ahmedabad"
+        },
+        {
+          "id": 70,
+          "name": "Ajabgarh"
+        },
+        {
+          "id": 32,
+          "name": "Ajmer"
+        },
+        {
+          "id": 31,
+          "name": "Amritsar"
+        },
+        {
+          "id": 69,
+          "name": "Andaman"
+        },
+        {
+          "id": 34,
+          "name": "Barwara"
+        },
+        {
+          "id": 23,
+          "name": "Bengal"
+        },
+        {
+          "id": 17,
+          "name": "Bengaluru"
+        },
+        {
+          "id": 40,
+          "name": "Bhopal"
+        },
+        {
+          "id": 67,
+          "name": "Bhubaneswar"
+        },
+        {
+          "id": 13,
+          "name": "Chandigarh"
+        },
+        {
+          "id": 18,
+          "name": "Chennai"
+        },
+        {
+          "id": 46,
+          "name": "Daman"
+        },
+        {
+          "id": 15,
+          "name": "Dehradun"
+        },
+        {
+          "id": 4,
+          "name": "Delhi NCR"
+        },
+        {
+          "id": 7,
+          "name": "Goa"
+        },
+        {
+          "id": 36,
+          "name": "Guwahati"
+        },
+        {
+          "id": 43,
+          "name": "Gwalior"
+        },
+        {
+          "id": 44,
+          "name": "Haridwar"
+        },
+        {
+          "id": 27,
+          "name": "Hyderabad"
+        },
+        {
+          "id": 47,
+          "name": "Indore"
+        },
+        {
+          "id": 5,
+          "name": "Jaipur"
+        },
+        {
+          "id": 9,
+          "name": "Jaisalmer"
+        },
+        {
+          "id": 12,
+          "name": "Jim Corbett"
+        },
+        {
+          "id": 6,
+          "name": "Jodhpur"
+        },
+        {
+          "id": 71,
+          "name": "Karjat"
+        },
+        {
+          "id": 55,
+          "name": "Karnal"
+        },
+        {
+          "id": 24,
+          "name": "Karnataka"
+        },
+        {
+          "id": 51,
+          "name": "kasauli"
+        },
+        {
+          "id": 21,
+          "name": "kerala"
+        },
+        {
+          "id": 56,
+          "name": "khimsar"
+        },
+        {
+          "id": 72,
+          "name": "Khopoli"
+        },
+        {
+          "id": 19,
+          "name": "kochi"
+        },
+        {
+          "id": 25,
+          "name": "Kolkata"
+        },
+        {
+          "id": 20,
+          "name": "Kovalam"
+        },
+        {
+          "id": 68,
+          "name": "Lakshadweep"
+        },
+        {
+          "id": 73,
+          "name": "Lonavala"
+        },
+        {
+          "id": 1,
+          "name": "Lucknow"
+        },
+        {
+          "id": 26,
+          "name": "Mumbai"
+        },
+        {
+          "id": 10,
+          "name": "Mussoorie"
+        },
+        {
+          "id": 2,
+          "name": "Noida"
+        },
+        {
+          "id": 16,
+          "name": "Pune"
+        },
+        {
+          "id": 30,
+          "name": "Pushkar"
+        },
+        {
+          "id": 35,
+          "name": "Raipur"
+        },
+        {
+          "id": 33,
+          "name": "Ranthambore"
+        },
+        {
+          "id": 11,
+          "name": "Rishikesh"
+        },
+        {
+          "id": 42,
+          "name": "Sakleshpur"
+        },
+        {
+          "id": 14,
+          "name": "Shimla"
+        },
+        {
+          "id": 29,
+          "name": "Surat"
+        },
+        {
+          "id": 22,
+          "name": "Trivandrum"
+        },
+        {
+          "id": 3,
+          "name": "Udaipur"
+        },
+        {
+          "id": 41,
+          "name": "Vrindavan"
+        }
+      ],
+      "text": "[{\"id\":8,\"name\":\"Agra\"},{\"id\":28,\"name\":\"Ahmedabad\"},{\"id\":70,\"name\":\"Ajabgarh\"},{\"id\":32,\"name\":\"Ajmer\"},{\"id\":31,\"name\":\"Amritsar\"},{\"id\":69,\"name\":\"Andaman\"},{\"id\":34,\"name\":\"Barwara\"},{\"id\":23,\"na"
+    },
+    "compareJaipur": {
+      "path": "/get-hotels-by-city?city=5",
+      "status": 200,
+      "cacheControl": "public, max-age=300",
+      "contentType": "application/json; charset=utf-8",
+      "length": 4176,
+      "json": [
+        {
+          "id": 27,
+          "name": "Hyatt Regency Jaipur Mansarovar",
+          "hotel_name": "Hyatt Regency Jaipur Mansarovar",
+          "total_rooms": 245
+        },
+        {
+          "id": 28,
+          "name": "The Leela Palace Jaipur",
+          "hotel_name": "The Leela Palace Jaipur",
+          "total_rooms": 200
+        },
+        {
+          "id": 32,
+          "name": "Taj Amer Jaipur",
+          "hotel_name": "Taj Amer Jaipur",
+          "total_rooms": 245
+        },
+        {
+          "id": 35,
+          "name": "Jai Mahal Palace Jaipur",
+          "hotel_name": "Jai Mahal Palace Jaipur",
+          "total_rooms": 100
+        },
+        {
+          "id": 36,
+          "name": "Raffles Jaipur",
+          "hotel_name": "Raffles Jaipur",
+          "total_rooms": 50
+        },
+        {
+          "id": 37,
+          "name": "Rambagh Palace  Jaipur",
+          "hotel_name": "Rambagh Palace  Jaipur",
+          "total_rooms": 78
+        },
+        {
+          "id": 40,
+          "name": "Alila Fort Bishangarh Jaipur",
+          "hotel_name": "Alila Fort Bishangarh Jaipur",
+          "total_rooms": 87
+        },
+        {
+          "id": 42,
+          "name": "Fairmont Jaipur",
+          "hotel_name": "Fairmont Jaipur",
+          "total_rooms": 245
+        },
+        {
+          "id": 124,
+          "name": "Le Meridien Jaipur Resort And Spa",
+          "hotel_name": "Le Meridien Jaipur Resort And Spa",
+          "total_rooms": 126
+        },
+        {
+          "id": 125,
+          "name": "ITC Rajputana Jaipur",
+          "hotel_name": "ITC Rajputana Jaipur",
+          "total_rooms": 218
+        },
+        {
+          "id": 146,
+          "name": "Taj Devi Ratn Resort And Spa Jaipur",
+          "hotel_name": "Taj Devi Ratn Resort And Spa Jaipur",
+          "total_rooms": 145
+        },
+        {
+          "id": 147,
+          "name": "Anantara Jewel Bagh Jaipur Hotel",
+          "hotel_name": "Anantara Jewel Bagh Jaipur Hotel",
+          "total_rooms": 150
+        },
+        {
+          "id": 148,
+          "name": "Bhanwar Singh Palace Jaipur",
+          "hotel_name": "Bhanwar Singh Palace Jaipur",
+          "total_rooms": 150
+        },
+        {
+          "id": 178,
+          "name": "The Westin Jaipur Kant Kalwar Resort and Spa",
+          "hotel_name": "The Westin Jaipur Kant Kalwar Resort and Spa",
+          "total_rooms": 135
+        },
+        {
+          "id": 179,
+          "name": "Mementos by ITC Hotels Jaipur",
+          "hotel_name": "Mementos by ITC Hotels Jaipur",
+          "total_rooms": 64
+        },
+        {
+          "id": 180,
+          "name": "The Oberoi Rajvilas Jaipur",
+          "hotel_name": "The Oberoi Rajvilas Jaipur",
+          "total_rooms": 71
+        },
+        {
+          "id": 181,
+          "name": "Ananta Spa And Resort Jaipur",
+          "hotel_name": "Ananta Spa And Resort Jaipur",
+          "total_rooms": 230
+        },
+        {
+          "id": 182,
+          "name": "Shiv Vilas Jaipur",
+          "hotel_name": "Shiv Vilas Jaipur",
+          "total_rooms": 125
+        },
+        {
+          "id": 183,
+          "name": "Indana Palace Jaipur",
+          "hotel_name": "Indana Palace Jaipur",
+          "total_rooms": 118
+        },
+        {
+          "id": 184,
+          "name": "Novotel Jaipur",
+          "hotel_name": "Novotel Jaipur",
+          "total_rooms": 226
+        },
+        {
+          "id": 185,
+          "name": "Rajasthali Resorts Jaipur",
+          "hotel_name": "Rajasthali Resorts Jaipur",
+          "total_rooms": 115
+        },
+        {
+          "id": 186,
+          "name": "Mundota Fort and Palace Jaipur",
+          "hotel_name": "Mundota Fort and Palace Jaipur",
+          "total_rooms": 125
+        },
+        {
+          "id": 187,
+          "name": "DoubleTree by Hilton Jaipur Amer",
+          "hotel_name": "DoubleTree by Hilton Jaipur Amer",
+          "total_rooms": 151
+        },
+        {
+          "id": 188,
+          "name": "Rajmahal Palace RAAS Jaipur",
+          "hotel_name": "Rajmahal Palace RAAS Jaipur",
+          "total_rooms": 13
+        },
+        {
+          "id": 189,
+          "name": "The Raj Palace Jaipur",
+          "hotel_name": "The Raj Palace Jaipur",
+          "total_rooms": 50
+        },
+        {
+          "id": 190,
+          "name": "Chokhi Dhani Jaipur",
+          "hotel_name": "Chokhi Dhani Jaipur",
+          "total_rooms": 100
+        },
+        {
+          "id": 191,
+          "name": "The Lalit Jaipur",
+          "hotel_name": "The Lalit Jaipur",
+          "total_rooms": 231
+        },
+        {
+          "id": 192,
+          "name": "InterContinental Jaipur Tonk Road by IHG",
+          "hotel_name": "InterContinental Jaipur Tonk Road by IHG",
+          "total_rooms": 218
+        },
+        {
+          "id": 193,
+          "name": "The JaiBagh Palace Jaipur",
+          "hotel_name": "The JaiBagh Palace Jaipur",
+          "total_rooms": 60
+        },
+        {
+          "id": 194,
+          "name": "The Gold Palace And Resorts Jaipur",
+          "hotel_name": "The Gold Palace And Resorts Jaipur",
+          "total_rooms": 70
+        },
+        {
+          "id": 196,
+          "name": "Lohagarh Fort Resort And Spa Jaipur",
+          "hotel_name": "Lohagarh Fort Resort And Spa Jaipur",
+          "total_rooms": 100
+        },
+        {
+          "id": 197,
+          "name": "Chomu Palace Hotel Jaipur",
+          "hotel_name": "Chomu Palace Hotel Jaipur",
+          "total_rooms": 100
+        },
+        {
+          "id": 245,
+          "name": "Buena Vista Luxury Garden Spa Resort",
+          "hotel_name": "Buena Vista Luxury Garden Spa Resort",
+          "total_rooms": 75
+        },
+        {
+          "id": 246,
+          "name": "Samode Bagh Jaipur",
+          "hotel_name": "Samode Bagh Jaipur",
+          "total_rooms": 44
+        },
+        {
+          "id": 247,
+          "name": "The Palace Aravali By Park Jewels Hotels and Resorts Jaipur",
+          "hotel_name": "The Palace Aravali By Park Jewels Hotels and Resorts Jaipur",
+          "total_rooms": 106
+        },
+        {
+          "id": 248,
+          "name": "Pride Amber Vilas Resort And Convention Centre Jaipur",
+          "hotel_name": "Pride Amber Vilas Resort And Convention Centre Jaipur",
+          "total_rooms": 95
+        },
+        {
+          "id": 250,
+          "name": "Fortune Resort Grace Mussoorie",
+          "hotel_name": "Fortune Resort Grace Mussoorie",
+          "total_rooms": 74
+        },
+        {
+          "id": 462,
+          "name": "Anantara Jewel Bagh Jaipur Hotel",
+          "hotel_name": "Anantara Jewel Bagh Jaipur Hotel",
+          "total_rooms": 150
+        }
+      ],
+      "text": "[{\"id\":27,\"name\":\"Hyatt Regency Jaipur Mansarovar\",\"hotel_name\":\"Hyatt Regency Jaipur Mansarovar\",\"total_rooms\":245},{\"id\":28,\"name\":\"The Leela Palace Jaipur\",\"hotel_name\":\"The Leela Palace Jaipur\",\"t"
+    },
+    "activeJaipur": {
+      "path": "/get-hotels-by-city/5",
+      "status": 200,
+      "cacheControl": "public, max-age=300",
+      "contentType": "application/json; charset=utf-8",
+      "length": 3315,
+      "json": [
+        {
+          "id": 40,
+          "name": "Alila Fort Bishangarh Jaipur",
+          "total_rooms": 87,
+          "hotel_name": "Alila Fort Bishangarh Jaipur"
+        },
+        {
+          "id": 181,
+          "name": "Ananta Spa And Resort Jaipur",
+          "total_rooms": 230,
+          "hotel_name": "Ananta Spa And Resort Jaipur"
+        },
+        {
+          "id": 148,
+          "name": "Bhanwar Singh Palace Jaipur",
+          "total_rooms": 150,
+          "hotel_name": "Bhanwar Singh Palace Jaipur"
+        },
+        {
+          "id": 245,
+          "name": "Buena Vista Luxury Garden Spa Resort",
+          "total_rooms": 75,
+          "hotel_name": "Buena Vista Luxury Garden Spa Resort"
+        },
+        {
+          "id": 197,
+          "name": "Chomu Palace Hotel Jaipur",
+          "total_rooms": 100,
+          "hotel_name": "Chomu Palace Hotel Jaipur"
+        },
+        {
+          "id": 187,
+          "name": "DoubleTree by Hilton Jaipur Amer",
+          "total_rooms": 151,
+          "hotel_name": "DoubleTree by Hilton Jaipur Amer"
+        },
+        {
+          "id": 42,
+          "name": "Fairmont Jaipur",
+          "total_rooms": 245,
+          "hotel_name": "Fairmont Jaipur"
+        },
+        {
+          "id": 27,
+          "name": "Hyatt Regency Jaipur Mansarovar",
+          "total_rooms": 245,
+          "hotel_name": "Hyatt Regency Jaipur Mansarovar"
+        },
+        {
+          "id": 183,
+          "name": "Indana Palace Jaipur",
+          "total_rooms": 118,
+          "hotel_name": "Indana Palace Jaipur"
+        },
+        {
+          "id": 192,
+          "name": "InterContinental Jaipur Tonk Road by IHG",
+          "total_rooms": 218,
+          "hotel_name": "InterContinental Jaipur Tonk Road by IHG"
+        },
+        {
+          "id": 125,
+          "name": "ITC Rajputana Jaipur",
+          "total_rooms": 218,
+          "hotel_name": "ITC Rajputana Jaipur"
+        },
+        {
+          "id": 35,
+          "name": "Jai Mahal Palace Jaipur",
+          "total_rooms": 100,
+          "hotel_name": "Jai Mahal Palace Jaipur"
+        },
+        {
+          "id": 124,
+          "name": "Le Meridien Jaipur Resort And Spa",
+          "total_rooms": 126,
+          "hotel_name": "Le Meridien Jaipur Resort And Spa"
+        },
+        {
+          "id": 179,
+          "name": "Mementos by ITC Hotels Jaipur",
+          "total_rooms": 64,
+          "hotel_name": "Mementos by ITC Hotels Jaipur"
+        },
+        {
+          "id": 186,
+          "name": "Mundota Fort and Palace Jaipur",
+          "total_rooms": 125,
+          "hotel_name": "Mundota Fort and Palace Jaipur"
+        },
+        {
+          "id": 184,
+          "name": "Novotel Jaipur",
+          "total_rooms": 226,
+          "hotel_name": "Novotel Jaipur"
+        },
+        {
+          "id": 248,
+          "name": "Pride Amber Vilas Resort And Convention Centre Jaipur",
+          "total_rooms": 95,
+          "hotel_name": "Pride Amber Vilas Resort And Convention Centre Jaipur"
+        },
+        {
+          "id": 36,
+          "name": "Raffles Jaipur",
+          "total_rooms": 50,
+          "hotel_name": "Raffles Jaipur"
+        },
+        {
+          "id": 185,
+          "name": "Rajasthali Resorts Jaipur",
+          "total_rooms": 115,
+          "hotel_name": "Rajasthali Resorts Jaipur"
+        },
+        {
+          "id": 37,
+          "name": "Rambagh Palace  Jaipur",
+          "total_rooms": 78,
+          "hotel_name": "Rambagh Palace  Jaipur"
+        },
+        {
+          "id": 246,
+          "name": "Samode Bagh Jaipur",
+          "total_rooms": 44,
+          "hotel_name": "Samode Bagh Jaipur"
+        },
+        {
+          "id": 182,
+          "name": "Shiv Vilas Jaipur",
+          "total_rooms": 125,
+          "hotel_name": "Shiv Vilas Jaipur"
+        },
+        {
+          "id": 32,
+          "name": "Taj Amer Jaipur",
+          "total_rooms": 245,
+          "hotel_name": "Taj Amer Jaipur"
+        },
+        {
+          "id": 146,
+          "name": "Taj Devi Ratn Resort And Spa Jaipur",
+          "total_rooms": 145,
+          "hotel_name": "Taj Devi Ratn Resort And Spa Jaipur"
+        },
+        {
+          "id": 194,
+          "name": "The Gold Palace And Resorts Jaipur",
+          "total_rooms": 70,
+          "hotel_name": "The Gold Palace And Resorts Jaipur"
+        },
+        {
+          "id": 193,
+          "name": "The JaiBagh Palace Jaipur",
+          "total_rooms": 60,
+          "hotel_name": "The JaiBagh Palace Jaipur"
+        },
+        {
+          "id": 28,
+          "name": "The Leela Palace Jaipur",
+          "total_rooms": 200,
+          "hotel_name": "The Leela Palace Jaipur"
+        },
+        {
+          "id": 180,
+          "name": "The Oberoi Rajvilas Jaipur",
+          "total_rooms": 71,
+          "hotel_name": "The Oberoi Rajvilas Jaipur"
+        },
+        {
+          "id": 247,
+          "name": "The Palace Aravali By Park Jewels Hotels and Resorts Jaipur",
+          "total_rooms": 106,
+          "hotel_name": "The Palace Aravali By Park Jewels Hotels and Resorts Jaipur"
+        },
+        {
+          "id": 178,
+          "name": "The Westin Jaipur Kant Kalwar Resort and Spa",
+          "total_rooms": 135,
+          "hotel_name": "The Westin Jaipur Kant Kalwar Resort and Spa"
+        }
+      ],
+      "text": "[{\"id\":40,\"name\":\"Alila Fort Bishangarh Jaipur\",\"total_rooms\":87,\"hotel_name\":\"Alila Fort Bishangarh Jaipur\"},{\"id\":181,\"name\":\"Ananta Spa And Resort Jaipur\",\"total_rooms\":230,\"hotel_name\":\"Ananta Spa"
+    },
+    "availability": {
+      "path": "/api/calculator/availability-data",
+      "status": 200,
+      "cacheControl": "public, max-age=300",
+      "contentType": "application/json; charset=utf-8",
+      "length": 14497,
+      "json": {
+        "generated_at": "2026-08-13T10:57:08.868Z",
+        "cities": [
+          {
+            "id": 8,
+            "name": "Agra"
+          },
+          {
+            "id": 28,
+            "name": "Ahmedabad"
+          },
+          {
+            "id": 70,
+            "name": "Ajabgarh"
+          },
+          {
+            "id": 32,
+            "name": "Ajmer"
+          },
+          {
+            "id": 31,
+            "name": "Amritsar"
+          },
+          {
+            "id": 69,
+            "name": "Andaman"
+          },
+          {
+            "id": 34,
+            "name": "Barwara"
+          },
+          {
+            "id": 23,
+            "name": "Bengal"
+          },
+          {
+            "id": 17,
+            "name": "Bengaluru"
+          },
+          {
+            "id": 40,
+            "name": "Bhopal"
+          },
+          {
+            "id": 67,
+            "name": "Bhubaneswar"
+          },
+          {
+            "id": 13,
+            "name": "Chandigarh"
+          },
+          {
+            "id": 18,
+            "name": "Chennai"
+          },
+          {
+            "id": 46,
+            "name": "Daman"
+          },
+          {
+            "id": 15,
+            "name": "Dehradun"
+          },
+          {
+            "id": 4,
+            "name": "Delhi NCR"
+          },
+          {
+            "id": 7,
+            "name": "Goa"
+          },
+          {
+            "id": 36,
+            "name": "Guwahati"
+          },
+          {
+            "id": 43,
+            "name": "Gwalior"
+          },
+          {
+            "id": 44,
+            "name": "Haridwar"
+          },
+          {
+            "id": 27,
+            "name": "Hyderabad"
+          },
+          {
+            "id": 47,
+            "name": "Indore"
+          },
+          {
+            "id": 5,
+            "name": "Jaipur"
+          },
+          {
+            "id": 9,
+            "name": "Jaisalmer"
+          },
+          {
+            "id": 12,
+            "name": "Jim Corbett"
+          },
+          {
+            "id": 6,
+            "name": "Jodhpur"
+          },
+          {
+            "id": 71,
+            "name": "Karjat"
+          },
+          {
+            "id": 55,
+            "name": "Karnal"
+          },
+          {
+            "id": 24,
+            "name": "Karnataka"
+          },
+          {
+            "id": 51,
+            "name": "kasauli"
+          },
+          {
+            "id": 21,
+            "name": "kerala"
+          },
+          {
+            "id": 56,
+            "name": "khimsar"
+          },
+          {
+            "id": 72,
+            "name": "Khopoli"
+          },
+          {
+            "id": 19,
+            "name": "kochi"
+          },
+          {
+            "id": 25,
+            "name": "Kolkata"
+          },
+          {
+            "id": 20,
+            "name": "Kovalam"
+          },
+          {
+            "id": 68,
+            "name": "Lakshadweep"
+          },
+          {
+            "id": 73,
+            "name": "Lonavala"
+          },
+          {
+            "id": 1,
+            "name": "Lucknow"
+          },
+          {
+            "id": 26,
+            "name": "Mumbai"
+          },
+          {
+            "id": 10,
+            "name": "Mussoorie"
+          },
+          {
+            "id": 2,
+            "name": "Noida"
+          },
+          {
+            "id": 16,
+            "name": "Pune"
+          },
+          {
+            "id": 30,
+            "name": "Pushkar"
+          },
+          {
+            "id": 35,
+            "name": "Raipur"
+          },
+          {
+            "id": 33,
+            "name": "Ranthambore"
+          },
+          {
+            "id": 11,
+            "name": "Rishikesh"
+          },
+          {
+            "id": 42,
+            "name": "Sakleshpur"
+          },
+          {
+            "id": 14,
+            "name": "Shimla"
+          },
+          {
+            "id": 29,
+            "name": "Surat"
+          },
+          {
+            "id": 22,
+            "name": "Trivandrum"
+          },
+          {
+            "id": 3,
+            "name": "Udaipur"
+          },
+          {
+            "id": 41,
+            "name": "Vrindavan"
+          }
+        ],
+        "hotelsByCity": {
+          "1": [
+            {
+              "id": 379,
+              "name": "Hyatt Regency Lucknow"
+            },
+            {
+              "id": 281,
+              "name": "Novotel Lucknow Gomti Nagar"
+            },
+            {
+              "id": 263,
+              "name": "Taj Mahal Lucknow"
+            }
+          ],
+          "2": [
+            {
+              "id": 359,
+              "name": "Crown plaza Greater Noida By IHG"
+            }
+          ],
+          "3": [
+            {
+              "id": 149,
+              "name": "Aurika Udaipur"
+            },
+            {
+              "id": 342,
+              "name": "Chunda Palace Udaipur"
+            },
+            {
+              "id": 9,
+              "name": "Fairmont Udaipur Palace"
+            },
+            {
+              "id": 151,
+              "name": "Holymont Udaipur"
+            },
+            {
+              "id": 349,
+              "name": "Hotel Lakend Udaipur"
+            },
+            {
+              "id": 343,
+              "name": "Justa Sajjangarh Resort And Spa Udaipur"
+            },
+            {
+              "id": 341,
+              "name": "Labh Garh Palace Resort And Spa Udaipur"
+            },
+            {
+              "id": 34,
+              "name": "Mementos by ITC Hotels Ekaaya Udaipur"
+            },
+            {
+              "id": 350,
+              "name": "Raajsa Resort Kumbhalgarh IHCL SeleQtions Udaipur"
+            },
+            {
+              "id": 344,
+              "name": "RAAS Devigarh Udaipur"
+            },
+            {
+              "id": 150,
+              "name": "Radisson Blu Palace Resort And Spa Udaipur"
+            },
+            {
+              "id": 19,
+              "name": "Raffles Udaipur"
+            },
+            {
+              "id": 373,
+              "name": "Ramada by Wyndham Udaipur Resort and Spa"
+            },
+            {
+              "id": 43,
+              "name": "Taj Aravali Resort And Spa Udaipur"
+            },
+            {
+              "id": 33,
+              "name": "Taj Fateh Prakash Palace Udaipur"
+            },
+            {
+              "id": 24,
+              "name": "Taj Lake Palace Udaipur"
+            },
+            {
+              "id": 152,
+              "name": "Taj Lalit Bagh Udaipur"
+            },
+            {
+              "id": 348,
+              "name": "The Ananta Udaipur"
+            },
+            {
+              "id": 257,
+              "name": "The LaLiT Laxmi Vilas Palace Udaipur"
+            },
+            {
+              "id": 12,
+              "name": "The Leela Palace Udaipur"
+            },
+            {
+              "id": 38,
+              "name": "The Oberoi Udaivilas  Udaipur"
+            },
+            {
+              "id": 347,
+              "name": "Trident Udaipur"
+            },
+            {
+              "id": 41,
+              "name": "Udaipur Marriott Hotel"
+            },
+            {
+              "id": 39,
+              "name": "Wyndham Grand Udaipur Fatehsagar Lake"
+            }
+          ],
+          "4": [
+            {
+              "id": 230,
+              "name": "Andaz New delhi"
+            },
+            {
+              "id": 103,
+              "name": "Courtyard by Marriott Aravali Resort Delhi Ncr"
+            },
+            {
+              "id": 270,
+              "name": "Grand Hyatt Gurgaon"
+            },
+            {
+              "id": 372,
+              "name": "Heritage Village Resort And Spa Manesar"
+            },
+            {
+              "id": 97,
+              "name": "ITC Grand Bharat Delhi NCR"
+            },
+            {
+              "id": 268,
+              "name": "ITC Maurya a Luxury Collection Hotel New Delhi"
+            },
+            {
+              "id": 368,
+              "name": "Jaypee Greens Golf And Spa Resort Delhi Ncr"
+            },
+            {
+              "id": 357,
+              "name": "JW Marriott Hotel New Delhi Aerocity"
+            },
+            {
+              "id": 369,
+              "name": "Karma Lakelands Gurugram"
+            },
+            {
+              "id": 232,
+              "name": "Pullman New Delhi Aerocity"
+            },
+            {
+              "id": 306,
+              "name": "Radisson Blu Plaza Hotel Delhi Airport"
+            },
+            {
+              "id": 370,
+              "name": "Resort Country Club Manesar"
+            },
+            {
+              "id": 308,
+              "name": "Sheraton New Delhi Hotel"
+            },
+            {
+              "id": 98,
+              "name": "Taj Damdama Lake Resort And Spa Gurugram"
+            },
+            {
+              "id": 260,
+              "name": "Taj mansingh New Delhi"
+            },
+            {
+              "id": 269,
+              "name": "Taj Palace New Delhi"
+            },
+            {
+              "id": 375,
+              "name": "Taj Surajkund Resort And Spa Delhi NCR"
+            },
+            {
+              "id": 319,
+              "name": "The Lalit Mangar Delhi Ncr"
+            },
+            {
+              "id": 104,
+              "name": "The Leela Ambience Convention Hotel gurugram"
+            },
+            {
+              "id": 258,
+              "name": "The Leela Palace New Delhi"
+            },
+            {
+              "id": 107,
+              "name": "The Oberoi Gurgaon"
+            },
+            {
+              "id": 259,
+              "name": "The Roseate New Delhi"
+            },
+            {
+              "id": 100,
+              "name": "The Westin Sohna Resort And Spa Gurgaon"
+            },
+            {
+              "id": 108,
+              "name": "Trident Gurgaon"
+            },
+            {
+              "id": 313,
+              "name": "Welcomhotel By ITC Hotels Delhi"
+            }
+          ],
+          "5": [
+            {
+              "id": 40,
+              "name": "Alila Fort Bishangarh Jaipur"
+            },
+            {
+              "id": 181,
+              "name": "Ananta Spa And Resort Jaipur"
+            },
+            {
+              "id": 148,
+              "name": "Bhanwar Singh Palace Jaipur"
+            },
+            {
+              "id": 245,
+              "name": "Buena Vista Luxury Garden Spa Resort"
+            },
+            {
+              "id": 197,
+              "name": "Chomu Palace Hotel Jaipur"
+            },
+            {
+              "id": 187,
+              "name": "DoubleTree by Hilton Jaipur Amer"
+            },
+            {
+              "id": 42,
+              "name": "Fairmont Jaipur"
+            },
+            {
+              "id": 27,
+              "name": "Hyatt Regency Jaipur Mansarovar"
+            },
+            {
+              "id": 183,
+              "name": "Indana Palace Jaipur"
+            },
+            {
+              "id": 192,
+              "name": "InterContinental Jaipur Tonk Road by IHG"
+            },
+            {
+              "id": 125,
+              "name": "ITC Rajputana Jaipur"
+            },
+            {
+              "id": 35,
+              "name": "Jai Mahal Palace Jaipur"
+            },
+            {
+              "id": 124,
+              "name": "Le Meridien Jaipur Resort And Spa"
+            },
+            {
+              "id": 179,
+              "name": "Mementos by ITC Hotels Jaipur"
+            },
+            {
+              "id": 186,
+              "name": "Mundota Fort and Palace Jaipur"
+            },
+            {
+              "id": 184,
+              "name": "Novotel Jaipur"
+            },
+            {
+              "id": 248,
+              "name": "Pride Amber Vilas Resort And Convention Centre Jaipur"
+            },
+            {
+              "id": 36,
+              "name": "Raffles Jaipur"
+            },
+            {
+              "id": 185,
+              "name": "Rajasthali Resorts Jaipur"
+            },
+            {
+              "id": 37,
+              "name": "Rambagh Palace  Jaipur"
+            },
+            {
+              "id": 246,
+              "name": "Samode Bagh Jaipur"
+            },
+            {
+              "id": 182,
+              "name": "Shiv Vilas Jaipur"
+            },
+            {
+              "id": 32,
+              "name": "Taj Amer Jaipur"
+            },
+            {
+              "id": 146,
+              "name": "Taj Devi Ratn Resort And Spa Jaipur"
+            },
+            {
+              "id": 194,
+              "name": "The Gold Palace And Resorts Jaipur"
+            },
+            {
+              "id": 193,
+              "name": "The JaiBagh Palace Jaipur"
+            },
+            {
+              "id": 28,
+              "name": "The Leela Palace Jaipur"
+            },
+            {
+              "id": 180,
+              "name": "The Oberoi Rajvilas Jaipur"
+            },
+            {
+              "id": 247,
+              "name": "The Palace Aravali By Park Jewels Hotels and Resorts Jaipur"
+            },
+            {
+              "id": 178,
+              "name": "The Westin Jaipur Kant Kalwar Resort and Spa"
+            }
+          ],
+          "6": [
+            {
+              "id": 44,
+              "name": "Indana Palace Jodhpur"
+            },
+            {
+              "id": 31,
+              "name": "Radisson Hotel Jodhpur"
+            },
+            {
+              "id": 145,
+              "name": "Ranbanka Palace Jodhpur"
+            },
+            {
+              "id": 26,
+              "name": "Taj Hari Mahal jodhpur"
+            },
+            {
+              "id": 25,
+              "name": "Umaid Bhawan Palace Jodhpur"
+            },
+            {
+              "id": 346,
+              "name": "WelcomHeritage Bal Samand Lake Palace Jodhpur"
+            },
+            {
+              "id": 30,
+              "name": "Welcomhotel by ITC Hotels Jodhpur"
+            }
+          ],
+          "7": [
+            {
+              "id": 17,
+              "name": "Alila Diwa Goa"
+            },
+            {
+              "id": 353,
+              "name": "Azaya Beach Resort Goa"
+            },
+            {
+              "id": 22,
+              "name": "Caravela Beach Resort"
+            },
+            {
+              "id": 23,
+              "name": "Grand Hyatt Goa"
+            },
+            {
+              "id": 18,
+              "name": "Holiday Inn Resort Goa"
+            },
+            {
+              "id": 157,
+              "name": "ITC Grand Goa"
+            },
+            {
+              "id": 352,
+              "name": "JW Marriott Goa"
+            },
+            {
+              "id": 351,
+              "name": "Planet Hollywood Beach Resort Goa"
+            },
+            {
+              "id": 158,
+              "name": "Radisson Blu Resort Goa Cavelossim Beach"
+            },
+            {
+              "id": 356,
+              "name": "Taj Cidade De Goa Heritage Goa"
+            },
+            {
+              "id": 437,
+              "name": "Taj Cidade De Goa Horizon Goa"
+            },
+            {
+              "id": 20,
+              "name": "Taj Exotica Resort And Spa Goa"
+            },
+            {
+              "id": 354,
+              "name": "Taj Fort Aguada Resort And Spa Goa"
+            },
+            {
+              "id": 355,
+              "name": "Taj Holiday Village Resort And Spa Goa"
+            },
+            {
+              "id": 384,
+              "name": "The LaLiT Golf And Spa Resort Goa"
+            },
+            {
+              "id": 14,
+              "name": "The St Regis Goa Resort"
+            },
+            {
+              "id": 29,
+              "name": "The Zuri White Sands Goa Resort And Casino"
+            },
+            {
+              "id": 21,
+              "name": "W Goa"
+            }
+          ],
+          "8": [
+            {
+              "id": 168,
+              "name": "Courtyard by Marriott Agra"
+            },
+            {
+              "id": 169,
+              "name": "DoubleTree by Hilton Hotel Agra"
+            },
+            {
+              "id": 48,
+              "name": "ITC Mughal Agra"
+            },
+            {
+              "id": 63,
+              "name": "Jaypee Palace Hotel And Convention Centre Agra"
+            },
+            {
+              "id": 170,
+              "name": "Laxmi Vilas Palace bharatpur"
+            },
+            {
+              "id": 171,
+              "name": "Taj Agra"
+            },
+            {
+              "id": 156,
+              "name": "Taj View Agra"
+            },
+            {
+              "id": 45,
+              "name": "The Oberoi Amarvilas Agra"
+            },
+            {
+              "id": 166,
+              "name": "Trident Agra"
+            }
+          ],
+          "9": [
+            {
+              "id": 162,
+              "name": "Fort Rajwada Jaisalmer"
+            },
+            {
+              "id": 161,
+              "name": "Gobindgarh Jaisalmer"
+            },
+            {
+              "id": 49,
+              "name": "Jaisalmer Marriott Resort And  Spa"
+            },
+            {
+              "id": 127,
+              "name": "Storii by ITC Hotels Jaisalmer"
+            },
+            {
+              "id": 47,
+              "name": "Suryagarh Palace jaisalmer"
+            },
+            {
+              "id": 126,
+              "name": "Taj Gorbandh Palace Jaisalmer"
+            }
+          ],
+          "10": [
+            {
+              "id": 64,
+              "name": "Jaypee Residency Manor"
+            },
+            {
+              "id": 65,
+              "name": "JW Marriott Mussoorie Walnut Grove Resort And Spa"
+            },
+            {
+              "id": 249,
+              "name": "Royal Orchid Fort Resort Mussoorie"
+            },
+            {
+              "id": 52,
+              "name": "Welcomhotel by ITC Hotels The Savoy"
+            }
+          ],
+          "11": [
+            {
+              "id": 66,
+              "name": "Taj Rishikesh Resort And Spa"
+            },
+            {
+              "id": 68,
+              "name": "The Westin Resort And Spa Himalayas"
+            }
+          ],
+          "12": [
+            {
+              "id": 155,
+              "name": "Aahana Resort Luxury resorts in Jim Corbett"
+            },
+            {
+              "id": 54,
+              "name": "Lemon Tree Premier Jim Corbett"
+            },
+            {
+              "id": 55,
+              "name": "Namah Jim Corbett"
+            },
+            {
+              "id": 236,
+              "name": "Resorts By The Baagh Jim Corbett"
+            },
+            {
+              "id": 53,
+              "name": "Taj Corbett Resort And Spa Jim Corbett"
+            },
+            {
+              "id": 58,
+              "name": "Tarangi Jim Corbett Resort and Spa"
+            },
+            {
+              "id": 234,
+              "name": "The Riverview Retreat Jim Corbett"
+            },
+            {
+              "id": 56,
+              "name": "Welcomhotel By ITC Hotels Jim Corbett"
+            },
+            {
+              "id": 57,
+              "name": "ZANA  A Luxury Escape  Dhikuli  Jim Corbet"
+            }
+          ],
+          "13": [
+            {
+              "id": 59,
+              "name": "Hyatt Regency chandigarh"
+            },
+            {
+              "id": 60,
+              "name": "JW Marriott Hotel Chandigarh"
+            },
+            {
+              "id": 139,
+              "name": "Novotel Chandigarh Tribune Chowk"
+            },
+            {
+              "id": 138,
+              "name": "Taj Chandigarh"
+            },
+            {
+              "id": 61,
+              "name": "The Oberoi Sukhvilas"
+            }
+          ],
+          "14": [
+            {
+              "id": 69,
+              "name": "Taj Theog Resort And Spa Shimla"
+            }
+          ],
+          "15": [
+            {
+              "id": 67,
+              "name": "Hyatt Regency Dehradun Resort and Spa"
+            },
+            {
+              "id": 137,
+              "name": "Le Meridien Dehradun Resort And Spa"
+            },
+            {
+              "id": 154,
+              "name": "Taj Mussoorie Foothills Dehradun"
+            }
+          ],
+          "16": [
+            {
+              "id": 72,
+              "name": "Conrad Pune"
+            },
+            {
+              "id": 386,
+              "name": "JW Marriott Hotel Pune"
+            },
+            {
+              "id": 307,
+              "name": "Radisson Blu Hotel Pune Kharadi"
+            },
+            {
+              "id": 283,
+              "name": "Sheraton Grand Pune Bund Garden Hotel"
+            },
+            {
+              "id": 70,
+              "name": "The Ritz Carlton Pune"
+            },
+            {
+              "id": 73,
+              "name": "The Westin Pune Koregaon Park"
+            }
+          ],
+          "17": [
+            {
+              "id": 388,
+              "name": "Hilton Bangalore Embassy GolfLinks"
+            },
+            {
+              "id": 381,
+              "name": "Hilton Garden Inn Bengaluru Embassy Manyata Business Park"
+            },
+            {
+              "id": 81,
+              "name": "ITC Gardenia Bengaluru"
+            },
+            {
+              "id": 267,
+              "name": "ITC Windsor a Luxury Collection Hotel Bengaluru"
+            },
+            {
+              "id": 78,
+              "name": "JW Marriott Bengaluru Prestige Golfshire Resort And Spa"
+            },
+            {
+              "id": 287,
+              "name": "Radisson Blu Hotel Bengaluru"
+            },
+            {
+              "id": 284,
+              "name": "Shangri La Bengaluru"
+            },
+            {
+              "id": 82,
+              "name": "Taj West End Bengaluru"
+            },
+            {
+              "id": 264,
+              "name": "The Leela Bhartiya City Bengaluru"
+            },
+            {
+              "id": 77,
+              "name": "The Leela Palace Bengaluru"
+            },
+            {
+              "id": 80,
+              "name": "The Ritz Carlton Bangalore"
+            }
+          ],
+          "18": [
+            {
+              "id": 293,
+              "name": "Hilton chennai"
+            },
+            {
+              "id": 294,
+              "name": "Hyatt Regency Chennai"
+            },
+            {
+              "id": 84,
+              "name": "ITC Grand Chola Chennai"
+            },
+            {
+              "id": 90,
+              "name": "Le Royal Meridien Chennai"
+            },
+            {
+              "id": 291,
+              "name": "Novotel Chennai OMR"
+            },
+            {
+              "id": 292,
+              "name": "Taj Club House Chennai"
+            },
+            {
+              "id": 289,
+              "name": "Taj Connemara Chennai"
+            },
+            {
+              "id": 88,
+              "name": "The Leela Palace Chennai"
+            }
+          ],
+          "19": [
+            {
+              "id": 276,
+              "name": "Courtyard by Marriott Kochi Airport"
+            },
+            {
+              "id": 85,
+              "name": "Grand Hyatt Kochi Bolgatty"
+            },
+            {
+              "id": 277,
+              "name": "Le Meridien Kochi"
+            },
+            {
+              "id": 314,
+              "name": "Radisson Blu Kochi"
+            }
+          ],
+          "20": [
+            {
+              "id": 86,
+              "name": "The Leela Kovalam A Raviz Hotel"
+            }
+          ],
+          "21": [
+            {
+              "id": 374,
+              "name": "Taj Bekal Resort And Spa Kerala"
+            },
+            {
+              "id": 87,
+              "name": "Taj Kumarakom Resort And Spa Kerala"
+            },
+            {
+              "id": 317,
+              "name": "Taj Wayanad Resort And Spa kerala"
+            }
+          ],
+          "22": [
+            {
+              "id": 89,
+              "name": "Hilton Garden Inn Trivandrum"
+            }
+          ],
+          "23": [
+            {
+              "id": 91,
+              "name": "ITC Royal Bengal"
+            }
+          ],
+          "24": [
+            {
+              "id": 92,
+              "name": "Coorg Marriott Resort And Spa"
+            },
+            {
+              "id": 93,
+              "name": "Gateway Coorg Karnataka"
+            },
+            {
+              "id": 315,
+              "name": "Taj Madikeri Resort And Spa"
+            }
+          ],
+          "25": [
+            {
+              "id": 279,
+              "name": "Hyatt Regency Kolkata"
+            },
+            {
+              "id": 383,
+              "name": "ITC Sonar a Luxury Collection Hotel Kolkata"
+            },
+            {
+              "id": 95,
+              "name": "JW Marriott Hotel kolkata"
+            },
+            {
+              "id": 318,
+              "name": "Novotel Kolkata Hotel And Residences"
+            },
+            {
+              "id": 278,
+              "name": "Taj Bengal Kolkata"
+            }
+          ],
+          "26": [
+            {
+              "id": 316,
+              "name": "Courtyard by Marriott Mumbai International Airport"
+            },
+            {
+              "id": 376,
+              "name": "Fairmont Mumbai"
+            },
+            {
+              "id": 109,
+              "name": "Four Seasons Hotel Mumbai"
+            },
+            {
+              "id": 271,
+              "name": "Grand Hyatt Mumbai Hotel And Residences"
+            },
+            {
+              "id": 272,
+              "name": "InterContinental Marine Drive Mumbai by IHG"
+            },
+            {
+              "id": 101,
+              "name": "ITC Maratha Mumbai"
+            },
+            {
+              "id": 273,
+              "name": "JW Marriott Mumbai Juhu"
+            },
+            {
+              "id": 111,
+              "name": "JW Marriott Mumbai Sahar"
+            },
+            {
+              "id": 274,
+              "name": "Novotel Mumbai Juhu Beach"
+            },
+            {
+              "id": 311,
+              "name": "Radisson Blu Mumbai International Airport"
+            },
+            {
+              "id": 380,
+              "name": "Sofitel Mumbai BKC"
+            },
+            {
+              "id": 102,
+              "name": "Taj Lands End Mumbai"
+            },
+            {
+              "id": 312,
+              "name": "Taj Santacruz Mumbai"
+            },
+            {
+              "id": 382,
+              "name": "The Leela Mumbai"
+            },
+            {
+              "id": 371,
+              "name": "The Oberoi Mumbai"
+            },
+            {
+              "id": 96,
+              "name": "The St Regis Mumbai"
+            },
+            {
+              "id": 99,
+              "name": "The Taj Mahal Palace Mumbai"
+            },
+            {
+              "id": 106,
+              "name": "The Westin Mumbai Powai Lake"
+            },
+            {
+              "id": 105,
+              "name": "Trident Nariman Point Mumbai"
+            }
+          ],
+          "27": [
+            {
+              "id": 285,
+              "name": "hyatt hyderabad gachibowli"
+            },
+            {
+              "id": 114,
+              "name": "Hyderabad Marriott Hotel And Convention Centre"
+            },
+            {
+              "id": 288,
+              "name": "ITC Kakatiya  a Luxury Collection Hotel Hyderabad"
+            },
+            {
+              "id": 367,
+              "name": "ITC Kohenur a Luxury Collection Hotel Hyderabad"
+            },
+            {
+              "id": 115,
+              "name": "Le Meridien Hyderabad"
+            },
+            {
+              "id": 290,
+              "name": "Novotel Hyderabad Convention Centre"
+            },
+            {
+              "id": 310,
+              "name": "Radisson Blu Plaza Hotel Hyderabad Banjara Hills"
+            },
+            {
+              "id": 296,
+              "name": "Sheraton Hyderabad Hotel"
+            },
+            {
+              "id": 303,
+              "name": "Taj Deccan Hyderabad"
+            },
+            {
+              "id": 112,
+              "name": "Taj Falaknuma Palace Hyderabad"
+            },
+            {
+              "id": 117,
+              "name": "Taj Krishna Hyderabad"
+            },
+            {
+              "id": 118,
+              "name": "The Leela Hyderabad"
+            },
+            {
+              "id": 116,
+              "name": "THE PARK HYDERABAD"
+            },
+            {
+              "id": 286,
+              "name": "Trident Hyderabad"
+            }
+          ],
+          "28": [
+            {
+              "id": 309,
+              "name": "DoubleTree by Hilton Ahmedabad"
+            },
+            {
+              "id": 305,
+              "name": "Gateway Ahmedabad Sindhu Bhavan"
+            },
+            {
+              "id": 262,
+              "name": "ITC Narmada a Luxury Collection Hotel Ahmedabad"
+            },
+            {
+              "id": 280,
+              "name": "Novotel Ahmedabad"
+            }
+          ],
+          "29": [
+            {
+              "id": 282,
+              "name": "Hilton Garden Inn Surat City Centre"
+            }
+          ],
+          "30": [
+            {
+              "id": 134,
+              "name": "Ananta Resort Pushkar"
+            },
+            {
+              "id": 136,
+              "name": "Pushkara Resort and Spa"
+            },
+            {
+              "id": 164,
+              "name": "Regenta Spa And Resort Pushkar"
+            }
+          ],
+          "31": [
+            {
+              "id": 144,
+              "name": "Holiday Inn Amritsar Ranjit Avenue by IHG"
+            },
+            {
+              "id": 131,
+              "name": "Hyatt Regency Amritsar Hotel And Spa"
+            },
+            {
+              "id": 130,
+              "name": "Taj Swarna Amritsar"
+            },
+            {
+              "id": 129,
+              "name": "Welcomhotel By ITC Hotels Amritsar"
+            }
+          ],
+          "32": [
+            {
+              "id": 133,
+              "name": "Pratap Mahal Ajmer  An IHCL SeleQtions Hotel"
+            }
+          ],
+          "33": [
+            {
+              "id": 153,
+              "name": "Nahargarh Ranthambhore"
+            },
+            {
+              "id": 387,
+              "name": "Ranthambore Bagh Palace"
+            },
+            {
+              "id": 345,
+              "name": "Taj Sawai Ranthambore"
+            },
+            {
+              "id": 378,
+              "name": "ZANA Forest Resort Ranthambore"
+            }
+          ],
+          "34": [
+            {
+              "id": 167,
+              "name": "Six Senses Fort Barwara"
+            }
+          ],
+          "35": [
+            {
+              "id": 172,
+              "name": "Courtyard by Marriott Raipur"
+            },
+            {
+              "id": 173,
+              "name": "MAYFAIR Lake Resort Raipur"
+            }
+          ],
+          "36": [
+            {
+              "id": 175,
+              "name": "Mayfair Spring Valley Resort Guwahati"
+            },
+            {
+              "id": 295,
+              "name": "Radisson Blu Hotel Guwahati"
+            }
+          ],
+          "40": [
+            {
+              "id": 241,
+              "name": "Courtyard by Marriott Bhopal"
+            },
+            {
+              "id": 242,
+              "name": "Radisson Hotel Bhopal"
+            },
+            {
+              "id": 239,
+              "name": "Taj Lakefront Bhopal"
+            }
+          ],
+          "41": [],
+          "42": [],
+          "43": [
+            {
+              "id": 275,
+              "name": "Taj Usha Kiran Palace Gwalior"
+            }
+          ],
+          "44": [],
+          "46": [
+            {
+              "id": 302,
+              "name": "Praveg Lake Resort Daman"
+            },
+            {
+              "id": 301,
+              "name": "Silver Waves Resort And Spa Daman"
+            },
+            {
+              "id": 439,
+              "name": "The Deltin Daman"
+            }
+          ],
+          "47": [
+            {
+              "id": 300,
+              "name": "Indore Marriott Hotel"
+            },
+            {
+              "id": 298,
+              "name": "Radisson Blu Hotel Indore"
+            },
+            {
+              "id": 299,
+              "name": "Sheraton Grand Palace Indore"
+            },
+            {
+              "id": 297,
+              "name": "The Park Indore"
+            }
+          ],
+          "51": [
+            {
+              "id": 358,
+              "name": "Fortune Select Forest Hill Mahiya Kasauli"
+            }
+          ],
+          "55": [
+            {
+              "id": 377,
+              "name": "Noormahal Palace Karnal"
+            }
+          ],
+          "56": [
+            {
+              "id": 385,
+              "name": "Welcomhotel By ITC Hotels Fort And Dunes Khimsar"
+            }
+          ],
+          "67": [],
+          "68": [],
+          "69": [],
+          "70": [],
+          "71": [],
+          "72": [],
+          "73": []
+        }
+      },
+      "text": "{\"generated_at\":\"2026-08-13T10:57:08.868Z\",\"cities\":[{\"id\":8,\"name\":\"Agra\"},{\"id\":28,\"name\":\"Ahmedabad\"},{\"id\":70,\"name\":\"Ajabgarh\"},{\"id\":32,\"name\":\"Ajmer\"},{\"id\":31,\"name\":\"Amritsar\"},{\"id\":69,\"name"
+    },
+    "compareOnlyPrice": {
+      "path": "/get-hotel-price/120/January",
+      "status": 200,
+      "cacheControl": "public, max-age=300",
+      "contentType": "application/json; charset=utf-8",
+      "length": 123,
+      "json": {
+        "room_price": "21500.00",
+        "lunch_price": "3500.00",
+        "hitea_price": "1200.00",
+        "dinner_price": "4500.00",
+        "hi_tea_price": "1200.00"
+      },
+      "text": "{\"room_price\":\"21500.00\",\"lunch_price\":\"3500.00\",\"hitea_price\":\"1200.00\",\"dinner_price\":\"4500.00\",\"hi_tea_price\":\"1200.00\"}"
+    },
+    "comparePostForm": {
+      "path": "/get-hotel-prices",
+      "status": 200,
+      "cacheControl": "public, max-age=300",
+      "contentType": "application/json; charset=utf-8",
+      "length": 480,
+      "json": [
+        {
+          "id": 120,
+          "hotel_name": "Hyatt Regency Ahmedabad",
+          "total_rooms": 210,
+          "prices": [
+            {
+              "room_price": "21500.00",
+              "lunch_price": "3500.00",
+              "hitea_price": "1200.00",
+              "dinner_price": "4500.00",
+              "hi_tea_price": "1200.00",
+              "hotel": {
+                "city": {
+                  "name": "Ahmedabad"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "hotel_name": "Fairmont Udaipur Palace",
+          "total_rooms": 327,
+          "prices": [
+            {
+              "room_price": "80000.00",
+              "lunch_price": "8500.00",
+              "hitea_price": "3500.00",
+              "dinner_price": "10000.00",
+              "hi_tea_price": "3500.00",
+              "hotel": {
+                "city": {
+                  "name": "Udaipur"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "text": "[{\"id\":120,\"hotel_name\":\"Hyatt Regency Ahmedabad\",\"total_rooms\":210,\"prices\":[{\"room_price\":\"21500.00\",\"lunch_price\":\"3500.00\",\"hitea_price\":\"1200.00\",\"dinner_price\":\"4500.00\",\"hi_tea_price\":\"1200.00\""
+    },
+    "rawCalculatorPublic": {
+      "path": "/data/calculator/calculator-data.json",
+      "status": 404,
+      "cacheControl": "no-store",
+      "contentType": "text/plain; charset=utf-8",
+      "length": 9,
+      "json": null,
+      "text": "Not found"
+    },
+    "rawAvailabilityPublic": {
+      "path": "/data/calculator/availability-data.json",
+      "status": 404,
+      "cacheControl": "no-store",
+      "contentType": "text/plain; charset=utf-8",
+      "length": 9,
+      "json": null,
+      "text": "Not found"
+    },
+    "crossSiteCities": {
+      "path": "/get-cities",
+      "status": 404,
+      "cacheControl": "no-store",
+      "contentType": "application/json; charset=utf-8",
+      "length": 21,
+      "json": {
+        "error": "Not found"
+      },
+      "text": "{\"error\":\"Not found\"}"
+    }
+  }
+}

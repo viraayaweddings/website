@@ -1,0 +1,674 @@
+{
+  "bodyClass": "homepage-gold-theme",
+  "brokenImages": [
+    {
+      "alt": "menu",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/menu.svg",
+      "width": 0
+    },
+    {
+      "alt": "Enter Your Details",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/hotel-cost-checker/steps/OTS7ztrCFNqYGF5VxjcZQXTo6cqpu9j8hZLVdh5Z.png",
+      "width": 0
+    },
+    {
+      "alt": "Receive an  Estimate",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/hotel-cost-checker/steps/AIpeBfLHgzJsF54d9yORtCm34IatNsNA93o2En18.png",
+      "width": 0
+    },
+    {
+      "alt": "Review Your Options",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/hotel-cost-checker/steps/502TXgxD3DpvKJ1i8oQPPtORFknMtnZjQVkfsa92.png",
+      "width": 0
+    },
+    {
+      "alt": "Plan With Confidence",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/hotel-cost-checker/steps/THzzJrfi1orDoPcbxblcCblcIseBx4KQgYgxidqN.png",
+      "width": 0
+    },
+    {
+      "alt": "check-in",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/input02.png",
+      "width": 0
+    },
+    {
+      "alt": "check-out",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/input02.png",
+      "width": 0
+    },
+    {
+      "alt": "feature_one",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/start-y.svg",
+      "width": 0
+    },
+    {
+      "alt": "feature_one",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/start-y.svg",
+      "width": 0
+    },
+    {
+      "alt": "feature_one",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/start-y.svg",
+      "width": 0
+    },
+    {
+      "alt": "feature_one",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/start-y.svg",
+      "width": 0
+    },
+    {
+      "alt": "Plan with Certainty",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/services/QVgbTakXiv3TdQ8PovHt7It6QbYFk14iYRfDY9ec.jpg",
+      "width": 0
+    },
+    {
+      "alt": "feature_one",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/start-y.svg",
+      "width": 0
+    },
+    {
+      "alt": "feature_one",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/start-y.svg",
+      "width": 0
+    },
+    {
+      "alt": "feature_one",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/start-y.svg",
+      "width": 0
+    },
+    {
+      "alt": "feature_one",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/start-y.svg",
+      "width": 0
+    },
+    {
+      "alt": "Plan with Certainty",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/services/xXZwUQ881KxorgZDpEDuBy8mGG8vaoHlPWkxyi9a.jpg",
+      "width": 0
+    },
+    {
+      "alt": "green-check",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/green-check.png",
+      "width": 0
+    },
+    {
+      "alt": "green-check",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/green-check.png",
+      "width": 0
+    },
+    {
+      "alt": "green-check",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/green-check.png",
+      "width": 0
+    },
+    {
+      "alt": "green-check",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/green-check.png",
+      "width": 0
+    },
+    {
+      "alt": "Hotel logo",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/packages/brand-images/zvNAbBDvoakJGy0zSyvJmq3ZhFvLYulkODJVOVf2.jpg",
+      "width": 0
+    },
+    {
+      "alt": "Hotel logo",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/packages/brand-images/CuPG86uglcycdVaAr8p0QSeqVULz887h2mmq0skv.jpg",
+      "width": 0
+    },
+    {
+      "alt": "Hotel logo",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/packages/brand-images/pov0sa3Ibp1iHN2AErgXWqok5GoGgjE7GwmTPKbS.jpg",
+      "width": 0
+    },
+    {
+      "alt": "green-check",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/green-check.png",
+      "width": 0
+    },
+    {
+      "alt": "green-check",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/green-check.png",
+      "width": 0
+    },
+    {
+      "alt": "green-check",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/green-check.png",
+      "width": 0
+    },
+    {
+      "alt": "green-check",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/green-check.png",
+      "width": 0
+    },
+    {
+      "alt": "Hotel logo",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/packages/brand-images/1IxxdqY3sdp7FBffbSYXmqThFqdjTFOlF4tBATAY.jpg",
+      "width": 0
+    },
+    {
+      "alt": "Hotel logo",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/packages/brand-images/at1PY1p6OWmXiJfqzunZPJ2swdCF2RboEYJprAyd.jpg",
+      "width": 0
+    },
+    {
+      "alt": "Hotel logo",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/packages/brand-images/5I1E1omMlCUAbBvst3HExoLNh9T3y5b529IwXjsZ.jpg",
+      "width": 0
+    },
+    {
+      "alt": "green-check",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/green-check.png",
+      "width": 0
+    },
+    {
+      "alt": "green-check",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/green-check.png",
+      "width": 0
+    },
+    {
+      "alt": "green-check",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/green-check.png",
+      "width": 0
+    },
+    {
+      "alt": "green-check",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/green-check.png",
+      "width": 0
+    },
+    {
+      "alt": "Hotel logo",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/packages/brand-images/1W9nYcR2XibkquSuownJuZmM7Vaytg3qL4sJ01qW.jpg",
+      "width": 0
+    },
+    {
+      "alt": "Hotel logo",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/packages/brand-images/v6pBGpfnbPAKVao2CzT6gpW9U3auH5A4Yjm7nkGF.jpg",
+      "width": 0
+    },
+    {
+      "alt": "Hotel logo",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/packages/brand-images/frIT0Jbo7jsro32sw9KTB1CvzFulVWbCb0UBgKfH.jpg",
+      "width": 0
+    },
+    {
+      "alt": "deal",
+      "complete": false,
+      "height": 0,
+      "src": "/uploads/deals/1777442808_img.jpg",
+      "width": 0
+    },
+    {
+      "alt": "deal",
+      "complete": false,
+      "height": 0,
+      "src": "/uploads/deals/1777443023_logo.png",
+      "width": 0
+    },
+    {
+      "alt": "deal",
+      "complete": false,
+      "height": 0,
+      "src": "/uploads/deals/1777443211_img.jpg",
+      "width": 0
+    },
+    {
+      "alt": "deal",
+      "complete": false,
+      "height": 0,
+      "src": "/uploads/deals/1775646886_logo.png",
+      "width": 0
+    },
+    {
+      "alt": "deal",
+      "complete": false,
+      "height": 0,
+      "src": "/uploads/deals/1777443598_img.jpg",
+      "width": 0
+    },
+    {
+      "alt": "deal",
+      "complete": false,
+      "height": 0,
+      "src": "/uploads/deals/1775646894_logo.png",
+      "width": 0
+    },
+    {
+      "alt": "Taj Theog Resort & Spa, Shimla",
+      "complete": false,
+      "height": 1080,
+      "src": "/storage/recent-weddings/covers/jiTcbMKNScY9RTRsJknBLLHdKcDdCxkJlEBFl6w6.jpg",
+      "width": 1620
+    },
+    {
+      "alt": "Taj Theog Resort & Spa, Shimla",
+      "complete": false,
+      "height": 1600,
+      "src": "/storage/recent-weddings/gallery/Y5CY23qnwN3AKtmHzw6HFUQu4GWMa1OYPj0XECyj.jpg",
+      "width": 1066
+    },
+    {
+      "alt": "Taj Theog Resort & Spa, Shimla",
+      "complete": false,
+      "height": 1066,
+      "src": "/storage/recent-weddings/gallery/uvMqI0CLGOeXpEQVPQOlW7nYnDxdlKrShedtUAvH.jpg",
+      "width": 1600
+    },
+    {
+      "alt": "Taj Theog Resort & Spa, Shimla",
+      "complete": false,
+      "height": 1066,
+      "src": "/storage/recent-weddings/gallery/xGMJCxRq8S3vAFp3or3kBhnaxeRY7QGkETNRano1.jpg",
+      "width": 1600
+    },
+    {
+      "alt": "map",
+      "complete": false,
+      "height": 14,
+      "src": "/user/assets/images/map-icon.svg",
+      "width": 14
+    },
+    {
+      "alt": "map",
+      "complete": false,
+      "height": 14,
+      "src": "/user/assets/images/map-icon.svg",
+      "width": 14
+    },
+    {
+      "alt": "map",
+      "complete": false,
+      "height": 64,
+      "src": "/user/assets/images/icon02.png",
+      "width": 64
+    },
+    {
+      "alt": "The Leela Palace, Udaipur",
+      "complete": false,
+      "height": 1000,
+      "src": "/storage/recent-weddings/covers/YHce9bdW97bDBMzcGKFO4bxlUwtADz0SOCgUvTFY.jpg",
+      "width": 1503
+    },
+    {
+      "alt": "The Leela Palace, Udaipur",
+      "complete": false,
+      "height": 1000,
+      "src": "/storage/recent-weddings/gallery/RT9mLE1xgROUZv97PnbYrlngMSiJPf1Fw18xYGDo.jpg",
+      "width": 1503
+    },
+    {
+      "alt": "The Leela Palace, Udaipur",
+      "complete": false,
+      "height": 1000,
+      "src": "/storage/recent-weddings/gallery/Rj3p3JJcjdaFqRxSenW3dqwSkVxp7JYUmvq4IinH.jpg",
+      "width": 1503
+    },
+    {
+      "alt": "The Leela Palace, Udaipur",
+      "complete": false,
+      "height": 1000,
+      "src": "/storage/recent-weddings/gallery/fjLJ82OACoVeSMIhcoAegtI0e6p0TJRkTxE5FMQV.jpg",
+      "width": 1503
+    },
+    {
+      "alt": "map",
+      "complete": false,
+      "height": 14,
+      "src": "/user/assets/images/map-icon.svg",
+      "width": 14
+    },
+    {
+      "alt": "map",
+      "complete": false,
+      "height": 14,
+      "src": "/user/assets/images/map-icon.svg",
+      "width": 14
+    },
+    {
+      "alt": "map",
+      "complete": false,
+      "height": 64,
+      "src": "/user/assets/images/icon02.png",
+      "width": 64
+    },
+    {
+      "alt": "Taj Falaknuma Palace, Hyderabad",
+      "complete": false,
+      "height": 413,
+      "src": "/storage/recent-weddings/covers/qoDTDRcxIvksG7ocB44ekdeC0iio9QfzCKyitsnM.webp",
+      "width": 823
+    },
+    {
+      "alt": "Taj Falaknuma Palace, Hyderabad",
+      "complete": false,
+      "height": 1420,
+      "src": "/storage/recent-weddings/gallery/Cb4wBs5Cj29JLWDQCEHmNkxCoTEjzAMwUSniWDBr.jpg",
+      "width": 1200
+    },
+    {
+      "alt": "Taj Falaknuma Palace, Hyderabad",
+      "complete": false,
+      "height": 800,
+      "src": "/storage/recent-weddings/gallery/m719ZcmFUO7GiyRNalHzrBu5U35ztMCIHJWOafFp.jpg",
+      "width": 1200
+    },
+    {
+      "alt": "Taj Falaknuma Palace, Hyderabad",
+      "complete": false,
+      "height": 703,
+      "src": "/storage/recent-weddings/gallery/AjhuqINByciH0v3emNZo4U3IRdrZ74nV43WR2PCi.jpg",
+      "width": 1200
+    },
+    {
+      "alt": "map",
+      "complete": false,
+      "height": 14,
+      "src": "/user/assets/images/map-icon.svg",
+      "width": 14
+    },
+    {
+      "alt": "map",
+      "complete": false,
+      "height": 14,
+      "src": "/user/assets/images/map-icon.svg",
+      "width": 14
+    },
+    {
+      "alt": "map",
+      "complete": false,
+      "height": 64,
+      "src": "/user/assets/images/icon02.png",
+      "width": 64
+    },
+    {
+      "alt": "The Oberoi Udaivilas, Udaipur",
+      "complete": false,
+      "height": 800,
+      "src": "/storage/recent-weddings/covers/xBSKQ3gNQAAv7Db39yG2vRWtq0yY0hPKiwHYE28G.jpg",
+      "width": 1200
+    },
+    {
+      "alt": "The Oberoi Udaivilas, Udaipur",
+      "complete": false,
+      "height": 395,
+      "src": "/storage/recent-weddings/gallery/cKLLOAszeVHIfoXgE3pwAXLGE0X50XuaZ36bAqcL.jpg",
+      "width": 650
+    },
+    {
+      "alt": "The Oberoi Udaivilas, Udaipur",
+      "complete": false,
+      "height": 395,
+      "src": "/storage/recent-weddings/gallery/qWbyIOHWMEGkCHsfowAL3pXFGynPQagg65Gt12sV.jpg",
+      "width": 650
+    },
+    {
+      "alt": "The Oberoi Udaivilas, Udaipur",
+      "complete": false,
+      "height": 1600,
+      "src": "/storage/recent-weddings/gallery/AhOBPuElnkoQ9h8fpnmiGKCmXmQXPBoWsxZfq8FV.jpg",
+      "width": 1067
+    },
+    {
+      "alt": "map",
+      "complete": false,
+      "height": 14,
+      "src": "/user/assets/images/map-icon.svg",
+      "width": 14
+    },
+    {
+      "alt": "map",
+      "complete": false,
+      "height": 14,
+      "src": "/user/assets/images/map-icon.svg",
+      "width": 14
+    },
+    {
+      "alt": "map",
+      "complete": false,
+      "height": 64,
+      "src": "/user/assets/images/icon02.png",
+      "width": 64
+    },
+    {
+      "alt": "Nikita & Makrand",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/testimonials/4kEKQ3Bb00PweyK8aSiqBtuHs2oiFRECClhpEhqQ.jpg",
+      "width": 0
+    },
+    {
+      "alt": "Nikita & Makrand",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/quote.svg",
+      "width": 0
+    },
+    {
+      "alt": "Nikita & Makrand",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/map01.svg",
+      "width": 0
+    },
+    {
+      "alt": "Riya & Arjun",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/testimonials/AVeBeB7xOSVT0Amfux6AaPuBjEif6mtIEmIlSWsJ.png",
+      "width": 0
+    },
+    {
+      "alt": "Riya & Arjun",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/quote.svg",
+      "width": 0
+    },
+    {
+      "alt": "Riya & Arjun",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/map01.svg",
+      "width": 0
+    },
+    {
+      "alt": "Taj Hotels",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/hospitality-partner-logos/W1S89bE78hnuwf8fVPuRXAWbWq7d8QN7lENTMnJa.png",
+      "width": 0
+    },
+    {
+      "alt": "Oberoi Hotels",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/hospitality-partner-logos/U1RrqmSDAN32ytMbOnXvpqAHiJnPPPW7acdCHErA.png",
+      "width": 0
+    },
+    {
+      "alt": "JWMarriott",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/hospitality-partner-logos/XeoyIj4yg8vQeSMqM7P6vnBh2z7kViOaPBuktUe6.png",
+      "width": 0
+    },
+    {
+      "alt": "The Leela",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/hospitality-partner-logos/A86rQI9BxfBYPKIlmRxyZFFbZDRL01UeVUtU4dUD.png",
+      "width": 0
+    },
+    {
+      "alt": "right_image",
+      "complete": false,
+      "height": 0,
+      "src": "/storage/hospitality-partners/eDLJVZmam8xH77ej7cwaOHiW89EfGLV6aUYvikYi.png",
+      "width": 0
+    },
+    {
+      "alt": "Iconic Luxury Venues",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/f-icon01.svg",
+      "width": 0
+    },
+    {
+      "alt": "Indian Destination Portfolio",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/f-icon02.svg",
+      "width": 0
+    },
+    {
+      "alt": "Vendor-Friendly Infrastructure",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/f-icon03.svg",
+      "width": 0
+    },
+    {
+      "alt": "On-Site Hospitality Expertise",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/f-icon04.svg",
+      "width": 0
+    },
+    {
+      "alt": "",
+      "complete": false,
+      "height": 0,
+      "src": "/user/assets/images/logo-footer.png",
+      "width": 0
+    }
+  ],
+  "emptyCtas": [],
+  "fonts": [
+    "Inter, sans-serif",
+    "\"Public Sans\", sans-serif"
+  ],
+  "forms": [
+    {
+      "action": "/get_in_touch/store",
+      "fieldCount": 6,
+      "id": "consultationForm",
+      "method": "POST",
+      "required": [
+        "name",
+        "email",
+        "number",
+        "subject"
+      ]
+    }
+  ],
+  "headings": [
+    "Take Your Vows at a Venue as Extraordinary as You",
+    "Check Availability for Your Dream Wedding Venue",
+    "Estimate Your Destination Wedding Cost",
+    "Get Direction on Wedding Planning",
+    "Take Your Vows at a Venue as Extraordinary as You",
+    "Check Availability for Your Dream Wedding Venue",
+    "Estimate Your Destination Wedding Cost",
+    "Get Direction on Wedding Planning",
+    "Take Your Vows at a Venue as Extraordinary as You",
+    "Find Your Perfect Destination Wedding Venue",
+    "Calculate Your Venue’s Cost",
+    "Enter Your Details",
+    "Receive an Estimate",
+    "Review Your Options",
+    "Plan With Confidence",
+    "Wedding Venue Cost Calculator",
+    "Our Destination Wedding Services",
+    "Check Wedding Venue Availability",
+    "Consult Premium Wedding Planners",
+    "Our Wedding Packages",
+    "Shresht",
+    "Siddhi {Most Popular!}",
+    "Shobhana",
+    "Deals of the Season",
+    "Our Luxury Wedding Success Stories",
+    "Testimonials from Our Clients",
+    "Our Hospitality Partners"
+  ],
+  "title": "Luxury Destination Wedding Venue in India by Viraaya Weddings",
+  "viewport": {
+    "height": 720,
+    "width": 1280
+  }
+}

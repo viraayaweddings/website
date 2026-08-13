@@ -790,7 +790,7 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 /*.consultation-wrapper .booking-layout .booking-left .flatpickr-calendar .flatpickr-innerContainer .flatpickr-days .flatpickr-day {margin: 0px 10px;}*/
 .consultation-wrapper .booking-layout .booking-left .flatpickr-calendar .flatpickr-days {width: 100%;}
 .consultation-wrapper .booking-layout .booking-left .flatpickr-calendar {box-shadow: 0px 0px;}
-.consultation-card .widget .secure-payment{color: rgb(58 45 37 / 80%);text-align: center;margin-top: 10px;}
+.consultation-card .widget .consultation-note{color: rgb(58 45 37 / 80%);text-align: center;margin-top: 10px;}
 .consultation-card .widget p.dis {color: rgb(58 45 37 / 80%);margin-bottom: 30px;margin-top: 10px;font-size: 16px;}
 .consultation-wrapper .widget ul li {display: flex;gap: 15px;margin-bottom: 20px;}
 
@@ -1626,4 +1626,51 @@ ul#hotelTabs .nav-link.active {
 }
 .packages-wrapper .elite-card .elite-bottom .check-item > .d-flex {
     min-width: 0;
+}
+
+/* Mobile/tablet hardening: avoid animation gutters and off-screen sliders creating horizontal scroll. */
+@media only screen and (max-width: 1199.98px) {
+    html,
+    body {
+        overflow-x: clip !important;
+    }
+    [data-aos^="fade"],
+    [data-aos^="zoom"] {
+        transform: none !important;
+    }
+    .destination-about-content,
+    .destination-about-content .container,
+    .destination-about-content .row,
+    .past-wedding-details .row,
+    .past-wedding-details [class*="col-"] {
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    .check-hotal-aval-slider,
+    .check-hotal-aval-slider .slick-list,
+    .check-hotal-aval-slider .owl-stage-outer,
+    .testimonials-wrapper .slick-list,
+    .testimonials-wrapper .slick-slider {
+        max-width: 100%;
+        overflow: hidden !important;
+    }
+    body .offcanvas.offcanvas-start.CostSummary,
+    body .offcanvas.offcanvas-start {
+        max-width: 100vw !important;
+    }
+    .estimator-wrapper .cost-calculator-widget {
+        width: 100%;
+        max-width: min(560px, 100%);
+    }
+}
+
+@media only screen and (max-width: 767.98px) {
+    .past-wedding-details .row.g-5,
+    .past-wedding-details .row[class*="g-"],
+    .post-wedding-wrapper > .container > .row.g-5,
+    .post-wedding-wrapper > .container > .row[class*="g-"] {
+        --bs-gutter-x: 0;
+        width: 100%;
+    }
 }

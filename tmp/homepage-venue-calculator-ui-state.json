@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "selectedCity": "Udaipur",
+  "hotelDisabled": null,
+  "hotelOptionCount": 25,
+  "firstHotelOptions": [
+    "Select a Hotel",
+    "Aurika Udaipur",
+    "Chunda Palace Udaipur",
+    "Fairmont Udaipur Palace",
+    "Holymont Udaipur",
+    "Hotel Lakend Udaipur",
+    "Justa Sajjangarh Resort And Spa Udaipur",
+    "Labh Garh Palace Resort And Spa Udaipur"
+  ]
+}

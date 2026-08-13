@@ -2572,7 +2572,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                         <span>120 Minutes </span>
                     </div>
                                     </div>
-                <a href="/wedding-consultation" class="btn w-100 mt-4 text-uppercase fw-600">BOOK A CONSULTATION</a>
+                <button type="button" class="btn w-100 mt-4 text-uppercase fw-600" data-bs-toggle="modal" data-bs-target="#BookConsultation">BOOK A CONSULTATION</button>
             </div>
         </div>
     </div>
@@ -2993,6 +2993,118 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         </div>
     </div>
 </section>
+          
+
+<div class="modal viv-custom-modal fade" id="enquiryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Send Enquiry for The LaLiT Golf And Spa Resort Goa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="enquiryForm" method="POST" action="/api/lead" class="MuiInputLabel-shrink" data-form-name="Hotel Enquiry">
+                    <input type="hidden" name="hotel_id" value="384">
+                    <input type="hidden" name="hotel_name" value="The LaLiT Golf And Spa Resort Goa">
+                    <input type="hidden" name="source_page" value="/destination-wedding/goa/the-lalit-golf-and-spa-resort-goa">
+                    <div class="form-group mb-3">
+                        <label class="form-label">Name *</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Email *</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Phone *</label>
+                        <input type="text" name="number" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Message</label>
+                        <textarea name="message" class="form-control" rows="3" placeholder="message"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Preferred Date</label>
+                        <input type="date" name="preferred_date" class="form-control">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn font-family03 fw-600 text-uppercase bg-plum-800 w-100">Submit Enquiry</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal viv-custom-modal fade" id="BookConsultation" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-black">Write to Us</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/api/lead" id="consultationForm" class="MuiInputLabel-shrink" data-form-name="Hotel Consultation Enquiry">
+          <input type="hidden" name="source_page" value="/destination-wedding/goa/the-lalit-golf-and-spa-resort-goa">
+          <input type="hidden" name="hotel_name" value="The LaLiT Golf And Spa Resort Goa">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-2">
+                <label class="form-label fw500 text-dark mb-2">Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="name" placeholder="Enter Name" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-2">
+                <label class="form-label fw500 text-dark mb-2">Email <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" name="email" placeholder="Enter Email" required>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group mb-2">
+                <label class="form-label fw500 text-dark mb-2">Mobile Number <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" name="number" placeholder="Enter Mobile Number" required>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group mb-2">
+                <label class="form-label fw500 text-dark mb-2">Enquiry <span class="text-danger">*</span></label>
+                <textarea class="form-control" name="subject" rows="3" placeholder="Write your enquiry..." required></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn font-family03 fw-600 text-uppercase bg-plum-800 w-100">Submit Enquiry</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-start CostSummary" tabindex="-1" id="costSummaryOffcanvas" aria-labelledby="costSummaryOffcanvasLabel">
+    <div class="offcanvas-header">
+        <div id="costSummaryOffcanvasLabel">Cost Summary</div>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body" id="offcanvasBody"></div>
+    <div class="disclaimer">
+        <h3 class="disclaimer-title text-prime-dark fw600 mb-3">Disclaimer</h3>
+        <p class="text-maroon-900 font-family03 fs-16">This service provides a comparative overview of selected hotel properties and does not constitute a reservation, booking or contractual commitment of any nature.</p>
+        <ul class="disclaimer-list">
+            <li>Comparison data reflects information available at the time of your enquiry and may not represent current rates, inclusions, or property details.</li>
+            <li>Properties vary in venue type, capacity, inclusions, and F&amp;B terms. Each property is unique, and all comparisons should be read as a general reference, not an exact equivalence.</li>
+            <li>This service is designed to assist in shortlisting and does not verify real-time availability. We recommend confirming availability directly once you have identified your preferred properties.</li>
+            <li>All final terms, pricing, and availability are subject to the hotel's acceptance at the time of formal booking.</li>
+        </ul>
+        <p class="disclaimer-note"><strong>Note:</strong> Vivahnam acts as an intermediary between the client and the hotel. While every effort is made to ensure the accuracy of the information presented, Vivahnam shall not be held liable for any discrepancy between the comparison report and the final terms confirmed by the hotel.</p>
+        <p class="disclaimer-cta"><strong><a href="/wedding-consultation">Book an expert consultation</a></strong> with our team for a precise, personalised assessment of your shortlisted properties.</p>
+    </div>
+</div>
           <!--============================
     =         Footer          =
     =============================-->
@@ -3046,7 +3158,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                       <a href="/real-weddings">Real Weddings</a>
                     </li>
                     <li>
-                      <a href="/wedding-packages">Wedding Packages</a>
+                      <a href="/package">Wedding Packages</a>
                     </li>
                     <li>
                       <a href="/blogs">Blogs</a>
@@ -3070,16 +3182,11 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                       <a href="/hotel-cost-calculator">Hotel Cost Calculator</a>
                     </li>
                     <li>
-                      <a href="/hotel-listing">Indian Venues</a>
+                      <a href="/hotel-listing?country=india">Indian Venues</a>
                     </li>
                     <li>
                       <a href="/faqs">Faq's</a>
                     </li>
-                    <li>
-                    <!--  <li>-->
-                    <a href="/check-hotel-availability">Venue Availability</a>
-                    <!--  </li>-->
-                    <!--</li>-->
                   </ul>
                 </div>
               </div>
@@ -3154,6 +3261,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 <link href="/vendor/select2/select2.min.css" rel="stylesheet" />
 <script src="/vendor/select2/select2.min.js"></script>
 <script src="/js/currency-switcher.js" defer></script>
+  <script src="/js/site-search.js" defer></script>
 
   <script src="/vendor/fancybox/fancybox.umd.js"></script>
 <script src="/vendor/slick/slick.min.js"></script>

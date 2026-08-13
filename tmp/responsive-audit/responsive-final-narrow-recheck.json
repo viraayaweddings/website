@@ -1,0 +1,99 @@
+[
+  {
+    "route": "/real-weddings/kashyap-prachi",
+    "viewportName": "mobile",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "scrollWidth": 390,
+    "bodyScrollWidth": 398,
+    "overflow": 8,
+    "visibleOver": [
+      {
+        "tag": "DIV",
+        "cls": "row g-5",
+        "left": -8,
+        "right": 398,
+        "width": 406
+      },
+      {
+        "tag": "DIV",
+        "cls": "col-lg-8",
+        "left": -8,
+        "right": 398,
+        "width": 406
+      },
+      {
+        "tag": "DIV",
+        "cls": "col-lg-4",
+        "left": -8,
+        "right": 398,
+        "width": 406
+      },
+      {
+        "tag": "DIV",
+        "cls": "slick-track",
+        "left": -930,
+        "right": 978,
+        "width": 1908
+      },
+      {
+        "tag": "DIV",
+        "cls": "item slick-slide slick-cloned",
+        "left": -918,
+        "right": -624,
+        "width": 294
+      },
+      {
+        "tag": "DIV",
+        "cls": "widget",
+        "left": -918,
+        "right": -624,
+        "width": 294
+      },
+      {
+        "tag": "DIV",
+        "cls": "outline d-flex",
+        "left": -918,
+        "right": -624,
+        "width": 294
+      },
+      {
+        "tag": "DIV",
+        "cls": "me-4",
+        "left": -847,
+        "right": -694,
+        "width": 153
+      },
+      {
+        "tag": "DIV",
+        "cls": "user",
+        "left": -847,
+        "right": -694,
+        "width": 153
+      },
+      {
+        "tag": "DIV",
+        "cls": "img",
+        "left": -835,
+        "right": -706,
+        "width": 129
+      }
+    ],
+    "brokenImages": []
+  },
+  {
+    "route": "/hotel-cost-calculator",
+    "viewportName": "small-tablet",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "scrollWidth": 1009,
+    "bodyScrollWidth": 1021,
+    "overflow": -3,
+    "visibleOver": [],
+    "brokenImages": []
+  }
+]

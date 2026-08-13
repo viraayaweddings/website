@@ -1,0 +1,108 @@
+{
+  "results": [
+    {
+      "name": "json_intercepted_form",
+      "status": 200,
+      "body": {
+        "ok": true,
+        "message": "Thanks. We will get back to you shortly."
+      },
+      "resendCalled": true,
+      "resendUrl": "https://api.resend.com/emails",
+      "to": [
+        "leads@example.com"
+      ],
+      "subject": "Lead Test - Wedding Consultation",
+      "replyTo": "test@example.com",
+      "hasName": true,
+      "hasPhone": true,
+      "hasEmail": true,
+      "hasPageUrl": true,
+      "hasSourcePage": true,
+      "hasRequestPath": true,
+      "hasUserAgent": true
+    },
+    {
+      "name": "direct_form_fallback",
+      "status": 200,
+      "body": {
+        "ok": true,
+        "message": "Thanks. We will get back to you shortly."
+      },
+      "resendCalled": true,
+      "resendUrl": "https://api.resend.com/emails",
+      "to": [
+        "leads@example.com"
+      ],
+      "subject": "Lead Test - Contact Form",
+      "replyTo": "test@example.com",
+      "hasName": true,
+      "hasPhone": true,
+      "hasEmail": true,
+      "hasPageUrl": true,
+      "hasSourcePage": true,
+      "hasRequestPath": true,
+      "hasUserAgent": true
+    },
+    {
+      "name": "custom_ajax_form_urlencoded",
+      "status": 200,
+      "body": {
+        "ok": true,
+        "message": "Thanks. We will get back to you shortly."
+      },
+      "resendCalled": true,
+      "resendUrl": "https://api.resend.com/emails",
+      "to": [
+        "leads@example.com"
+      ],
+      "subject": "Lead Test - Website Query",
+      "replyTo": "test@example.com",
+      "hasName": true,
+      "hasPhone": true,
+      "hasEmail": true,
+      "hasPageUrl": true,
+      "hasSourcePage": true,
+      "hasRequestPath": true,
+      "hasUserAgent": true
+    }
+  ],
+  "captures": [
+    {
+      "url": "https://api.resend.com/emails",
+      "payload": {
+        "from": "Viraaya Weddings <queries@viraayaweddings.com>",
+        "to": [
+          "leads@example.com"
+        ],
+        "subject": "Lead Test - Wedding Consultation",
+        "reply_to": "test@example.com",
+        "textPreview": "Website Query\nForm: Wedding Consultation\nPage URL: http://local.test/wedding-consultation\n\nSubmitted Details:\nPage URL: http://local.test/wedding-consultation\nName: Test User\nPhone Number: +919876543210\nEmail: test@example.com\nMessage: Consultation Request\n\nTracking Information:\nPage Title: Book Consultation\nPage URL: http://local.test/wedding-consultation\nSource Page: Wedding Consultation\nSubmitted At: 2026-08-13T10:28:09.520Z\nIP Address: 203.0.113.10\nRequest Host: local.test\nRequest Path: /api/lead\nRequest Method: POST\nRequest Browser: SmokeAgent/1.0\nForwarded For: 203.0.113.10\nReferer Header: http://local.test/wedding-consultation\nOrigin Header: http://local.test"
+      }
+    },
+    {
+      "url": "https://api.resend.com/emails",
+      "payload": {
+        "from": "Viraaya Weddings <queries@viraayaweddings.com>",
+        "to": [
+          "leads@example.com"
+        ],
+        "subject": "Lead Test - Contact Form",
+        "reply_to": "test@example.com",
+        "textPreview": "Website Query\nForm: Contact Form\nPage URL: http://local.test/contact\n\nSubmitted Details:\nPage URL: http://local.test/contact\nName: Test User\nPhone Number: +919876543210\nEmail: test@example.com\nMessage: Contact Form\n\nTracking Information:\nSubmission Endpoint: /contact/save\nPage URL: http://local.test/contact\nSource Page: Contact Page\nUser Agent: SmokeAgent/1.0\nSubmitted At: 2026-08-13T10:28:09.525Z\nIP Address: unknown\nRequest Host: local.test\nRequest Path: /contact/save\nRequest Method: POST\nRequest Browser: SmokeAgent/1.0\nReferer Header: http://local.test/contact\nOrigin Header: http://local.test"
+      }
+    },
+    {
+      "url": "https://api.resend.com/emails",
+      "payload": {
+        "from": "Viraaya Weddings <queries@viraayaweddings.com>",
+        "to": [
+          "leads@example.com"
+        ],
+        "subject": "Lead Test - Website Query",
+        "reply_to": "test@example.com",
+        "textPreview": "Website Query\nForm: Website Query\nPage URL: http://local.test/check-hotel-availability\n\nSubmitted Details:\nPage URL: http://local.test/check-hotel-availability\nName: Test User\nPhone Number: +919876543210\nEmail: test@example.com\nCity / Location: Udaipur\nMessage: Hotel Availability Check\n\nTracking Information:\nSubmission Endpoint: /api/lead\nPage URL: http://local.test/check-hotel-availability\nSource Page: /check-hotel-availability\nUser Agent: SmokeAgent/1.0\nSubmitted At: 2026-08-13T10:28:09.526Z\nIP Address: unknown\nRequest Host: local.test\nRequest Path: /api/lead\nRequest Method: POST\nRequest Browser: SmokeAgent/1.0\nReferer Header: http://local.test/check-hotel-availability\nOrigin Header: http://local.test"
+      }
+    }
+  ]
+}

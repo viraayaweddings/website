@@ -1,0 +1,31 @@
+{
+  "boxText": "Insert Script to <head>\nMove up\nMove down\nToggle panel: Insert Script to <head>\n\nThe code below will be inserted into the <head> section of this specific page/post.\n\n1\n<style>\n2\n.custom-table-wrapper{\n3\n    width:100%;\n4\n    overflow-x:auto;\n5\n    font-family:'Manrope',sans-serif !important;\n6\n}\n7\n​\n8\n.custom-benefit-table{\n9\n    width:100%;\n10\n    border-collapse:collapse;\n11\n    border:1px solid rgba(0,0,0,0.08);\n12\n    background:#fff;\n13\n}\n14\n​\n15\n.custom-benefit-table th,\n16\n.custom-benefit-table td{\n17\n    padding:26px 22px;\n18\n    border:1px solid rgba(0,0,0,0.08);\n19\n    vertical-align:top;\n20\n    line-height:1.7;\n21\n    font-size:16px;\n22\n}\n23\n​\n24\n/* Heading */\n25\n.custom-benefit-table th{\n26\n    color:#8012FF;\n27\n    font-size:16px;\n28\n    font-weight:700;\n29\n    text-align:center;\n30\n}\n31\n​\n32\n​\n33\n/* Right Column */\n34\n.custom-benefit-table td {\n35\n    color:#646363;\n36\n    font-weight:400;\n37\n}\n38\n​\n39\n/* Mobile */\n40\n@media(max-width:767px){\n41\n​\n42\n.custom-benefit-table",
+  "cmCount": 4,
+  "nodes": [
+    {
+      "className": "",
+      "id": "jamify_hfs_inpost_head_script",
+      "idx": 0,
+      "tag": "TEXTAREA",
+      "text": "<style>\n.custom-table-wrapper{\n    width:100%;\n    overflow-x:auto;\n    font-family:'Manrope',sans-serif !important;\n}\n\n.custom-benefit-table{\n    width:100%;\n    border-collapse:collapse;\n    border:1px solid rgba(0,0,0,0.08);\n    background:#fff;\n}\n\n.custom-benefit-table th,\n.custom-benefit-table ",
+      "visible": false
+    },
+    {
+      "className": "CodeMirror cm-s-default CodeMirror-wrap",
+      "id": "",
+      "idx": 1,
+      "tag": "DIV",
+      "text": "1\n<style>\n2\n.custom-table-wrapper{\n3\n    width:100%;\n4\n    overflow-x:auto;\n5\n    font-family:'Manrope',sans-serif !important;\n6\n}\n7\n​\n8\n.custom-benefit-table{\n9\n    width:100%;\n10\n    border-collapse:collapse;\n11\n    border:1px solid rgba(0,0,0,0.08);\n12\n    background:#fff;\n13\n}\n14\n​\n15\n.custom-be",
+      "visible": true
+    },
+    {
+      "className": "CodeMirror-code",
+      "id": "",
+      "idx": 2,
+      "tag": "DIV",
+      "text": "1\n<style>\n2\n.custom-table-wrapper{\n3\n    width:100%;\n4\n    overflow-x:auto;\n5\n    font-family:'Manrope',sans-serif !important;\n6\n}\n7\n​\n8\n.custom-benefit-table{\n9\n    width:100%;\n10\n    border-collapse:collapse;\n11\n    border:1px solid rgba(0,0,0,0.08);\n12\n    background:#fff;\n13\n}\n14\n​\n15\n.custom-be",
+      "visible": true
+    }
+  ],
+  "url": "https://rategain.com/wp-admin/post.php?post=47110&action=edit"
+}

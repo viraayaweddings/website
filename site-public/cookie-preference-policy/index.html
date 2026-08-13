@@ -2102,23 +2102,6 @@
 </a>
 </li>
                         </ul>
-                        
-<!--<div class="currency-switcher-wrap">-->
-<!--    <select id="currencySelect" class="currency-select-dropdown">-->
-<!--        -->
-<!--            <option value="INR"-->
-<!--                    data-symbol="₹"-->
-<!--                    data-rate="94.15">-->
-<!--                ₹ INR-->
-<!--            </option>-->
-<!--        -->
-<!---->
-<!--        -->
-<!---->
-<!--        -->
-<!--    </select>-->
-<!--</div>-->
-
 <div class="currency-switcher-wrap">
     <div class="currency-dropdown-trigger" id="currencyTrigger">
         <span class="currency-globe">
@@ -2149,43 +2132,7 @@
             </option>
             </select>
 </div>
-
-            <!--<div class="currency-switcher-wrap">-->
-            <!--    <div class="custom-dropdown" id="currencyDropdown">-->
-            <!--        <div class="dropdown-selected">-->
-            <!--            Select Currency <i class="fa-sharp-duotone fa-regular fa-angle-down"></i>-->
-            <!--        </div>-->
-            
-            <!--        <ul class="dropdown-options">-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="INR"-->
-            <!--                    data-symbol="₹"-->
-            <!--                    data-rate="94.15">-->
-                                
-            <!--                    ₹ INR-->
-            <!--                </li>-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="USD"-->
-            <!--                    data-symbol="$"-->
-            <!--                    data-rate="1">-->
-                                
-            <!--                    $ USD-->
-            <!--                </li>-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="AED"-->
-            <!--                    data-symbol="د.إ"-->
-            <!--                    data-rate="3.67">-->
-                                
-            <!--                    د.إ AED-->
-            <!--                </li>-->
-            <!--            -->
-            <!--        </ul>-->
-            <!--    </div>-->
-            <!--</div>-->
-            </div>
+</div>
                     </div>
                 </nav>
             </div>
@@ -2553,7 +2500,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                       <a href="/real-weddings">Real Weddings</a>
                     </li>
                     <li>
-                      <a href="/wedding-packages">Wedding Packages</a>
+                      <a href="/package">Wedding Packages</a>
                     </li>
                     <li>
                       <a href="/blogs">Blogs</a>
@@ -2577,16 +2524,11 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                       <a href="/hotel-cost-calculator">Hotel Cost Calculator</a>
                     </li>
                     <li>
-                      <a href="/hotel-listing">Indian Venues</a>
+                      <a href="/hotel-listing?country=india">Indian Venues</a>
                     </li>
                     <li>
                       <a href="/faqs">Faq's</a>
                     </li>
-                    <li>
-                    <!--  <li>-->
-                    <a href="/check-hotel-availability">Venue Availability</a>
-                    <!--  </li>-->
-                    <!--</li>-->
                   </ul>
                 </div>
               </div>
@@ -2594,7 +2536,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 <div class="widget d-flex flex-column justify-content-between h-100">
                   <div>
                     <h4 class="font-family01 text-white fs-26 mb-4">A Thoughtful Conversation Awaits</h4>
-                    <p class="font-family01">Whether you have a question or a specific request, we’re glad to hear from you.</p>
+                    <p class="font-family01">Whether you have a question or a specific request, we&rsquo;re glad to hear from you.</p>
                   </div>
                   <a href="/contact" class="btn">CONTACT US NOW</a>
                 </div>
@@ -2616,13 +2558,13 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
           </ul>
         </div>
         <div class="footer-content">
-            <p>Wedding planning involves countless details and considerations. With over 10 years of experience, we understand these expectations intimately and welcome the opportunity to connect with you at any stage of your journey. Whether you’re just browsing options, evaluating a specific venue or keen to make a decision, our team is here to offer reassurance. We handle every inquiry with care and discretion. </p>
+            <p>Wedding planning involves countless details and considerations. With over 10 years of experience, we understand these expectations intimately and welcome the opportunity to connect with you at any stage of your journey. Whether you&rsquo;re just browsing options, evaluating a specific venue or keen to make a decision, our team is here to offer reassurance. We handle every inquiry with care and discretion. </p>
             <p>As a smart destination wedding planner, our role is to simplify the process, provide expert insights and ensure you feel confident and supported from the very first interaction.</p>
             <p>When you reach out, your message is reviewed by experienced professionals who understand luxury hospitality, family expectations and the importance of every minute detail.</p>
         </div>
         <div class="row pb-4">
           <div class="col-lg-6 d-flex align-items-center">
-            <p class="copyright-text m-0 font-family03 fs-13 fw-300">Copyrights © 2026, viraayaweddings.com, All Rights Reserved</p>
+            <p class="copyright-text m-0 font-family03 fs-13 fw-300">Copyrights &copy; 2026, viraayaweddings.com, All Rights Reserved</p>
           </div>
           <div class="col-lg-6 d-flex justify-content-end align-items-end">
             <button id="goTop" class="btn go-to-top d-flex gap-2 align-items-center ">Go to Top 
@@ -2664,6 +2606,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 <link href="/vendor/select2/select2.min.css" rel="stylesheet" />
 <script src="/vendor/select2/select2.min.js"></script>
 <script src="/js/currency-switcher.js" defer></script>
+  <script src="/js/site-search.js" defer></script>
 
   
 </body>

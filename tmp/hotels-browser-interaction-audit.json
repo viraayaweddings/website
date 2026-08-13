@@ -1,0 +1,356 @@
+{
+  "listingAudit": {
+    "beforeCards": [
+      "Alila Fort Bishangarh Jaipur Jaipur 87 Rooms 220 Pax DETAILS CHECK AVAILABILITY",
+      "Fairmont Udaipur Palace Udaipur 327 Rooms 700 Pax DETAILS CHECK AVAILABILITY",
+      "Suryagarh Palace jaisalmer Jaisalmer 72 Rooms 180 Pax DETAILS CHECK AVAILABILITY",
+      "Taj Amer Jaipur Jaipur 245 Rooms 500 Pax DETAILS CHECK AVAILABILITY",
+      "The Leela Palace Udaipur Udaipur 89 Rooms 200 Pax DETAILS CHECK AVAILABILITY"
+    ],
+    "beforeSummary": "Showing 1 - 12 of 259 hotels",
+    "brokenLoadedImages": [],
+    "cards": 12,
+    "checkboxes": 18,
+    "cityOptions": 53,
+    "hasCitySelect": true,
+    "hasFilterForm": true,
+    "hasHotelSearch": true,
+    "paginationButtons": 6,
+    "title": "Wedding Hotel Listing - Viraaya Weddings",
+    "url": "http://127.0.0.1:3002/hotel-listing/"
+  },
+  "afterSearch": {
+    "cards": [
+      "The Leela Palace Udaipur Udaipur 89 Rooms 200 Pax DETAILS CHECK AVAILABILITY",
+      "The Leela Bhartiya City Bengaluru Bengaluru 281 Rooms 600 Pax DETAILS CHECK AVAILABILITY",
+      "The Leela Palace Bengaluru Bengaluru 357 Rooms 760 Pax DETAILS CHECK AVAILABILITY",
+      "The Leela Palace Chennai Chennai 325 Rooms 650 Pax DETAILS CHECK AVAILABILITY",
+      "The Leela Hyderabad Hyderabad 156 Rooms 350 Pax DETAILS CHECK AVAILABILITY",
+      "The Leela Kovalam A Raviz Hotel Kovalam 188 Rooms 380 Pax DETAILS CHECK AVAILABILITY"
+    ],
+    "summary": "Showing 1 - 10 of 10 hotels",
+    "url": "http://127.0.0.1:3002/hotel-listing/?hotel_search=Leela"
+  },
+  "afterRoomFilter": {
+    "cardCount": 9,
+    "checkedRooms": [
+      "2"
+    ],
+    "summary": "Showing 1 - 9 of 9 hotels",
+    "url": "http://127.0.0.1:3002/hotel-listing/?room_ranges%5B%5D=2&hotel_search=Leela"
+  },
+  "cityAudit": {
+    "brokenLoadedImages": [],
+    "cards": [
+      "Fairmont Udaipur Palace Udaipur 327 Rooms 700 Pax DETAILS CHECK AVAILABILITY",
+      "The Leela Palace Udaipur Udaipur 89 Rooms 200 Pax DETAILS CHECK AVAILABILITY",
+      "Aurika Udaipur Udaipur 139 Rooms 280 Pax DETAILS CHECK AVAILABILITY",
+      "Chunda Palace Udaipur Udaipur 50 Rooms 100 Pax DETAILS CHECK AVAILABILITY",
+      "Holymont Udaipur Udaipur 150 Rooms 320 Pax DETAILS CHECK AVAILABILITY",
+      "Hotel Lakend Udaipur Udaipur 78 Rooms 210 Pax DETAILS CHECK AVAILABILITY"
+    ],
+    "selectedCities": [
+      "Udaipur"
+    ],
+    "summary": "Showing 1 - 12 of 24 hotels",
+    "url": "http://127.0.0.1:3002/destination-wedding/udaipur/"
+  },
+  "detailBefore": {
+    "activePaneText": "Delhi NCR View All Andaz New delhi Courtyard by Marriott Aravali Resort Delhi Ncr Grand Hyatt Gurgaon Heritage Village Resort And Spa Manesar ITC Grand Bharat Delhi NCR ITC Maurya a Luxury Collection ",
+    "brokenLoadedImages": [],
+    "carouselCount": 2,
+    "ctas": [
+      {
+        "href": "http://127.0.0.1:3002/wedding-packages",
+        "text": "WEDDING PACKAGES",
+        "visible": true
+      },
+      {
+        "href": "http://127.0.0.1:3002/destination-wedding/udaipur/the-leela-palace-udaipur/#",
+        "text": "Hotels",
+        "visible": true
+      },
+      {
+        "href": "",
+        "text": "Delhi NCR",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Goa",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Jaipur",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Mussoorie",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Udaipur",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Agra",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Ajmer",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Amritsar",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Bengaluru",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Chandigarh",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Chennai",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Dehradun",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Hyderabad",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Jaisalmer",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Jim Corbett",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Jodhpur",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "kochi",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Kolkata",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Mumbai",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Pune",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Pushkar",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Ranthambore",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Rishikesh",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Shimla",
+        "visible": false
+      },
+      {
+        "href": "",
+        "text": "Trivandrum",
+        "visible": false
+      },
+      {
+        "href": "http://127.0.0.1:3002/hotel-listing?city_search=Delhi%20NCR",
+        "text": "View All",
+        "visible": false
+      },
+      {
+        "href": "http://127.0.0.1:3002/destination-wedding/delhi-ncr/andaz-new-delhi",
+        "text": "Andaz New delhi",
+        "visible": false
+      },
+      {
+        "href": "http://127.0.0.1:3002/destination-wedding/delhi-ncr/courtyard-by-marriott-aravali-resort-delhi-ncr",
+        "text": "Courtyard by Marriott Aravali Resort Delhi Ncr",
+        "visible": false
+      },
+      {
+        "href": "http://127.0.0.1:3002/destination-wedding/delhi-ncr/grand-hyatt-gurgaon",
+        "text": "Grand Hyatt Gurgaon",
+        "visible": false
+      },
+      {
+        "href": "http://127.0.0.1:3002/destination-wedding/delhi-ncr/heritage-village-resort-and-spa-manesar",
+        "text": "Heritage Village Resort And Spa Manesar",
+        "visible": false
+      },
+      {
+        "href": "http://127.0.0.1:3002/destination-wedding/delhi-ncr/itc-grand-bharat-delhi-ncr",
+        "text": "ITC Grand Bharat Delhi NCR",
+        "visible": false
+      },
+      {
+        "href": "http://127.0.0.1:3002/destination-wedding/delhi-ncr/itc-maurya-a-luxury-collection-hotel-new-delhi",
+        "text": "ITC Maurya a Luxury Collection Hotel New Delhi",
+        "visible": false
+      },
+      {
+        "href": "http://127.0.0.1:3002/destination-wedding/delhi-ncr/jaypee-greens-golf-and-spa-resort-delhi-ncr",
+        "text": "Jaypee Greens Golf And Spa Resort Delhi Ncr",
+        "visible": false
+      },
+      {
+        "href": "http://127.0.0.1:3002/destination-wedding/delhi-ncr/jw-marriott-hotel-new-delhi-aerocity",
+        "text": "JW Marriott Hotel New Delhi Aerocity",
+        "visible": false
+      },
+      {
+        "href": "http://127.0.0.1:3002/destination-wedding/delhi-ncr/karma-lakelands-gurugram",
+        "text": "Karma Lakelands Gurugram",
+        "visible": false
+      },
+      {
+        "href": "http://127.0.0.1:3002/destination-wedding/delhi-ncr/pullman-new-delhi-aerocity",
+        "text": "Pullman New Delhi Aerocity",
+        "visible": false
+      },
+      {
+        "href": "http://127.0.0.1:3002/destination-wedding/delhi-ncr/radisson-blu-plaza-hotel-delhi-airport",
+        "text": "Radisson Blu Plaza Hotel Delhi Airport",
+        "visible": false
+      },
+      {
+        "href": "http://127.0.0.1:3002/destination-wedding/delhi-ncr/resort-country-club-manesar",
+        "text": "Resort Country Club Manesar",
+        "visible": false
+      }
+    ],
+    "forms": [
+      {
+        "action": "/get_in_touch/store",
+        "fields": [
+          "hotel_id",
+          "hotel_name",
+          "source_page",
+          "name",
+          "email",
+          "number",
+          "message",
+          "preferred_date"
+        ],
+        "id": "enquiryForm"
+      },
+      {
+        "action": "/get_in_touch/store",
+        "fields": [
+          "source_page",
+          "hotel_name",
+          "name",
+          "email",
+          "number",
+          "subject"
+        ],
+        "id": "consultationForm"
+      }
+    ],
+    "galleryLinks": 9,
+    "headings": [
+      "The Leela Palace Udaipur",
+      "The Leela Palace Udaipur",
+      "AT A GLANCE",
+      "Hotel Amenities",
+      "Restaurants and bars onsite",
+      "Signature celebration experiences",
+      "Private dining and hospitality",
+      "Event Spaces Gallery",
+      "The Leela Palace Udaipur",
+      "The Leela Palace Udaipur",
+      "The Leela Palace Udaipur",
+      "The Leela Palace Udaipur",
+      "The Leela Palace Udaipur",
+      "The Leela Palace Udaipur",
+      "The Leela Palace Udaipur",
+      "The Leela Palace Udaipur",
+      "The Leela Palace Udaipur",
+      "Cost Calculator",
+      "Discover real-time hotel availability for your wedding guests across your preferred dates and venues",
+      "Browse Similar Hotels"
+    ],
+    "tabButtons": [
+      "Delhi NCR",
+      "Goa",
+      "Jaipur",
+      "Mussoorie",
+      "Udaipur",
+      "Agra",
+      "Ajmer",
+      "Amritsar",
+      "Bengaluru",
+      "Chandigarh",
+      "Chennai",
+      "Dehradun",
+      "Hyderabad",
+      "Jaisalmer",
+      "Jim Corbett",
+      "Jodhpur",
+      "kochi",
+      "Kolkata",
+      "Mumbai",
+      "Pune",
+      "Pushkar",
+      "Ranthambore",
+      "Rishikesh",
+      "Shimla",
+      "Trivandrum",
+      "PHOTO GALLERY",
+      "VIDEO GALLERY"
+    ],
+    "title": "The Leela Palace Udaipur Wedding Cost & Venue Booking",
+    "url": "http://127.0.0.1:3002/destination-wedding/udaipur/the-leela-palace-udaipur/"
+  },
+  "tabClickResult": {
+    "clicked": false,
+    "error": "Playwright selector deadline exceeded\nwaiting on click for selector [data-bs-toggle=\"tab\"], [data-bs-toggle=\"pill\"] >> nth=1\nLocator diagnostics: {\"kind\":\"no_visible_match\",\"action\":\"click\",\"locator\":\"[data-bs-toggle=\\\"tab\\\"], [data-bs-toggle=\\\"pill\\\"] >> nth=1\",\"matchCount\":1,\"matches\":[{\"ariaLabel\":null,\"disabled\":false,\"role\":\"tab\",\"tag\":\"button\",\"text\":\"Goa\",\"type\":\"button\",\"visible\":false}],\"visibleCount\":0,\"truncated\":false}",
+    "label": "\n                                                                            Goa\n                                                                        "
+  },
+  "detailAfter": {
+    "activePaneText": "Delhi NCR View All Andaz New delhi Courtyard by Marriott Aravali Resort Delhi Ncr Grand Hyatt Gurgaon Heritage Village Resort And Spa Manesar ITC Grand Bharat Delhi NCR ITC Maurya a Luxury Collection ",
+    "owlInitialized": []
+  }
+}

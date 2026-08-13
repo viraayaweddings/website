@@ -1,0 +1,5083 @@
+{
+  "summary": {
+    "pagesWithPostForms": 343,
+    "totalPostForms": 602,
+    "pagesMissingLeadScript": [],
+    "invalidPostActions": [],
+    "postActionCounts": {
+      "/contact/save": 5,
+      "/blog-form-submit": 11,
+      "/api/lead": 586
+    }
+  },
+  "pages": [
+    {
+      "route": "/appointment-booking",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/contact/save",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/blogs/arjun-kapoor-sister-anshula-wedding-cost",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/blog-form-submit",
+          "id": "contactForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/blogs/destination-wedding-venue-checklist",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/blog-form-submit",
+          "id": "contactForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/blogs/new-luxury-wedding-hotels-in-india",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/blog-form-submit",
+          "id": "contactForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/blogs/nupur-sanon-stebin-ben-wedding-cost",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/blog-form-submit",
+          "id": "contactForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/blogs/plan-luxury-destination-wedding-like-nupur-sanon-stebin-ben",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/blog-form-submit",
+          "id": "contactForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/blogs/questions-to-ask-destination-wedding-planner",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/blog-form-submit",
+          "id": "contactForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/blogs/top-beachside-wedding-venues-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/blog-form-submit",
+          "id": "contactForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/blogs/top-destination-wedding-places-rajasthan",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/blog-form-submit",
+          "id": "contactForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/blogs/traditional-vs-destination-wedding",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/blog-form-submit",
+          "id": "contactForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/blogs/vijay-rashmika-udaipur-wedding-cost",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/blog-form-submit",
+          "id": "contactForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/blogs/when-to-book-a-wedding-venue",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/blog-form-submit",
+          "id": "contactForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/contact",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/contact/save",
+          "id": "contactForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/contact/save",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/contact/save",
+          "id": "contactForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/agra/courtyard-by-marriott-agra",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/agra/doubletree-by-hilton-hotel-agra",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/agra",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/agra/itc-mughal-agra",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/agra/jaypee-palace-hotel-and-convention-centre-agra",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/agra/laxmi-vilas-palace-bharatpur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/agra/taj-agra",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/agra/taj-view-agra",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/agra/the-oberoi-amarvilas-agra",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/agra/trident-agra",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/ahmedabad/doubletree-by-hilton-ahmedabad",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/ahmedabad/gateway-ahmedabad-sindhu-bhavan",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/ahmedabad",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/ahmedabad/itc-narmada-a-luxury-collection-hotel-ahmedabad",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/ahmedabad/novotel-ahmedabad",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/ajabgarh",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/ajmer",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/ajmer/pratap-mahal-ajmer-an-ihcl-seleqtions-hotel",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/amritsar/holiday-inn-amritsar-ranjit-avenue-by-ihg",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/amritsar/hyatt-regency-amritsar-hotel-and-spa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/amritsar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/amritsar/taj-swarna-amritsar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/amritsar/welcomhotel-by-itc-hotels-amritsar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/andaman",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/barwara",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/barwara/six-senses-fort-barwara",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bengal",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bengal/itc-royal-bengal",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bengaluru/hilton-bangalore-embassy-golflinks",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bengaluru/hilton-garden-inn-bengaluru-embassy-manyata-business-park",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bengaluru",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bengaluru/itc-gardenia-bengaluru",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bengaluru/itc-windsor-a-luxury-collection-hotel-bengaluru",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bengaluru/jw-marriott-bengaluru-prestige-golfshire-resort-and-spa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bengaluru/radisson-blu-hotel-bengaluru",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bengaluru/shangri-la-bengaluru",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bengaluru/taj-west-end-bengaluru",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bengaluru/the-leela-bhartiya-city-bengaluru",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bengaluru/the-leela-palace-bengaluru",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bengaluru/the-ritz-carlton-bangalore",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bhopal/courtyard-by-marriott-bhopal",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bhopal",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bhopal/radisson-hotel-bhopal",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bhopal/taj-lakefront-bhopal",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/bhubaneswar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chandigarh/hyatt-regency-chandigarh",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chandigarh",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chandigarh/jw-marriott-hotel-chandigarh",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chandigarh/novotel-chandigarh-tribune-chowk",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chandigarh/taj-chandigarh",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chandigarh/the-oberoi-sukhvilas",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chennai/hilton-chennai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chennai/hyatt-regency-chennai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chennai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chennai/itc-grand-chola-chennai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chennai/le-royal-meridien-chennai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chennai/novotel-chennai-omr",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chennai/taj-club-house-chennai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chennai/taj-connemara-chennai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/chennai/the-leela-palace-chennai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/daman",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/daman/praveg-lake-resort-daman",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/daman/silver-waves-resort-and-spa-daman",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/daman/the-deltin-daman",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/dehradun/hyatt-regency-dehradun-resort-and-spa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/dehradun",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/dehradun/le-meridien-dehradun-resort-and-spa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/dehradun/taj-mussoorie-foothills-dehradun",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/andaz-new-delhi",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/courtyard-by-marriott-aravali-resort-delhi-ncr",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/grand-hyatt-gurgaon",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/heritage-village-resort-and-spa-manesar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/itc-grand-bharat-delhi-ncr",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/itc-maurya-a-luxury-collection-hotel-new-delhi",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/jaypee-greens-golf-and-spa-resort-delhi-ncr",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/jw-marriott-hotel-new-delhi-aerocity",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/karma-lakelands-gurugram",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/pullman-new-delhi-aerocity",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/radisson-blu-plaza-hotel-delhi-airport",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/resort-country-club-manesar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/sheraton-new-delhi-hotel",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/taj-damdama-lake-resort-and-spa-gurugram",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/taj-mansingh-new-delhi",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/taj-palace-new-delhi",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/taj-surajkund-resort-and-spa-delhi-ncr",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/the-lalit-mangar-delhi-ncr",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/the-leela-ambience-convention-hotel-gurugram",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/the-leela-palace-new-delhi",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/the-oberoi-gurgaon",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/the-roseate-new-delhi",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/the-westin-sohna-resort-and-spa-gurgaon",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/trident-gurgaon",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/delhi-ncr/welcomhotel-by-itc-hotels-delhi",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/alila-diwa-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/azaya-beach-resort-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/caravela-beach-resort",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/grand-hyatt-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/holiday-inn-resort-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/itc-grand-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/jw-marriott-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/planet-hollywood-beach-resort-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/radisson-blu-resort-goa-cavelossim-beach",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/taj-cidade-de-goa-heritage-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/taj-cidade-de-goa-horizon-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/taj-exotica-resort-and-spa-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/taj-fort-aguada-resort-and-spa-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/taj-holiday-village-resort-and-spa-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/the-lalit-golf-and-spa-resort-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/the-st-regis-goa-resort",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/the-zuri-white-sands-goa-resort-and-casino",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/goa/w-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/guwahati",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/guwahati/mayfair-spring-valley-resort-guwahati",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/guwahati/radisson-blu-hotel-guwahati",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/gwalior",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/gwalior/taj-usha-kiran-palace-gwalior",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/haridwar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad/hyatt-hyderabad-gachibowli",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad/hyderabad-marriott-hotel-and-convention-centre",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad/itc-kakatiya-a-luxury-collection-hotel-hyderabad",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad/itc-kohenur-a-luxury-collection-hotel-hyderabad",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad/le-meridien-hyderabad",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad/novotel-hyderabad-convention-centre",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad/radisson-blu-plaza-hotel-hyderabad-banjara-hills",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad/sheraton-hyderabad-hotel",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad/taj-deccan-hyderabad",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad/taj-falaknuma-palace-hyderabad",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad/taj-krishna-hyderabad",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad/the-leela-hyderabad",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad/the-park-hyderabad",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/hyderabad/trident-hyderabad",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/indore",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/indore/indore-marriott-hotel",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/indore/radisson-blu-hotel-indore",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/indore/sheraton-grand-palace-indore",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/indore/the-park-indore",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/alila-fort-bishangarh-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/ananta-spa-and-resort-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/bhanwar-singh-palace-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/buena-vista-luxury-garden-spa-resort",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/chomu-palace-hotel-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/doubletree-by-hilton-jaipur-amer",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/fairmont-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/hyatt-regency-jaipur-mansarovar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/indana-palace-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/intercontinental-jaipur-tonk-road-by-ihg",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/itc-rajputana-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/jai-mahal-palace-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/le-meridien-jaipur-resort-and-spa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/mementos-by-itc-hotels-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/mundota-fort-and-palace-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/novotel-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/pride-amber-vilas-resort-and-convention-centre-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/raffles-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/rajasthali-resorts-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/rambagh-palace-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/samode-bagh-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/shiv-vilas-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/taj-amer-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/taj-devi-ratn-resort-and-spa-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/the-gold-palace-and-resorts-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/the-jaibagh-palace-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/the-leela-palace-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/the-oberoi-rajvilas-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/the-palace-aravali-by-park-jewels-hotels-and-resorts-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaipur/the-westin-jaipur-kant-kalwar-resort-and-spa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaisalmer/fort-rajwada-jaisalmer",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaisalmer/gobindgarh-jaisalmer",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaisalmer",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaisalmer/jaisalmer-marriott-resort-and-spa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaisalmer/storii-by-itc-hotels-jaisalmer",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaisalmer/suryagarh-palace-jaisalmer",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jaisalmer/taj-gorbandh-palace-jaisalmer",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jim-corbett/aahana-resort-luxury-resorts-in-jim-corbett",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jim-corbett",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jim-corbett/lemon-tree-premier-jim-corbett",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jim-corbett/namah-jim-corbett",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jim-corbett/resorts-by-the-baagh-jim-corbett",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jim-corbett/taj-corbett-resort-and-spa-jim-corbett",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jim-corbett/tarangi-jim-corbett-resort-and-spa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jim-corbett/the-riverview-retreat-jim-corbett",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jim-corbett/welcomhotel-by-itc-hotels-jim-corbett",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jim-corbett/zana-a-luxury-escape-dhikuli-jim-corbet",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jodhpur/indana-palace-jodhpur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jodhpur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jodhpur/radisson-hotel-jodhpur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jodhpur/ranbanka-palace-jodhpur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jodhpur/taj-hari-mahal-jodhpur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jodhpur/umaid-bhawan-palace-jodhpur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jodhpur/welcomheritage-bal-samand-lake-palace-jodhpur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/jodhpur/welcomhotel-by-itc-hotels-jodhpur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/karjat",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/karnal",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/karnal/noormahal-palace-karnal",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/karnataka/coorg-marriott-resort-and-spa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/karnataka/gateway-coorg-karnataka",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/karnataka",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/karnataka/taj-madikeri-resort-and-spa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kasauli/fortune-select-forest-hill-mahiya-kasauli",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kasauli",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kerala",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kerala/taj-bekal-resort-and-spa-kerala",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kerala/taj-kumarakom-resort-and-spa-kerala",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kerala/taj-wayanad-resort-and-spa-kerala",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/khimsar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/khimsar/welcomhotel-by-itc-hotels-fort-and-dunes-khimsar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/khopoli",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kochi/courtyard-by-marriott-kochi-airport",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kochi/grand-hyatt-kochi-bolgatty",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kochi",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kochi/le-meridien-kochi",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kochi/radisson-blu-kochi",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kolkata/hyatt-regency-kolkata",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kolkata",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kolkata/itc-sonar-a-luxury-collection-hotel-kolkata",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kolkata/jw-marriott-hotel-kolkata",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kolkata/novotel-kolkata-hotel-and-residences",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kolkata/taj-bengal-kolkata",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kovalam",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/kovalam/the-leela-kovalam-a-raviz-hotel",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/lakshadweep",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/lonavala",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/lucknow/hyatt-regency-lucknow",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/lucknow",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/lucknow/novotel-lucknow-gomti-nagar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/lucknow/taj-mahal-lucknow",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/courtyard-by-marriott-mumbai-international-airport",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/fairmont-mumbai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/four-seasons-hotel-mumbai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/grand-hyatt-mumbai-hotel-and-residences",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/intercontinental-marine-drive-mumbai-by-ihg",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/itc-maratha-mumbai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/jw-marriott-mumbai-juhu",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/jw-marriott-mumbai-sahar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/novotel-mumbai-juhu-beach",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/radisson-blu-mumbai-international-airport",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/sofitel-mumbai-bkc",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/taj-lands-end-mumbai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/taj-santacruz-mumbai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/the-leela-mumbai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/the-oberoi-mumbai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/the-st-regis-mumbai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/the-taj-mahal-palace-mumbai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/the-westin-mumbai-powai-lake",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mumbai/trident-nariman-point-mumbai",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mussoorie",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mussoorie/jaypee-residency-manor",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mussoorie/jw-marriott-mussoorie-walnut-grove-resort-and-spa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mussoorie/royal-orchid-fort-resort-mussoorie",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/mussoorie/welcomhotel-by-itc-hotels-the-savoy",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/noida/crown-plaza-greater-noida-by-ihg",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/noida",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/pune/conrad-pune",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/pune",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/pune/jw-marriott-hotel-pune",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/pune/radisson-blu-hotel-pune-kharadi",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/pune/sheraton-grand-pune-bund-garden-hotel",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/pune/the-ritz-carlton-pune",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/pune/the-westin-pune-koregaon-park",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/pushkar/ananta-resort-pushkar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/pushkar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/pushkar/pushkara-resort-and-spa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/pushkar/regenta-spa-and-resort-pushkar",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/raipur/courtyard-by-marriott-raipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/raipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/raipur/mayfair-lake-resort-raipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/ranthambore",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/ranthambore/nahargarh-ranthambhore",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/ranthambore/ranthambore-bagh-palace",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/ranthambore/taj-sawai-ranthambore",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/ranthambore/zana-forest-resort-ranthambore",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/rishikesh",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/rishikesh/taj-rishikesh-resort-and-spa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/rishikesh/the-westin-resort-and-spa-himalayas",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/sakleshpur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/shimla",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/shimla/taj-theog-resort-and-spa-shimla",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/surat/hilton-garden-inn-surat-city-centre",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/surat",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/trivandrum/hilton-garden-inn-trivandrum",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/trivandrum",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/aurika-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/chunda-palace-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/fairmont-udaipur-palace",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/holymont-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/hotel-lakend-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/justa-sajjangarh-resort-and-spa-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/labh-garh-palace-resort-and-spa-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/mementos-by-itc-hotels-ekaaya-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/raajsa-resort-kumbhalgarh-ihcl-seleqtions-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/raas-devigarh-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/radisson-blu-palace-resort-and-spa-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/raffles-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/ramada-by-wyndham-udaipur-resort-and-spa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/taj-aravali-resort-and-spa-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/taj-fateh-prakash-palace-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/taj-lake-palace-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/taj-lalit-bagh-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/the-ananta-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/the-lalit-laxmi-vilas-palace-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/the-leela-palace-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/the-oberoi-udaivilas-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/trident-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/udaipur-marriott-hotel",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/udaipur/wyndham-grand-udaipur-fatehsagar-lake",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "enquiryForm"
+        },
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding/vrindavan",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding-in-agra",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "ctaEnquiryForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding-in-dehradun",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "ctaEnquiryForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding-in-delhi",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "ctaEnquiryForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding-in-goa",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "ctaEnquiryForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding-in-jaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "ctaEnquiryForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding-in-jim-corbett",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "ctaEnquiryForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding-in-jodhpur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "ctaEnquiryForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding-in-mussoorie",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "ctaEnquiryForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding-in-rishikesh",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "ctaEnquiryForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/destination-wedding-in-udaipur",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "ctaEnquiryForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/get_in_touch/store",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/contact/save",
+          "id": "contactForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/hotel-listing",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": ""
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/index.html",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/wedding-consultation",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/contact/save",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/wedding-packages/shobhana",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/wedding-packages/shresht",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    },
+    {
+      "route": "/wedding-packages/siddhi",
+      "postForms": [
+        {
+          "method": "POST",
+          "action": "/api/lead",
+          "id": "consultationForm"
+        }
+      ],
+      "hasLeadFormsScript": true
+    }
+  ]
+}

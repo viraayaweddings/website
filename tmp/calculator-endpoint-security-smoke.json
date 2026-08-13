@@ -1,0 +1,336 @@
+[
+  {
+    "path": "/data/calculator/calculator-data.json",
+    "status": 404,
+    "len": 9
+  },
+  {
+    "path": "/data/calculator/availability-data.json",
+    "status": 404,
+    "len": 9
+  },
+  {
+    "path": "/get-cities",
+    "status": 404,
+    "len": 21,
+    "sample": {
+      "error": "Not found"
+    }
+  },
+  {
+    "path": "/get-cities",
+    "status": 200,
+    "len": 1357,
+    "count": 50,
+    "sample": [
+      {
+        "id": 8,
+        "name": "Agra"
+      },
+      {
+        "id": 28,
+        "name": "Ahmedabad"
+      }
+    ]
+  },
+  {
+    "path": "/get-hotels-by-city?city=5",
+    "status": 200,
+    "len": 4176,
+    "count": 38,
+    "sample": [
+      {
+        "id": 27,
+        "name": "Hyatt Regency Jaipur Mansarovar",
+        "hotel_name": "Hyatt Regency Jaipur Mansarovar",
+        "total_rooms": 245
+      },
+      {
+        "id": 28,
+        "name": "The Leela Palace Jaipur",
+        "hotel_name": "The Leela Palace Jaipur",
+        "total_rooms": 200
+      }
+    ]
+  },
+  {
+    "path": "/get-hotels-by-city/5",
+    "status": 200,
+    "len": 3315,
+    "count": 30,
+    "sample": [
+      {
+        "id": 40,
+        "name": "Alila Fort Bishangarh Jaipur",
+        "total_rooms": 87,
+        "hotel_name": "Alila Fort Bishangarh Jaipur"
+      },
+      {
+        "id": 181,
+        "name": "Ananta Spa And Resort Jaipur",
+        "total_rooms": 230,
+        "hotel_name": "Ananta Spa And Resort Jaipur"
+      }
+    ]
+  },
+  {
+    "path": "/api/calculator/availability-data",
+    "status": 200,
+    "len": 14497,
+    "count": 53,
+    "hotelCount": 259,
+    "sample": {
+      "generated_at": "2026-08-13T10:57:08.868Z",
+      "cities": [
+        {
+          "id": 8,
+          "name": "Agra"
+        },
+        {
+          "id": 28,
+          "name": "Ahmedabad"
+        },
+        {
+          "id": 70,
+          "name": "Ajabgarh"
+        },
+        {
+          "id": 32,
+          "name": "Ajmer"
+        },
+        {
+          "id": 31,
+          "name": "Amritsar"
+        },
+        {
+          "id": 69,
+          "name": "Andaman"
+        },
+        {
+          "id": 34,
+          "name": "Barwara"
+        },
+        {
+          "id": 23,
+          "name": "Bengal"
+        },
+        {
+          "id": 17,
+          "name": "Bengaluru"
+        },
+        {
+          "id": 40,
+          "name": "Bhopal"
+        },
+        {
+          "id": 67,
+          "name": "Bhubaneswar"
+        },
+        {
+          "id": 13,
+          "name": "Chandigarh"
+        },
+        {
+          "id": 18,
+          "name": "Chennai"
+        },
+        {
+          "id": 46,
+          "name": "Daman"
+        },
+        {
+          "id": 15,
+          "name": "Dehradun"
+        },
+        {
+          "id": 4,
+          "name": "Delhi NCR"
+        },
+        {
+          "id": 7,
+          "name": "Goa"
+        },
+        {
+          "id": 36,
+          "name": "Guwahati"
+        },
+        {
+          "id": 43,
+          "name": "Gwalior"
+        },
+        {
+          "id": 44,
+          "name": "Haridwar"
+        },
+        {
+          "id": 27,
+          "name": "Hyderabad"
+        },
+        {
+          "id": 47,
+          "name": "Indore"
+        },
+        {
+          "id": 5,
+          "name": "Jaipur"
+        },
+        {
+          "id": 9,
+          "name": "Jaisalmer"
+        },
+        {
+          "id": 12,
+          "name": "Jim Corbett"
+        },
+        {
+          "id": 6,
+          "name": "Jodhpur"
+        },
+        {
+          "id": 71,
+          "name": "Karjat"
+        },
+        {
+          "id": 55,
+          "name": "Karnal"
+        },
+        {
+          "id": 24,
+          "name": "Karnataka"
+        },
+        {
+          "id": 51,
+          "name": "kasauli"
+        },
+        {
+          "id": 21,
+          "name": "kerala"
+        },
+        {
+          "id": 56,
+          "name": "khimsar"
+        },
+        {
+          "id": 72,
+          "name": "Khopoli"
+        },
+        {
+          "id": 19,
+          "name": "kochi"
+        },
+        {
+          "id": 25,
+          "name": "Kolkata"
+        },
+        {
+          "id": 20,
+          "name": "Kovalam"
+        },
+        {
+          "id": 68,
+          "name": "Lakshadweep"
+        },
+        {
+          "id": 73,
+          "name": "Lonavala"
+        },
+        {
+          "id": 1,
+          "name": "Lucknow"
+        },
+        {
+          "id": 26,
+          "name": "Mumbai"
+        },
+        {
+          "id": 10,
+          "name": "Mussoorie"
+        },
+        {
+          "id": 2,
+          "name": "Noida"
+        },
+        {
+          "id": 16,
+          "name": "Pune"
+        },
+        {
+          "id": 30,
+          "name": "Pushkar"
+        },
+        {
+          "id": 35,
+          "name": "Raipur"
+        },
+        {
+          "id": 33,
+          "name": "Ranthambore"
+        },
+        {
+          "id": 11,
+          "name": "Rishikesh"
+        },
+        {
+          "id": 42,
+          "name": "Sakleshpur"
+        },
+        {
+          "id": 14,
+          "name": "Shimla"
+        },
+        {
+          "id": 29,
+          "name": "Surat"
+        },
+        {
+          "id": 22,
+          "name": "Trivandrum"
+        },
+        {
+          "id": 3,
+          "name": "Udaipur"
+        },
+        {
+          "id": 41,
+          "name": "Vrindavan"
+        }
+      ]
+    }
+  },
+  {
+    "path": "/get-hotel-price/120/January",
+    "status": 200,
+    "len": 123,
+    "sample": {
+      "room_price": "21500.00",
+      "lunch_price": "3500.00"
+    }
+  },
+  {
+    "path": "/get-hotel-prices",
+    "status": 200,
+    "len": 239,
+    "count": 1,
+    "sample": [
+      {
+        "id": 9,
+        "hotel_name": "Fairmont Udaipur Palace",
+        "total_rooms": 327,
+        "prices": [
+          {
+            "room_price": "80000.00",
+            "lunch_price": "8500.00",
+            "hitea_price": "3500.00",
+            "dinner_price": "10000.00",
+            "hi_tea_price": "3500.00",
+            "hotel": {
+              "city": {
+                "name": "Udaipur"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

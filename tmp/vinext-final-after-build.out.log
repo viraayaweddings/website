@@ -1,0 +1,8 @@
+
+> viraaya-weddings-site@0.1.0 start
+> vinext start --host 127.0.0.1 --port 4177
+
+
+  vinext start  (port 4177)
+
+[vinext] Production server running at http://0.0.0.0:4177

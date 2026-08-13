@@ -1,0 +1,4854 @@
+{
+  "summary": {
+    "checked": 51,
+    "errors": 0,
+    "overflow": [
+      {
+        "route": "/hotel-cost-calculator",
+        "viewport": "small-tablet",
+        "overflow": 12,
+        "sample": [
+          {
+            "tag": "DIV",
+            "id": "offcanvasRight",
+            "cls": "offcanvas offcanvas-start CostSummary",
+            "left": -500,
+            "right": 0,
+            "width": 500,
+            "text": ""
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "cls": "offcanvas-header",
+            "left": -500,
+            "right": 0,
+            "width": 500,
+            "text": ""
+          },
+          {
+            "tag": "DIV",
+            "id": "offcanvasRightLabel",
+            "cls": "",
+            "left": -484,
+            "right": -370,
+            "width": 114,
+            "text": ""
+          }
+        ]
+      },
+      {
+        "route": "/check-hotel-availability",
+        "viewport": "mobile",
+        "overflow": 8,
+        "sample": [
+          {
+            "tag": "DIV",
+            "id": "",
+            "cls": "slick-track",
+            "left": -464,
+            "right": 2416,
+            "width": 2880,
+            "text": ""
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "cls": "item text-center slick-slide slick-cloned",
+            "left": -464,
+            "right": -344,
+            "width": 120,
+            "text": ""
+          },
+          {
+            "tag": "IMG",
+            "id": "",
+            "cls": "img-fluid",
+            "left": -434,
+            "right": -374,
+            "width": 60,
+            "text": "Partner Hotel"
+          }
+        ]
+      },
+      {
+        "route": "/destination-wedding-in-jaipur",
+        "viewport": "mobile",
+        "overflow": 96,
+        "sample": [
+          {
+            "tag": "SECTION",
+            "id": "",
+            "cls": "destination-about-content py-5 aos-init",
+            "left": -100,
+            "right": 290,
+            "width": 390,
+            "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "cls": "container custom-width",
+            "left": -100,
+            "right": 290,
+            "width": 390,
+            "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "cls": "row",
+            "left": -96,
+            "right": 286,
+            "width": 382,
+            "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+          }
+        ]
+      },
+      {
+        "route": "/destination-wedding-in-jaipur",
+        "viewport": "tablet",
+        "overflow": 88,
+        "sample": [
+          {
+            "tag": "SECTION",
+            "id": "",
+            "cls": "destination-about-content py-5 aos-init",
+            "left": -100,
+            "right": 668,
+            "width": 768,
+            "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "cls": "container custom-width",
+            "left": -100,
+            "right": 668,
+            "width": 768,
+            "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "cls": "row",
+            "left": -100,
+            "right": 668,
+            "width": 768,
+            "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+          }
+        ]
+      },
+      {
+        "route": "/destination-wedding-in-jaipur",
+        "viewport": "small-tablet",
+        "overflow": 88,
+        "sample": [
+          {
+            "tag": "SECTION",
+            "id": "",
+            "cls": "destination-about-content py-5 aos-init",
+            "left": -100,
+            "right": 909,
+            "width": 1009,
+            "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "cls": "container custom-width",
+            "left": -100,
+            "right": 909,
+            "width": 1009,
+            "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "cls": "row",
+            "left": -100,
+            "right": 909,
+            "width": 1009,
+            "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+          }
+        ]
+      },
+      {
+        "route": "/real-weddings/kashyap-prachi",
+        "viewport": "mobile",
+        "overflow": 8,
+        "sample": [
+          {
+            "tag": "DIV",
+            "id": "",
+            "cls": "row g-5",
+            "left": -8,
+            "right": 398,
+            "width": 406,
+            "text": "THE CELEBRATION A Grand Indian Wedding Experience Kashyap & Prachi’s wedding at "
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "cls": "col-lg-8",
+            "left": -8,
+            "right": 398,
+            "width": 406,
+            "text": "THE CELEBRATION A Grand Indian Wedding Experience Kashyap & Prachi’s wedding at "
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "cls": "col-lg-4",
+            "left": -8,
+            "right": 398,
+            "width": 406,
+            "text": "Verified Venue Taj Theog Resort And Spa Shimla , Shimla Men Market, Theog, Himac"
+          }
+        ]
+      }
+    ],
+    "brokenImages": [],
+    "slow": []
+  },
+  "results": [
+    {
+      "path": "/",
+      "title": "Luxury Destination Wedding Venue in India by Viraaya Weddings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 0,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 0,
+      "loadMs": 890,
+      "resourceCount": 7,
+      "transferSize": 97582,
+      "route": "/",
+      "viewportName": "mobile",
+      "elapsedMs": 5367,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\home-mobile.png"
+    },
+    {
+      "path": "/",
+      "title": "Luxury Destination Wedding Venue in India by Viraaya Weddings",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 0,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 0,
+      "loadMs": 549,
+      "resourceCount": 7,
+      "transferSize": 97582,
+      "route": "/",
+      "viewportName": "tablet",
+      "elapsedMs": 5021,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\home-tablet.png"
+    },
+    {
+      "path": "/",
+      "title": "Luxury Destination Wedding Venue in India by Viraaya Weddings",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1024,
+      "clientWidth": 1024,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 0,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 0,
+      "loadMs": 794,
+      "resourceCount": 7,
+      "transferSize": 97582,
+      "route": "/",
+      "viewportName": "small-tablet",
+      "elapsedMs": 5266,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\home-small-tablet.png"
+    },
+    {
+      "path": "/hotel-cost-calculator",
+      "title": "Hotel Cost Calculator & Wedding Budget Estimator Online",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalOverflow": 0,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "offcanvasRight",
+          "cls": "offcanvas offcanvas-start CostSummary",
+          "left": -390,
+          "right": 0,
+          "width": 390,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "offcanvas-header",
+          "left": -390,
+          "right": 0,
+          "width": 390,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "offcanvasRightLabel",
+          "cls": "",
+          "left": -374,
+          "right": -260,
+          "width": 114,
+          "text": ""
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "btn-close text-reset",
+          "left": -40,
+          "right": -8,
+          "width": 32,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "offcanvas-body",
+          "left": -390,
+          "right": 0,
+          "width": 390,
+          "text": ""
+        },
+        {
+          "tag": "H5",
+          "id": "",
+          "cls": "text-prime-dark fw600 mb-3",
+          "left": -374,
+          "right": -16,
+          "width": 358,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "disclaimer",
+          "left": -390,
+          "right": 0,
+          "width": 390,
+          "text": ""
+        },
+        {
+          "tag": "H3",
+          "id": "",
+          "cls": "disclaimer-title text-prime-dark fw600 mb-3",
+          "left": -375,
+          "right": -15,
+          "width": 360,
+          "text": ""
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "text-maroon-900 font-family03 fs-16",
+          "left": -375,
+          "right": -15,
+          "width": 360,
+          "text": ""
+        },
+        {
+          "tag": "UL",
+          "id": "",
+          "cls": "disclaimer-list",
+          "left": -375,
+          "right": -15,
+          "width": 360,
+          "text": ""
+        },
+        {
+          "tag": "LI",
+          "id": "",
+          "cls": "",
+          "left": -360,
+          "right": -15,
+          "width": 345,
+          "text": ""
+        },
+        {
+          "tag": "LI",
+          "id": "",
+          "cls": "",
+          "left": -360,
+          "right": -15,
+          "width": 345,
+          "text": ""
+        },
+        {
+          "tag": "LI",
+          "id": "",
+          "cls": "",
+          "left": -360,
+          "right": -15,
+          "width": 345,
+          "text": ""
+        },
+        {
+          "tag": "LI",
+          "id": "",
+          "cls": "",
+          "left": -360,
+          "right": -15,
+          "width": 345,
+          "text": ""
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "disclaimer-note",
+          "left": -375,
+          "right": -15,
+          "width": 360,
+          "text": ""
+        },
+        {
+          "tag": "STRONG",
+          "id": "",
+          "cls": "",
+          "left": -360,
+          "right": -327,
+          "width": 33,
+          "text": ""
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "disclaimer-cta",
+          "left": -375,
+          "right": -15,
+          "width": 360,
+          "text": ""
+        },
+        {
+          "tag": "STRONG",
+          "id": "",
+          "cls": "",
+          "left": -375,
+          "right": -204,
+          "width": 171,
+          "text": ""
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "",
+          "left": -375,
+          "right": -204,
+          "width": 171,
+          "text": ""
+        }
+      ],
+      "imageCount": 13,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 17,
+      "loadMs": 1059,
+      "resourceCount": 51,
+      "transferSize": 2580137,
+      "route": "/hotel-cost-calculator",
+      "viewportName": "mobile",
+      "elapsedMs": 5245,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\hotel-cost-calculator-mobile.png"
+    },
+    {
+      "path": "/hotel-cost-calculator",
+      "title": "Hotel Cost Calculator & Wedding Budget Estimator Online",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "offcanvasRight",
+          "cls": "offcanvas offcanvas-start CostSummary",
+          "left": -500,
+          "right": 0,
+          "width": 500,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "offcanvas-header",
+          "left": -500,
+          "right": 0,
+          "width": 500,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "offcanvasRightLabel",
+          "cls": "",
+          "left": -484,
+          "right": -370,
+          "width": 114,
+          "text": ""
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "btn-close text-reset",
+          "left": -40,
+          "right": -8,
+          "width": 32,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "offcanvas-body",
+          "left": -500,
+          "right": 0,
+          "width": 500,
+          "text": ""
+        },
+        {
+          "tag": "H5",
+          "id": "",
+          "cls": "text-prime-dark fw600 mb-3",
+          "left": -484,
+          "right": -16,
+          "width": 468,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "disclaimer",
+          "left": -500,
+          "right": 0,
+          "width": 500,
+          "text": ""
+        },
+        {
+          "tag": "H3",
+          "id": "",
+          "cls": "disclaimer-title text-prime-dark fw600 mb-3",
+          "left": -485,
+          "right": -15,
+          "width": 470,
+          "text": ""
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "text-maroon-900 font-family03 fs-16",
+          "left": -485,
+          "right": -15,
+          "width": 470,
+          "text": ""
+        },
+        {
+          "tag": "UL",
+          "id": "",
+          "cls": "disclaimer-list",
+          "left": -485,
+          "right": -15,
+          "width": 470,
+          "text": ""
+        },
+        {
+          "tag": "LI",
+          "id": "",
+          "cls": "",
+          "left": -470,
+          "right": -15,
+          "width": 455,
+          "text": ""
+        },
+        {
+          "tag": "LI",
+          "id": "",
+          "cls": "",
+          "left": -470,
+          "right": -15,
+          "width": 455,
+          "text": ""
+        },
+        {
+          "tag": "LI",
+          "id": "",
+          "cls": "",
+          "left": -470,
+          "right": -15,
+          "width": 455,
+          "text": ""
+        },
+        {
+          "tag": "LI",
+          "id": "",
+          "cls": "",
+          "left": -470,
+          "right": -15,
+          "width": 455,
+          "text": ""
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "disclaimer-note",
+          "left": -485,
+          "right": -15,
+          "width": 470,
+          "text": ""
+        },
+        {
+          "tag": "STRONG",
+          "id": "",
+          "cls": "",
+          "left": -470,
+          "right": -437,
+          "width": 33,
+          "text": ""
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "disclaimer-cta",
+          "left": -485,
+          "right": -15,
+          "width": 470,
+          "text": ""
+        },
+        {
+          "tag": "STRONG",
+          "id": "",
+          "cls": "",
+          "left": -485,
+          "right": -314,
+          "width": 171,
+          "text": ""
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "",
+          "left": -485,
+          "right": -314,
+          "width": 171,
+          "text": ""
+        }
+      ],
+      "imageCount": 13,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 17,
+      "loadMs": 494,
+      "resourceCount": 51,
+      "transferSize": 2580137,
+      "route": "/hotel-cost-calculator",
+      "viewportName": "tablet",
+      "elapsedMs": 4576,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\hotel-cost-calculator-tablet.png"
+    },
+    {
+      "path": "/hotel-cost-calculator",
+      "title": "Hotel Cost Calculator & Wedding Budget Estimator Online",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1021,
+      "clientWidth": 1009,
+      "horizontalOverflow": 12,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "offcanvasRight",
+          "cls": "offcanvas offcanvas-start CostSummary",
+          "left": -500,
+          "right": 0,
+          "width": 500,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "offcanvas-header",
+          "left": -500,
+          "right": 0,
+          "width": 500,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "offcanvasRightLabel",
+          "cls": "",
+          "left": -484,
+          "right": -370,
+          "width": 114,
+          "text": ""
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "btn-close text-reset",
+          "left": -40,
+          "right": -8,
+          "width": 32,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "offcanvas-body",
+          "left": -500,
+          "right": 0,
+          "width": 500,
+          "text": ""
+        },
+        {
+          "tag": "H5",
+          "id": "",
+          "cls": "text-prime-dark fw600 mb-3",
+          "left": -484,
+          "right": -16,
+          "width": 468,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "disclaimer",
+          "left": -500,
+          "right": 0,
+          "width": 500,
+          "text": ""
+        },
+        {
+          "tag": "H3",
+          "id": "",
+          "cls": "disclaimer-title text-prime-dark fw600 mb-3",
+          "left": -485,
+          "right": -15,
+          "width": 470,
+          "text": ""
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "text-maroon-900 font-family03 fs-16",
+          "left": -485,
+          "right": -15,
+          "width": 470,
+          "text": ""
+        },
+        {
+          "tag": "UL",
+          "id": "",
+          "cls": "disclaimer-list",
+          "left": -485,
+          "right": -15,
+          "width": 470,
+          "text": ""
+        },
+        {
+          "tag": "LI",
+          "id": "",
+          "cls": "",
+          "left": -470,
+          "right": -15,
+          "width": 455,
+          "text": ""
+        },
+        {
+          "tag": "LI",
+          "id": "",
+          "cls": "",
+          "left": -470,
+          "right": -15,
+          "width": 455,
+          "text": ""
+        },
+        {
+          "tag": "LI",
+          "id": "",
+          "cls": "",
+          "left": -470,
+          "right": -15,
+          "width": 455,
+          "text": ""
+        },
+        {
+          "tag": "LI",
+          "id": "",
+          "cls": "",
+          "left": -470,
+          "right": -15,
+          "width": 455,
+          "text": ""
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "disclaimer-note",
+          "left": -485,
+          "right": -15,
+          "width": 470,
+          "text": ""
+        },
+        {
+          "tag": "STRONG",
+          "id": "",
+          "cls": "",
+          "left": -470,
+          "right": -437,
+          "width": 33,
+          "text": ""
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "disclaimer-cta",
+          "left": -485,
+          "right": -15,
+          "width": 470,
+          "text": ""
+        },
+        {
+          "tag": "STRONG",
+          "id": "",
+          "cls": "",
+          "left": -485,
+          "right": -314,
+          "width": 171,
+          "text": ""
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "",
+          "left": -485,
+          "right": -314,
+          "width": 171,
+          "text": ""
+        }
+      ],
+      "imageCount": 13,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 22,
+      "loadMs": 1096,
+      "resourceCount": 50,
+      "transferSize": 2579627,
+      "route": "/hotel-cost-calculator",
+      "viewportName": "small-tablet",
+      "elapsedMs": 5298,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\hotel-cost-calculator-small-tablet.png"
+    },
+    {
+      "path": "/compare-hotel",
+      "title": "Compare Wedding Hotels - Viraaya Weddings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 17,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 14,
+      "loadMs": 846,
+      "resourceCount": 46,
+      "transferSize": 2834911,
+      "route": "/compare-hotel",
+      "viewportName": "mobile",
+      "elapsedMs": 5013,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\compare-hotel-mobile.png"
+    },
+    {
+      "path": "/compare-hotel",
+      "title": "Compare Wedding Hotels - Viraaya Weddings",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 17,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 23,
+      "loadMs": 1254,
+      "resourceCount": 46,
+      "transferSize": 2834911,
+      "route": "/compare-hotel",
+      "viewportName": "tablet",
+      "elapsedMs": 5392,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\compare-hotel-tablet.png"
+    },
+    {
+      "path": "/compare-hotel",
+      "title": "Compare Wedding Hotels - Viraaya Weddings",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1009,
+      "clientWidth": 1009,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 17,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 27,
+      "loadMs": 779,
+      "resourceCount": 45,
+      "transferSize": 2834401,
+      "route": "/compare-hotel",
+      "viewportName": "small-tablet",
+      "elapsedMs": 4958,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\compare-hotel-small-tablet.png"
+    },
+    {
+      "path": "/check-hotel-availability",
+      "title": "Check Hotel Availability - Viraaya Weddings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 398,
+      "clientWidth": 390,
+      "horizontalOverflow": 8,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "slick-track",
+          "left": -464,
+          "right": 2416,
+          "width": 2880,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item text-center slick-slide slick-cloned",
+          "left": -464,
+          "right": -344,
+          "width": 120,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -434,
+          "right": -374,
+          "width": 60,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item text-center slick-slide slick-cloned",
+          "left": -344,
+          "right": -224,
+          "width": 120,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -314,
+          "right": -254,
+          "width": 60,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item text-center slick-slide slick-cloned",
+          "left": -224,
+          "right": -104,
+          "width": 120,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -194,
+          "right": -134,
+          "width": 60,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item text-center slick-slide slick-cloned",
+          "left": -104,
+          "right": 16,
+          "width": 120,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -74,
+          "right": -14,
+          "width": 60,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide03",
+          "cls": "item text-center slick-slide",
+          "left": 376,
+          "right": 496,
+          "width": 120,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": 406,
+          "right": 466,
+          "width": 60,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide04",
+          "cls": "item text-center slick-slide",
+          "left": 496,
+          "right": 616,
+          "width": 120,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": 526,
+          "right": 586,
+          "width": 60,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide05",
+          "cls": "item text-center slick-slide",
+          "left": 616,
+          "right": 736,
+          "width": 120,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": 646,
+          "right": 706,
+          "width": 60,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide06",
+          "cls": "item text-center slick-slide",
+          "left": 736,
+          "right": 856,
+          "width": 120,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": 766,
+          "right": 826,
+          "width": 60,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide07",
+          "cls": "item text-center slick-slide",
+          "left": 856,
+          "right": 976,
+          "width": 120,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": 886,
+          "right": 946,
+          "width": 60,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide08",
+          "cls": "item text-center slick-slide",
+          "left": 976,
+          "right": 1096,
+          "width": 120,
+          "text": ""
+        }
+      ],
+      "imageCount": 47,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 6,
+      "loadMs": 1225,
+      "resourceCount": 68,
+      "transferSize": 3075744,
+      "route": "/check-hotel-availability",
+      "viewportName": "mobile",
+      "elapsedMs": 5299,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\check-hotel-availability-mobile.png"
+    },
+    {
+      "path": "/check-hotel-availability",
+      "title": "Check Hotel Availability - Viraaya Weddings",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "slick-track",
+          "left": -892,
+          "right": 4676,
+          "width": 5568,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item text-center slick-slide slick-cloned",
+          "left": -892,
+          "right": -660,
+          "width": 232,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -862,
+          "right": -762,
+          "width": 100,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item text-center slick-slide slick-cloned",
+          "left": -660,
+          "right": -428,
+          "width": 232,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -630,
+          "right": -530,
+          "width": 100,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item text-center slick-slide slick-cloned",
+          "left": -428,
+          "right": -196,
+          "width": 232,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -398,
+          "right": -298,
+          "width": 100,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item text-center slick-slide slick-cloned",
+          "left": -196,
+          "right": 36,
+          "width": 232,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -166,
+          "right": -66,
+          "width": 100,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide03",
+          "cls": "item text-center slick-slide",
+          "left": 732,
+          "right": 964,
+          "width": 232,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": 762,
+          "right": 862,
+          "width": 100,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide04",
+          "cls": "item text-center slick-slide",
+          "left": 964,
+          "right": 1196,
+          "width": 232,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": 994,
+          "right": 1094,
+          "width": 100,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide05",
+          "cls": "item text-center slick-slide",
+          "left": 1196,
+          "right": 1428,
+          "width": 232,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": 1226,
+          "right": 1326,
+          "width": 100,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide06",
+          "cls": "item text-center slick-slide",
+          "left": 1428,
+          "right": 1660,
+          "width": 232,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": 1458,
+          "right": 1558,
+          "width": 100,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide07",
+          "cls": "item text-center slick-slide",
+          "left": 1660,
+          "right": 1892,
+          "width": 232,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": 1690,
+          "right": 1790,
+          "width": 100,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide08",
+          "cls": "item text-center slick-slide",
+          "left": 1892,
+          "right": 2124,
+          "width": 232,
+          "text": ""
+        }
+      ],
+      "imageCount": 47,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 12,
+      "loadMs": 489,
+      "resourceCount": 69,
+      "transferSize": 3234264,
+      "route": "/check-hotel-availability",
+      "viewportName": "tablet",
+      "elapsedMs": 4556,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\check-hotel-availability-tablet.png"
+    },
+    {
+      "path": "/check-hotel-availability",
+      "title": "Check Hotel Availability - Viraaya Weddings",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1009,
+      "clientWidth": 1009,
+      "horizontalOverflow": 0,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "slick-track",
+          "left": -743,
+          "right": 3469,
+          "width": 4212,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item text-center slick-slide slick-cloned",
+          "left": -743,
+          "right": -587,
+          "width": 156,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -713,
+          "right": -617,
+          "width": 96,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item text-center slick-slide slick-cloned",
+          "left": -587,
+          "right": -431,
+          "width": 156,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -557,
+          "right": -461,
+          "width": 96,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item text-center slick-slide slick-cloned",
+          "left": -431,
+          "right": -275,
+          "width": 156,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -401,
+          "right": -305,
+          "width": 96,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item text-center slick-slide slick-cloned",
+          "left": -275,
+          "right": -119,
+          "width": 156,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -245,
+          "right": -149,
+          "width": 96,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item text-center slick-slide slick-cloned",
+          "left": -119,
+          "right": 37,
+          "width": 156,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -89,
+          "right": 7,
+          "width": 96,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide04",
+          "cls": "item text-center slick-slide slick-active",
+          "left": 973,
+          "right": 1129,
+          "width": 156,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": 1003,
+          "right": 1099,
+          "width": 96,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide05",
+          "cls": "item text-center slick-slide",
+          "left": 1129,
+          "right": 1285,
+          "width": 156,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": 1159,
+          "right": 1255,
+          "width": 96,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide06",
+          "cls": "item text-center slick-slide",
+          "left": 1285,
+          "right": 1441,
+          "width": 156,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": 1315,
+          "right": 1411,
+          "width": 96,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide07",
+          "cls": "item text-center slick-slide",
+          "left": 1441,
+          "right": 1597,
+          "width": 156,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": 1471,
+          "right": 1567,
+          "width": 96,
+          "text": "Partner Hotel"
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide08",
+          "cls": "item text-center slick-slide",
+          "left": 1597,
+          "right": 1753,
+          "width": 156,
+          "text": ""
+        }
+      ],
+      "imageCount": 50,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 11,
+      "loadMs": 1282,
+      "resourceCount": 68,
+      "transferSize": 3233754,
+      "route": "/check-hotel-availability",
+      "viewportName": "small-tablet",
+      "elapsedMs": 5212,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\check-hotel-availability-small-tablet.png"
+    },
+    {
+      "path": "/hotel-listing",
+      "title": "Wedding Hotel Listing - Viraaya Weddings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalOverflow": 0,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "sidebar",
+          "left": -330,
+          "right": -30,
+          "width": 300,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "card p-3",
+          "left": -326,
+          "right": -34,
+          "width": 292,
+          "text": ""
+        },
+        {
+          "tag": "H5",
+          "id": "",
+          "cls": "text-uppercase text-mulberry fs-16 fw-600 font-family01 mb-3",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "filterAccordion",
+          "cls": "accordion",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "accordion-item",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "id": "",
+          "cls": "accordion-header",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "accordion-button font-family01 fs-11 text-uppercase fw-600 border-0",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "rooms",
+          "cls": "accordion-collapse collapse show",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "accordion-body",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "cls": "form-check-label",
+          "left": -286,
+          "right": -224,
+          "width": 62,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "cls": "form-check-label",
+          "left": -286,
+          "right": -253,
+          "width": 33,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "cls": "form-check-label",
+          "left": -286,
+          "right": -254,
+          "width": 32,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        }
+      ],
+      "imageCount": 30,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 36,
+      "loadMs": 997,
+      "resourceCount": 51,
+      "transferSize": 3646411,
+      "route": "/hotel-listing",
+      "viewportName": "mobile",
+      "elapsedMs": 5020,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\hotel-listing-mobile.png"
+    },
+    {
+      "path": "/hotel-listing",
+      "title": "Wedding Hotel Listing - Viraaya Weddings",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "sidebar",
+          "left": -330,
+          "right": -30,
+          "width": 300,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "card p-3",
+          "left": -326,
+          "right": -34,
+          "width": 292,
+          "text": ""
+        },
+        {
+          "tag": "H5",
+          "id": "",
+          "cls": "text-uppercase text-mulberry fs-16 fw-600 font-family01 mb-3",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "filterAccordion",
+          "cls": "accordion",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "accordion-item",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "id": "",
+          "cls": "accordion-header",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "accordion-button font-family01 fs-11 text-uppercase fw-600 border-0",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "rooms",
+          "cls": "accordion-collapse collapse show",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "accordion-body",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "cls": "form-check-label",
+          "left": -286,
+          "right": -237,
+          "width": 49,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "cls": "form-check-label",
+          "left": -286,
+          "right": -260,
+          "width": 26,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "cls": "form-check-label",
+          "left": -286,
+          "right": -261,
+          "width": 25,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        }
+      ],
+      "imageCount": 30,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 47,
+      "loadMs": 1309,
+      "resourceCount": 58,
+      "transferSize": 5148001,
+      "route": "/hotel-listing",
+      "viewportName": "tablet",
+      "elapsedMs": 5292,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\hotel-listing-tablet.png"
+    },
+    {
+      "path": "/hotel-listing",
+      "title": "Wedding Hotel Listing - Viraaya Weddings",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1009,
+      "clientWidth": 1009,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 30,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 38,
+      "loadMs": 542,
+      "resourceCount": 55,
+      "transferSize": 4739477,
+      "route": "/hotel-listing",
+      "viewportName": "small-tablet",
+      "elapsedMs": 4559,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\hotel-listing-small-tablet.png"
+    },
+    {
+      "path": "/destination-wedding/jaipur",
+      "title": "Luxury Wedding Hotels in Jaipur | Viraaya Weddings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalOverflow": 0,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "sidebar",
+          "left": -330,
+          "right": -30,
+          "width": 300,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "card p-3",
+          "left": -326,
+          "right": -34,
+          "width": 292,
+          "text": ""
+        },
+        {
+          "tag": "H5",
+          "id": "",
+          "cls": "text-uppercase text-mulberry fs-16 fw-600 font-family01 mb-3",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "filterAccordion",
+          "cls": "accordion",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "accordion-item",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "id": "",
+          "cls": "accordion-header",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "accordion-button font-family01 fs-11 text-uppercase fw-600 border-0",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "rooms",
+          "cls": "accordion-collapse collapse show",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "accordion-body",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "cls": "form-check-label",
+          "left": -286,
+          "right": -224,
+          "width": 62,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "cls": "form-check-label",
+          "left": -286,
+          "right": -253,
+          "width": 33,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "cls": "form-check-label",
+          "left": -286,
+          "right": -254,
+          "width": 32,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        }
+      ],
+      "imageCount": 30,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 38,
+      "loadMs": 1169,
+      "resourceCount": 51,
+      "transferSize": 3699048,
+      "route": "/destination-wedding/jaipur",
+      "viewportName": "mobile",
+      "elapsedMs": 5225,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\destination-wedding__jaipur-mobile.png"
+    },
+    {
+      "path": "/destination-wedding/jaipur",
+      "title": "Luxury Wedding Hotels in Jaipur | Viraaya Weddings",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "sidebar",
+          "left": -330,
+          "right": -30,
+          "width": 300,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "card p-3",
+          "left": -326,
+          "right": -34,
+          "width": 292,
+          "text": ""
+        },
+        {
+          "tag": "H5",
+          "id": "",
+          "cls": "text-uppercase text-mulberry fs-16 fw-600 font-family01 mb-3",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "filterAccordion",
+          "cls": "accordion",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "accordion-item",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "id": "",
+          "cls": "accordion-header",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "cls": "accordion-button font-family01 fs-11 text-uppercase fw-600 border-0",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "rooms",
+          "cls": "accordion-collapse collapse show",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "accordion-body",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "cls": "form-check-label",
+          "left": -286,
+          "right": -237,
+          "width": 49,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "cls": "form-check-label",
+          "left": -286,
+          "right": -260,
+          "width": 26,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "cls": "form-check-label",
+          "left": -286,
+          "right": -261,
+          "width": 25,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "form-check mb-2",
+          "left": -310,
+          "right": -50,
+          "width": 260,
+          "text": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "cls": "form-check-input filter-checkbox",
+          "left": -310,
+          "right": -292,
+          "width": 18,
+          "text": ""
+        }
+      ],
+      "imageCount": 30,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 49,
+      "loadMs": 620,
+      "resourceCount": 58,
+      "transferSize": 5128078,
+      "route": "/destination-wedding/jaipur",
+      "viewportName": "tablet",
+      "elapsedMs": 4554,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\destination-wedding__jaipur-tablet.png"
+    },
+    {
+      "path": "/destination-wedding/jaipur",
+      "title": "Luxury Wedding Hotels in Jaipur | Viraaya Weddings",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1009,
+      "clientWidth": 1009,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 30,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 40,
+      "loadMs": 1166,
+      "resourceCount": 55,
+      "transferSize": 4750716,
+      "route": "/destination-wedding/jaipur",
+      "viewportName": "small-tablet",
+      "elapsedMs": 5149,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\destination-wedding__jaipur-small-tablet.png"
+    },
+    {
+      "path": "/destination-wedding/jaipur/fairmont-jaipur",
+      "title": "Fairmont Jaipur Wedding Cost, Packages & Booking",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalOverflow": 0,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "slick-track",
+          "left": -306,
+          "right": 2032,
+          "width": 2338,
+          "text": "Fairmont Jaipur Fairmont Jaipur Fairmont Jaipur Fairmont Jaipur Fairmont Jaipur "
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative slick-slide slick-cloned aos-init",
+          "left": -306,
+          "right": 28,
+          "width": 334,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid w-100",
+          "left": -306,
+          "right": 28,
+          "width": 334,
+          "text": "Romantic private candlelight dinners"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "content-widget w-100 px-4 py-3 d-flex justify-content-between align-items-center",
+          "left": -306,
+          "right": 28,
+          "width": 334,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "H4",
+          "id": "",
+          "cls": "",
+          "left": -282,
+          "right": -170,
+          "width": 112,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "",
+          "left": -12,
+          "right": 4,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "I",
+          "id": "",
+          "cls": "fa-jelly fa-regular fa-magnifying-glass-plus",
+          "left": -12,
+          "right": 4,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative slick-slide aos-init",
+          "left": 362,
+          "right": 696,
+          "width": 334,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid w-100",
+          "left": 362,
+          "right": 696,
+          "width": 334,
+          "text": "3+ restaurants and bars onsite"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "content-widget w-100 px-4 py-3 d-flex justify-content-between align-items-center",
+          "left": 362,
+          "right": 696,
+          "width": 334,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "H4",
+          "id": "",
+          "cls": "",
+          "left": 386,
+          "right": 498,
+          "width": 112,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "",
+          "left": 656,
+          "right": 672,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "I",
+          "id": "",
+          "cls": "fa-jelly fa-regular fa-magnifying-glass-plus",
+          "left": 656,
+          "right": 672,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative slick-slide aos-init",
+          "left": 696,
+          "right": 1030,
+          "width": 334,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid w-100",
+          "left": 696,
+          "right": 1030,
+          "width": 334,
+          "text": "Romantic private candlelight dinners"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "content-widget w-100 px-4 py-3 d-flex justify-content-between align-items-center",
+          "left": 696,
+          "right": 1030,
+          "width": 334,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "H4",
+          "id": "",
+          "cls": "",
+          "left": 720,
+          "right": 832,
+          "width": 112,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "",
+          "left": 990,
+          "right": 1006,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "I",
+          "id": "",
+          "cls": "fa-jelly fa-regular fa-magnifying-glass-plus",
+          "left": 990,
+          "right": 1006,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative slick-slide slick-cloned aos-init",
+          "left": 1030,
+          "right": 1364,
+          "width": 334,
+          "text": "Fairmont Jaipur"
+        }
+      ],
+      "imageCount": 37,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 10,
+      "loadMs": 700,
+      "resourceCount": 61,
+      "transferSize": 3125572,
+      "route": "/destination-wedding/jaipur/fairmont-jaipur",
+      "viewportName": "mobile",
+      "elapsedMs": 4562,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\destination-wedding__jaipur__fairmont-jaipur-mobile.png"
+    },
+    {
+      "path": "/destination-wedding/jaipur/fairmont-jaipur",
+      "title": "Fairmont Jaipur Wedding Cost, Packages & Booking",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "slick-track",
+          "left": -660,
+          "right": 4212,
+          "width": 4872,
+          "text": "Fairmont Jaipur Fairmont Jaipur Fairmont Jaipur Fairmont Jaipur Fairmont Jaipur "
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative slick-slide slick-cloned aos-init",
+          "left": -660,
+          "right": 36,
+          "width": 696,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid w-100",
+          "left": -660,
+          "right": 36,
+          "width": 696,
+          "text": "Romantic private candlelight dinners"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "content-widget w-100 px-4 py-3 d-flex justify-content-between align-items-center",
+          "left": -660,
+          "right": 36,
+          "width": 696,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "H4",
+          "id": "",
+          "cls": "",
+          "left": -636,
+          "right": -524,
+          "width": 112,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "",
+          "left": -4,
+          "right": 12,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "I",
+          "id": "",
+          "cls": "fa-jelly fa-regular fa-magnifying-glass-plus",
+          "left": -4,
+          "right": 12,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative slick-slide aos-init",
+          "left": 732,
+          "right": 1428,
+          "width": 696,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid w-100",
+          "left": 732,
+          "right": 1428,
+          "width": 696,
+          "text": "3+ restaurants and bars onsite"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "content-widget w-100 px-4 py-3 d-flex justify-content-between align-items-center",
+          "left": 732,
+          "right": 1428,
+          "width": 696,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "H4",
+          "id": "",
+          "cls": "",
+          "left": 756,
+          "right": 868,
+          "width": 112,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "",
+          "left": 1388,
+          "right": 1404,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "I",
+          "id": "",
+          "cls": "fa-jelly fa-regular fa-magnifying-glass-plus",
+          "left": 1388,
+          "right": 1404,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative slick-slide aos-init",
+          "left": 1428,
+          "right": 2124,
+          "width": 696,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid w-100",
+          "left": 1428,
+          "right": 2124,
+          "width": 696,
+          "text": "Romantic private candlelight dinners"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "content-widget w-100 px-4 py-3 d-flex justify-content-between align-items-center",
+          "left": 1428,
+          "right": 2124,
+          "width": 696,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "H4",
+          "id": "",
+          "cls": "",
+          "left": 1452,
+          "right": 1564,
+          "width": 112,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "",
+          "left": 2084,
+          "right": 2100,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "I",
+          "id": "",
+          "cls": "fa-jelly fa-regular fa-magnifying-glass-plus",
+          "left": 2084,
+          "right": 2100,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative slick-slide slick-cloned aos-init",
+          "left": 2124,
+          "right": 2820,
+          "width": 696,
+          "text": "Fairmont Jaipur"
+        }
+      ],
+      "imageCount": 37,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 10,
+      "loadMs": 968,
+      "resourceCount": 62,
+      "transferSize": 3126130,
+      "route": "/destination-wedding/jaipur/fairmont-jaipur",
+      "viewportName": "tablet",
+      "elapsedMs": 4576,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\destination-wedding__jaipur__fairmont-jaipur-tablet.png"
+    },
+    {
+      "path": "/destination-wedding/jaipur/fairmont-jaipur",
+      "title": "Fairmont Jaipur Wedding Cost, Packages & Booking",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1009,
+      "clientWidth": 1009,
+      "horizontalOverflow": 0,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "slick-track",
+          "left": -579,
+          "right": 3733,
+          "width": 4312,
+          "text": "Fairmont Jaipur Fairmont Jaipur Fairmont Jaipur Fairmont Jaipur Fairmont Jaipur "
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative slick-slide slick-cloned aos-init",
+          "left": -579,
+          "right": 37,
+          "width": 616,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid w-100",
+          "left": -579,
+          "right": 37,
+          "width": 616,
+          "text": "Romantic private candlelight dinners"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "content-widget w-100 px-4 py-3 d-flex justify-content-between align-items-center",
+          "left": -579,
+          "right": 37,
+          "width": 616,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "H4",
+          "id": "",
+          "cls": "",
+          "left": -555,
+          "right": -444,
+          "width": 112,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "",
+          "left": -3,
+          "right": 13,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "I",
+          "id": "",
+          "cls": "fa-jelly fa-regular fa-magnifying-glass-plus",
+          "left": -3,
+          "right": 13,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative slick-slide aos-init",
+          "left": 653,
+          "right": 1269,
+          "width": 616,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid w-100",
+          "left": 653,
+          "right": 1269,
+          "width": 616,
+          "text": "3+ restaurants and bars onsite"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "content-widget w-100 px-4 py-3 d-flex justify-content-between align-items-center",
+          "left": 653,
+          "right": 1269,
+          "width": 616,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "",
+          "left": 1229,
+          "right": 1245,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "I",
+          "id": "",
+          "cls": "fa-jelly fa-regular fa-magnifying-glass-plus",
+          "left": 1229,
+          "right": 1245,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative slick-slide aos-init",
+          "left": 1269,
+          "right": 1885,
+          "width": 616,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid w-100",
+          "left": 1269,
+          "right": 1885,
+          "width": 616,
+          "text": "Romantic private candlelight dinners"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "content-widget w-100 px-4 py-3 d-flex justify-content-between align-items-center",
+          "left": 1269,
+          "right": 1885,
+          "width": 616,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "H4",
+          "id": "",
+          "cls": "",
+          "left": 1293,
+          "right": 1404,
+          "width": 112,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "",
+          "left": 1845,
+          "right": 1861,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "I",
+          "id": "",
+          "cls": "fa-jelly fa-regular fa-magnifying-glass-plus",
+          "left": 1845,
+          "right": 1861,
+          "width": 16,
+          "text": ""
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative slick-slide slick-cloned aos-init",
+          "left": 1885,
+          "right": 2501,
+          "width": 616,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid w-100",
+          "left": 1885,
+          "right": 2501,
+          "width": 616,
+          "text": "Fairmont Jaipur header image"
+        }
+      ],
+      "imageCount": 37,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 14,
+      "loadMs": 1109,
+      "resourceCount": 62,
+      "transferSize": 3126311,
+      "route": "/destination-wedding/jaipur/fairmont-jaipur",
+      "viewportName": "small-tablet",
+      "elapsedMs": 4609,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\destination-wedding__jaipur__fairmont-jaipur-small-tablet.png"
+    },
+    {
+      "path": "/destination-wedding-in-jaipur",
+      "title": "Destination Wedding in Jaipur - Top Wedding Venues",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 486,
+      "clientWidth": 390,
+      "horizontalOverflow": 96,
+      "overflowEls": [
+        {
+          "tag": "SECTION",
+          "id": "",
+          "cls": "destination-about-content py-5 aos-init",
+          "left": -100,
+          "right": 290,
+          "width": 390,
+          "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "container custom-width",
+          "left": -100,
+          "right": 290,
+          "width": 390,
+          "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "row",
+          "left": -96,
+          "right": 286,
+          "width": 382,
+          "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "col-md-8 mx-auto",
+          "left": -96,
+          "right": 286,
+          "width": 382,
+          "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "section-heading",
+          "left": -84,
+          "right": 274,
+          "width": 358,
+          "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+        },
+        {
+          "tag": "H4",
+          "id": "",
+          "cls": "all-heading font-family01 fs-37 fw-100 text-maroon-900",
+          "left": -84,
+          "right": 274,
+          "width": 358,
+          "text": "Jaipur as a Preferred Wedding Destination"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "fw-300 text-deep-maroon-80 mt-md-4 mb-2",
+          "left": -84,
+          "right": 274,
+          "width": 358,
+          "text": "Jaipur — the Pink City — is India's top wedding destination, offering majestic p"
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "",
+          "left": -84,
+          "right": 274,
+          "width": 358,
+          "text": "Jaipur — the Pink City — is India's top wedding destination, offering majestic p"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "row justify-content-between mt-md-4 mt-3",
+          "left": -96,
+          "right": 286,
+          "width": 382,
+          "text": "Tourist Places in Jaipur Your wedding guests will explore some of India's finest"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "col-md-6",
+          "left": -96,
+          "right": 286,
+          "width": 382,
+          "text": ""
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative",
+          "left": -84,
+          "right": 274,
+          "width": 358,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "w-100 rounded-4",
+          "left": -84,
+          "right": 274,
+          "width": 358,
+          "text": "The Pink City"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "col-md-6 ps-md-5",
+          "left": -96,
+          "right": 286,
+          "width": 382,
+          "text": "Tourist Places in Jaipur Your wedding guests will explore some of India's finest"
+        },
+        {
+          "tag": "H4",
+          "id": "",
+          "cls": "all-heading font-family01 fs-37 fw-100 text-maroon-900",
+          "left": -84,
+          "right": 274,
+          "width": 358,
+          "text": "Tourist Places in Jaipur"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "fw-300 text-deep-maroon-80 mt-md-4 mb-2",
+          "left": -84,
+          "right": 274,
+          "width": 358,
+          "text": "Your wedding guests will explore some of India's finest landmarks steps from the"
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "",
+          "left": -84,
+          "right": 274,
+          "width": 358,
+          "text": "Your wedding guests will explore some of India's finest landmarks steps from the"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "about-facts row g-2 mt-md-4",
+          "left": -88,
+          "right": 278,
+          "width": 366,
+          "text": "Oct–Mar Peak Wedding Season Apr–Sep Low Wedding Season ₹1 Cr – ₹5 Cr Jaipur Wedd"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "col-md-4",
+          "left": -88,
+          "right": 278,
+          "width": 366,
+          "text": "Oct–Mar Peak Wedding Season"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "af",
+          "left": -84,
+          "right": 274,
+          "width": 358,
+          "text": "Oct–Mar Peak Wedding Season"
+        },
+        {
+          "tag": "STRONG",
+          "id": "",
+          "cls": "text-primary",
+          "left": -68,
+          "right": 258,
+          "width": 326,
+          "text": "Oct–Mar"
+        }
+      ],
+      "imageCount": 60,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 8,
+      "loadMs": 1487,
+      "resourceCount": 60,
+      "transferSize": 4042744,
+      "route": "/destination-wedding-in-jaipur",
+      "viewportName": "mobile",
+      "elapsedMs": 5165,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\destination-wedding-in-jaipur-mobile.png"
+    },
+    {
+      "path": "/destination-wedding-in-jaipur",
+      "title": "Destination Wedding in Jaipur - Top Wedding Venues",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 856,
+      "clientWidth": 768,
+      "horizontalOverflow": 88,
+      "overflowEls": [
+        {
+          "tag": "SECTION",
+          "id": "",
+          "cls": "destination-about-content py-5 aos-init",
+          "left": -100,
+          "right": 668,
+          "width": 768,
+          "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "container custom-width",
+          "left": -100,
+          "right": 668,
+          "width": 768,
+          "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "row",
+          "left": -100,
+          "right": 668,
+          "width": 768,
+          "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "row justify-content-between mt-md-4 mt-3",
+          "left": -100,
+          "right": 668,
+          "width": 768,
+          "text": "Tourist Places in Jaipur Your wedding guests will explore some of India's finest"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "col-md-6",
+          "left": -100,
+          "right": 284,
+          "width": 384,
+          "text": ""
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative",
+          "left": -88,
+          "right": 272,
+          "width": 360,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "w-100 rounded-4",
+          "left": -88,
+          "right": 272,
+          "width": 360,
+          "text": "The Pink City"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "btn sm-btn font-family02 fw-600 fs-10 btn-availability",
+          "left": 673,
+          "right": 819,
+          "width": 146,
+          "text": "CHECK AVAILABILITY"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "btn sm-btn font-family02 fw-600 fs-10 btn-availability",
+          "left": 673,
+          "right": 819,
+          "width": 146,
+          "text": "CHECK AVAILABILITY"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "btn sm-btn font-family02 fw-600 fs-10 btn-availability",
+          "left": 673,
+          "right": 819,
+          "width": 146,
+          "text": "CHECK AVAILABILITY"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "widget aos-init",
+          "left": -64,
+          "right": 632,
+          "width": 696,
+          "text": "Calculate Your Venue's Cost Unsure about your hotel budget? Our Venue Cost Calcu"
+        },
+        {
+          "tag": "H4",
+          "id": "",
+          "cls": "all-heading font-family01 fs-37 fw-100 text-maroon-900",
+          "left": -64,
+          "right": 632,
+          "width": 696,
+          "text": "Calculate Your Venue's Cost"
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "font-family03 fw-300 fs-15 text-maroon-900-80",
+          "left": -64,
+          "right": 632,
+          "width": 696,
+          "text": "Unsure about your hotel budget? Our Venue Cost Calculator gives you a practical "
+        },
+        {
+          "tag": "SPAN",
+          "id": "",
+          "cls": "heading-highlight bg-primary-light fw-600 font-family01 fs-12 d-inline-block tex",
+          "left": -64,
+          "right": 217,
+          "width": 281,
+          "text": "HOW THIS ESTIMATION HELPS YOU?"
+        },
+        {
+          "tag": "UL",
+          "id": "",
+          "cls": "aos-init",
+          "left": -164,
+          "right": 532,
+          "width": 696,
+          "text": "Enter Guest Count Simply add the number of guests attending your event to get st"
+        },
+        {
+          "tag": "LI",
+          "id": "",
+          "cls": "d-flex align-items-center",
+          "left": -164,
+          "right": 532,
+          "width": 696,
+          "text": "Enter Guest Count Simply add the number of guests attending your event to get st"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "icon",
+          "left": -164,
+          "right": -116,
+          "width": 48,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "",
+          "left": -160,
+          "right": -120,
+          "width": 40,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "content",
+          "left": -92,
+          "right": 392,
+          "width": 484,
+          "text": "Enter Guest Count Simply add the number of guests attending your event to get st"
+        },
+        {
+          "tag": "H4",
+          "id": "",
+          "cls": "font-family01 fs-18 fw-400 text-maroon-900 mb-6",
+          "left": -92,
+          "right": 392,
+          "width": 484,
+          "text": "Enter Guest Count"
+        }
+      ],
+      "imageCount": 57,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 8,
+      "loadMs": 1293,
+      "resourceCount": 61,
+      "transferSize": 4234854,
+      "route": "/destination-wedding-in-jaipur",
+      "viewportName": "tablet",
+      "elapsedMs": 4890,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\destination-wedding-in-jaipur-tablet.png"
+    },
+    {
+      "path": "/destination-wedding-in-jaipur",
+      "title": "Destination Wedding in Jaipur - Top Wedding Venues",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1097,
+      "clientWidth": 1009,
+      "horizontalOverflow": 88,
+      "overflowEls": [
+        {
+          "tag": "SECTION",
+          "id": "",
+          "cls": "destination-about-content py-5 aos-init",
+          "left": -100,
+          "right": 909,
+          "width": 1009,
+          "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "container custom-width",
+          "left": -100,
+          "right": 909,
+          "width": 1009,
+          "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "row",
+          "left": -100,
+          "right": 909,
+          "width": 1009,
+          "text": "THE PINK CITY Jaipur as a Preferred Wedding Destination Jaipur — the Pink City —"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "row justify-content-between mt-md-4 mt-3",
+          "left": -100,
+          "right": 909,
+          "width": 1009,
+          "text": "Tourist Places in Jaipur Your wedding guests will explore some of India's finest"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "col-md-6",
+          "left": -100,
+          "right": 405,
+          "width": 505,
+          "text": ""
+        },
+        {
+          "tag": "FIGURE",
+          "id": "",
+          "cls": "position-relative",
+          "left": -88,
+          "right": 393,
+          "width": 481,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "w-100 rounded-4",
+          "left": -88,
+          "right": 393,
+          "width": 481,
+          "text": "The Pink City"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "btn sm-btn font-family02 fw-600 fs-10 btn-availability",
+          "left": 895,
+          "right": 1041,
+          "width": 146,
+          "text": "CHECK AVAILABILITY"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "btn sm-btn font-family02 fw-600 fs-10 btn-availability",
+          "left": 895,
+          "right": 1041,
+          "width": 146,
+          "text": "CHECK AVAILABILITY"
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "cls": "btn sm-btn font-family02 fw-600 fs-10 btn-availability",
+          "left": 895,
+          "right": 1041,
+          "width": 146,
+          "text": "CHECK AVAILABILITY"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "widget aos-init",
+          "left": -63,
+          "right": 393,
+          "width": 456,
+          "text": "Calculate Your Venue's Cost Unsure about your hotel budget? Our Venue Cost Calcu"
+        },
+        {
+          "tag": "H4",
+          "id": "",
+          "cls": "all-heading font-family01 fs-37 fw-100 text-maroon-900",
+          "left": -63,
+          "right": 393,
+          "width": 456,
+          "text": "Calculate Your Venue's Cost"
+        },
+        {
+          "tag": "SPAN",
+          "id": "",
+          "cls": "fw-600 text-primary",
+          "left": -63,
+          "right": 329,
+          "width": 393,
+          "text": "Venue's Cost"
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "font-family03 fw-300 fs-15 text-maroon-900-80",
+          "left": -63,
+          "right": 393,
+          "width": 456,
+          "text": "Unsure about your hotel budget? Our Venue Cost Calculator gives you a practical "
+        },
+        {
+          "tag": "SPAN",
+          "id": "",
+          "cls": "heading-highlight bg-primary-light fw-600 font-family01 fs-12 d-inline-block tex",
+          "left": -63,
+          "right": 217,
+          "width": 281,
+          "text": "HOW THIS ESTIMATION HELPS YOU?"
+        },
+        {
+          "tag": "UL",
+          "id": "",
+          "cls": "aos-init",
+          "left": -163,
+          "right": 293,
+          "width": 456,
+          "text": "Enter Guest Count Simply add the number of guests attending your event to get st"
+        },
+        {
+          "tag": "LI",
+          "id": "",
+          "cls": "d-flex align-items-center",
+          "left": -163,
+          "right": 293,
+          "width": 456,
+          "text": "Enter Guest Count Simply add the number of guests attending your event to get st"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "icon",
+          "left": -163,
+          "right": -115,
+          "width": 48,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "",
+          "left": -159,
+          "right": -119,
+          "width": 40,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "content",
+          "left": -91,
+          "right": 293,
+          "width": 384,
+          "text": "Enter Guest Count Simply add the number of guests attending your event to get st"
+        }
+      ],
+      "imageCount": 57,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 13,
+      "loadMs": 1364,
+      "resourceCount": 61,
+      "transferSize": 4239650,
+      "route": "/destination-wedding-in-jaipur",
+      "viewportName": "small-tablet",
+      "elapsedMs": 5104,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\destination-wedding-in-jaipur-small-tablet.png"
+    },
+    {
+      "path": "/wedding-packages",
+      "title": "Destination Wedding Packages - Viraaya Weddings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 26,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 6,
+      "loadMs": 557,
+      "resourceCount": 48,
+      "transferSize": 3528295,
+      "route": "/wedding-packages",
+      "viewportName": "mobile",
+      "elapsedMs": 4559,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\wedding-packages-mobile.png"
+    },
+    {
+      "path": "/wedding-packages",
+      "title": "Destination Wedding Packages - Viraaya Weddings",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 26,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 8,
+      "loadMs": 1172,
+      "resourceCount": 51,
+      "transferSize": 3543312,
+      "route": "/wedding-packages",
+      "viewportName": "tablet",
+      "elapsedMs": 5153,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\wedding-packages-tablet.png"
+    },
+    {
+      "path": "/wedding-packages",
+      "title": "Destination Wedding Packages - Viraaya Weddings",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1009,
+      "clientWidth": 1009,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 26,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 11,
+      "loadMs": 522,
+      "resourceCount": 54,
+      "transferSize": 3696118,
+      "route": "/wedding-packages",
+      "viewportName": "small-tablet",
+      "elapsedMs": 4554,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\wedding-packages-small-tablet.png"
+    },
+    {
+      "path": "/wedding-packages/shresht",
+      "title": "Shreshth Premium Destination Wedding Package - Viraaya Weddings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 27,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 10,
+      "loadMs": 1327,
+      "resourceCount": 56,
+      "transferSize": 4039645,
+      "route": "/wedding-packages/shresht",
+      "viewportName": "mobile",
+      "elapsedMs": 5330,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\wedding-packages__shresht-mobile.png"
+    },
+    {
+      "path": "/wedding-packages/shresht",
+      "title": "Shreshth Premium Destination Wedding Package - Viraaya Weddings",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 27,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 12,
+      "loadMs": 502,
+      "resourceCount": 58,
+      "transferSize": 4053157,
+      "route": "/wedding-packages/shresht",
+      "viewportName": "tablet",
+      "elapsedMs": 4568,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\wedding-packages__shresht-tablet.png"
+    },
+    {
+      "path": "/wedding-packages/shresht",
+      "title": "Shreshth Premium Destination Wedding Package - Viraaya Weddings",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1009,
+      "clientWidth": 1009,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 27,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 12,
+      "loadMs": 1316,
+      "resourceCount": 61,
+      "transferSize": 4078455,
+      "route": "/wedding-packages/shresht",
+      "viewportName": "small-tablet",
+      "elapsedMs": 5317,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\wedding-packages__shresht-small-tablet.png"
+    },
+    {
+      "path": "/real-weddings",
+      "title": "Real Destination Weddings - Viraaya Weddings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 17,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 7,
+      "loadMs": 708,
+      "resourceCount": 48,
+      "transferSize": 3965728,
+      "route": "/real-weddings",
+      "viewportName": "mobile",
+      "elapsedMs": 4942,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\real-weddings-mobile.png"
+    },
+    {
+      "path": "/real-weddings",
+      "title": "Real Destination Weddings - Viraaya Weddings",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 17,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 8,
+      "loadMs": 687,
+      "resourceCount": 48,
+      "transferSize": 3965728,
+      "route": "/real-weddings",
+      "viewportName": "tablet",
+      "elapsedMs": 4941,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\real-weddings-tablet.png"
+    },
+    {
+      "path": "/real-weddings",
+      "title": "Real Destination Weddings - Viraaya Weddings",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1009,
+      "clientWidth": 1009,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 17,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 11,
+      "loadMs": 1144,
+      "resourceCount": 47,
+      "transferSize": 3965218,
+      "route": "/real-weddings",
+      "viewportName": "small-tablet",
+      "elapsedMs": 5360,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\real-weddings-small-tablet.png"
+    },
+    {
+      "path": "/real-weddings/kashyap-prachi",
+      "title": "Kashyap & Prachi Real Wedding in Shimla - Viraaya Weddings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 398,
+      "clientWidth": 390,
+      "horizontalOverflow": 8,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "row g-5",
+          "left": -8,
+          "right": 398,
+          "width": 406,
+          "text": "THE CELEBRATION A Grand Indian Wedding Experience Kashyap & Prachi’s wedding at "
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "col-lg-8",
+          "left": -8,
+          "right": 398,
+          "width": 406,
+          "text": "THE CELEBRATION A Grand Indian Wedding Experience Kashyap & Prachi’s wedding at "
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "col-lg-4",
+          "left": -8,
+          "right": 398,
+          "width": 406,
+          "text": "Verified Venue Taj Theog Resort And Spa Shimla , Shimla Men Market, Theog, Himac"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "slick-track",
+          "left": -1002,
+          "right": 1050,
+          "width": 2052,
+          "text": "Nikita & Makrand Fairmont Jaipur From Planning to Perfection Viraaya Weddings tu"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item slick-slide slick-cloned",
+          "left": -990,
+          "right": -672,
+          "width": 318,
+          "text": "Nikita & Makrand Fairmont Jaipur From Planning to Perfection Viraaya Weddings tu"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "widget",
+          "left": -990,
+          "right": -672,
+          "width": 318,
+          "text": "Nikita & Makrand Fairmont Jaipur From Planning to Perfection Viraaya Weddings tu"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "outline d-flex",
+          "left": -990,
+          "right": -672,
+          "width": 318,
+          "text": "Nikita & Makrand Fairmont Jaipur From Planning to Perfection Viraaya Weddings tu"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "me-4",
+          "left": -907,
+          "right": -754,
+          "width": 153,
+          "text": "Nikita & Makrand Fairmont Jaipur"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "user",
+          "left": -907,
+          "right": -754,
+          "width": 153,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "img",
+          "left": -895,
+          "right": -766,
+          "width": 129,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -895,
+          "right": -767,
+          "width": 128,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "quote",
+          "left": -767,
+          "right": -693,
+          "width": 74,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "",
+          "left": -747,
+          "right": -714,
+          "width": 33,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "user-details",
+          "left": -907,
+          "right": -754,
+          "width": 153,
+          "text": "Nikita & Makrand Fairmont Jaipur"
+        },
+        {
+          "tag": "H5",
+          "id": "",
+          "cls": "font-family01",
+          "left": -907,
+          "right": -754,
+          "width": 153,
+          "text": "Nikita & Makrand"
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "font-family03",
+          "left": -907,
+          "right": -754,
+          "width": 153,
+          "text": "Fairmont Jaipur"
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "",
+          "left": -884,
+          "right": -875,
+          "width": 9,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "content",
+          "left": -950,
+          "right": -712,
+          "width": 238,
+          "text": "From Planning to Perfection Viraaya Weddings turned our dream wedding into a sea"
+        },
+        {
+          "tag": "H5",
+          "id": "",
+          "cls": "font-family01",
+          "left": -950,
+          "right": -712,
+          "width": 238,
+          "text": "From Planning to Perfection"
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "font-family02",
+          "left": -950,
+          "right": -712,
+          "width": 238,
+          "text": ""
+        }
+      ],
+      "imageCount": 32,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 6,
+      "loadMs": 509,
+      "resourceCount": 67,
+      "transferSize": 5005969,
+      "route": "/real-weddings/kashyap-prachi",
+      "viewportName": "mobile",
+      "elapsedMs": 4552,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\real-weddings__kashyap-prachi-mobile.png"
+    },
+    {
+      "path": "/real-weddings/kashyap-prachi",
+      "title": "Kashyap & Prachi Real Wedding in Shimla - Viraaya Weddings",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "slick-track",
+          "left": -1416,
+          "right": 2184,
+          "width": 3600,
+          "text": "Riya & Arjun The Taj From the first conversation, there was clarity and calm The"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item slick-slide slick-cloned",
+          "left": -1404,
+          "right": -708,
+          "width": 696,
+          "text": "Riya & Arjun The Taj From the first conversation, there was clarity and calm The"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "widget",
+          "left": -1404,
+          "right": -708,
+          "width": 696,
+          "text": "Riya & Arjun The Taj From the first conversation, there was clarity and calm The"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "outline d-flex",
+          "left": -1404,
+          "right": -708,
+          "width": 696,
+          "text": "Riya & Arjun The Taj From the first conversation, there was clarity and calm The"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "me-4",
+          "left": -1364,
+          "right": -1212,
+          "width": 152,
+          "text": "Riya & Arjun The Taj"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "user",
+          "left": -1364,
+          "right": -1212,
+          "width": 152,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "img",
+          "left": -1352,
+          "right": -1224,
+          "width": 128,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -1352,
+          "right": -1224,
+          "width": 128,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "quote",
+          "left": -1225,
+          "right": -1151,
+          "width": 74,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "",
+          "left": -1204,
+          "right": -1171,
+          "width": 33,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "user-details",
+          "left": -1364,
+          "right": -1212,
+          "width": 152,
+          "text": "Riya & Arjun The Taj"
+        },
+        {
+          "tag": "H5",
+          "id": "",
+          "cls": "font-family01",
+          "left": -1364,
+          "right": -1212,
+          "width": 152,
+          "text": "Riya & Arjun"
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "font-family03",
+          "left": -1364,
+          "right": -1212,
+          "width": 152,
+          "text": "The Taj"
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "",
+          "left": -1364,
+          "right": -1355,
+          "width": 9,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "content",
+          "left": -1188,
+          "right": -772,
+          "width": 416,
+          "text": "From the first conversation, there was clarity and calm They understood our expe"
+        },
+        {
+          "tag": "H5",
+          "id": "",
+          "cls": "font-family01",
+          "left": -1188,
+          "right": -772,
+          "width": 416,
+          "text": "From the first conversation, there was clarity and calm"
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "font-family02",
+          "left": -1188,
+          "right": -772,
+          "width": 416,
+          "text": ""
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "",
+          "left": -1188,
+          "right": -772,
+          "width": 416,
+          "text": "They understood our expectations and family dynamics immediately. The planning f"
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "",
+          "left": -1188,
+          "right": -772,
+          "width": 416,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide00",
+          "cls": "item slick-slide",
+          "left": -684,
+          "right": 12,
+          "width": 696,
+          "text": "Nikita & Makrand Fairmont Jaipur From Planning to Perfection Viraaya Weddings tu"
+        }
+      ],
+      "imageCount": 29,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 6,
+      "loadMs": 1429,
+      "resourceCount": 67,
+      "transferSize": 5005969,
+      "route": "/real-weddings/kashyap-prachi",
+      "viewportName": "tablet",
+      "elapsedMs": 5383,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\real-weddings__kashyap-prachi-tablet.png"
+    },
+    {
+      "path": "/real-weddings/kashyap-prachi",
+      "title": "Kashyap & Prachi Real Wedding in Shimla - Viraaya Weddings",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1009,
+      "clientWidth": 1009,
+      "horizontalOverflow": 0,
+      "overflowEls": [
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "slick-track",
+          "left": -1895,
+          "right": 2905,
+          "width": 4800,
+          "text": "Riya & Arjun The Taj From the first conversation, there was clarity and calm The"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "item slick-slide slick-cloned",
+          "left": -1883,
+          "right": -947,
+          "width": 936,
+          "text": "Riya & Arjun The Taj From the first conversation, there was clarity and calm The"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "widget",
+          "left": -1883,
+          "right": -947,
+          "width": 936,
+          "text": "Riya & Arjun The Taj From the first conversation, there was clarity and calm The"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "outline d-flex",
+          "left": -1883,
+          "right": -947,
+          "width": 936,
+          "text": "Riya & Arjun The Taj From the first conversation, there was clarity and calm The"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "me-4",
+          "left": -1843,
+          "right": -1691,
+          "width": 152,
+          "text": "Riya & Arjun The Taj"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "user",
+          "left": -1843,
+          "right": -1691,
+          "width": 152,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "img",
+          "left": -1831,
+          "right": -1703,
+          "width": 128,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "img-fluid",
+          "left": -1831,
+          "right": -1703,
+          "width": 128,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "quote",
+          "left": -1704,
+          "right": -1630,
+          "width": 74,
+          "text": ""
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "",
+          "left": -1684,
+          "right": -1651,
+          "width": 33,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "user-details",
+          "left": -1843,
+          "right": -1691,
+          "width": 152,
+          "text": "Riya & Arjun The Taj"
+        },
+        {
+          "tag": "H5",
+          "id": "",
+          "cls": "font-family01",
+          "left": -1843,
+          "right": -1691,
+          "width": 152,
+          "text": "Riya & Arjun"
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "font-family03",
+          "left": -1843,
+          "right": -1691,
+          "width": 152,
+          "text": "The Taj"
+        },
+        {
+          "tag": "IMG",
+          "id": "",
+          "cls": "",
+          "left": -1843,
+          "right": -1834,
+          "width": 9,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "cls": "content",
+          "left": -1667,
+          "right": -1011,
+          "width": 656,
+          "text": "From the first conversation, there was clarity and calm They understood our expe"
+        },
+        {
+          "tag": "H5",
+          "id": "",
+          "cls": "font-family01",
+          "left": -1667,
+          "right": -1011,
+          "width": 656,
+          "text": "From the first conversation, there was clarity and calm"
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "font-family02",
+          "left": -1667,
+          "right": -1011,
+          "width": 656,
+          "text": ""
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "",
+          "left": -1667,
+          "right": -1011,
+          "width": 656,
+          "text": "They understood our expectations and family dynamics immediately. The planning f"
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "cls": "",
+          "left": -1667,
+          "right": -1011,
+          "width": 656,
+          "text": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "slick-slide00",
+          "cls": "item slick-slide",
+          "left": -923,
+          "right": 13,
+          "width": 936,
+          "text": "Nikita & Makrand Fairmont Jaipur From Planning to Perfection Viraaya Weddings tu"
+        }
+      ],
+      "imageCount": 29,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 11,
+      "loadMs": 521,
+      "resourceCount": 66,
+      "transferSize": 5005459,
+      "route": "/real-weddings/kashyap-prachi",
+      "viewportName": "small-tablet",
+      "elapsedMs": 4558,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\real-weddings__kashyap-prachi-small-tablet.png"
+    },
+    {
+      "path": "/about-us",
+      "title": "Our Journey – About Viraaya Weddings Destination Wedding Planners",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 16,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 6,
+      "loadMs": 1235,
+      "resourceCount": 45,
+      "transferSize": 3129331,
+      "route": "/about-us",
+      "viewportName": "mobile",
+      "elapsedMs": 5387,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\about-us-mobile.png"
+    },
+    {
+      "path": "/about-us",
+      "title": "Our Journey – About Viraaya Weddings Destination Wedding Planners",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 16,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 6,
+      "loadMs": 1163,
+      "resourceCount": 46,
+      "transferSize": 3254200,
+      "route": "/about-us",
+      "viewportName": "tablet",
+      "elapsedMs": 5324,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\about-us-tablet.png"
+    },
+    {
+      "path": "/about-us",
+      "title": "Our Journey – About Viraaya Weddings Destination Wedding Planners",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1009,
+      "clientWidth": 1009,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 16,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 11,
+      "loadMs": 846,
+      "resourceCount": 45,
+      "transferSize": 3253690,
+      "route": "/about-us",
+      "viewportName": "small-tablet",
+      "elapsedMs": 5029,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\about-us-small-tablet.png"
+    },
+    {
+      "path": "/contact",
+      "title": "Contact Viraaya Weddings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 5,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 6,
+      "loadMs": 978,
+      "resourceCount": 41,
+      "transferSize": 2495839,
+      "route": "/contact",
+      "viewportName": "mobile",
+      "elapsedMs": 5241,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\contact-mobile.png"
+    },
+    {
+      "path": "/contact",
+      "title": "Contact Viraaya Weddings",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 5,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 6,
+      "loadMs": 401,
+      "resourceCount": 41,
+      "transferSize": 2495839,
+      "route": "/contact",
+      "viewportName": "tablet",
+      "elapsedMs": 4570,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\contact-tablet.png"
+    },
+    {
+      "path": "/contact",
+      "title": "Contact Viraaya Weddings",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1009,
+      "clientWidth": 1009,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 5,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 11,
+      "loadMs": 1152,
+      "resourceCount": 40,
+      "transferSize": 2495329,
+      "route": "/contact",
+      "viewportName": "small-tablet",
+      "elapsedMs": 5396,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\contact-small-tablet.png"
+    },
+    {
+      "path": "/blogs",
+      "title": "Wedding Planning Blogs - Viraaya Weddings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 16,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 6,
+      "loadMs": 392,
+      "resourceCount": 44,
+      "transferSize": 4226394,
+      "route": "/blogs",
+      "viewportName": "mobile",
+      "elapsedMs": 4547,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\blogs-mobile.png"
+    },
+    {
+      "path": "/blogs",
+      "title": "Wedding Planning Blogs - Viraaya Weddings",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 16,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 6,
+      "loadMs": 855,
+      "resourceCount": 47,
+      "transferSize": 4790486,
+      "route": "/blogs",
+      "viewportName": "tablet",
+      "elapsedMs": 4973,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\blogs-tablet.png"
+    },
+    {
+      "path": "/blogs",
+      "title": "Wedding Planning Blogs - Viraaya Weddings",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1009,
+      "clientWidth": 1009,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 16,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 11,
+      "loadMs": 1253,
+      "resourceCount": 46,
+      "transferSize": 4789976,
+      "route": "/blogs",
+      "viewportName": "small-tablet",
+      "elapsedMs": 5393,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\blogs-small-tablet.png"
+    },
+    {
+      "path": "/blogs/destination-wedding-venue-checklist",
+      "title": "Your Guide to Finding the Perfect Destination Wedding Venue",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 5,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 14,
+      "loadMs": 1193,
+      "resourceCount": 42,
+      "transferSize": 2657039,
+      "route": "/blogs/destination-wedding-venue-checklist",
+      "viewportName": "mobile",
+      "elapsedMs": 5385,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\blogs__destination-wedding-venue-checklist-mobile.png"
+    },
+    {
+      "path": "/blogs/destination-wedding-venue-checklist",
+      "title": "Your Guide to Finding the Perfect Destination Wedding Venue",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 5,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 16,
+      "loadMs": 754,
+      "resourceCount": 42,
+      "transferSize": 2657039,
+      "route": "/blogs/destination-wedding-venue-checklist",
+      "viewportName": "tablet",
+      "elapsedMs": 4942,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\blogs__destination-wedding-venue-checklist-tablet.png"
+    },
+    {
+      "path": "/blogs/destination-wedding-venue-checklist",
+      "title": "Your Guide to Finding the Perfect Destination Wedding Venue",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1009,
+      "clientWidth": 1009,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 5,
+      "brokenImages": [],
+      "navToggle": true,
+      "visibleControls": 13,
+      "loadMs": 1299,
+      "resourceCount": 42,
+      "transferSize": 2749249,
+      "route": "/blogs/destination-wedding-venue-checklist",
+      "viewportName": "small-tablet",
+      "elapsedMs": 5450,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\blogs__destination-wedding-venue-checklist-small-tablet.png"
+    },
+    {
+      "path": "/privacy-policy",
+      "title": "Privacy Policy – How We Protect Your Data",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 5,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 7,
+      "loadMs": 868,
+      "resourceCount": 41,
+      "transferSize": 2721231,
+      "route": "/privacy-policy",
+      "viewportName": "mobile",
+      "elapsedMs": 4606,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\privacy-policy-mobile.png"
+    },
+    {
+      "path": "/privacy-policy",
+      "title": "Privacy Policy – How We Protect Your Data",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 5,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 7,
+      "loadMs": 800,
+      "resourceCount": 41,
+      "transferSize": 2721231,
+      "route": "/privacy-policy",
+      "viewportName": "tablet",
+      "elapsedMs": 4595,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\privacy-policy-tablet.png"
+    },
+    {
+      "path": "/privacy-policy",
+      "title": "Privacy Policy – How We Protect Your Data",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "scrollWidth": 1009,
+      "clientWidth": 1009,
+      "horizontalOverflow": 0,
+      "overflowEls": [],
+      "imageCount": 5,
+      "brokenImages": [],
+      "navToggle": false,
+      "visibleControls": 12,
+      "loadMs": 1267,
+      "resourceCount": 40,
+      "transferSize": 2720721,
+      "route": "/privacy-policy",
+      "viewportName": "small-tablet",
+      "elapsedMs": 5325,
+      "screenshot": "C:\\Users\\RohitKumar\\Downloads\\viraayaweddings.com\\tmp\\responsive-audit\\privacy-policy-small-tablet.png"
+    }
+  ],
+  "profiles": [
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-6f4v8w",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-EG6Tmy",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-qA4s7M",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-1XBpSb",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-leq5nY",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-Ocjol9",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-mlqv0l",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-XD3oY4",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-4iMzSR",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-hN441M",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-PFKEht",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-kmGcqx",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-YXokKM",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-lkcAxn",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-WiozeI",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-7I5yj6",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-CqEdBl",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-LCdnRu",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-M7v8v0",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-IPCmGF",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-kIVLPC",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-d6trT0",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-MfQvcD",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-GHDcqx",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-zXAgOd",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-z0ATiw",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-OPVFeT",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-UpKYjX",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-4Ki07I",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-6IVz3C",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-XQSRCC",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-Cbqren",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-pmKVtQ",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-bm4anT",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-zfrRuG",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-0VHkqY",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-ApjNmr",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-bjWaTQ",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-JncQC0",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-BedUU7",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-pUM5St",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-qezvol",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-jHTOk2",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-bBn04k",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-k0SYoP",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-zPhor7",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-DGOxz7",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-U7ewkL",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-wVMFsw",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-TBrS1T",
+    "C:\\Users\\ROHITK~1\\AppData\\Local\\Temp\\vw-chrome-UMNsh6"
+  ]
+}

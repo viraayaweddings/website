@@ -1,0 +1,1 @@
+{"sql":"SELECT ts_ms, level, message FROM logs ORDER BY ts_ms DESC LIMIT 5"}

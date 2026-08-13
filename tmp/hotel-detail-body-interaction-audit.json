@@ -1,0 +1,184 @@
+{
+  "beforeBody": {
+    "costButtonEnabled": true,
+    "dateInputs": [
+      {
+        "id": "currencySelect",
+        "name": "",
+        "options": 1,
+        "type": "select-one",
+        "value": "INR"
+      },
+      {
+        "id": "",
+        "name": "preferred_date",
+        "options": 0,
+        "type": "date",
+        "value": ""
+      },
+      {
+        "id": "",
+        "name": "",
+        "options": 5,
+        "type": "select-one",
+        "value": "7"
+      },
+      {
+        "id": "",
+        "name": "",
+        "options": 12,
+        "type": "select-one",
+        "value": "7"
+      }
+    ],
+    "fancyboxReady": false,
+    "mainSliderInitialized": [
+      {
+        "classes": "slider main-slider slick-initialized slick-slider",
+        "slides": 18
+      }
+    ],
+    "photoVisible": true,
+    "slickReady": false,
+    "thumbSliderInitialized": [
+      {
+        "classes": "slider-thumbnails thumbnail-slider slick-initialized slick-slider aos-init",
+        "slides": 8
+      }
+    ],
+    "videoVisible": false,
+    "visibleGalleryTabs": [
+      {
+        "target": "#photo-gallery",
+        "text": "PHOTO GALLERY"
+      },
+      {
+        "target": "#video-gallery",
+        "text": "VIDEO GALLERY"
+      }
+    ]
+  },
+  "afterVideoTab": {
+    "photoVisible": true,
+    "videoText": "",
+    "videoVisible": false
+  },
+  "afterPhotoTab": {
+    "photoVisible": true,
+    "videoVisible": false
+  },
+  "costBeforeClick": {
+    "buttonDisabled": false,
+    "fields": [
+      {
+        "id": "hotelTotalRooms",
+        "name": "",
+        "type": "hidden",
+        "value": "89"
+      },
+      {
+        "id": "",
+        "name": "",
+        "type": "number",
+        "value": ""
+      }
+    ]
+  },
+  "costAfterClick": {
+    "alerts": [],
+    "offcanvasShown": false,
+    "summaryText": "Cost Summary Disclaimer This service provides a comparative overview of selected hotel properties and does not constitute a reservation, booking or contractual commitment of any nature. Comparison data reflects information available at the time of your enquiry and may not represent current rates, inclusions, or property details. Properties vary in venue type, capacity, inclusions, and F&B terms. Each property is unique, and all comparisons should be read as a general reference, not an exact equivalence. This service is designed to assist in shortlisting and does not verify real-time availability. We recommend confirming availability directly once you have identified your preferred properties"
+  },
+  "ctaHealth": [
+    {
+      "href": "http://127.0.0.1:3002/wedding-consultation",
+      "target": "",
+      "text": "BOOK A Consultation",
+      "visible": true
+    },
+    {
+      "href": "",
+      "target": "#BookConsultation",
+      "text": "BOOK A CONSULTATION",
+      "visible": true
+    },
+    {
+      "href": "",
+      "target": "#photo-gallery",
+      "text": "PHOTO GALLERY",
+      "visible": true
+    },
+    {
+      "href": "",
+      "target": "#video-gallery",
+      "text": "VIDEO GALLERY",
+      "visible": true
+    },
+    {
+      "href": "",
+      "target": "",
+      "text": "Calculate HOTEL COST",
+      "visible": true
+    },
+    {
+      "href": "http://127.0.0.1:3002/check-hotel-availability",
+      "target": "",
+      "text": "CHECK AVAILABILITY",
+      "visible": true
+    },
+    {
+      "href": "http://127.0.0.1:3002/destination-wedding/udaipur/fairmont-udaipur-palace",
+      "target": "",
+      "text": "DETAILS",
+      "visible": true
+    },
+    {
+      "href": "http://127.0.0.1:3002/check-hotel-availability",
+      "target": "",
+      "text": "CHECK AVAILABILITY",
+      "visible": true
+    },
+    {
+      "href": "http://127.0.0.1:3002/destination-wedding/udaipur/raffles-udaipur",
+      "target": "",
+      "text": "DETAILS",
+      "visible": true
+    },
+    {
+      "href": "http://127.0.0.1:3002/check-hotel-availability",
+      "target": "",
+      "text": "CHECK AVAILABILITY",
+      "visible": true
+    },
+    {
+      "href": "http://127.0.0.1:3002/destination-wedding/udaipur/taj-lake-palace-udaipur",
+      "target": "",
+      "text": "DETAILS",
+      "visible": true
+    },
+    {
+      "href": "http://127.0.0.1:3002/check-hotel-availability",
+      "target": "",
+      "text": "CHECK AVAILABILITY",
+      "visible": true
+    },
+    {
+      "href": "http://127.0.0.1:3002/wedding-consultation",
+      "target": "",
+      "text": "Book an expert consultation",
+      "visible": true
+    },
+    {
+      "href": "http://127.0.0.1:3002/wedding-consultation",
+      "target": "",
+      "text": "Book Consultation",
+      "visible": true
+    },
+    {
+      "href": "http://127.0.0.1:3002/check-hotel-availability",
+      "target": "",
+      "text": "Hotel Availability Check",
+      "visible": true
+    }
+  ]
+}

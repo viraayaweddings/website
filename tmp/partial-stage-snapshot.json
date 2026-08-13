@@ -1,0 +1,51 @@
+{
+  "ok": true,
+  "snapshot": {
+    "activeId": "",
+    "activeTag": "BODY",
+    "faqValues": [
+      {
+        "id": "acf-editor-56",
+        "len": 251,
+        "value": "A hotel booking engine is a software application integrated into a hotel's website or mobile app that allows guests to c"
+      },
+      {
+        "id": "acf-editor-57",
+        "len": 343,
+        "value": "A booking engine increases direct bookings by providing a seamless, branded reservation experience on the hotel's own we"
+      },
+      {
+        "id": "acf-editor-58",
+        "len": 244,
+        "value": "Key features include real-time inventory management, channel manager integration, secure payment processing (PCI DSS com"
+      },
+      {
+        "id": "acf-editor-59",
+        "len": 254,
+        "value": "Reputable hotel booking engines are built with robust security measures including PCI DSS compliance for payment data, S"
+      },
+      {
+        "id": "acf-editor-60",
+        "len": 266,
+        "value": "Yes. Modern hotel booking engines are designed to integrate with property management systems (PMS), channel managers, re"
+      },
+      {
+        "id": "acf-editor-61",
+        "len": 248,
+        "value": "Hotel booking engines typically use one of three pricing models: commission-based (a percentage of each booking), flat m"
+      }
+    ],
+    "hasOldTitle": true,
+    "hasStaleImage": true,
+    "headLen": 10713,
+    "headStart": "<style>\n.custom-table-wrapper{\n    width:100%;\n    overflow-x:auto;\n    font-family:'Manrope',sans-serif !important;\n}\n\n",
+    "notices": [
+      "Connection lost. Saving has been disabled until you are reconnected. This post is being backed up in your browser, just in case.",
+      "The backup of this post in your browser is different from the version below.Restore the backupThis will replace the current editor content with the last backup version. You can use undo and redo in the editor to get the old content back or to return to the restored version.Dismiss this notice."
+    ],
+    "scriptCount": 10,
+    "scrollY": 11804.4453125,
+    "title": "Edit Post “What Is a Hotel Booking Engine and How Does It Work?” ‹ RateGain — WordPress",
+    "url": "https://rategain.com/wp-admin/post.php?post=47110&action=edit"
+  }
+}

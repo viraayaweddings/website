@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "calcSetup": {
+    "error": "flatpickr missing",
+    "hasCheckIn": true,
+    "hasCheckOut": true
+  },
+  "calcResult": {
+    "dialog": null,
+    "offcanvasShown": false,
+    "summary": "Cost Summary Disclaimer This service provides a comparative overview of selected hotel properties and does not constitute a reservation, booking or contractual commitment of any nature. Comparison data reflects information available at the time of your enquiry and may not represent current rates, inclusions, or property details. Properties vary in venue type, capacity, inclusions, and F&B terms. Each property is unique, and all comparisons should be read as a general reference, not an exact equivalence. This service is designed to assist in shortlisting and does not verify real-time availability. We recommend confirming availability directly once you have identified your preferred properties. All final terms, pricing, and availability are subject to the hotel's acceptance at the time of formal booking. Note: Vivahnam acts as an intermediary between the client and the hotel. While every effort is made to ensure the accuracy of the information presented, Vivahnam shall not be held liable for any discrepancy between the comparison report and the final terms confirmed by the hotel. Book an expert consultation with our team for a precise, personalised assessment of your shortlisted prop"
+  }
+}

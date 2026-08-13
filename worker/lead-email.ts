@@ -24,6 +24,7 @@ export interface LeadEmailEnv {
   RESEND_FROM_EMAIL?: string;
   RESEND_REPLY_TO?: string;
   RESEND_TO_EMAIL?: string;
+  LEAD_EMAIL_TO?: string;
   RESEND_ALLOW_INSECURE_LOCAL_TLS?: string;
   LEAD_EMAIL_SUBJECT?: string;
 }
@@ -237,6 +238,9 @@ function validateLead(payload: LeadPayload): { lead?: CleanLead; errors?: string
   if (errors.length) return { errors: [...new Set(errors)] };
 
   metadata["Submitted At"] = new Date().toISOString();
+  const sourcePage = fields.source_page || fields["Source Page"];
+  if (sourcePage && !metadata["Source Page"]) metadata["Source Page"] = sourcePage;
+  if (pageUrl && !metadata["Page URL"]) metadata["Page URL"] = pageUrl;
 
   return {
     lead: {
@@ -359,7 +363,7 @@ async function sendResendEmail(env: LeadEmailEnv, lead: CleanLead) {
   const apiKey = envValue(env, "RESEND_API_KEY");
   if (!apiKey) return { ok: false, status: 500, body: "Email service is not configured." };
 
-  const to = recipients(envValue(env, "RESEND_TO_EMAIL"));
+  const to = recipients(envValue(env, "RESEND_TO_EMAIL") || envValue(env, "LEAD_EMAIL_TO"));
   if (!to.length) return { ok: false, status: 500, body: "Lead recipient email is not configured." };
 
   const subjectBase = envValue(env, "LEAD_EMAIL_SUBJECT") || "Website Query";
@@ -394,8 +398,8 @@ async function sendResendEmail(env: LeadEmailEnv, lead: CleanLead) {
 
 function allowLocalInsecureTls(env: LeadEmailEnv) {
   const explicit = envValue(env, "RESEND_ALLOW_INSECURE_LOCAL_TLS");
-  if (explicit === "true") return true;
-  return false;
+  const isWorkerRuntime = typeof (globalThis as { WebSocketPair?: unknown }).WebSocketPair !== "undefined";
+  return explicit === "true" && !isWorkerRuntime;
 }
 
 async function sendResendWithNodeHttps(apiKey: string, payload: ResendPayload, rejectUnauthorized: boolean) {
@@ -457,14 +461,24 @@ async function payloadFromRequest(request: Request, url: URL): Promise<LeadPaylo
     }
   }
 
+  const pageUrl =
+    text(fields.pageUrl, 500) ||
+    text(fields["Page URL"], 500) ||
+    text(fields.page_url, 500) ||
+    request.headers.get("referer") ||
+    "";
+  const sourcePage = text(fields.source_page, 500);
+
   return {
     formId: fields.formId || "",
     formName: fields.formName || legacyFormName(url.pathname),
-    pageUrl: fields.pageUrl || request.headers.get("referer") || "",
+    pageUrl,
     fields,
     requiredFields: Object.keys(fields).filter((key) => ["name", "email", "phone", "number"].includes(normalizeKey(key))),
     metadata: {
       "Submission Endpoint": url.pathname,
+      "Page URL": pageUrl,
+      "Source Page": sourcePage,
       "User Agent": request.headers.get("user-agent") || "",
     },
   };

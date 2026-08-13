@@ -1,0 +1,128 @@
+interface Browsers {
+  get(id: string): Promise<Browser>; // Get a browser by id or client type.
+  list(): Promise<Array<{ apiSupportOverrides?: Record<string, boolean>; capabilities: { browser?: Array<{ description: string; id: string }>; tab?: Array<{ description: string; id: string }> }; family?: string; id: string; metadata?: Record<string, string>; name: string; type: "iab" | "extension" | "cdp" }>>; // List available browsers.
+}
+
+interface Browser {
+  browserId: string; // Browser id selected by `agent.browsers.get()`.
+  capabilities: BrowserCapabilityCollection; // Browser-scoped optional capabilities advertised by the connected backend; discover IDs with `await browser.capabilities.list()`, then call `await (await browser.capabilities.get(id)).documentation()` for method details.
+  tabs: Tabs; // API for interacting with browser tabs.
+  user: BrowserUser; // Readonly context about the user's browser state.
+  documentation(): Promise<string>; // Read browser guidance and the core API reference.
+  nameSession(name: string): Promise<void>; // Name the current browser automation session.
+}
+
+interface BrowserUser {
+  claimTab(tab: string | BrowserUserTabInfo): Promise<Tab>; // Claim a user tab returned by `openTabs()` and return it as a controllable agent tab.
+  history(options: BrowserHistoryOptions): Promise<Array<BrowserHistoryEntry>>; // List recent browsing history ordered by `dateVisited` descending.
+  openTabs(): Promise<Array<BrowserUserTabInfo>>; // List open top-level tabs across the user's browser windows ordered by `lastOpened` descending.
+}
+
+interface Tabs {
+  finalize(options: FinalizeTabsOptions): Promise<void>; // Finalize the browser session's tabs by cleaning up tabs that are no longer needed.
+  get(id: string): Promise<Tab>; // Get a tab by id.
+  list(): Promise<Array<TabInfo>>; // List open tabs in the browser.
+  new(): Promise<Tab>; // Create and return a new tab in the browser.
+  selected(): Promise<undefined | Tab>; // Return the currently selected tab, if any.
+}
+
+interface Tab {
+  capabilities: TabCapabilityCollection; // Tab-scoped optional capabilities advertised by the connected backend; discover IDs with `await tab.capabilities.list()`, then call `await (await tab.capabilities.get(id)).documentation()` for method details.
+  clipboard: TabClipboardAPI; // API for interacting with the browser session's clipboard.
+  cua: CUAAPI; // API for interacting with the tab via the cua api
+  dev: TabDevAPI; // API for developer-oriented tab inspection.
+  dom_cua: DomCUAAPI; // API for interacting with the tab via the dom based cua api
+  id: string; // A tab's unique identifier
+  playwright: PlaywrightAPI; // API for interacting with the tab via the playwright api
+  back(): Promise<void>; // Navigate this tab back in history.
+  close(): Promise<void>; // Close this tab.
+  forward(): Promise<void>; // Navigate this tab forward in history.
+  getJsDialog(): Promise<undefined | Dialog>; // Get the active JavaScript dialog for this tab, if one is currently open.
+  goto(url: string): Promise<void>; // Open a URL in this tab.
+  reload(): Promise<void>; // Reload this tab.
+  screenshot(options: ScreenshotOptions): Promise<Uint8Array>; // Capture a screenshot of this tab.
+  title(): Promise<undefined | string>; // Get the current title for this tab.
+  url(): Promise<undefined | string>; // Get the current URL for this tab.
+}
+
+interface CUAAPI {
+  click(options: ClickOptions): Promise<void>; // Click at a coordinate in the current viewport.
+  double_click(options: DoubleClickOptions): Promise<void>; // Double click at a coordinate in the current viewport.
+  drag(options: DragOptions): Promise<void>; // Drag from a point to a point by the provided path.
+  keypress(options: KeypressOptions): Promise<void>; // Press control characters at the current focused element (focus it first via click/dblclick).
+  move(options: MoveOptions): Promise<void>; // Move the mouse to a point by the provided x and y coordinates.
+  scroll(options: ScrollOptions): Promise<void>; // Scroll by a delta from a specific viewport coordinate.
+  type(options: TypeOptions): Promise<void>; // Type text at the current focus.
+}
+
+interface DomCUAAPI {
+  click(options: DomClickOptions): Promise<void>; // Click a DOM node by its id from the visible DOM snapshot.
+  double_click(options: DomClickOptions): Promise<void>; // Double-click a DOM node by its id.
+  get_visible_dom(): Promise<unknown>; // Return a filtered DOM with node ids for interactable elements.
+  keypress(options: DomKeypressOptions): Promise<void>; // Press control characters at the currently focused element (focus it first via click/dblclick).
+  scroll(options: DomScrollOptions): Promise<void>; // Scroll either the page or a specific node (if node_id provided) by deltas.
+  type(options: DomTypeOptions): Promise<void>; // Type text into the currently focused element (focus via click first).
+}
+
+interface PlaywrightAPI {
+  domSnapshot(): Promise<string>; // Return a snapshot of the current DOM as a string, including expanded iframe body content when available.
+  evaluate<TResult, TArg>(pageFunction: PlaywrightEvaluateFunction<TArg, TResult>, arg?: TArg, options?: PlaywrightEvaluateOptions): Promise<TResult>; // Evaluate JavaScript in a read-only page scope.
+  expectNavigation<T>(action: () => Promise<T>, options: { timeoutMs?: number; url?: string; waitUntil?: LoadState }): Promise<T>; // Expect a navigation triggered by an action.
+  frameLocator(frameSelector: string): PlaywrightFrameLocator; // Create a frame-scoped locator builder.
+  getByLabel(text: TextMatcher, options: { exact?: boolean }): PlaywrightLocator; // Find elements by label text within the page.
+  getByPlaceholder(text: TextMatcher, options: { exact?: boolean }): PlaywrightLocator; // Find elements by placeholder text within the page.
+  getByRole(role: string, options: { exact?: boolean; name?: TextMatcher }): PlaywrightLocator; // Find elements by ARIA role within the page.
+  getByTestId(testId: string): PlaywrightLocator; // Find elements by test id within the page.
+  getByText(text: TextMatcher, options: { exact?: boolean }): PlaywrightLocator; // Find elements by text within the page.
+  locator(selector: string): PlaywrightLocator; // Create a locator scoped to this tab.
+  waitForEvent(event: "download", options?: WaitForEventOptions): Promise<PlaywrightDownload>; // Wait for the next event on the page.
+  waitForEvent(event: "filechooser", options?: WaitForEventOptions): Promise<PlaywrightFileChooser>;
+  waitForLoadState(options: PageWaitForLoadStateOptions): Promise<void>; // Wait for the page to reach a specific load state.
+  waitForTimeout(timeoutMs: number): Promise<void>; // Wait for a fixed duration.
+  waitForURL(url: string, options: PageWaitForURLOptions): Promise<void>; // Wait for the page URL to match the provided value.
+}
+
+interface PlaywrightFrameLocator {
+  frameLocator(frameSelector: string): PlaywrightFrameLocator; // Create a locator scoped to a nested frame.
+  getByLabel(text: TextMatcher, options: { exact?: boolean }): PlaywrightLocator; // Find elements by label within this frame.
+  getByPlaceholder(text: TextMatcher, options: { exact?: boolean }): PlaywrightLocator; // Find elements by placeholder within this frame.
+  getByRole(role: string, options: { exact?: boolean; name?: TextMatcher }): PlaywrightLocator; // Find elements by ARIA role within this frame.
+  getByTestId(testId: string): PlaywrightLocator; // Find elements by test id within this frame.
+  getByText(text: TextMatcher, options: { exact?: boolean }): PlaywrightLocator; // Find elements by text within this frame.
+  locator(selector: string): PlaywrightLocator; // Create a locator scoped to this frame.
+}
+
+interface PlaywrightLocator {
+  all(): Promise<Array<PlaywrightLocator>>; // Resolve to a list of locators for each matched element.
+  allTextContents(options: { timeoutMs?: number }): Promise<Array<string>>; // Return `textContent` for *all* elements matched by this locator.
+  and(locator: PlaywrightLocator): PlaywrightLocator; // Return a locator matching elements that satisfy both this locator and `locator`.
+  check(options: LocatorCheckOptions): Promise<void>; // Check a checkbox or switch-like control.
+  click(options: LocatorClickOptions): Promise<void>; // Click the element matched by this locator.
+  count(): Promise<number>; // Number of elements matching this locator.
+  dblclick(options: LocatorClickOptions): Promise<void>; // Double-click the element matched by this locator.
+  downloadMedia(options: LocatorDownloadMediaOptions): Promise<void>; // Trigger a download for the media or file link in the first matched element.
+  evaluate<TResult, TArg>(pageFunction: LocatorEvaluateFunction<TArg, TResult>, arg?: TArg, options?: PlaywrightEvaluateOptions): Promise<TResult>; // Evaluate JavaScript in a read-only scope; the locator must resolve unambiguously to one element.
+  evaluateAll<TResult, TArg>(pageFunction: LocatorEvaluateAllFunction<TArg, TResult>, arg?: TArg, options?: PlaywrightEvaluateOptions): Promise<TResult>; // Evaluate read-only JavaScript against all elements matched by this locator.
+  fill(value: string, options: { timeoutMs?: number }): Promise<void>; // Replace the element's value with the provided text.
+  filter(options: LocatorFilterOptions): PlaywrightLocator; // Narrow this locator by additional constraints.
+  first(): PlaywrightLocator; // Return a locator pointing at the first matched element.
+  getAttribute(name: string, options: { timeoutMs?: number }): Promise<null | string>; // Return an attribute value from the first matched element.
+  getByLabel(text: TextMatcher, options: { exact?: boolean }): PlaywrightLocator; // Find elements by label text, scoped to this locator.
+  getByPlaceholder(text: TextMatcher, options: { exact?: boolean }): PlaywrightLocator; // Find elements by placeholder text, scoped to this locator.
+  getByRole(role: string, options: { exact?: boolean; name?: TextMatcher }): PlaywrightLocator; // Find elements by ARIA role, scoped to this locator.
+  getByTestId(testId: string): PlaywrightLocator; // Find elements by test id, scoped to this locator.
+  getByText(text: TextMatcher, options: { exact?: boolean }): PlaywrightLocator; // Find elements by text content, scoped to this locator.
+  innerText(options: { timeoutMs?: number }): Promise<string>; // Return the rendered (visible) text of the first matched element.
+  isEnabled(): Promise<boolean>; // Whether the first matched element is currently enabled.
+  isVisible(): Promise<boolean>; // Whether the first matched element is currently visible.
+  last(): PlaywrightLocator; // Return a locator pointing at the last matched element.
+  locator(selector: string, options: LocatorLocatorOptions): PlaywrightLocator; // Create a descendant locator scoped to this locator.
+  nth(index: number): PlaywrightLocator; // Return a locator pointing at the Nth matched element.
+  or(locator: PlaywrightLocator): PlaywrightLocator; // Return a locator matching elements that satisfy either this locator or `locator`.
+  press(value: string, options: { timeoutMs?: number }): Promise<void>; // Press a keyboard key while this locator is focused.
+  selectOption(value: SelectOptionInput | Array<SelectOptionInput>, options: { timeoutMs?: number }): Promise<void>; // Select one or more options on a native `<select>` element.
+  setChecked(checked: boolean, options: LocatorCheckOptions): Promise<void>; // Set a checkbox or switch-like control to a checked/unchecked state.
+  textContent(options: { timeoutMs?: number }): Promise<null | string>; // Return the raw textContent of the first matched element (or null if missing).
+  type(value: string, options: { timeoutMs?: number }): Promise<void>; // Type text into the element without clearing existing content.
+  uncheck(options: LocatorCheckOptions): Promise<void>; // Uncheck a checkbox or switch-like control.
+  waitFor(options: LocatorWaitForOptions): Promise<void>; // Wait

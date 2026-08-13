@@ -1,0 +1,81 @@
+{
+  "hasOldTitle": true,
+  "hasStaleImage": true,
+  "scriptCount": 12,
+  "title": "Hotel Booking Engine: What It Is, How It Works & Benefits",
+  "types": [
+    {
+      "className": "yoast-schema-graph",
+      "headline": null,
+      "index": 0,
+      "type": "@graph Article|WebPage|ImageObject|BreadcrumbList|WebSite|Organization|Person"
+    },
+    {
+      "className": "",
+      "headline": null,
+      "index": 1,
+      "type": "Organization"
+    },
+    {
+      "className": "",
+      "headline": null,
+      "index": 2,
+      "type": "WebSite"
+    },
+    {
+      "className": "",
+      "headline": null,
+      "index": 3,
+      "type": "BreadcrumbList"
+    },
+    {
+      "className": "",
+      "headline": "What Is a Hotel Booking Engine and How Does It Work?",
+      "index": 4,
+      "type": "BlogPosting"
+    },
+    {
+      "className": "",
+      "headline": null,
+      "index": 5,
+      "type": "Person"
+    },
+    {
+      "className": "",
+      "headline": null,
+      "index": 6,
+      "type": "FAQPage"
+    },
+    {
+      "className": "",
+      "headline": "How Hotel Booking Engines Boost Your Business Today",
+      "index": 7,
+      "type": "Article"
+    },
+    {
+      "className": "",
+      "headline": null,
+      "index": 8,
+      "type": "DefinedTerm"
+    },
+    {
+      "className": "",
+      "headline": "How Hotel Booking Engines Boost Your Business Today",
+      "index": 9,
+      "type": "BlogPosting"
+    },
+    {
+      "className": "",
+      "headline": null,
+      "index": 10,
+      "type": "BreadcrumbList"
+    },
+    {
+      "className": "",
+      "headline": null,
+      "index": 11,
+      "type": "FAQPage"
+    }
+  ],
+  "url": "https://rategain.com/blog/hotel-booking-engine/?cachebust=1786615682407"
+}

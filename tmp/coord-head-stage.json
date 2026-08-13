@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "rect": {
+    "height": 8799.8388671875,
+    "innerHeight": 639,
+    "scrollY": 6000.00048828125,
+    "width": 877.77783203125,
+    "x": 194.69908142089844,
+    "y": 1770.94921875
+  },
+  "click": {
+    "x": 375,
+    "y": 549
+  },
+  "verify": {
+    "headLen": 10713,
+    "headStart": "<style>\n.custom-tabl",
+    "linkScript": false,
+    "old": true,
+    "preload": false,
+    "scripts": 10,
+    "scrollY": 6000.00048828125,
+    "staleImage": true
+  }
+}

@@ -202,14 +202,31 @@
     
         .check-hotal-aval-wrapper { background: linear-gradient(180deg, #fff8f3 0%, #fff 100%); }
         .process-block figure { width: 164px; height: 164px; margin: 0 auto 42px; }
-        .process-count { background: #B98230; min-width: 56px; min-height: 56px; align-items: center; justify-content: center; position: relative; margin-top: -52px; margin-bottom: 30px; }
+        .process-block figure img,
+        .why-us-section .quality-block .icon img {
+            filter: brightness(0) saturate(100%) invert(56%) sepia(34%) saturate(940%) hue-rotate(356deg) brightness(86%) contrast(87%);
+        }
+        .process-count {
+            background: #B98230;
+            width: 56px;
+            height: 56px;
+            min-width: 56px;
+            min-height: 56px;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-top: -48px;
+            margin-bottom: 30px;
+            padding: 0 !important;
+            line-height: 56px;
+        }
         .check-hotal-ava-widget { border: 1px solid #eadfcf; border-radius: 28px; overflow: hidden; box-shadow: 0 26px 70px rgba(72,45,37,.08); margin-top: 34px; }
         .check-hotal-ava-widget > .col-lg-6:first-child { border-right: 1px solid #eadfcf; }
         .check-hotal-ava-widget .widget, .check-hotal-ava-widget .form-widget { padding: 48px 58px; }
         .card-box { border: 1px solid #d8b16f; border-radius: 12px; padding: 20px; background: #fff; }
         .heading-highlight, .bg-primary-light { background: #B98230 !important; }
         .text-prime { color: #B98230 !important; }
-        .btn-primary, #pay-btn, #book-btn { background: #B98230 !important; border-color: #B98230 !important; color: #fff !important; }
+        .btn-primary, #submit-availability-btn, #book-btn { background: #B98230 !important; border-color: #B98230 !important; color: #fff !important; }
         .why-us-section.bg-primary { background-color: #3a2d25 !important; }
         .more_hotel .item { padding: 30px; }
         .check-hotal-aval-wrapper [data-aos],
@@ -2274,23 +2291,6 @@
 </a>
 </li>
                         </ul>
-                        
-<!--<div class="currency-switcher-wrap">-->
-<!--    <select id="currencySelect" class="currency-select-dropdown">-->
-<!--        -->
-<!--            <option value="INR"-->
-<!--                    data-symbol="₹"-->
-<!--                    data-rate="94.15">-->
-<!--                ₹ INR-->
-<!--            </option>-->
-<!--        -->
-<!---->
-<!--        -->
-<!---->
-<!--        -->
-<!--    </select>-->
-<!--</div>-->
-
 <div class="currency-switcher-wrap">
     <div class="currency-dropdown-trigger" id="currencyTrigger">
         <span class="currency-globe">
@@ -2321,43 +2321,7 @@
             </option>
             </select>
 </div>
-
-            <!--<div class="currency-switcher-wrap">-->
-            <!--    <div class="custom-dropdown" id="currencyDropdown">-->
-            <!--        <div class="dropdown-selected">-->
-            <!--            Select Currency <i class="fa-sharp-duotone fa-regular fa-angle-down"></i>-->
-            <!--        </div>-->
-            
-            <!--        <ul class="dropdown-options">-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="INR"-->
-            <!--                    data-symbol="₹"-->
-            <!--                    data-rate="94.15">-->
-                                
-            <!--                    ₹ INR-->
-            <!--                </li>-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="USD"-->
-            <!--                    data-symbol="$"-->
-            <!--                    data-rate="1">-->
-                                
-            <!--                    $ USD-->
-            <!--                </li>-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="AED"-->
-            <!--                    data-symbol="د.إ"-->
-            <!--                    data-rate="3.67">-->
-                                
-            <!--                    د.إ AED-->
-            <!--                </li>-->
-            <!--            -->
-            <!--        </ul>-->
-            <!--    </div>-->
-            <!--</div>-->
-            </div>
+</div>
                     </div>
                 </nav>
             </div>
@@ -2802,14 +2766,14 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                 
                                 <select id="plan-select" class="form-control form-select" style="display:none;">
                                     <option value="" data-hotels="0" data-amount="0">Select</option>
-                                                                        <option value="1" data-hotels="1" data-amount="199.00">
-                                        1 Hotel @ ₹ 199
+                                                                        <option value="1" data-hotels="1" data-amount="0">
+                                        1 Hotel
                                     </option>
-                                                                        <option value="2" data-hotels="3" data-amount="299.00">
-                                        3 Hotel @ ₹ 299
+                                                                        <option value="2" data-hotels="3" data-amount="0">
+                                        3 Hotels
                                     </option>
-                                                                        <option value="3" data-hotels="5" data-amount="399.00">
-                                        5 Hotel @ ₹ 399
+                                                                        <option value="3" data-hotels="5" data-amount="0">
+                                        5 Hotels
                                     </option>
                                                                     </select>
                                 <img src="/user/assets/images/hotel.png" alt="" style="z-index:1;">
@@ -2825,13 +2789,10 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                         </div>
                     </div>
                     <div class="gst-box mt-3" id="price-summary-box" data-aos="fade-up">
-                        <div class="gst-row base-row"><span>Base Amount</span><span><span class="currency-symbol">₹</span> <span id="display-base">0</span></span></div>
-<div class="gst-row"><span>CGST (9%)</span><span><span class="currency-symbol">₹</span> <span id="display-cgst">0</span></span></div>
-<div class="gst-row"><span>SGST (9%)</span><span><span class="currency-symbol">₹</span> <span id="display-sgst">0</span></span></div>
-<div class="gst-row grand-row"><span>Total Payable (incl. 18% GST)</span><span><span class="currency-symbol">₹</span> <span id="display-total">0</span></span></div>
+                        <p class="font-family03 fs-14 text-maroon-900 mb-0">Choose the number of hotels you want our team to check, then submit your details for email follow-up.</p>
                     </div>
                     <button type="button" data-aos="fade-up" id="book-btn" class="w-100 btn lg-btn text-uppercase fs-13 fw-600 py-4 h-auto mt-3">
-                        PROCEED TO BOOK
+                        CONTINUE TO REQUEST
                     </button>
                 </div>
 
@@ -2839,7 +2800,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 <div id="booking-form-section" style="display:none;">
                     <div class="text-center mt-4" data-aos="fade-up">
                         <h4 class="all-heading font-family01 fs-30 fw-100 text-maroon-900 mb-3">
-                            Complete <span class="fw-600 text-primary">Booking</span>
+                            Submit <span class="fw-600 text-primary">Availability Request</span>
                         </h4>
                     </div>
                     <div class="card-box MuiInputLabel-shrink" data-aos="fade-up">
@@ -2907,14 +2868,13 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                           </div>
                         </div>
                         <div class="gst-box mt-3" data-aos="fade-up">
-                            <div class="gst-row base-row"><span>Base Amount</span><span><span class="currency-symbol">₹</span> <span id="s2-base">0</span></span></div>
-<div class="gst-row"><span>CGST (9%)</span><span><span class="currency-symbol">₹</span> <span id="s2-cgst">0</span></span></div>
-<div class="gst-row"><span>SGST (9%)</span><span><span class="currency-symbol">₹</span> <span id="s2-sgst">0</span></span></div>
-<div class="gst-row grand-row"><span>Total Payable (incl. 18% GST)</span><span><span class="currency-symbol">₹</span> <span id="s2-total">0</span></span></div>
+                            <p class="font-family03 fs-14 text-maroon-900 mb-0">
+                                Submit this request and our team will email you after checking availability with the selected hotel teams.
+                            </p>
                         </div>
                         <div class="d-flex gap-2 mt-3" data-aos="fade-up">
                             <button type="button" id="back-btn" class="btn btn-secondary w-50">BACK</button>
-                            <button type="button" id="pay-btn" class="btn btn-primary w-50">MAKE PAYMENT</button>
+                            <button type="button" id="submit-availability-btn" class="btn btn-primary w-50">SUBMIT REQUEST</button>
                         </div>
                     </div>
                 </div>
@@ -2958,7 +2918,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 </div>
                                     </div>
         <div class="text-center" data-aos="fade-up">
-            <a href="/hotel-listing" class="btn lg-btn text-uppercase fs-12 fw-600 py-3 h-auto mt-3">Browse Our 500+ Venues</a>
+            <a href="/hotel-listing" class="btn lg-btn text-uppercase fs-12 fw-600 py-3 h-auto mt-3">Browse Our Indian Venues</a>
         </div>
     </div>
 </section>
@@ -3018,9 +2978,9 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     <div class="container">
         <div class="text-center" data-aos="fade-up">
                                             <h4 class="all-heading font-family01 fs-37 fw-100 text-maroon-900">
-                    Choose 500+ <span class="fw-600 text-primary">Hotels</span>
+                    Choose 250+ <span class="fw-600 text-primary">Indian Hotels</span>
                 </h4>
-                                        <div>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</div>
+                                        <div>Explore a curated portfolio of premium Indian wedding venues across palace hotels, resorts, and luxury city properties.</div>
                     </div>
         <div class="row mt-md-5 mt-2" data-aos="fade-up">
             <div class="check-hotal-aval-slider aos-init aos-animate" data-aos="fade-right">
@@ -3074,7 +3034,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                     <div id="faqItem2"
                          class="accordion-collapse collapse show"
                          data-bs-parent="#weddingFAQ">
-                        <div class="accordion-body"><p>We don’t rely on public contact details. Our team works through direct relationships with hospitality partners, which means you’re not being passed around between departments. You get access to the right information from the right people.</p></div>
+                        <div class="accordion-body"><p>We don’t rely on public contact details. Our team works through direct relationships with hospitality partners, which means you&rsquo;re not being passed around between departments. You get access to the right information from the right people.</p></div>
                     </div>
                 </div>
                                 <div class="accordion-item " data-aos="fade-up">
@@ -3119,10 +3079,10 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             </div>
                         <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
                 <div class="widget d-flex gap-3">
-                    <div class="icon"><img src="/user/assets/images/f-icon03.svg" alt="30+ Global Destinations"></div>
+                    <div class="icon"><img src="/user/assets/images/f-icon03.svg" alt="30+ Indian Destinations"></div>
                     <div class="content">
-                        <h5 class="font-family01 fs-16 text-maroon-900 fw-400">30+ Global Destinations</h5>
-                        <p>India and international luxury wedding locations</p>
+                        <h5 class="font-family01 fs-16 text-maroon-900 fw-400">30+ Indian Destinations</h5>
+                        <p>Curated luxury wedding locations across India</p>
                     </div>
                 </div>
             </div>
@@ -3155,13 +3115,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     var $ = window.jQuery;
     var cities = [];
     var hotelsByCity = {};
-    var currencies = [
-      { code: 'INR', symbol: '\u20b9', rate_to_usd: 94.15 },
-      { code: 'USD', symbol: '$', rate_to_usd: 1 },
-      { code: 'AED', symbol: '\u062f.\u0625', rate_to_usd: 3.67 }
-    ];
     var maxHotels = 0;
-    var baseAmount = 0;
     var selectedPlanLabel = '';
     var preferredNights = 0;
 
@@ -3182,26 +3136,6 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     function addDays(date, days) { var copy = new Date(date); copy.setDate(copy.getDate() + days); return copy; }
     function calcNightsBetween(start, end) { return Math.round((end - start) / 86400000); }
     function toYMD(date) { if (!date) return ''; return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0'); }
-    function calcGST(base) { var cgst = Math.round(base * 0.09 * 100) / 100; var sgst = Math.round(base * 0.09 * 100) / 100; return { base: base, cgst: cgst, sgst: sgst, total: Math.round((base + cgst + sgst) * 100) / 100 }; }
-
-    function renderGST(base, prefix) {
-      var gst = calcGST(base);
-      var selectedCode = localStorage.getItem('selected_currency') || 'INR';
-      var inrRate = (currencies.find(function (currency) { return currency.code === 'INR'; }) || {}).rate_to_usd || 94.15;
-      var selected = currencies.find(function (currency) { return currency.code === selectedCode; }) || currencies[0];
-      function convertAndFormat(amount) {
-        var converted = (amount / inrRate) * (selected.rate_to_usd || inrRate);
-        if (selected.code === 'INR') return Math.round(converted).toLocaleString('en-IN');
-        return new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(converted);
-      }
-      $('.currency-symbol').text(selected.symbol || '\u20b9');
-      $('#' + prefix + '-base').text(convertAndFormat(gst.base));
-      $('#' + prefix + '-cgst').text(convertAndFormat(gst.cgst));
-      $('#' + prefix + '-sgst').text(convertAndFormat(gst.sgst));
-      $('#' + prefix + '-total').text(convertAndFormat(gst.total));
-      return gst;
-    }
-
     var today = new Date(); today.setHours(0, 0, 0, 0);
     var fpPrefCI = flatpickr('#pref_checkin', { dateFormat: 'd/m/Y', minDate: today, disableMobile: true, onChange: function (selectedDates) { var ci = selectedDates[0]; fpPrefCO.clear(); preferredNights = 0; updateRoomsPaxRows(0); $('#nights-badge').hide(); if (!ci) return; fpPrefCO.set('minDate', addDays(ci, 1)); fpPrefCO.set('maxDate', addDays(ci, 3)); } });
     var fpPrefCO = flatpickr('#pref_checkout', { dateFormat: 'd/m/Y', minDate: addDays(today, 1), disableMobile: true, onChange: function (selectedDates) { var co = selectedDates[0]; preferredNights = 0; updateRoomsPaxRows(0); $('#nights-badge').hide(); if (!co) return; var ci = fpPrefCI.selectedDates[0]; if (!ci) return; var nights = calcNightsBetween(ci, co); if (nights < 1 || nights > 3) { showAlert('Preferred Check-Out must be 1 to 3 nights after Check-In.'); fpPrefCO.clear(); return; } preferredNights = nights; $('#nights-badge').text(nights + ' Night' + (nights > 1 ? 's' : '')).show(); updateRoomsPaxRows(nights); } });
@@ -3234,7 +3168,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     }
 
     $(document).on('change', '.city-select', function () { var cityId = $(this).val(); var index = $(this).data('index'); var hotelSelect = $('.hotel-select[data-index="' + index + '"]'); if (hotelSelect.hasClass('select2-hidden-accessible')) hotelSelect.select2('destroy'); if (cityId) hotelSelect.prop('disabled', false).html(buildHotelOptions(cityId)); else hotelSelect.prop('disabled', true).html('<option value="">Select Hotel</option>'); initSelect(hotelSelect, 'Select Hotel'); });
-    $('#plan-select').on('change', function () { var opt = $(this).find('option:selected'); maxHotels = parseInt(opt.data('hotels'), 10) || 0; baseAmount = parseFloat(opt.data('amount')) || 0; selectedPlanLabel = opt.text(); renderGST(baseAmount, 'display'); renderHotelRows(); });
+    $('#plan-select').on('change', function () { var opt = $(this).find('option:selected'); maxHotels = parseInt(opt.data('hotels'), 10) || 0; selectedPlanLabel = opt.text(); renderHotelRows(); });
 
     $('#book-btn').on('click', function () {
       if (maxHotels === 0) { showAlert('Please select a plan first.'); return; }
@@ -3253,11 +3187,11 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
       $('#summary-hotels').html(hotelNames.map(function (hotel) { return '<li>' + escapeHtml(hotel) + '</li>'; }).join(''));
       $('#summary-pref-ci').text(toYMD(prefCI)); $('#summary-pref-co').text(toYMD(prefCO)); $('#summary-alt1-ci').text(toYMD(alt1CI)); $('#summary-alt1-co').text(toYMD(alt1CO)); $('#summary-alt2-ci').text(toYMD(alt2CI)); $('#summary-alt2-co').text(toYMD(alt2CO));
       $('#summary-rooms-pax').html(roomsPax.map(function (row, index) { return '<li>Night ' + (index + 1) + ': ' + row.rooms + ' Rooms, ' + row.pax + ' Pax</li>'; }).join(''));
-      renderGST(baseAmount, 's2'); $('.form-widget').hide(); $('#booking-form-section').fadeIn();
+      $('.form-widget').hide(); $('#booking-form-section').fadeIn();
     });
 
     $('#back-btn').on('click', function () { $('#booking-form-section').hide(); $('.form-widget').show(); });
-    $('#pay-btn').on('click', function () {
+    $('#submit-availability-btn').on('click', function () {
       $('.text-danger').text('');
       var name = $('#name').val().trim(), email = $('#email').val().trim(), phone = $('#phone').val().trim(), city = $('#user-city').val().trim();
       var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -3270,13 +3204,12 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
       if (!valid) return;
       var roomsPax = []; $('.rooms-input').each(function (i) { roomsPax.push({ rooms: parseInt($(this).val(), 10), pax: parseInt($('.pax-input').eq(i).val(), 10) }); });
       var hotels = []; $('.hotel-select').each(function () { hotels.push($(this).find('option:selected').text()); });
-      var gst = calcGST(baseAmount);
-      var message = ['Plan: ' + selectedPlanLabel.trim(), 'Hotels: ' + hotels.join('; '), 'Preferred: ' + toYMD(fpPrefCI.selectedDates[0]) + ' to ' + toYMD(fpPrefCO.selectedDates[0]), 'Alternate 1: ' + toYMD(fpAlt1CI.selectedDates[0]) + ' to ' + toYMD(fpAlt1CO.selectedDates[0]), 'Alternate 2: ' + toYMD(fpAlt2CI.selectedDates[0]) + ' to ' + toYMD(fpAlt2CO.selectedDates[0]), 'Rooms/Pax: ' + roomsPax.map(function (row, index) { return 'Night ' + (index + 1) + ': ' + row.rooms + ' Rooms, ' + row.pax + ' Pax'; }).join('; '), 'Total: INR ' + gst.total].join('\n');
-      $('#pay-btn').prop('disabled', true).text('Submitting...');
-      $.ajax({ url: '/get_in_touch/store', type: 'POST', data: { name: name, email: email, number: phone, city: city, subject: 'Hotel Availability Check', source_page: '/check-hotel-availability', message: message }, success: function () { showAlert('Your availability request has been submitted.', 'success'); $('#pay-btn').prop('disabled', false).text('MAKE PAYMENT'); }, error: function () { showAlert('Could not submit the request. Please try again.'); $('#pay-btn').prop('disabled', false).text('MAKE PAYMENT'); } });
+      var message = ['Plan: ' + selectedPlanLabel.trim(), 'Hotels: ' + hotels.join('; '), 'Preferred: ' + toYMD(fpPrefCI.selectedDates[0]) + ' to ' + toYMD(fpPrefCO.selectedDates[0]), 'Alternate 1: ' + toYMD(fpAlt1CI.selectedDates[0]) + ' to ' + toYMD(fpAlt1CO.selectedDates[0]), 'Alternate 2: ' + toYMD(fpAlt2CI.selectedDates[0]) + ' to ' + toYMD(fpAlt2CO.selectedDates[0]), 'Rooms/Pax: ' + roomsPax.map(function (row, index) { return 'Night ' + (index + 1) + ': ' + row.rooms + ' Rooms, ' + row.pax + ' Pax'; }).join('; ')].join('\n');
+      $('#submit-availability-btn').prop('disabled', true).text('Submitting...');
+      $.ajax({ url: '/api/lead', type: 'POST', data: { name: name, email: email, number: phone, city: city, subject: 'Hotel Availability Check', source_page: '/check-hotel-availability', message: message }, success: function () { showAlert('Your availability request has been submitted.', 'success'); $('#submit-availability-btn').prop('disabled', false).text('SUBMIT REQUEST'); }, error: function () { showAlert('Could not submit the request. Please try again.'); $('#submit-availability-btn').prop('disabled', false).text('SUBMIT REQUEST'); } });
     });
 
-    fetch('/data/calculator/availability-data.json').then(function (response) { return response.json(); }).then(function (data) { cities = data.cities || []; hotelsByCity = data.hotelsByCity || {}; renderHotelRows(); updateRoomsPaxRows(0); renderGST(0, 'display'); $('#plan-select').select2({ placeholder: 'Select', allowClear: false, width: '100%' }); }).catch(function () { renderHotelRows(); updateRoomsPaxRows(0); renderGST(0, 'display'); $('#plan-select').select2({ placeholder: 'Select', allowClear: false, width: '100%' }); });
+    fetch('/api/calculator/availability-data').then(function (response) { return response.json(); }).then(function (data) { cities = data.cities || []; hotelsByCity = data.hotelsByCity || {}; renderHotelRows(); updateRoomsPaxRows(0);  $('#plan-select').select2({ placeholder: 'Select', allowClear: false, width: '100%' }); }).catch(function () { renderHotelRows(); updateRoomsPaxRows(0);  $('#plan-select').select2({ placeholder: 'Select', allowClear: false, width: '100%' }); });
     var slider = $('.check-hotal-aval-slider'); if (slider.length && typeof $.fn.owlCarousel === 'function') slider.owlCarousel({ items: 6, margin: 10, loop: true, nav: true });
   });
 })();
@@ -3334,7 +3267,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                       <a href="/real-weddings">Real Weddings</a>
                     </li>
                     <li>
-                      <a href="/wedding-packages">Wedding Packages</a>
+                      <a href="/package">Wedding Packages</a>
                     </li>
                     <li>
                       <a href="/blogs">Blogs</a>
@@ -3358,16 +3291,11 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                       <a href="/hotel-cost-calculator">Hotel Cost Calculator</a>
                     </li>
                     <li>
-                      <a href="/hotel-listing">Indian Venues</a>
+                      <a href="/hotel-listing?country=india">Indian Venues</a>
                     </li>
                     <li>
                       <a href="/faqs">Faq's</a>
                     </li>
-                    <li>
-                    <!--  <li>-->
-                    <a href="/check-hotel-availability">Venue Availability</a>
-                    <!--  </li>-->
-                    <!--</li>-->
                   </ul>
                 </div>
               </div>
@@ -3375,7 +3303,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 <div class="widget d-flex flex-column justify-content-between h-100">
                   <div>
                     <h4 class="font-family01 text-white fs-26 mb-4">A Thoughtful Conversation Awaits</h4>
-                    <p class="font-family01">Whether you have a question or a specific request, we’re glad to hear from you.</p>
+                    <p class="font-family01">Whether you have a question or a specific request, we&rsquo;re glad to hear from you.</p>
                   </div>
                   <a href="/contact" class="btn">CONTACT US NOW</a>
                 </div>
@@ -3397,13 +3325,13 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
           </ul>
         </div>
         <div class="footer-content">
-            <p>Wedding planning involves countless details and considerations. With over 10 years of experience, we understand these expectations intimately and welcome the opportunity to connect with you at any stage of your journey. Whether you’re just browsing options, evaluating a specific venue or keen to make a decision, our team is here to offer reassurance. We handle every inquiry with care and discretion. </p>
+            <p>Wedding planning involves countless details and considerations. With over 10 years of experience, we understand these expectations intimately and welcome the opportunity to connect with you at any stage of your journey. Whether you&rsquo;re just browsing options, evaluating a specific venue or keen to make a decision, our team is here to offer reassurance. We handle every inquiry with care and discretion. </p>
             <p>As a smart destination wedding planner, our role is to simplify the process, provide expert insights and ensure you feel confident and supported from the very first interaction.</p>
             <p>When you reach out, your message is reviewed by experienced professionals who understand luxury hospitality, family expectations and the importance of every minute detail.</p>
         </div>
         <div class="row pb-4">
           <div class="col-lg-6 d-flex align-items-center">
-            <p class="copyright-text m-0 font-family03 fs-13 fw-300">Copyrights © 2026, viraayaweddings.com, All Rights Reserved</p>
+            <p class="copyright-text m-0 font-family03 fs-13 fw-300">Copyrights &copy; 2026, viraayaweddings.com, All Rights Reserved</p>
           </div>
           <div class="col-lg-6 d-flex justify-content-end align-items-end">
             <button id="goTop" class="btn go-to-top d-flex gap-2 align-items-center ">Go to Top 
@@ -3445,6 +3373,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
 <script src="/vendor/select2/select2.min.js"></script>
 <script src="/js/currency-switcher.js" defer></script>
+  <script src="/js/site-search.js" defer></script>
 </body>
 
 </html>

@@ -1,0 +1,1958 @@
+{
+  "summary": {
+    "footerLinks": {
+      "live": [
+        {
+          "text": "",
+          "href": "https://www.facebook.com/vivahnam/",
+          "normalized": "https://www.facebook.com/vivahnam/"
+        },
+        {
+          "text": "",
+          "href": "https://www.instagram.com/vivahnam/",
+          "normalized": "https://www.instagram.com/vivahnam/"
+        },
+        {
+          "text": "",
+          "href": "https://www.threads.com/@vivahnam",
+          "normalized": "https://www.threads.com/@vivahnam"
+        },
+        {
+          "text": "",
+          "href": "https://www.linkedin.com/company/vivahnam/",
+          "normalized": "https://www.linkedin.com/company/vivahnam/"
+        },
+        {
+          "text": "",
+          "href": "https://in.pinterest.com/vivahnam/",
+          "normalized": "https://in.pinterest.com/vivahnam/"
+        },
+        {
+          "text": "",
+          "href": "https://youtube.com/@vivahnam?si=ALnixvtzyKjblMLT",
+          "normalized": "https://youtube.com/@vivahnam?si=ALnixvtzyKjblMLT"
+        },
+        {
+          "text": "Home",
+          "href": "https://www.vivahnam.com",
+          "normalized": "/"
+        },
+        {
+          "text": "About Us",
+          "href": "/about-us",
+          "normalized": "/about-us"
+        },
+        {
+          "text": "Real Weddings",
+          "href": "https://www.vivahnam.com/real-weddings",
+          "normalized": "/real-weddings"
+        },
+        {
+          "text": "Wedding Packages",
+          "href": "/package",
+          "normalized": "/package"
+        },
+        {
+          "text": "Blogs",
+          "href": "https://www.vivahnam.com/blogs",
+          "normalized": "/blogs"
+        },
+        {
+          "text": "Contact us",
+          "href": "https://www.vivahnam.com/contact",
+          "normalized": "/contact"
+        },
+        {
+          "text": "Book Consultation",
+          "href": "https://www.vivahnam.com/wedding-consultation",
+          "normalized": "/wedding-consultation"
+        },
+        {
+          "text": "Hotel Availability Check",
+          "href": "https://www.vivahnam.com/check-hotel-availability",
+          "normalized": "/check-hotel-availability"
+        },
+        {
+          "text": "Hotel Cost Calculator",
+          "href": "https://www.vivahnam.com/hotel-cost-calculator",
+          "normalized": "/hotel-cost-calculator"
+        },
+        {
+          "text": "Indian Venues",
+          "href": "https://www.vivahnam.com/hotel-listing?country=india",
+          "normalized": "/hotel-listing?country=india"
+        },
+        {
+          "text": "Abroad Venues",
+          "href": "https://www.vivahnam.com/hotel-listing?country=abroad",
+          "normalized": "/hotel-listing?country=abroad"
+        },
+        {
+          "text": "Faq's",
+          "href": "/faqs",
+          "normalized": "/faqs"
+        },
+        {
+          "text": "Venue Availability",
+          "href": "https://www.vivahnam.com/check-hotel-availability",
+          "normalized": "/check-hotel-availability"
+        },
+        {
+          "text": "CONTACT US NOW",
+          "href": "https://www.vivahnam.com/contact",
+          "normalized": "/contact"
+        },
+        {
+          "text": "Privacy Policy",
+          "href": "https://www.vivahnam.com/privacy-policy",
+          "normalized": "/privacy-policy"
+        },
+        {
+          "text": "Terms Of Use",
+          "href": "https://www.vivahnam.com/terms-of-use",
+          "normalized": "/terms-of-use"
+        },
+        {
+          "text": "Cookie Preferences",
+          "href": "https://www.vivahnam.com/cookie-preference-policy",
+          "normalized": "/cookie-preference-policy"
+        }
+      ],
+      "local": [
+        {
+          "text": "",
+          "href": "https://www.instagram.com/viraayaweddings/",
+          "normalized": "https://www.instagram.com/viraayaweddings/"
+        },
+        {
+          "text": "",
+          "href": "https://www.linkedin.com/company/viraaya-weddings/",
+          "normalized": "https://www.linkedin.com/company/viraaya-weddings/"
+        },
+        {
+          "text": "Home",
+          "href": "/",
+          "normalized": "/"
+        },
+        {
+          "text": "About Us",
+          "href": "/about-us",
+          "normalized": "/about-us"
+        },
+        {
+          "text": "Real Weddings",
+          "href": "/real-weddings",
+          "normalized": "/real-weddings"
+        },
+        {
+          "text": "Wedding Packages",
+          "href": "/package",
+          "normalized": "/package"
+        },
+        {
+          "text": "Blogs",
+          "href": "/blogs",
+          "normalized": "/blogs"
+        },
+        {
+          "text": "Contact us",
+          "href": "/contact",
+          "normalized": "/contact"
+        },
+        {
+          "text": "Book Consultation",
+          "href": "/wedding-consultation",
+          "normalized": "/wedding-consultation"
+        },
+        {
+          "text": "Hotel Availability Check",
+          "href": "/check-hotel-availability",
+          "normalized": "/check-hotel-availability"
+        },
+        {
+          "text": "Hotel Cost Calculator",
+          "href": "/hotel-cost-calculator",
+          "normalized": "/hotel-cost-calculator"
+        },
+        {
+          "text": "Indian Venues",
+          "href": "/hotel-listing?country=india",
+          "normalized": "/hotel-listing?country=india"
+        },
+        {
+          "text": "Faq's",
+          "href": "/faqs",
+          "normalized": "/faqs"
+        },
+        {
+          "text": "CONTACT US NOW",
+          "href": "/contact",
+          "normalized": "/contact"
+        },
+        {
+          "text": "Privacy Policy",
+          "href": "/privacy-policy",
+          "normalized": "/privacy-policy"
+        },
+        {
+          "text": "Terms Of Use",
+          "href": "/terms-of-use",
+          "normalized": "/terms-of-use"
+        },
+        {
+          "text": "Cookie Preferences",
+          "href": "/cookie-preference-policy",
+          "normalized": "/cookie-preference-policy"
+        }
+      ]
+    },
+    "scope": [
+      "/",
+      "/about-us",
+      "/real-weddings",
+      "/package",
+      "/blogs",
+      "/contact",
+      "/wedding-consultation",
+      "/check-hotel-availability",
+      "/hotel-cost-calculator",
+      "/hotel-listing?country=india",
+      "/faqs",
+      "/privacy-policy",
+      "/terms-of-use",
+      "/cookie-preference-policy"
+    ],
+    "totalPages": 14,
+    "missingLocal": [],
+    "liveFailures": [],
+    "pagesWithBrokenInternalLinks": [],
+    "pagesWithBrokenImages": [],
+    "pagesWithOldFormActions": [],
+    "pagesWithNonResendPostActions": [],
+    "pagesWithOldAjaxOrAbroad": [],
+    "formPages": [
+      {
+        "route": "/",
+        "forms": [
+          {
+            "action": "/api/lead",
+            "method": "POST",
+            "id": "consultationForm",
+            "inputs": [
+              "name",
+              "email",
+              "source_page",
+              "number",
+              "subject"
+            ]
+          }
+        ]
+      },
+      {
+        "route": "/contact",
+        "forms": [
+          {
+            "action": "/contact/save",
+            "method": "POST",
+            "id": "contactForm",
+            "inputs": [
+              "name",
+              "email",
+              "source_page",
+              "number",
+              "subject",
+              "message"
+            ]
+          }
+        ]
+      },
+      {
+        "route": "/wedding-consultation",
+        "forms": [
+          {
+            "action": "/contact/save",
+            "method": "POST",
+            "id": "consultationForm",
+            "inputs": [
+              "enquiry_type",
+              "name",
+              "email",
+              "number",
+              "city"
+            ]
+          }
+        ]
+      },
+      {
+        "route": "/hotel-listing?country=india",
+        "forms": [
+          {
+            "action": "/hotel-listing",
+            "method": "GET",
+            "id": "filterForm",
+            "inputs": [
+              "room_ranges[]",
+              "room_ranges[]",
+              "room_ranges[]",
+              "room_ranges[]",
+              "room_ranges[]",
+              "guest_capacities[]",
+              "guest_capacities[]",
+              "guest_capacities[]",
+              "guest_capacities[]",
+              "guest_capacities[]",
+              "guest_capacities[]",
+              "guest_capacities[]",
+              "input",
+              "input",
+              "input",
+              "input",
+              "input",
+              "wedding_types[]",
+              "wedding_types[]",
+              "wedding_types[]",
+              "wedding_types[]",
+              "wedding_types[]",
+              "wedding_types[]"
+            ]
+          },
+          {
+            "action": "/api/lead",
+            "method": "POST",
+            "id": "",
+            "inputs": [
+              "name",
+              "email",
+              "number",
+              "message",
+              "subject"
+            ]
+          }
+        ]
+      }
+    ],
+    "countDiffs": [
+      {
+        "route": "/",
+        "counts": {
+          "original": {
+            "headings": 62,
+            "ctas": 84,
+            "images": 142,
+            "forms": 1
+          },
+          "local": {
+            "headings": 56,
+            "ctas": 49,
+            "images": 119,
+            "forms": 1
+          }
+        },
+        "samples": {
+          "originalHeadings": [
+            "h2:Check Availability for Your Dream Wedding Venue",
+            "h5:Reliable Venue Availability Checks",
+            "h2:Estimate Your Destination Wedding Cost",
+            "h5:Smart Venue Cost Insights",
+            "h2:Get Direction on Wedding Planning",
+            "h5:Senior-Level Wedding Expertise",
+            "h2:Take Your Vows at a Venue as Extraordinary as You",
+            "h5:500+ Verified Luxury Wedding Venues",
+            "h2:Find Your Perfect Destination Wedding Venue",
+            "h5:Alila Fort Bishangarh Jaipur",
+            "h5:Fairmont Udaipur Palace",
+            "h5:Suryagarh Palace jaisalmer"
+          ],
+          "localHeadings": [
+            "h2:Check Availability for Your Dream Wedding Venue",
+            "h5:Reliable Venue Availability Checks",
+            "h2:Estimate Your Destination Wedding Cost",
+            "h5:Smart Venue Cost Insights",
+            "h2:Get Direction on Wedding Planning",
+            "h5:Senior-Level Wedding Expertise",
+            "h2:Take Your Vows at a Venue as Extraordinary as You",
+            "h5:250+ Verified Luxury Wedding Venues",
+            "h2:Find Your Perfect Destination Wedding Venue",
+            "h5:Alila Fort Bishangarh Jaipur",
+            "h5:Fairmont Udaipur Palace",
+            "h5:Suryagarh Palace jaisalmer"
+          ]
+        },
+        "controls": {
+          "hasSearch": true,
+          "hasDropdown": true,
+          "hasTabs": true,
+          "hasCarousel": true,
+          "hasCalculator": true,
+          "hasModal": true,
+          "hasAccordion": false
+        }
+      },
+      {
+        "route": "/about-us",
+        "counts": {
+          "original": {
+            "headings": 10,
+            "ctas": 3,
+            "images": 14,
+            "forms": 0
+          },
+          "local": {
+            "headings": 10,
+            "ctas": 3,
+            "images": 12,
+            "forms": 0
+          }
+        },
+        "samples": {
+          "originalHeadings": [
+            "h1:About Us",
+            "h4:Why We Started Vivahnam",
+            "h2:Our Mission &amp; Vision",
+            "h3:Our Our Mission",
+            "h3:Our Our Vision",
+            "h3:Why Choose Why Choose Vivahnam",
+            "h2:What Makes Us Different",
+            "h5:Venue Matchmaking",
+            "h5:Cost Calculator",
+            "h5:Live Venue Availability Check Service"
+          ],
+          "localHeadings": [
+            "h1:About Us",
+            "h4:Why We Started Viraaya Weddings",
+            "h2:Our Mission &amp; Vision",
+            "h3:Our Our Mission",
+            "h3:Our Our Vision",
+            "h3:Why Choose Viraaya Weddings",
+            "h2:What Makes Us Different",
+            "h5:Venue Matchmaking",
+            "h5:Cost Calculator",
+            "h5:Live Venue Availability Check Service"
+          ]
+        },
+        "controls": {
+          "hasSearch": true,
+          "hasDropdown": true,
+          "hasTabs": false,
+          "hasCarousel": true,
+          "hasCalculator": true,
+          "hasModal": false,
+          "hasAccordion": false
+        }
+      },
+      {
+        "route": "/real-weddings",
+        "counts": {
+          "original": {
+            "headings": 1,
+            "ctas": 6,
+            "images": 15,
+            "forms": 0
+          },
+          "local": {
+            "headings": 1,
+            "ctas": 6,
+            "images": 13,
+            "forms": 0
+          }
+        },
+        "samples": {
+          "originalHeadings": [
+            "h1:Real Weddings"
+          ],
+          "localHeadings": [
+            "h1:Real Weddings"
+          ]
+        },
+        "controls": {
+          "hasSearch": true,
+          "hasDropdown": true,
+          "hasTabs": false,
+          "hasCarousel": true,
+          "hasCalculator": false,
+          "hasModal": false,
+          "hasAccordion": false
+        }
+      },
+      {
+        "route": "/package",
+        "counts": {
+          "original": {
+            "headings": 8,
+            "ctas": 5,
+            "images": 24,
+            "forms": 0
+          },
+          "local": {
+            "headings": 8,
+            "ctas": 5,
+            "images": 22,
+            "forms": 0
+          }
+        },
+        "samples": {
+          "originalHeadings": [
+            "h1:Wedding Packages",
+            "h4:Wedding Packages",
+            "h2:Shresht",
+            "h5:Top Hotels Includes",
+            "h2:Siddhi {Most Popular!}",
+            "h5:Top Hotels Includes",
+            "h2:Shobhana",
+            "h5:Top Hotels Includes"
+          ],
+          "localHeadings": [
+            "h1:Wedding Packages",
+            "h4:Wedding Packages",
+            "h2:Shresht",
+            "h5:Top Hotels Includes",
+            "h2:Siddhi {Most Popular!}",
+            "h5:Top Hotels Includes",
+            "h2:Shobhana",
+            "h5:Top Hotels Includes"
+          ]
+        },
+        "controls": {
+          "hasSearch": true,
+          "hasDropdown": true,
+          "hasTabs": false,
+          "hasCarousel": true,
+          "hasCalculator": false,
+          "hasModal": false,
+          "hasAccordion": false
+        }
+      },
+      {
+        "route": "/blogs",
+        "counts": {
+          "original": {
+            "headings": 13,
+            "ctas": 14,
+            "images": 15,
+            "forms": 0
+          },
+          "local": {
+            "headings": 12,
+            "ctas": 13,
+            "images": 12,
+            "forms": 0
+          }
+        },
+        "samples": {
+          "originalHeadings": [
+            "h1:Blogs",
+            "h5:Top Beachside Wedding Venues in Goa: Costs, Capacity &amp; Locations",
+            "h5:Top 10 Destination Wedding Places in Rajasthan for Luxury Celebrations",
+            "h5:Why Is ITC Ratnadipa a Top Choice for a Destination Wedding in Sri Lanka?",
+            "h5:15 Questions to Ask a Destination Wedding Planner Before Hiring",
+            "h5:India’s Newest Luxury Wedding Hotels: A First Look at Leela Jaisalmer, Fairmont Agra &amp; More",
+            "h5:Why Couples Regret Not Booking Their Venue 12 Months Early",
+            "h5:A Simple Checklist Before Booking a Destination Wedding Venue",
+            "h5:Traditional Vs Destination Wedding - What’s Best For You?",
+            "h5:Anshula Kapoor’s Mumbai Wedding: What a One-Venue Celebration Actually Costs",
+            "h5:Nupur Sanon &amp; Stebin Ben: Plan a Luxury Destination Wedding Like Them",
+            "h5:Vijay &amp; Rashmika Udaipur Wedding Cost &amp; Venue Guide"
+          ],
+          "localHeadings": [
+            "h1:Blogs",
+            "h5:Top Beachside Wedding Venues in Goa: Costs, Capacity &amp; Locations",
+            "h5:Top 10 Destination Wedding Places in Rajasthan for Luxury Celebrations",
+            "h5:15 Questions to Ask a Destination Wedding Planner Before Hiring",
+            "h5:India&#8217;s Newest Luxury Wedding Hotels: A First Look at Leela Jaisalmer, Fairmont Agra &amp; More",
+            "h5:Why Couples Regret Not Booking Their Venue 12 Months Early",
+            "h5:A Simple Checklist Before Booking a Destination Wedding Venue",
+            "h5:Traditional Vs Destination Wedding - What&#8217;s Best For You?",
+            "h5:Anshula Kapoor&#8217;s Mumbai Wedding: What a One-Venue Celebration Actually Costs",
+            "h5:Nupur Sanon &amp; Stebin Ben: Plan a Luxury Destination Wedding Like Them",
+            "h5:Vijay &amp; Rashmika Udaipur Wedding Cost &amp; Venue Guide",
+            "h5:How Much Would a Wedding Like Nupur Sanon &amp; Stebin Ben Cost in India?"
+          ]
+        },
+        "controls": {
+          "hasSearch": true,
+          "hasDropdown": true,
+          "hasTabs": false,
+          "hasCarousel": true,
+          "hasCalculator": true,
+          "hasModal": false,
+          "hasAccordion": false
+        }
+      },
+      {
+        "route": "/contact",
+        "counts": {
+          "original": {
+            "headings": 6,
+            "ctas": 3,
+            "images": 3,
+            "forms": 1
+          },
+          "local": {
+            "headings": 6,
+            "ctas": 3,
+            "images": 1,
+            "forms": 1
+          }
+        },
+        "samples": {
+          "originalHeadings": [
+            "h1:Get in Touch",
+            "h2:Contact Us",
+            "h3:Phone",
+            "h3:Email",
+            "h3:Address",
+            "h4:Send us a Message"
+          ],
+          "localHeadings": [
+            "h1:Get in Touch",
+            "h2:Contact Us",
+            "h3:Phone",
+            "h3:Email",
+            "h3:Address",
+            "h4:Send us a Message"
+          ]
+        },
+        "controls": {
+          "hasSearch": true,
+          "hasDropdown": true,
+          "hasTabs": false,
+          "hasCarousel": true,
+          "hasCalculator": false,
+          "hasModal": false,
+          "hasAccordion": false
+        }
+      },
+      {
+        "route": "/wedding-consultation",
+        "counts": {
+          "original": {
+            "headings": 43,
+            "ctas": 21,
+            "images": 27,
+            "forms": 1
+          },
+          "local": {
+            "headings": 42,
+            "ctas": 21,
+            "images": 25,
+            "forms": 1
+          }
+        },
+        "samples": {
+          "originalHeadings": [
+            "h1:Book a Private Consultation",
+            "h2:BOOK PRIVATE CONSULTATION",
+            "h2:Book Your Consultation Slot",
+            "h3:What’s Included in the Consultation",
+            "h4:Wedding Vision Clarity",
+            "h4:Budget &amp; Scale Guidance",
+            "h4:Venue &amp; Experience Direction",
+            "h3:Choose Your Date & Time",
+            "h5:Time-Slot",
+            "h2:Book Your Consultation Slot",
+            "h5:What This Consultation Covers",
+            "h5:Wedding Vision Clarity"
+          ],
+          "localHeadings": [
+            "h1:Book a Private Consultation",
+            "h2:BOOK PRIVATE CONSULTATION",
+            "h2:Book Your Consultation",
+            "h3:What’s Included in the Consultation",
+            "h4:Wedding Vision Clarity",
+            "h4:Budget &amp; Scale Guidance",
+            "h4:Venue &amp; Experience Direction",
+            "h3:Start With a Private Consultation",
+            "h2:Book Your Consultation",
+            "h5:What This Consultation Covers",
+            "h5:Wedding Vision Clarity",
+            "h5:Budget Support"
+          ]
+        },
+        "controls": {
+          "hasSearch": true,
+          "hasDropdown": true,
+          "hasTabs": false,
+          "hasCarousel": true,
+          "hasCalculator": true,
+          "hasModal": true,
+          "hasAccordion": true
+        }
+      },
+      {
+        "route": "/check-hotel-availability",
+        "counts": {
+          "original": {
+            "headings": 27,
+            "ctas": 9,
+            "images": 31,
+            "forms": 0
+          },
+          "local": {
+            "headings": 27,
+            "ctas": 9,
+            "images": 29,
+            "forms": 0
+          }
+        },
+        "samples": {
+          "originalHeadings": [
+            "h1:Check Hotel Availability",
+            "h5:Select Your Hotels",
+            "h5:Choose Preferred Dates",
+            "h5:Confirmation Report",
+            "h5:Decide Smarter, Faster",
+            "h4:Choose Your Date",
+            "h5:Preferred Dates",
+            "h5:Alternate Dates",
+            "h4:Before You Plan Plan Better",
+            "h4:Availability Checker",
+            "h5:No. of Rooms &amp; Pax",
+            "h5:Select Plan"
+          ],
+          "localHeadings": [
+            "h1:Check Hotel Availability",
+            "h5:Select Your Hotels",
+            "h5:Choose Preferred Dates",
+            "h5:Confirmation Report",
+            "h5:Decide Smarter, Faster",
+            "h4:Choose Your Date",
+            "h5:Preferred Dates",
+            "h5:Alternate Dates",
+            "h4:Before You Plan Plan Better",
+            "h4:Availability Checker",
+            "h5:No. of Rooms &amp; Pax",
+            "h5:Select Plan"
+          ]
+        },
+        "controls": {
+          "hasSearch": true,
+          "hasDropdown": true,
+          "hasTabs": false,
+          "hasCarousel": true,
+          "hasCalculator": false,
+          "hasModal": false,
+          "hasAccordion": true
+        }
+      },
+      {
+        "route": "/hotel-cost-calculator",
+        "counts": {
+          "original": {
+            "headings": 7,
+            "ctas": 5,
+            "images": 11,
+            "forms": 0
+          },
+          "local": {
+            "headings": 7,
+            "ctas": 5,
+            "images": 9,
+            "forms": 0
+          }
+        },
+        "samples": {
+          "originalHeadings": [
+            "h1:Calculate Your Venue’s Cost",
+            "h4:Enter Your Details",
+            "h4:Receive an Estimate",
+            "h4:Review Your Options",
+            "h4:Plan With Confidence",
+            "h4:Cost Calculator",
+            "h3:Disclaimer"
+          ],
+          "localHeadings": [
+            "h1:Calculate Your Venue’s Cost",
+            "h4:Enter Your Details",
+            "h4:Receive an Estimate",
+            "h4:Review Your Options",
+            "h4:Plan With Confidence",
+            "h4:Cost Calculator",
+            "h3:Disclaimer"
+          ]
+        },
+        "controls": {
+          "hasSearch": true,
+          "hasDropdown": true,
+          "hasTabs": false,
+          "hasCarousel": true,
+          "hasCalculator": true,
+          "hasModal": true,
+          "hasAccordion": false
+        }
+      },
+      {
+        "route": "/hotel-listing?country=india",
+        "counts": {
+          "original": {
+            "headings": 19,
+            "ctas": 65,
+            "images": 28,
+            "forms": 2
+          },
+          "local": {
+            "headings": 18,
+            "ctas": 64,
+            "images": 26,
+            "forms": 2
+          }
+        },
+        "samples": {
+          "originalHeadings": [
+            "h1:Luxury Hotels",
+            "h5:Filters",
+            "h2:Country",
+            "h2:Number of Rooms",
+            "h2:Guest Capacity",
+            "h2:--> --> --> <!--",
+            "h2:Wedding Type",
+            "h4:Alila Fort Bishangarh Jaipur",
+            "h4:Fairmont Udaipur Palace",
+            "h4:Suryagarh Palace jaisalmer",
+            "h4:Taj Amer Jaipur",
+            "h4:The Leela Palace Udaipur"
+          ],
+          "localHeadings": [
+            "h1:Luxury Hotels",
+            "h5:Filters",
+            "h2:Number of Rooms",
+            "h2:Guest Capacity",
+            "h2:--> --> --> <!--",
+            "h2:Wedding Type",
+            "h4:Alila Fort Bishangarh Jaipur",
+            "h4:Fairmont Udaipur Palace",
+            "h4:Suryagarh Palace jaisalmer",
+            "h4:Taj Amer Jaipur",
+            "h4:The Leela Palace Udaipur",
+            "h4:W Goa"
+          ]
+        },
+        "controls": {
+          "hasSearch": true,
+          "hasDropdown": true,
+          "hasTabs": false,
+          "hasCarousel": true,
+          "hasCalculator": true,
+          "hasModal": false,
+          "hasAccordion": true
+        }
+      },
+      {
+        "route": "/faqs",
+        "counts": {
+          "original": {
+            "headings": 3,
+            "ctas": 4,
+            "images": 3,
+            "forms": 0
+          },
+          "local": {
+            "headings": 3,
+            "ctas": 4,
+            "images": 1,
+            "forms": 0
+          }
+        },
+        "samples": {
+          "originalHeadings": [
+            "h1:FAQs",
+            "h2:What is the starting budget for Destination Wedding",
+            "h2:Do you also Manage Visas in Destination Wedding"
+          ],
+          "localHeadings": [
+            "h1:FAQs",
+            "h2:What is the starting budget for Destination Wedding",
+            "h2:Do you also Manage Visas in Destination Wedding"
+          ]
+        },
+        "controls": {
+          "hasSearch": true,
+          "hasDropdown": true,
+          "hasTabs": false,
+          "hasCarousel": true,
+          "hasCalculator": true,
+          "hasModal": false,
+          "hasAccordion": true
+        }
+      },
+      {
+        "route": "/privacy-policy",
+        "counts": {
+          "original": {
+            "headings": 2,
+            "ctas": 3,
+            "images": 3,
+            "forms": 0
+          },
+          "local": {
+            "headings": 2,
+            "ctas": 3,
+            "images": 1,
+            "forms": 0
+          }
+        },
+        "samples": {
+          "originalHeadings": [
+            "h1:Privacy Policy",
+            "h2:Privacy Policy"
+          ],
+          "localHeadings": [
+            "h1:Privacy Policy",
+            "h2:Privacy Policy"
+          ]
+        },
+        "controls": {
+          "hasSearch": true,
+          "hasDropdown": true,
+          "hasTabs": false,
+          "hasCarousel": true,
+          "hasCalculator": false,
+          "hasModal": false,
+          "hasAccordion": false
+        }
+      },
+      {
+        "route": "/terms-of-use",
+        "counts": {
+          "original": {
+            "headings": 2,
+            "ctas": 3,
+            "images": 3,
+            "forms": 0
+          },
+          "local": {
+            "headings": 2,
+            "ctas": 3,
+            "images": 1,
+            "forms": 0
+          }
+        },
+        "samples": {
+          "originalHeadings": [
+            "h1:Terms Of Use",
+            "h2:Terms of Use"
+          ],
+          "localHeadings": [
+            "h1:Terms Of Use",
+            "h2:Terms of Use"
+          ]
+        },
+        "controls": {
+          "hasSearch": true,
+          "hasDropdown": true,
+          "hasTabs": false,
+          "hasCarousel": true,
+          "hasCalculator": false,
+          "hasModal": false,
+          "hasAccordion": false
+        }
+      },
+      {
+        "route": "/cookie-preference-policy",
+        "counts": {
+          "original": {
+            "headings": 2,
+            "ctas": 3,
+            "images": 3,
+            "forms": 0
+          },
+          "local": {
+            "headings": 2,
+            "ctas": 3,
+            "images": 1,
+            "forms": 0
+          }
+        },
+        "samples": {
+          "originalHeadings": [
+            "h1:Cookie Preference",
+            "h2:Cookie Preferences"
+          ],
+          "localHeadings": [
+            "h1:Cookie Preference",
+            "h2:Cookie Preferences"
+          ]
+        },
+        "controls": {
+          "hasSearch": true,
+          "hasDropdown": true,
+          "hasTabs": false,
+          "hasCarousel": true,
+          "hasCalculator": false,
+          "hasModal": false,
+          "hasAccordion": false
+        }
+      }
+    ]
+  },
+  "pages": [
+    {
+      "text": "Home",
+      "route": "/",
+      "localExists": true,
+      "liveStatus": 200,
+      "counts": {
+        "original": {
+          "headings": 62,
+          "ctas": 84,
+          "images": 142,
+          "forms": 1
+        },
+        "local": {
+          "headings": 56,
+          "ctas": 49,
+          "images": 119,
+          "forms": 1
+        }
+      },
+      "samples": {
+        "originalHeadings": [
+          "h2:Check Availability for Your Dream Wedding Venue",
+          "h5:Reliable Venue Availability Checks",
+          "h2:Estimate Your Destination Wedding Cost",
+          "h5:Smart Venue Cost Insights",
+          "h2:Get Direction on Wedding Planning",
+          "h5:Senior-Level Wedding Expertise",
+          "h2:Take Your Vows at a Venue as Extraordinary as You",
+          "h5:500+ Verified Luxury Wedding Venues",
+          "h2:Find Your Perfect Destination Wedding Venue",
+          "h5:Alila Fort Bishangarh Jaipur",
+          "h5:Fairmont Udaipur Palace",
+          "h5:Suryagarh Palace jaisalmer"
+        ],
+        "localHeadings": [
+          "h2:Check Availability for Your Dream Wedding Venue",
+          "h5:Reliable Venue Availability Checks",
+          "h2:Estimate Your Destination Wedding Cost",
+          "h5:Smart Venue Cost Insights",
+          "h2:Get Direction on Wedding Planning",
+          "h5:Senior-Level Wedding Expertise",
+          "h2:Take Your Vows at a Venue as Extraordinary as You",
+          "h5:250+ Verified Luxury Wedding Venues",
+          "h2:Find Your Perfect Destination Wedding Venue",
+          "h5:Alila Fort Bishangarh Jaipur",
+          "h5:Fairmont Udaipur Palace",
+          "h5:Suryagarh Palace jaisalmer"
+        ]
+      },
+      "brokenInternalLinks": [],
+      "brokenImages": [],
+      "originalForms": [
+        {
+          "action": "https://www.vivahnam.com/get_in_touch/store",
+          "method": "POST",
+          "id": "consultationForm",
+          "inputs": [
+            "_token",
+            "name",
+            "email",
+            "source_page",
+            "number",
+            "subject"
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "action": "/api/lead",
+          "method": "POST",
+          "id": "consultationForm",
+          "inputs": [
+            "name",
+            "email",
+            "source_page",
+            "number",
+            "subject"
+          ]
+        }
+      ],
+      "oldFormActions": [],
+      "nonResendFormActions": [],
+      "oldAjaxEndpoints": [],
+      "controls": {
+        "hasSearch": true,
+        "hasDropdown": true,
+        "hasTabs": true,
+        "hasCarousel": true,
+        "hasCalculator": true,
+        "hasModal": true,
+        "hasAccordion": false
+      }
+    },
+    {
+      "text": "About Us",
+      "route": "/about-us",
+      "localExists": true,
+      "liveStatus": 200,
+      "counts": {
+        "original": {
+          "headings": 10,
+          "ctas": 3,
+          "images": 14,
+          "forms": 0
+        },
+        "local": {
+          "headings": 10,
+          "ctas": 3,
+          "images": 12,
+          "forms": 0
+        }
+      },
+      "samples": {
+        "originalHeadings": [
+          "h1:About Us",
+          "h4:Why We Started Vivahnam",
+          "h2:Our Mission &amp; Vision",
+          "h3:Our Our Mission",
+          "h3:Our Our Vision",
+          "h3:Why Choose Why Choose Vivahnam",
+          "h2:What Makes Us Different",
+          "h5:Venue Matchmaking",
+          "h5:Cost Calculator",
+          "h5:Live Venue Availability Check Service"
+        ],
+        "localHeadings": [
+          "h1:About Us",
+          "h4:Why We Started Viraaya Weddings",
+          "h2:Our Mission &amp; Vision",
+          "h3:Our Our Mission",
+          "h3:Our Our Vision",
+          "h3:Why Choose Viraaya Weddings",
+          "h2:What Makes Us Different",
+          "h5:Venue Matchmaking",
+          "h5:Cost Calculator",
+          "h5:Live Venue Availability Check Service"
+        ]
+      },
+      "brokenInternalLinks": [],
+      "brokenImages": [],
+      "originalForms": [],
+      "forms": [],
+      "oldFormActions": [],
+      "nonResendFormActions": [],
+      "oldAjaxEndpoints": [],
+      "controls": {
+        "hasSearch": true,
+        "hasDropdown": true,
+        "hasTabs": false,
+        "hasCarousel": true,
+        "hasCalculator": true,
+        "hasModal": false,
+        "hasAccordion": false
+      }
+    },
+    {
+      "text": "Real Weddings",
+      "route": "/real-weddings",
+      "localExists": true,
+      "liveStatus": 200,
+      "counts": {
+        "original": {
+          "headings": 1,
+          "ctas": 6,
+          "images": 15,
+          "forms": 0
+        },
+        "local": {
+          "headings": 1,
+          "ctas": 6,
+          "images": 13,
+          "forms": 0
+        }
+      },
+      "samples": {
+        "originalHeadings": [
+          "h1:Real Weddings"
+        ],
+        "localHeadings": [
+          "h1:Real Weddings"
+        ]
+      },
+      "brokenInternalLinks": [],
+      "brokenImages": [],
+      "originalForms": [],
+      "forms": [],
+      "oldFormActions": [],
+      "nonResendFormActions": [],
+      "oldAjaxEndpoints": [],
+      "controls": {
+        "hasSearch": true,
+        "hasDropdown": true,
+        "hasTabs": false,
+        "hasCarousel": true,
+        "hasCalculator": false,
+        "hasModal": false,
+        "hasAccordion": false
+      }
+    },
+    {
+      "text": "Wedding Packages",
+      "route": "/package",
+      "localExists": true,
+      "liveStatus": 200,
+      "counts": {
+        "original": {
+          "headings": 8,
+          "ctas": 5,
+          "images": 24,
+          "forms": 0
+        },
+        "local": {
+          "headings": 8,
+          "ctas": 5,
+          "images": 22,
+          "forms": 0
+        }
+      },
+      "samples": {
+        "originalHeadings": [
+          "h1:Wedding Packages",
+          "h4:Wedding Packages",
+          "h2:Shresht",
+          "h5:Top Hotels Includes",
+          "h2:Siddhi {Most Popular!}",
+          "h5:Top Hotels Includes",
+          "h2:Shobhana",
+          "h5:Top Hotels Includes"
+        ],
+        "localHeadings": [
+          "h1:Wedding Packages",
+          "h4:Wedding Packages",
+          "h2:Shresht",
+          "h5:Top Hotels Includes",
+          "h2:Siddhi {Most Popular!}",
+          "h5:Top Hotels Includes",
+          "h2:Shobhana",
+          "h5:Top Hotels Includes"
+        ]
+      },
+      "brokenInternalLinks": [],
+      "brokenImages": [],
+      "originalForms": [],
+      "forms": [],
+      "oldFormActions": [],
+      "nonResendFormActions": [],
+      "oldAjaxEndpoints": [],
+      "controls": {
+        "hasSearch": true,
+        "hasDropdown": true,
+        "hasTabs": false,
+        "hasCarousel": true,
+        "hasCalculator": false,
+        "hasModal": false,
+        "hasAccordion": false
+      }
+    },
+    {
+      "text": "Blogs",
+      "route": "/blogs",
+      "localExists": true,
+      "liveStatus": 200,
+      "counts": {
+        "original": {
+          "headings": 13,
+          "ctas": 14,
+          "images": 15,
+          "forms": 0
+        },
+        "local": {
+          "headings": 12,
+          "ctas": 13,
+          "images": 12,
+          "forms": 0
+        }
+      },
+      "samples": {
+        "originalHeadings": [
+          "h1:Blogs",
+          "h5:Top Beachside Wedding Venues in Goa: Costs, Capacity &amp; Locations",
+          "h5:Top 10 Destination Wedding Places in Rajasthan for Luxury Celebrations",
+          "h5:Why Is ITC Ratnadipa a Top Choice for a Destination Wedding in Sri Lanka?",
+          "h5:15 Questions to Ask a Destination Wedding Planner Before Hiring",
+          "h5:India’s Newest Luxury Wedding Hotels: A First Look at Leela Jaisalmer, Fairmont Agra &amp; More",
+          "h5:Why Couples Regret Not Booking Their Venue 12 Months Early",
+          "h5:A Simple Checklist Before Booking a Destination Wedding Venue",
+          "h5:Traditional Vs Destination Wedding - What’s Best For You?",
+          "h5:Anshula Kapoor’s Mumbai Wedding: What a One-Venue Celebration Actually Costs",
+          "h5:Nupur Sanon &amp; Stebin Ben: Plan a Luxury Destination Wedding Like Them",
+          "h5:Vijay &amp; Rashmika Udaipur Wedding Cost &amp; Venue Guide"
+        ],
+        "localHeadings": [
+          "h1:Blogs",
+          "h5:Top Beachside Wedding Venues in Goa: Costs, Capacity &amp; Locations",
+          "h5:Top 10 Destination Wedding Places in Rajasthan for Luxury Celebrations",
+          "h5:15 Questions to Ask a Destination Wedding Planner Before Hiring",
+          "h5:India&#8217;s Newest Luxury Wedding Hotels: A First Look at Leela Jaisalmer, Fairmont Agra &amp; More",
+          "h5:Why Couples Regret Not Booking Their Venue 12 Months Early",
+          "h5:A Simple Checklist Before Booking a Destination Wedding Venue",
+          "h5:Traditional Vs Destination Wedding - What&#8217;s Best For You?",
+          "h5:Anshula Kapoor&#8217;s Mumbai Wedding: What a One-Venue Celebration Actually Costs",
+          "h5:Nupur Sanon &amp; Stebin Ben: Plan a Luxury Destination Wedding Like Them",
+          "h5:Vijay &amp; Rashmika Udaipur Wedding Cost &amp; Venue Guide",
+          "h5:How Much Would a Wedding Like Nupur Sanon &amp; Stebin Ben Cost in India?"
+        ]
+      },
+      "brokenInternalLinks": [],
+      "brokenImages": [],
+      "originalForms": [],
+      "forms": [],
+      "oldFormActions": [],
+      "nonResendFormActions": [],
+      "oldAjaxEndpoints": [],
+      "controls": {
+        "hasSearch": true,
+        "hasDropdown": true,
+        "hasTabs": false,
+        "hasCarousel": true,
+        "hasCalculator": true,
+        "hasModal": false,
+        "hasAccordion": false
+      }
+    },
+    {
+      "text": "Contact us",
+      "route": "/contact",
+      "localExists": true,
+      "liveStatus": 200,
+      "counts": {
+        "original": {
+          "headings": 6,
+          "ctas": 3,
+          "images": 3,
+          "forms": 1
+        },
+        "local": {
+          "headings": 6,
+          "ctas": 3,
+          "images": 1,
+          "forms": 1
+        }
+      },
+      "samples": {
+        "originalHeadings": [
+          "h1:Get in Touch",
+          "h2:Contact Us",
+          "h3:Phone",
+          "h3:Email",
+          "h3:Address",
+          "h4:Send us a Message"
+        ],
+        "localHeadings": [
+          "h1:Get in Touch",
+          "h2:Contact Us",
+          "h3:Phone",
+          "h3:Email",
+          "h3:Address",
+          "h4:Send us a Message"
+        ]
+      },
+      "brokenInternalLinks": [],
+      "brokenImages": [],
+      "originalForms": [
+        {
+          "action": "https://www.vivahnam.com/contact/save",
+          "method": "POST",
+          "id": "contactForm",
+          "inputs": [
+            "_token",
+            "name",
+            "email",
+            "source_page",
+            "number",
+            "subject",
+            "message"
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "action": "/contact/save",
+          "method": "POST",
+          "id": "contactForm",
+          "inputs": [
+            "name",
+            "email",
+            "source_page",
+            "number",
+            "subject",
+            "message"
+          ]
+        }
+      ],
+      "oldFormActions": [],
+      "nonResendFormActions": [],
+      "oldAjaxEndpoints": [],
+      "controls": {
+        "hasSearch": true,
+        "hasDropdown": true,
+        "hasTabs": false,
+        "hasCarousel": true,
+        "hasCalculator": false,
+        "hasModal": false,
+        "hasAccordion": false
+      }
+    },
+    {
+      "text": "Book Consultation",
+      "route": "/wedding-consultation",
+      "localExists": true,
+      "liveStatus": 200,
+      "counts": {
+        "original": {
+          "headings": 43,
+          "ctas": 21,
+          "images": 27,
+          "forms": 1
+        },
+        "local": {
+          "headings": 42,
+          "ctas": 21,
+          "images": 25,
+          "forms": 1
+        }
+      },
+      "samples": {
+        "originalHeadings": [
+          "h1:Book a Private Consultation",
+          "h2:BOOK PRIVATE CONSULTATION",
+          "h2:Book Your Consultation Slot",
+          "h3:What’s Included in the Consultation",
+          "h4:Wedding Vision Clarity",
+          "h4:Budget &amp; Scale Guidance",
+          "h4:Venue &amp; Experience Direction",
+          "h3:Choose Your Date & Time",
+          "h5:Time-Slot",
+          "h2:Book Your Consultation Slot",
+          "h5:What This Consultation Covers",
+          "h5:Wedding Vision Clarity"
+        ],
+        "localHeadings": [
+          "h1:Book a Private Consultation",
+          "h2:BOOK PRIVATE CONSULTATION",
+          "h2:Book Your Consultation",
+          "h3:What’s Included in the Consultation",
+          "h4:Wedding Vision Clarity",
+          "h4:Budget &amp; Scale Guidance",
+          "h4:Venue &amp; Experience Direction",
+          "h3:Start With a Private Consultation",
+          "h2:Book Your Consultation",
+          "h5:What This Consultation Covers",
+          "h5:Wedding Vision Clarity",
+          "h5:Budget Support"
+        ]
+      },
+      "brokenInternalLinks": [],
+      "brokenImages": [],
+      "originalForms": [
+        {
+          "action": "",
+          "method": "GET",
+          "id": "paymentForm",
+          "inputs": [
+            "appointment_date",
+            "appointment_time",
+            "name",
+            "email",
+            "number",
+            "city"
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "action": "/contact/save",
+          "method": "POST",
+          "id": "consultationForm",
+          "inputs": [
+            "enquiry_type",
+            "name",
+            "email",
+            "number",
+            "city"
+          ]
+        }
+      ],
+      "oldFormActions": [],
+      "nonResendFormActions": [],
+      "oldAjaxEndpoints": [],
+      "controls": {
+        "hasSearch": true,
+        "hasDropdown": true,
+        "hasTabs": false,
+        "hasCarousel": true,
+        "hasCalculator": true,
+        "hasModal": true,
+        "hasAccordion": true
+      }
+    },
+    {
+      "text": "Hotel Availability Check",
+      "route": "/check-hotel-availability",
+      "localExists": true,
+      "liveStatus": 200,
+      "counts": {
+        "original": {
+          "headings": 27,
+          "ctas": 9,
+          "images": 31,
+          "forms": 0
+        },
+        "local": {
+          "headings": 27,
+          "ctas": 9,
+          "images": 29,
+          "forms": 0
+        }
+      },
+      "samples": {
+        "originalHeadings": [
+          "h1:Check Hotel Availability",
+          "h5:Select Your Hotels",
+          "h5:Choose Preferred Dates",
+          "h5:Confirmation Report",
+          "h5:Decide Smarter, Faster",
+          "h4:Choose Your Date",
+          "h5:Preferred Dates",
+          "h5:Alternate Dates",
+          "h4:Before You Plan Plan Better",
+          "h4:Availability Checker",
+          "h5:No. of Rooms &amp; Pax",
+          "h5:Select Plan"
+        ],
+        "localHeadings": [
+          "h1:Check Hotel Availability",
+          "h5:Select Your Hotels",
+          "h5:Choose Preferred Dates",
+          "h5:Confirmation Report",
+          "h5:Decide Smarter, Faster",
+          "h4:Choose Your Date",
+          "h5:Preferred Dates",
+          "h5:Alternate Dates",
+          "h4:Before You Plan Plan Better",
+          "h4:Availability Checker",
+          "h5:No. of Rooms &amp; Pax",
+          "h5:Select Plan"
+        ]
+      },
+      "brokenInternalLinks": [],
+      "brokenImages": [],
+      "originalForms": [],
+      "forms": [],
+      "oldFormActions": [],
+      "nonResendFormActions": [],
+      "oldAjaxEndpoints": [],
+      "controls": {
+        "hasSearch": true,
+        "hasDropdown": true,
+        "hasTabs": false,
+        "hasCarousel": true,
+        "hasCalculator": false,
+        "hasModal": false,
+        "hasAccordion": true
+      }
+    },
+    {
+      "text": "Hotel Cost Calculator",
+      "route": "/hotel-cost-calculator",
+      "localExists": true,
+      "liveStatus": 200,
+      "counts": {
+        "original": {
+          "headings": 7,
+          "ctas": 5,
+          "images": 11,
+          "forms": 0
+        },
+        "local": {
+          "headings": 7,
+          "ctas": 5,
+          "images": 9,
+          "forms": 0
+        }
+      },
+      "samples": {
+        "originalHeadings": [
+          "h1:Calculate Your Venue’s Cost",
+          "h4:Enter Your Details",
+          "h4:Receive an Estimate",
+          "h4:Review Your Options",
+          "h4:Plan With Confidence",
+          "h4:Cost Calculator",
+          "h3:Disclaimer"
+        ],
+        "localHeadings": [
+          "h1:Calculate Your Venue’s Cost",
+          "h4:Enter Your Details",
+          "h4:Receive an Estimate",
+          "h4:Review Your Options",
+          "h4:Plan With Confidence",
+          "h4:Cost Calculator",
+          "h3:Disclaimer"
+        ]
+      },
+      "brokenInternalLinks": [],
+      "brokenImages": [],
+      "originalForms": [],
+      "forms": [],
+      "oldFormActions": [],
+      "nonResendFormActions": [],
+      "oldAjaxEndpoints": [],
+      "controls": {
+        "hasSearch": true,
+        "hasDropdown": true,
+        "hasTabs": false,
+        "hasCarousel": true,
+        "hasCalculator": true,
+        "hasModal": true,
+        "hasAccordion": false
+      }
+    },
+    {
+      "text": "Indian Venues",
+      "route": "/hotel-listing?country=india",
+      "localExists": true,
+      "liveStatus": 200,
+      "counts": {
+        "original": {
+          "headings": 19,
+          "ctas": 65,
+          "images": 28,
+          "forms": 2
+        },
+        "local": {
+          "headings": 18,
+          "ctas": 64,
+          "images": 26,
+          "forms": 2
+        }
+      },
+      "samples": {
+        "originalHeadings": [
+          "h1:Luxury Hotels",
+          "h5:Filters",
+          "h2:Country",
+          "h2:Number of Rooms",
+          "h2:Guest Capacity",
+          "h2:--> --> --> <!--",
+          "h2:Wedding Type",
+          "h4:Alila Fort Bishangarh Jaipur",
+          "h4:Fairmont Udaipur Palace",
+          "h4:Suryagarh Palace jaisalmer",
+          "h4:Taj Amer Jaipur",
+          "h4:The Leela Palace Udaipur"
+        ],
+        "localHeadings": [
+          "h1:Luxury Hotels",
+          "h5:Filters",
+          "h2:Number of Rooms",
+          "h2:Guest Capacity",
+          "h2:--> --> --> <!--",
+          "h2:Wedding Type",
+          "h4:Alila Fort Bishangarh Jaipur",
+          "h4:Fairmont Udaipur Palace",
+          "h4:Suryagarh Palace jaisalmer",
+          "h4:Taj Amer Jaipur",
+          "h4:The Leela Palace Udaipur",
+          "h4:W Goa"
+        ]
+      },
+      "brokenInternalLinks": [],
+      "brokenImages": [],
+      "originalForms": [
+        {
+          "action": "https://www.vivahnam.com/hotel-listing",
+          "method": "GET",
+          "id": "filterForm",
+          "inputs": [
+            "countries[]",
+            "countries[]",
+            "countries[]",
+            "countries[]",
+            "countries[]",
+            "countries[]",
+            "countries[]",
+            "countries[]",
+            "countries[]",
+            "room_ranges[]",
+            "room_ranges[]",
+            "room_ranges[]",
+            "room_ranges[]",
+            "room_ranges[]",
+            "guest_capacities[]",
+            "guest_capacities[]",
+            "guest_capacities[]",
+            "guest_capacities[]",
+            "guest_capacities[]",
+            "guest_capacities[]",
+            "guest_capacities[]",
+            "input",
+            "input",
+            "input",
+            "input",
+            "input",
+            "wedding_types[]",
+            "wedding_types[]",
+            "wedding_types[]",
+            "wedding_types[]",
+            "wedding_types[]",
+            "wedding_types[]"
+          ]
+        },
+        {
+          "action": "https://www.vivahnam.com/get_in_touch/store",
+          "method": "POST",
+          "id": "",
+          "inputs": [
+            "_token",
+            "name",
+            "email",
+            "number",
+            "message",
+            "subject"
+          ]
+        }
+      ],
+      "forms": [
+        {
+          "action": "/hotel-listing",
+          "method": "GET",
+          "id": "filterForm",
+          "inputs": [
+            "room_ranges[]",
+            "room_ranges[]",
+            "room_ranges[]",
+            "room_ranges[]",
+            "room_ranges[]",
+            "guest_capacities[]",
+            "guest_capacities[]",
+            "guest_capacities[]",
+            "guest_capacities[]",
+            "guest_capacities[]",
+            "guest_capacities[]",
+            "guest_capacities[]",
+            "input",
+            "input",
+            "input",
+            "input",
+            "input",
+            "wedding_types[]",
+            "wedding_types[]",
+            "wedding_types[]",
+            "wedding_types[]",
+            "wedding_types[]",
+            "wedding_types[]"
+          ]
+        },
+        {
+          "action": "/api/lead",
+          "method": "POST",
+          "id": "",
+          "inputs": [
+            "name",
+            "email",
+            "number",
+            "message",
+            "subject"
+          ]
+        }
+      ],
+      "oldFormActions": [],
+      "nonResendFormActions": [],
+      "oldAjaxEndpoints": [],
+      "controls": {
+        "hasSearch": true,
+        "hasDropdown": true,
+        "hasTabs": false,
+        "hasCarousel": true,
+        "hasCalculator": true,
+        "hasModal": false,
+        "hasAccordion": true
+      }
+    },
+    {
+      "text": "Faq's",
+      "route": "/faqs",
+      "localExists": true,
+      "liveStatus": 200,
+      "counts": {
+        "original": {
+          "headings": 3,
+          "ctas": 4,
+          "images": 3,
+          "forms": 0
+        },
+        "local": {
+          "headings": 3,
+          "ctas": 4,
+          "images": 1,
+          "forms": 0
+        }
+      },
+      "samples": {
+        "originalHeadings": [
+          "h1:FAQs",
+          "h2:What is the starting budget for Destination Wedding",
+          "h2:Do you also Manage Visas in Destination Wedding"
+        ],
+        "localHeadings": [
+          "h1:FAQs",
+          "h2:What is the starting budget for Destination Wedding",
+          "h2:Do you also Manage Visas in Destination Wedding"
+        ]
+      },
+      "brokenInternalLinks": [],
+      "brokenImages": [],
+      "originalForms": [],
+      "forms": [],
+      "oldFormActions": [],
+      "nonResendFormActions": [],
+      "oldAjaxEndpoints": [],
+      "controls": {
+        "hasSearch": true,
+        "hasDropdown": true,
+        "hasTabs": false,
+        "hasCarousel": true,
+        "hasCalculator": true,
+        "hasModal": false,
+        "hasAccordion": true
+      }
+    },
+    {
+      "text": "Privacy Policy",
+      "route": "/privacy-policy",
+      "localExists": true,
+      "liveStatus": 200,
+      "counts": {
+        "original": {
+          "headings": 2,
+          "ctas": 3,
+          "images": 3,
+          "forms": 0
+        },
+        "local": {
+          "headings": 2,
+          "ctas": 3,
+          "images": 1,
+          "forms": 0
+        }
+      },
+      "samples": {
+        "originalHeadings": [
+          "h1:Privacy Policy",
+          "h2:Privacy Policy"
+        ],
+        "localHeadings": [
+          "h1:Privacy Policy",
+          "h2:Privacy Policy"
+        ]
+      },
+      "brokenInternalLinks": [],
+      "brokenImages": [],
+      "originalForms": [],
+      "forms": [],
+      "oldFormActions": [],
+      "nonResendFormActions": [],
+      "oldAjaxEndpoints": [],
+      "controls": {
+        "hasSearch": true,
+        "hasDropdown": true,
+        "hasTabs": false,
+        "hasCarousel": true,
+        "hasCalculator": false,
+        "hasModal": false,
+        "hasAccordion": false
+      }
+    },
+    {
+      "text": "Terms Of Use",
+      "route": "/terms-of-use",
+      "localExists": true,
+      "liveStatus": 200,
+      "counts": {
+        "original": {
+          "headings": 2,
+          "ctas": 3,
+          "images": 3,
+          "forms": 0
+        },
+        "local": {
+          "headings": 2,
+          "ctas": 3,
+          "images": 1,
+          "forms": 0
+        }
+      },
+      "samples": {
+        "originalHeadings": [
+          "h1:Terms Of Use",
+          "h2:Terms of Use"
+        ],
+        "localHeadings": [
+          "h1:Terms Of Use",
+          "h2:Terms of Use"
+        ]
+      },
+      "brokenInternalLinks": [],
+      "brokenImages": [],
+      "originalForms": [],
+      "forms": [],
+      "oldFormActions": [],
+      "nonResendFormActions": [],
+      "oldAjaxEndpoints": [],
+      "controls": {
+        "hasSearch": true,
+        "hasDropdown": true,
+        "hasTabs": false,
+        "hasCarousel": true,
+        "hasCalculator": false,
+        "hasModal": false,
+        "hasAccordion": false
+      }
+    },
+    {
+      "text": "Cookie Preferences",
+      "route": "/cookie-preference-policy",
+      "localExists": true,
+      "liveStatus": 200,
+      "counts": {
+        "original": {
+          "headings": 2,
+          "ctas": 3,
+          "images": 3,
+          "forms": 0
+        },
+        "local": {
+          "headings": 2,
+          "ctas": 3,
+          "images": 1,
+          "forms": 0
+        }
+      },
+      "samples": {
+        "originalHeadings": [
+          "h1:Cookie Preference",
+          "h2:Cookie Preferences"
+        ],
+        "localHeadings": [
+          "h1:Cookie Preference",
+          "h2:Cookie Preferences"
+        ]
+      },
+      "brokenInternalLinks": [],
+      "brokenImages": [],
+      "originalForms": [],
+      "forms": [],
+      "oldFormActions": [],
+      "nonResendFormActions": [],
+      "oldAjaxEndpoints": [],
+      "controls": {
+        "hasSearch": true,
+        "hasDropdown": true,
+        "hasTabs": false,
+        "hasCarousel": true,
+        "hasCalculator": false,
+        "hasModal": false,
+        "hasAccordion": false
+      }
+    }
+  ]
+}

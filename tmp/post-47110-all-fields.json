@@ -1,0 +1,5359 @@
+{
+  "inputs": [
+    {
+      "id": "jamify_hfs_all_post_meta-hide",
+      "label": "Insert Script to <head>",
+      "len": 24,
+      "name": "jamify_hfs_all_post_meta-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "jamify_hfs_all_post_meta"
+    },
+    {
+      "id": "bdpp_post_sett-hide",
+      "label": "Blog Designer Pack - Settings",
+      "len": 14,
+      "name": "bdpp_post_sett-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "bdpp_post_sett"
+    },
+    {
+      "id": "wpseo_meta-hide",
+      "label": "Yoast SEO",
+      "len": 10,
+      "name": "wpseo_meta-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "wpseo_meta"
+    },
+    {
+      "id": "acf-group_69f999a0280d2-hide",
+      "label": "Blog Extra Sections",
+      "len": 23,
+      "name": "acf-group_69f999a0280d2-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "acf-group_69f999a0280d2"
+    },
+    {
+      "id": "acf-group_post_settings-hide",
+      "label": "Post settings",
+      "len": 23,
+      "name": "acf-group_post_settings-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "acf-group_post_settings"
+    },
+    {
+      "id": "revisionsdiv-hide",
+      "label": "Revisions",
+      "len": 12,
+      "name": "revisionsdiv-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "revisionsdiv"
+    },
+    {
+      "id": "postexcerpt-hide",
+      "label": "Excerpt",
+      "len": 11,
+      "name": "postexcerpt-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "postexcerpt"
+    },
+    {
+      "id": "trackbacksdiv-hide",
+      "label": "Send Trackbacks",
+      "len": 13,
+      "name": "trackbacksdiv-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "trackbacksdiv"
+    },
+    {
+      "id": "postcustom-hide",
+      "label": "Custom Fields",
+      "len": 10,
+      "name": "postcustom-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "postcustom"
+    },
+    {
+      "id": "commentstatusdiv-hide",
+      "label": "Discussion",
+      "len": 16,
+      "name": "commentstatusdiv-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "commentstatusdiv"
+    },
+    {
+      "id": "commentsdiv-hide",
+      "label": "Comments",
+      "len": 11,
+      "name": "commentsdiv-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "commentsdiv"
+    },
+    {
+      "id": "slugdiv-hide",
+      "label": "Slug",
+      "len": 7,
+      "name": "slugdiv-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "slugdiv"
+    },
+    {
+      "id": "authordiv-hide",
+      "label": "Author",
+      "len": 9,
+      "name": "authordiv-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "authordiv"
+    },
+    {
+      "id": "wpcode-metabox-snippets-hide",
+      "label": "WPCode Page Scripts",
+      "len": 23,
+      "name": "wpcode-metabox-snippets-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "wpcode-metabox-snippets"
+    },
+    {
+      "id": "categorydiv-hide",
+      "label": "Categories",
+      "len": 11,
+      "name": "categorydiv-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "categorydiv"
+    },
+    {
+      "id": "tagsdiv-post_tag-hide",
+      "label": "Tags",
+      "len": 16,
+      "name": "tagsdiv-post_tag-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "tagsdiv-post_tag"
+    },
+    {
+      "id": "industrydiv-hide",
+      "label": "Industry",
+      "len": 11,
+      "name": "industrydiv-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "industrydiv"
+    },
+    {
+      "id": "countrydiv-hide",
+      "label": "Country",
+      "len": 10,
+      "name": "countrydiv-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "countrydiv"
+    },
+    {
+      "id": "productdiv-hide",
+      "label": "Product",
+      "len": 10,
+      "name": "productdiv-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "productdiv"
+    },
+    {
+      "id": "typesdiv-hide",
+      "label": "Types",
+      "len": 8,
+      "name": "typesdiv-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "typesdiv"
+    },
+    {
+      "id": "tagsdiv-post_class-hide",
+      "label": "Post Class",
+      "len": 18,
+      "name": "tagsdiv-post_class-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "tagsdiv-post_class"
+    },
+    {
+      "id": "post-authordiv-hide",
+      "label": "Authors",
+      "len": 14,
+      "name": "post-authordiv-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "post-authordiv"
+    },
+    {
+      "id": "pageparentdiv-hide",
+      "label": "Post Attributes",
+      "len": 13,
+      "name": "pageparentdiv-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "pageparentdiv"
+    },
+    {
+      "id": "postimagediv-hide",
+      "label": "Featured image",
+      "len": 12,
+      "name": "postimagediv-hide",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "postimagediv"
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 1,
+      "name": "screen_columns",
+      "tag": "INPUT",
+      "type": "radio",
+      "value": "1"
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 1,
+      "name": "screen_columns",
+      "tag": "INPUT",
+      "type": "radio",
+      "value": "2"
+    },
+    {
+      "id": "editor-expand-toggle",
+      "label": "Enable full-height editor and distraction-free functionality.",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "on"
+    },
+    {
+      "id": "screenoptionnonce",
+      "label": "",
+      "len": 10,
+      "name": "screenoptionnonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "22f1e08a90"
+    },
+    {
+      "id": "_wpnonce",
+      "label": "",
+      "len": 10,
+      "name": "_wpnonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "2948f2085e"
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 41,
+      "name": "_wp_http_referer",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "/wp-admin/post.php?post=47110&action=edit"
+    },
+    {
+      "id": "user-id",
+      "label": "",
+      "len": 2,
+      "name": "user_ID",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "13"
+    },
+    {
+      "id": "hiddenaction",
+      "label": "",
+      "len": 8,
+      "name": "action",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "editpost"
+    },
+    {
+      "id": "originalaction",
+      "label": "",
+      "len": 8,
+      "name": "originalaction",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "editpost"
+    },
+    {
+      "id": "post_author",
+      "label": "",
+      "len": 2,
+      "name": "post_author",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "34"
+    },
+    {
+      "id": "post_type",
+      "label": "",
+      "len": 4,
+      "name": "post_type",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "post"
+    },
+    {
+      "id": "original_post_status",
+      "label": "",
+      "len": 7,
+      "name": "original_post_status",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "publish"
+    },
+    {
+      "id": "referredby",
+      "label": "",
+      "len": 0,
+      "name": "referredby",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "active_post_lock",
+      "label": "",
+      "len": 13,
+      "name": null,
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "1786615246:13"
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 0,
+      "name": "_wp_original_http_referer",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "post_ID",
+      "label": "",
+      "len": 5,
+      "name": "post_ID",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "47110"
+    },
+    {
+      "id": "meta-box-order-nonce",
+      "label": "",
+      "len": 10,
+      "name": "meta-box-order-nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "fcdfbc0879"
+    },
+    {
+      "id": "closedpostboxesnonce",
+      "label": "",
+      "len": 10,
+      "name": "closedpostboxesnonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "1bfbbe153a"
+    },
+    {
+      "id": "title",
+      "label": "Add title",
+      "len": 52,
+      "name": "post_title",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "What Is a Hotel Booking Engine and How Does It Work?"
+    },
+    {
+      "id": "samplepermalinknonce",
+      "label": "",
+      "len": 10,
+      "name": "samplepermalinknonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "aaa49e010e"
+    },
+    {
+      "id": "_elementor_edit_mode_nonce",
+      "label": "",
+      "len": 10,
+      "name": "_elementor_edit_mode_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "c828ddeafb"
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 41,
+      "name": "_wp_http_referer",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "/wp-admin/post.php?post=47110&action=edit"
+    },
+    {
+      "id": "elementor-switch-mode-input",
+      "label": "",
+      "len": 0,
+      "name": "_elementor_post_mode",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "_acf_screen",
+      "label": "",
+      "len": 4,
+      "name": "_acf_screen",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "post"
+    },
+    {
+      "id": "_acf_post_id",
+      "label": "",
+      "len": 5,
+      "name": "_acf_post_id",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "47110"
+    },
+    {
+      "id": "_acf_validation",
+      "label": "",
+      "len": 1,
+      "name": "_acf_validation",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "1"
+    },
+    {
+      "id": "_acf_nonce",
+      "label": "",
+      "len": 10,
+      "name": "_acf_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "89ea1cb36f"
+    },
+    {
+      "id": "_acf_changed",
+      "label": "",
+      "len": 1,
+      "name": "_acf_changed",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "0"
+    },
+    {
+      "id": "qt_content_strong",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b"
+    },
+    {
+      "id": "qt_content_em",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "i"
+    },
+    {
+      "id": "qt_content_link",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "link"
+    },
+    {
+      "id": "qt_content_block",
+      "label": "",
+      "len": 7,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b-quote"
+    },
+    {
+      "id": "qt_content_del",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "del"
+    },
+    {
+      "id": "qt_content_ins",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ins"
+    },
+    {
+      "id": "qt_content_img",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "img"
+    },
+    {
+      "id": "qt_content_ul",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ul"
+    },
+    {
+      "id": "qt_content_ol",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ol"
+    },
+    {
+      "id": "qt_content_li",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "li"
+    },
+    {
+      "id": "qt_content_code",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "code"
+    },
+    {
+      "id": "qt_content_tablepress_quicktags_button",
+      "label": "",
+      "len": 5,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Table"
+    },
+    {
+      "id": "qt_content_more",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "more"
+    },
+    {
+      "id": "qt_content_close",
+      "label": "",
+      "len": 10,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "close tags"
+    },
+    {
+      "id": "content",
+      "label": "",
+      "len": 20872,
+      "name": "content",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "<h2>What is a Hotel Booking Engine?</h2>\nA <a href=\"https://rategain.com/blog/best-hotel-booking-engines/\">hotel booking engine</a> is a software application designed specifically for the hotel industry. It allows customers to search for and book rooms at hotels directly through a hotel's website or mobile app.\n\nThe hotel booking engine typically allows customers to search for available rooms based on various criteria, such as date of stay, number of guests, room type, and price.\n\nIt also allows customers to view detailed information about each room, including photos and amenities, and to make reservations and complete transactions online. Some hotel booking engines also offer additional features such as the ability to add or modify reservations, or to make special requests such as extra beds or early check-in.\n<h2>How Does an Online Booking Engine Work?</h2>\nAn online booking engine works by connecting customers with suppliers of travel products and services, such as airlines, hotels, rental car companies, and tour operators. The booking engine acts as an intermediary, allowing customers to search for and compare products, make reservations, and complete transactions online.\n\n<strong>Here is a step-by-step overview of how a hotel booking engine typically works:</strong>\n<h3>STEP 1 · Guest Searches for Rooms</h3>\nThe customer visits the hotel's website and enters their desired dates, number of guests, and room preferences into the booking engine's search interface.\n<h3>STEP 2 · Real-time Availability Check</h3>\nThe booking engine queries the hotel's inventory system (connected to the PMS) and returns a list of available rooms with current rates.\n<h3>STEP 3 · Room Selection and Extras</h3>\nThe guest selects their preferred room type and can add extras such as breakfast, airport transfers, or spa packages.\n<h3>STEP 4 · Secure Payment Processing</h3>\nThe booking engine collects the guest's personal and payment information and processes the transaction through a secure,"
+    },
+    {
+      "id": "in-popular-category-132",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "132"
+    },
+    {
+      "id": "in-popular-category-62",
+      "label": "Blog",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "62"
+    },
+    {
+      "id": "in-popular-category-712",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "712"
+    },
+    {
+      "id": "in-popular-category-718",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "718"
+    },
+    {
+      "id": "in-popular-category-133",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "133"
+    },
+    {
+      "id": "in-popular-category-711",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "711"
+    },
+    {
+      "id": "in-popular-category-758",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "758"
+    },
+    {
+      "id": "in-popular-category-144",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "144"
+    },
+    {
+      "id": "in-popular-category-134",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "134"
+    },
+    {
+      "id": "in-popular-category-143",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "143"
+    },
+    {
+      "id": "",
+      "label": "Blog",
+      "len": 1,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "0"
+    },
+    {
+      "id": "in-category-132-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "132"
+    },
+    {
+      "id": "in-category-134-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "134"
+    },
+    {
+      "id": "in-category-711-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "711"
+    },
+    {
+      "id": "in-category-967-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "967"
+    },
+    {
+      "id": "in-category-133-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "133"
+    },
+    {
+      "id": "in-category-169-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "169"
+    },
+    {
+      "id": "in-category-170-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "170"
+    },
+    {
+      "id": "in-category-707-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "707"
+    },
+    {
+      "id": "in-category-224-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "224"
+    },
+    {
+      "id": "in-category-141-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "141"
+    },
+    {
+      "id": "in-category-62-2",
+      "label": "Blog",
+      "len": 2,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "62"
+    },
+    {
+      "id": "in-category-142-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "142"
+    },
+    {
+      "id": "in-category-143-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "143"
+    },
+    {
+      "id": "in-category-713-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "713"
+    },
+    {
+      "id": "in-category-165-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "165"
+    },
+    {
+      "id": "in-category-144-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "144"
+    },
+    {
+      "id": "in-category-166-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "166"
+    },
+    {
+      "id": "in-category-69-2",
+      "label": "Blog",
+      "len": 2,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "69"
+    },
+    {
+      "id": "in-category-718-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "718"
+    },
+    {
+      "id": "in-category-365-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "365"
+    },
+    {
+      "id": "in-category-1-2",
+      "label": "Blog",
+      "len": 1,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "1"
+    },
+    {
+      "id": "in-category-712-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "712"
+    },
+    {
+      "id": "in-category-758-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "post_category[]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "758"
+    },
+    {
+      "id": "newcategory",
+      "label": "Add Category",
+      "len": 17,
+      "name": "newcategory",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "New Category Name"
+    },
+    {
+      "id": "newcategory_parent",
+      "label": "Parent Category:",
+      "len": 2,
+      "name": "newcategory_parent",
+      "tag": "SELECT",
+      "type": null,
+      "value": "-1"
+    },
+    {
+      "id": "category-add-submit",
+      "label": "Blog",
+      "len": 12,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Add Category"
+    },
+    {
+      "id": "_ajax_nonce-add-category",
+      "label": "Blog",
+      "len": 10,
+      "name": "_ajax_nonce-add-category",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "1f057578d2"
+    },
+    {
+      "id": "save",
+      "label": "Set status",
+      "len": 4,
+      "name": "save",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Save"
+    },
+    {
+      "id": "wp-preview",
+      "label": "Set status",
+      "len": 0,
+      "name": "wp-preview",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "hidden_post_status",
+      "label": "Set status",
+      "len": 7,
+      "name": "hidden_post_status",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "publish"
+    },
+    {
+      "id": "post_status",
+      "label": "Set status",
+      "len": 7,
+      "name": "post_status",
+      "tag": "SELECT",
+      "type": null,
+      "value": "publish"
+    },
+    {
+      "id": "hidden-post-password",
+      "label": "Set status",
+      "len": 0,
+      "name": "hidden_post_password",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "hidden-post-sticky",
+      "label": "Set status",
+      "len": 6,
+      "name": "hidden_post_sticky",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "sticky"
+    },
+    {
+      "id": "hidden-post-visibility",
+      "label": "Set status",
+      "len": 6,
+      "name": "hidden_post_visibility",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "public"
+    },
+    {
+      "id": "visibility-radio-public",
+      "label": "Public",
+      "len": 6,
+      "name": "visibility",
+      "tag": "INPUT",
+      "type": "radio",
+      "value": "public"
+    },
+    {
+      "id": "sticky",
+      "label": "Stick this post to the front page",
+      "len": 6,
+      "name": "sticky",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "sticky"
+    },
+    {
+      "id": "visibility-radio-password",
+      "label": "Password protected",
+      "len": 8,
+      "name": "visibility",
+      "tag": "INPUT",
+      "type": "radio",
+      "value": "password"
+    },
+    {
+      "id": "post_password",
+      "label": "Password:",
+      "len": 0,
+      "name": "post_password",
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "visibility-radio-private",
+      "label": "Private",
+      "len": 7,
+      "name": "visibility",
+      "tag": "INPUT",
+      "type": "radio",
+      "value": "private"
+    },
+    {
+      "id": "mm",
+      "label": "Set status",
+      "len": 2,
+      "name": "mm",
+      "tag": "SELECT",
+      "type": null,
+      "value": "06"
+    },
+    {
+      "id": "jj",
+      "label": "Set status",
+      "len": 2,
+      "name": "jj",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "24"
+    },
+    {
+      "id": "aa",
+      "label": "Set status",
+      "len": 4,
+      "name": "aa",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "2026"
+    },
+    {
+      "id": "hh",
+      "label": "Set status",
+      "len": 2,
+      "name": "hh",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "14"
+    },
+    {
+      "id": "mn",
+      "label": "Set status",
+      "len": 2,
+      "name": "mn",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "38"
+    },
+    {
+      "id": "ss",
+      "label": "Set status",
+      "len": 2,
+      "name": "ss",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "27"
+    },
+    {
+      "id": "hidden_mm",
+      "label": "Set status",
+      "len": 2,
+      "name": "hidden_mm",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "06"
+    },
+    {
+      "id": "cur_mm",
+      "label": "Set status",
+      "len": 2,
+      "name": "cur_mm",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "08"
+    },
+    {
+      "id": "hidden_jj",
+      "label": "Set status",
+      "len": 2,
+      "name": "hidden_jj",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "24"
+    },
+    {
+      "id": "cur_jj",
+      "label": "Set status",
+      "len": 2,
+      "name": "cur_jj",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "13"
+    },
+    {
+      "id": "hidden_aa",
+      "label": "Set status",
+      "len": 4,
+      "name": "hidden_aa",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "2026"
+    },
+    {
+      "id": "cur_aa",
+      "label": "Set status",
+      "len": 4,
+      "name": "cur_aa",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "2026"
+    },
+    {
+      "id": "hidden_hh",
+      "label": "Set status",
+      "len": 2,
+      "name": "hidden_hh",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "14"
+    },
+    {
+      "id": "cur_hh",
+      "label": "Set status",
+      "len": 2,
+      "name": "cur_hh",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "15"
+    },
+    {
+      "id": "hidden_mn",
+      "label": "Set status",
+      "len": 2,
+      "name": "hidden_mn",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "38"
+    },
+    {
+      "id": "cur_mn",
+      "label": "Set status",
+      "len": 2,
+      "name": "cur_mn",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "29"
+    },
+    {
+      "id": "original_publish",
+      "label": "Set status",
+      "len": 6,
+      "name": "original_publish",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "Update"
+    },
+    {
+      "id": "publish",
+      "label": "Set status",
+      "len": 6,
+      "name": "save",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "tax-input-post_tag",
+      "label": "Add or remove tags",
+      "len": 45,
+      "name": "tax_input[post_tag]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "Booking Engine, Direct Bookings, Distribution"
+    },
+    {
+      "id": "new-tag-post_tag",
+      "label": "Add Tag",
+      "len": 0,
+      "name": "newtag[post_tag]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "",
+      "label": "Add or remove tags",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Add"
+    },
+    {
+      "id": "in-popular-industry-721",
+      "label": "Hotel",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "721"
+    },
+    {
+      "id": "in-popular-industry-732",
+      "label": "Hotel",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "732"
+    },
+    {
+      "id": "in-popular-industry-759",
+      "label": "Hotel",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "759"
+    },
+    {
+      "id": "in-popular-industry-734",
+      "label": "Hotel",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "734"
+    },
+    {
+      "id": "in-popular-industry-805",
+      "label": "Hotel",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "805"
+    },
+    {
+      "id": "in-popular-industry-748",
+      "label": "Hotel",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "748"
+    },
+    {
+      "id": "in-popular-industry-740",
+      "label": "Hotel",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "740"
+    },
+    {
+      "id": "in-popular-industry-742",
+      "label": "Hotel",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "742"
+    },
+    {
+      "id": "in-popular-industry-808",
+      "label": "Hotel",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "808"
+    },
+    {
+      "id": "",
+      "label": "Hotel",
+      "len": 1,
+      "name": "tax_input[industry][]",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "0"
+    },
+    {
+      "id": "in-industry-732-2",
+      "label": "Hotel",
+      "len": 3,
+      "name": "tax_input[industry][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "732"
+    },
+    {
+      "id": "in-industry-734-2",
+      "label": "Hotel",
+      "len": 3,
+      "name": "tax_input[industry][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "734"
+    },
+    {
+      "id": "in-industry-805-2",
+      "label": "Hotel",
+      "len": 3,
+      "name": "tax_input[industry][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "805"
+    },
+    {
+      "id": "in-industry-740-2",
+      "label": "Hotel",
+      "len": 3,
+      "name": "tax_input[industry][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "740"
+    },
+    {
+      "id": "in-industry-721-2",
+      "label": "Hotel",
+      "len": 3,
+      "name": "tax_input[industry][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "721"
+    },
+    {
+      "id": "in-industry-759-2",
+      "label": "Hotel",
+      "len": 3,
+      "name": "tax_input[industry][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "759"
+    },
+    {
+      "id": "in-industry-808-2",
+      "label": "Hotel",
+      "len": 3,
+      "name": "tax_input[industry][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "808"
+    },
+    {
+      "id": "in-industry-742-2",
+      "label": "Hotel",
+      "len": 3,
+      "name": "tax_input[industry][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "742"
+    },
+    {
+      "id": "in-industry-748-2",
+      "label": "Hotel",
+      "len": 3,
+      "name": "tax_input[industry][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "748"
+    },
+    {
+      "id": "newindustry",
+      "label": "Add new Industry",
+      "len": 17,
+      "name": "newindustry",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "New Industry name"
+    },
+    {
+      "id": "newindustry_parent",
+      "label": "Parent Industry:",
+      "len": 2,
+      "name": "newindustry_parent",
+      "tag": "SELECT",
+      "type": null,
+      "value": "-1"
+    },
+    {
+      "id": "industry-add-submit",
+      "label": "Hotel",
+      "len": 16,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Add new Industry"
+    },
+    {
+      "id": "_ajax_nonce-add-industry",
+      "label": "Hotel",
+      "len": 10,
+      "name": "_ajax_nonce-add-industry",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "6f94f9a611"
+    },
+    {
+      "id": "in-popular-country-702",
+      "label": "Asia",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "702"
+    },
+    {
+      "id": "in-popular-country-761",
+      "label": "Asia",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "761"
+    },
+    {
+      "id": "in-popular-country-703",
+      "label": "Asia",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "703"
+    },
+    {
+      "id": "in-popular-country-704",
+      "label": "Asia",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "704"
+    },
+    {
+      "id": "in-popular-country-705",
+      "label": "Asia",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "705"
+    },
+    {
+      "id": "in-popular-country-706",
+      "label": "Asia",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "706"
+    },
+    {
+      "id": "",
+      "label": "Asia",
+      "len": 1,
+      "name": "tax_input[country][]",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "0"
+    },
+    {
+      "id": "in-country-702-2",
+      "label": "Asia",
+      "len": 3,
+      "name": "tax_input[country][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "702"
+    },
+    {
+      "id": "in-country-761-2",
+      "label": "Asia",
+      "len": 3,
+      "name": "tax_input[country][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "761"
+    },
+    {
+      "id": "in-country-704-2",
+      "label": "Asia",
+      "len": 3,
+      "name": "tax_input[country][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "704"
+    },
+    {
+      "id": "in-country-706-2",
+      "label": "Asia",
+      "len": 3,
+      "name": "tax_input[country][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "706"
+    },
+    {
+      "id": "in-country-703-2",
+      "label": "Asia",
+      "len": 3,
+      "name": "tax_input[country][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "703"
+    },
+    {
+      "id": "in-country-705-2",
+      "label": "Asia",
+      "len": 3,
+      "name": "tax_input[country][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "705"
+    },
+    {
+      "id": "newcountry",
+      "label": "Add new Country",
+      "len": 16,
+      "name": "newcountry",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "New Country name"
+    },
+    {
+      "id": "newcountry_parent",
+      "label": "Parent Country:",
+      "len": 2,
+      "name": "newcountry_parent",
+      "tag": "SELECT",
+      "type": null,
+      "value": "-1"
+    },
+    {
+      "id": "country-add-submit",
+      "label": "Asia",
+      "len": 15,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Add new Country"
+    },
+    {
+      "id": "_ajax_nonce-add-country",
+      "label": "Asia",
+      "len": 10,
+      "name": "_ajax_nonce-add-country",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "529ecc2303"
+    },
+    {
+      "id": "in-popular-product-723",
+      "label": "Channel Manager",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "723"
+    },
+    {
+      "id": "in-popular-product-754",
+      "label": "Channel Manager",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "754"
+    },
+    {
+      "id": "in-popular-product-753",
+      "label": "Channel Manager",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "753"
+    },
+    {
+      "id": "in-popular-product-725",
+      "label": "Channel Manager",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "725"
+    },
+    {
+      "id": "in-popular-product-807",
+      "label": "Channel Manager",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "807"
+    },
+    {
+      "id": "in-popular-product-730",
+      "label": "Channel Manager",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "730"
+    },
+    {
+      "id": "in-popular-product-806",
+      "label": "Channel Manager",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "806"
+    },
+    {
+      "id": "",
+      "label": "Channel Manager",
+      "len": 1,
+      "name": "tax_input[product][]",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "0"
+    },
+    {
+      "id": "in-product-723-2",
+      "label": "Channel Manager",
+      "len": 3,
+      "name": "tax_input[product][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "723"
+    },
+    {
+      "id": "in-product-730-2",
+      "label": "Channel Manager",
+      "len": 3,
+      "name": "tax_input[product][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "730"
+    },
+    {
+      "id": "in-product-754-2",
+      "label": "Channel Manager",
+      "len": 3,
+      "name": "tax_input[product][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "754"
+    },
+    {
+      "id": "in-product-807-2",
+      "label": "Channel Manager",
+      "len": 3,
+      "name": "tax_input[product][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "807"
+    },
+    {
+      "id": "in-product-753-2",
+      "label": "Channel Manager",
+      "len": 3,
+      "name": "tax_input[product][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "753"
+    },
+    {
+      "id": "in-product-725-2",
+      "label": "Channel Manager",
+      "len": 3,
+      "name": "tax_input[product][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "725"
+    },
+    {
+      "id": "in-product-806-2",
+      "label": "Channel Manager",
+      "len": 3,
+      "name": "tax_input[product][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "806"
+    },
+    {
+      "id": "newproduct",
+      "label": "Add new Product",
+      "len": 16,
+      "name": "newproduct",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "New Product name"
+    },
+    {
+      "id": "newproduct_parent",
+      "label": "Parent Product:",
+      "len": 2,
+      "name": "newproduct_parent",
+      "tag": "SELECT",
+      "type": null,
+      "value": "-1"
+    },
+    {
+      "id": "product-add-submit",
+      "label": "Channel Manager",
+      "len": 15,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Add new Product"
+    },
+    {
+      "id": "_ajax_nonce-add-product",
+      "label": "Channel Manager",
+      "len": 10,
+      "name": "_ajax_nonce-add-product",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "586bbe34e8"
+    },
+    {
+      "id": "in-popular-types-909",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "909"
+    },
+    {
+      "id": "in-popular-types-956",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "956"
+    },
+    {
+      "id": "in-popular-types-726",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "726"
+    },
+    {
+      "id": "in-popular-types-763",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "763"
+    },
+    {
+      "id": "in-popular-types-731",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "731"
+    },
+    {
+      "id": "in-popular-types-756",
+      "label": "Blog",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "756"
+    },
+    {
+      "id": "",
+      "label": "Blog",
+      "len": 1,
+      "name": "tax_input[types][]",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "0"
+    },
+    {
+      "id": "in-types-909-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "tax_input[types][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "909"
+    },
+    {
+      "id": "in-types-756-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "tax_input[types][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "756"
+    },
+    {
+      "id": "in-types-956-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "tax_input[types][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "956"
+    },
+    {
+      "id": "in-types-763-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "tax_input[types][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "763"
+    },
+    {
+      "id": "in-types-726-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "tax_input[types][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "726"
+    },
+    {
+      "id": "in-types-731-2",
+      "label": "Blog",
+      "len": 3,
+      "name": "tax_input[types][]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "731"
+    },
+    {
+      "id": "newtypes",
+      "label": "Add new Types",
+      "len": 14,
+      "name": "newtypes",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "New Types name"
+    },
+    {
+      "id": "newtypes_parent",
+      "label": "Parent Types:",
+      "len": 2,
+      "name": "newtypes_parent",
+      "tag": "SELECT",
+      "type": null,
+      "value": "-1"
+    },
+    {
+      "id": "types-add-submit",
+      "label": "Blog",
+      "len": 13,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Add new Types"
+    },
+    {
+      "id": "_ajax_nonce-add-types",
+      "label": "Blog",
+      "len": 10,
+      "name": "_ajax_nonce-add-types",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "fe4c3ae3d5"
+    },
+    {
+      "id": "tax-input-post_class",
+      "label": "Add or remove Post Class",
+      "len": 0,
+      "name": "tax_input[post_class]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": ""
+    },
+    {
+      "id": "new-tag-post_class",
+      "label": "Add new post_class",
+      "len": 0,
+      "name": "newtag[post_class]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "",
+      "label": "Add or remove Post Class",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Add"
+    },
+    {
+      "id": "page_template",
+      "label": "Template",
+      "len": 7,
+      "name": "page_template",
+      "tag": "SELECT",
+      "type": null,
+      "value": "default"
+    },
+    {
+      "id": "menu_order",
+      "label": "Order",
+      "len": 1,
+      "name": "menu_order",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "0"
+    },
+    {
+      "id": "_thumbnail_id",
+      "label": "",
+      "len": 5,
+      "name": "_thumbnail_id",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "49834"
+    },
+    {
+      "id": "",
+      "label": "Add new Author",
+      "len": 1,
+      "name": "tax_input[post-author][]",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "0"
+    },
+    {
+      "id": "newpost-author",
+      "label": "Add new Author",
+      "len": 15,
+      "name": "newpost-author",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "New Author name"
+    },
+    {
+      "id": "newpost-author_parent",
+      "label": "Parent Author:",
+      "len": 2,
+      "name": "newpost-author_parent",
+      "tag": "SELECT",
+      "type": null,
+      "value": "-1"
+    },
+    {
+      "id": "post-author-add-submit",
+      "label": "Add new Author",
+      "len": 14,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Add new Author"
+    },
+    {
+      "id": "_ajax_nonce-add-post-author",
+      "label": "Add new Author",
+      "len": 10,
+      "name": "_ajax_nonce-add-post-author",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "e36b374350"
+    },
+    {
+      "id": "jamify_hfs_inpost_head_script",
+      "label": "",
+      "len": 10713,
+      "name": "_inpost_head_script[synth_header_script]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "<style>\n.custom-table-wrapper{\n    width:100%;\n    overflow-x:auto;\n    font-family:'Manrope',sans-serif !important;\n}\n\n.custom-benefit-table{\n    width:100%;\n    border-collapse:collapse;\n    border:1px solid rgba(0,0,0,0.08);\n    background:#fff;\n}\n\n.custom-benefit-table th,\n.custom-benefit-table td{\n    padding:26px 22px;\n    border:1px solid rgba(0,0,0,0.08);\n    vertical-align:top;\n    line-height:1.7;\n    font-size:16px;\n}\n\n/* Heading */\n.custom-benefit-table th{\n    color:#8012FF;\n    font-size:16px;\n    font-weight:700;\n    text-align:center;\n}\n\n\n/* Right Column */\n.custom-benefit-table td {\n    color:#646363;\n    font-weight:400;\n}\n\n/* Mobile */\n@media(max-width:767px){\n\n.custom-benefit-table th,\n.custom-benefit-table td{\n    padding:18px 15px;\n    font-size:14px;\n}\n\n}\n</style>\n\n<script type=\"application/ld+json\">\n{\n  \"@context\":\"https://schema.org\",\n  \"@type\":\"Organization\",\n  \"@id\":\"https://rategain.com/#organization\",\n  \"name\":\"RateGain\",\n  \"url\":\"https://rategain.com/\",\n  \"logo\":{\n    \"@type\":\"ImageObject\",\n    \"url\":\"https://rategain.com/wp-content/uploads/2024/02/RateGain-logo-Vivid-Lavender.svg\"\n  },\n  \"sameAs\":[\n    \"https://www.linkedin.com/company/rategain/\",\n    \"https://twitter.com/rategain\",\n    \"https://www.facebook.com/RateGain\",\n    \"https://www.youtube.com/@RateGain\"\n  ]\n}\n</script>\n\n<script type=\"application/ld+json\">\n{\n  \"@context\":\"https://schema.org\",\n  \"@type\":\"WebSite\",\n  \"@id\":\"https://rategain.com/#website\",\n  \"url\":\"https://rategain.com/\",\n  \"name\":\"RateGain\",\n  \"publisher\":{\n    \"@id\":\"https://rategain.com/#organization\"\n  },\n  \"inLanguage\":\"en\"\n}\n</script>\n\n<script type=\"application/ld+json\">\n{\n  \"@context\":\"https://schema.org\",\n  \"@type\":\"BreadcrumbList\",\n  \"@id\":\"https://rategain.com/blog/hotel-booking-engine/#breadcrumb\",\n  \"itemListElement\":[\n    {\n      \"@type\":\"ListItem\",\n      \"position\":1,\n      \"name\":\"Home\",\n      \"item\":\"https://rategain.com/\"\n    },\n    {\n      \"@type\":\"ListItem\",\n      \"position\":2,\n      \"name\":\"Blo"
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 10,
+      "name": "jamify_hfs_post_meta_noncename",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "d3bead03da"
+    },
+    {
+      "id": "bdpp-disable-sharing",
+      "label": "Disable Social Sharing",
+      "len": 0,
+      "name": "",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": ""
+    },
+    {
+      "id": "bdpp-feat-post",
+      "label": "Featured Post",
+      "len": 0,
+      "name": "",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": ""
+    },
+    {
+      "id": "bdpp-sub-title",
+      "label": "Post Sub Title",
+      "len": 0,
+      "name": "",
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "bdpp-read-more-link",
+      "label": "Read More Link",
+      "len": 0,
+      "name": "",
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "",
+      "label": "Post View Count",
+      "len": 16,
+      "name": "",
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Reset Post Count"
+    },
+    {
+      "id": "",
+      "label": "Show Key Takeaways",
+      "len": 1,
+      "name": "acf[field_69f9999ff21f6]",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "0"
+    },
+    {
+      "id": "acf-field_69f9999ff21f6",
+      "label": "Show Key Takeaways",
+      "len": 1,
+      "name": "acf[field_69f9999ff21f6]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "1"
+    },
+    {
+      "id": "",
+      "label": "Show Key Takeaways",
+      "len": 0,
+      "name": "acf[field_69f9a659f21f7]",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "acf-field_69f9a659f21f7-row-0-field_69f9a68174c35",
+      "label": "",
+      "len": 210,
+      "name": "acf[field_69f9a659f21f7][row-0][field_69f9a68174c35]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "A hotel booking engine is software embedded on a hotel's website or app that enables guests to search availability, select rooms, and complete reservations directly — without relying on other indirect channels."
+    },
+    {
+      "id": "acf-field_69f9a659f21f7-row-1-field_69f9a68174c35",
+      "label": "",
+      "len": 128,
+      "name": "acf[field_69f9a659f21f7][row-1][field_69f9a68174c35]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "It works by connecting real-time room inventory with a secure payment gateway, giving guests a seamless booking experience 24/7."
+    },
+    {
+      "id": "acf-field_69f9a659f21f7-row-2-field_69f9a68174c35",
+      "label": "",
+      "len": 162,
+      "name": "acf[field_69f9a659f21f7][row-2][field_69f9a68174c35]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "Key benefits include increased direct bookings, improved operational efficiency, better guest data collection, and higher revenue through upselling opportunities."
+    },
+    {
+      "id": "acf-field_69f9a659f21f7-row-3-field_69f9a68174c35",
+      "label": "",
+      "len": 180,
+      "name": "acf[field_69f9a659f21f7][row-3][field_69f9a68174c35]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "Essential features to look for include real-time inventory management, channel management integration, mobile responsiveness, secure payment processing, and multi-language support."
+    },
+    {
+      "id": "acf-field_69f9a659f21f7-row-4-field_69f9a68174c35",
+      "label": "",
+      "len": 128,
+      "name": "acf[field_69f9a659f21f7][row-4][field_69f9a68174c35]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "Choosing the right booking engine requires evaluating integration capabilities, scalability, pricing models, and vendor support."
+    },
+    {
+      "id": "acf-field_69f9a659f21f7-acfcloneindex-field_69f9a68174c35",
+      "label": "",
+      "len": 0,
+      "name": "acf[field_69f9a659f21f7][acfcloneindex][field_69f9a68174c35]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "",
+      "label": "Show Key Takeaways",
+      "len": 1,
+      "name": "acf[field_69f9a6a4cddb0]",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "0"
+    },
+    {
+      "id": "acf-field_69f9a6a4cddb0",
+      "label": "Show FAQs",
+      "len": 1,
+      "name": "acf[field_69f9a6a4cddb0]",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "1"
+    },
+    {
+      "id": "",
+      "label": "Show Key Takeaways",
+      "len": 0,
+      "name": "acf[field_69f9a6bccddb1]",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "acf-field_69f9a6bccddb1-row-0-field_69f9a6dcddb9d",
+      "label": "",
+      "len": 31,
+      "name": "acf[field_69f9a6bccddb1][row-0][field_69f9a6dcddb9d]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "What is a hotel booking engine?"
+    },
+    {
+      "id": "qt_acf-editor-56_strong",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b"
+    },
+    {
+      "id": "qt_acf-editor-56_em",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "i"
+    },
+    {
+      "id": "qt_acf-editor-56_link",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "link"
+    },
+    {
+      "id": "qt_acf-editor-56_block",
+      "label": "",
+      "len": 7,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b-quote"
+    },
+    {
+      "id": "qt_acf-editor-56_del",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "del"
+    },
+    {
+      "id": "qt_acf-editor-56_ins",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ins"
+    },
+    {
+      "id": "qt_acf-editor-56_img",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "img"
+    },
+    {
+      "id": "qt_acf-editor-56_ul",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ul"
+    },
+    {
+      "id": "qt_acf-editor-56_ol",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ol"
+    },
+    {
+      "id": "qt_acf-editor-56_li",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "li"
+    },
+    {
+      "id": "qt_acf-editor-56_code",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "code"
+    },
+    {
+      "id": "qt_acf-editor-56_tablepress_quicktags_button",
+      "label": "",
+      "len": 5,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Table"
+    },
+    {
+      "id": "qt_acf-editor-56_more",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "more"
+    },
+    {
+      "id": "qt_acf-editor-56_close",
+      "label": "",
+      "len": 10,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "close tags"
+    },
+    {
+      "id": "acf-editor-56",
+      "label": "",
+      "len": 251,
+      "name": "acf[field_69f9a6bccddb1][row-0][field_69f9a6eeddb9e]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "A hotel booking engine is a software application integrated into a hotel's website or mobile app that allows guests to check room availability, select their preferred room type, and complete a reservation with secure online payment — all in real time."
+    },
+    {
+      "id": "acf-field_69f9a6bccddb1-row-1-field_69f9a6dcddb9d",
+      "label": "",
+      "len": 57,
+      "name": "acf[field_69f9a6bccddb1][row-1][field_69f9a6dcddb9d]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "How does a hotel booking engine increase direct bookings?"
+    },
+    {
+      "id": "qt_acf-editor-57_strong",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b"
+    },
+    {
+      "id": "qt_acf-editor-57_em",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "i"
+    },
+    {
+      "id": "qt_acf-editor-57_link",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "link"
+    },
+    {
+      "id": "qt_acf-editor-57_block",
+      "label": "",
+      "len": 7,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b-quote"
+    },
+    {
+      "id": "qt_acf-editor-57_del",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "del"
+    },
+    {
+      "id": "qt_acf-editor-57_ins",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ins"
+    },
+    {
+      "id": "qt_acf-editor-57_img",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "img"
+    },
+    {
+      "id": "qt_acf-editor-57_ul",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ul"
+    },
+    {
+      "id": "qt_acf-editor-57_ol",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ol"
+    },
+    {
+      "id": "qt_acf-editor-57_li",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "li"
+    },
+    {
+      "id": "qt_acf-editor-57_code",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "code"
+    },
+    {
+      "id": "qt_acf-editor-57_tablepress_quicktags_button",
+      "label": "",
+      "len": 5,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Table"
+    },
+    {
+      "id": "qt_acf-editor-57_more",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "more"
+    },
+    {
+      "id": "qt_acf-editor-57_close",
+      "label": "",
+      "len": 10,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "close tags"
+    },
+    {
+      "id": "acf-editor-57",
+      "label": "",
+      "len": 343,
+      "name": "acf[field_69f9a6bccddb1][row-1][field_69f9a6eeddb9e]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "A booking engine increases direct bookings by providing a seamless, branded reservation experience on the hotel's own website. Features like exclusive promo codes, mobile-optimized checkout, rate comparison widgets, and integration with digital marketing campaigns encourage guests to book directly rather than through other indirect channels."
+    },
+    {
+      "id": "acf-field_69f9a6bccddb1-row-2-field_69f9a6dcddb9d",
+      "label": "",
+      "len": 58,
+      "name": "acf[field_69f9a6bccddb1][row-2][field_69f9a6dcddb9d]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "What features should I look for in a hotel booking engine?"
+    },
+    {
+      "id": "qt_acf-editor-58_strong",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b"
+    },
+    {
+      "id": "qt_acf-editor-58_em",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "i"
+    },
+    {
+      "id": "qt_acf-editor-58_link",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "link"
+    },
+    {
+      "id": "qt_acf-editor-58_block",
+      "label": "",
+      "len": 7,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b-quote"
+    },
+    {
+      "id": "qt_acf-editor-58_del",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "del"
+    },
+    {
+      "id": "qt_acf-editor-58_ins",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ins"
+    },
+    {
+      "id": "qt_acf-editor-58_img",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "img"
+    },
+    {
+      "id": "qt_acf-editor-58_ul",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ul"
+    },
+    {
+      "id": "qt_acf-editor-58_ol",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ol"
+    },
+    {
+      "id": "qt_acf-editor-58_li",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "li"
+    },
+    {
+      "id": "qt_acf-editor-58_code",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "code"
+    },
+    {
+      "id": "qt_acf-editor-58_tablepress_quicktags_button",
+      "label": "",
+      "len": 5,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Table"
+    },
+    {
+      "id": "qt_acf-editor-58_more",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "more"
+    },
+    {
+      "id": "qt_acf-editor-58_close",
+      "label": "",
+      "len": 10,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "close tags"
+    },
+    {
+      "id": "acf-editor-58",
+      "label": "",
+      "len": 244,
+      "name": "acf[field_69f9a6bccddb1][row-2][field_69f9a6eeddb9e]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "Key features include real-time inventory management, channel manager integration, secure payment processing (PCI DSS compliant), mobile responsiveness, multi-language and multi-currency support, reporting and analytics, and 24/7 vendor support."
+    },
+    {
+      "id": "acf-field_69f9a6bccddb1-row-3-field_69f9a6dcddb9d",
+      "label": "",
+      "len": 37,
+      "name": "acf[field_69f9a6bccddb1][row-3][field_69f9a6dcddb9d]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "How secure are hotel booking engines?"
+    },
+    {
+      "id": "qt_acf-editor-59_strong",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b"
+    },
+    {
+      "id": "qt_acf-editor-59_em",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "i"
+    },
+    {
+      "id": "qt_acf-editor-59_link",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "link"
+    },
+    {
+      "id": "qt_acf-editor-59_block",
+      "label": "",
+      "len": 7,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b-quote"
+    },
+    {
+      "id": "qt_acf-editor-59_del",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "del"
+    },
+    {
+      "id": "qt_acf-editor-59_ins",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ins"
+    },
+    {
+      "id": "qt_acf-editor-59_img",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "img"
+    },
+    {
+      "id": "qt_acf-editor-59_ul",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ul"
+    },
+    {
+      "id": "qt_acf-editor-59_ol",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ol"
+    },
+    {
+      "id": "qt_acf-editor-59_li",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "li"
+    },
+    {
+      "id": "qt_acf-editor-59_code",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "code"
+    },
+    {
+      "id": "qt_acf-editor-59_tablepress_quicktags_button",
+      "label": "",
+      "len": 5,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Table"
+    },
+    {
+      "id": "qt_acf-editor-59_more",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "more"
+    },
+    {
+      "id": "qt_acf-editor-59_close",
+      "label": "",
+      "len": 10,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "close tags"
+    },
+    {
+      "id": "acf-editor-59",
+      "label": "",
+      "len": 254,
+      "name": "acf[field_69f9a6bccddb1][row-3][field_69f9a6eeddb9e]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "Reputable hotel booking engines are built with robust security measures including PCI DSS compliance for payment data, SSL/TLS encryption for data in transit, GDPR compliance for guest privacy, and fraud prevention tools such as 3D Secure authentication."
+    },
+    {
+      "id": "acf-field_69f9a6bccddb1-row-4-field_69f9a6dcddb9d",
+      "label": "",
+      "len": 62,
+      "name": "acf[field_69f9a6bccddb1][row-4][field_69f9a6dcddb9d]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "Can a booking engine integrate with my existing hotel systems?"
+    },
+    {
+      "id": "qt_acf-editor-60_strong",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b"
+    },
+    {
+      "id": "qt_acf-editor-60_em",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "i"
+    },
+    {
+      "id": "qt_acf-editor-60_link",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "link"
+    },
+    {
+      "id": "qt_acf-editor-60_block",
+      "label": "",
+      "len": 7,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b-quote"
+    },
+    {
+      "id": "qt_acf-editor-60_del",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "del"
+    },
+    {
+      "id": "qt_acf-editor-60_ins",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ins"
+    },
+    {
+      "id": "qt_acf-editor-60_img",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "img"
+    },
+    {
+      "id": "qt_acf-editor-60_ul",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ul"
+    },
+    {
+      "id": "qt_acf-editor-60_ol",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ol"
+    },
+    {
+      "id": "qt_acf-editor-60_li",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "li"
+    },
+    {
+      "id": "qt_acf-editor-60_code",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "code"
+    },
+    {
+      "id": "qt_acf-editor-60_tablepress_quicktags_button",
+      "label": "",
+      "len": 5,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Table"
+    },
+    {
+      "id": "qt_acf-editor-60_more",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "more"
+    },
+    {
+      "id": "qt_acf-editor-60_close",
+      "label": "",
+      "len": 10,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "close tags"
+    },
+    {
+      "id": "acf-editor-60",
+      "label": "",
+      "len": 266,
+      "name": "acf[field_69f9a6bccddb1][row-4][field_69f9a6eeddb9e]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "Yes. Modern hotel booking engines are designed to integrate with property management systems (PMS), channel managers, revenue management systems, CRM platforms, and payment gateways. Always verify the vendor's list of certified integrations before making a decision."
+    },
+    {
+      "id": "acf-field_69f9a6bccddb1-row-5-field_69f9a6dcddb9d",
+      "label": "",
+      "len": 61,
+      "name": "acf[field_69f9a6bccddb1][row-5][field_69f9a6dcddb9d]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "What are the common pricing models for hotel booking engines?"
+    },
+    {
+      "id": "qt_acf-editor-61_strong",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b"
+    },
+    {
+      "id": "qt_acf-editor-61_em",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "i"
+    },
+    {
+      "id": "qt_acf-editor-61_link",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "link"
+    },
+    {
+      "id": "qt_acf-editor-61_block",
+      "label": "",
+      "len": 7,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b-quote"
+    },
+    {
+      "id": "qt_acf-editor-61_del",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "del"
+    },
+    {
+      "id": "qt_acf-editor-61_ins",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ins"
+    },
+    {
+      "id": "qt_acf-editor-61_img",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "img"
+    },
+    {
+      "id": "qt_acf-editor-61_ul",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ul"
+    },
+    {
+      "id": "qt_acf-editor-61_ol",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ol"
+    },
+    {
+      "id": "qt_acf-editor-61_li",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "li"
+    },
+    {
+      "id": "qt_acf-editor-61_code",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "code"
+    },
+    {
+      "id": "qt_acf-editor-61_tablepress_quicktags_button",
+      "label": "",
+      "len": 5,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Table"
+    },
+    {
+      "id": "qt_acf-editor-61_more",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "more"
+    },
+    {
+      "id": "qt_acf-editor-61_close",
+      "label": "",
+      "len": 10,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "close tags"
+    },
+    {
+      "id": "acf-editor-61",
+      "label": "",
+      "len": 248,
+      "name": "acf[field_69f9a6bccddb1][row-5][field_69f9a6eeddb9e]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "Hotel booking engines typically use one of three pricing models: commission-based (a percentage of each booking), flat monthly subscription fee, or a hybrid model combining both. The best choice depends on your property's booking volume and budget."
+    },
+    {
+      "id": "acf-field_69f9a6bccddb1-acfcloneindex-field_69f9a6dcddb9d",
+      "label": "",
+      "len": 0,
+      "name": "acf[field_69f9a6bccddb1][acfcloneindex][field_69f9a6dcddb9d]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "acf-editor-6a7d9584448bf",
+      "label": "",
+      "len": 0,
+      "name": "acf[field_69f9a6bccddb1][acfcloneindex][field_69f9a6eeddb9e]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": ""
+    },
+    {
+      "id": "acf-field_6a04a52df0fb1-input",
+      "label": "Show Key Takeaways",
+      "len": 0,
+      "name": "acf[field_6a04a52df0fb1]",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "acf-field_6a04a52df0fb1",
+      "label": "Select Blog Author",
+      "len": 5,
+      "name": "acf[field_6a04a52df0fb1]",
+      "tag": "SELECT",
+      "type": null,
+      "value": "46616"
+    },
+    {
+      "id": "yoast_free_metabox_nonce",
+      "label": "Focus keyphrase",
+      "len": 10,
+      "name": "yoast_free_metabox_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "634b637ca9"
+    },
+    {
+      "id": "",
+      "label": "Focus keyphrase",
+      "len": 41,
+      "name": "_wp_http_referer",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "/wp-admin/post.php?post=47110&action=edit"
+    },
+    {
+      "id": "yoast_wpseo_focuskw",
+      "label": "Focus keyphrase",
+      "len": 0,
+      "name": "yoast_wpseo_focuskw",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "yoast_wpseo_title",
+      "label": "Focus keyphrase",
+      "len": 57,
+      "name": "yoast_wpseo_title",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "Hotel Booking Engine: What It Is, How It Works & Benefits"
+    },
+    {
+      "id": "yoast_wpseo_metadesc",
+      "label": "Focus keyphrase",
+      "len": 151,
+      "name": "yoast_wpseo_metadesc",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "Learn what a hotel booking engine is, how it works, must-have features, and how it helps hotels win more direct bookings. A complete guide by RateGain."
+    },
+    {
+      "id": "yoast_wpseo_linkdex",
+      "label": "Focus keyphrase",
+      "len": 4,
+      "name": "yoast_wpseo_linkdex",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "-631"
+    },
+    {
+      "id": "yoast_wpseo_content_score",
+      "label": "Focus keyphrase",
+      "len": 2,
+      "name": "yoast_wpseo_content_score",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "30"
+    },
+    {
+      "id": "yoast_wpseo_inclusive_language_score",
+      "label": "Focus keyphrase",
+      "len": 1,
+      "name": "yoast_wpseo_inclusive_language_score",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "0"
+    },
+    {
+      "id": "yoast_wpseo_is_cornerstone",
+      "label": "Focus keyphrase",
+      "len": 5,
+      "name": "yoast_wpseo_is_cornerstone",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "false"
+    },
+    {
+      "id": "yoast_wpseo_estimated-reading-time-minutes",
+      "label": "Focus keyphrase",
+      "len": 0,
+      "name": "yoast_wpseo_estimated-reading-time-minutes",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "yoast_wpseo_meta-robots-noindex",
+      "label": "Focus keyphrase",
+      "len": 1,
+      "name": "yoast_wpseo_meta-robots-noindex",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "0"
+    },
+    {
+      "id": "yoast_wpseo_meta-robots-nofollow",
+      "label": "Focus keyphrase",
+      "len": 1,
+      "name": "yoast_wpseo_meta-robots-nofollow",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "0"
+    },
+    {
+      "id": "yoast_wpseo_meta-robots-adv",
+      "label": "Focus keyphrase",
+      "len": 0,
+      "name": "yoast_wpseo_meta-robots-adv",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "yoast_wpseo_bctitle",
+      "label": "Focus keyphrase",
+      "len": 0,
+      "name": "yoast_wpseo_bctitle",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "yoast_wpseo_canonical",
+      "label": "Focus keyphrase",
+      "len": 0,
+      "name": "yoast_wpseo_canonical",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "yoast_wpseo_schema_page_type",
+      "label": "Focus keyphrase",
+      "len": 0,
+      "name": "yoast_wpseo_schema_page_type",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "yoast_wpseo_schema_article_type",
+      "label": "Focus keyphrase",
+      "len": 0,
+      "name": "yoast_wpseo_schema_article_type",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "yoast_wpseo_opengraph-title",
+      "label": "Focus keyphrase",
+      "len": 57,
+      "name": "yoast_wpseo_opengraph-title",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "Hotel Booking Engine: What It Is, How It Works & Benefits"
+    },
+    {
+      "id": "yoast_wpseo_opengraph-description",
+      "label": "Focus keyphrase",
+      "len": 151,
+      "name": "yoast_wpseo_opengraph-description",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "Learn what a hotel booking engine is, how it works, must-have features, and how it helps hotels win more direct bookings. A complete guide by RateGain."
+    },
+    {
+      "id": "yoast_wpseo_opengraph-image",
+      "label": "Focus keyphrase",
+      "len": 92,
+      "name": "yoast_wpseo_opengraph-image",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "https://rategain.com/wp-content/uploads/2026/06/what-is-a-hotel-booking-engine-1024x536.webp"
+    },
+    {
+      "id": "yoast_wpseo_opengraph-image-id",
+      "label": "Focus keyphrase",
+      "len": 5,
+      "name": "yoast_wpseo_opengraph-image-id",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "49834"
+    },
+    {
+      "id": "yoast_wpseo_twitter-title",
+      "label": "Focus keyphrase",
+      "len": 57,
+      "name": "yoast_wpseo_twitter-title",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "Hotel Booking Engine: What It Is, How It Works & Benefits"
+    },
+    {
+      "id": "yoast_wpseo_twitter-description",
+      "label": "Focus keyphrase",
+      "len": 151,
+      "name": "yoast_wpseo_twitter-description",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "Learn what a hotel booking engine is, how it works, must-have features, and how it helps hotels win more direct bookings. A complete guide by RateGain."
+    },
+    {
+      "id": "yoast_wpseo_twitter-image",
+      "label": "Focus keyphrase",
+      "len": 92,
+      "name": "yoast_wpseo_twitter-image",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "https://rategain.com/wp-content/uploads/2026/06/what-is-a-hotel-booking-engine-1024x536.webp"
+    },
+    {
+      "id": "yoast_wpseo_twitter-image-id",
+      "label": "Focus keyphrase",
+      "len": 5,
+      "name": "yoast_wpseo_twitter-image-id",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "49834"
+    },
+    {
+      "id": "yoast-wpseo-primary-category",
+      "label": "Focus keyphrase",
+      "len": 3,
+      "name": "yoast_wpseo_primary_category_term",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "132"
+    },
+    {
+      "id": "yoast_wpseo_primary_category_nonce",
+      "label": "Focus keyphrase",
+      "len": 10,
+      "name": "yoast_wpseo_primary_category_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "b7adfee618"
+    },
+    {
+      "id": "yoast-wpseo-primary-industry",
+      "label": "Focus keyphrase",
+      "len": 0,
+      "name": "yoast_wpseo_primary_industry_term",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "yoast_wpseo_primary_industry_nonce",
+      "label": "Focus keyphrase",
+      "len": 10,
+      "name": "yoast_wpseo_primary_industry_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "b7adfee618"
+    },
+    {
+      "id": "yoast-wpseo-primary-country",
+      "label": "Focus keyphrase",
+      "len": 0,
+      "name": "yoast_wpseo_primary_country_term",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "yoast_wpseo_primary_country_nonce",
+      "label": "Focus keyphrase",
+      "len": 10,
+      "name": "yoast_wpseo_primary_country_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "b7adfee618"
+    },
+    {
+      "id": "yoast-wpseo-primary-product",
+      "label": "Focus keyphrase",
+      "len": 0,
+      "name": "yoast_wpseo_primary_product_term",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "yoast_wpseo_primary_product_nonce",
+      "label": "Focus keyphrase",
+      "len": 10,
+      "name": "yoast_wpseo_primary_product_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "b7adfee618"
+    },
+    {
+      "id": "yoast-wpseo-primary-types",
+      "label": "Focus keyphrase",
+      "len": 3,
+      "name": "yoast_wpseo_primary_types_term",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "909"
+    },
+    {
+      "id": "yoast_wpseo_primary_types_nonce",
+      "label": "Focus keyphrase",
+      "len": 10,
+      "name": "yoast_wpseo_primary_types_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "b7adfee618"
+    },
+    {
+      "id": "yoast-wpseo-primary-post-author",
+      "label": "Focus keyphrase",
+      "len": 0,
+      "name": "yoast_wpseo_primary_post-author_term",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "yoast_wpseo_primary_post-author_nonce",
+      "label": "Focus keyphrase",
+      "len": 10,
+      "name": "yoast_wpseo_primary_post-author_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "b7adfee618"
+    },
+    {
+      "id": "focus-keyword-input-metabox",
+      "label": "Focus keyphrase",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "yoast-google-preview-slug-metabox",
+      "label": "Focus keyphrase",
+      "len": 20,
+      "name": null,
+      "tag": "INPUT",
+      "type": null,
+      "value": "hotel-booking-engine"
+    },
+    {
+      "id": "yoast-schema-page-type-metabox",
+      "label": "Page type",
+      "len": 0,
+      "name": "",
+      "tag": "SELECT",
+      "type": null,
+      "value": ""
+    },
+    {
+      "id": "yoast-schema-article-type-metabox",
+      "label": "Article type",
+      "len": 0,
+      "name": "",
+      "tag": "SELECT",
+      "type": null,
+      "value": ""
+    },
+    {
+      "id": "acf-field_5a267b326916ab",
+      "label": "Short description",
+      "len": 0,
+      "name": "acf[field_5a267b326916ab]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": ""
+    },
+    {
+      "id": "excerpt",
+      "label": "Excerpt",
+      "len": 0,
+      "name": "excerpt",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": ""
+    },
+    {
+      "id": "trackback_url",
+      "label": "Send trackbacks to:",
+      "len": 0,
+      "name": "trackback_url",
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "meta-977140-key",
+      "label": "Key",
+      "len": 21,
+      "name": "meta[977140][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "ekit_post_views_count"
+    },
+    {
+      "id": "deletemeta[977140]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977140]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977140-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977140-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977140-value",
+      "label": "Value",
+      "len": 3,
+      "name": "meta[977140][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "192"
+    },
+    {
+      "id": "meta-977124-key",
+      "label": "Key",
+      "len": 4,
+      "name": "meta[977124][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "faqs"
+    },
+    {
+      "id": "deletemeta[977124]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977124]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977124-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977124-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977124-value",
+      "label": "Value",
+      "len": 1,
+      "name": "meta[977124][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "6"
+    },
+    {
+      "id": "meta-977198-key",
+      "label": "Key",
+      "len": 13,
+      "name": "meta[977198][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "faqs_0_answer"
+    },
+    {
+      "id": "deletemeta[977198]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977198]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977198-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977198-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977198-value",
+      "label": "Value",
+      "len": 251,
+      "name": "meta[977198][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "A hotel booking engine is a software application integrated into a hotel's website or mobile app that allows guests to check room availability, select their preferred room type, and complete a reservation with secure online payment — all in real time."
+    },
+    {
+      "id": "meta-977196-key",
+      "label": "Key",
+      "len": 15,
+      "name": "meta[977196][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "faqs_0_question"
+    },
+    {
+      "id": "deletemeta[977196]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977196]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977196-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977196-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977196-value",
+      "label": "Value",
+      "len": 31,
+      "name": "meta[977196][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "What is a hotel booking engine?"
+    },
+    {
+      "id": "meta-977202-key",
+      "label": "Key",
+      "len": 13,
+      "name": "meta[977202][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "faqs_1_answer"
+    },
+    {
+      "id": "deletemeta[977202]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977202]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977202-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977202-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977202-value",
+      "label": "Value",
+      "len": 343,
+      "name": "meta[977202][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "A booking engine increases direct bookings by providing a seamless, branded reservation experience on the hotel's own website. Features like exclusive promo codes, mobile-optimized checkout, rate comparison widgets, and integration with digital marketing campaigns encourage guests to book directly rather than through other indirect channels."
+    },
+    {
+      "id": "meta-977200-key",
+      "label": "Key",
+      "len": 15,
+      "name": "meta[977200][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "faqs_1_question"
+    },
+    {
+      "id": "deletemeta[977200]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977200]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977200-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977200-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977200-value",
+      "label": "Value",
+      "len": 57,
+      "name": "meta[977200][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "How does a hotel booking engine increase direct bookings?"
+    },
+    {
+      "id": "meta-977206-key",
+      "label": "Key",
+      "len": 13,
+      "name": "meta[977206][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "faqs_2_answer"
+    },
+    {
+      "id": "deletemeta[977206]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977206]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977206-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977206-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977206-value",
+      "label": "Value",
+      "len": 244,
+      "name": "meta[977206][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "Key features include real-time inventory management, channel manager integration, secure payment processing (PCI DSS compliant), mobile responsiveness, multi-language and multi-currency support, reporting and analytics, and 24/7 vendor support."
+    },
+    {
+      "id": "meta-977204-key",
+      "label": "Key",
+      "len": 15,
+      "name": "meta[977204][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "faqs_2_question"
+    },
+    {
+      "id": "deletemeta[977204]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977204]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977204-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977204-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977204-value",
+      "label": "Value",
+      "len": 58,
+      "name": "meta[977204][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "What features should I look for in a hotel booking engine?"
+    },
+    {
+      "id": "meta-977210-key",
+      "label": "Key",
+      "len": 13,
+      "name": "meta[977210][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "faqs_3_answer"
+    },
+    {
+      "id": "deletemeta[977210]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977210]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977210-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977210-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977210-value",
+      "label": "Value",
+      "len": 254,
+      "name": "meta[977210][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "Reputable hotel booking engines are built with robust security measures including PCI DSS compliance for payment data, SSL/TLS encryption for data in transit, GDPR compliance for guest privacy, and fraud prevention tools such as 3D Secure authentication."
+    },
+    {
+      "id": "meta-977208-key",
+      "label": "Key",
+      "len": 15,
+      "name": "meta[977208][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "faqs_3_question"
+    },
+    {
+      "id": "deletemeta[977208]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977208]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977208-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977208-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977208-value",
+      "label": "Value",
+      "len": 37,
+      "name": "meta[977208][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "How secure are hotel booking engines?"
+    },
+    {
+      "id": "meta-977214-key",
+      "label": "Key",
+      "len": 13,
+      "name": "meta[977214][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "faqs_4_answer"
+    },
+    {
+      "id": "deletemeta[977214]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977214]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977214-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977214-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977214-value",
+      "label": "Value",
+      "len": 266,
+      "name": "meta[977214][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "Yes. Modern hotel booking engines are designed to integrate with property management systems (PMS), channel managers, revenue management systems, CRM platforms, and payment gateways. Always verify the vendor's list of certified integrations before making a decision."
+    },
+    {
+      "id": "meta-977212-key",
+      "label": "Key",
+      "len": 15,
+      "name": "meta[977212][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "faqs_4_question"
+    },
+    {
+      "id": "deletemeta[977212]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977212]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977212-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977212-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977212-value",
+      "label": "Value",
+      "len": 62,
+      "name": "meta[977212][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "Can a booking engine integrate with my existing hotel systems?"
+    },
+    {
+      "id": "meta-977218-key",
+      "label": "Key",
+      "len": 13,
+      "name": "meta[977218][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "faqs_5_answer"
+    },
+    {
+      "id": "deletemeta[977218]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977218]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977218-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977218-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977218-value",
+      "label": "Value",
+      "len": 248,
+      "name": "meta[977218][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "Hotel booking engines typically use one of three pricing models: commission-based (a percentage of each booking), flat monthly subscription fee, or a hybrid model combining both. The best choice depends on your property's booking volume and budget."
+    },
+    {
+      "id": "meta-977216-key",
+      "label": "Key",
+      "len": 15,
+      "name": "meta[977216][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "faqs_5_question"
+    },
+    {
+      "id": "deletemeta[977216]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977216]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977216-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977216-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977216-value",
+      "label": "Value",
+      "len": 61,
+      "name": "meta[977216][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "What are the common pricing models for hotel booking engines?"
+    },
+    {
+      "id": "meta-977120-key",
+      "label": "Key",
+      "len": 13,
+      "name": "meta[977120][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "key_takeaways"
+    },
+    {
+      "id": "deletemeta[977120]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977120]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977120-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977120-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977120-value",
+      "label": "Value",
+      "len": 1,
+      "name": "meta[977120][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "5"
+    },
+    {
+      "id": "meta-977186-key",
+      "label": "Key",
+      "len": 21,
+      "name": "meta[977186][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "key_takeaways_0_point"
+    },
+    {
+      "id": "deletemeta[977186]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977186]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977186-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977186-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977186-value",
+      "label": "Value",
+      "len": 210,
+      "name": "meta[977186][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "A hotel booking engine is software embedded on a hotel's website or app that enables guests to search availability, select rooms, and complete reservations directly — without relying on other indirect channels."
+    },
+    {
+      "id": "meta-977188-key",
+      "label": "Key",
+      "len": 21,
+      "name": "meta[977188][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "key_takeaways_1_point"
+    },
+    {
+      "id": "deletemeta[977188]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977188]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977188-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977188-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977188-value",
+      "label": "Value",
+      "len": 128,
+      "name": "meta[977188][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "It works by connecting real-time room inventory with a secure payment gateway, giving guests a seamless booking experience 24/7."
+    },
+    {
+      "id": "meta-977190-key",
+      "label": "Key",
+      "len": 21,
+      "name": "meta[977190][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "key_takeaways_2_point"
+    },
+    {
+      "id": "deletemeta[977190]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977190]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977190-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977190-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977190-value",
+      "label": "Value",
+      "len": 162,
+      "name": "meta[977190][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "Key benefits include increased direct bookings, improved operational efficiency, better guest data collection, and higher revenue through upselling opportunities."
+    },
+    {
+      "id": "meta-977192-key",
+      "label": "Key",
+      "len": 21,
+      "name": "meta[977192][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "key_takeaways_3_point"
+    },
+    {
+      "id": "deletemeta[977192]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977192]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977192-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977192-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977192-value",
+      "label": "Value",
+      "len": 180,
+      "name": "meta[977192][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "Essential features to look for include real-time inventory management, channel management integration, mobile responsiveness, secure payment processing, and multi-language support."
+    },
+    {
+      "id": "meta-977194-key",
+      "label": "Key",
+      "len": 21,
+      "name": "meta[977194][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "key_takeaways_4_point"
+    },
+    {
+      "id": "deletemeta[977194]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977194]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977194-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977194-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977194-value",
+      "label": "Value",
+      "len": 128,
+      "name": "meta[977194][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "Choosing the right booking engine requires evaluating integration capabilities, scalability, pricing models, and vendor support."
+    },
+    {
+      "id": "meta-977126-key",
+      "label": "Key",
+      "len": 18,
+      "name": "meta[977126][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "select_blog_author"
+    },
+    {
+      "id": "deletemeta[977126]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977126]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977126-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977126-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977126-value",
+      "label": "Value",
+      "len": 5,
+      "name": "meta[977126][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "46616"
+    },
+    {
+      "id": "meta-977128-key",
+      "label": "Key",
+      "len": 10,
+      "name": "meta[977128][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "short_desc"
+    },
+    {
+      "id": "deletemeta[977128]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977128]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977128-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977128-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977128-value",
+      "label": "Value",
+      "len": 0,
+      "name": "meta[977128][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": ""
+    },
+    {
+      "id": "meta-977122-key",
+      "label": "Key",
+      "len": 9,
+      "name": "meta[977122][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "show_faqs"
+    },
+    {
+      "id": "deletemeta[977122]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977122]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977122-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977122-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977122-value",
+      "label": "Value",
+      "len": 1,
+      "name": "meta[977122][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "1"
+    },
+    {
+      "id": "meta-977118-key",
+      "label": "Key",
+      "len": 18,
+      "name": "meta[977118][key]",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "show_key_takeaways"
+    },
+    {
+      "id": "deletemeta[977118]",
+      "label": "Key",
+      "len": 6,
+      "name": "deletemeta[977118]",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Delete"
+    },
+    {
+      "id": "meta-977118-submit",
+      "label": "Key",
+      "len": 6,
+      "name": "meta-977118-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Update"
+    },
+    {
+      "id": "_ajax_nonce",
+      "label": "Key",
+      "len": 10,
+      "name": "_ajax_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "92dcdca883"
+    },
+    {
+      "id": "meta-977118-value",
+      "label": "Value",
+      "len": 1,
+      "name": "meta[977118][value]",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": "1"
+    },
+    {
+      "id": "metakeyselect",
+      "label": "Name",
+      "len": 6,
+      "name": "metakeyselect",
+      "tag": "SELECT",
+      "type": null,
+      "value": "#NONE#"
+    },
+    {
+      "id": "metakeyinput",
+      "label": "",
+      "len": 0,
+      "name": "metakeyinput",
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "metavalue",
+      "label": "Value",
+      "len": 0,
+      "name": "metavalue",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": ""
+    },
+    {
+      "id": "_ajax_nonce-add-meta",
+      "label": "",
+      "len": 10,
+      "name": "_ajax_nonce-add-meta",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "0f1f0e2ae7"
+    },
+    {
+      "id": "newmeta-submit",
+      "label": "Key",
+      "len": 16,
+      "name": "addmeta",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Add Custom Field"
+    },
+    {
+      "id": "",
+      "label": "Allow comments",
+      "len": 1,
+      "name": "advanced_view",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "1"
+    },
+    {
+      "id": "comment_status",
+      "label": "Allow comments",
+      "len": 4,
+      "name": "comment_status",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "open"
+    },
+    {
+      "id": "ping_status",
+      "label": "Allow trackbacks and pingbacks",
+      "len": 4,
+      "name": "ping_status",
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "open"
+    },
+    {
+      "id": "add_comment_nonce",
+      "label": "",
+      "len": 10,
+      "name": "add_comment_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "1cf3919bcf"
+    },
+    {
+      "id": "_ajax_fetch_list_nonce",
+      "label": "",
+      "len": 10,
+      "name": "_ajax_fetch_list_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "5f59ec102c"
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 41,
+      "name": "_wp_http_referer",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "/wp-admin/post.php?post=47110&action=edit"
+    },
+    {
+      "id": "post_name",
+      "label": "Slug",
+      "len": 20,
+      "name": "post_name",
+      "tag": "INPUT",
+      "type": "text",
+      "value": "hotel-booking-engine"
+    },
+    {
+      "id": "post_author_override",
+      "label": "Author",
+      "len": 2,
+      "name": "post_author_override",
+      "tag": "SELECT",
+      "type": null,
+      "value": "34"
+    },
+    {
+      "id": "",
+      "label": "Disable global Header scripts on this page",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "on"
+    },
+    {
+      "id": "",
+      "label": "Disable global Header scripts on this page",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "on"
+    },
+    {
+      "id": "",
+      "label": "Disable global Header scripts on this page",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "on"
+    },
+    {
+      "id": "wpcode-search-snippets",
+      "label": "Disable global Header scripts on this page",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "",
+      "label": "Disable global Header scripts on this page",
+      "len": 17,
+      "name": null,
+      "tag": "SELECT",
+      "type": null,
+      "value": "Insert After Post"
+    },
+    {
+      "id": "",
+      "label": "Disable global Header scripts on this page",
+      "len": 18,
+      "name": null,
+      "tag": "SELECT",
+      "type": null,
+      "value": "Insert Before Post"
+    },
+    {
+      "id": "",
+      "label": "Disable global Header scripts on this page",
+      "len": 21,
+      "name": null,
+      "tag": "SELECT",
+      "type": null,
+      "value": "Insert Before Content"
+    },
+    {
+      "id": "",
+      "label": "Disable global Header scripts on this page",
+      "len": 17,
+      "name": null,
+      "tag": "SELECT",
+      "type": null,
+      "value": "Insert After Post"
+    },
+    {
+      "id": "",
+      "label": "Disable global Header scripts on this page",
+      "len": 20,
+      "name": null,
+      "tag": "SELECT",
+      "type": null,
+      "value": "Insert After Content"
+    },
+    {
+      "id": "",
+      "label": "Disable global Header scripts on this page",
+      "len": 17,
+      "name": null,
+      "tag": "SELECT",
+      "type": null,
+      "value": "Insert After Post"
+    },
+    {
+      "id": "qt_replycontent_strong",
+      "label": "Comment",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b"
+    },
+    {
+      "id": "qt_replycontent_em",
+      "label": "Comment",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "i"
+    },
+    {
+      "id": "qt_replycontent_link",
+      "label": "Comment",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "link"
+    },
+    {
+      "id": "qt_replycontent_block",
+      "label": "Comment",
+      "len": 7,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b-quote"
+    },
+    {
+      "id": "qt_replycontent_del",
+      "label": "Comment",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "del"
+    },
+    {
+      "id": "qt_replycontent_ins",
+      "label": "Comment",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ins"
+    },
+    {
+      "id": "qt_replycontent_img",
+      "label": "Comment",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "img"
+    },
+    {
+      "id": "qt_replycontent_ul",
+      "label": "Comment",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ul"
+    },
+    {
+      "id": "qt_replycontent_ol",
+      "label": "Comment",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ol"
+    },
+    {
+      "id": "qt_replycontent_li",
+      "label": "Comment",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "li"
+    },
+    {
+      "id": "qt_replycontent_code",
+      "label": "Comment",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "code"
+    },
+    {
+      "id": "qt_replycontent_tablepress_quicktags_button",
+      "label": "Comment",
+      "len": 5,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Table"
+    },
+    {
+      "id": "qt_replycontent_close",
+      "label": "Comment",
+      "len": 10,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "close tags"
+    },
+    {
+      "id": "replycontent",
+      "label": "Comment",
+      "len": 0,
+      "name": "replycontent",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": ""
+    },
+    {
+      "id": "author-name",
+      "label": "Name",
+      "len": 0,
+      "name": "newcomment_author",
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "author-email",
+      "label": "Email",
+      "len": 0,
+      "name": "newcomment_author_email",
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "author-url",
+      "label": "URL",
+      "len": 0,
+      "name": "newcomment_author_url",
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "action",
+      "label": "Comment",
+      "len": 0,
+      "name": "action",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "comment_ID",
+      "label": "Comment",
+      "len": 0,
+      "name": "comment_ID",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "comment_post_ID",
+      "label": "Comment",
+      "len": 0,
+      "name": "comment_post_ID",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "status",
+      "label": "Comment",
+      "len": 0,
+      "name": "status",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": ""
+    },
+    {
+      "id": "position",
+      "label": "Comment",
+      "len": 1,
+      "name": "position",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "1"
+    },
+    {
+      "id": "checkbox",
+      "label": "Comment",
+      "len": 1,
+      "name": "checkbox",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "0"
+    },
+    {
+      "id": "mode",
+      "label": "Comment",
+      "len": 6,
+      "name": "mode",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "single"
+    },
+    {
+      "id": "_ajax_nonce-replyto-comment",
+      "label": "Comment",
+      "len": 10,
+      "name": "_ajax_nonce-replyto-comment",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "2542fbd0d9"
+    },
+    {
+      "id": "_wp_unfiltered_html_comment",
+      "label": "Comment",
+      "len": 10,
+      "name": "_wp_unfiltered_html_comment",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "de93018719"
+    },
+    {
+      "id": "_ajax_linking_nonce",
+      "label": "",
+      "len": 10,
+      "name": "_ajax_linking_nonce",
+      "tag": "INPUT",
+      "type": "hidden",
+      "value": "428292f6d3"
+    },
+    {
+      "id": "wp-link-url",
+      "label": "",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "wp-link-text",
+      "label": "",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "wp-link-target",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "checkbox",
+      "value": "on"
+    },
+    {
+      "id": "wp-link-search",
+      "label": "",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "search",
+      "value": ""
+    },
+    {
+      "id": "wp-link-submit",
+      "label": "",
+      "len": 8,
+      "name": "wp-link-submit",
+      "tag": "INPUT",
+      "type": "submit",
+      "value": "Add Link"
+    },
+    {
+      "id": "qt_acf_content_strong",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b"
+    },
+    {
+      "id": "qt_acf_content_em",
+      "label": "",
+      "len": 1,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "i"
+    },
+    {
+      "id": "qt_acf_content_link",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "link"
+    },
+    {
+      "id": "qt_acf_content_block",
+      "label": "",
+      "len": 7,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "b-quote"
+    },
+    {
+      "id": "qt_acf_content_del",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "del"
+    },
+    {
+      "id": "qt_acf_content_ins",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ins"
+    },
+    {
+      "id": "qt_acf_content_img",
+      "label": "",
+      "len": 3,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "img"
+    },
+    {
+      "id": "qt_acf_content_ul",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ul"
+    },
+    {
+      "id": "qt_acf_content_ol",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "ol"
+    },
+    {
+      "id": "qt_acf_content_li",
+      "label": "",
+      "len": 2,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "li"
+    },
+    {
+      "id": "qt_acf_content_code",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "code"
+    },
+    {
+      "id": "qt_acf_content_tablepress_quicktags_button",
+      "label": "",
+      "len": 5,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "Table"
+    },
+    {
+      "id": "qt_acf_content_more",
+      "label": "",
+      "len": 4,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "more"
+    },
+    {
+      "id": "qt_acf_content_close",
+      "label": "",
+      "len": 10,
+      "name": null,
+      "tag": "INPUT",
+      "type": "button",
+      "value": "close tags"
+    },
+    {
+      "id": "acf_content",
+      "label": "",
+      "len": 0,
+      "name": "acf_content",
+      "tag": "TEXTAREA",
+      "type": null,
+      "value": ""
+    },
+    {
+      "id": "mceu_51_label",
+      "label": "Paste URL or type to search",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "mceu_114_label",
+      "label": "Paste URL or type to search",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 0,
+      "name": "file",
+      "tag": "INPUT",
+      "type": "file",
+      "value": ""
+    },
+    {
+      "id": "mceu_177_label",
+      "label": "Paste URL or type to search",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "mceu_239_label",
+      "label": "Paste URL or type to search",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "mceu_301_label",
+      "label": "Paste URL or type to search",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "mceu_363_label",
+      "label": "Paste URL or type to search",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "mceu_425_label",
+      "label": "Paste URL or type to search",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "mceu_487_label",
+      "label": "Paste URL or type to search",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "id": "",
+      "label": "",
+      "len": 0,
+      "name": null,
+      "tag": "INPUT",
+      "type": "text",
+      "value": ""
+    }
+  ]
+}

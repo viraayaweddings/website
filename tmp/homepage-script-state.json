@@ -1,0 +1,93 @@
+{
+  "scriptState": {
+    "bodyText": "WEDDING PACKAGES Hotels Hotels Delhi NCR Goa Jaipur Mussoorie Udaipur Agra Ajmer Amritsar Bengaluru Chandigarh Chennai Dehradun Hyderabad Jaisalmer Jim Corbett Jodhpur kochi Kolkata Mumbai Pune Pushkar Ranthambore Rishikesh Shimla Trivandrum Delhi NCR View All Andaz New delhi Courtyard by Marriott A",
+    "hasDollar": false,
+    "hasJQuery": false,
+    "readyState": "complete",
+    "scripts": [
+      {
+        "async": false,
+        "defer": false,
+        "src": "inline"
+      },
+      {
+        "async": false,
+        "defer": false,
+        "src": "http://127.0.0.1:3002/js/mutation-observer-guard.js"
+      },
+      {
+        "async": false,
+        "defer": true,
+        "src": "http://127.0.0.1:3002/js/lead-forms.js"
+      },
+      {
+        "async": false,
+        "defer": false,
+        "src": "inline"
+      },
+      {
+        "async": false,
+        "defer": false,
+        "src": "inline"
+      },
+      {
+        "async": false,
+        "defer": false,
+        "src": "http://127.0.0.1:3002/user/assets/vendor/jquery.min.js"
+      },
+      {
+        "async": false,
+        "defer": false,
+        "src": "http://127.0.0.1:3002/user/assets/vendor/bootstrap/js/bootstrap.min.js"
+      },
+      {
+        "async": false,
+        "defer": false,
+        "src": "http://127.0.0.1:3002/vendor/flatpickr/flatpickr.min.js"
+      },
+      {
+        "async": false,
+        "defer": false,
+        "src": "http://127.0.0.1:3002/user/assets/vendor/slick/js/slick.min.js"
+      },
+      {
+        "async": false,
+        "defer": false,
+        "src": "http://127.0.0.1:3002/user/assets/vendor/aos/aos.js"
+      },
+      {
+        "async": false,
+        "defer": false,
+        "src": "http://127.0.0.1:3002/user/assets/js/custom.js"
+      },
+      {
+        "async": false,
+        "defer": false,
+        "src": "http://127.0.0.1:3002/vendor/select2/select2.min.js"
+      },
+      {
+        "async": false,
+        "defer": true,
+        "src": "http://127.0.0.1:3002/js/currency-switcher.js"
+      },
+      {
+        "async": false,
+        "defer": true,
+        "src": "http://127.0.0.1:3002/js/site-search.js"
+      },
+      {
+        "async": false,
+        "defer": false,
+        "src": "inline"
+      }
+    ]
+  },
+  "logs": [
+    {
+      "level": "log",
+      "message": "Accordion not found",
+      "timestamp": "2026-08-13T07:16:50.763Z",
+      "url": "http://127.0.0.1:3002/user/assets/js/custom.js"
+    }
+  ]
+}

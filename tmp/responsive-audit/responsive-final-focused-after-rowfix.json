@@ -1,0 +1,22 @@
+[
+  {
+    "route": "/real-weddings/kashyap-prachi",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": []
+  },
+  {
+    "route": "/hotel-cost-calculator",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "overflow": -3,
+    "visibleOver": [],
+    "brokenImages": []
+  }
+]

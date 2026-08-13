@@ -1,0 +1,5 @@
+[vinext] Server error: TypeError: Content-Type was not one of "multipart/form-data" or "application/x-www-form-urlencoded".
+    at node:internal/deps/undici/undici:6870:19
+    at successSteps (node:internal/deps/undici/undici:6902:27)
+    at readAllBytes (node:internal/deps/undici/undici:5825:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)

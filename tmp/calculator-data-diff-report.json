@@ -1,0 +1,556 @@
+{
+  "summary": {
+    "original": {
+      "cities": 53,
+      "hotelEntries": 259,
+      "uniqueHotels": 259,
+      "compareHotelEntries": 320,
+      "pricePayloads": 3108,
+      "priceFields": 12432
+    },
+    "local": {
+      "cities": 53,
+      "hotelEntries": 259,
+      "uniqueHotels": 259,
+      "priceHotelKeys": 259,
+      "searchIndex": 259
+    },
+    "citySet": {
+      "label": "cities by id",
+      "localCount": 53,
+      "originalCount": 53,
+      "missingLocal": [],
+      "extraLocal": []
+    },
+    "hotelSet": {
+      "label": "hotels by city:id",
+      "localCount": 259,
+      "originalCount": 259,
+      "missingLocal": [],
+      "extraLocal": []
+    },
+    "cityNameMismatchCount": 0,
+    "hotelFieldMismatchCount": 0,
+    "missingLocalPriceHotelCount": 0,
+    "priceMismatchCount": 0,
+    "compareShapeIssueCount": 61,
+    "availabilityVsOriginal": {
+      "cityMissingLocal": 10,
+      "cityExtraLocal": 0,
+      "hotelMissingLocal": 0,
+      "hotelExtraLocal": 0
+    }
+  },
+  "samples": {
+    "cityNameMismatches": [],
+    "hotelFieldMismatches": [],
+    "missingLocalPrices": [],
+    "priceMismatches": [],
+    "compareShapeIssues": [
+      {
+        "city_id": 5,
+        "id": 147,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 5,
+        "id": 188,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 5,
+        "id": 189,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 5,
+        "id": 190,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 5,
+        "id": 191,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 5,
+        "id": 196,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 5,
+        "id": 250,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 5,
+        "id": 462,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 8,
+        "id": 461,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 9,
+        "id": 128,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 9,
+        "id": 460,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 11,
+        "id": 253,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 11,
+        "id": 254,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 12,
+        "id": 233,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 12,
+        "id": 235,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 12,
+        "id": 237,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 12,
+        "id": 238,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 13,
+        "id": 140,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 13,
+        "id": 141,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 13,
+        "id": 142,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 13,
+        "id": 159,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 14,
+        "id": 62,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 15,
+        "id": 251,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 15,
+        "id": 252,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 16,
+        "id": 71,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 17,
+        "id": 83,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 25,
+        "id": 94,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 25,
+        "id": 261,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 27,
+        "id": 121,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 28,
+        "id": 120,
+        "issue": "missing in local compare/dropdown source"
+      }
+    ],
+    "availabilityMissingCities": [
+      "41",
+      "42",
+      "44",
+      "67",
+      "68",
+      "69",
+      "70",
+      "71",
+      "72",
+      "73"
+    ],
+    "availabilityMissingHotels": [],
+    "availabilityExtraCities": []
+  },
+  "details": {
+    "cityNameMismatches": [],
+    "hotelFieldMismatches": [],
+    "missingLocalPrices": [],
+    "priceMismatches": [],
+    "compareShapeIssues": [
+      {
+        "city_id": 5,
+        "id": 147,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 5,
+        "id": 188,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 5,
+        "id": 189,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 5,
+        "id": 190,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 5,
+        "id": 191,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 5,
+        "id": 196,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 5,
+        "id": 250,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 5,
+        "id": 462,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 8,
+        "id": 461,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 9,
+        "id": 128,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 9,
+        "id": 460,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 11,
+        "id": 253,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 11,
+        "id": 254,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 12,
+        "id": 233,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 12,
+        "id": 235,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 12,
+        "id": 237,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 12,
+        "id": 238,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 13,
+        "id": 140,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 13,
+        "id": 141,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 13,
+        "id": 142,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 13,
+        "id": 159,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 14,
+        "id": 62,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 15,
+        "id": 251,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 15,
+        "id": 252,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 16,
+        "id": 71,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 17,
+        "id": 83,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 25,
+        "id": 94,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 25,
+        "id": 261,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 27,
+        "id": 121,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 28,
+        "id": 120,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 28,
+        "id": 122,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 29,
+        "id": 123,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 30,
+        "id": 132,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 30,
+        "id": 165,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 32,
+        "id": 135,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 33,
+        "id": 463,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 35,
+        "id": 174,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 36,
+        "id": 177,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 40,
+        "id": 240,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 40,
+        "id": 243,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 40,
+        "id": 244,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 41,
+        "id": 255,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 42,
+        "id": 256,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 46,
+        "id": 454,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 46,
+        "id": 455,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 67,
+        "id": 438,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 68,
+        "id": 440,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 68,
+        "id": 441,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 68,
+        "id": 442,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 70,
+        "id": 443,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 71,
+        "id": 444,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 71,
+        "id": 446,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 71,
+        "id": 456,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 72,
+        "id": 445,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 73,
+        "id": 447,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 73,
+        "id": 448,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 73,
+        "id": 449,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 73,
+        "id": 450,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 73,
+        "id": 452,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 73,
+        "id": 453,
+        "issue": "missing in local compare/dropdown source"
+      },
+      {
+        "city_id": 73,
+        "id": 457,
+        "issue": "missing in local compare/dropdown source"
+      }
+    ],
+    "availabilityVsOriginal": {
+      "cities": {
+        "label": "availability cities by id",
+        "localCount": 43,
+        "originalCount": 53,
+        "missingLocal": [
+          "41",
+          "42",
+          "44",
+          "67",
+          "68",
+          "69",
+          "70",
+          "71",
+          "72",
+          "73"
+        ],
+        "extraLocal": []
+      },
+      "hotels": {
+        "label": "availability hotels by city:id",
+        "localCount": 259,
+        "originalCount": 259,
+        "missingLocal": [],
+        "extraLocal": []
+      }
+    }
+  }
+}

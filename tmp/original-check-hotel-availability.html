@@ -3823,7 +3823,7 @@ function updatePlanOptionPrices() {
         $.ajax({
             url: "https://www.vivahnam.com/create-order", type: "POST",
             data: JSON.stringify(formData), contentType: 'application/json',
-            headers: { 'X-CSRF-TOKEN': "ai5dlu708g086FBT3g3aQyWTV0aYWDrpZVyeGYXf" },
+            headers: { 'X-CSRF-TOKEN': "zVf6cKEfNDwK3vQqRcStv43GxTZ5Rx0mDO4meBwx" },
             success: function (res) {
                 let rzp = new Razorpay({
                     key: res.key, amount: res.amount * 100, currency: "INR",
@@ -3836,7 +3836,7 @@ function updatePlanOptionPrices() {
                         $.ajax({
                             url: "https://www.vivahnam.com/verify-payment", type: "POST",
                             data: JSON.stringify(formData), contentType: 'application/json',
-                            headers: { 'X-CSRF-TOKEN': "ai5dlu708g086FBT3g3aQyWTV0aYWDrpZVyeGYXf" },
+                            headers: { 'X-CSRF-TOKEN': "zVf6cKEfNDwK3vQqRcStv43GxTZ5Rx0mDO4meBwx" },
                             success: function (res) {
                                 if (res.success) { window.location.href = "https://www.vivahnam.com/booking-success/" + res.booking_id; }
                                 else { showAlert('Payment verification failed. Please contact support.'); $('#pay-btn').prop('disabled', false).text('MAKE PAYMENT'); }
