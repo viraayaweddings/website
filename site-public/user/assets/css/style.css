@@ -1302,7 +1302,9 @@ body .offcanvas.offcanvas-start {width: 100% !important;min-width: auto;border-r
 .js-header .navbar .nav-item .nav-link.btn {display: none;}
 }
 @media only screen and (min-width: 1200px) {
-    .js-header .navbar .main-menu {margin-left: 56px;}
+    .js-header .navbar .main-menu {margin-left: auto;}
+    .js-header .navbar .main-menu .navbar-nav {justify-content: flex-end;}
+    .js-header nav.navbar > .d-flex {gap: 34px;}
 }
 @media only screen and (max-width: 1200px) {
     .js-header .navbar-brand {max-width: 120px;}
