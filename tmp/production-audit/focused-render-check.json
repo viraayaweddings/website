@@ -1,0 +1,118 @@
+[
+  {
+    "route": "/",
+    "viewport": "mobile",
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "title": "Luxury Destination Wedding Venue in India by Viraaya Weddings",
+    "exceptions": [],
+    "consoleErrors": []
+  },
+  {
+    "route": "/index.html",
+    "viewport": "mobile",
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "DIV",
+        "cls": "item",
+        "left": 277,
+        "right": 401,
+        "width": 124
+      },
+      {
+        "tag": "DIV",
+        "cls": "font-family01 text-white text-uppercase fs-11 position-relative d-flex align-items-center",
+        "left": 300,
+        "right": 401,
+        "width": 101
+      },
+      {
+        "tag": "DIV",
+        "cls": "item",
+        "left": 401,
+        "right": 523,
+        "width": 122
+      },
+      {
+        "tag": "DIV",
+        "cls": "font-family01 text-white text-uppercase fs-11 position-relative d-flex align-items-center",
+        "left": 424,
+        "right": 523,
+        "width": 99
+      },
+      {
+        "tag": "IMG",
+        "cls": "",
+        "left": 424,
+        "right": 434,
+        "width": 10
+      }
+    ],
+    "brokenImages": [],
+    "title": "Luxury Destination Wedding Venue in India by Viraaya Weddings",
+    "exceptions": [],
+    "consoleErrors": []
+  },
+  {
+    "route": "/appointment/payment-failed",
+    "viewport": "mobile",
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "title": "Consultation Request Not Sent - Viraaya Weddings",
+    "exceptions": [],
+    "consoleErrors": []
+  },
+  {
+    "route": "/appointment/payment-success",
+    "viewport": "mobile",
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "title": "Consultation Request Received - Viraaya Weddings",
+    "exceptions": [],
+    "consoleErrors": []
+  },
+  {
+    "route": "/",
+    "viewport": "tablet",
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "title": "Luxury Destination Wedding Venue in India by Viraaya Weddings",
+    "exceptions": [],
+    "consoleErrors": []
+  },
+  {
+    "route": "/index.html",
+    "viewport": "tablet",
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "title": "Luxury Destination Wedding Venue in India by Viraaya Weddings",
+    "exceptions": [],
+    "consoleErrors": []
+  },
+  {
+    "route": "/appointment/payment-failed",
+    "viewport": "tablet",
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "title": "Consultation Request Not Sent - Viraaya Weddings",
+    "exceptions": [],
+    "consoleErrors": []
+  },
+  {
+    "route": "/appointment/payment-success",
+    "viewport": "tablet",
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "title": "Consultation Request Received - Viraaya Weddings",
+    "exceptions": [],
+    "consoleErrors": []
+  }
+]

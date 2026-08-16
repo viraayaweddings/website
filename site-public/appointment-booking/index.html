@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,7 +9,7 @@
   <!-- Mobile Specific Metas
 		================================================== -->
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-   <title>Book a Wedding Appointment - Viraaya Weddings</title>
+   <title>Wedding Consultation - Viraaya Weddings</title>
 
 <meta name="description" content="Schedule a free consultation with Viraaya Weddings' destination wedding experts. Get honest advice on venues, pricing &amp; packages for your big day in India.">
 <meta name="keywords" content="book your appointment, appointment booking">
@@ -2102,271 +2102,12 @@
 </a>
 </li>
                         </ul>
-                        
-<!--<div class="currency-switcher-wrap">-->
-<!--    <select id="currencySelect" class="currency-select-dropdown">-->
-<!--        -->
-<!--            <option value="INR"-->
-<!--                    data-symbol="₹"-->
-<!--                    data-rate="94.15">-->
-<!--                ₹ INR-->
-<!--            </option>-->
-<!--        -->
-<!---->
-<!--        -->
-<!---->
-<!--        -->
-<!--    </select>-->
-<!--</div>-->
-
-<div class="currency-switcher-wrap">
-    <div class="currency-dropdown-trigger" id="currencyTrigger">
-        <span class="currency-globe">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="2" y1="12" x2="22" y2="12"/>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-            </svg>
-        </span>
-        <span class="currency-current-code" id="currencyCurrentCode">INR</span>
-        <span class="currency-chevron">
-            <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
-                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5"
-                      stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </span>
-    </div>
-
-    <div class="currency-dropdown-menu" id="currencyMenu">
-            </div>
-
-    <select id="currencySelect" style="display:none;">
-                    <option value="INR"
-                    data-symbol="₹"
-                    data-rate="94.15">
-                ₹ INR
-            </option>
-            </select>
 </div>
-
-            <!--<div class="currency-switcher-wrap">-->
-            <!--    <div class="custom-dropdown" id="currencyDropdown">-->
-            <!--        <div class="dropdown-selected">-->
-            <!--            Select Currency <i class="fa-sharp-duotone fa-regular fa-angle-down"></i>-->
-            <!--        </div>-->
-            
-            <!--        <ul class="dropdown-options">-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="INR"-->
-            <!--                    data-symbol="₹"-->
-            <!--                    data-rate="94.15">-->
-                                
-            <!--                    ₹ INR-->
-            <!--                </li>-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="USD"-->
-            <!--                    data-symbol="$"-->
-            <!--                    data-rate="1">-->
-                                
-            <!--                    $ USD-->
-            <!--                </li>-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="AED"-->
-            <!--                    data-symbol="د.إ"-->
-            <!--                    data-rate="3.67">-->
-                                
-            <!--                    د.إ AED-->
-            <!--                </li>-->
-            <!--            -->
-            <!--        </ul>-->
-            <!--    </div>-->
-            <!--</div>-->
-            </div>
                     </div>
                 </nav>
             </div>
         </header>
-        
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    const wrap    = document.querySelector('.currency-switcher-wrap');
-    const trigger = document.getElementById('currencyTrigger');
-    const menu    = document.getElementById('currencyMenu');
-    const codeEl  = document.getElementById('currencyCurrentCode');
-    const hiddenSelect = document.getElementById('currencySelect');
-
-    if (!trigger || !menu) return;
-
-    const saved = localStorage.getItem('selected_currency') || 'INR';
-    codeEl.textContent = saved;
-
-    document.querySelectorAll('.currency-option').forEach(opt => {
-        if (opt.dataset.code === saved) opt.classList.add('active');
-    });
-
-    trigger.addEventListener('click', function (e) {
-        e.stopPropagation();
-        wrap.classList.toggle('open');
-    });
-
-    document.querySelectorAll('.currency-option').forEach(opt => {
-        opt.addEventListener('click', function () {
-            const code = this.dataset.code;
-
-            codeEl.textContent = code;
-
-            document.querySelectorAll('.currency-option').forEach(o => o.classList.remove('active'));
-            this.classList.add('active');
-
-            if (hiddenSelect) {
-                hiddenSelect.value = code;
-                hiddenSelect.dispatchEvent(new Event('change'));
-            }
-
-            wrap.classList.remove('open');
-        });
-    });
-
-    document.addEventListener('click', function (e) {
-        if (!wrap.contains(e.target)) {
-            wrap.classList.remove('open');
-        }
-    });
-});
-</script>
-
-
 <style>
-.currency-switcher-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.currency-dropdown-trigger {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    padding: 6px 12px;
-    border-radius: 3px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    color: #1a1a1a;
-    background: #fff;
-    transition: all 0.2s ease;
-    text-transform: uppercase;
-    user-select: none;
-}
-
-.currency-dropdown-trigger:hover {
-    border-color: #1a1a1a;
-}
-
-.currency-globe {
-    display: flex;
-    align-items: center;
-    opacity: 0.6;
-}
-
-.currency-current-code {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.currency-chevron {
-    display: flex;
-    align-items: center;
-    opacity: 0.5;
-    transition: transform 0.2s ease;
-}
-
-.currency-switcher-wrap.open .currency-chevron {
-    transform: rotate(180deg);
-}
-
-/* Dropdown Menu */
-.currency-dropdown-menu {
-    display: none;
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    background: #fff;
-    border: 1px solid #e8e8e8;
-    border-radius: 4px;
-    min-width: 200px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-    z-index: 9999;
-    overflow: hidden;
-}
-
-.currency-switcher-wrap.open .currency-dropdown-menu {
-    display: block;
-}
-
-.currency-option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 16px;
-    cursor: pointer;
-    border-bottom: 1px solid #f5f5f5;
-    transition: background 0.15s ease;
-}
-
-.currency-option:last-child {
-    border-bottom: none;
-}
-
-.currency-option:hover {
-    background: #f8f8f8;
-}
-
-.currency-option.active {
-    background: #f5f0eb;
-}
-
-.cur-symbol {
-    font-size: 14px;
-    font-weight: 700;
-    color: #1a1a1a;
-    min-width: 20px;
-    text-align: center;
-}
-
-.cur-code {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    color: #1a1a1a;
-    text-transform: uppercase;
-}
-
-.cur-name {
-    font-size: 11px;
-    color: #888;
-    margin-left: auto;
-}
-
-/* Mobile */
-@media (max-width: 991px) {
-    .currency-dropdown-menu {
-        right: auto;
-        left: 0;
-    }
-    .currency-dropdown-trigger {
-        padding: 5px 10px;
-    }
-}
-</style>
-     <style>
 .search-wrapper {
     position: relative;
     width: 100%;
@@ -2381,7 +2122,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 .search-suggestions {
     position: absolute;
-    top: 100%;              /* 👈 directly below input */
+    top: 100%;              /* directly below input */
     left: 0;
     width: 100%;
     background: #fff;
@@ -2390,7 +2131,7 @@ document.addEventListener('DOMContentLoaded', function () {
     max-height: 300px;
     overflow-y: auto;
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    z-index: 9999;          /* 👈 important */
+    z-index: 9999;          /* important */
 }
 
 .search-item {
@@ -2494,8 +2235,118 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 .form-control.is-invalid { border-color:#dc3545; }
 #topErrors { margin-bottom:12px; font-size:13px; }
 .consultation-form-note { text-align:center; color:#888; margin-top:8px; margin-bottom:0; }
-.consultation-cta-panel { background:#fff8ef; border:1px solid #eadfce; border-radius:12px; padding:32px 28px; text-align:center; }
-.consultation-cta-panel p { max-width:420px; margin:0 auto 22px; color:#6e625a; }
+.consultation-wrapper .widget ul li .icon img {
+    filter: brightness(0) saturate(100%) invert(48%) sepia(70%) saturate(495%) hue-rotate(357deg) brightness(95%) contrast(89%);
+    opacity: .74;
+}
+.what-cons-wrapper img[src*="/storage/appointment/"][src$=".png"],
+.why-choose-wrapper img[src*="/storage/appointment/"][src$=".png"],
+.elevated-wrapper img[src*="/storage/appointment/"][src$=".png"],
+.luxury-feedback img[src*="/storage/appointment/"][src$=".png"] {
+    filter: brightness(0) saturate(100%) invert(48%) sepia(70%) saturate(495%) hue-rotate(357deg) brightness(95%) contrast(89%);
+    opacity: .74;
+}
+.process-section .circle-widget > img {
+    filter: brightness(0) saturate(100%) invert(48%) sepia(70%) saturate(495%) hue-rotate(357deg) brightness(95%) contrast(89%);
+    opacity: .74;
+}
+.consultation-wrapper .booking-layout {
+    --consult-time-width: 140px;
+    display: flex;
+    border: 1px solid #eadfce;
+    border-radius: 24px;
+    overflow: hidden;
+    margin-top: 24px;
+    background: #fff;
+}
+.consultation-wrapper .booking-left { flex: 1 1 calc(100% - var(--consult-time-width)); min-width: 0; padding: 12px 22px 18px; }
+.consultation-wrapper .booking-right { flex: 0 0 var(--consult-time-width); min-width: var(--consult-time-width); max-width: var(--consult-time-width); overflow: hidden; background: #fbf3e8; }
+.consultation-wrapper .booking-right #time-slots.time-slot-list {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-wrap: nowrap !important;
+    gap: 0 !important;
+    height: 340px !important;
+    max-height: 340px !important;
+    min-height: 340px !important;
+    width: var(--consult-time-width) !important;
+    overflow-y: scroll !important;
+    overflow-x: scroll !important;
+    padding: 0 !important;
+    position: static !important;
+    text-align: center !important;
+    scrollbar-gutter: auto;
+    box-sizing: border-box;
+}
+.consultation-wrapper .booking-right #time-slots.time-slot-list h5,
+.consultation-wrapper .booking-right #time-slots.time-slot-list p {
+    position: static !important;
+    left: auto !important;
+    width: 100% !important;
+    margin: 0 0 6px !important;
+    text-align: center !important;
+}
+.consultation-wrapper .booking-right #time-slots.time-slot-list h5 { color: #B98230; font-size: 13px; font-weight: 600; }
+.consultation-wrapper .booking-right #time-slots .time-slot {
+    width: 105px !important;
+    min-width: 105px !important;
+    max-width: 105px !important;
+    flex: 0 0 auto !important;
+    align-self: center !important;
+    display: block !important;
+    margin: 0 auto !important;
+    border: 0 !important;
+    background: transparent;
+    color: #6d625a;
+    border-radius: 12px;
+    padding: 8px 14px !important;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center !important;
+    cursor: pointer;
+}
+.consultation-wrapper .booking-right #time-slots .time-slot:hover,
+.consultation-wrapper .booking-right #time-slots .time-slot.active { background: #B98230; color: #fff; }
+.consultation-wrapper .booking-layout .flatpickr-calendar {
+    width: min(414px, 100%) !important;
+    max-width: 100% !important;
+    box-shadow: none;
+    border: 0;
+    margin: 0 auto;
+}
+.consultation-wrapper .booking-layout .flatpickr-innerContainer,
+.consultation-wrapper .booking-layout .flatpickr-rContainer,
+.consultation-wrapper .booking-layout .flatpickr-days,
+.consultation-wrapper .booking-layout .dayContainer { width: 100% !important; max-width: none !important; }
+.consultation-wrapper .booking-layout .flatpickr-day { max-width: none; height: 42px; line-height: 42px; border: 0; }
+.consultation-wrapper .booking-layout .flatpickr-day.selected,
+.consultation-wrapper .booking-layout .flatpickr-day.selected:hover {
+    background: #B98230;
+    color: #fff;
+    border-color: #B98230;
+}
+.consultation-wrapper .booking-layout .flatpickr-months .flatpickr-month,
+.consultation-wrapper .booking-layout .flatpickr-current-month,
+.consultation-wrapper .booking-layout .flatpickr-monthDropdown-months {
+    background: transparent;
+}
+.consultation-wrapper .booking-layout .flatpickr-monthDropdown-months {
+    background-color: #fbf3e8;
+    border-radius: 20px;
+    color: #3A2D25;
+    font-weight: 500;
+    padding: 0 12px;
+}
+@media only screen and (max-width: 1400px) {
+    .consultation-wrapper .booking-layout .booking-left .flatpickr-calendar { width: min(340px, 100%) !important; }
+}
+@media only screen and (max-width: 767.98px) {
+    .consultation-wrapper .booking-layout { --consult-time-width: 100%; }
+    .consultation-wrapper .booking-right { flex: 0 0 auto; min-width: 0; max-width: none; width: 100%; }
+    .consultation-wrapper .booking-right #time-slots.time-slot-list { width: 100% !important; }
+}
 .booking-Confirm-wrapper .booking-card .modal-body {
     padding: 40px 20px 30px 20px;
 }
@@ -2559,7 +2410,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 <section class="section-padding consultation-wrapper" id="slot">
     <div class="container">
         <div class="section-hrading text-center mb-4">
-            <h2 class="all-heading font-family01 fs-37 fw-100 text-maroon-900">Book Your <span class="fw-600 text-primary">Consultation</span></h2>
+            <h2 class="all-heading font-family01 fs-37 fw-100 text-maroon-900">Book Your <span class="fw-600 text-primary">Consultation Slot</span></h2>
         </div>
         <div class="row consultation-card position-relative">
             <div class="col-xl-6" data-aos="fade-up">
@@ -2573,7 +2424,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                                                     </div>
                                 <div class="content">
                                     <h4 class="font-family01 fs-18 text-maroon-900">Wedding Vision Clarity</h4>
-                                    <p class="font-family03"><p>Understand the right wedding format—destination, palace,<br>resort, or international—based on your expectations.</p></p>
+                                    <p class="font-family03"><p>Understand the right wedding format—destination, palace,<br>resort, or luxury hotel—based on your expectations.</p></p>
                                 </div>
                             </li>
                                                         <li>
@@ -2602,12 +2453,22 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 <div class="widget">
                     <div class="text-center">
                         <span class="heading-highlight bg-primary-light fw-600 font-family01 fs-12 d-inline-block text-white">BOOK PRIVATE CONSULTATION</span>
-                        <h3 class="mt-3 all-heading fs-30 fw-200 font-family01 text-maroon-900">Start With a <span class="fw-600 text-primary">Private Consultation</span></h3>
+                        <h3 class="mt-3 all-heading fs-30 fw-200 font-family01 text-maroon-900">Choose Your <span class="fw-600 text-primary">Date &amp; Time</span></h3>
                     </div>
-                    <div class="consultation-cta-panel mt-4">
-                        <p class="font-family03">Share your details and our wedding specialist will connect with you to plan the next step.</p>
-                        <a class="btn w-100 text-uppercase fw-600 fs-17 h-auto" href="#consultationForm" data-open-consultation-form>Book a Consultation</a>
+                    <div class="booking-layout">
+                        <div class="booking-left">
+                            <div class="calendar-box">
+                                <input type="text" id="calendar" class="form-control d-none" aria-label="Consultation date">
+                            </div>
+                        </div>
+                        <div class="booking-right">
+                            <div class="time-slot-list" id="time-slots">
+                                <h5 class="font-family03">Time-Slot</h5>
+                                <p class="font-family03 text-muted" style="font-size:13px;">Please select a date first</p>
+                            </div>
+                        </div>
                     </div>
+                    <button type="button" class="btn w-100 text-uppercase fw-600 fs-17 h-auto mt-3" id="goNext">Book Consultation</button>
                     <p class="consultation-form-note fs-12 font-family03">Confirmation will be shared by our team.</p>
                 </div>
             </div>
@@ -2618,7 +2479,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
 <section class="what-cons-wrapper py-5">
     <div class="container">
-                                <h2 class="all-heading font-family01 fs-37 fw-100 text-maroon-900 text-center mb-md-4 mb-3">Book Your <span class="fw-600 text-primary">Consultation</span></h2>
+                                <h2 class="all-heading font-family01 fs-37 fw-100 text-maroon-900 text-center mb-md-4 mb-3">Book Your Consultation <span class="fw-600 text-primary">Slot</span></h2>
         
         <div class="row g-md-3 mt-4 mt-md-5">
                                             <div class="col-md-6 mb-2" data-aos="fade-up">
@@ -2628,7 +2489,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                         </div>
                                                 <div class="col-md-6 ">
                             <h5 class="text-primary fs-18">What This Consultation Covers</h5>
-                            <p class="text-justify"><p>Wedding planning can get overwhelming very quickly. You might not know where to start, or you may already have a few ideas and just need someone to tell you if you’re on the right track. This consultation is designed to give you that clarity.</p></p>
+                            <p class="text-justify"><p>Wedding planning can get overwhelming very quickly. You might not know where to start, or you may already have a few ideas and just need someone to tell you if you&rsquo;re on the right track. This consultation is designed to give you that clarity.</p></p>
                         </div>
                     </div>
                 </div>
@@ -2696,7 +2557,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                         <figure><img src="/storage/appointment/4PKw3vH6ZIRhphqfdn53EBFXqfpT10IV0I3Dbwdy.jpg" class="w-100 rounded-3" alt="Wedding consultation planning" decoding="async" loading="lazy"></figure>                    </div>
                     <div class="col-md-6 order-md-1 pe-md-5" data-aos="fade-up">
                         <h5 class="text-primary fs-18">Access Transparent Pricing</h5>
-                        <p><p>Every single source will claim to give you a final price. Wedding planners, venue teams, specialised vendors, everyone says their number is the one to go with. But because no one is fully upfront, your budget never really feels finalised.<br><br>We understand how frustrating that can be. Your budget is one of the most important parts of this process. In this consultation, our expert gives you a clear closing budget based on your vision, backed by negotiated pricing through direct relationships with hospitality partners, so you’re working with numbers you can actually trust.</p></p>
+                        <p><p>Every single source will claim to give you a final price. Wedding planners, venue teams, specialised vendors, everyone says their number is the one to go with. But because no one is fully upfront, your budget never really feels finalised.<br><br>We understand how frustrating that can be. Your budget is one of the most important parts of this process. In this consultation, our expert gives you a clear closing budget based on your vision, backed by negotiated pricing through direct relationships with hospitality partners, so you&rsquo;re working with numbers you can actually trust.</p></p>
                     </div>
                 </div>
                                             <div class="row align-items-center justify-content-between mb-3 mb-md-4">
@@ -2704,7 +2565,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                         <figure><img src="/storage/appointment/ef4o6pKR6J7QgukHaK1fyDgcAqOen2Q3y9ye4zJS.jpg" class="w-100 rounded-3" alt="Wedding consultation planning" decoding="async" loading="lazy"></figure>                    </div>
                     <div class="col-md-6 ps-md-5" data-aos="fade-up">
                         <h5 class="text-primary fs-18">Secure Expert Support</h5>
-                        <p><p>This is a big day, and it comes with some big decisions. You want it to be perfect, magical, everything you’ve imagined, but you also worry about getting carried away or missing something important.<br><br>Our expert gives you an objective, experienced perspective from within the industry. You tell us what you like, what you don’t and what you’re already set on, and we help you understand if you’re making the right choices, both financially and for your guests.</p></p>
+                        <p><p>This is a big day, and it comes with some big decisions. You want it to be perfect, magical, everything you’ve imagined, but you also worry about getting carried away or missing something important.<br><br>Our expert gives you an objective, experienced perspective from within the industry. You tell us what you like, what you don’t and what you&rsquo;re already set on, and we help you understand if you&rsquo;re making the right choices, both financially and for your guests.</p></p>
                     </div>
                 </div>
                             <div class="text-center" data-aos="fade-up"><a href="#consultationForm" class="btn fw-600 mt-md-2 mt-2" data-open-consultation-form>Book a Consultation</a></div>
@@ -2721,7 +2582,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                     <div class="circle-widget first-box">
                         <img src="/storage/appointment/WJ2QcRZbaGHoyozd4G3CqVU90SRsXrnispcjTsy3.png" width="56" alt="" decoding="async" loading="lazy">
                                                 <span class="font-family01">Step - 01</span>
-                        <h4 class="text-maroon-900 fs-17 font-family01">Share Your Details</h4>
+                        <h4 class="text-maroon-900 fs-17 font-family01">Select Your Slot</h4>
                         <p class="font-family03"><p>Share your details through the form and our team will connect with you to schedule the consultation.</p></p>
                                                 <div class="arrow-icon"><span><img src="/user/assets/images/awrro.png" width="19" alt="" decoding="async" loading="lazy"></span></div>
                                             </div>
@@ -2765,7 +2626,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                                     <h5 class="text-primary fs-18 mb-md-3 mb-2">
                                 <img src="/storage/appointment/buEdDwqs2EW51DbjEaBFMsDXpKrlhf3vIBuJ3Cwo.png" width="20" alt="" decoding="async" loading="lazy"> You Don’t Know Where to Start
                             </h5>
-                                                <p><p>You know you want a destination wedding, but everything after that feels unclear. Which city makes sense, how do you shortlist venues, when do you start booking vendors and what actually matters first? It’s easy to feel stuck before you even begin. In this consultation, our expert helps you break things down into simple, clear steps so you’re not stumbling your way through the process.</p></p>
+                                                <p><p>You know you want a destination wedding, but everything after that feels unclear. Which city makes sense, how do you shortlist venues, when do you start booking vendors and what actually matters first? It’s easy to feel stuck before you even begin. In this consultation, our expert helps you break things down into simple, clear steps so you&rsquo;re not stumbling your way through the process.</p></p>
                     </div>
                 </div>
                                 <div class="col-md-6" data-aos="fade-up">
@@ -2789,7 +2650,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                                     <h5 class="text-primary fs-18 mb-md-3 mb-2">
                                 <img src="/storage/appointment/jFvczO2pXQCFQWqN0jHlPS8uwDSWW09PMHY4Khwh.png" width="20" alt="" decoding="async" loading="lazy"> You Need Some Reassurance
                             </h5>
-                                                <p><p>You might already have a strong vision and know exactly what you want. But when it comes to making final decisions, there’s some hesitation. What if there’s a better option or something you’ve missed? That’s where this consultation helps. Our industry expert reviews your plan, validates your choices, and gives you the confidence that everything you’re deciding is aligned with how destination weddings actually work.</p></p>
+                                                <p><p>You might already have a strong vision and know exactly what you want. But when it comes to making final decisions, there’s some hesitation. What if there’s a better option or something you’ve missed? That’s where this consultation helps. Our industry expert reviews your plan, validates your choices, and gives you the confidence that everything you&rsquo;re deciding is aligned with how destination weddings actually work.</p></p>
                     </div>
                 </div>
                                     </div>
@@ -2826,7 +2687,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqItem2">What This Consultation Covers</button>
                     </h2>
                     <div id="faqItem2" class="accordion-collapse collapse " data-bs-parent="#weddingFAQ">
-                        <div class="accordion-body"><p><p>Wedding planning can get overwhelming very quickly. You might not know where to start, or you may already have a few ideas and just need someone to tell you if you’re on the right track. This consultation is designed to give you that clarity.</p></p></div>
+                        <div class="accordion-body"><p><p>Wedding planning can get overwhelming very quickly. You might not know where to start, or you may already have a few ideas and just need someone to tell you if you&rsquo;re on the right track. This consultation is designed to give you that clarity.</p></p></div>
                     </div>
                 </div>
                                 <div class="accordion-item ">
@@ -2858,7 +2719,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqItem6">You Don’t Know Where to Start</button>
                     </h2>
                     <div id="faqItem6" class="accordion-collapse collapse " data-bs-parent="#weddingFAQ">
-                        <div class="accordion-body"><p><p>You know you want a destination wedding, but everything after that feels unclear. Which city makes sense, how do you shortlist venues, when do you start booking vendors and what actually matters first? It’s easy to feel stuck before you even begin. In this consultation, our expert helps you break things down into simple, clear steps so you’re not stumbling your way through the process.</p></p></div>
+                        <div class="accordion-body"><p><p>You know you want a destination wedding, but everything after that feels unclear. Which city makes sense, how do you shortlist venues, when do you start booking vendors and what actually matters first? It’s easy to feel stuck before you even begin. In this consultation, our expert helps you break things down into simple, clear steps so you&rsquo;re not stumbling your way through the process.</p></p></div>
                     </div>
                 </div>
                                 <div class="accordion-item ">
@@ -2882,7 +2743,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqItem9">You Need Some Reassurance</button>
                     </h2>
                     <div id="faqItem9" class="accordion-collapse collapse " data-bs-parent="#weddingFAQ">
-                        <div class="accordion-body"><p><p>You might already have a strong vision and know exactly what you want. But when it comes to making final decisions, there’s some hesitation. What if there’s a better option or something you’ve missed? That’s where this consultation helps. Our industry expert reviews your plan, validates your choices, and gives you the confidence that everything you’re deciding is aligned with how destination weddings actually work.</p></p></div>
+                        <div class="accordion-body"><p><p>You might already have a strong vision and know exactly what you want. But when it comes to making final decisions, there’s some hesitation. What if there’s a better option or something you’ve missed? That’s where this consultation helps. Our industry expert reviews your plan, validates your choices, and gives you the confidence that everything you&rsquo;re deciding is aligned with how destination weddings actually work.</p></p></div>
                     </div>
                 </div>
                                     </div>
@@ -2916,8 +2777,8 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 </div>
                                 <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
                     <div class="widget d-flex gap-3">
-                        <div class="icon"><img src="/storage/appointment/JfYj1yiYYc7s4Fwa33qVmxk5t4r8tB1XfsqpyZJy.png" alt="Global Destination Portfolio" decoding="async" loading="lazy"></div>
-                        <div class="content"><h5 class="font-family01 fs-16 text-maroon-900 fw-400">Global Destination Portfolio</h5><p class="font-family03">30+ curated wedding locations suited for all types of weddings</p></div>
+                        <div class="icon"><img src="/storage/appointment/JfYj1yiYYc7s4Fwa33qVmxk5t4r8tB1XfsqpyZJy.png" alt="Indian Destination Portfolio" decoding="async" loading="lazy"></div>
+                        <div class="content"><h5 class="font-family01 fs-16 text-maroon-900 fw-400">Indian Destination Portfolio</h5><p class="font-family03">30+ curated Indian wedding locations suited for all types of weddings</p></div>
                     </div>
                 </div>
                                 <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
@@ -2950,6 +2811,8 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         <div id="topErrors" class="alert alert-danger d-none"></div>
         <form id="consultationForm" class="MuiInputLabel-shrink" action="/contact/save" method="post" data-form-name="Wedding Consultation">
             <input type="hidden" name="enquiry_type" value="Wedding Consultation">
+            <input type="hidden" name="appointment_date" id="appointmentDate" value="">
+            <input type="hidden" name="appointment_time" id="appointmentTime" value="">
             <div class="form-group mb-3">
                 <label class="form-label fw500 text-dark mb-2">Name</label>
                 <input type="text" class="form-control " value="" name="name" placeholder="Your Name" required>
@@ -2969,6 +2832,16 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 <label class="form-label fw500 text-dark mb-2">City</label>
                 <input type="text" class="form-control " value="" name="city" placeholder="City" required>
                 <div class="invalid-feedback" data-error="city"></div>
+            </div>
+            <div class="selected-info">
+                <div class="d-flex align-items-start">
+                    <div class="icon"><i class="fa-regular fa-calendar"></i></div>
+                    <div class="content"><p>Date</p><h5 id="showDate"></h5></div>
+                </div>
+                <div class="d-flex align-items-start">
+                    <div class="icon"><i class="fa-regular fa-clock"></i></div>
+                    <div class="content"><p>Time</p><h5 id="showTime"></h5></div>
+                </div>
             </div>
             <div class="d-flex gap-2 mb-3">
                 <!--<button type="button" id="backBtn" class="btn btn-outline-secondary fs-13 w-50">Back</button>-->
@@ -3073,7 +2946,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 <div class="widget d-flex flex-column justify-content-between h-100">
                   <div>
                     <h4 class="font-family01 text-white fs-26 mb-4">A Thoughtful Conversation Awaits</h4>
-                    <p class="font-family01">Whether you have a question or a specific request, we’re glad to hear from you.</p>
+                    <p class="font-family01">Whether you have a question or a specific request, we&rsquo;re glad to hear from you.</p>
                   </div>
                   <a href="/contact" class="btn">CONTACT US NOW</a>
                 </div>
@@ -3095,13 +2968,13 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
           </ul>
         </div>
         <div class="footer-content">
-            <p>Wedding planning involves countless details and considerations. With over 10 years of experience, we understand these expectations intimately and welcome the opportunity to connect with you at any stage of your journey. Whether you’re just browsing options, evaluating a specific venue or keen to make a decision, our team is here to offer reassurance. We handle every inquiry with care and discretion. </p>
+            <p>Wedding planning involves countless details and considerations. With over 10 years of experience, we understand these expectations intimately and welcome the opportunity to connect with you at any stage of your journey. Whether you&rsquo;re just browsing options, evaluating a specific venue or keen to make a decision, our team is here to offer reassurance. We handle every inquiry with care and discretion. </p>
             <p>As a smart destination wedding planner, our role is to simplify the process, provide expert insights and ensure you feel confident and supported from the very first interaction.</p>
             <p>When you reach out, your message is reviewed by experienced professionals who understand luxury hospitality, family expectations and the importance of every minute detail.</p>
         </div>
         <div class="row pb-4">
           <div class="col-lg-6 d-flex align-items-center">
-            <p class="copyright-text m-0 font-family03 fs-13 fw-300">Copyrights © 2026, viraayaweddings.com, All Rights Reserved</p>
+            <p class="copyright-text m-0 font-family03 fs-13 fw-300">Copyrights &copy; 2026, viraayaweddings.com, All Rights Reserved</p>
           </div>
           <div class="col-lg-6 d-flex justify-content-end align-items-end">
             <button id="goTop" class="btn go-to-top d-flex gap-2 align-items-center ">Go to Top 
@@ -3152,16 +3025,82 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    let selectedDate = "";
+    let selectedTime = "";
+    const allSlots = ["11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
+
+    function toYMD(date) {
+        return date.getFullYear() + '-' +
+            String(date.getMonth() + 1).padStart(2, '0') + '-' +
+            String(date.getDate()).padStart(2, '0');
+    }
+
+    function renderTimeSlots() {
+        const container = document.getElementById('time-slots');
+        if (!container) return;
+        let html = '<h5 class="font-family03 mb-2">Time-Slot</h5>';
+        allSlots.forEach(function (time) {
+            html += '<button type="button" class="time-slot">' + time + '</button>';
+        });
+        container.innerHTML = html;
+    }
+
+    function selectDate(date) {
+        selectedDate = toYMD(date);
+        selectedTime = "";
+        renderTimeSlots();
+    }
+
+    if (window.flatpickr && document.getElementById('calendar')) {
+        flatpickr('#calendar', {
+            inline: true,
+            disableMobile: true,
+            defaultDate: new Date(),
+            minDate: null,
+            onChange: function (selectedDates) {
+                if (!selectedDates.length) return;
+                selectDate(selectedDates[0]);
+            },
+            onReady: function (selectedDates, dateStr, instance) {
+                instance.setDate(new Date(), true);
+            }
+        });
+    }
+
+    const slots = document.getElementById('time-slots');
+    if (slots) {
+        slots.addEventListener('click', function (e) {
+            if (!e.target.classList.contains('time-slot')) return;
+            slots.querySelectorAll('.time-slot').forEach(function (slot) { slot.classList.remove('active'); });
+            e.target.classList.add('active');
+            selectedTime = e.target.innerText.trim();
+        });
+    }
+
     function openConsultationForm(event) {
         if (event) event.preventDefault();
+        if (!selectedDate || !selectedTime) {
+            alert('Please select a date and time slot first.');
+            return;
+        }
+        document.getElementById('appointmentDate').value = selectedDate;
+        document.getElementById('appointmentTime').value = selectedTime;
+        document.getElementById('showDate').innerText = selectedDate;
+        document.getElementById('showTime').innerText = selectedTime;
         document.getElementById('bookingModal').classList.add('active');
         document.body.style.overflow = 'hidden';
         const firstField = document.querySelector('#consultationForm [name="name"]');
         if (firstField) setTimeout(() => firstField.focus(), 150);
     }
 
-    document.querySelectorAll('[data-open-consultation-form]').forEach(function (button) {
+    document.querySelectorAll('#goNext').forEach(function (button) {
         button.addEventListener('click', openConsultationForm);
+    });
+    document.querySelectorAll('[data-open-consultation-form]').forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            document.getElementById('slot').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
     });
 
     function closeModal() {
@@ -3179,3 +3118,5 @@ document.addEventListener('DOMContentLoaded', function () {
 </body>
 
 </html>
+
+

@@ -2185,271 +2185,12 @@
 </a>
 </li>
                         </ul>
-                        
-<!--<div class="currency-switcher-wrap">-->
-<!--    <select id="currencySelectLegacy" class="currency-select-dropdown">-->
-<!--        -->
-<!--            <option value="INR"-->
-<!--                    data-symbol="₹"-->
-<!--                    data-rate="94.15">-->
-<!--                ₹ INR-->
-<!--            </option>-->
-<!--        -->
-<!---->
-<!--        -->
-<!---->
-<!--        -->
-<!--    </select>-->
-<!--</div>-->
-
-<div class="currency-switcher-wrap">
-    <div class="currency-dropdown-trigger" id="currencyTrigger">
-        <span class="currency-globe">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="2" y1="12" x2="22" y2="12"/>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-            </svg>
-        </span>
-        <span class="currency-current-code" id="currencyCurrentCode">INR</span>
-        <span class="currency-chevron">
-            <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
-                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5"
-                      stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </span>
-    </div>
-
-    <div class="currency-dropdown-menu" id="currencyMenu">
-            </div>
-
-    <select id="currencySelect" style="display:none;">
-                    <option value="INR"
-                    data-symbol="₹"
-                    data-rate="94.15">
-                ₹ INR
-            </option>
-            </select>
 </div>
-
-            <!--<div class="currency-switcher-wrap">-->
-            <!--    <div class="custom-dropdown" id="currencyDropdown">-->
-            <!--        <div class="dropdown-selected">-->
-            <!--            Select Currency <i class="fa-sharp-duotone fa-regular fa-angle-down"></i>-->
-            <!--        </div>-->
-            
-            <!--        <ul class="dropdown-options">-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="INR"-->
-            <!--                    data-symbol="₹"-->
-            <!--                    data-rate="94.15">-->
-                                
-            <!--                    ₹ INR-->
-            <!--                </li>-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="USD"-->
-            <!--                    data-symbol="$"-->
-            <!--                    data-rate="1">-->
-                                
-            <!--                    $ USD-->
-            <!--                </li>-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="AED"-->
-            <!--                    data-symbol="د.إ"-->
-            <!--                    data-rate="3.67">-->
-                                
-            <!--                    د.إ AED-->
-            <!--                </li>-->
-            <!--            -->
-            <!--        </ul>-->
-            <!--    </div>-->
-            <!--</div>-->
-            </div>
                     </div>
                 </nav>
             </div>
         </header>
-        
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    const wrap    = document.querySelector('.currency-switcher-wrap');
-    const trigger = document.getElementById('currencyTrigger');
-    const menu    = document.getElementById('currencyMenu');
-    const codeEl  = document.getElementById('currencyCurrentCode');
-    const hiddenSelect = document.getElementById('currencySelect');
-
-    if (!trigger || !menu) return;
-
-    const saved = localStorage.getItem('selected_currency') || 'INR';
-    codeEl.textContent = saved;
-
-    document.querySelectorAll('.currency-option').forEach(opt => {
-        if (opt.dataset.code === saved) opt.classList.add('active');
-    });
-
-    trigger.addEventListener('click', function (e) {
-        e.stopPropagation();
-        wrap.classList.toggle('open');
-    });
-
-    document.querySelectorAll('.currency-option').forEach(opt => {
-        opt.addEventListener('click', function () {
-            const code = this.dataset.code;
-
-            codeEl.textContent = code;
-
-            document.querySelectorAll('.currency-option').forEach(o => o.classList.remove('active'));
-            this.classList.add('active');
-
-            if (hiddenSelect) {
-                hiddenSelect.value = code;
-                hiddenSelect.dispatchEvent(new Event('change'));
-            }
-
-            wrap.classList.remove('open');
-        });
-    });
-
-    document.addEventListener('click', function (e) {
-        if (!wrap.contains(e.target)) {
-            wrap.classList.remove('open');
-        }
-    });
-});
-</script>
-
-
 <style>
-.currency-switcher-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.currency-dropdown-trigger {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    padding: 6px 12px;
-    border-radius: 3px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    color: #1a1a1a;
-    background: #fff;
-    transition: all 0.2s ease;
-    text-transform: uppercase;
-    user-select: none;
-}
-
-.currency-dropdown-trigger:hover {
-    border-color: #1a1a1a;
-}
-
-.currency-globe {
-    display: flex;
-    align-items: center;
-    opacity: 0.6;
-}
-
-.currency-current-code {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.currency-chevron {
-    display: flex;
-    align-items: center;
-    opacity: 0.5;
-    transition: transform 0.2s ease;
-}
-
-.currency-switcher-wrap.open .currency-chevron {
-    transform: rotate(180deg);
-}
-
-/* Dropdown Menu */
-.currency-dropdown-menu {
-    display: none;
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    background: #fff;
-    border: 1px solid #e8e8e8;
-    border-radius: 4px;
-    min-width: 200px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-    z-index: 9999;
-    overflow: hidden;
-}
-
-.currency-switcher-wrap.open .currency-dropdown-menu {
-    display: block;
-}
-
-.currency-option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 16px;
-    cursor: pointer;
-    border-bottom: 1px solid #f5f5f5;
-    transition: background 0.15s ease;
-}
-
-.currency-option:last-child {
-    border-bottom: none;
-}
-
-.currency-option:hover {
-    background: #f8f8f8;
-}
-
-.currency-option.active {
-    background: #f5f0eb;
-}
-
-.cur-symbol {
-    font-size: 14px;
-    font-weight: 700;
-    color: #1a1a1a;
-    min-width: 20px;
-    text-align: center;
-}
-
-.cur-code {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    color: #1a1a1a;
-    text-transform: uppercase;
-}
-
-.cur-name {
-    font-size: 11px;
-    color: #888;
-    margin-left: auto;
-}
-
-/* Mobile */
-@media (max-width: 991px) {
-    .currency-dropdown-menu {
-        right: auto;
-        left: 0;
-    }
-    .currency-dropdown-trigger {
-        padding: 5px 10px;
-    }
-}
-</style>
-     <style>
 .search-wrapper {
     position: relative;
     width: 100%;
@@ -2464,7 +2205,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 .search-suggestions {
     position: absolute;
-    top: 100%;              /* 👈 directly below input */
+    top: 100%;              /* directly below input */
     left: 0;
     width: 100%;
     background: #fff;
@@ -2473,7 +2214,7 @@ document.addEventListener('DOMContentLoaded', function () {
     max-height: 300px;
     overflow-y: auto;
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    z-index: 9999;          /* 👈 important */
+    z-index: 9999;          /* important */
 }
 
 .search-item {
@@ -2572,7 +2313,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                         <span>15 minutes </span>
                     </div>
                                     </div>
-                <button type="button" class="btn w-100 mt-4 text-uppercase fw-600" data-bs-toggle="modal" data-bs-target="#BookConsultation">BOOK A CONSULTATION</button>
+                <button type="button" class="btn w-100 mt-4 text-uppercase fw-600" data-bs-toggle="modal" data-bs-target="#BookConsultation">BOOK THIS HOTEL</button>
             </div>
         </div>
     </div>
@@ -3477,7 +3218,7 @@ checkOutPicker = flatpickr("#checkOut", {
             $input.val(totalRooms);
             $input.addClass('is-invalid');
             $errDiv
-                .text('⚠ Max ' + totalRooms + ' rooms available for this hotel.')
+                .text('Max ' + totalRooms + ' rooms available for this hotel.')
                 .show();
 
             setTimeout(function () {
@@ -3681,3 +3422,4 @@ html += '<div class="text-end mt-4"><a href="/compare-hotel" class="btn text-upp
 </body>
 
 </html>
+

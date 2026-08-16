@@ -400,7 +400,8 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .service-wrapper .widget .widget-content .pill span img {width: 12px;aspect-ratio: 1;}
 .service-wrapper .widget .widget-footer { height: 330px;}
 .service-wrapper .widget .widget-footer img {border-radius: 8px 80px 22px 22px; height: 100%; object-fit: cover;}
-.service-wrapper .widget .widget-content .btn-price .btn {width: 256px;height: 57px;margin-right: 25px;}
+.service-wrapper .widget .widget-content .btn-price a {display: inline-flex;align-items: center;text-decoration: none;}
+.service-wrapper .widget .widget-content .btn-price .btn {width: 256px;height: 57px;margin-right: 25px;display: inline-flex;align-items: center;justify-content: center;text-align: center;line-height: 1.2;padding: 0 24px;}
 .service-wrapper .widget .widget-content .btn-price {margin-top: 30px;}
 .service-wrapper .widget .widget-content .btn-price .starts-from {color: rgb(80 68 59 / 60%);}
 
@@ -746,8 +747,12 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .listing-details-wrapper .product-images .content-widget {bottom: 0;}
 .listing-details-wrapper .product-images .content-widget h4 {font-size: 14px;color: #ffffff;font-weight: 600;margin: 0;}
 .listing-details-wrapper .product-images .content-widget a i {color: #fff;}
-.listing-details-wrapper .slider-thumbnails {margin-left: -6px;margin-right: -6px;}
-.listing-details-wrapper .slider-thumbnails .slick-slide {overflow: hidden;padding: 0px 6px;cursor: pointer;}
+.listing-details-wrapper .slider-thumbnails {margin: 14px -6px 0;max-width: 100%;overflow: hidden;}
+.listing-details-wrapper .slider-thumbnails:not(.slick-initialized) {display: grid;grid-template-columns: repeat(5, minmax(0, 1fr));gap: 12px;margin-left: 0;margin-right: 0;}
+.listing-details-wrapper .slider-thumbnails .slick-list {width: 100%;overflow: hidden;}
+.listing-details-wrapper .slider-thumbnails .slick-track {display: flex !important;align-items: stretch;margin-left: 0;}
+.listing-details-wrapper .slider-thumbnails .slick-slide {float: none;height: auto;overflow: hidden;padding: 0px 6px;cursor: pointer;}
+.listing-details-wrapper .slider-thumbnails .slick-slide > div {height: 100%;}
 .listing-details-wrapper .slider-thumbnails figure {aspect-ratio: 16 / 9;overflow: hidden;border-radius: 10px;margin: 0;}
 .listing-details-wrapper .slider-thumbnails .slick-slide img {border-radius: 10px;width: 100%;height: 100%;object-fit: cover;display: block;}
 .listing-details-wrapper .product-images .main-slider figure {aspect-ratio: 16 / 9;overflow: hidden;border-radius: 14px;margin: 0;}
@@ -827,6 +832,11 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .top-hotal-widget .all-logo img {height: 45px;}
 .top-hotal-logo {margin-top: -45px;z-index: 999;position: relative;}
 .package-details-wrapper .feature-items .item {background-color: #FFF8F3;padding: 15px;border-radius: 12px;}
+.package-details-wrapper .feature-items .item img[src*="/storage/packages/inclusions/"],
+.luxury-feedback .widget .icon img,
+img[src*="/user/assets/images/f-icon"] {
+    filter: brightness(0) saturate(100%) invert(52%) sepia(59%) saturate(582%) hue-rotate(359deg) brightness(88%) contrast(90%) !important;
+}
 .package-details-wrapper .faq-wrapper .accordion-item {background: linear-gradient(10deg, #FFF8F0, #FBF3E8);padding: 0px 5px 5px;}
 .package-details-wrapper .faq-wrapper .accordion-collapse {background-color: #fff;padding: 35px;}
 .package-details-wrapper .faq-wrapper .accordion-collapse .accordion-body {padding: 0px;}
@@ -872,6 +882,45 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .outline-btn {border: solid 1px rgb(185 130 48 / 50%);background-color: #FBF3E8;color: #3A2D25;height: 48px !important;width: 190px !important;font-weight: 500;position: static !important;}
 
 .check-hotal-aval-wrapper {background: linear-gradient(135deg, #FFF8F0, #FBF3E8);}
+.check-hotal-aval-wrapper .HowItWork {
+    row-gap: 26px;
+}
+.check-hotal-aval-wrapper .HowItWork .process-block {
+    text-align: center;
+}
+.check-hotal-aval-wrapper .HowItWork .process-block figure {
+    width: 164px;
+    height: 164px;
+    margin: 0 auto !important;
+    background: radial-gradient(circle, #fff 0%, #fff8f3 58%, #fbf3e8 100%) !important;
+}
+.check-hotal-aval-wrapper .HowItWork .process-block figure img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    filter: brightness(0) saturate(100%) invert(50%) sepia(78%) saturate(490%) hue-rotate(359deg) brightness(91%) contrast(89%);
+}
+.check-hotal-aval-wrapper .HowItWork .process-count {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    padding: 0 !important;
+    align-items: center;
+    justify-content: center;
+    margin: -28px auto 28px;
+    background: #B98230;
+    box-shadow: none !important;
+    font-size: 24px !important;
+    line-height: 1 !important;
+}
+.check-hotal-aval-wrapper .HowItWork .process-block h5 {
+    margin-bottom: 20px !important;
+}
+.check-hotal-aval-wrapper .HowItWork .process-block p {
+    max-width: 330px;
+    margin-left: auto;
+    margin-right: auto;
+}
 .check-hotal-aval-wrapper .item .content p {color: rgb(58 45 37 / 70%);font-size: 14px;margin-bottom: 0;}
 .check-hotal-aval-wrapper .item .number {font-size: 56px;color: rgb(80 68 59 / 06%);}
 .check-hotal-aval-wrapper .item .content {width: 100%;}
@@ -1004,6 +1053,29 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 .Understanding-wrapper .feature-items .item p {color: rgb(80 68 59 / 60%);line-height: 22px;margin-bottom: 0;margin-top: 7px;}
 .Understanding-wrapper .feature-items .item h5 {color: #4A3C33;margin-top: 14px;}
 .why-us-section .Co-Tr-img { position: absolute;content: "";left: 0px;top: 0px;width: 48%;height: 100%; background-repeat:no-repeat; background-size: cover; background-position: center center;}
+.why-us-section .row.justify-content-end > [class*="col-"] {
+    padding-top: 72px !important;
+    padding-bottom: 72px !important;
+}
+.why-us-section .Craft-block {
+    margin-top: 34px !important;
+}
+.why-us-section .quality-block {
+    align-items: flex-start;
+}
+.why-us-section .quality-block + .quality-block {
+    margin-top: 56px !important;
+}
+.why-us-section .quality-block .icon {
+    width: 42px;
+    min-width: 42px;
+}
+.why-us-section .quality-block .icon img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    filter: brightness(0) saturate(100%) invert(52%) sepia(59%) saturate(582%) hue-rotate(359deg) brightness(88%) contrast(90%) !important;
+}
 .consultation-card .dis p{ color: rgb(58 45 37 / 70%);}
 
 
@@ -1116,10 +1188,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 .MuiInputLabel-shrink .form-group .form-label {position: absolute;padding: 0px 6px;color: #4A3C33 !important;top: -9px;left: 11px;font-weight: 600;font-size: 12px;background-color: #fff;}
 .MuiInputLabel-shrink .form-group .form-control {height: 56px;border: solid 1px rgb(0 0 0 / 16%);border-radius: 12px;font-size: 14px;}
 .MuiInputLabel-shrink .form-group textarea.form-control {min-height: 160px;padding: 20px .75rem;}
-.viv-custom-modal .modal-dialog {max-width: 620px;}
-.viv-custom-modal .modal-dialog .modal-header {border-bottom: 0;background-color: #ffe8ce;}
+.modal-backdrop {z-index: 10000000 !important;}
+.modal.viv-custom-modal {z-index: 10000001 !important;}
+.viv-custom-modal .modal-dialog {max-width: 620px;margin-top: 24px;margin-bottom: 24px;}
+.viv-custom-modal .modal-content {max-height: calc(100dvh - 48px);overflow: hidden;}
+.viv-custom-modal .modal-dialog .modal-header {border-bottom: 0;background-color: #ffe8ce;position: sticky;top: 0;z-index: 2;}
 .viv-custom-modal .modal-dialog .modal-header .modal-title {color: #B98230 !important;font-size: 18px;font-weight: 600;}
-.viv-custom-modal .modal-body {padding: 40px 30px;}
+.viv-custom-modal .modal-body {padding: 40px 30px;overflow-y: auto;}
 .MuiInputLabel-shrink .accordion-item .accordion-header .accordion-button {background-color: #fdf6f0;}
 .room-card-details ul { display: flex; justify-content: space-between;}
 .CostSummary .days-box li {display: inline-flex;margin-right: 12px;margin-left: 5px;gap: 10px;}
@@ -1151,6 +1226,36 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 .packages-slider .item {padding: 0px 10px;}
 body .offcanvas.offcanvas-start {width: 100% !important;min-width: auto;border-right: 0;max-width: 500px;overflow: auto;height: 100vh;}
 .offcanvas-body {overflow: visible;}
+.CostSummary:not(.show) {scroll-behavior: auto;}
+.CostSummary .offcanvas-header {position: sticky;top: 0;z-index: 2;}
+.CostSummary {overflow: hidden !important;}
+.CostSummary .offcanvas-body {overflow-y: auto;overflow-x: hidden;}
+.CostSummary .room-card-details i.fa-light {
+    display: inline-block;
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    color: #6c757d;
+    background-color: currentColor;
+    font-size: 0;
+    line-height: 1;
+    -webkit-mask: var(--cost-summary-icon) center / contain no-repeat;
+    mask: var(--cost-summary-icon) center / contain no-repeat;
+}
+.CostSummary .room-card-details i.fa-light::before {content: "" !important;}
+.CostSummary .room-card-details i.fa-bed {
+    --cost-summary-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7v10'/%3E%3Cpath d='M21 12v5'/%3E%3Cpath d='M3 12h18'/%3E%3Cpath d='M5 12V8.5A1.5 1.5 0 0 1 6.5 7H10a2 2 0 0 1 2 2v3'/%3E%3Cpath d='M12 12V9.5A2.5 2.5 0 0 1 14.5 7H17a4 4 0 0 1 4 4v1'/%3E%3Cpath d='M3 17h18'/%3E%3C/svg%3E");
+}
+.CostSummary .room-card-details i.fa-utensils {
+    --cost-summary-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 3v8'/%3E%3Cpath d='M9 3v8'/%3E%3Cpath d='M4 3v6a4 4 0 0 0 4 4v8'/%3E%3Cpath d='M18 3c-2 1.7-3 4-3 7v4h4'/%3E%3Cpath d='M19 3v18'/%3E%3C/svg%3E");
+}
+.CostSummary .room-card-details i.fa-mug-hot {
+    --cost-summary-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 8h10v6a5 5 0 0 1-5 5h0a5 5 0 0 1-5-5V8Z'/%3E%3Cpath d='M17 10h1.5a2.5 2.5 0 0 1 0 5H17'/%3E%3Cpath d='M8 3v2'/%3E%3Cpath d='M12 3v2'/%3E%3Cpath d='M16 3v2'/%3E%3C/svg%3E");
+}
+.CostSummary .room-card-details i.fa-plate-utensils {
+    --cost-summary-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='5.5'/%3E%3Cpath d='M4 3v7'/%3E%3Cpath d='M6.5 3v7'/%3E%3Cpath d='M3 3v5a3.5 3.5 0 0 0 3.5 3.5V21'/%3E%3Cpath d='M20 3c-1.7 1.5-2.5 3.7-2.5 6.5V13H20'/%3E%3Cpath d='M20 3v18'/%3E%3C/svg%3E");
+}
 .short-text {max-height: 120px; /* jitna chhota dikhana hai */overflow: hidden;position: relative;}
 .short-text::after {content: "";position: absolute;bottom: 0;left: 0;width: 100%;height: 40px;background: linear-gradient(transparent, white);}
 .description-text.expanded {max-height: none;}
@@ -1195,6 +1300,9 @@ body .offcanvas.offcanvas-start {width: 100% !important;min-width: auto;border-r
 }
 @media only screen and (max-width: 1210px) {
 .js-header .navbar .nav-item .nav-link.btn {display: none;}
+}
+@media only screen and (min-width: 1200px) {
+    .js-header .navbar .main-menu {margin-left: 56px;}
 }
 @media only screen and (max-width: 1200px) {
     .js-header .navbar-brand {max-width: 120px;}
@@ -1270,6 +1378,16 @@ html, body {margin-top: 36px;}
 .about-list {padding: 15px;}
 .check-hotal-ava-widget:after{display: none;}
     .day-section .form-control {padding: 0px 15px !important; font-size: 12px !important;}
+.why-us-section .row.justify-content-end > [class*="col-"] {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+}
+.why-us-section .Craft-block {
+    margin-top: 28px !important;
+}
+.why-us-section .quality-block + .quality-block {
+    margin-top: 36px !important;
+}
 
 }
 @media (max-width: 767px) {
@@ -1650,6 +1768,10 @@ ul#hotelTabs .nav-link.active {
     .check-hotal-aval-slider,
     .check-hotal-aval-slider .slick-list,
     .check-hotal-aval-slider .owl-stage-outer,
+    .banner-bottom-list,
+    .banner-bottom-list .container,
+    .banner-bottom-list .stats-slider,
+    .banner-bottom-list .slick-list,
     .testimonials-wrapper .slick-list,
     .testimonials-wrapper .slick-slider {
         max-width: 100%;

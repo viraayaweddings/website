@@ -281,10 +281,19 @@
 
 .homepage-gold-theme .service-wrapper::before,
 .homepage-gold-theme .deal-season-wrapper:before,
-.homepage-gold-theme .questions-wrapper .widget::before,
-.homepage-gold-theme .testimonials-slider .item .outline .user::before {
+.homepage-gold-theme .questions-wrapper .widget::before {
     background-image: none !important;
     background: linear-gradient(135deg, rgb(74 60 51 / 96%), rgb(58 45 37 / 92%)) !important;
+    opacity: 1 !important;
+}
+
+.homepage-gold-theme .testimonials-slider .item .outline .user::before {
+    background-image: url("../images/gradient-border.svg") !important;
+    background-repeat: no-repeat !important;
+    background-position: bottom !important;
+    background-size: 100% !important;
+    background-color: transparent !important;
+    background: url("../images/gradient-border.svg") no-repeat bottom / 100% !important;
     opacity: 1 !important;
 }
 

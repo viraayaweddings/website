@@ -7,6 +7,43 @@
 
 jQuery(document).ready(function () {
 
+$(document).on('show.bs.offcanvas shown.bs.offcanvas hidden.bs.offcanvas', '.CostSummary', function () {
+  var offcanvas = this;
+  var $body = $(offcanvas).find('.offcanvas-body');
+  function resetCostSummaryScroll() {
+    offcanvas.scrollTop = 0;
+    $body.scrollTop(0);
+    if (typeof offcanvas.scrollTo === 'function') {
+      try {
+        offcanvas.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      } catch (e) {
+        offcanvas.scrollTo(0, 0);
+      }
+    }
+  }
+  resetCostSummaryScroll();
+  requestAnimationFrame(resetCostSummaryScroll);
+  [0, 80, 180, 360, 600].forEach(function (delay) {
+    setTimeout(resetCostSummaryScroll, delay);
+  });
+});
+
+function canUseSlick($el) {
+  return $el && $el.length && $.fn && typeof $.fn.slick === 'function';
+}
+
+function initSlick($el, options) {
+  if (!canUseSlick($el)) return false;
+  $el.slick(options);
+  return true;
+}
+
+function destroySlick($el) {
+  if (canUseSlick($el) && $el.hasClass('slick-initialized')) {
+    $el.slick('unslick');
+  }
+}
+
 $('.nav-link.dropdown-toggle').on('click', function (e) {
 
   if ($(window).width() <= 992) {
@@ -72,7 +109,7 @@ $(".menu-btn").click(function () {
   =       2. Banner Slide         =
   =================================*/
 
-  $('.slider-banner').slick({
+  initSlick($('.slider-banner'), {
     slidesToShow: 1,  // Shows 3 full slides and part of the 4th
     slidesToScroll: 1,
     dots: true,
@@ -96,8 +133,8 @@ $(window).on('load', function () {
 
         // if (window.innerWidth < 992) {
 
-            if (!$slider.hasClass('slick-initialized')) {
-                $slider.slick({
+            if (canUseSlick($slider) && !$slider.hasClass('slick-initialized')) {
+                initSlick($slider, {
 slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
@@ -138,8 +175,8 @@ window.addEventListener('load', function () {
     function initSlider() {
         if (window.innerWidth < 992) {
 
-            if (!$slider.hasClass('slick-initialized')) {
-                $slider.slick({
+            if (canUseSlick($slider) && !$slider.hasClass('slick-initialized')) {
+                initSlick($slider, {
                     slidesToShow: 3.2,
                     slidesToScroll: 1,
                     arrows: false,
@@ -163,9 +200,7 @@ window.addEventListener('load', function () {
             }
 
         } else {
-            if ($slider.hasClass('slick-initialized')) {
-                $slider.slick('unslick');
-            }
+            destroySlick($slider);
         }
     }
 
@@ -183,6 +218,7 @@ window.addEventListener('load', function () {
 var $slider = $('.deal-season-slider');
 var slideCount = $slider.children().length;
 
+if (canUseSlick($slider)) {
 $slider.on('init afterChange', function(event, slick, currentSlide){
 
   // sabse pehle remove karo
@@ -205,7 +241,7 @@ $slider.on('init afterChange', function(event, slick, currentSlide){
 
 });
 
-$slider.slick({
+initSlick($slider, {
   slidesToShow: 3,
   slidesToScroll: 1,
   dots: true,
@@ -246,6 +282,7 @@ $slider.slick({
     }
   ]
 });
+}
 
   /*=====================================
   =     4. Post Wedding images Change   =
@@ -281,7 +318,7 @@ $slider.slick({
   =     5. Testimonials           =
   =================================*/
 
-  $('.testimonials-slider').slick({
+  initSlick($('.testimonials-slider'), {
     slidesToShow: 2,
     slidesToScroll: 1,
     dots: true,
@@ -311,7 +348,7 @@ $slider.slick({
   });
   
   
-   $('.packages-slider').slick({
+   initSlick($('.packages-slider'), {
     slidesToShow: 3,
     slidesToScroll: 1,
     dots: true,
@@ -348,7 +385,7 @@ $slider.slick({
   
   
   
-  $('.product-slider2').slick({
+  initSlick($('.product-slider2'), {
     slidesToShow: 3,
     slidesToScroll: 1,
     dots: false,
@@ -381,7 +418,7 @@ $slider.slick({
   
 
 function initProductSlider($el) {
-  $el.slick({
+  initSlick($el, {
     slidesToShow: 3,
     slidesToScroll: 1,
     dots: false,
@@ -433,9 +470,7 @@ $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
   var targetTab = $(e.target).data('bs-target');
   var $slider = $(targetTab).find('.product-slider');
 
-  if ($slider.hasClass('slick-initialized')) {
-    $slider.slick('unslick');
-  }
+  destroySlick($slider);
 
   initProductSlider($slider);
 });
@@ -444,7 +479,7 @@ $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
   =    3. Deal Season Slider      =
   =================================*/
 
-  $('.check-hotal-aval-slider').slick({
+  initSlick($('.check-hotal-aval-slider'), {
     slidesToShow: 9,
     slidesToScroll: 1,
     dots: true,
@@ -480,7 +515,7 @@ $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
   =    3. Partner Hotels      =
   =================================*/
 
-  $('.PartnerHotels-slider').slick({
+  initSlick($('.PartnerHotels-slider'), {
     slidesToShow:4,
     slidesToScroll: 1,
     dots: false,
@@ -527,16 +562,17 @@ $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
   });
 
 
-AOS.init({
-  duration: 1200,
-//   disable: 'mobile'
-});
+if (window.AOS && typeof AOS.init === 'function') {
+  AOS.init({
+    duration: 1200,
+  //   disable: 'mobile'
+  });
+}
   
   
  const accordion = document.querySelector("#weddingFAQ");
 
   if (!accordion) {
-    console.log("Accordion not found");
     return;
   }
 

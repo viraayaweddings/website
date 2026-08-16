@@ -57,6 +57,11 @@
     var status = addStatus(form);
     status.className = "lead-form-status lead-form-status--" + type;
     status.textContent = message || "";
+    status.setAttribute("tabindex", "-1");
+    window.setTimeout(function () {
+      status.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+      status.focus({ preventScroll: true });
+    }, 50);
   }
 
   function markInvalid(control, message) {
@@ -189,9 +194,30 @@
     return form.querySelector('[type="submit"], button:not([type]), .btn[type="button"]');
   }
 
+  function setButtonSending(button, isSending) {
+    if (!button) return;
+    var text = button.querySelector("#btnText, [data-button-text]");
+    var loader = button.querySelector("#btnLoader, [data-button-loader]");
+
+    button.disabled = isSending;
+
+    if (text && loader) {
+      text.classList.toggle("d-none", isSending);
+      loader.classList.toggle("d-none", !isSending);
+      return;
+    }
+
+    if (isSending && button.textContent.trim()) {
+      button.dataset.originalText = button.dataset.originalText || button.textContent;
+      button.textContent = "Sending...";
+    } else if (!isSending && button.dataset.originalText) {
+      button.textContent = button.dataset.originalText;
+      delete button.dataset.originalText;
+    }
+  }
+
   async function submitLead(form) {
     var button = submitButton(form);
-    var originalText = button ? button.textContent : "";
     var errors = validate(form);
 
     if (errors.length) {
@@ -201,10 +227,7 @@
       return;
     }
 
-    if (button) {
-      button.disabled = true;
-      if (button.textContent.trim()) button.textContent = "Sending...";
-    }
+    setButtonSending(button, true);
     setStatus(form, "Sending your enquiry...", "pending");
 
     try {
@@ -229,10 +252,7 @@
     } catch (error) {
       setStatus(form, "Could not send your enquiry right now.", "error");
     } finally {
-      if (button) {
-        button.disabled = false;
-        if (originalText.trim()) button.textContent = originalText;
-      }
+      setButtonSending(button, false);
     }
   }
 

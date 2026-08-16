@@ -1,0 +1,102 @@
+[
+  {
+    "index": 1,
+    "figure": {
+      "w": 164,
+      "h": 164,
+      "top": 220,
+      "left": 373
+    },
+    "icon": {
+      "w": 48,
+      "h": 48,
+      "filter": "brightness(0) saturate(1) invert(0.5) sepia(0.78) saturate(4.9) hue-rotate(359deg) brightness(0.91) contrast(0.89)"
+    },
+    "count": {
+      "w": 56,
+      "h": 56,
+      "top": 345,
+      "left": 427,
+      "bg": "rgb(185, 130, 48)",
+      "font": "24px",
+      "marginTop": "-28px",
+      "marginBottom": "28px"
+    },
+    "headingTop": 450
+  },
+  {
+    "index": 2,
+    "figure": {
+      "w": 164,
+      "h": 164,
+      "top": 220,
+      "left": 698
+    },
+    "icon": {
+      "w": 48,
+      "h": 48,
+      "filter": "brightness(0) saturate(1) invert(0.5) sepia(0.78) saturate(4.9) hue-rotate(359deg) brightness(0.91) contrast(0.89)"
+    },
+    "count": {
+      "w": 56,
+      "h": 56,
+      "top": 345,
+      "left": 752,
+      "bg": "rgb(185, 130, 48)",
+      "font": "24px",
+      "marginTop": "-28px",
+      "marginBottom": "28px"
+    },
+    "headingTop": 450
+  },
+  {
+    "index": 3,
+    "figure": {
+      "w": 164,
+      "h": 164,
+      "top": 220,
+      "left": 1023
+    },
+    "icon": {
+      "w": 48,
+      "h": 48,
+      "filter": "brightness(0) saturate(1) invert(0.5) sepia(0.78) saturate(4.9) hue-rotate(359deg) brightness(0.91) contrast(0.89)"
+    },
+    "count": {
+      "w": 56,
+      "h": 56,
+      "top": 345,
+      "left": 1077,
+      "bg": "rgb(185, 130, 48)",
+      "font": "24px",
+      "marginTop": "-28px",
+      "marginBottom": "28px"
+    },
+    "headingTop": 450
+  },
+  {
+    "index": 4,
+    "figure": {
+      "w": 164,
+      "h": 164,
+      "top": 220,
+      "left": 1348
+    },
+    "icon": {
+      "w": 48,
+      "h": 48,
+      "filter": "brightness(0) saturate(1) invert(0.5) sepia(0.78) saturate(4.9) hue-rotate(359deg) brightness(0.91) contrast(0.89)"
+    },
+    "count": {
+      "w": 56,
+      "h": 56,
+      "top": 345,
+      "left": 1402,
+      "bg": "rgb(185, 130, 48)",
+      "font": "24px",
+      "marginTop": "-28px",
+      "marginBottom": "28px"
+    },
+    "headingTop": 450
+  }
+]

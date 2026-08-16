@@ -1,0 +1,4652 @@
+[
+  {
+    "route": "/about-us",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1860,
+    "title": "Our Journey – About Viraaya Weddings Destination Wedding Planners",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 16,
+    "bodyTextLength": 5531,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/blog-form-submit",
+    "viewport": {
+      "width": 980,
+      "height": 2121
+    },
+    "navError": null,
+    "loadMs": 1575,
+    "title": "",
+    "statusText": "loaded",
+    "scrollWidth": 980,
+    "bodyScrollWidth": 980,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 0,
+    "bodyTextLength": 44,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/blogs/category/weeding-planning",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1588,
+    "title": "Wedding Planning Category - Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 14,
+    "bodyTextLength": 3434,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/blogs/plan-luxury-destination-wedding-like-nupur-sanon-stebin-ben",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1559,
+    "title": "Plan a Luxury Destination Wedding Like Nupur Sanon & Stebin",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "TBODY",
+        "id": "",
+        "cls": "",
+        "left": 17,
+        "right": 476,
+        "width": 460
+      },
+      {
+        "tag": "TR",
+        "id": "",
+        "cls": "",
+        "left": 17,
+        "right": 476,
+        "width": 460
+      },
+      {
+        "tag": "TD",
+        "id": "",
+        "cls": "",
+        "left": 366,
+        "right": 476,
+        "width": 110
+      },
+      {
+        "tag": "STRONG",
+        "id": "",
+        "cls": "",
+        "left": 379,
+        "right": 464,
+        "width": 85
+      },
+      {
+        "tag": "TR",
+        "id": "",
+        "cls": "",
+        "left": 17,
+        "right": 476,
+        "width": 460
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 7,
+    "bodyTextLength": 9333,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/blogs/top-beachside-wedding-venues-goa",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1552,
+    "title": "Beachside Wedding Venue in Goa: Top 7 Resorts & Costs",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "TBODY",
+        "id": "",
+        "cls": "",
+        "left": 17,
+        "right": 546,
+        "width": 529
+      },
+      {
+        "tag": "TR",
+        "id": "",
+        "cls": "",
+        "left": 17,
+        "right": 546,
+        "width": 529
+      },
+      {
+        "tag": "TD",
+        "id": "",
+        "cls": "",
+        "left": 306,
+        "right": 416,
+        "width": 110
+      },
+      {
+        "tag": "STRONG",
+        "id": "",
+        "cls": "",
+        "left": 318,
+        "right": 404,
+        "width": 85
+      },
+      {
+        "tag": "TD",
+        "id": "",
+        "cls": "",
+        "left": 416,
+        "right": 546,
+        "width": 130
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 5,
+    "bodyTextLength": 8436,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/blogs/when-to-book-a-wedding-venue",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1585,
+    "title": "When to Book a Wedding Venue: A Complete Timeline",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 7,
+    "bodyTextLength": 8133,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/contact/save",
+    "viewport": {
+      "width": 980,
+      "height": 2121
+    },
+    "navError": null,
+    "loadMs": 1542,
+    "title": "",
+    "statusText": "loaded",
+    "scrollWidth": 980,
+    "bodyScrollWidth": 980,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 0,
+    "bodyTextLength": 44,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding-in-delhi",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1552,
+    "title": "Destination Wedding in Delhi - Luxury Hotels & Venues",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 45,
+    "bodyTextLength": 9013,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding-in-jodhpur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1554,
+    "title": "Destination Wedding in Jodhpur - Royal Palace Venues",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 45,
+    "bodyTextLength": 8947,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/agra",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1555,
+    "title": "Luxury Wedding Hotels in Agra | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 24,
+    "bodyTextLength": 2688,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/agra/jaypee-palace-hotel-and-convention-centre-agra",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1545,
+    "title": "Jaypee Palace Hotel & Convention Centre Agra Wedding Cost",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 5284,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/agra/the-oberoi-amarvilas-agra",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1532,
+    "title": "The Oberoi Amarvilas Agra Wedding Cost & Hotel Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 53,
+    "bodyTextLength": 4981,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/ahmedabad/gateway-ahmedabad-sindhu-bhavan",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1532,
+    "title": "Gateway Ahmedabad Sindhu Bhavan – Wedding & Booking Cost",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 5222,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/ajmer",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1537,
+    "title": "Luxury Wedding Hotels in Ajmer | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 8,
+    "bodyTextLength": 2082,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/amritsar/hyatt-regency-amritsar-hotel-and-spa",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1537,
+    "title": "Hyatt Regency Amritsar Wedding Packages & Booking Details",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 5043,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/barwara",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1533,
+    "title": "Luxury Wedding Hotels in Barwara | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 8,
+    "bodyTextLength": 2066,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/bengaluru",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1539,
+    "title": "Luxury Wedding Hotels in Bengaluru | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 28,
+    "bodyTextLength": 3030,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/bengaluru/itc-windsor-a-luxury-collection-hotel-bengaluru",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1539,
+    "title": "ITC Windsor Bengaluru Luxury Wedding Cost and Venue Info",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 53,
+    "bodyTextLength": 5529,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/bengaluru/taj-west-end-bengaluru",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1540,
+    "title": "Taj West End Bangalore Wedding Cost - Reserve Your Venue",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4622,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/bhopal",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1532,
+    "title": "Luxury Wedding Hotels in Bhopal | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 12,
+    "bodyTextLength": 2227,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/bhubaneswar",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1532,
+    "title": "Luxury Wedding Hotels in Bhubaneswar | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 6,
+    "bodyTextLength": 2028,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/chandigarh/novotel-chandigarh-tribune-chowk",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1535,
+    "title": "Novotel Chandigarh Tribune Chowk - Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 5327,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/chennai/hilton-chennai",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1530,
+    "title": "Hilton Chennai Wedding Cost, Packages & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4840,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/chennai/novotel-chennai-omr",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1534,
+    "title": "Novotel Chennai OMR – Banquets & Wedding Cost and Reviews",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4903,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/daman",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1521,
+    "title": "Luxury Wedding Hotels in Daman | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 12,
+    "bodyTextLength": 2225,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/dehradun",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1531,
+    "title": "Luxury Wedding Hotels in Dehradun | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 12,
+    "bodyTextLength": 2270,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/delhi-ncr",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1535,
+    "title": "Luxury Wedding Hotels in Delhi NCR | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 30,
+    "bodyTextLength": 3112,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/delhi-ncr/heritage-village-resort-and-spa-manesar",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1533,
+    "title": "Heritage Village Resort & Spa Manesar Wedding Cost",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 53,
+    "bodyTextLength": 5282,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/delhi-ncr/jw-marriott-hotel-new-delhi-aerocity",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1549,
+    "title": "JW Marriott New Delhi Aerocity Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4987,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/delhi-ncr/resort-country-club-manesar",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1537,
+    "title": "Resort Country Club Manesar Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4777,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/delhi-ncr/taj-palace-new-delhi",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1538,
+    "title": "Taj Palace New Delhi Luxury Wedding Cost & Booking Guide",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4908,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/delhi-ncr/the-leela-palace-new-delhi",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1528,
+    "title": "The Leela Palace New Delhi Wedding Costs & Packages",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4794,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/delhi-ncr/trident-gurgaon",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1543,
+    "title": "Trident Gurgaon Wedding Cost, Booking & Packages",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4744,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/goa/azaya-beach-resort-goa",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1538,
+    "title": "Azaya Beach Resort Goa Wedding Cost Estimates & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4416,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/goa/itc-grand-goa",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1545,
+    "title": "ITC Grand Goa Luxury Wedding Packages & Venue Costs",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4623,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/goa/taj-cidade-de-goa-heritage-goa",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1538,
+    "title": "Taj Cidade De Goa Heritage Goa Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4720,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/goa/taj-holiday-village-resort-and-spa-goa",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1540,
+    "title": "Taj Holiday Village Goa Wedding Cost & Booking Packages",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4914,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/goa/w-goa",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1525,
+    "title": "W Goa Destination Wedding Cost & Venue Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4352,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/gwalior",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1534,
+    "title": "Luxury Wedding Hotels in Gwalior | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 8,
+    "bodyTextLength": 2072,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/hyderabad/hyatt-hyderabad-gachibowli",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1546,
+    "title": "Hyatt Hyderabad Gachibowli Wedding Cost & Booking Details",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 5122,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/hyderabad/le-meridien-hyderabad",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1538,
+    "title": "Le Méridien Hyderabad Grand Wedding Cost & Venue Pricing",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4523,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/hyderabad/taj-deccan-hyderabad",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1539,
+    "title": "Taj Deccan Hyderabad - Weddings, Cost & Hotel Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4860,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/hyderabad/the-park-hyderabad",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1531,
+    "title": "The Park Hyderabad Booking, Events and Wedding Cost",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4596,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/indore/radisson-blu-hotel-indore",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1536,
+    "title": "Radisson Blu Indore - Luxury Wedding Cost & Direct Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 5010,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/alila-fort-bishangarh-jaipur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1530,
+    "title": "Alila Fort Bishangarh Jaipur Wedding Cost & Venue Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4618,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/chomu-palace-hotel-jaipur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1538,
+    "title": "Chomu Palace Jaipur Wedding Cost & Packages Details",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 53,
+    "bodyTextLength": 4939,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/indana-palace-jaipur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1530,
+    "title": "Indana Palace Jaipur Hotel Booking & Wedding Venue Cost",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4855,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/le-meridien-jaipur-resort-and-spa",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1531,
+    "title": "Le Meridien Jaipur Resort & Spa Luxury Wedding Deals Online!",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4973,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/pride-amber-vilas-resort-and-convention-centre-jaipur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1532,
+    "title": "Pride Amber Vilas Jaipur - Wedding Cost & Resort Stay Info",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 5457,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/samode-bagh-jaipur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1539,
+    "title": "Samode Bagh Jaipur Royal Wedding Cost and Venue Details",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4726,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/the-gold-palace-and-resorts-jaipur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1540,
+    "title": "The Gold Palace & Resorts Jaipur Wedding Cost & Bookings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 5093,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/the-palace-aravali-by-park-jewels-hotels-and-resorts-jaipur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1535,
+    "title": "The Palace by Park Jewels Jaipur Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 5423,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaisalmer/gobindgarh-jaisalmer",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1540,
+    "title": "Gobindgarh Jaisalmer Wedding Cost – Your Dream Fort Wedding",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4580,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaisalmer/taj-gorbandh-palace-jaisalmer",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1550,
+    "title": "Taj Gorbandh Palace Jaisalmer – Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 5246,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jim-corbett/namah-jim-corbett",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1543,
+    "title": "Namah Jim Corbett Wedding Cost & Venue Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4759,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jim-corbett/the-riverview-retreat-jim-corbett",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1535,
+    "title": "Riverview Retreat Jim Corbett Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 5129,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jodhpur/indana-palace-jodhpur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1534,
+    "title": "Indana Palace Jodhpur Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4807,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jodhpur/umaid-bhawan-palace-jodhpur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1530,
+    "title": "Umaid Bhawan Palace Jodhpur Wedding Cost & Venue Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 54,
+    "bodyTextLength": 5079,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/karnal",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1527,
+    "title": "Luxury Wedding Hotels in Karnal | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 8,
+    "bodyTextLength": 2065,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/karnataka/gateway-coorg-karnataka",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1529,
+    "title": "Gateway Coorg Madikeri, Karnataka Wedding Cost & Packages",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 51,
+    "bodyTextLength": 4729,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/kerala",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1538,
+    "title": "Luxury Wedding Hotels in Kerala | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 12,
+    "bodyTextLength": 2254,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/khimsar",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1522,
+    "title": "Luxury Wedding Hotels in Khimsar | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 8,
+    "bodyTextLength": 2091,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/kochi/courtyard-by-marriott-kochi-airport",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1532,
+    "title": "Courtyard by Marriott Kochi Airport Wedding Cost Details",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4786,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/kolkata",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1553,
+    "title": "Luxury Wedding Hotels in Kolkata | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 16,
+    "bodyTextLength": 2423,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/kolkata/novotel-kolkata-hotel-and-residences",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1536,
+    "title": "Novotel Kolkata - Reviews, Wedding Cost & Direct Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 5243,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/lakshadweep",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1525,
+    "title": "Luxury Wedding Hotels in Lakshadweep | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 6,
+    "bodyTextLength": 2028,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/lucknow/novotel-lucknow-gomti-nagar",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1557,
+    "title": "Novotel Lucknow Gomti Nagar - Wedding Costs, Banquets & Stay",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 47,
+    "bodyTextLength": 5175,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/mumbai/fairmont-mumbai",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1547,
+    "title": "Fairmont Mumbai Wedding Cost & Packages – Book Now!",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4728,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/mumbai/itc-maratha-mumbai",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1559,
+    "title": "ITC Maratha Luxury Collection Mumbai Wedding Cost",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4764,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/mumbai/radisson-blu-mumbai-international-airport",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1543,
+    "title": "Radisson Blu Mumbai International Airport – Weddings & Cost",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 5249,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/mumbai/the-leela-mumbai",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1558,
+    "title": "The Leela Mumbai Luxury Wedding Cost, Buffet & Reservations",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4657,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/mumbai/the-westin-mumbai-powai-lake",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1536,
+    "title": "The Westin Mumbai Powai Lake Wedding Cost & Hotel Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 4752,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/mussoorie/jw-marriott-mussoorie-walnut-grove-resort-and-spa",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1547,
+    "title": "JW Marriott Mussoorie Walnut Grove Resort & Spa Wedding Cost",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 5193,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/noida/crown-plaza-greater-noida-by-ihg",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1586,
+    "title": "Crowne Plaza Greater Noida Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 31,
+    "bodyTextLength": 4713,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/pune/radisson-blu-hotel-pune-kharadi",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1672,
+    "title": "Radisson Blu Pune Kharadi Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 5123,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/pushkar",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1655,
+    "title": "Luxury Wedding Hotels in Pushkar | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 12,
+    "bodyTextLength": 2234,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/raipur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1534,
+    "title": "Luxury Wedding Hotels in Raipur | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 10,
+    "bodyTextLength": 2154,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/ranthambore/nahargarh-ranthambhore",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1544,
+    "title": "Nahargarh Ranthambhore Wedding Cost, Packages & Bookings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 5113,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/rishikesh",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1529,
+    "title": "Luxury Wedding Hotels in Rishikesh | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 10,
+    "bodyTextLength": 2171,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/shimla",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1537,
+    "title": "Luxury Wedding Hotels in Shimla | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 8,
+    "bodyTextLength": 2072,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/trivandrum",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1533,
+    "title": "Luxury Wedding Hotels in Trivandrum | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 8,
+    "bodyTextLength": 2078,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/udaipur/chunda-palace-udaipur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1547,
+    "title": "Chunda Palace Udaipur Wedding Cost, Packages & Hotel Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 53,
+    "bodyTextLength": 4867,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/udaipur/justa-sajjangarh-resort-and-spa-udaipur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1539,
+    "title": "Justa Sajjangarh Resort & Spa Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 48,
+    "bodyTextLength": 5086,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/udaipur/raas-devigarh-udaipur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1546,
+    "title": "Raas Devigarh Udaipur Wedding Cost & Booking Details",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 53,
+    "bodyTextLength": 4743,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/udaipur/taj-aravali-resort-and-spa-udaipur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1549,
+    "title": "Taj Aravali Resort & Spa Udaipur Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-prev slick-arrow",
+        "left": -3,
+        "right": 17,
+        "width": 20
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "cls": "slick-next slick-arrow",
+        "left": 373,
+        "right": 393,
+        "width": 20
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 53,
+    "bodyTextLength": 5195,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/udaipur/the-ananta-udaipur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1538,
+    "title": "The Ananta Udaipur – Wedding Costs & Packages",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4516,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/udaipur/trident-udaipur",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1556,
+    "title": "Trident Udaipur Wedding Cost & Luxury Package Deals",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4534,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/faqs",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1532,
+    "title": "Frequently Asked Questions - Viraaya Weddings Destination Wedding",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 5,
+    "bodyTextLength": 2202,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/index.html",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1543,
+    "title": "Luxury Destination Wedding Venue in India by Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 662,
+    "overflow": 272,
+    "visibleOver": [
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "item",
+        "left": 277,
+        "right": 401,
+        "width": 124
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "font-family01 text-white text-uppercase fs-11 position-relative d-flex align-items-center",
+        "left": 300,
+        "right": 401,
+        "width": 101
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "item",
+        "left": 401,
+        "right": 523,
+        "width": 122
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "font-family01 text-white text-uppercase fs-11 position-relative d-flex align-items-center",
+        "left": 424,
+        "right": 523,
+        "width": 99
+      },
+      {
+        "tag": "IMG",
+        "id": "",
+        "cls": "",
+        "left": 424,
+        "right": 434,
+        "width": 10
+      }
+    ],
+    "brokenImages": [],
+    "imageCount": 246,
+    "bodyTextLength": 16394,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/real-weddings",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1542,
+    "title": "Real Destination Weddings - Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 17,
+    "bodyTextLength": 1562,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/real-weddings/rohan-aanya",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1534,
+    "title": "Rohan & Aanya Destination Wedding Story - Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 34,
+    "bodyTextLength": 4044,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/wedding-packages/shobhana",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "navError": null,
+    "loadMs": 1550,
+    "title": "Shobhana Bespoke Destination Wedding Package - Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 28,
+    "bodyTextLength": 6778,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/about-us",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1535,
+    "title": "Our Journey – About Viraaya Weddings Destination Wedding Planners",
+    "statusText": "loaded",
+    "scrollWidth": 768,
+    "bodyScrollWidth": 768,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 16,
+    "bodyTextLength": 5524,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/blog-form-submit",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1517,
+    "title": "",
+    "statusText": "loaded",
+    "scrollWidth": 768,
+    "bodyScrollWidth": 768,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 0,
+    "bodyTextLength": 44,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/blogs/category/weeding-planning",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1530,
+    "title": "Wedding Planning Category - Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 768,
+    "bodyScrollWidth": 768,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 14,
+    "bodyTextLength": 3434,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/blogs/plan-luxury-destination-wedding-like-nupur-sanon-stebin-ben",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1532,
+    "title": "Plan a Luxury Destination Wedding Like Nupur Sanon & Stebin",
+    "statusText": "loaded",
+    "scrollWidth": 768,
+    "bodyScrollWidth": 768,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 7,
+    "bodyTextLength": 9333,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/blogs/top-beachside-wedding-venues-goa",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1532,
+    "title": "Beachside Wedding Venue in Goa: Top 7 Resorts & Costs",
+    "statusText": "loaded",
+    "scrollWidth": 768,
+    "bodyScrollWidth": 768,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 5,
+    "bodyTextLength": 8436,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/blogs/when-to-book-a-wedding-venue",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1539,
+    "title": "When to Book a Wedding Venue: A Complete Timeline",
+    "statusText": "loaded",
+    "scrollWidth": 768,
+    "bodyScrollWidth": 768,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 7,
+    "bodyTextLength": 8133,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/contact/save",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1529,
+    "title": "",
+    "statusText": "loaded",
+    "scrollWidth": 768,
+    "bodyScrollWidth": 768,
+    "overflow": 0,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 0,
+    "bodyTextLength": 44,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding-in-delhi",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1543,
+    "title": "Destination Wedding in Delhi - Luxury Hotels & Venues",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 42,
+    "bodyTextLength": 8701,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding-in-jodhpur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1565,
+    "title": "Destination Wedding in Jodhpur - Royal Palace Venues",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 42,
+    "bodyTextLength": 8635,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/agra",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1557,
+    "title": "Luxury Wedding Hotels in Agra | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 24,
+    "bodyTextLength": 2688,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/agra/jaypee-palace-hotel-and-convention-centre-agra",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1555,
+    "title": "Jaypee Palace Hotel & Convention Centre Agra Wedding Cost",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 5270,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/agra/the-oberoi-amarvilas-agra",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1544,
+    "title": "The Oberoi Amarvilas Agra Wedding Cost & Hotel Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 45,
+    "bodyTextLength": 4967,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/ahmedabad/gateway-ahmedabad-sindhu-bhavan",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1537,
+    "title": "Gateway Ahmedabad Sindhu Bhavan – Wedding & Booking Cost",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 5208,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/ajmer",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1549,
+    "title": "Luxury Wedding Hotels in Ajmer | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 8,
+    "bodyTextLength": 2082,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/amritsar/hyatt-regency-amritsar-hotel-and-spa",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1535,
+    "title": "Hyatt Regency Amritsar Wedding Packages & Booking Details",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 5043,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/barwara",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1535,
+    "title": "Luxury Wedding Hotels in Barwara | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 8,
+    "bodyTextLength": 2066,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/bengaluru",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1541,
+    "title": "Luxury Wedding Hotels in Bengaluru | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 28,
+    "bodyTextLength": 3030,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/bengaluru/itc-windsor-a-luxury-collection-hotel-bengaluru",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1552,
+    "title": "ITC Windsor Bengaluru Luxury Wedding Cost and Venue Info",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 45,
+    "bodyTextLength": 5515,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/bengaluru/taj-west-end-bengaluru",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1557,
+    "title": "Taj West End Bangalore Wedding Cost - Reserve Your Venue",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4622,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/bhopal",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1551,
+    "title": "Luxury Wedding Hotels in Bhopal | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 12,
+    "bodyTextLength": 2227,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/bhubaneswar",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1542,
+    "title": "Luxury Wedding Hotels in Bhubaneswar | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 6,
+    "bodyTextLength": 2028,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/chandigarh/novotel-chandigarh-tribune-chowk",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1562,
+    "title": "Novotel Chandigarh Tribune Chowk - Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 5313,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/chennai/hilton-chennai",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1553,
+    "title": "Hilton Chennai Wedding Cost, Packages & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4846,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/chennai/novotel-chennai-omr",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1553,
+    "title": "Novotel Chennai OMR – Banquets & Wedding Cost and Reviews",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4889,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/daman",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1570,
+    "title": "Luxury Wedding Hotels in Daman | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 12,
+    "bodyTextLength": 2225,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/dehradun",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1596,
+    "title": "Luxury Wedding Hotels in Dehradun | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 12,
+    "bodyTextLength": 2270,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/delhi-ncr",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1655,
+    "title": "Luxury Wedding Hotels in Delhi NCR | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 30,
+    "bodyTextLength": 3112,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/delhi-ncr/heritage-village-resort-and-spa-manesar",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1582,
+    "title": "Heritage Village Resort & Spa Manesar Wedding Cost",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 45,
+    "bodyTextLength": 5268,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/delhi-ncr/jw-marriott-hotel-new-delhi-aerocity",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1650,
+    "title": "JW Marriott New Delhi Aerocity Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4979,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/delhi-ncr/resort-country-club-manesar",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1557,
+    "title": "Resort Country Club Manesar Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4777,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/delhi-ncr/taj-palace-new-delhi",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1575,
+    "title": "Taj Palace New Delhi Luxury Wedding Cost & Booking Guide",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4908,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/delhi-ncr/the-leela-palace-new-delhi",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1595,
+    "title": "The Leela Palace New Delhi Wedding Costs & Packages",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4780,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/delhi-ncr/trident-gurgaon",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1571,
+    "title": "Trident Gurgaon Wedding Cost, Booking & Packages",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4730,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/goa/azaya-beach-resort-goa",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1562,
+    "title": "Azaya Beach Resort Goa Wedding Cost Estimates & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4408,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/goa/itc-grand-goa",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1563,
+    "title": "ITC Grand Goa Luxury Wedding Packages & Venue Costs",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4623,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/goa/taj-cidade-de-goa-heritage-goa",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1604,
+    "title": "Taj Cidade De Goa Heritage Goa Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4712,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/goa/taj-holiday-village-resort-and-spa-goa",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1597,
+    "title": "Taj Holiday Village Goa Wedding Cost & Booking Packages",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4906,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/goa/w-goa",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1545,
+    "title": "W Goa Destination Wedding Cost & Venue Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4338,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/gwalior",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1532,
+    "title": "Luxury Wedding Hotels in Gwalior | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 8,
+    "bodyTextLength": 2072,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/hyderabad/hyatt-hyderabad-gachibowli",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1538,
+    "title": "Hyatt Hyderabad Gachibowli Wedding Cost & Booking Details",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 5114,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/hyderabad/le-meridien-hyderabad",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1522,
+    "title": "Le Méridien Hyderabad Grand Wedding Cost & Venue Pricing",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4509,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/hyderabad/taj-deccan-hyderabad",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1531,
+    "title": "Taj Deccan Hyderabad - Weddings, Cost & Hotel Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4860,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/hyderabad/the-park-hyderabad",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1534,
+    "title": "The Park Hyderabad Booking, Events and Wedding Cost",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4582,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/indore/radisson-blu-hotel-indore",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1536,
+    "title": "Radisson Blu Indore - Luxury Wedding Cost & Direct Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4996,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/alila-fort-bishangarh-jaipur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1562,
+    "title": "Alila Fort Bishangarh Jaipur Wedding Cost & Venue Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4618,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/chomu-palace-hotel-jaipur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1563,
+    "title": "Chomu Palace Jaipur Wedding Cost & Packages Details",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 45,
+    "bodyTextLength": 4925,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/indana-palace-jaipur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1554,
+    "title": "Indana Palace Jaipur Hotel Booking & Wedding Venue Cost",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4841,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/le-meridien-jaipur-resort-and-spa",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1536,
+    "title": "Le Meridien Jaipur Resort & Spa Luxury Wedding Deals Online!",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4973,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/pride-amber-vilas-resort-and-convention-centre-jaipur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1544,
+    "title": "Pride Amber Vilas Jaipur - Wedding Cost & Resort Stay Info",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 5457,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/samode-bagh-jaipur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1547,
+    "title": "Samode Bagh Jaipur Royal Wedding Cost and Venue Details",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4712,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/the-gold-palace-and-resorts-jaipur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1541,
+    "title": "The Gold Palace & Resorts Jaipur Wedding Cost & Bookings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 5079,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaipur/the-palace-aravali-by-park-jewels-hotels-and-resorts-jaipur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1545,
+    "title": "The Palace by Park Jewels Jaipur Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 5409,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaisalmer/gobindgarh-jaisalmer",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1539,
+    "title": "Gobindgarh Jaisalmer Wedding Cost – Your Dream Fort Wedding",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4580,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jaisalmer/taj-gorbandh-palace-jaisalmer",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1543,
+    "title": "Taj Gorbandh Palace Jaisalmer – Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 5232,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jim-corbett/namah-jim-corbett",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1591,
+    "title": "Namah Jim Corbett Wedding Cost & Venue Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4745,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jim-corbett/the-riverview-retreat-jim-corbett",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1697,
+    "title": "Riverview Retreat Jim Corbett Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 5121,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jodhpur/indana-palace-jodhpur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 2614,
+    "title": "Indana Palace Jodhpur Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4813,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/jodhpur/umaid-bhawan-palace-jodhpur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1560,
+    "title": "Umaid Bhawan Palace Jodhpur Wedding Cost & Venue Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 46,
+    "bodyTextLength": 5071,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/karnal",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1551,
+    "title": "Luxury Wedding Hotels in Karnal | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 8,
+    "bodyTextLength": 2065,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/karnataka/gateway-coorg-karnataka",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1625,
+    "title": "Gateway Coorg Madikeri, Karnataka Wedding Cost & Packages",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 43,
+    "bodyTextLength": 4721,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/kerala",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1703,
+    "title": "Luxury Wedding Hotels in Kerala | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 12,
+    "bodyTextLength": 2254,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/khimsar",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 3709,
+    "title": "Luxury Wedding Hotels in Khimsar | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 8,
+    "bodyTextLength": 2091,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/kochi/courtyard-by-marriott-kochi-airport",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1704,
+    "title": "Courtyard by Marriott Kochi Airport Wedding Cost Details",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4786,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/kolkata",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 2070,
+    "title": "Luxury Wedding Hotels in Kolkata | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 16,
+    "bodyTextLength": 2423,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/kolkata/novotel-kolkata-hotel-and-residences",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1816,
+    "title": "Novotel Kolkata - Reviews, Wedding Cost & Direct Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 5229,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/lakshadweep",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1598,
+    "title": "Luxury Wedding Hotels in Lakshadweep | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 6,
+    "bodyTextLength": 2028,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/lucknow/novotel-lucknow-gomti-nagar",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1744,
+    "title": "Novotel Lucknow Gomti Nagar - Wedding Costs, Banquets & Stay",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 40,
+    "bodyTextLength": 5151,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/mumbai/fairmont-mumbai",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1834,
+    "title": "Fairmont Mumbai Wedding Cost & Packages – Book Now!",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4714,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/mumbai/itc-maratha-mumbai",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1816,
+    "title": "ITC Maratha Luxury Collection Mumbai Wedding Cost",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4764,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/mumbai/radisson-blu-mumbai-international-airport",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1642,
+    "title": "Radisson Blu Mumbai International Airport – Weddings & Cost",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 5249,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/mumbai/the-leela-mumbai",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1617,
+    "title": "The Leela Mumbai Luxury Wedding Cost, Buffet & Reservations",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4633,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/mumbai/the-westin-mumbai-powai-lake",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1738,
+    "title": "The Westin Mumbai Powai Lake Wedding Cost & Hotel Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 4738,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/mussoorie/jw-marriott-mussoorie-walnut-grove-resort-and-spa",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1565,
+    "title": "JW Marriott Mussoorie Walnut Grove Resort & Spa Wedding Cost",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 5179,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/noida/crown-plaza-greater-noida-by-ihg",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1656,
+    "title": "Crowne Plaza Greater Noida Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 31,
+    "bodyTextLength": 4713,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/pune/radisson-blu-hotel-pune-kharadi",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1581,
+    "title": "Radisson Blu Pune Kharadi Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 5109,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/pushkar",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1553,
+    "title": "Luxury Wedding Hotels in Pushkar | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 12,
+    "bodyTextLength": 2234,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/raipur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1542,
+    "title": "Luxury Wedding Hotels in Raipur | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 10,
+    "bodyTextLength": 2154,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/ranthambore/nahargarh-ranthambhore",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1546,
+    "title": "Nahargarh Ranthambhore Wedding Cost, Packages & Bookings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 5113,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/rishikesh",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1545,
+    "title": "Luxury Wedding Hotels in Rishikesh | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 10,
+    "bodyTextLength": 2171,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/shimla",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1540,
+    "title": "Luxury Wedding Hotels in Shimla | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 8,
+    "bodyTextLength": 2072,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/trivandrum",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1555,
+    "title": "Luxury Wedding Hotels in Trivandrum | Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 8,
+    "bodyTextLength": 2078,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/udaipur/chunda-palace-udaipur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1557,
+    "title": "Chunda Palace Udaipur Wedding Cost, Packages & Hotel Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 45,
+    "bodyTextLength": 4853,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/udaipur/justa-sajjangarh-resort-and-spa-udaipur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1561,
+    "title": "Justa Sajjangarh Resort & Spa Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 41,
+    "bodyTextLength": 5072,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/udaipur/raas-devigarh-udaipur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1553,
+    "title": "Raas Devigarh Udaipur Wedding Cost & Booking Details",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 45,
+    "bodyTextLength": 4729,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/udaipur/taj-aravali-resort-and-spa-udaipur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1554,
+    "title": "Taj Aravali Resort & Spa Udaipur Wedding Cost & Booking",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 45,
+    "bodyTextLength": 5181,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/udaipur/the-ananta-udaipur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1565,
+    "title": "The Ananta Udaipur – Wedding Costs & Packages",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4516,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/destination-wedding/udaipur/trident-udaipur",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1559,
+    "title": "Trident Udaipur Wedding Cost & Luxury Package Deals",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 37,
+    "bodyTextLength": 4534,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/faqs",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1542,
+    "title": "Frequently Asked Questions - Viraaya Weddings Destination Wedding",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 5,
+    "bodyTextLength": 2202,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/index.html",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1562,
+    "title": "Luxury Destination Wedding Venue in India by Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 252,
+    "bodyTextLength": 16259,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/real-weddings",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1548,
+    "title": "Real Destination Weddings - Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 17,
+    "bodyTextLength": 1562,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/real-weddings/rohan-aanya",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1541,
+    "title": "Rohan & Aanya Destination Wedding Story - Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 31,
+    "bodyTextLength": 3732,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  },
+  {
+    "route": "/wedding-packages/shobhana",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "navError": null,
+    "loadMs": 1535,
+    "title": "Shobhana Bespoke Destination Wedding Package - Viraaya Weddings",
+    "statusText": "loaded",
+    "scrollWidth": 753,
+    "bodyScrollWidth": 761,
+    "overflow": -7,
+    "visibleOver": [],
+    "brokenImages": [],
+    "imageCount": 28,
+    "bodyTextLength": 6768,
+    "consoleIssues": [],
+    "exceptions": [],
+    "failedRequests": []
+  }
+]

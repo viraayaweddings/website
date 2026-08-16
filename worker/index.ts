@@ -107,6 +107,11 @@ const worker = {
       "cache-control": "public, max-age=300",
     };
 
+    if ((request.method === "GET" || request.method === "HEAD") && url.pathname === "/wedding-consultation") {
+      url.pathname = "/wedding-consultation/";
+      return withSecurityHeaders(Response.redirect(url, 308), url);
+    }
+
     if (url.pathname === "/_vinext/image") {
       const allowedWidths = [...DEFAULT_DEVICE_SIZES, ...DEFAULT_IMAGE_SIZES];
       const imageResponse = await handleImageOptimization(request, {
@@ -352,10 +357,12 @@ async function getNodeStaticResponse(request: Request, url: URL): Promise<Respon
   const requestedPath = decodeURIComponent(url.pathname).replace(/^\/+/, "");
   const candidates = requestedPath.includes(".")
     ? [requestedPath]
-    : [
+    : requestedPath
+      ? [
         `${requestedPath.replace(/\/$/, "")}/index.html`,
         `${requestedPath.replace(/\/$/, "")}.html`,
-      ];
+      ]
+      : ["index.html"];
 
   for (const candidate of candidates) {
     const filePath = resolve(publicRoot, candidate || "index.html");

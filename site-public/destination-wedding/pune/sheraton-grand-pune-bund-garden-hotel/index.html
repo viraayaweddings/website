@@ -2185,90 +2185,7 @@
 </a>
 </li>
                         </ul>
-                        
-<!--<div class="currency-switcher-wrap">-->
-<!--    <select id="currencySelectLegacy" class="currency-select-dropdown">-->
-<!--        -->
-<!--            <option value="INR"-->
-<!--                    data-symbol="₹"-->
-<!--                    data-rate="94.15">-->
-<!--                ₹ INR-->
-<!--            </option>-->
-<!--        -->
-<!---->
-<!--        -->
-<!---->
-<!--        -->
-<!--    </select>-->
-<!--</div>-->
-
-<div class="currency-switcher-wrap">
-    <div class="currency-dropdown-trigger" id="currencyTrigger">
-        <span class="currency-globe">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="2" y1="12" x2="22" y2="12"/>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-            </svg>
-        </span>
-        <span class="currency-current-code" id="currencyCurrentCode">INR</span>
-        <span class="currency-chevron">
-            <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
-                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5"
-                      stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </span>
-    </div>
-
-    <div class="currency-dropdown-menu" id="currencyMenu">
-            </div>
-
-    <select id="currencySelect" style="display:none;">
-                    <option value="INR"
-                    data-symbol="₹"
-                    data-rate="94.15">
-                ₹ INR
-            </option>
-            </select>
 </div>
-
-            <!--<div class="currency-switcher-wrap">-->
-            <!--    <div class="custom-dropdown" id="currencyDropdown">-->
-            <!--        <div class="dropdown-selected">-->
-            <!--            Select Currency <i class="fa-sharp-duotone fa-regular fa-angle-down"></i>-->
-            <!--        </div>-->
-            
-            <!--        <ul class="dropdown-options">-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="INR"-->
-            <!--                    data-symbol="₹"-->
-            <!--                    data-rate="94.15">-->
-                                
-            <!--                    ₹ INR-->
-            <!--                </li>-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="USD"-->
-            <!--                    data-symbol="$"-->
-            <!--                    data-rate="1">-->
-                                
-            <!--                    $ USD-->
-            <!--                </li>-->
-            <!--            -->
-            <!--                <li class="dropdown-item"-->
-            <!--                    data-value="AED"-->
-            <!--                    data-symbol="د.إ"-->
-            <!--                    data-rate="3.67">-->
-                                
-            <!--                    د.إ AED-->
-            <!--                </li>-->
-            <!--            -->
-            <!--        </ul>-->
-            <!--    </div>-->
-            <!--</div>-->
-            </div>
                     </div>
                 </nav>
             </div>
@@ -2464,7 +2381,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 .search-suggestions {
     position: absolute;
-    top: 100%;              /* 👈 directly below input */
+    top: 100%;              /* directly below input */
     left: 0;
     width: 100%;
     background: #fff;
@@ -2473,7 +2390,7 @@ document.addEventListener('DOMContentLoaded', function () {
     max-height: 300px;
     overflow-y: auto;
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    z-index: 9999;          /* 👈 important */
+    z-index: 9999;          /* important */
 }
 
 .search-item {
@@ -2572,7 +2489,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                         <span>10 minutes </span>
                     </div>
                                     </div>
-                <button type="button" class="btn w-100 mt-4 text-uppercase fw-600" data-bs-toggle="modal" data-bs-target="#BookConsultation">BOOK A CONSULTATION</button>
+                <button type="button" class="btn w-100 mt-4 text-uppercase fw-600" data-bs-toggle="modal" data-bs-target="#BookConsultation">BOOK THIS HOTEL</button>
             </div>
         </div>
     </div>
@@ -3514,7 +3431,7 @@ checkOutPicker = flatpickr("#checkOut", {
             $input.val(totalRooms);
             $input.addClass('is-invalid');
             $errDiv
-                .text('⚠ Max ' + totalRooms + ' rooms available for this hotel.')
+                .text('Max ' + totalRooms + ' rooms available for this hotel.')
                 .show();
 
             setTimeout(function () {

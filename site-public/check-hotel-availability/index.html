@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -2291,218 +2291,12 @@
 </a>
 </li>
                         </ul>
-<div class="currency-switcher-wrap">
-    <div class="currency-dropdown-trigger" id="currencyTrigger">
-        <span class="currency-globe">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="2" y1="12" x2="22" y2="12"/>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-            </svg>
-        </span>
-        <span class="currency-current-code" id="currencyCurrentCode">INR</span>
-        <span class="currency-chevron">
-            <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
-                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5"
-                      stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </span>
-    </div>
-
-    <div class="currency-dropdown-menu" id="currencyMenu">
-            </div>
-
-    <select id="currencySelect" style="display:none;">
-                    <option value="INR"
-                    data-symbol="₹"
-                    data-rate="94.15">
-                ₹ INR
-            </option>
-            </select>
-</div>
 </div>
                     </div>
                 </nav>
             </div>
         </header>
-        
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    const wrap    = document.querySelector('.currency-switcher-wrap');
-    const trigger = document.getElementById('currencyTrigger');
-    const menu    = document.getElementById('currencyMenu');
-    const codeEl  = document.getElementById('currencyCurrentCode');
-    const hiddenSelect = document.getElementById('currencySelect');
-
-    if (!trigger || !menu) return;
-
-    const saved = localStorage.getItem('selected_currency') || 'INR';
-    codeEl.textContent = saved;
-
-    document.querySelectorAll('.currency-option').forEach(opt => {
-        if (opt.dataset.code === saved) opt.classList.add('active');
-    });
-
-    trigger.addEventListener('click', function (e) {
-        e.stopPropagation();
-        wrap.classList.toggle('open');
-    });
-
-    document.querySelectorAll('.currency-option').forEach(opt => {
-        opt.addEventListener('click', function () {
-            const code = this.dataset.code;
-
-            codeEl.textContent = code;
-
-            document.querySelectorAll('.currency-option').forEach(o => o.classList.remove('active'));
-            this.classList.add('active');
-
-            if (hiddenSelect) {
-                hiddenSelect.value = code;
-                hiddenSelect.dispatchEvent(new Event('change'));
-            }
-
-            wrap.classList.remove('open');
-        });
-    });
-
-    document.addEventListener('click', function (e) {
-        if (!wrap.contains(e.target)) {
-            wrap.classList.remove('open');
-        }
-    });
-});
-</script>
-
-
 <style>
-.currency-switcher-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.currency-dropdown-trigger {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    padding: 6px 12px;
-    border-radius: 3px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    color: #1a1a1a;
-    background: #fff;
-    transition: all 0.2s ease;
-    text-transform: uppercase;
-    user-select: none;
-}
-
-.currency-dropdown-trigger:hover {
-    border-color: #1a1a1a;
-}
-
-.currency-globe {
-    display: flex;
-    align-items: center;
-    opacity: 0.6;
-}
-
-.currency-current-code {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.currency-chevron {
-    display: flex;
-    align-items: center;
-    opacity: 0.5;
-    transition: transform 0.2s ease;
-}
-
-.currency-switcher-wrap.open .currency-chevron {
-    transform: rotate(180deg);
-}
-
-/* Dropdown Menu */
-.currency-dropdown-menu {
-    display: none;
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    background: #fff;
-    border: 1px solid #e8e8e8;
-    border-radius: 4px;
-    min-width: 200px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-    z-index: 9999;
-    overflow: hidden;
-}
-
-.currency-switcher-wrap.open .currency-dropdown-menu {
-    display: block;
-}
-
-.currency-option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 16px;
-    cursor: pointer;
-    border-bottom: 1px solid #f5f5f5;
-    transition: background 0.15s ease;
-}
-
-.currency-option:last-child {
-    border-bottom: none;
-}
-
-.currency-option:hover {
-    background: #f8f8f8;
-}
-
-.currency-option.active {
-    background: #f5f0eb;
-}
-
-.cur-symbol {
-    font-size: 14px;
-    font-weight: 700;
-    color: #1a1a1a;
-    min-width: 20px;
-    text-align: center;
-}
-
-.cur-code {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    color: #1a1a1a;
-    text-transform: uppercase;
-}
-
-.cur-name {
-    font-size: 11px;
-    color: #888;
-    margin-left: auto;
-}
-
-/* Mobile */
-@media (max-width: 991px) {
-    .currency-dropdown-menu {
-        right: auto;
-        left: 0;
-    }
-    .currency-dropdown-trigger {
-        padding: 5px 10px;
-    }
-}
-</style>
-     <style>
 .search-wrapper {
     position: relative;
     width: 100%;
@@ -2517,7 +2311,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 .search-suggestions {
     position: absolute;
-    top: 100%;              /* 👈 directly below input */
+    top: 100%;              /* directly below input */
     left: 0;
     width: 100%;
     background: #fff;
@@ -2526,7 +2320,7 @@ document.addEventListener('DOMContentLoaded', function () {
     max-height: 300px;
     overflow-y: auto;
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    z-index: 9999;          /* 👈 important */
+    z-index: 9999;          /* important */
 }
 
 .search-item {
@@ -2756,7 +2550,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                         <small class="text-muted fs-12 d-block mb-2">Based on your preferred check-in/check-out nights</small>
                         <div id="rooms-pax-container"></div>
                     </div>
-                    <div class="card-box mt-3">
+                    <div class="card-box mt-3" id="plan-card">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <h5 class="text-maroon-900 fs-17 font-family01 fw-500 mb-0">Select Plan</h5>
                         </div>
@@ -2780,7 +2574,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                             </div>
                         </div>
                     </div>
-                    <div class="card-box mt-3">
+                    <div class="card-box mt-3" id="hotel-card">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <h5 class="text-maroon-900 fs-17 font-family01 fw-500 mb-0">Choose Hotel</h5>
                         </div>
@@ -2872,9 +2666,13 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                 Submit this request and our team will email you after checking availability with the selected hotel teams.
                             </p>
                         </div>
+                        <div id="availability-error-message" class="alert alert-danger mt-3 mb-0" style="display:none;" role="alert" aria-live="assertive"></div>
+                        <div id="availability-success-message" class="alert alert-success mt-3 mb-0" style="display:none;" role="status" aria-live="polite">
+                            Thank you! Your booking request has been submitted successfully. Our team will check availability and email you shortly.
+                        </div>
                         <div class="d-flex gap-2 mt-3" data-aos="fade-up">
                             <button type="button" id="back-btn" class="btn btn-secondary w-50">BACK</button>
-                            <button type="button" id="submit-availability-btn" class="btn btn-primary w-50">SUBMIT REQUEST</button>
+                            <button type="button" id="submit-availability-btn" class="btn btn-primary w-50">BOOK NOW</button>
                         </div>
                     </div>
                 </div>
@@ -3129,8 +2927,55 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
       var box = $('#top-alert');
       box.removeClass('alert-danger alert-success').addClass(type === 'success' ? 'alert-success' : 'alert-danger');
       box.text(message).fadeIn();
-      $('html, body').animate({ scrollTop: box.offset().top - 100 }, 300);
       setTimeout(function () { box.fadeOut(); }, 5000);
+    }
+
+    function resolveScrollTarget(target) {
+      var el = target && target.jquery ? target.first() : $(target).first();
+      if (!el.length) return $();
+      if (el.is(':visible')) return el;
+      return el.closest('.card-box, .form-group, .form-widget, #booking-form-section, section').first();
+    }
+
+    function focusTargetWithoutScroll(target) {
+      var el = target && target.jquery ? target.first() : $(target).first();
+      if (!el.length) return;
+      var focusTarget = el.is(':input, button, select, textarea') ? el : el.find('input, select, textarea, button').filter(':visible').first();
+      if (!focusTarget.length) return;
+      try {
+        focusTarget[0].focus({ preventScroll: true });
+      } catch (e) {
+        focusTarget.trigger('focus');
+      }
+    }
+
+    function scrollToElement(target, focusTarget) {
+      var el = resolveScrollTarget(target);
+      if (!el.length) return;
+      var topOffset = Math.max(88, Math.min(120, Math.round(window.innerHeight * 0.13)));
+      $('html, body').stop(true).animate({ scrollTop: Math.max(0, el.offset().top - topOffset) }, 350, function () {
+        focusTargetWithoutScroll(focusTarget || target);
+      });
+    }
+
+    function showAlertAndScroll(message, target, type) {
+      showAlert(message, type);
+      scrollToElement('#top-alert', target || '#top-alert');
+    }
+
+    function scrollToFirstFieldError() {
+      var firstError = $('.text-danger').filter(function () { return $.trim($(this).text()).length > 0; }).first();
+      if (firstError.length) {
+        scrollToElement(firstError.closest('.form-group'));
+        return true;
+      }
+      return false;
+    }
+
+    function showBookingError(message) {
+      $('#availability-success-message').hide();
+      $('#availability-error-message').text(message).fadeIn();
+      scrollToElement('#availability-error-message');
     }
 
     function addDays(date, days) { var copy = new Date(date); copy.setDate(copy.getDate() + days); return copy; }
@@ -3171,28 +3016,30 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     $('#plan-select').on('change', function () { var opt = $(this).find('option:selected'); maxHotels = parseInt(opt.data('hotels'), 10) || 0; selectedPlanLabel = opt.text(); renderHotelRows(); });
 
     $('#book-btn').on('click', function () {
-      if (maxHotels === 0) { showAlert('Please select a plan first.'); return; }
+      if (maxHotels === 0) { showAlertAndScroll('Please select a plan first.', '#plan-card'); return; }
       var prefCI = fpPrefCI.selectedDates[0], prefCO = fpPrefCO.selectedDates[0];
-      if (!prefCI || !prefCO) { showAlert('Please select Preferred Check-In and Check-Out dates.'); return; }
+      if (!prefCI || !prefCO) { showAlertAndScroll('Please select Preferred Check-In and Check-Out dates.', '#dates-card'); return; }
       var alt1CI = fpAlt1CI.selectedDates[0], alt1CO = fpAlt1CO.selectedDates[0], alt2CI = fpAlt2CI.selectedDates[0], alt2CO = fpAlt2CO.selectedDates[0];
-      if (!alt1CI || !alt1CO || !alt2CI || !alt2CO) { showAlert('Please fill all Alternate Check-In and Check-Out dates.'); return; }
+      if (!alt1CI || !alt1CO || !alt2CI || !alt2CO) { showAlertAndScroll('Please fill all Alternate Check-In and Check-Out dates.', '#dates-card'); return; }
       var hotels = [], hotelNames = [], validHotels = true;
       $('.hotel-select').each(function () { var val = $(this).val(); if (!val) validHotels = false; else { hotels.push(val); hotelNames.push($(this).find('option:selected').text()); } });
-      if (!validHotels || hotels.length !== maxHotels) { showAlert('Please select city and hotel for all slots.'); return; }
-      if (preferredNights < 1) { showAlert('Please select Preferred dates first.'); return; }
+      if (!validHotels || hotels.length !== maxHotels) { showAlertAndScroll('Please select city and hotel for all slots.', '#hotel-card'); return; }
+      if (preferredNights < 1) { showAlertAndScroll('Please select Preferred dates first.', '#dates-card'); return; }
       var roomsPax = [], validRooms = true;
       $('.rooms-input').each(function (i) { var rooms = parseInt($(this).val(), 10); var pax = parseInt($('.pax-input').eq(i).val(), 10); if (!rooms || !pax || rooms < 1 || pax < 1) validRooms = false; roomsPax.push({ rooms: rooms, pax: pax }); });
-      if (!validRooms || roomsPax.length !== preferredNights) { showAlert('Please fill Rooms and Pax for all nights.'); return; }
+      if (!validRooms || roomsPax.length !== preferredNights) { showAlertAndScroll('Please fill Rooms and Pax for all nights.', '#rooms-pax-card'); return; }
       $('#summary-plan').text(selectedPlanLabel);
       $('#summary-hotels').html(hotelNames.map(function (hotel) { return '<li>' + escapeHtml(hotel) + '</li>'; }).join(''));
       $('#summary-pref-ci').text(toYMD(prefCI)); $('#summary-pref-co').text(toYMD(prefCO)); $('#summary-alt1-ci').text(toYMD(alt1CI)); $('#summary-alt1-co').text(toYMD(alt1CO)); $('#summary-alt2-ci').text(toYMD(alt2CI)); $('#summary-alt2-co').text(toYMD(alt2CO));
       $('#summary-rooms-pax').html(roomsPax.map(function (row, index) { return '<li>Night ' + (index + 1) + ': ' + row.rooms + ' Rooms, ' + row.pax + ' Pax</li>'; }).join(''));
-      $('.form-widget').hide(); $('#booking-form-section').fadeIn();
+      $('.form-widget').hide(); $('#booking-form-section').fadeIn(function () { scrollToElement('#booking-form-section'); });
     });
 
     $('#back-btn').on('click', function () { $('#booking-form-section').hide(); $('.form-widget').show(); });
     $('#submit-availability-btn').on('click', function () {
       $('.text-danger').text('');
+      $('#availability-success-message').hide();
+      $('#availability-error-message').hide().text('');
       var name = $('#name').val().trim(), email = $('#email').val().trim(), phone = $('#phone').val().trim(), city = $('#user-city').val().trim();
       var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       var phonePattern = /^[6-9][0-9]{9}$/;
@@ -3201,12 +3048,78 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
       if (!email) { $('#email-error').text('Email is required'); valid = false; } else if (!emailPattern.test(email)) { $('#email-error').text('Enter a valid email'); valid = false; }
       if (!phone) { $('#phone-error').text('Phone is required'); valid = false; } else if (!phonePattern.test(phone)) { $('#phone-error').text('Enter a valid 10-digit phone'); valid = false; }
       if (!city) { $('#city-error').text('City is required'); valid = false; }
-      if (!valid) return;
+      if (!valid) { scrollToFirstFieldError(); return; }
       var roomsPax = []; $('.rooms-input').each(function (i) { roomsPax.push({ rooms: parseInt($(this).val(), 10), pax: parseInt($('.pax-input').eq(i).val(), 10) }); });
-      var hotels = []; $('.hotel-select').each(function () { hotels.push($(this).find('option:selected').text()); });
-      var message = ['Plan: ' + selectedPlanLabel.trim(), 'Hotels: ' + hotels.join('; '), 'Preferred: ' + toYMD(fpPrefCI.selectedDates[0]) + ' to ' + toYMD(fpPrefCO.selectedDates[0]), 'Alternate 1: ' + toYMD(fpAlt1CI.selectedDates[0]) + ' to ' + toYMD(fpAlt1CO.selectedDates[0]), 'Alternate 2: ' + toYMD(fpAlt2CI.selectedDates[0]) + ' to ' + toYMD(fpAlt2CO.selectedDates[0]), 'Rooms/Pax: ' + roomsPax.map(function (row, index) { return 'Night ' + (index + 1) + ': ' + row.rooms + ' Rooms, ' + row.pax + ' Pax'; }).join('; ')].join('\n');
-      $('#submit-availability-btn').prop('disabled', true).text('Submitting...');
-      $.ajax({ url: '/api/lead', type: 'POST', data: { name: name, email: email, number: phone, city: city, subject: 'Hotel Availability Check', source_page: '/check-hotel-availability', message: message }, success: function () { showAlert('Your availability request has been submitted.', 'success'); $('#submit-availability-btn').prop('disabled', false).text('SUBMIT REQUEST'); }, error: function () { showAlert('Could not submit the request. Please try again.'); $('#submit-availability-btn').prop('disabled', false).text('SUBMIT REQUEST'); } });
+      var hotelSelections = [];
+      $('.hotel-select').each(function (index) {
+        var row = $(this).closest('[data-index]');
+        var citySelect = row.find('.city-select');
+        hotelSelections.push({
+          slot: index + 1,
+          city: citySelect.find('option:selected').text(),
+          hotel: $(this).find('option:selected').text(),
+          hotel_id: $(this).val()
+        });
+      });
+      var roomsPaxText = roomsPax.map(function (row, index) { return 'Night ' + (index + 1) + ': ' + row.rooms + ' Rooms, ' + row.pax + ' Pax'; }).join('; ');
+      var hotelsText = hotelSelections.map(function (row) { return row.slot + '. ' + row.hotel + ' (' + row.city + ')'; }).join('; ');
+      var preferredText = toYMD(fpPrefCI.selectedDates[0]) + ' to ' + toYMD(fpPrefCO.selectedDates[0]);
+      var alt1Text = toYMD(fpAlt1CI.selectedDates[0]) + ' to ' + toYMD(fpAlt1CO.selectedDates[0]);
+      var alt2Text = toYMD(fpAlt2CI.selectedDates[0]) + ' to ' + toYMD(fpAlt2CO.selectedDates[0]);
+      var message = ['Plan: ' + selectedPlanLabel.trim(), 'Hotels: ' + hotelsText, 'Preferred: ' + preferredText, 'Alternate 1: ' + alt1Text, 'Alternate 2: ' + alt2Text, 'Rooms/Pax: ' + roomsPaxText].join('\n');
+      var payload = {
+        formId: 'hotel-availability-booking',
+        formName: 'Hotel Availability Booking',
+        pageUrl: window.location.href,
+        requiredFields: ['name', 'email', 'number', 'city'],
+        fields: {
+          name: name,
+          email: email,
+          number: phone,
+          city: city,
+          subject: 'Hotel Availability Booking',
+          source_page: '/check-hotel-availability',
+          page_url: window.location.href,
+          plan: selectedPlanLabel.trim(),
+          selected_hotels: hotelsText,
+          preferred_dates: preferredText,
+          alternate_dates_1: alt1Text,
+          alternate_dates_2: alt2Text,
+          rooms_and_pax: roomsPaxText,
+          complete_selection_json: JSON.stringify({ plan: selectedPlanLabel.trim(), hotels: hotelSelections, dates: { preferred: preferredText, alternate_1: alt1Text, alternate_2: alt2Text }, rooms_pax: roomsPax }),
+          message: message
+        },
+        metadata: {
+          'Page URL': window.location.href,
+          'Source Page': '/check-hotel-availability',
+          'Submitted From': 'Check Hotel Availability',
+          'Browser Language': navigator.language || '',
+          'Screen Size': window.innerWidth + 'x' + window.innerHeight
+        }
+      };
+      $('#submit-availability-btn').prop('disabled', true).text('Booking...');
+      $.ajax({
+        url: '/api/lead',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        success: function (res) {
+          if (res && res.ok === false) {
+            showBookingError(res.message || 'Could not submit the request. Please try again.');
+            $('#submit-availability-btn').prop('disabled', false).text('BOOK NOW');
+            return;
+          }
+          $('#availability-error-message').hide().text('');
+          $('#availability-success-message').fadeIn();
+          scrollToElement('#availability-success-message');
+          $('#submit-availability-btn').text('BOOKED').prop('disabled', true);
+        },
+        error: function (xhr) {
+          var response = xhr.responseJSON || {};
+          showBookingError(response.message || 'Could not submit the request. Please try again.');
+          $('#submit-availability-btn').prop('disabled', false).text('BOOK NOW');
+        }
+      });
     });
 
     fetch('/api/calculator/availability-data').then(function (response) { return response.json(); }).then(function (data) { cities = data.cities || []; hotelsByCity = data.hotelsByCity || {}; renderHotelRows(); updateRoomsPaxRows(0);  $('#plan-select').select2({ placeholder: 'Select', allowClear: false, width: '100%' }); }).catch(function () { renderHotelRows(); updateRoomsPaxRows(0);  $('#plan-select').select2({ placeholder: 'Select', allowClear: false, width: '100%' }); });
@@ -3377,3 +3290,5 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 </body>
 
 </html>
+
+
