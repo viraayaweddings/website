@@ -1,0 +1,127 @@
+Cookies We UseRateGain Travel Technologies — cookie list for rategain.com  |  Prepared for the Cookie Policy  |  Reviewed: August 2026
+This table lists the cookies and similar technologies used on our website, grouped by the category you can control. 
+Strictly Necessary cookies are always on because the site cannot work without them. Every other category is off
+until you choose to allow it, and you can change your choice at any time using the Cookie Settings link on any
+page.
+Strictly Necessary — always active
+Cookie Set by What it does How long Type
+OptanonConsent,
+OptanonAlertBoxClosed
+OneTrust Remembers your cookie choices so we don't ask
+again.
+1 year First
+Tag Manager (no
+cookie stored)
+Google Tag
+Manager
+Loads the other tools listed below. It does not store a
+cookie by itself.
+— First
+Download session
+cookie
+WordPress
+Download
+Manager
+Lets you download guides and resources. Session First
+Performance & Analytics — help us improve the site
+Cookie Set by What it does How long Type
+_ga, _ga_<id>, _gidGoogle AnalyticsTells us how visitors use the site so we can improve it.
+Does not identify you by name.
+Up to 2
+years
+First
+_clck, _clsk, CLID,
+MUID
+Microsoft ClarityRecords anonymised interactions (clicks, scrolling) to
+help us improve usability.
+Up to ~13
+months
+First /
+Third
+_hjSession, _hjid Hotjar Records anonymised interactions and heatmaps to
+help us improve pages.
+Up to 1 yearFirst
+Usability-test cookiesMaze Helps us run usability tests and improve the site.Session /
+short-term
+Third
+Functional — power features on the site
+Cookie Set by What it does How long Type
+Interactive-demo
+cookies
+Storylane Runs the interactive product demos on our pages.Session /
+short-term
+Third
+Investor-tools cookiesEuroland Powers the investor-relations tools (on the Investor
+Relations page only).
+Session /
+short-term
+Third
+Targeting & Advertising — measure and personalise our marketing
+Cookie Set by What it does How long Type
+_gcl_au, IDE,
+test_cookie, NID
+Google Ads Measures our ad performance and helps show you
+relevant RateGain ads on other sites.
+Session – 2
+years
+First /
+Third
+_uetsid, _uetvid, MUIDMicrosoft
+Advertising
+Measures the performance of our Microsoft/Bing ads.Session –
+~13 months
+First /
+Third
+bcookie, lidc, li_sugr,
+UserMatchHistory
+LinkedIn Measures LinkedIn ad performance and helps show
+relevant ads.
+Session – 1
+year
+First /
+Third
+_fbp, fr Meta (Facebook)
+Page 1 of 2
+Measures the performance of our Facebook and
+Instagram ads.
+Up to 3
+months
+First /
+Third
+_lfa and related Leadfeeder /
+Dealfront
+Identifies the organisation a visitor comes from (for
+business marketing) — not you personally.
+Up to 1 yearFirst
+visitor_id, pardot Salesforce PardotLinks your activity to our marketing system and
+supports our forms.
+Session – up
+to 10 years
+First /
+Third
+Marketing-
+measurement cookies
+Factors.ai Measures how our marketing performs across
+channels.
+Up to 1 yearFirst
+Intent-data cookies Bombora Helps us understand business interest in our topics.Up to 1 yearThird
+Attribution cookies Dreamdata Measures which marketing activities lead to enquiries.Up to 1 yearFirst /
+Third
+VISITOR_INFO1_LIVE,
+YSC
+YouTube Plays embedded videos (we use YouTube's privacy-
+enhanced mode).
+Session – 6
+months
+Third
+Notes for the reader:
+Durations are set by each provider and can change; the figures show the typical maximum, not an exact
+measurement.
+Cookies marked “First / Third” may be stored under our domain or the provider's domain depending on how they load.
+The exact cookies you receive depend on the choices you make in Cookie Settings and the pages you visit — not
+every cookie is set on every page.
+To manage your preferences, use the Cookie Settings link on any page, or contact us at privacy@rategain.com.
+• 
+• 
+• 
+Page 2 of 2

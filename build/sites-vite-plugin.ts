@@ -58,7 +58,9 @@ export function sites(): Plugin {
         });
       }
 
-      await writeFile(resolve(root, "dist", "client", "_headers"), staticHeaders);
+      const clientOutputDirectory = resolve(root, "dist", "client");
+      await mkdir(clientOutputDirectory, { recursive: true });
+      await writeFile(resolve(clientOutputDirectory, "_headers"), staticHeaders);
     },
   };
 }

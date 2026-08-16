@@ -1,0 +1,50 @@
+{
+   "action": {
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [ {
+      "all_frames": true,
+      "css": [  ],
+      "exclude_matches": [ "https://centralops.net/co/*", "https://pibportal.com/*", "https://portal.people.adp.com/*", "https://workforcenow.adp.com/*", "https://breeze.softtimeonline.com/*", "https://tgsmc.kandji.io/*", "https://owncloud.dssi.pt/*", "https://wsfoundation.applied.com/*" ],
+      "js": [ "contentscript.js" ],
+      "match_origin_as_fallback": true,
+      "matches": [ "http://*/*", "https://*/*", "*://*/*", "\u003Call_urls>" ],
+      "run_at": "document_start"
+   } ],
+   "content_security_policy": {
+      "extension_pages": "default-src 'self';",
+      "sandbox": "sandbox allow-scripts; script-src 'self';"
+   },
+   "declarative_net_request": {
+      "rule_resources": [ {
+         "enabled": true,
+         "id": "csp_rule",
+         "path": "rules/csp_rule.json"
+      } ]
+   },
+   "description": "Mimecast Incydr Extension",
+   "host_permissions": [ "\u003Call_urls>", "*://*/*" ],
+   "icons": {
+      "128": "images/icon128.png",
+      "16": "images/icon16.png",
+      "32": "images/icon32.png",
+      "48": "images/icon48.png",
+      "96": "images/icon96.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl+NJPciGPSrcbe3r11HxB/VNHeS5iVzkaU1ITb+uzZ6dPaZkOcooRN2X8o2eC/vNnGhVnI3vkr5vYsQzAFzfzjy3LT4wOzO3kUj8AFS+g/dtC0iQT5Wisl4H49B8PbSLCdeFHz0mSMpOEt4gopcMutsxiKgeFwmmkwQzjVvqyKo10jx+Hd2DnkrVb8kfQdy18mBdZc5ExnOrjm5eUKhHF0t/gJgWgzTHYFVJNww8GktNnX7lnlvWRyi158fpx4Fa3MyFkjkL7uOyNPsCYApfHr0/jVA4y+SRdIvyszIUnwM2VjoEpkMykkKOTnZNHr6r+2PuFfyywNN1f0yOFHSIfQIDAQAB",
+   "manifest_version": 3,
+   "name": "Mimecast Incydr",
+   "optional_permissions": [  ],
+   "permissions": [ "clipboardRead", "declarativeNetRequestFeedback", "declarativeNetRequestWithHostAccess", "downloads", "identity", "identity.email", "management", "nativeMessaging", "offscreen", "scripting", "storage", "system.memory", "system.cpu", "tabs", "webRequest" ],
+   "sandbox": {
+      "pages": [ "src/offscreen.html", "src/devTools/canary/devtools.html", "src/devTools/canary/panel.html" ]
+   },
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.55.0",
+   "web_accessible_resources": [ {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "/images/*", "mainworld.js", "/fonts/*" ]
+   } ]
+}

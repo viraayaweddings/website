@@ -1,0 +1,1343 @@
+2,198SITEMAP URLS FOUND
+321FULL CRAWL OK
+28ACCEPTED PAGES OK
+57ONETRUST ROWS
+83FINAL COOKIE ROWS
+METHOD
+Enumerated all 17 RateGain sitemap files and all 2,198 sitemap URLs. Ran an accepted-consent
+deep browser audit for cookie-tab and Set-Cookie evidence, then a full sitemap crawl to surface
+additional third-party route cookies. Heavy image/media/font resources were blocked only during the
+full crawl; scripts, documents, iframes and Set-Cookie headers were captured.
+IMPORTANT LIMITATION
+The full sitemap pass attempted every URL but many pages timed out under the fast audit timeout
+(1,877 timeouts/failures). The accepted-consent audit is the primary source for the active inventory;
+the full sitemap pass is supplemental for route-only cookies.
+CATEGORY DESCRIPTION ROWS
+Strictly Necessary Cookies Essential for core site functionality; cannot be switched off. 12
+Performance Cookies Measure and improve site performance and analytics. 8
+Functional Cookies Enable enhanced functionality and personalisation. 12
+Targeting Cookies Used to build a profile and show relevant advertising. 51
+Total Distinct cookie / host / scope rows 83
+Cookie Inventory
+R A T E G A I N    ·    P R I V A C Y  &  C O M P L I A N C E
+Complete sitemap-based audit of rategain.com plus accepted-consent cookie verification. 16 Jul 2026
+AUDIT DATE
+Complete Cookie Register
+Evidence: DECLARED + OBSERVEDOBSERVED ONLY DECLARED NETWORK-ONLY ACTIVE Security flags: Yes No
+# COOKIE HOST EXPIRY SECURITY EVIDENCE PURPOSE / NOTES
+STRICTLY NECESSARY COOKIES12 cookies
+Essential for core site functionality; cannot be switched off.
+1 __cf_bm airgain.ai Session / under 1 day Yes Yes
+None
+NETWORK-ONLY ACTIVE
+Full sitemap audit network (observed
+during full sitemap pass; consent
+banner was not clicked in that fast pass)
+Cloudflare Bot Management cookie
+observed on third-party resources
+reached during the audit.
+2 __cf_bm calendly.com Session / under 1 day Yes Yes
+None
+NETWORK-ONLY ACTIVE
+Full sitemap audit network (observed
+during full sitemap pass; consent
+banner was not clicked in that fast pass)
+Cloudflare Bot Management cookie
+observed on third-party resources
+reached during the audit.
+3 __cf_bm .linkedin.com Session / under 1 day Yes Yes
+None
+OBSERVED ONLY
+Accepted deep audit cookie tab
+Cloudflare Bot Management cookie
+observed on third-party resources
+reached during the audit.
+4 __cf_bm wpenginepowered.com Session / under 1 day Yes Yes
+None
+NETWORK-ONLY ACTIVE
+Accepted deep audit network
+Cloudflare Bot Management cookie
+observed on third-party resources
+reached during the audit.
+5 _cfuvid .calendly.com Session Yes Yes
+None
+OBSERVED ONLY
+Full sitemap audit cookie tab (observed
+during full sitemap pass; consent
+banner was not clicked in that fast pass)
+Cloudflare visitor/session identifier
+observed on third-party resources
+reached from RateGain pages.
+6 _cfuvid .www.sojern.com Session Yes Yes
+None
+OBSERVED ONLY
+Accepted deep audit cookie tab
+Cloudflare visitor/session identifier
+observed on third-party resources
+reached from RateGain pages.
+SET
+SET
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+RateGain.com Cookie Inventory · Confidential · Page 2 of 22
+# COOKIE HOST EXPIRY SECURITY EVIDENCE PURPOSE / NOTES
+7 _dc_gtm_UA-xxxxxxxx rategain.com Session Not observed in cookie store DECLARED
+OneTrust declaration
+This cookie is associated with sites
+using Google Tag Manager to load
+other scripts and code into a page.
+Where it is used it may be
+regarded as Strictly Necessary as
+without it, other scripts may not
+function correctly. The end of the
+name is a unique number which is
+also an identifier for an associated
+Google Analytics account.This
+cookie is associated with sites
+using Google Tag Manager to load
+other scripts and code into a page.
+Where it is used it may be
+regarded as Strictly Necessary as
+without it, other scripts may not
+function correctly. The end of the
+name is a unique number which is
+also an identifier for an associated
+Google Analytics account.
+8 OptanonAlertBoxClosed.rategain.com 365 days No No
+Lax
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This cookie is set by websites
+using certain versions of the cookie
+law compliance solution from
+OneTrust. It is set after visitors
+have seen a cookie information
+notice and in some cases only
+when they actively close the notice
+down. It enables the website not to
+show the message more than once
+to a user. The cookie has a one
+year lifespan and contains no
+personal information.
+HTTPONLY
+SECURE
+SAMESITE
+RateGain.com Cookie Inventory · Confidential · Page 3 of 22
+# COOKIE HOST EXPIRY SECURITY EVIDENCE PURPOSE / NOTES
+9 OptanonConsent .rategain.com 365 days No No
+Lax
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This cookie is set by the cookie
+compliance solution from
+OneTrust. It stores information
+about the categories of cookies the
+site uses and whether visitors have
+given or withdrawn consent for the
+use of each category. This enables
+site owners to prevent cookies in
+each category from being set in the
+users browser, when consent is not
+given. The cookie has a normal
+lifespan of one year, so that
+returning visitors to the site will
+have their preferences
+remembered. It contains no
+information that can identify the
+site visitor.
+10 OptanonConsent .sojern.com 365 days No No
+Lax
+OBSERVED ONLY
+Accepted deep audit cookie tab
+OneTrust consent preference
+cookie observed for a third-party
+route/resource.
+11 sfs_ext_urls airgain.ai 1 days Yes Yes
+Lax
+OBSERVED ONLY
+Full sitemap audit cookie tab (observed
+during full sitemap pass; consent
+banner was not clicked in that fast pass)
+Session support cookie storing
+encoded external URL state
+observed during the full sitemap
+crawl.
+12 sfs_sid airgain.ai 1 days Yes Yes
+Lax
+OBSERVED ONLY
+Full sitemap audit cookie tab (observed
+during full sitemap pass; consent
+banner was not clicked in that fast pass)
+Session/security cookie observed
+during the full sitemap crawl on an
+AirGain/RateGain-related resource.
+8
+PERFORMANCE COOKIES8 cookies
+Measure and improve site performance and analytics.
+13 _clck rategain.com 364 days No No
+Lax
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This cookie is related to Microsoft
+Clarity analytics service. It is used
+to collect information about how
+visitors interact with the website,
+which helps in creating reports and
+improving the site.
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+RateGain.com Cookie Inventory · Confidential · Page 4 of 22
+# COOKIE HOST EXPIRY SECURITY EVIDENCE PURPOSE / NOTES
+14 _clsk rategain.com Session No No
+Lax
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+Used by Microsoft Clarity to
+connect multiple page views by a
+user into a single Clarity session
+recording.
+15 _ga rategain.com 729 days No No
+Lax
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This cookie name is associated
+with Google Universal Analytics -
+which is a significant update to
+Google's more commonly used
+analytics service. This cookie is
+used to distinguish unique users by
+assigning a randomly generated
+number as a client identifier. It is
+included in each page request in a
+site and used to calculate visitor,
+session and campaign data for the
+sites analytics reports. By default it
+is set to expire after 2 years,
+although this is customisable by
+website owners.
+16 _ga_SW8NG6C5KZ .rategain.com 400 days No No
+Lax
+OBSERVED EXACT INSTANCE
+Accepted deep audit cookie tab
+Concrete Google Analytics
+property cookie observed after
+consent; matches the OneTrust
+_ga_xxxxxxxxxx declaration.
+17 _ga_xxxxxxxxxx rategain.com 729 days No No
+Lax
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+Used by Google Analytics to
+identify and track an individual
+session with your device.
+18 _gid rategain.com Session Not observed in cookie store DECLARED
+OneTrust declaration
+This cookie name is associated
+with Google Universal Analytics.
+This appears to be a new cookie
+and as of Spring 2017 no
+information is available from
+Google. It appears to store and
+update a unique value for each
+page visited.
+19 _omappvp rategain.com 3998 days Not observed in cookie store DECLARED
+OneTrust declaration
+This cookie name is used to
+determine if the visitor has visited
+the website before, or if it is a new
+visitor on the website.
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+RateGain.com Cookie Inventory · Confidential · Page 5 of 22
+# COOKIE HOST EXPIRY SECURITY EVIDENCE PURPOSE / NOTES
+20 _uetvid rategain.com 389 days No No
+Lax
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This is a cookie utilised by
+Microsoft Bing Ads and is a
+tracking cookie. It allows us to
+engage with a user that has
+previously visited our website. 12
+FUNCTIONAL COOKIES12 cookies
+Enable enhanced functionality and personalisation.
+21 __tld__ rategain.com Session Not observed in cookie store DECLARED
+OneTrust declaration
+From Segment Analytics.js library;
+this cookie helps to figure out a
+toplevel domain for a user.
+22 __wpdm_client rategain.com Session Not observed in cookie store DECLARED
+OneTrust declaration
+This cookie name is used by
+Wordpress Download Manager to
+provide functions across pages.
+23 _calendly_session calendly.com 21 days Yes Yes
+Lax
+NETWORK-ONLY ACTIVE
+Full sitemap audit network (observed
+during full sitemap pass; consent
+banner was not clicked in that fast pass)
+Calendly scheduling widget
+session cookie observed from
+RateGain sitemap pages with
+embedded Calendly booking
+widgets.
+24 ajs%3Acookies rategain.com 364 days Not observed in cookie store DECLARED
+OneTrust declaration
+This cookie supports use, service
+performance, and functionality of
+websites. Cookies in this domain
+have lifespan of 1 year.
+25 ajs%3Atest rategain.com 364 days Not observed in cookie store DECLARED
+OneTrust declaration
+This performance cookie counts
+visits and tracks other website
+trafficrelated metrics. Cookies in
+this domain have lifespan of 1 year.
+26 ajs_anonymous_id rategain.com 364 days Not observed in cookie store DECLARED
+OneTrust declaration
+These cookies are generally used
+for Analytics and help count how
+many people visit a certain site by
+tracking if you have visited before.
+This cookie has a lifespan of 1
+year.
+27 ANONCHK c.clarity.ms Session No Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This domain is associated with
+Microsoft Clarity, a web analytics
+product that provides insights on
+user behavior and website
+performance.
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+RateGain.com Cookie Inventory · Confidential · Page 6 of 22
+# COOKIE HOST EXPIRY SECURITY EVIDENCE PURPOSE / NOTES
+28 cal_anonymous_id calendly.com 31536000 No Yes
+Lax
+NETWORK-ONLY ACTIVE
+Full sitemap audit network (observed
+during full sitemap pass; consent
+banner was not clicked in that fast pass)
+Calendly anonymous visitor
+identifier observed from RateGain
+sitemap pages with embedded
+Calendly booking widgets.
+29 CLID www.clarity.ms 364 days Yes Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This domain is associated with
+Microsoft Clarity, a web analytics
+service that provides insights into
+user behavior on websites.
+30 MR c.clarity.ms 6 days No Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This domain is associated with
+Microsoft Clarity, a web analytics
+product that provides insights on
+user behavior and website
+performance.
+31 MUID clarity.ms 389 days No Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This domain is associated with
+Microsoft Clarity, a web analytics
+service that provides insights into
+user behavior on websites.
+32 SM c.clarity.ms Session No Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This domain is associated with
+Microsoft Clarity, a web analytics
+product that provides insights on
+user behavior and website
+performance. 51
+TARGETING COOKIES51 cookies
+Used to build a profile and show relevant advertising.
+33 __cf_bm zoominfo.com Session Not observed in cookie store DECLARED
+OneTrust declaration
+This is a Cloudflare Bot
+Management cookie
+34 __Secure-ROLLOUT_TOKEN.youtube.com 180 days Yes Yes
+None
+OBSERVED ONLY
+Accepted deep audit cookie tab
+YouTube secure rollout/session
+token observed when RateGain
+pages loaded embedded YouTube
+assets.
+35 __Secure-YNID .youtube.com 180 days Yes Yes
+None
+OBSERVED ONLY
+Accepted deep audit cookie tab
+YouTube secure identifier observed
+when RateGain pages loaded
+embedded YouTube assets.
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+RateGain.com Cookie Inventory · Confidential · Page 7 of 22
+# COOKIE HOST EXPIRY SECURITY EVIDENCE PURPOSE / NOTES
+36 _cfuvid zoominfo.com Session Not observed in cookie store DECLARED
+OneTrust declaration
+This domain is associated with
+ZoomInfo, a business-to-business
+database software that provides
+information on sales and marketing
+for professional recruiters and
+salespeople.
+37 _fbp rategain.com 89 days No No
+Lax
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+Used by Facebook to deliver a
+series of advertisement products
+such as real time bidding from third
+party advertisers
+38 _fuid .rategain.com 400 days No No
+Lax
+OBSERVED ONLY
+Accepted deep audit cookie tab
+Observed first-party RateGain
+identifier after consent; not
+declared by exact name in
+OneTrust.
+39 _gat_UA-XXXXXX-X rategain.com Session Not observed in cookie store DECLARED
+OneTrust declaration
+Google Analytics Cookies
+40 _gcl_au rategain.com 89 days No No
+Lax
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+Used by Google AdSense for
+experimenting with advertisement
+efficiency across websites using
+their services For more information
+about Google&#39;s processing of
+your personal data, please consult
+Google&#39;s <a href="https://
+business.safety.google/privacy/"
+rel="nofollow">Privacy &amp;
+Terms</a> site.
+41 _lfa rategain.com 364 days No No
+Lax
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This cookie is used by Leadfeeder
+to track visitor behavior on the
+website to build visitor profiles for
+improving site analytics and
+marketing effectiveness.
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+RateGain.com Cookie Inventory · Confidential · Page 8 of 22
+# COOKIE HOST EXPIRY SECURITY EVIDENCE PURPOSE / NOTES
+42 _lfa_test_cookie_storedrategain.com Session Not observed in cookie store DECLARED
+OneTrust declaration
+This cookie name is associated
+with Leadfeeder and is used in
+context with Account-Based-
+Marketing (ABM) to register data
+such as IPaddresses, time spent
+on the website, and page requests
+for the visit. It is used for
+retargeting of multiple users rooting
+from the same IP-addresses.
+43 _uetsid rategain.com Session No No
+Lax
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This cookie is used by Bing to
+determine what ads should be
+shown that may be relevant to the
+end user perusing the site.
+44 ajs_group_id rategain.com 364 days Not observed in cookie store DECLARED
+OneTrust declaration
+These cookies track visitor usage
+and events within the website.
+Cookies in this domain have
+lifespan of 1 year.
+45 ajs_user_id rategain.com 364 days Not observed in cookie store DECLARED
+OneTrust declaration
+This cookie helps track visitor
+usage, events, target marketing,
+and can also measure application
+performance and stability. Cookies
+in this domain have lifespan of 1
+year.
+46 AnalyticsSyncHistory linkedin.com 29 days No Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This domain is owned by LinkedIn
+Corporation. LinkedIn is a
+businessand employment-oriented
+online service that operates via
+websites and mobile apps.
+47 ar_debug px.ads.linkedin.com 31 days Yes Yes
+None
+NETWORK-ONLY ACTIVE
+Accepted deep audit network
+LinkedIn Ads attribution/debug
+cookie observed in Set-Cookie
+headers.
+48 bcookie linkedin.com 364 days No Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This domain is owned by LinkedIn
+Corporation. LinkedIn is a
+businessand employment-oriented
+online service that operates via
+websites and mobile apps.
+49 bscookie .www.linkedin.com 365 days Yes Yes
+None
+OBSERVED ONLY
+Accepted deep audit cookie tab
+LinkedIn secure browser identifier
+observed after consent.
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+RateGain.com Cookie Inventory · Confidential · Page 9 of 22
+# COOKIE HOST EXPIRY SECURITY EVIDENCE PURPOSE / NOTES
+50 drift_aid rategain.com 729 days Not observed in cookie store DECLARED
+OneTrust declaration
+This is the anonymous identifier
+token. It is used to tie the visitor on
+your website with the profile within
+the Drift system. This allows Drift to
+remember the information that this
+site visitor has provided through
+the chat on subsequent site visits.
+51 drift_campaign_refreshrategain.com Session Not observed in cookie store DECLARED
+OneTrust declaration
+This is the session identifier token.
+It is used to tie the visitor on your
+website with a current website
+session within the Drift system.
+This is enables session-specific
+features, such as popping up a
+messaging only once during a 30
+minute session as to prevent a
+disruptive experience.
+52 driftt_aid rategain.com 729 days Not observed in cookie store DECLARED
+OneTrust declaration
+This is the anonymous identifier
+token. It is used to tie the visitor on
+your website with the profile within
+the Drift system. This allows Drift to
+remember the information that this
+site visitor has provided through
+the chat on subsequent site visits.
+53 fr facebook.com 89 days Not observed in cookie store DECLARED
+OneTrust declaration
+Contains browser and user unique
+ID combination, used for targeted
+advertising.
+54 IDE doubleclick.net 729 days Yes Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This domain is owned by
+Doubleclick (Google). The main
+business activity is: Doubleclick is
+Googles real time bidding
+advertising exchange
+55 li_sugr linkedin.com 89 days No Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This domain is owned by LinkedIn
+Corporation. LinkedIn is a
+businessand employment-oriented
+online service that operates via
+websites and mobile apps.
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+RateGain.com Cookie Inventory · Confidential · Page 10 of 22
+# COOKIE HOST EXPIRY SECURITY EVIDENCE PURPOSE / NOTES
+56 lidc linkedin.com Session No Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This domain is owned by LinkedIn
+Corporation. LinkedIn is a
+businessand employment-oriented
+online service that operates via
+websites and mobile apps.
+57 lpv413792 pi.pardot.com Session No Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This domain is owned by Pardot, a
+marketing automation platform
+which provides lead generation
+services to businesses.
+58 MR .bat.bing.com 7 days No Yes
+None
+OBSERVED ONLY
+Accepted deep audit cookie tab
+Microsoft/Bing advertising or
+synchronization cookie observed
+on an additional Bing host.
+59 MR c.bing.com 6 days No Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This domain is owned by Microsoft
+- it is the site for the search engine
+Bing.
+60 MSPTC bing.com 389 days Not observed in cookie store DECLARED
+OneTrust declaration
+This domain is owned by Microsoft
+- it is the site for the search engine
+Bing.
+61 MUID bing.com 389 days No Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This domain is owned by Microsoft
+- it is the site for the search engine
+Bing.
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+RateGain.com Cookie Inventory · Confidential · Page 11 of 22
+# COOKIE HOST EXPIRY SECURITY EVIDENCE PURPOSE / NOTES
+62 NID google.com 182 days Not observed in cookie store DECLARED
+OneTrust declaration
+This domain is owned by Google
+Inc. Although Google is primarily
+known as a search engine, the
+company provides a diverse range
+of products and services. Its main
+source of revenue however is
+advertising. Google tracks users
+extensively both through its own
+products and sites, and the
+numerous technologies embedded
+into many millions of websites
+around the world. It uses the data
+gathered from most of these
+services to profile the interests of
+web users and sell advertising
+space to organisations based on
+such interest profiles as well as
+aligning adverts to the content on
+the pages where its customer's
+adverts appear.
+63 pardot pi.pardot.com Session Not observed in cookie store DECLARED
+OneTrust declaration
+This domain is owned by Pardot, a
+marketing automation platform
+which provides lead generation
+services to businesses.
+64 pardot ww2.rategain.com Session Not observed in cookie store DECLARED
+OneTrust declaration
+Cookie name associated with
+services from marketing
+automation and lead generation
+platform Pardot.
+65 pi .ml314.com 365 days Yes Yes
+None
+OBSERVED ONLY
+Accepted deep audit cookie tab
+Observed ml314.com third-party
+identifier used during tracking/
+synchronization requests.
+66 SRM_B c.bing.com 389 days No Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This domain is owned by Microsoft
+- it is the site for the search engine
+Bing.
+67 test_cookie doubleclick.net Session No Yes
+none
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit
+network
+This domain is owned by
+Doubleclick (Google). The main
+business activity is: Doubleclick is
+Googles real time bidding
+advertising exchange
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+RateGain.com Cookie Inventory · Confidential · Page 12 of 22
+# COOKIE HOST EXPIRY SECURITY EVIDENCE PURPOSE / NOTES
+68 TESTCOOKIESENABLED www.youtube.com Session Not observed in cookie store DECLARED
+OneTrust declaration
+YouTube is a video-sharing
+platform owned by Google. It uses
+cookies for various purposes
+including improving user
+experience, tracking user
+preferences, and serving targeted
+advertisements.
+69 u .ml314.com Session / under 1 day No Yes
+None
+OBSERVED ONLY
+Accepted deep audit cookie tab
+Observed ml314.com third-party
+URL/user synchronization cookie.
+70 UserMatchHistory linkedin.com 29 days No Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+Used to track usage of the
+embedded video player.
+71 visitor_id pardot.com 3649 days Not observed in cookie store DECLARED
+OneTrust declaration
+This is a cookie pattern that
+appends a unique identifier for a
+website visitor, used for tracking
+purposes. The cookies in this
+domain have a lifespan of 10
+years.
+72 visitor_id ww2.rategain.com 3649 days Not observed in cookie store DECLARED
+OneTrust declaration
+This is a cookie pattern (visitor_id)
+that appends a unique identifier for
+a website visitor, used for tracking
+purposes. The cookies in this
+domain have lifespans of 10
+years.This is a cookie pattern that
+appends a unique identifier for a
+website visitor, used for tracking
+purposes. The cookies in this
+domain have a lifespan of 10
+years.
+73 visitor_id##### pardot.com 3649 days Not observed in cookie store DECLARED
+OneTrust declaration
+This is a cookie pattern that
+appends a unique identifier for a
+website visitor, used for tracking
+purposes. The cookies in this
+domain have a lifespan of 10
+years.
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+RateGain.com Cookie Inventory · Confidential · Page 13 of 22
+# COOKIE HOST EXPIRY SECURITY EVIDENCE PURPOSE / NOTES
+74 visitor_id##### rategain.com 3649 days Not observed in cookie store DECLARED
+OneTrust declaration
+This is a cookie pattern that
+appends a unique identifier for a
+website visitor, used for tracking
+purposes. The cookies in this
+domain have a lifespan of 10
+years.
+75 visitor_id413792 .pardot.com 400 days No Yes
+None
+OBSERVED ONLY
+Accepted deep audit cookie tab
+Concrete Salesforce/Pardot visitor
+identifier observed during the audit;
+instance of visitor_id pattern.
+76 visitor_id413792 rategain.com 400 days No No
+Lax
+OBSERVED ONLY
+Accepted deep audit cookie tab
+Concrete Salesforce/Pardot visitor
+identifier observed during the audit;
+instance of visitor_id pattern.
+77 visitor_id413792 ww2.rategain.com 400 days No Yes
+None
+OBSERVED ONLY
+Accepted deep audit cookie tab
+Concrete Salesforce/Pardot visitor
+identifier observed during the audit;
+instance of visitor_id pattern.
+78 visitor_id413792-hash.pardot.com 400 days No Yes
+None
+OBSERVED ONLY
+Accepted deep audit cookie tab
+Salesforce/Pardot visitor hash
+paired with visitor_id413792.
+79 visitor_id413792-hashrategain.com 400 days No No
+Lax
+OBSERVED ONLY
+Accepted deep audit cookie tab
+Salesforce/Pardot visitor hash
+paired with visitor_id413792.
+80 visitor_id413792-hashww2.rategain.com 400 days No Yes
+None
+OBSERVED ONLY
+Accepted deep audit cookie tab
+Salesforce/Pardot visitor hash
+paired with visitor_id413792.
+81 VISITOR_INFO1_LIVE youtube.com 179 days Yes Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+This cookie is used as a unique
+identifier to track viewing of videos
+82 VISITOR_PRIVACY_METADATAyoutube.com 179 days Yes Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+YouTube is a Google owned
+platform for hosting and sharing
+videos. YouTube collects user data
+through videos embedded in
+websites, which is aggregated with
+profile data from other Google
+services in order to display
+targeted advertising to web visitors
+across a broad range of their own
+and other websites.
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+HTTPONLY
+SECURE
+SAMESITE
+RateGain.com Cookie Inventory · Confidential · Page 14 of 22
+83 YSC youtube.com Session Yes Yes
+None
+DECLARED + OBSERVED
+OneTrust + Accepted deep audit cookie
+tab
+YouTube is a Google owned
+platform for hosting and sharing
+videos. YouTube collects user data
+through videos embedded in
+websites, which is aggregated with
+profile data from other Google
+services in order to display
+targeted advertising to web visitors
+across a broad range of their own
+and other websites. 2198 attempts.
+Full raw audit JSON is saved in
+Result Final URL OK https://
+rategain.com/ OK https://
+rategain.com/about-us/
+brandresource-center/ OK https://
+rategain.com/about-us/ OK https://
+rategain.com/about-us-rategain/
+OK https://rategain.com/aboutus/
+governance/ OK https://
+rategain.com/about-us/leadership/
+OK https://rategain.com/aboutus/
+partnerships/ OK https://
+rategain.com/ae/ OK https://
+rategain.com/aboutus/partnerships/
+airline/ OK https://rategain.com/
+airline-offerings/ OK https://
+rategain.com/airline-
+travelersforecast/ OK https://
+rategain.com/airlines/ OK https://
+rategain.com/airsight/ OK https://
+rategain.com/attribution-
+testingform/ Timeout / failed OK
+https://rategain.com/author/gyan/
+OK https://rategain.com/apmea-
+microsoftdraft-1-1/ Result Final
+URL OK https://rategain.com/
+apmea-microsoftdraft-1-0/ OK
+https://rategain.com/apmea-
+revenuegrowth-hub/ OK https://
+rategain.com/author/
+kushalwaliarategain-com/ OK
+https://rategain.com/author/
+legarde/ OK https://rategain.com/
+author/rohitkumar/ OK https://
+rategain.com/awards-new/ OK
+https://rategain.com/awards/ OK
+https://rategain.com/blog/ OK
+HTTPONLY
+SECURE
+SAMESITE
+RateGain.com Cookie Inventory · Confidential · Page 15 of 22
+https://rategain.com/blog/18-
+factors-toconsider-before-
+investing-in-channelmanager-for-
+your-hotel/ OK https://
+rategain.com/blog/21-points-
+toconsider-while-buying-a-rate-
+shoppingtool-for-your-hotel/ OK
+https://rategain.com/blog/3-
+questionsrategain-will-answer-for-
+you-at-wtm-latinamerica/ OK
+https://rategain.com/blog/3-
+reasons-visitrategain-itb-berlin/ OK
+https://rategain.com/blog/5-
+keyhighlights-of-super-successful-
+rategainshotel-revenue-
+summit-2015-jakarta/ OK https://
+rategain.com/blog/5-things-
+abouthotel-revenue-management-
+your-bosswants-to-know-part-i/ OK
+https://rategain.com/blog/5-
+waysimprove-hotels-visibility-
+search-engines/ OK https://
+rategain.com/blog/5-ways-
+tomaximize-hotel-revenues-in-the-
+era-ofmobile-bookings/ Result
+Final URL OK https://rategain.com/
+blog/5-ways-to-acehospitality-
+marketing-in-2020/ Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Result Final URL Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Result Final URL
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+RateGain.com Cookie Inventory · Confidential · Page 16 of 22
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Result Final URL
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Result Final URL
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Result Final URL Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed OK
+https://rategain.com/blog/create-
+hotelrevenue-centric-culture/
+Timeout / failed Timeout / failed
+Timeout / failed Result Final URL
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed OK https://
+rategain.com/blog/dhiscos-bigdata-
+challenge/ OK https://rategain.com/
+blog/dhisco-shoptotal-pricing/ OK
+https://rategain.com/blog/
+destinationmarketing-guide/ OK
+https://rategain.com/blog/
+differencebetween-a-hotel-pms-
+channel-managerotas-and-
+booking-engine/ OK https://
+rategain.com/blog/digitalhospitality-
+no-longer-an-oxymoron/ OK https://
+rategain.com/blog/digitalmarketing-
+RateGain.com Cookie Inventory · Confidential · Page 17 of 22
+updates-october-2024/ OK https://
+rategain.com/blog/digitalmarketing-
+updates-august-2024/ OK https://
+rategain.com/blog/digitalmarketing-
+updates-november-2024/ OK
+https://rategain.com/blog/
+digitalfoundation-in-hospitality/ OK
+https://rategain.com/blog/
+directlymanage-rooms-and-rates-
+fromrategains-channel-manager-ui-
+tobooking-com/ Result Final URL
+OK https://rategain.com/blog/
+distributionchallenges-for-hotels-in-
+latin-america/ OK https://
+rategain.com/blog/disruption-inthe-
+hotel-industry-and-changing-face-
+ofthe-global-travel-market/ OK
+https://rategain.com/blog/driving-
+higherhotel-occupancy-rates/ OK
+https://rategain.com/blog/
+dmodestination-marketing-
+intelligencestrategy/ OK https://
+rategain.com/blog/eco-
+friendlypractices-in-vacation-
+rentals/ OK https://rategain.com/
+blog/eco-tourism/ OK https://
+rategain.com/blog/effective-
+hotelguest-loyalty-program-
+increase-revenue/ OK https://
+rategain.com/blog/effective-
+hotelpricing-strategy-to-boost-
+revenue/ OK https://rategain.com/
+blog/effective-hotelpricing-
+strategies-during-low-
+demandperiods/ OK https://
+rategain.com/blog/effective-
+hotelsguest-surveys-loyalty-
+programs/ OK https://rategain.com/
+blog/effective-hotelrevenue-
+management-strategies/ OK
+https://rategain.com/blog/effective-
+waysto-increase-hotel-revenue-
+and-profit/ Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Result Final URL
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+RateGain.com Cookie Inventory · Confidential · Page 18 of 22
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Result Final URL Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Result Final URL Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Result Final URL Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Result Final URL Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed Result Final URL
+Timeout / failed Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed OK https://
+rategain.com/blog/hotel-
+channelmanager-integration/ OK
+https://rategain.com/blog/
+RateGain.com Cookie Inventory · Confidential · Page 19 of 22
+hotelchallenges/ OK https://
+rategain.com/blog/hotel-
+centralreservation-system/ OK
+https://rategain.com/blog/hotel-
+dataanalytics/ OK https://
+rategain.com/blog/hotel-
+contentmanagement-system-for-
+increasedonline-presence/ OK
+https://rategain.com/blog/hotel-
+demandforecasting-top-3-ways-
+hoteliers-canleverage-this-
+strategic-management-tool/ OK
+https://rategain.com/blog/
+hoteldistribution-channels-guide/
+OK https://rategain.com/blog/hotel-
+loyaltyprograms/ OK https://
+rategain.com/blog/hotel-
+digitalmarketing-strategies-for-
+indonesia/ OK https://rategain.com/
+blog/hotel-directbooking-vs-ota/ OK
+https://rategain.com/blog/
+hotelmarketing-strategy-for-2023/
+Result Final URL OK https://
+rategain.com/blog/hoteloccupancy-
+rate/ OK https://rategain.com/blog/
+hotel-onlinebookings-can-be-more-
+profitable/ OK https://rategain.com/
+blog/hotel-paidmedia-marketing-
+changes/ OK https://rategain.com/
+blog/hotel-propertymanagement-
+system/ OK https://rategain.com/
+blog/hotel-pricingstrategy-to-
+maximize-revenue/ OK https://
+rategain.com/blog/hotel-pricing-ai/
+OK https://rategain.com/blog/hotel-
+parityprevent-revenue-leakages/
+OK https://rategain.com/blog/
+hotelremarketing-guide/ OK https://
+rategain.com/blog/hotelreputation-
+matters-revenue/ OK https://
+rategain.com/blog/hotel-
+searchengines/ Timeout / failed
+Timeout / failed Timeout / failed
+Timeout / failed OK https://
+rategain.com/blog/hoteliers-
+guideto-google-marketing-
+live-2024/ OK https://rategain.com/
+RateGain.com Cookie Inventory · Confidential · Page 20 of 22
+blog/hoteliers-spotnew-markets-to-
+create-new-revenues-ina-post-
+covid-19-world/ Timeout / failed
+Result Final URL OK https://
+rategain.com/blog/hotels-lets-
+godirect/ OK https://rategain.com/
+blog/hotels-improveyour-online-
+distribution-strategy-with-sixsimple-
+tips/ OK https://rategain.com/blog/
+hotels-are-youprepared-for-digital-
+detox-travelers/ OK https://
+rategain.com/blog/how-
+airlinerevenue-management-and-
+pricingteams-respond-to-revenue-
+volatility/ OK https://rategain.com/
+blog/howautomation-can-help-otas-
+handle-lastminute-cancellations-
+changes-efficiently/ OK https://
+rategain.com/blog/how-ai-
+istransforming-competitive-
+pricingintelligence-for-otas-travel-
+businesses/ OK https://
+rategain.com/blog/how-canhotels-
+generate-more-revenue-
+fromcustomer-loyalty-part-i/ OK
+https://rategain.com/blog/how-
+canhoteliers-get-2021-right-with-a-
+solidpricing-strategy-as-volatility-in-
+recoverypersists/ OK https://
+rategain.com/blog/how-canhotels-
+generate-more-revenue-
+fromcustomer-loyalty-part-ii/ OK
+https://rategain.com/blog/how-can-
+userexperience-help-revenue-
+managers/ OK https://
+rategain.com/blog/how-can-
+newairlines-thrive-the-post-covid-
+world/ OK https://rategain.com/
+blog/how-canscoring-content-help-
+hotels-drive-morebookings/ OK
+https://rategain.com/blog/how-
+channelmanagement-enhances-
+guestexperience/ Result Final URL
+OK https://rategain.com/blog/how-
+channelmanagement-impacts-
+revenue-in-thehotel-business/ OK
+https://rategain.com/blog/how-
+RateGain.com Cookie Inventory · Confidential · Page 21 of 22
+# COOKIE HOST EXPIRY SECURITY EVIDENCE PURPOSE / NOTES
+contentcan-solve-the-expectation-
+gap-for-hotels/ OK https://
+rategain.com/blog/how-googleads-
+enhance-hotel-visibility/ OK https://
+rategain.com/blog/how-green-
+isyour-hotel/ OK https://
+rategain.com/blog/how-
+hotelmarketers-can-expand-from-
+meta-adsinto-google-ads/ OK
+https://rategain.com/blog/how-
+hotelsdistribute-inventory-to-drive-
+bookings/ OK https://rategain.com/
+blog/how-hotels-oftomorrow-are-
+improving-guestexperience-with-
+technology/ OK https://
+rategain.com/blog/how-hotelsuse-
+google-maximise-online-presence/
+OK https://rategain.com/blog/how-
+to-avoidoverbooking-channel-
+manager-bestpractices/ OK https://
+rategain.com/blog/how-
+revenuemanagers-can-be-future-
+ready-for-thenext-crisis/ OK https://
+rategain.com/blog/how-tobecome-
+a-genius-and-drive-up-
+hotelvisibility-and-occupancy-rates/
+OK https://rategain.com/blog/how-
+to-choosethe-best-hotel-
+reservation-system/ OK https://
+rategain.com/blog/how-to-
+benefitfrom-hotel-wholesalers/ OK
+https://rategain.com/blog/how-to-
+capturerate-integrity-issues-in-the-
+mostsimplified-way/
+RateGain.com Cookie Inventory · Confidential · Page 22 of 22
