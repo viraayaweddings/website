@@ -193,6 +193,48 @@ async function getLocalEndpointResponse(
     });
   }
 
+  if (url.pathname === "/data/calculator/cities.json") {
+    const cities = calculatorData.cities.filter((city) => INDIA_CITY_IDS.has(String(city.id)));
+    return Response.json(cities, { headers });
+  }
+
+  if (url.pathname === "/data/calculator/currencies.json") {
+    return Response.json(calculatorData.currencies.filter((currency) => currency.code === "INR"), { headers });
+  }
+
+  if (url.pathname === "/data/calculator/hotels-by-city.json") {
+    const hotelsByCity = Object.fromEntries(
+      Object.entries(calculatorData.hotelsByCity)
+        .filter(([cityId]) => INDIA_CITY_IDS.has(String(cityId)))
+        .map(([cityId, hotels]) => [
+          cityId,
+          hotels.map((hotel) => ({
+            id: hotel.id,
+            name: hotel.name,
+            hotel_name: hotel.hotel_name || hotel.name,
+            total_rooms: hotel.total_rooms,
+          })),
+        ]),
+    );
+    return Response.json(hotelsByCity, { headers });
+  }
+
+  if (url.pathname === "/data/calculator/hotels.json") {
+    const hotels = Object.values(calculatorData.hotelsByCity)
+      .flat()
+      .map((hotel) => ({
+        id: hotel.id,
+        name: hotel.name,
+        hotel_name: hotel.hotel_name || hotel.name,
+        total_rooms: hotel.total_rooms,
+      }));
+    return Response.json(hotels, { headers });
+  }
+
+  if (url.pathname === "/data/calculator/prices.json") {
+    return Response.json(calculatorData.prices, { headers });
+  }
+
   if (url.pathname === "/api/lead") {
     return handleLeadRequest(request, env, url);
   }

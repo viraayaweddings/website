@@ -2835,7 +2835,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
  
 
 <script src="/vendor/select2/select2.min.js"></script>
-<script src="/js/currency-switcher.js" defer></script>
+<script src="/js/currency-switcher.js"></script>
   <script src="/js/site-search.js" defer></script>
 
   
@@ -2872,7 +2872,6 @@ $(document).ready(function () {
     }
 
     getCalculatorData('/data/calculator/currencies.json')
-        .catch(function () { return fetchJson('/api/currencies'); })
         .catch(function () { return []; })
         .then(function (data) { window.__currencies = data; });
 

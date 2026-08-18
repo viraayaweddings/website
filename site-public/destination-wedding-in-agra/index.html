@@ -3062,7 +3062,7 @@ Begin writing the next chapter of your lives in the City of the Taj, stage to on
  
 
 <script src="/vendor/select2/select2.min.js"></script>
-<script src="/js/currency-switcher.js" defer></script>
+<script src="/js/currency-switcher.js"></script>
   <script src="/js/site-search.js" defer></script>
 
   
@@ -3071,9 +3071,7 @@ Begin writing the next chapter of your lives in the City of the Taj, stage to on
 $(document).ready(function () {
 
     window.__currencies = [];
-    fetch('/api/currencies')
-        .then(r => r.json())
-        .then(data => { window.__currencies = data; });
+    ViraayaCalculatorData.getCurrencies().then(data => { window.__currencies = data; });
 
     var hotelRoomLimits = {};
 

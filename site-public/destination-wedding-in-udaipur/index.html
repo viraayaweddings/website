@@ -3068,7 +3068,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
  
 
 <script src="/vendor/select2/select2.min.js"></script>
-<script src="/js/currency-switcher.js" defer></script>
+<script src="/js/currency-switcher.js"></script>
   <script src="/js/site-search.js" defer></script>
 
   
@@ -3077,9 +3077,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 $(document).ready(function () {
 
     window.__currencies = [];
-    fetch('/api/currencies')
-        .then(r => r.json())
-        .then(data => { window.__currencies = data; });
+    ViraayaCalculatorData.getCurrencies().then(data => { window.__currencies = data; });
 
     var hotelRoomLimits = {};
 
