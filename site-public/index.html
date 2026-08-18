@@ -4283,9 +4283,55 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 $(document).ready(function () {
     
     window.__currencies = [];
-    fetch('/api/currencies')
-        .then(r => r.json())
-        .then(data => { window.__currencies = data; });
+
+    function fetchJson(url) {
+        return fetch(url, { headers: { 'Accept': 'application/json' } })
+            .then(function (response) {
+                if (!response.ok) throw new Error('Request failed: ' + response.status);
+                return response.json();
+            });
+    }
+
+    var calculatorDataCache = {};
+
+    function getCalculatorData(path) {
+        if (!calculatorDataCache[path]) {
+            calculatorDataCache[path] = fetchJson(path);
+        }
+        return calculatorDataCache[path];
+    }
+
+    function normalizePrice(price) {
+        price = price || {};
+        return {
+            room_price: parseFloat(price.room_price) || 0,
+            lunch_price: parseFloat(price.lunch_price) || 0,
+            hitea_price: parseFloat(price.hitea_price) || 0,
+            dinner_price: parseFloat(price.dinner_price) || 0
+        };
+    }
+
+    function getHotelsByCity(cityId) {
+        return getCalculatorData('/data/calculator/hotels-by-city.json')
+            .then(function (data) { return data[String(cityId)] || []; })
+            .catch(function () {
+                return fetchJson('/get-hotels-by-city/' + encodeURIComponent(cityId));
+            });
+    }
+
+    function getHotelPrice(hotelId, month) {
+        return getCalculatorData('/data/calculator/prices.json')
+            .then(function (data) { return normalizePrice((data[String(hotelId)] || {})[month]); })
+            .catch(function () {
+                return fetchJson('/get-hotel-price/' + encodeURIComponent(hotelId) + '/' + encodeURIComponent(month));
+            })
+            .then(normalizePrice);
+    }
+
+    getCalculatorData('/data/calculator/currencies.json')
+        .catch(function () { return fetchJson('/api/currencies'); })
+        .catch(function () { return []; })
+        .then(function (data) { window.__currencies = data; });
 
     var hotelRoomLimits = {};
     var indiaCityIds = new Set([
@@ -4405,11 +4451,8 @@ var checkInPicker = flatpickr('#checkIn', {
             hotelSelect.append('<option value="">Loading hotels...</option>');
             hotelSelect.trigger('change');
 
-            $.ajax({
-                url: '/get-hotels-by-city/cityId'.replace('cityId', cityId),
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
+            getHotelsByCity(cityId)
+                .then(function (data) {
                     hotelSelect.empty().prop('disabled', false);
                     hotelSelect.append('<option value="">Select a Hotel</option>');
 
@@ -4424,13 +4467,12 @@ var checkInPicker = flatpickr('#checkIn', {
                     });
 
                     hotelSelect.trigger('change');
-                },
-                error: function () {
+                })
+                .catch(function () {
                     hotelSelect.empty().prop('disabled', true);
                     hotelSelect.append('<option value="">Error loading hotels</option>');
                     hotelSelect.trigger('change');
-                }
-            });
+                });
         } else {
             resetCalculator();
         }
@@ -4572,18 +4614,12 @@ var checkInPicker = flatpickr('#checkIn', {
         var originalText = $btn.text();
         $btn.text('Calculating...').prop('disabled', true);
 
-        $.ajax({
-            url: '/get-hotel-price/hotelId/month'
-                    .replace('hotelId', hotelId)
-                    .replace('month', month),
-            type: 'GET',
-            dataType: 'json',
-            success: function (priceData) { renderOffcanvas(priceData, hotelName); },
-            error: function () {
+        getHotelPrice(hotelId, month)
+            .then(function (priceData) { renderOffcanvas(priceData, hotelName); })
+            .catch(function () {
                 renderOffcanvas({ room_price: 0, lunch_price: 0, hitea_price: 0, dinner_price: 0 }, hotelName);
-            },
-            complete: function () { $btn.text(originalText).prop('disabled', false); }
-        });
+            })
+            .finally(function () { $btn.text(originalText).prop('disabled', false); });
     });
 
    function renderOffcanvas(prices, hotelName) {

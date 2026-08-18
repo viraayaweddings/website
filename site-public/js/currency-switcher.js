@@ -4,8 +4,7 @@ const CurrencySwitcher = (() => {
 
     async function init() {
         try {
-            const res  = await fetch('/api/currencies');
-            currencies = await res.json();
+            currencies = await loadCurrencies();
         } catch (e) {
             console.error('Currency load failed', e);
             return;
@@ -26,6 +25,20 @@ const CurrencySwitcher = (() => {
                 window.location.reload();
             });
         });
+    }
+
+    async function fetchJson(url) {
+        const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('Request failed: ' + res.status);
+        return res.json();
+    }
+
+    async function loadCurrencies() {
+        try {
+            return await fetchJson('/data/calculator/currencies.json');
+        } catch (e) {
+            return fetchJson('/api/currencies');
+        }
     }
 
     function getCurrency(code) {

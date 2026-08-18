@@ -2844,25 +2844,53 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 $(document).ready(function () {
     window.__currencies = [];
 
-    fetch('/api/currencies')
-        .then(function (r) { if (!r.ok) throw new Error('Currencies unavailable'); return r.json(); })
+    function fetchJson(url) {
+        return fetch(url, { headers: { 'Accept': 'application/json' } })
+            .then(function (response) {
+                if (!response.ok) throw new Error('Request failed: ' + response.status);
+                return response.json();
+            });
+    }
+
+    var calculatorDataCache = {};
+
+    function getCalculatorData(path) {
+        if (!calculatorDataCache[path]) {
+            calculatorDataCache[path] = fetchJson(path);
+        }
+        return calculatorDataCache[path];
+    }
+
+    function normalizePrice(price) {
+        price = price || {};
+        return {
+            room_price: parseFloat(price.room_price) || 0,
+            lunch_price: parseFloat(price.lunch_price) || 0,
+            hitea_price: parseFloat(price.hitea_price) || 0,
+            dinner_price: parseFloat(price.dinner_price) || 0
+        };
+    }
+
+    getCalculatorData('/data/calculator/currencies.json')
+        .catch(function () { return fetchJson('/api/currencies'); })
         .catch(function () { return []; })
         .then(function (data) { window.__currencies = data; });
 
     function getHotelsByCity(cityId) {
-        return $.ajax({
-            url: '/get-hotels-by-city/cityId'.replace('cityId', cityId),
-            type: 'GET',
-            dataType: 'json'
-        });
+        return getCalculatorData('/data/calculator/hotels-by-city.json')
+            .then(function (data) { return data[String(cityId)] || []; })
+            .catch(function () {
+                return fetchJson('/get-hotels-by-city/' + encodeURIComponent(cityId));
+            });
     }
 
     function getHotelPrice(hotelId, month) {
-        return $.ajax({
-            url: '/get-hotel-price/hotelId/month'.replace('hotelId', hotelId).replace('month', month),
-            type: 'GET',
-            dataType: 'json'
-        });
+        return getCalculatorData('/data/calculator/prices.json')
+            .then(function (data) { return normalizePrice((data[String(hotelId)] || {})[month]); })
+            .catch(function () {
+                return fetchJson('/get-hotel-price/' + encodeURIComponent(hotelId) + '/' + encodeURIComponent(month));
+            })
+            .then(normalizePrice);
     }
 
     var hotelRoomLimits = {};
