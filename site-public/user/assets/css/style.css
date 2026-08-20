@@ -687,6 +687,17 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .estimator-wrapper .cost-calculator-widget .form-check .form-check-label {font-size: 11px;color: #50443B;font-family: "Inter", sans-serif;font-weight: 800;}
 .estimator-wrapper .cost-calculator-widget .form-check .form-check-input {width: 18px;height: 18px;}
 .estimator-wrapper .cost-calculator-widget .form-check {margin-top: 15px;}
+.listing-wrapper .change-colm:not(.list-view) > [class*="col-"] {display: flex;}
+.listing-wrapper .change-colm:not(.list-view) .hotel-card {width: 100%;height: 100%;display: flex;flex-direction: column;}
+.listing-wrapper .change-colm:not(.list-view) .hotel-card > a {display: block;flex: 0 0 auto;}
+.listing-wrapper .change-colm:not(.list-view) .hotel-card .content {display: flex;flex: 1 1 auto;flex-direction: column;}
+.listing-wrapper .change-colm:not(.list-view) .hotel-card .content > a {display: block;min-height: 44px;}
+.listing-wrapper .change-colm:not(.list-view) .hotel-card .content h4 {display: -webkit-box;min-height: 44px;line-height: 1.35;overflow: hidden;-webkit-box-orient: vertical;-webkit-line-clamp: 2;}
+.listing-wrapper .change-colm:not(.list-view) .hotel-card .content p {display: flex;align-items: center;min-height: 22px;}
+.listing-wrapper .change-colm:not(.list-view) .hotel-card .content > div.d-flex.flex-wrap {min-height: 24px;}
+.listing-wrapper .change-colm:not(.list-view) .hotel-card .content > div.d-flex.gap-2 {margin-top: auto;align-items: center;}
+.listing-wrapper .change-colm:not(.list-view) .hotel-card .btn-details {flex: 0 0 104px;}
+.listing-wrapper .change-colm:not(.list-view) .hotel-card .btn-availability {flex: 1 1 auto;min-width: 0;white-space: nowrap;}
 .listing-wrapper .hotel-card .content p {font-size: 13px;color: #3A2D25 !important;}
 .listing-wrapper .hotel-card .content p img {width: 14px;margin-right: 4px;}
 .listing-wrapper .hotel-card .content .text-warning i {color: #F48D3E;}

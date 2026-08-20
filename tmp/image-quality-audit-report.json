@@ -1,0 +1,12 @@
+{
+  "total_raster_images": 1829,
+  "referenced_raster_images": 1640,
+  "referenced_photo_images": 1379,
+  "possibly_blurry_count": 0,
+  "tiny_or_low_res_count": 0,
+  "possible_crop_risk_count": 0,
+  "possibly_blurry": [],
+  "tiny_or_low_res": [],
+  "possible_crop_risk": [],
+  "errors": []
+}
