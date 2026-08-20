@@ -981,9 +981,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 
 
 .SelectYourPlan .heading-highlight {border-radius: 10px; padding: 13px 26px;}
-.select2-selection .select2-selection__rendered .select2-selection__choice .select2-selection__choice__remove {padding: 2px 5px;border-right: 0px;}
-.select2-selection .select2-selection__rendered .select2-selection__choice .select2-selection__choice__display {padding-left: 5px;font-size: 10px;}
+.select2-selection .select2-selection__rendered .select2-selection__choice .select2-selection__choice__remove {padding: 0 4px;border-right: 0px;display: inline-flex;align-items: center;justify-content: center;line-height: 1;}
+.select2-selection .select2-selection__rendered .select2-selection__choice .select2-selection__choice__display {padding-left: 5px;font-size: 10px;line-height: 1;}
 .city-select-wrapper .select2-container--default .select2-selection--multiple .select2-selection__choice {background: #B98230 !important;}
+.city-select-wrapper .select2-container--default .select2-selection--multiple .select2-selection__rendered {align-items: center;}
+.city-select-wrapper .select2-container--default .select2-selection--multiple .select2-selection__clear {display: inline-flex !important;align-items: center;justify-content: center;height: 22px;width: 22px;margin-top: 0 !important;line-height: 1 !important;}
 
 
 

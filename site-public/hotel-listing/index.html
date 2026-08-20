@@ -134,6 +134,7 @@
 
 .city-select-wrapper .select2-container--default .select2-selection--multiple .select2-selection__rendered {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     gap: 4px;
     padding: 0 !important;
@@ -147,16 +148,38 @@
     font-size: 11px !important;
     padding: 2px 10px !important;
     margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center;
+    min-height: 22px;
 }
 
 .city-select-wrapper .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
     color: rgba(255,255,255,0.7) !important;
     margin-right: 4px !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    height: 16px;
+    min-width: 12px;
 }
 
 .city-select-wrapper .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
     color: #fff !important;
     background: transparent !important;
+}
+
+.city-select-wrapper .select2-container--default .select2-selection--multiple .select2-selection__clear {
+    align-self: center;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    margin: 0 2px 0 6px !important;
+    padding: 0 !important;
+    line-height: 1 !important;
 }
 
 .city-select-wrapper .select2-container--default .select2-search--inline .select2-search__field {
@@ -2332,52 +2355,6 @@
 </div>
 
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    let searchBox = document.getElementById("searchbox");
-    let suggestionBox = document.getElementById("search-suggestions");
-
-    if (!searchBox) return;
-
-    searchBox.addEventListener("keyup", function () {
-
-        let query = this.value.trim();
-
-        if (query.length < 2) {
-            suggestionBox.innerHTML = "";
-            return;
-        }
-
-fetch("/hotel-search?q=" + encodeURIComponent(query))
-.then(response => response.json())
-            .then(data => {
-
-                if (!data.length) {
-                    suggestionBox.innerHTML = "<div class='no-result'>No hotels found</div>";
-                    return;
-                }
-
-                let html = "";
-
-                data.forEach(hotel => {
-                    html += `
-                        <a href="/hotel-listing?hotel_search=${encodeURIComponent(hotel.hotel_name)}" class="search-item">
-                            ${hotel.hotel_name}
-                        </a>
-                    `;
-                });
-
-                suggestionBox.innerHTML = html;
-            })
-            .catch(error => {
-                console.log("Search error:", error);
-            });
-    });
-
-});
-</script>     
-     
 <section class="listing-wrapper">
     <div class="container">
         <div class="row">

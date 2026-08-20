@@ -97,13 +97,17 @@
                 option.selected = state.cityIds.includes(option.value);
             });
             if (window.jQuery && window.jQuery.fn && window.jQuery.fn.select2) {
-                window.jQuery(citySelect).select2({
-                    placeholder: 'Search By City',
-                    allowClear: true,
-                    width: '100%',
-                    dropdownParent: window.jQuery('body'),
-                    language: { noResults: () => 'No cities found' }
-                }).trigger('change.select2');
+                const $citySelect = window.jQuery(citySelect);
+                if (!$citySelect.data('select2')) {
+                    $citySelect.select2({
+                        placeholder: 'Search By City',
+                        allowClear: true,
+                        width: '100%',
+                        dropdownParent: window.jQuery('body'),
+                        language: { noResults: () => 'No cities found' }
+                    });
+                }
+                $citySelect.val(state.cityIds).trigger('change.select2');
             }
         }
     }
@@ -243,6 +247,14 @@
             }
 
             updateUrl(state, baseCityId);
+            window.__hotelListingState = {
+                cityIds: state.cityIds.slice(),
+                query: state.query,
+                page: state.page,
+                total: filtered.length,
+                visible: visible.length,
+                summary: summary ? summary.textContent : ''
+            };
         }
 
         form.addEventListener('submit', (event) => {
@@ -258,14 +270,25 @@
                 timer = setTimeout(() => render(stateFromControls()), 250);
             };
         })());
-        qs('#cityMultiSelect')?.addEventListener('change', () => render(stateFromControls()));
+        const citySelect = qs('#cityMultiSelect');
+        if (citySelect) {
+            if (window.jQuery && window.jQuery.fn && window.jQuery.fn.select2) {
+                window.jQuery(citySelect)
+                    .off('change.hotelListing')
+                    .on('change.hotelListing', () => render(stateFromControls()));
+            } else {
+                citySelect.addEventListener('change', () => render(stateFromControls()));
+            }
+        }
         qs('.btn-outline-secondary', form)?.addEventListener('click', (event) => {
             event.preventDefault();
             qsa('input[type="checkbox"]', form).forEach((input) => { input.checked = false; });
             const citySelect = qs('#cityMultiSelect');
             if (citySelect) {
                 Array.from(citySelect.options).forEach((option) => { option.selected = baseCityId ? option.value === baseCityId : false; });
-                if (window.jQuery && window.jQuery.fn && window.jQuery.fn.select2) window.jQuery(citySelect).val(baseCityId ? [baseCityId] : null).trigger('change.select2');
+                if (window.jQuery && window.jQuery.fn && window.jQuery.fn.select2) {
+                    window.jQuery(citySelect).val(baseCityId ? [baseCityId] : []).trigger('change.select2');
+                }
             }
             if (qs('#hotelSearch')) qs('#hotelSearch').value = '';
             render({ cityIds: baseCityId ? [baseCityId] : [], query: '', page: 1 });
