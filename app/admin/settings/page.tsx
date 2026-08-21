@@ -1,12 +1,15 @@
 // Reads the session cookie on every request; never prerender or cache.
 export const dynamic = "force-dynamic";
 
+import { sql } from "drizzle-orm";
+import { hotels } from "@/worker/db/schema";
 import { readSettings } from "@/worker/site/settings";
 import { AdminShell } from "../_components/AdminShell";
 import { SubmitButton, UnsavedGuard } from "../_components/FormControls";
 import { Alert, Card, CardHead, DetailList, Field, TextArea } from "../_components/ui";
 import { requireDb, requireRole } from "../_lib/auth";
 import { saveSettingsAction } from "./actions";
+import { importSiteContentAction } from "./seed-actions";
 
 export default async function SettingsPage({
   searchParams,
@@ -18,6 +21,9 @@ export default async function SettingsPage({
   await searchParams; // The shell's toast reads these straight from the URL.
 
   const { values, hasStoredValues } = await readSettings(db);
+  const venueCount = Number(
+    (await db.select({ total: sql<number>`count(*)` }).from(hotels))[0]?.total ?? 0,
+  );
 
   return (
     <AdminShell
@@ -25,6 +31,25 @@ export default async function SettingsPage({
       title="Contact details"
       subtitle="One set of details, used everywhere the site shows a phone number, address or social link."
     >
+      {venueCount === 0 ? (
+        <div className="mb-4">
+          <Card pad={false}>
+            <CardHead title="Import site content" icon="download" />
+            <div className="vw-card-pad space-y-3">
+              <p className="text-sm leading-6" style={{ color: "var(--ink-soft)" }}>
+                Postgres is connected but empty. Import venues, articles, hero slides, contact details and page
+                templates from the legacy site export. Safe to run more than once.
+              </p>
+              <form action={importSiteContentAction}>
+                <SubmitButton icon="download" pendingLabel="Importing…">
+                  Import site content
+                </SubmitButton>
+              </form>
+            </div>
+          </Card>
+        </div>
+      ) : null}
+
       {hasStoredValues ? null : (
         <div className="mb-4">
           <Alert tone="warning" title="Not stored yet">
