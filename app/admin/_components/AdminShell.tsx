@@ -1,10 +1,9 @@
 /**
  * The frame every admin screen renders inside.
  *
- * A server component wrapping the interactive chrome, so pages can keep passing
- * the whole `User` row they already loaded while only the three fields the
- * browser needs cross into client code. The row also holds the password hash,
- * which must never be serialised into the page.
+ * Page headings and action buttons stay in this server component. Only plain
+ * strings cross into ShellChrome; server-rendered buttons must not be passed as
+ * props to a client component.
  */
 import type { User } from "@/worker/db/schema";
 import { ShellChrome } from "./ShellChrome";
@@ -27,9 +26,20 @@ export function AdminShell({
     <ShellChrome
       user={{ name: user.name, email: user.email, role: user.role }}
       title={title}
-      subtitle={subtitle}
-      actions={actions}
     >
+      <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="vw-display text-2xl font-semibold" style={{ color: "var(--ink)" }}>
+            {title}
+          </h1>
+          {subtitle ? (
+            <p className="mt-1 text-sm" style={{ color: "var(--ink-soft)" }}>
+              {subtitle}
+            </p>
+          ) : null}
+        </div>
+        {actions ? <div className="flex flex-wrap items-center gap-2">{actions}</div> : null}
+      </div>
       {children}
     </ShellChrome>
   );
