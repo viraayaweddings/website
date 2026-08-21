@@ -64,8 +64,18 @@ async function serve(request: Request): Promise<Response> {
  */
 async function readOriginalPage(url: URL): Promise<Response | null> {
   if (process.env.VERCEL) {
+    const headers: Record<string, string> = { [SHELL_HEADER]: "1" };
+
+    // A protected deployment answers its own origin with a login redirect, so
+    // without this the fallback stalls on preview builds while production is
+    // fine -- exactly the sort of difference that only shows up once deployed.
+    const bypass = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
+    if (bypass) headers["x-vercel-protection-bypass"] = bypass;
+
     const response = await fetch(new URL(url.pathname, url.origin), {
-      headers: { [SHELL_HEADER]: "1" },
+      headers,
+      // Bounded so a slow origin costs a fallback, not the whole invocation.
+      signal: AbortSignal.timeout(5000),
     }).catch(() => null);
 
     if (!response || !response.ok) return null;
