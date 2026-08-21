@@ -35,8 +35,8 @@ function contentTypeFor(filePath: string): string {
 function publicRoots(): string[] {
   const cwd = process.cwd();
   return [
-    resolve(cwd, "site-public"),
     resolve(cwd, ".output", "public"),
+    resolve(cwd, "site-public"),
     resolve(cwd, "dist", "client"),
   ];
 }

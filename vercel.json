@@ -2,10 +2,5 @@
   "buildCommand": "NITRO_PRESET=vercel npm run build",
   "outputDirectory": ".output",
   "installCommand": "npm install",
-  "framework": null,
-  "functions": {
-    ".output/server/**": {
-      "includeFiles": "site-public/**"
-    }
-  }
+  "framework": null
 }
