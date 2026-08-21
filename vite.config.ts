@@ -28,6 +28,28 @@ const redirectRules = Object.fromEntries(
   ]),
 );
 
+/**
+ * Vercel serves .vercel/output/static before the function ever runs, so a page
+ * that lives in site-public can never pick up an admin's edits. These send the
+ * database-owned paths to the function first.
+ *
+ * The `missing` guard is what keeps that from looping: when the handler fetches
+ * a page's original markup back through the origin it sets this header, the
+ * rewrite stops matching, and the static file is served instead.
+ */
+const SHELL_HEADER = "x-vw-shell";
+
+const databaseOwnedRoutes = [
+  "/",
+  "/contact(/.*)?",
+  "/blogs(/.*)?",
+  "/destination-wedding/.*",
+].map((src) => ({
+  src,
+  missing: [{ type: "header", key: SHELL_HEADER }],
+  dest: "/__server",
+}));
+
 export default defineConfig({
   publicDir: "site-public",
   // html-rewriter-wasm must stay a live import. Vinext bundles server deps with
@@ -56,6 +78,7 @@ export default defineConfig({
       ],
       routeRules: redirectRules,
       traceDeps: ["html-rewriter-wasm*"],
+      vercel: { config: { routes: databaseOwnedRoutes } },
     }),
     sites(),
   ],
