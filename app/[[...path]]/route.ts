@@ -1,15 +1,27 @@
 import handler from "vinext/server/app-router-entry";
 import { isAppOwnedPath, isNextInternalRequest } from "@/worker/site/app-routes";
+import { publicRedirectTarget } from "@/worker/site/public-routes";
 import { cacheControlFor, readStaticFile } from "@/worker/site/serve-static";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 async function serve(request: Request): Promise<Response> {
-  const pathname = new URL(request.url).pathname;
+  const url = new URL(request.url);
+  const pathname = url.pathname;
 
   if (isAppOwnedPath(pathname) || isNextInternalRequest(request)) {
     return handler(request);
+  }
+
+  if (pathname === "/wedding-consultation") {
+    url.pathname = "/wedding-consultation/";
+    return Response.redirect(url, 308);
+  }
+
+  const redirectTarget = publicRedirectTarget(pathname);
+  if (redirectTarget) {
+    return Response.redirect(new URL(redirectTarget, url.origin), 301);
   }
 
   const file = await readStaticFile(pathname);
