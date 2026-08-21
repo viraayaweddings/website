@@ -4,7 +4,6 @@ import { nitro } from "nitro/vite";
 import tailwindcss from "@tailwindcss/postcss";
 import { defineConfig } from "vite";
 import { sites } from "./build/sites-vite-plugin.ts";
-import { copyHtmlRewriterWasm } from "./build/html-rewriter-wasm-asset.ts";
 import { PUBLIC_REDIRECTS } from "./worker/site/public-routes.ts";
 
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
@@ -47,11 +46,6 @@ export default defineConfig({
         { dir: staticSiteDir, baseURL: "/", maxAge: 0, fallthrough: true },
       ],
       routeRules: redirectRules,
-      hooks: {
-        async compiled(nitro) {
-          await copyHtmlRewriterWasm(nitro.options.output.serverDir);
-        },
-      },
     }),
     sites(),
   ],

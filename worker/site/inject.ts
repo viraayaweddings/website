@@ -5,7 +5,6 @@
  * admin controls are swapped. When nothing has been customised the response is
  * passed straight through, so an unmanaged site stays byte-for-byte unchanged.
  */
-import "../html-rewriter";
 import type { BlogPost, HeroSlide, Hotel } from "../db/schema";
 import { escapeHtml, renderHeroSlides } from "./hero";
 import { whatsappHref, type ResolvedSettings } from "./settings";
