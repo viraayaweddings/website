@@ -4,7 +4,6 @@ import { nitro } from "nitro/vite";
 import tailwindcss from "@tailwindcss/postcss";
 import { defineConfig } from "vite";
 import { sites } from "./build/sites-vite-plugin.ts";
-import { copyHtmlRewriterWasm } from "./build/html-rewriter-wasm-asset.ts";
 import { PUBLIC_REDIRECTS } from "./worker/site/public-routes.ts";
 
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
@@ -31,6 +30,15 @@ const redirectRules = Object.fromEntries(
 
 export default defineConfig({
   publicDir: "site-public",
+  // html-rewriter-wasm must stay a live import. Vinext bundles server deps with
+  // `noExternal: true`, and this package does not survive that: the CJS glue
+  // reads its .wasm through a `__dirname`-relative readFileSync and pulls in
+  // `./asyncify.js` with a relative require. Bundled, `__dirname` is left
+  // undefined and asyncify.js is never emitted, so the server function throws
+  // at module load and every route -- not just the HTML ones -- returns 500.
+  ssr: {
+    external: ["html-rewriter-wasm"],
+  },
   css: {
     postcss: {
       plugins: [tailwindcss()],
@@ -47,18 +55,7 @@ export default defineConfig({
         { dir: staticSiteDir, baseURL: "/", maxAge: 0, fallthrough: true },
       ],
       routeRules: redirectRules,
-      // Registered as a module, not as `hooks`: a `hooks` entry in the Nitro
-      // config replaces the preset's handler for that hook, and the Vercel
-      // preset writes .vercel/output/config.json from its own `compiled` hook.
-      // Overwriting it produces a build that reports success and deploys with
-      // no routes at all.
-      modules: [
-        (nitro) => {
-          nitro.hooks.hook("compiled", async () => {
-            await copyHtmlRewriterWasm(nitro.options.output.serverDir);
-          });
-        },
-      ],
+      traceDeps: ["html-rewriter-wasm*"],
     }),
     sites(),
   ],
