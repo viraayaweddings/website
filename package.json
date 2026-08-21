@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "vinext dev",
-    "build": "vinext build",
+    "build": "vinext build && node scripts/verify-vercel-output.mjs",
     "start": "vinext start",
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "test:ci": "npm run test && npm run build",
