@@ -6,7 +6,6 @@ import { drizzle, type NeonHttpDatabase } from "drizzle-orm/neon-http";
 import { getDatabaseUrl, type DatabaseEnv } from "../env";
 import { applyPgMigrations } from "./apply-pg-migrations";
 import * as schema from "./schema";
-import { seedPageTemplates } from "./seed-templates";
 
 export type Db = NeonHttpDatabase<typeof schema>;
 
@@ -17,15 +16,21 @@ let schemaReady: Promise<void> | null = null;
 
 async function ensureSchema(db: Db): Promise<void> {
   if (!schemaReady) {
-    schemaReady = (async () => {
-      await applyPgMigrations(db);
-      await seedPageTemplates(db);
-    })().catch((error) => {
+    schemaReady = applyPgMigrations(db).catch((error) => {
       schemaReady = null;
       throw error;
     });
   }
   await schemaReady;
+}
+
+/**
+ * Loads HTML page shells when the public site injection path needs them.
+ * Kept out of admin startup: the bundle is several MB of HTML.
+ */
+export async function ensurePageTemplates(db: Db): Promise<void> {
+  const { seedPageTemplates } = await import("./seed-templates");
+  await seedPageTemplates(db);
 }
 
 /**

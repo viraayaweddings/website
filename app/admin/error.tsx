@@ -3,7 +3,7 @@
 export default function AdminError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   const message =
     error.name === "DatabaseUnavailableError" || /database|postgres|DATABASE_URL|POSTGRES_URL/i.test(error.message)
-      ? "The admin panel cannot reach Postgres. In Vercel, open Storage → your Neon database → confirm it is connected to this project with POSTGRES_URL set for Production, then redeploy."
+      ? "The admin panel cannot reach Postgres. In Vercel, confirm POSTGRES_URL is set for Production, redeploy, then open /api/health/db to see the exact error."
       : error.message || "Something went wrong loading the admin panel.";
 
   return (
