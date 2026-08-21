@@ -1,6 +1,6 @@
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
-import { migrate } from "drizzle-orm/neon-http/migrator";
+import postgres from "postgres";
+import { drizzle } from "drizzle-orm/postgres-js";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -19,6 +19,12 @@ if (!url) {
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const migrationsFolder = join(root, "drizzle-pg");
 
-const db = drizzle(neon(url));
-await migrate(db, { migrationsFolder });
-console.log(`PostgreSQL migrations applied from ${migrationsFolder}.`);
+const sql = postgres(url, { max: 1, prepare: false, ssl: "require" });
+const db = drizzle(sql);
+
+try {
+  await migrate(db, { migrationsFolder });
+  console.log(`PostgreSQL migrations applied from ${migrationsFolder}.`);
+} finally {
+  await sql.end({ timeout: 5 });
+}

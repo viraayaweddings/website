@@ -2,6 +2,7 @@
  * Applies bundled PostgreSQL migrations (no filesystem access required on Vercel).
  */
 import { sql } from "drizzle-orm";
+import type postgres from "postgres";
 import migration0000 from "../../drizzle-pg/0000_magenta_dust.sql?raw";
 import type { Db } from "./client";
 import { splitStatements } from "./migrations";
@@ -36,51 +37,51 @@ async function usersTableExists(db: Db): Promise<boolean> {
   }
 }
 
-async function appliedMigrationNames(db: Db): Promise<Set<string>> {
+async function appliedMigrationNames(sql: postgres.Sql): Promise<Set<string>> {
   try {
-    const rows = await db.execute<{ name: string }>(sql`SELECT name FROM __migrations`);
-    const list = Array.isArray(rows) ? rows : [];
-    return new Set(list.map((row) => row.name));
+    const rows = await sql<{ name: string }[]>`
+      SELECT name FROM __migrations
+    `;
+    return new Set(rows.map((row) => row.name));
   } catch {
     return new Set();
   }
 }
 
-async function markMigrationApplied(db: Db, name: string): Promise<void> {
-  await db.execute(sql`
-    INSERT INTO __migrations (name)
-    VALUES (${name})
-    ON CONFLICT (name) DO NOTHING
-  `);
-}
-
-export async function applyPgMigrations(db: Db): Promise<void> {
-  await db.execute(sql`
+export async function applyPgMigrations(db: Db, sqlClient: postgres.Sql): Promise<void> {
+  await sqlClient.unsafe(`
     CREATE TABLE IF NOT EXISTS __migrations (
       name text PRIMARY KEY,
       applied_at timestamptz NOT NULL DEFAULT now()
     )
   `);
 
-  const applied = await appliedMigrationNames(db);
+  const applied = await appliedMigrationNames(sqlClient);
 
   for (const migration of PG_MIGRATIONS) {
     if (applied.has(migration.name)) continue;
 
-    // Build-time drizzle migrate may have created the schema already.
     if (migration.name === "0000_magenta_dust" && (await usersTableExists(db))) {
-      await markMigrationApplied(db, migration.name);
+      await sqlClient`
+        INSERT INTO __migrations (name)
+        VALUES (${migration.name})
+        ON CONFLICT (name) DO NOTHING
+      `;
       continue;
     }
 
     for (const statement of splitStatements(migration.sql)) {
       try {
-        await db.execute(sql.raw(statement));
+        await sqlClient.unsafe(statement);
       } catch (error) {
         if (!isAlreadyAppliedError(error)) throw error;
       }
     }
 
-    await markMigrationApplied(db, migration.name);
+    await sqlClient`
+      INSERT INTO __migrations (name)
+      VALUES (${migration.name})
+      ON CONFLICT (name) DO NOTHING
+    `;
   }
 }

@@ -6,19 +6,15 @@ function isPostgresUrl(value: string | undefined): value is string {
   return Boolean(value && /^postgres(ql)?:\/\//i.test(value));
 }
 
-/** Prefer direct/unpooled URLs for DDL; fall back to pooled URLs. */
+/** Prefer pooled URLs; postgres.js works with Neon pooler on Vercel. */
 export function getDatabaseUrl(): string | undefined {
-  const direct = [
-    process.env.DATABASE_URL_UNPOOLED,
-    process.env.POSTGRES_URL_NON_POOLING,
-    process.env.POSTGRES_URL_NON_POOLED,
-  ].find(isPostgresUrl);
-  if (direct) return direct;
-
   return [
     process.env.DATABASE_URL,
     process.env.POSTGRES_URL,
     process.env.POSTGRES_PRISMA_URL,
+    process.env.DATABASE_URL_UNPOOLED,
+    process.env.POSTGRES_URL_NON_POOLING,
+    process.env.POSTGRES_URL_NON_POOLED,
     process.env.POSTGRES_URL_NO_SSL,
   ].find(isPostgresUrl);
 }

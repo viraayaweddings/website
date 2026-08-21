@@ -1,22 +1,23 @@
 /**
  * PostgreSQL access for the admin panel and public APIs (Vercel / Node).
  */
-import { neon } from "@neondatabase/serverless";
-import { drizzle, type NeonHttpDatabase } from "drizzle-orm/neon-http";
+import { drizzle, type PostgresJsDatabase } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import { getDatabaseUrl, type DatabaseEnv } from "../env";
 import { applyPgMigrations } from "./apply-pg-migrations";
 import * as schema from "./schema";
 
-export type Db = NeonHttpDatabase<typeof schema>;
+export type Db = PostgresJsDatabase<typeof schema>;
 
 export type { DatabaseEnv };
 
 let dbPromise: Promise<Db | null> | null = null;
 let schemaReady: Promise<void> | null = null;
+let sqlClient: postgres.Sql | null = null;
 
-async function ensureSchema(db: Db): Promise<void> {
+async function ensureSchema(db: Db, client: postgres.Sql): Promise<void> {
   if (!schemaReady) {
-    schemaReady = applyPgMigrations(db).catch((error) => {
+    schemaReady = applyPgMigrations(db, client).catch((error) => {
       schemaReady = null;
       throw error;
     });
@@ -42,9 +43,16 @@ export async function getDb(_env: DatabaseEnv = {}): Promise<Db | null> {
 
   if (!dbPromise) {
     dbPromise = (async () => {
-      const sql = neon(url);
-      const db = drizzle(sql, { schema });
-      await ensureSchema(db);
+      if (!sqlClient) {
+        sqlClient = postgres(url, {
+          max: 1,
+          prepare: false,
+          ssl: "require",
+          connect_timeout: 10,
+        });
+      }
+      const db = drizzle(sqlClient, { schema });
+      await ensureSchema(db, sqlClient);
       return db;
     })().catch((error) => {
       dbPromise = null;
