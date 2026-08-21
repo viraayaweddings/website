@@ -49,6 +49,8 @@ export async function getDb(_env: DatabaseEnv = {}): Promise<Db | null> {
           prepare: false,
           ssl: "require",
           connect_timeout: 10,
+          idle_timeout: 20,
+          max_lifetime: 60 * 10,
         });
       }
       const db = drizzle(sqlClient, { schema });

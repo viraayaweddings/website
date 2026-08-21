@@ -77,13 +77,40 @@ export async function applyPgMigrations(db: Db, sqlClient: postgres.Sql): Promis
     )
   `);
 
-  await sqlClient.unsafe(`SELECT pg_advisory_lock(${MIGRATION_LOCK_KEY})`);
+  const applied = await appliedMigrationNames(sqlClient);
+  if (PG_MIGRATIONS.every((migration) => applied.has(migration.name))) {
+    return;
+  }
+
+  if (
+    !applied.has("0000_magenta_dust") &&
+    (await usersTableExists(db))
+  ) {
+    await sqlClient`
+      INSERT INTO __migrations (name)
+      VALUES (${"0000_magenta_dust"})
+      ON CONFLICT (name) DO NOTHING
+    `;
+    return;
+  }
+
+  const lockRows = await sqlClient<{ locked: boolean }[]>`
+    SELECT pg_try_advisory_lock(${MIGRATION_LOCK_KEY}) AS locked
+  `;
+  const locked = lockRows[0]?.locked === true;
+
+  if (!locked) {
+    // Another cold start is migrating; don't block this request for minutes.
+    if (await usersTableExists(db)) return;
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    if (await usersTableExists(db)) return;
+  }
 
   try {
-    const applied = await appliedMigrationNames(sqlClient);
+    const pending = await appliedMigrationNames(sqlClient);
 
     for (const migration of PG_MIGRATIONS) {
-      if (applied.has(migration.name)) continue;
+      if (pending.has(migration.name)) continue;
 
       if (migration.name === "0000_magenta_dust" && (await usersTableExists(db))) {
         await sqlClient`
@@ -109,6 +136,8 @@ export async function applyPgMigrations(db: Db, sqlClient: postgres.Sql): Promis
       `;
     }
   } finally {
-    await sqlClient.unsafe(`SELECT pg_advisory_unlock(${MIGRATION_LOCK_KEY})`).catch(() => undefined);
+    if (locked) {
+      await sqlClient.unsafe(`SELECT pg_advisory_unlock(${MIGRATION_LOCK_KEY})`).catch(() => undefined);
+    }
   }
 }

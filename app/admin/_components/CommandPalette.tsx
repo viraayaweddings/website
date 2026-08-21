@@ -14,6 +14,7 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Icon, type IconName } from "./icons";
 import { navFor, type NavItem } from "./nav";
 
@@ -34,6 +35,7 @@ const DEBOUNCE_MS = 180;
 const MIN_QUERY = 2;
 
 export function CommandPalette({ role }: { role: string }) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [hits, setHits] = useState<Hit[]>([]);
@@ -136,9 +138,9 @@ export function CommandPalette({ role }: { role: string }) {
   const go = useCallback(
     (href: string) => {
       close();
-      window.location.assign(href);
+      router.push(href);
     },
-    [close],
+    [close, router],
   );
 
   const onKeyDown = (event: React.KeyboardEvent) => {
