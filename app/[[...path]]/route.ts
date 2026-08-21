@@ -74,11 +74,16 @@ async function readOriginalPage(url: URL): Promise<Response | null> {
 
     const response = await fetch(new URL(url.pathname, url.origin), {
       headers,
+      // A redirect here is never the page: on a protected deployment it is the
+      // login screen, and serving that as site content would be worse than
+      // having no fallback at all.
+      redirect: "manual",
       // Bounded so a slow origin costs a fallback, not the whole invocation.
       signal: AbortSignal.timeout(5000),
     }).catch(() => null);
 
     if (!response || !response.ok) return null;
+    if (!response.headers.get("content-type")?.includes("text/html")) return null;
     return response;
   }
 
