@@ -1,5 +1,6 @@
 import vinext from "vinext";
 import { nitro } from "nitro/vite";
+import tailwindcss from "@tailwindcss/postcss";
 import { defineConfig } from "vite";
 import { sites } from "./build/sites-vite-plugin.ts";
 
@@ -8,6 +9,11 @@ const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 
 export default defineConfig({
   publicDir: "site-public",
+  css: {
+    postcss: {
+      plugins: [tailwindcss()],
+    },
+  },
   server: isCodexSeatbeltSandbox
     ? { watch: { useFsEvents: false, usePolling: true } }
     : undefined,
