@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { getDb } from "@/worker/db/client";
+import { seedSiteContent } from "@/worker/db/seed-content";
 import { recordAudit, requireDb, requireRole } from "../_lib/auth";
 
 const SETTINGS_PATH = "/admin/settings";
