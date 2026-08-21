@@ -3,7 +3,7 @@
 export default function AdminError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   const message =
     error.name === "DatabaseUnavailableError" || /database|postgres|DATABASE_URL|POSTGRES_URL/i.test(error.message)
-      ? "The admin panel cannot reach Postgres. In Vercel, confirm POSTGRES_URL is set for Production, redeploy, then open /api/health/db to see the exact error."
+      ? "The admin panel cannot reach Postgres. In Vercel, confirm POSTGRES_URL is set for Production, redeploy, then open /admin/health to see the exact error."
       : error.message || "Something went wrong loading the admin panel.";
 
   return (

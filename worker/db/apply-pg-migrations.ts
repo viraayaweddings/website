@@ -11,16 +11,37 @@ const PG_MIGRATIONS: ReadonlyArray<{ name: string; sql: string }> = [
   { name: "0000_magenta_dust", sql: migration0000 },
 ];
 
+const MIGRATION_LOCK_KEY = 842_001;
+
 function errorText(error: unknown): string {
   if (!(error instanceof Error)) return String(error);
   const parts = [error.message];
   if (error.cause) parts.push(String(error.cause));
+  const code = (error as { code?: string }).code;
+  if (code) parts.push(code);
   return parts.join(" ");
 }
 
 function isAlreadyAppliedError(error: unknown): boolean {
+  const code = error && typeof error === "object" ? (error as { code?: string }).code : undefined;
+  if (code === "42P07" || code === "42710") return true;
   const text = errorText(error);
   return /already exists|duplicate key|42P07|42710/i.test(text);
+}
+
+/** Concurrent Vercel lambdas can both run bundled DDL on cold start. */
+function idempotentStatement(statement: string): string {
+  const trimmed = statement.trim();
+  if (/^CREATE TABLE /i.test(trimmed)) {
+    return trimmed.replace(/^CREATE TABLE /i, "CREATE TABLE IF NOT EXISTS ");
+  }
+  if (/^CREATE UNIQUE INDEX /i.test(trimmed)) {
+    return trimmed.replace(/^CREATE UNIQUE INDEX /i, "CREATE UNIQUE INDEX IF NOT EXISTS ");
+  }
+  if (/^CREATE INDEX /i.test(trimmed)) {
+    return trimmed.replace(/^CREATE INDEX /i, "CREATE INDEX IF NOT EXISTS ");
+  }
+  return trimmed;
 }
 
 async function usersTableExists(db: Db): Promise<boolean> {
@@ -56,32 +77,38 @@ export async function applyPgMigrations(db: Db, sqlClient: postgres.Sql): Promis
     )
   `);
 
-  const applied = await appliedMigrationNames(sqlClient);
+  await sqlClient.unsafe(`SELECT pg_advisory_lock(${MIGRATION_LOCK_KEY})`);
 
-  for (const migration of PG_MIGRATIONS) {
-    if (applied.has(migration.name)) continue;
+  try {
+    const applied = await appliedMigrationNames(sqlClient);
 
-    if (migration.name === "0000_magenta_dust" && (await usersTableExists(db))) {
+    for (const migration of PG_MIGRATIONS) {
+      if (applied.has(migration.name)) continue;
+
+      if (migration.name === "0000_magenta_dust" && (await usersTableExists(db))) {
+        await sqlClient`
+          INSERT INTO __migrations (name)
+          VALUES (${migration.name})
+          ON CONFLICT (name) DO NOTHING
+        `;
+        continue;
+      }
+
+      for (const statement of splitStatements(migration.sql)) {
+        try {
+          await sqlClient.unsafe(idempotentStatement(statement));
+        } catch (error) {
+          if (!isAlreadyAppliedError(error)) throw error;
+        }
+      }
+
       await sqlClient`
         INSERT INTO __migrations (name)
         VALUES (${migration.name})
         ON CONFLICT (name) DO NOTHING
       `;
-      continue;
     }
-
-    for (const statement of splitStatements(migration.sql)) {
-      try {
-        await sqlClient.unsafe(statement);
-      } catch (error) {
-        if (!isAlreadyAppliedError(error)) throw error;
-      }
-    }
-
-    await sqlClient`
-      INSERT INTO __migrations (name)
-      VALUES (${migration.name})
-      ON CONFLICT (name) DO NOTHING
-    `;
+  } finally {
+    await sqlClient.unsafe(`SELECT pg_advisory_unlock(${MIGRATION_LOCK_KEY})`).catch(() => undefined);
   }
 }

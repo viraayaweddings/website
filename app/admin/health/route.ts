@@ -19,8 +19,14 @@ export async function GET(): Promise<Response> {
     if (!db) {
       return Response.json({ ok: false, error: "Database client could not be created." }, { status: 503 });
     }
-    await db.execute(sql`SELECT 1`);
-    return Response.json({ ok: true });
+    const probe = await db.execute<{ users_table: string | null }>(sql`
+      SELECT table_name AS users_table
+      FROM information_schema.tables
+      WHERE table_schema = 'public' AND table_name = 'users'
+      LIMIT 1
+    `);
+    const hasUsersTable = Array.isArray(probe) && probe.length > 0;
+    return Response.json({ ok: true, schemaReady: hasUsersTable });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     return Response.json({ ok: false, error: message }, { status: 500 });

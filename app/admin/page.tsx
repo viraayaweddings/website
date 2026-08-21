@@ -45,7 +45,7 @@ async function loadDashboard(db: Db, now: number) {
     db
       .select({
         total: sql<number>`count(*)`,
-        lastWeek: sql<number>`sum(case when ${leads.createdAt} >= ${weekStart.getTime()} then 1 else 0 end)`,
+        lastWeek: sql<number>`sum(case when ${leads.createdAt} >= ${weekStart} then 1 else 0 end)`,
         unsent: sql<number>`sum(case when ${leads.emailSent} = 0 then 1 else 0 end)`,
       })
       .from(leads),
