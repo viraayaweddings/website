@@ -1,12 +1,15 @@
 /**
- * The frame every admin screen renders inside.
+ * Server layout for every admin screen.
  *
- * Page headings and action buttons stay in this server component. Only plain
- * strings cross into ShellChrome; server-rendered buttons must not be passed as
- * props to a client component.
+ * Client components (nav rail, top bar, toasts) are siblings of the main
+ * column — page content never crosses a client boundary, which breaks vinext
+ * production renders when action buttons or tables are server components.
  */
+import { Suspense } from "react";
 import type { User } from "@/worker/db/schema";
-import { ShellChrome } from "./ShellChrome";
+import { AdminHeaderBar } from "./AdminHeaderBar";
+import { SideNav } from "./SideNav";
+import { Toaster } from "./Toaster";
 
 export function AdminShell({
   user,
@@ -17,30 +20,43 @@ export function AdminShell({
 }: {
   user: User;
   title: string;
-  /** One line under the heading: what this screen is for. */
   subtitle?: string;
   actions?: React.ReactNode;
   children: React.ReactNode;
 }) {
+  const safeUser = { name: user.name, email: user.email, role: user.role };
+
   return (
-    <ShellChrome
-      user={{ name: user.name, email: user.email, role: user.role }}
-      title={title}
-    >
-      <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
-        <div className="min-w-0">
-          <h1 className="vw-display text-2xl font-semibold" style={{ color: "var(--ink)" }}>
-            {title}
-          </h1>
-          {subtitle ? (
-            <p className="mt-1 text-sm" style={{ color: "var(--ink-soft)" }}>
-              {subtitle}
-            </p>
-          ) : null}
-        </div>
-        {actions ? <div className="flex flex-wrap items-center gap-2">{actions}</div> : null}
+    <div className="flex min-h-screen">
+      <SideNav role={safeUser.role} name={safeUser.name} email={safeUser.email} />
+
+      <div className="flex min-w-0 flex-1 flex-col">
+        <AdminHeaderBar user={safeUser} title={title} />
+
+        <main className="min-w-0 flex-1 px-4 py-5 md:px-6 md:py-7">
+          <div className="mx-auto w-full max-w-[86rem]">
+            <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+              <div className="min-w-0">
+                <h1 className="vw-display text-2xl font-semibold" style={{ color: "var(--ink)" }}>
+                  {title}
+                </h1>
+                {subtitle ? (
+                  <p className="mt-1 text-sm" style={{ color: "var(--ink-soft)" }}>
+                    {subtitle}
+                  </p>
+                ) : null}
+              </div>
+              {actions ? <div className="flex flex-wrap items-center gap-2">{actions}</div> : null}
+            </div>
+
+            {children}
+          </div>
+        </main>
       </div>
-      {children}
-    </ShellChrome>
+
+      <Suspense fallback={null}>
+        <Toaster />
+      </Suspense>
+    </div>
   );
 }

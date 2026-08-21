@@ -11,8 +11,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useSyncExternalStore, useState } from "react";
 import { Icon, Monogram } from "./icons";
+import { ADMIN_NAV_OPEN_EVENT } from "./AdminHeaderBar";
 import { navGroupsFor } from "./nav";
 
 const COLLAPSE_KEY = "vw-admin-rail";
@@ -45,17 +46,25 @@ export function SideNav({
   role,
   name,
   email,
-  open,
-  onClose,
 }: {
   role: string;
   name: string;
   email: string;
-  /** Drawer state, owned by the shell so the top bar button can drive it. */
-  open: boolean;
-  onClose: () => void;
 }) {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const close = useCallback(() => setOpen(false), []);
+
+  useEffect(() => {
+    const onOpen = () => setOpen(true);
+    window.addEventListener(ADMIN_NAV_OPEN_EVENT, onOpen);
+    return () => window.removeEventListener(ADMIN_NAV_OPEN_EVENT, onOpen);
+  }, []);
+
+  useEffect(() => {
+    close();
+  }, [pathname, close]);
+
   // Expanded on the server: the stored choice is not knowable until hydration.
   const collapsed = useSyncExternalStore(subscribe, readCollapsed, () => false);
 
@@ -77,7 +86,7 @@ export function SideNav({
         <button
           type="button"
           className="vw-scrim md:hidden"
-          onClick={onClose}
+          onClick={close}
           aria-label="Close menu"
         />
       ) : null}
@@ -102,7 +111,7 @@ export function SideNav({
           )}
           <button
             type="button"
-            onClick={onClose}
+            onClick={close}
             className="vw-btn vw-btn-ghost vw-btn-icon ml-auto md:hidden"
             style={{ color: "var(--rail-ink)" }}
             aria-label="Close menu"
@@ -127,7 +136,7 @@ export function SideNav({
                       key={item.href}
                       href={item.href}
                       data-on={on}
-                      onClick={onClose}
+                      onClick={close}
                       className="vw-rail-link"
                       title={collapsed ? item.label : undefined}
                       aria-current={on ? "page" : undefined}

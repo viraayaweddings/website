@@ -77,7 +77,8 @@ async function loadDashboard(db: Db, now: number) {
     counts.set(istDay(now - index * 24 * 60 * 60 * 1000), 0);
   }
   for (const row of recentLeadDays) {
-    const day = istDay(row.createdAt.getTime());
+    const createdAt = row.createdAt instanceof Date ? row.createdAt : new Date(String(row.createdAt));
+    const day = istDay(createdAt.getTime());
     if (counts.has(day)) counts.set(day, (counts.get(day) ?? 0) + 1);
   }
 
@@ -177,7 +178,24 @@ export default async function AdminDashboard({
   const deniedSection = params.section?.replace(/-/g, " ");
   const now = await currentTime();
 
-  const { totals, byStatus, recent, topForms, daily, content } = await loadDashboard(db, now);
+  let totals;
+  let byStatus;
+  let recent;
+  let topForms;
+  let daily;
+  let content;
+  try {
+    ({ totals, byStatus, recent, topForms, daily, content } = await loadDashboard(db, now));
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : String(error);
+    return (
+      <AdminShell user={user} title="Dashboard" subtitle="Could not load dashboard data.">
+        <Alert tone="error" title="Database query failed">
+          {detail}
+        </Alert>
+      </AdminShell>
+    );
+  }
 
   const total = Number(totals?.total ?? 0);
   const lastWeek = Number(totals?.lastWeek ?? 0);
@@ -376,9 +394,10 @@ function ContentRow({
 }
 
 function partOfDay(now: number): string {
-  // The team works to IST, so the greeting should too.
   const hour = Number(
-    new Intl.DateTimeFormat("en-GB", { hour: "numeric", hour12: false, timeZone: "Asia/Kolkata" }).format(now),
+    new Intl.DateTimeFormat("en-GB", { hour: "numeric", hour12: false, timeZone: "Asia/Kolkata" }).format(
+      new Date(now),
+    ),
   );
   if (hour < 12) return "morning";
   if (hour < 17) return "afternoon";
