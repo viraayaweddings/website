@@ -1,6 +1,12 @@
 "use client";
 
-import { isRedirectError } from "next/navigation";
+function isRedirectError(error: unknown): boolean {
+  if (typeof error !== "object" || error === null) return false;
+  const digest = "digest" in error ? String((error as { digest?: unknown }).digest ?? "") : "";
+  if (digest.startsWith("NEXT_REDIRECT")) return true;
+  const message = "message" in error ? String((error as { message?: unknown }).message ?? "") : "";
+  return message.includes("NEXT_REDIRECT");
+}
 
 export default function AdminError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   if (isRedirectError(error)) throw error;
