@@ -6,20 +6,20 @@ function isPostgresUrl(value: string | undefined): value is string {
   return Boolean(value && /^postgres(ql)?:\/\//i.test(value));
 }
 
-/** Prefer pooled URLs for @neondatabase/serverless HTTP driver. */
+/** Prefer direct/unpooled URLs for DDL; fall back to pooled URLs. */
 export function getDatabaseUrl(): string | undefined {
-  const pooled = [
+  const direct = [
+    process.env.DATABASE_URL_UNPOOLED,
+    process.env.POSTGRES_URL_NON_POOLING,
+    process.env.POSTGRES_URL_NON_POOLED,
+  ].find(isPostgresUrl);
+  if (direct) return direct;
+
+  return [
     process.env.DATABASE_URL,
     process.env.POSTGRES_URL,
     process.env.POSTGRES_PRISMA_URL,
     process.env.POSTGRES_URL_NO_SSL,
-  ].find(isPostgresUrl);
-  if (pooled) return pooled;
-
-  return [
-    process.env.DATABASE_URL_UNPOOLED,
-    process.env.POSTGRES_URL_NON_POOLING,
-    process.env.POSTGRES_URL_NON_POOLED,
   ].find(isPostgresUrl);
 }
 
