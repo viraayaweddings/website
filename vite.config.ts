@@ -47,11 +47,18 @@ export default defineConfig({
         { dir: staticSiteDir, baseURL: "/", maxAge: 0, fallthrough: true },
       ],
       routeRules: redirectRules,
-      hooks: {
-        async compiled(nitro) {
-          await copyHtmlRewriterWasm(nitro.options.output.serverDir);
+      // Registered as a module, not as `hooks`: a `hooks` entry in the Nitro
+      // config replaces the preset's handler for that hook, and the Vercel
+      // preset writes .vercel/output/config.json from its own `compiled` hook.
+      // Overwriting it produces a build that reports success and deploys with
+      // no routes at all.
+      modules: [
+        (nitro) => {
+          nitro.hooks.hook("compiled", async () => {
+            await copyHtmlRewriterWasm(nitro.options.output.serverDir);
+          });
         },
-      },
+      ],
     }),
     sites(),
   ],
