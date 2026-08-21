@@ -9,7 +9,6 @@
  * remembered per browser.
  */
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useSyncExternalStore, useState } from "react";
 import { Icon, Monogram } from "./icons";
@@ -77,6 +76,14 @@ export function SideNav({
     for (const listener of listeners) listener();
   }, []);
 
+  const navigate = useCallback(
+    (href: string) => {
+      close();
+      window.location.assign(href);
+    },
+    [close],
+  );
+
   const groups = navGroupsFor(role);
   const width = collapsed ? "4.25rem" : "15rem";
 
@@ -132,11 +139,18 @@ export function SideNav({
                 {group.items.map((item) => {
                   const on = isCurrent(pathname, item.href);
                   return (
-                    <Link
+                    <a
                       key={item.href}
                       href={item.href}
                       data-on={on}
-                      onClick={close}
+                      onClick={(event) => {
+                        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {
+                          close();
+                          return;
+                        }
+                        event.preventDefault();
+                        navigate(item.href);
+                      }}
                       className="vw-rail-link"
                       title={collapsed ? item.label : undefined}
                       aria-current={on ? "page" : undefined}
@@ -146,7 +160,7 @@ export function SideNav({
                         <Icon name={item.icon} size={17} />
                       </span>
                       {collapsed ? <span className="sr-only">{item.label}</span> : <span className="truncate">{item.label}</span>}
-                    </Link>
+                    </a>
                   );
                 })}
               </div>

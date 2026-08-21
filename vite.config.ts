@@ -17,5 +17,5 @@ export default defineConfig({
   server: isCodexSeatbeltSandbox
     ? { watch: { useFsEvents: false, usePolling: true } }
     : undefined,
-  plugins: [vinext(), nitro(), sites()],
+  plugins: [vinext(), nitro({ preset: process.env.NITRO_PRESET || "vercel" }), sites()],
 });
