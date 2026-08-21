@@ -39,7 +39,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   if (pathname === "/wedding-consultation") {
     const url = request.nextUrl.clone();
     url.pathname = "/wedding-consultation/";
-    return NextResponse.redirect(url, 308);
+    return NextResponse.redirect(url.toString(), 308);
   }
 
   const redirectTarget = publicRedirectTarget(pathname);
@@ -49,7 +49,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 
   const file = await readStaticFile(pathname);
   if (file) {
-    return new NextResponse(request.method === "HEAD" ? null : file.body, {
+    return new NextResponse(request.method === "HEAD" ? null : new Uint8Array(file.body), {
       status: 200,
       headers: {
         "content-type": file.contentType,
@@ -60,7 +60,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 
   const notFound = await readStaticFile("/404.html");
   if (notFound) {
-    return new NextResponse(request.method === "HEAD" ? null : notFound.body, {
+    return new NextResponse(request.method === "HEAD" ? null : new Uint8Array(notFound.body), {
       status: 404,
       headers: {
         "content-type": notFound.contentType,

@@ -120,7 +120,7 @@ function text(value: unknown, max = 500): string {
   }
 
   return String(value ?? "")
-    .replaceAll(/./gs, (character) => {
+    .replace(/[\s\S]/g, (character) => {
       const code = character.charCodeAt(0);
       return code <= 31 || code === 127 ? " " : character;
     })

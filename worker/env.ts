@@ -55,7 +55,7 @@ export function getR2Config(): R2Config | null {
 }
 
 /** Legacy env shape kept so worker/site modules compile during migration. */
-export type DatabaseEnv = Record<string, never>;
+export interface DatabaseEnv {}
 
 export function emptyEnv(): DatabaseEnv {
   return {};
