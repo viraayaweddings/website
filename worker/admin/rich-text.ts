@@ -19,6 +19,7 @@
  * and passes through everything it is not asked to change, which is exactly the
  * balance above.
  */
+import "../html-rewriter";
 
 /** Attributes that carry a URL and could therefore carry `javascript:`. */
 const URL_ATTRIBUTES = ["href", "src", "action", "formaction", "xlink:href", "poster", "data"];
