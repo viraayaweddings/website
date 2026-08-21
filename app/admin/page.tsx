@@ -41,14 +41,12 @@ async function loadDashboard(db: Db, now: number) {
   const windowStart = new Date(now - WINDOW_DAYS * 24 * 60 * 60 * 1000);
   const weekStart = new Date(now - 7 * 24 * 60 * 60 * 1000);
 
-  const [totals, byStatus, recent, topForms, recentLeadDays, content] = await Promise.all([
-    db
-      .select({
-        total: sql<number>`count(*)`,
-        lastWeek: sql<number>`sum(case when ${leads.createdAt} >= ${weekStart} then 1 else 0 end)`,
-        unsent: sql<number>`sum(case when ${leads.emailSent} = 0 then 1 else 0 end)`,
-      })
-      .from(leads),
+  const [leadCounts, byStatus, recent, topForms, recentLeadDays, content] = await Promise.all([
+    Promise.all([
+      db.select({ total: sql<number>`count(*)` }).from(leads),
+      db.select({ lastWeek: sql<number>`count(*)` }).from(leads).where(gte(leads.createdAt, weekStart)),
+      db.select({ unsent: sql<number>`count(*)` }).from(leads).where(eq(leads.emailSent, 0)),
+    ]),
     db.select({ status: leads.status, total: sql<number>`count(*)` }).from(leads).groupBy(leads.status),
     db.select().from(leads).orderBy(desc(leads.createdAt)).limit(8),
     db
@@ -84,8 +82,14 @@ async function loadDashboard(db: Db, now: number) {
 
   const [venues, venueDrafts, posts, postDrafts, cities, liveSlides, images] = content;
 
+  const [[totalRows], [lastWeekRows], [unsentRows]] = leadCounts;
+
   return {
-    totals: totals[0],
+    totals: {
+      total: totalRows[0]?.total ?? 0,
+      lastWeek: lastWeekRows[0]?.lastWeek ?? 0,
+      unsent: unsentRows[0]?.unsent ?? 0,
+    },
     byStatus,
     recent,
     topForms,
