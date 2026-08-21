@@ -1,14 +1,34 @@
 /**
  * Runtime configuration for Vercel / Node (PostgreSQL + R2 via S3 API).
  */
+
+function isPostgresUrl(value: string | undefined): value is string {
+  return Boolean(value && /^postgres(ql)?:\/\//i.test(value));
+}
+
+/** Prefer pooled URLs for @neondatabase/serverless HTTP driver. */
 export function getDatabaseUrl(): string | undefined {
-  return process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL;
+  const pooled = [
+    process.env.DATABASE_URL,
+    process.env.POSTGRES_URL,
+    process.env.POSTGRES_PRISMA_URL,
+    process.env.POSTGRES_URL_NO_SSL,
+  ].find(isPostgresUrl);
+  if (pooled) return pooled;
+
+  return [
+    process.env.DATABASE_URL_UNPOOLED,
+    process.env.POSTGRES_URL_NON_POOLING,
+    process.env.POSTGRES_URL_NON_POOLED,
+  ].find(isPostgresUrl);
 }
 
 export function requireDatabaseUrl(): string {
   const url = getDatabaseUrl();
   if (!url) {
-    throw new Error("DATABASE_URL is not set. Add a Postgres connection string in Vercel project settings.");
+    throw new Error(
+      "No Postgres URL found. In Vercel, link Neon storage to this project and ensure POSTGRES_URL or DATABASE_URL is set for Production.",
+    );
   }
   return url;
 }

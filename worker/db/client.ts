@@ -3,8 +3,8 @@
  */
 import { neon } from "@neondatabase/serverless";
 import { drizzle, type NeonHttpDatabase } from "drizzle-orm/neon-http";
-import { migrate } from "drizzle-orm/neon-http/migrator";
 import { getDatabaseUrl, type DatabaseEnv } from "../env";
+import { applyPgMigrations } from "./apply-pg-migrations";
 import * as schema from "./schema";
 import { seedPageTemplates } from "./seed-templates";
 
@@ -18,7 +18,7 @@ let schemaReady: Promise<void> | null = null;
 async function ensureSchema(db: Db): Promise<void> {
   if (!schemaReady) {
     schemaReady = (async () => {
-      await migrate(db, { migrationsFolder: "drizzle-pg" });
+      await applyPgMigrations(db);
       await seedPageTemplates(db);
     })().catch((error) => {
       schemaReady = null;
@@ -29,7 +29,7 @@ async function ensureSchema(db: Db): Promise<void> {
 }
 
 /**
- * Returns a ready-to-use client, or null when DATABASE_URL is absent.
+ * Returns a ready-to-use client, or null when no Postgres URL is configured.
  */
 export async function getDb(_env: DatabaseEnv = {}): Promise<Db | null> {
   const url = getDatabaseUrl();
@@ -43,6 +43,7 @@ export async function getDb(_env: DatabaseEnv = {}): Promise<Db | null> {
       return db;
     })().catch((error) => {
       dbPromise = null;
+      console.error("[db] connection failed", error instanceof Error ? error.message : error);
       throw error;
     });
   }
