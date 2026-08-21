@@ -8,6 +8,7 @@
  * than from a framework default. Both themes are defined in full: the panel is
  * used all day, and a washed-out dark mode is worse than none.
  */
+@import "tailwindcss/index.css";
 
 .vw-admin {
   --ink: #1c1917;
