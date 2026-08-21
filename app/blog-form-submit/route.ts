@@ -1,7 +1,8 @@
-import { leadOptions, leadPost } from "../lead-route";
+import { legacyLeadGet, legacyLeadOptions, legacyLeadPost } from "../_lib/deprecated-lead-route";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-export const POST = leadPost();
-export const OPTIONS = leadOptions;
+export const GET = legacyLeadGet;
+export const POST = legacyLeadPost;
+export const OPTIONS = legacyLeadOptions;

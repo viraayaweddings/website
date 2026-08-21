@@ -23,7 +23,12 @@
 
 # misc
 .DS_Store
+Thumbs.db
 *.pem
+
+# AI / IDE local configs (not part of the deployed app)
+.claude/
+.cursor/
 
 # debug
 npm-debug.log*
@@ -54,3 +59,5 @@ responsive-dev*.log
 /site-public/mirror-report.json
 __pycache__/
 /.tmp/
+/tmp/
+/output/

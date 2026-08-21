@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -2871,7 +2871,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         }
     </style>
 
-    <footer class="main-footer section-padding pb-0">
+            <footer class="main-footer section-padding pb-0">
       <div class="container">
         <div class="row">
           <div class="col-lg-4">
@@ -2882,12 +2882,12 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 <p class="font-family01 text-white">Follow us on</p>
                 <ul class="social-icon d-inline-flex">
                   <li>
-                    <a href="https://www.instagram.com/viraayaweddings/">
+                    <a href="https://www.instagram.com/viraayaweddings/" target="_blank" rel="noopener noreferrer">
                       <i class="fa-brands fa-instagram"></i>
                     </a>
                   </li>
                   <li>
-                    <a href="https://www.linkedin.com/company/viraaya-weddings/">
+                    <a href="https://www.linkedin.com/company/viraaya-weddings/" target="_blank" rel="noopener noreferrer">
                       <i class="fa-brands fa-linkedin-in"></i>
                     </a>
                   </li>
@@ -2899,6 +2899,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             <div class="row">
               <div class="col-lg-4 col-md-4 mt-5 mt-lg-0">
                 <div class="widget">
+                  <h5 class="footer-widget-title">Explore</h5>
                   <ul>
                     <li>
                       <a href="/">Home</a>
@@ -2923,6 +2924,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
               </div>
               <div class="col-lg-4 col-md-4 mt-5 mt-lg-0">
                 <div class="widget">
+                  <h5 class="footer-widget-title">Planning Tools</h5>
                   <ul>
                     <li>
                       <a href="/wedding-consultation">Book Consultation</a>
@@ -3027,7 +3029,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 document.addEventListener('DOMContentLoaded', function () {
     let selectedDate = "";
     let selectedTime = "";
-    const allSlots = ["11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
+    let allSlots = ["11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
 
     function toYMD(date) {
         return date.getFullYear() + '-' +
@@ -3051,31 +3053,44 @@ document.addEventListener('DOMContentLoaded', function () {
         renderTimeSlots();
     }
 
-    if (window.flatpickr && document.getElementById('calendar')) {
-        flatpickr('#calendar', {
-            inline: true,
-            disableMobile: true,
-            defaultDate: new Date(),
-            minDate: null,
-            onChange: function (selectedDates) {
-                if (!selectedDates.length) return;
-                selectDate(selectedDates[0]);
-            },
-            onReady: function (selectedDates, dateStr, instance) {
-                instance.setDate(new Date(), true);
-            }
-        });
+    function bootCalendar() {
+        if (window.flatpickr && document.getElementById('calendar')) {
+            flatpickr('#calendar', {
+                inline: true,
+                disableMobile: true,
+                defaultDate: new Date(),
+                minDate: null,
+                onChange: function (selectedDates) {
+                    if (!selectedDates.length) return;
+                    selectDate(selectedDates[0]);
+                },
+                onReady: function (selectedDates, dateStr, instance) {
+                    instance.setDate(new Date(), true);
+                }
+            });
+        }
+
+        const slots = document.getElementById('time-slots');
+        if (slots) {
+            slots.addEventListener('click', function (e) {
+                if (!e.target.classList.contains('time-slot')) return;
+                slots.querySelectorAll('.time-slot').forEach(function (slot) { slot.classList.remove('active'); });
+                e.target.classList.add('active');
+                selectedTime = e.target.innerText.trim();
+            });
+        }
     }
 
-    const slots = document.getElementById('time-slots');
-    if (slots) {
-        slots.addEventListener('click', function (e) {
-            if (!e.target.classList.contains('time-slot')) return;
-            slots.querySelectorAll('.time-slot').forEach(function (slot) { slot.classList.remove('active'); });
-            e.target.classList.add('active');
-            selectedTime = e.target.innerText.trim();
+    fetch('/appointment/slots')
+        .then(function (response) { return response.ok ? response.json() : allSlots; })
+        .then(function (data) {
+            if (Array.isArray(data) && data.length) allSlots = data.map(String);
+        })
+        .catch(function () { /* keep fallback slots */ })
+        .finally(function () {
+            renderTimeSlots();
+            bootCalendar();
         });
-    }
 
     function openConsultationForm(event) {
         if (event) event.preventDefault();

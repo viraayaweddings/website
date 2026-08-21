@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+# Optional git hook: install with `git config core.hooksPath .githooks`
+# Runs documentation validation before commit. Does not block on warnings.
+set -e
+if [ -f docs/generated/code-inventory.json ]; then
+  node scripts/docs-inventory.mjs >/dev/null 2>&1 || true
+  node scripts/docs-validate.mjs || {
+    echo ""
+    echo "Documentation validation FAILED."
+    echo "Run: npm run docs:sync"
+    echo "Or commit with --no-verify to skip (not recommended)."
+    exit 1
+  }
+fi

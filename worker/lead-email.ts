@@ -1,3 +1,8 @@
+import type { DatabaseEnv } from "./db/client";
+import { getDb } from "./db/client";
+import { markLeadEmailSent, storeLead } from "./admin/lead-store";
+import { clearRateLimit, isRateLimited, recordRateLimitAttempt } from "./admin/rate-limit";
+
 export type LeadResponseMode = "lead" | "appointment";
 
 type LeadPayload = {
@@ -17,9 +22,11 @@ type CleanLead = {
   fields: Record<string, string>;
   metadata: Record<string, string>;
   replyTo: string;
+  /** Extracted separately so stored leads are filterable without JSON parsing. */
+  contact: { name: string; email: string; phone: string };
 };
 
-export interface LeadEmailEnv {
+export interface LeadEmailEnv extends DatabaseEnv {
   RESEND_API_KEY?: string;
   RESEND_FROM_EMAIL?: string;
   RESEND_REPLY_TO?: string;
@@ -46,7 +53,53 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const otpPattern = /\b(?:otp|one[-\s]?time|verification\s*code|verify\s*code)\b/i;
 const rateLimitWindowMs = 10 * 60 * 1000;
 const rateLimitMax = 8;
-const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
+const CSRF_COOKIE = "lead_csrf";
+
+function rateLimitKey(ip: string): string {
+  return `lead:${ip}`;
+}
+
+async function leadRateLimited(env: LeadEmailEnv, ip: string): Promise<boolean> {
+  const db = await getDb(env);
+  if (!db) return false;
+  return isRateLimited(db, rateLimitKey(ip), rateLimitMax);
+}
+
+async function recordLeadAttempt(env: LeadEmailEnv, ip: string): Promise<void> {
+  const db = await getDb(env);
+  if (!db) return;
+  await recordRateLimitAttempt(db, rateLimitKey(ip), rateLimitMax, rateLimitWindowMs);
+}
+
+async function clearLeadAttempts(env: LeadEmailEnv, ip: string): Promise<void> {
+  const db = await getDb(env);
+  if (!db) return;
+  await clearRateLimit(db, rateLimitKey(ip));
+}
+
+export function issueLeadCsrfToken(secure: boolean): { token: string; cookie: string } {
+  const token = crypto.randomUUID();
+  const flags = secure ? "; Secure" : "";
+  return {
+    token,
+    cookie: `${CSRF_COOKIE}=${token}; Path=/; SameSite=Strict; Max-Age=3600${flags}`,
+  };
+}
+
+function readCsrfCookie(request: Request): string {
+  const raw = request.headers.get("cookie") || "";
+  for (const part of raw.split(";")) {
+    const [name, ...rest] = part.trim().split("=");
+    if (name === CSRF_COOKIE) return decodeURIComponent(rest.join("="));
+  }
+  return "";
+}
+
+function csrfValid(request: Request, payload: LeadPayload): boolean {
+  const expected = readCsrfCookie(request);
+  const provided = text(payload && typeof payload === "object" ? (payload as Record<string, unknown>).csrfToken : "", 80);
+  return Boolean(expected && provided && expected === provided);
+}
 
 function text(value: unknown, max = 500): string {
   if (value && typeof value === "object") {
@@ -131,17 +184,6 @@ function isSameOrigin(request: Request) {
   } catch {
     return false;
   }
-}
-
-function isRateLimited(key: string) {
-  const now = Date.now();
-  const current = rateLimitStore.get(key);
-  if (!current || current.resetAt <= now) {
-    rateLimitStore.set(key, { count: 1, resetAt: now + rateLimitWindowMs });
-    return false;
-  }
-  current.count += 1;
-  return current.count > rateLimitMax;
 }
 
 function cleanFormLabel(formName: string, formId: string) {
@@ -250,6 +292,11 @@ function validateLead(payload: LeadPayload): { lead?: CleanLead; errors?: string
       fields: displayLeadFields(fields, pageUrl),
       metadata,
       replyTo: emailPattern.test(email) ? email : defaultReplyTo,
+      contact: {
+        name,
+        email: emailPattern.test(email) ? email : "",
+        phone: normalizePhone(phone) || phone,
+      },
     },
   };
 }
@@ -355,8 +402,69 @@ function recipients(value?: string) {
     .filter((email) => emailPattern.test(email));
 }
 
-function envValue(env: LeadEmailEnv, key: keyof LeadEmailEnv) {
+/** Config keys only: the env also carries bindings, which are not strings. */
+type LeadEmailConfigKey = {
+  [K in keyof LeadEmailEnv]-?: LeadEmailEnv[K] extends string | undefined ? K : never;
+}[keyof LeadEmailEnv];
+
+function envValue(env: LeadEmailEnv, key: LeadEmailConfigKey): string | undefined {
   return env[key] || (globalThis as unknown as { process?: { env?: Record<string, string> } }).process?.env?.[key];
+}
+
+/** A stored row, as the admin panel holds it. */
+export interface StoredLeadForResend {
+  formId: string;
+  formName: string;
+  pageUrl: string;
+  name: string;
+  email: string;
+  phone: string;
+  /** JSON, as stored. */
+  fields: string;
+  metadata: string;
+}
+
+function parseStored(value: string): Record<string, string> {
+  try {
+    const parsed = JSON.parse(value);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
+    return Object.fromEntries(
+      Object.entries(parsed as Record<string, unknown>).map(([key, item]) => [key, String(item)]),
+    );
+  } catch {
+    return {};
+  }
+}
+
+/**
+ * Re-sends the notification for an enquiry already in the database.
+ *
+ * The original send happens as the visitor submits, and a Resend outage at that
+ * moment used to leave the team with an enquiry nobody was told about. This
+ * rebuilds the same email from the stored row so it can be sent again later.
+ */
+export async function resendStoredLeadEmail(
+  env: LeadEmailEnv,
+  stored: StoredLeadForResend,
+): Promise<{ ok: boolean; error?: string }> {
+  const lead: CleanLead = {
+    formId: stored.formId,
+    formName: stored.formName,
+    pageUrl: stored.pageUrl,
+    fields: parseStored(stored.fields),
+    metadata: parseStored(stored.metadata),
+    replyTo: emailPattern.test(stored.email) ? stored.email : "",
+    contact: { name: stored.name, email: stored.email, phone: stored.phone },
+  };
+
+  try {
+    const response = await sendResendEmail(env, lead);
+    if (response.ok) return { ok: true };
+    return { ok: false, error: `The email service refused it (${response.status}).` };
+  } catch (error) {
+    console.error("[lead-email] resend failed", error instanceof Error ? error.message : error);
+    return { ok: false, error: "Could not reach the email service." };
+  }
 }
 
 async function sendResendEmail(env: LeadEmailEnv, lead: CleanLead) {
@@ -513,7 +621,7 @@ export async function handleLeadRequest(
   if (!isSameOrigin(request)) return jsonResponse({ ok: false, message: "Invalid request origin." }, 403);
 
   const key = clientKey(request);
-  if (isRateLimited(key)) {
+  if (await leadRateLimited(env, key)) {
     return jsonResponse({ ok: false, message: "Too many submissions. Please try again later." }, 429);
   }
 
@@ -523,9 +631,14 @@ export async function handleLeadRequest(
   }
 
   const payload = await payloadFromRequest(request, url);
+  if (!csrfValid(request, payload)) {
+    await recordLeadAttempt(env, key);
+    return jsonResponse({ ok: false, message: "Your session expired. Refresh the page and try again." }, 403);
+  }
   const validation = validateLead(payload);
   if (validation.spam) return jsonResponse(successPayload(mode));
   if (validation.errors?.length || !validation.lead) {
+    await recordLeadAttempt(env, key);
     if (mode === "appointment") {
       return jsonResponse({ ok: false, errors: { form: validation.errors || ["Invalid form data."] } }, 422);
     }
@@ -538,20 +651,40 @@ export async function handleLeadRequest(
     ...requestMetadata(request, url, key),
   };
 
-  let resendResponse: { ok: boolean; status: number; body: string };
+  // Store before sending. Email delivery is the flaky half of this path, and a
+  // Resend outage used to drop the enquiry entirely.
+  const leadId = await storeLead(env, {
+    formId: lead.formId,
+    formName: lead.formName,
+    pageUrl: lead.pageUrl,
+    contact: lead.contact,
+    fields: lead.fields,
+    metadata: lead.metadata,
+  });
+
+  let resendResponse: { ok: boolean; status: number; body: string } | null = null;
   try {
     resendResponse = await sendResendEmail(env, lead);
   } catch (error) {
     console.error("[lead-email] Resend network failure", error instanceof Error ? error.message : "Unknown error");
-    return jsonResponse({ ok: false, message: "Could not send your enquiry right now." }, 502);
   }
 
-  if (!resendResponse.ok) {
-    console.error("[lead-email] Resend failed", resendResponse.status);
-    return jsonResponse({ ok: false, message: "Could not send your enquiry right now." }, 502);
+  if (resendResponse?.ok) {
+    if (leadId !== null) await markLeadEmailSent(env, leadId);
+    await clearLeadAttempts(env, key);
+    return jsonResponse(successPayload(mode));
   }
 
-  return jsonResponse(successPayload(mode));
+  console.error("[lead-email] Resend failed", resendResponse?.status ?? "network error");
+
+  // The enquiry is safely recorded and visible in the admin panel, so from the
+  // visitor's point of view it has been received. Without storage, fail loudly.
+  if (leadId !== null) {
+    await clearLeadAttempts(env, key);
+    return jsonResponse(successPayload(mode));
+  }
+
+  return jsonResponse({ ok: false, message: "Could not send your enquiry right now." }, 502);
 }
 
 function successPayload(mode: LeadResponseMode) {

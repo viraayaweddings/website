@@ -1,7 +1,0 @@
-[31mX [41;31m[[41;97mERROR[41;31m][0m [1mFound both a user configuration file at "dist\server\wrangler.json"[0m
-
-  and a deploy configuration file at ".wrangler\deploy\config.json".
-  But these do not share the same base path so it is not clear which should be used.
-
-
-🪵  Logs were written to "C:\Users\RohitKumar\AppData\Roaming\xdg.config\.wrangler\logs\wrangler-2026-08-13_06-51-21_849.log"

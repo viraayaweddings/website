@@ -1,0 +1,33 @@
+{
+  "validatedAt": "2026-08-21T15:21:12.462Z",
+  "gitCommit": "101510587d02a2287379fd72e758be37c79241d7",
+  "gitCommitShort": "10151058",
+  "status": "PASS",
+  "inventoryCounts": {
+    "routes": 34,
+    "serverActions": 28,
+    "dbTables": 15,
+    "workerEndpoints": 28,
+    "adminComponents": 18,
+    "adminFiles": 62,
+    "staticSiteRoutes": 370,
+    "publicJsFiles": 7,
+    "pageTypePatterns": 9,
+    "publicForms": 7,
+    "workerSiteFiles": 18
+  },
+  "issueCount": 0,
+  "warningCount": 9,
+  "issues": [],
+  "warnings": [
+    "serverActions \"saveCalculatorPricesAction\" in manifest but not found in docs text",
+    "publicJsFiles \"city-filter-mobile.js\" in manifest but not found in docs text",
+    "Worker site file not referenced in docs: worker/site/calculator-prices.ts",
+    "Worker site file not referenced in docs: worker/site/json-ld.ts",
+    "Worker site file not referenced in docs: worker/site/public-html.ts",
+    "Worker site file not referenced in docs: worker/site/sitemap.ts",
+    "Worker site file not referenced in docs: worker/site/static-routes.generated.ts",
+    "Admin file not referenced in docs: app/admin/_components/CharCounter.tsx",
+    "Admin file not referenced in docs: app/admin/_components/DeleteConfirmTrigger.tsx"
+  ]
+}

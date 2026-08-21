@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -565,6 +565,18 @@ span.flatpickr-weekday {
     background: url('/user/assets/images/gradient-border.svg') no-repeat bottom / 100% !important;
 }
 
+.deal-season-wrapper.bg-primary {
+    background-color: #631755 !important;
+}
+
+.deal-season-wrapper:before {
+    background-image: url('/user/assets/images/deal-bg.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    opacity: 1 !important;
+}
+
 .testimonials-wrapper .section-heading span {
     color: var(--vw-gold-light) !important;
     background: none !important;
@@ -715,7 +727,10 @@ span.flatpickr-weekday {
                         <div class="main-menu">
                             <ul class="navbar-nav me-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="/wedding-packages" class="active">WEDDING PACKAGES</a>
+                                    <a class="nav-link active" href="/">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/wedding-packages">WEDDING PACKAGES</a>
                                 </li>
                                 <li class="nav-item dropdown position-static">
                                     <a class="nav-link dropdown-toggle" href="/hotel-listing" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -2989,7 +3004,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                     <div class="col-lg-3 col-md-12 mb-lg-0 mb-5" data-aos="fade-up">
                         <div class="content-widget">
                             <div class="content">
-                                                                <h2 class="all-heading font-family01 fs-37 fw-100 text-maroon-900">Find Your Perfect Destination Wedding <span class="fw-600 text-primary">Venue</span></h2>
+                                                                <h2 class="all-heading venue-section-heading font-family01 fs-37 fw-100 text-maroon-900">Find Your Perfect<br>Destination<br>Wedding <span class="fw-600 text-primary">Venue</span></h2>
                                 <div class="fs-13 fw-300 font-family03 text-deep-maroon-80"><p>At Viraaya Weddings, we offer a carefully selected portfolio of India wedding venues suited for intimate gatherings, large-scale celebrations and multi-ceremony weddings.</p></div>
                             </div>
                             <div class="content02">
@@ -3000,7 +3015,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                     </div>
                     <div class="col-lg-9 col-md-12" data-aos="fade-up">
                         <div class="widget">
-                            <div class="d-flex justify-content-between align-items-center mb-31 flex-wrap gap-3">
+                            <div class="d-flex justify-content-end align-items-center mb-31 flex-wrap gap-3">
                                 <div class="search-box d-flex align-items-center bg-lavender-50" style="position: relative;">
                                     <input
                                         class="font-family02 text-maroon-900-50 fs-13 w-100"
@@ -3493,7 +3508,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                         <div class="check-icon"><img src="/user/assets/images/green-check.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
                                         <div class="d-flex flex-column">
                                             <strong class="font-family03 fs-15 fw-500">Services:</strong>
-                                            <span class="font-family03">Hotel, Decorations, Light and Sound, Hospitability, Entertainment All Event, Photographer, Couple Entries, Mehandi Artist, Bride Makeup, Wedding Procession Band, Wedding Hospitality &amp; Vendor Corrdination, Guest Welcome on Arrival, Room Hampers</span>
+                                            <span class="font-family03">Hotel, Decorations, Light and Sound, Hospitality, Entertainment All Event, Photographer, Couple Entries, Mehandi Artist, Bride Makeup, Wedding Procession Band, Wedding Hospitality &amp; Vendor Coordination, Guest Welcome on Arrival, Room Hampers</span>
                                         </div>
                                     </div>
                                                                     </div>
@@ -3558,7 +3573,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                         <div class="check-icon"><img src="/user/assets/images/green-check.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
                                         <div class="d-flex flex-column">
                                             <strong class="font-family03 fs-15 fw-500">Services:</strong>
-                                            <span class="font-family03">Hotels, Decorations, Light and Sound, Hospitability, Entertainment &amp; Wedding Services, Photography &amp; Wedding Films</span>
+                                            <span class="font-family03">Hotels, Decorations, Light and Sound, Hospitality, Entertainment &amp; Wedding Services, Photography &amp; Wedding Films</span>
                                         </div>
                                     </div>
                                                                     </div>
@@ -3623,7 +3638,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                         <div class="check-icon"><img src="/user/assets/images/green-check.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
                                         <div class="d-flex flex-column">
                                             <strong class="font-family03 fs-15 fw-500">Services:</strong>
-                                            <span class="font-family03">Hotels, Decorations, Light and Sound, Hospitability, Photographer</span>
+                                            <span class="font-family03">Iconic hotels, bespoke decor concepts, premium light and sound, celebrity entertainment coordination, photography and wedding films, bridal styling, guest hospitality, logistics planning and senior planner supervision.</span>
                                         </div>
                                     </div>
                                                                     </div>
@@ -3662,7 +3677,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                                 <div class="item">
                             <div class="img-widget"><img src="/uploads/deals/1777442808_img.jpg" class="img-fluid" alt="deal" decoding="async" loading="lazy"></div>
                             <div class="content">
-                                <div class="card-logo"><img src="/uploads/deals/1777443023_logo.png" class="img-fluid" alt="deal" decoding="async" loading="lazy"></div>
+                                <div class="card-logo card-logo--leela"><img src="/uploads/deals/1777443023_logo.png" class="img-fluid" alt="deal" decoding="async" loading="lazy"></div>
                                 <h5>Leela Udaipur</h5>
                                 <p>Book at 50% | Exclusively at Viraaya Weddings</p>
                                 <a href="/destination-wedding/udaipur/the-leela-palace-udaipur" class="btn white-btn">VIEW THE DEAL</a>
@@ -3671,7 +3686,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                                 <div class="item">
                             <div class="img-widget"><img src="/uploads/deals/1777443211_img.jpg" class="img-fluid" alt="deal" decoding="async" loading="lazy"></div>
                             <div class="content">
-                                <div class="card-logo"><img src="/uploads/deals/1775646886_logo.png" class="img-fluid" alt="deal" decoding="async" loading="lazy"></div>
+                                <div class="card-logo card-logo--light-logo"><img src="/uploads/deals/1775646886_logo.png" class="img-fluid" alt="deal" decoding="async" loading="lazy"></div>
                                 <h5>Plan Destination</h5>
                                 <p>Raffles Udaipur | At 40,000 Per Room</p>
                                 <a href="/destination-wedding/udaipur/raffles-udaipur" class="btn white-btn">VIEW THE DEAL</a>
@@ -3680,8 +3695,8 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                                 <div class="item">
                             <div class="img-widget"><img src="/uploads/deals/1777443598_img.jpg" class="img-fluid" alt="deal" decoding="async" loading="lazy"></div>
                             <div class="content">
-                                <div class="card-logo"><img src="/uploads/deals/1775646894_logo.png" class="img-fluid" alt="deal" decoding="async" loading="lazy"></div>
-                                <h5>Mementos by ITC Hotels, Ekaaya Udaipur</h5>
+                                <div class="card-logo card-logo--light-logo"><img src="/uploads/deals/1775646894_logo.png" class="img-fluid" alt="deal" decoding="async" loading="lazy"></div>
+                                <h5>Mementos by ITC Hotels,<br>Ekaaya Udaipur</h5>
                                 <p>Book now | INR 35,000 Per Room Per Night with all Meals</p>
                                 <a href="/destination-wedding/udaipur/mementos-by-itc-hotels-ekaaya-udaipur" class="btn white-btn">VIEW THE DEAL</a>
                             </div>
@@ -3697,7 +3712,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                     <div class="col-lg-3 col-md-12 mb-lg-0 mb-5" data-aos="fade-up">
                         <div class="content-widget">
                             <div class="content">
-                                                                <h2 class="all-heading font-family01 fs-37 fw-100 text-maroon-900">Our Luxury Wedding Success <span class="fw-600 text-primary">Stories</span></h2>
+                                                                <h2 class="all-heading success-stories-heading font-family01 fs-37 fw-100 text-maroon-900">Our Luxury<br>Wedding<br><span class="success-stories-line">Success <span class="fw-600 text-primary">Stories</span></span></h2>
                                 <div class="font-family03 fw-300 fs-15 text-maroon-900-80"><p>Explore the dream weddings we’ve helped bring to life. Our team carefully matches wedding destinations to each family’s cultural values, traditions and celebration style.</p></div>
                             </div>
                             <div class="content02">
@@ -3755,7 +3770,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                             </div>
                                             <div class="d-flex gap-2-custom mt-3-custom">
                                                 <a href="/real-weddings/kashyap-prachi" class="btn-details btn">DETAILS</a>
-                                                <a href="/check-hotel-availability" class="btn-availability btn-venue btn">VENUE AVAILABILITY</a>
+                                                <a href="/real-weddings/kashyap-prachi" class="btn-availability btn-venue btn">VIEW STORY</a>
                                             </div>
                                         </div>
                                     </div>
@@ -3806,7 +3821,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                             </div>
                                             <div class="d-flex gap-2-custom mt-3-custom">
                                                 <a href="/real-weddings/ramneek-harleen" class="btn-details btn">DETAILS</a>
-                                                <a href="/check-hotel-availability" class="btn-availability btn-venue btn">VENUE AVAILABILITY</a>
+                                                <a href="/real-weddings/ramneek-harleen" class="btn-availability btn-venue btn">VIEW STORY</a>
                                             </div>
                                         </div>
                                     </div>
@@ -3857,7 +3872,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                             </div>
                                             <div class="d-flex gap-2-custom mt-3-custom">
                                                 <a href="/real-weddings/rohan-aanya" class="btn-details btn">DETAILS</a>
-                                                <a href="/check-hotel-availability" class="btn-availability btn-venue btn">VENUE AVAILABILITY</a>
+                                                <a href="/real-weddings/rohan-aanya" class="btn-availability btn-venue btn">VIEW STORY</a>
                                             </div>
                                         </div>
                                     </div>
@@ -3908,7 +3923,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                             </div>
                                             <div class="d-flex gap-2-custom mt-3-custom">
                                                 <a href="/real-weddings/aarav-meera" class="btn-details btn">DETAILS</a>
-                                                <a href="/check-hotel-availability" class="btn-availability btn-venue btn">VENUE AVAILABILITY</a>
+                                                <a href="/real-weddings/aarav-meera" class="btn-availability btn-venue btn">VIEW STORY</a>
                                             </div>
                                         </div>
                                     </div>
@@ -3947,7 +3962,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                 </div>
                                 <div class="content">
                                     <h5 class="font-family01">From Planning to Perfection</h5>
-                                    <p class="font-family02"><p>Viraaya Weddings turned our dream wedding into a seamless reality. From consultation to execution, every detail felt curated just for us. The venue cost calculator and hotel availability check made decision-making incredibly easy and transparent.</p></p>
+                                    <p class="font-family02">Viraaya Weddings turned our dream wedding into a seamless reality. From consultation to execution, every detail felt curated just for us. The venue cost calculator and hotel availability check made decision-making incredibly easy and transparent.</p>
                                 </div>
                             </div>
                         </div>
@@ -3969,7 +3984,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                 </div>
                                 <div class="content">
                                     <h5 class="font-family01">From the first conversation, there was clarity and calm</h5>
-                                    <p class="font-family02"><p>They understood our expectations and family dynamics immediately.<br>The planning felt controlled and thoughtful, and we were able to enjoy the celebrations without worrying about execution.</p></p>
+                                    <p class="font-family02">They understood our expectations and family dynamics immediately. The planning felt controlled and thoughtful, and we were able to enjoy the celebrations without worrying about execution.</p>
                                 </div>
                             </div>
                         </div>
@@ -4070,46 +4085,59 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         <div class="modal viv-custom-modal fade" id="BookConsultation" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-black">Make an Enquiry</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        
-                        
-                        <form method="POST" action="/api/lead" id="consultationForm" class="MuiInputLabel-shrink"><div class="row">
+                    <div class="modal-body p-0">
+                        <button type="button" class="enquiry-popup-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="enquiry-popup-grid">
+                            <div class="enquiry-popup-media" aria-hidden="true">
+                                <div class="enquiry-popup-media-content">
+                                    <span class="enquiry-popup-brand">VIRAAYA WEDDINGS</span>
+                                    <h3>Luxury wedding venues, shortlisted for you.</h3>
+                                    <div class="enquiry-popup-proof">
+                                        <span>250+ verified venues</span>
+                                        <span>Personalised shortlist</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="enquiry-popup-form">
+                                <h5 class="enquiry-popup-title">Find your perfect wedding venue.</h5>
+                                <p class="enquiry-popup-copy font-family03">Tell us a few details and we&rsquo;ll shortlist venues that fit your wedding.</p>
+                        <form method="POST" action="/api/lead" id="consultationForm" class="MuiInputLabel-shrink enquiry-popup-lead-form" data-form-name="Homepage Popup Enquiry"><div class="row g-2">
                                 <div class="col-md-6">
-                                    <div class="form-group mb-2">
-                                        <label class="form-label fw500 text-dark mb-2">Name <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control " name="name" placeholder="Enter Name" value="" required>
+                                    <div class="form-group">
+                                        <label class="form-label fw500 text-dark">Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control " name="name" placeholder="Full name" value="" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group mb-2">
-                                        <label class="form-label fw500 text-dark mb-2">Email <span class="text-danger">*</span></label>
-                                        <input type="email" class="form-control " name="email" placeholder="Enter Email" value="" required>
+                                    <div class="form-group">
+                                        <label class="form-label fw500 text-dark">Email <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control " name="email" placeholder="Email address" value="" required>
                                     </div>
                                 </div>
-<input type="hidden" name="source_page" value="/">
+<input type="hidden" name="source_page" value="Home Popup">
+<input type="hidden" name="lead_type" value="Venue shortlist request">
 <div class="col-md-12">
-                                    <div class="form-group mb-2">
-                                        <label class="form-label fw500 text-dark mb-2">Mobile Number <span class="text-danger">*</span></label>
-                                        <input type="tel" class="form-control " name="number" placeholder="Enter Mobile Number" value="" required>
+                                    <div class="form-group">
+                                        <label class="form-label fw500 text-dark">WhatsApp Number <span class="text-danger">*</span></label>
+                                        <input type="tel" class="form-control " name="number" placeholder="WhatsApp number" value="" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="form-group mb-2">
-                                        <label class="form-label fw500 text-dark mb-2">Enquiry <span class="text-danger">*</span></label>
-                                        <textarea class="form-control " name="subject" rows="3" placeholder="Comment" required></textarea>
+                                    <div class="form-group">
+                                        <label class="form-label fw500 text-dark">Wedding Details <span class="text-danger">*</span></label>
+                                        <textarea class="form-control " name="subject" rows="1" placeholder="City, dates, guests &amp; budget" required></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn font-family03 fw-600 text-uppercase bg-plum-800 w-100">Submit Enquiry</button>
+                                    <button type="submit" class="btn font-family03 fw-600 text-uppercase bg-plum-800 w-100">GET MY VENUE SHORTLIST</button>
+                                    <p class="enquiry-popup-note">Senior planner callback within 24 hours.</p>
                                 </div>
                             </div>
                         </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -4123,6 +4151,374 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     <style>
         .whatsapp-btn{position: fixed;bottom: 40px;right: 40px;width: 60px;height: 60px;background: #25D366;color: #fff; border-radius: 50%;display: flex;align-items: center;justify-content: center;text-decoration: none;font-size: 30px;z-index: 9999;animation: float 3s ease-in-out infinite,pulse 2s infinite;}
 
+        .homepage-gold-theme .banner-wrapper {
+            background: #fff;
+        }
+
+        .homepage-gold-theme .banner-wrapper .slider-banner {
+            overflow: hidden;
+            border-radius: 0;
+        }
+
+        .homepage-gold-theme .banner-wrapper .item .container {
+            max-width: none;
+            width: 100%;
+            padding-left: var(--site-page-gutter);
+            padding-right: var(--site-page-gutter);
+        }
+
+        .homepage-gold-theme .banner-wrapper .luxury-img img {
+            width: 42px !important;
+            height: 42px !important;
+        }
+
+        .homepage-gold-theme .viv-custom-modal .modal-dialog {
+            max-width: 880px;
+            width: calc(100% - 36px);
+        }
+
+        .homepage-gold-theme .viv-custom-modal .modal-content {
+            border: 0;
+            border-radius: 22px;
+            box-shadow: 0 30px 90px rgba(33, 18, 12, 0.38);
+            overflow: hidden;
+        }
+
+        .enquiry-popup-grid {
+            display: grid;
+            grid-template-columns: minmax(300px, 0.9fr) 1fr;
+            background: #fffaf4;
+            min-height: 540px;
+        }
+
+        .enquiry-popup-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 38px;
+            height: 38px;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.92);
+            z-index: 5;
+            box-shadow: 0 10px 26px rgba(33, 18, 12, 0.16);
+        }
+
+        .enquiry-popup-close:before,
+        .enquiry-popup-close:after {
+            position: absolute;
+            content: '';
+            left: 11px;
+            top: 18px;
+            width: 16px;
+            height: 2px;
+            background: #4A3C33;
+            border-radius: 2px;
+        }
+
+        .enquiry-popup-close:before {
+            transform: rotate(45deg);
+        }
+
+        .enquiry-popup-close:after {
+            transform: rotate(-45deg);
+        }
+
+        .enquiry-popup-media {
+            position: relative;
+            min-height: 540px;
+            background-image: linear-gradient(180deg, rgba(58,45,37,0.08), rgba(58,45,37,0.84)), url('/storage/recent-weddings/covers/YHce9bdW97bDBMzcGKFO4bxlUwtADz0SOCgUvTFY.jpg');
+            background-position: center;
+            background-size: cover;
+        }
+
+        .enquiry-popup-media-content {
+            position: absolute;
+            left: 26px;
+            right: 26px;
+            bottom: 26px;
+            color: #fff;
+        }
+
+        .enquiry-popup-brand {
+            display: inline-flex;
+            margin-bottom: 16px;
+            padding: 7px 13px;
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.14);
+            font-size: 11px;
+            line-height: 1;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            font-family: "Readex Pro", sans-serif;
+        }
+
+        .enquiry-popup-media h3 {
+            margin: 0 0 18px;
+            color: #fff;
+            font-family: "Readex Pro", sans-serif;
+            font-size: 30px;
+            line-height: 1.16;
+            font-weight: 500;
+        }
+
+        .enquiry-popup-proof {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .enquiry-popup-proof span {
+            padding: 8px 10px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.92);
+            color: #4A3C33;
+            font-family: "Public Sans", sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .enquiry-popup-form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 42px 38px 34px;
+        }
+
+        .enquiry-popup-kicker {
+            display: inline-flex;
+            width: fit-content;
+            margin-bottom: 14px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: #F3E5D3;
+            color: #936C35;
+            font-family: "Readex Pro", sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .enquiry-popup-title {
+            margin: 0 0 20px;
+            color: #3A2D25;
+            font-family: "Readex Pro", sans-serif;
+            font-size: 29px;
+            line-height: 1.16;
+            font-weight: 600;
+        }
+
+        .enquiry-popup-copy {
+            color: rgba(58,45,37,0.72);
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0 0 20px;
+        }
+
+        .enquiry-popup-form .form-group {
+            position: relative;
+            margin-bottom: 9px;
+        }
+
+        .enquiry-popup-form .form-label {
+            margin: 0 0 5px;
+            color: #4A3C33 !important;
+            font-family: "Readex Pro", sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .enquiry-popup-form .form-group input,
+        .enquiry-popup-form .form-group textarea {
+            width: 100%;
+            border: 1px solid #E1D3C1;
+            background: #fff;
+            border-radius: 12px;
+            color: #3A2D25;
+            font-size: 13px;
+            box-shadow: 0 8px 20px rgba(74,60,51,0.04);
+        }
+
+        .enquiry-popup-form .form-group input {
+            height: 43px;
+            padding: 0 14px;
+        }
+
+        .homepage-gold-theme .viv-custom-modal .enquiry-popup-lead-form .form-group textarea.form-control {
+            min-height: 56px !important;
+            height: 56px !important;
+            padding: 16px 14px !important;
+            line-height: 1.25;
+            overflow: hidden;
+            resize: none;
+        }
+
+        .enquiry-popup-form button[type="submit"] {
+            position: relative;
+            overflow: hidden;
+            height: 48px;
+            margin-top: 6px;
+            padding: 0 18px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #9F6E2C, #C58A32) !important;
+            color: #fff !important;
+            box-shadow: 0 14px 26px rgba(159,110,44,0.28);
+            letter-spacing: 0.04em;
+            transform: translateY(0);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background-position 0.35s ease;
+            background-size: 160% 100% !important;
+            background-position: left center !important;
+        }
+
+        .enquiry-popup-form button[type="submit"]:before {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: -70%;
+            width: 45%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+            transform: skewX(-18deg);
+            transition: left 0.45s ease;
+            pointer-events: none;
+        }
+
+        .enquiry-popup-form button[type="submit"]:hover,
+        .enquiry-popup-form button[type="submit"]:focus {
+            color: #fff !important;
+            background: linear-gradient(90deg, #B98230, #D6A14A) !important;
+            background-position: right center !important;
+            box-shadow: 0 18px 34px rgba(159,110,44,0.36);
+            transform: translateY(-2px);
+        }
+
+        .enquiry-popup-form button[type="submit"]:hover:before,
+        .enquiry-popup-form button[type="submit"]:focus:before {
+            left: 125%;
+        }
+
+        .enquiry-popup-note {
+            margin: 12px 0 0;
+            color: rgba(58,45,37,0.62);
+            font-family: "Public Sans", sans-serif;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .enquiry-success-panel {
+            margin-top: 18px;
+            padding: 34px 26px;
+            border: 1px solid rgba(185,130,48,0.26);
+            border-radius: 18px;
+            background: linear-gradient(180deg, #fffdf9, #f8eddf);
+            text-align: center;
+            box-shadow: 0 18px 42px rgba(74,60,51,0.12);
+            outline: none;
+        }
+
+        .enquiry-success-icon {
+            position: relative;
+            display: inline-flex;
+            width: 54px;
+            height: 54px;
+            margin-bottom: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #9F6E2C, #C58A32);
+            box-shadow: 0 14px 28px rgba(159,110,44,0.26);
+        }
+
+        .enquiry-success-icon:after {
+            position: absolute;
+            content: '';
+            left: 50%;
+            top: 48%;
+            width: 15px;
+            height: 26px;
+            border: solid #fff;
+            border-width: 0 3px 3px 0;
+            transform: translate(-50%, -50%) rotate(45deg);
+            transform-origin: center;
+        }
+
+        .enquiry-success-panel h5 {
+            margin: 0 0 10px;
+            color: #3A2D25;
+            font-family: "Readex Pro", sans-serif;
+            font-size: 24px;
+            line-height: 1.22;
+            font-weight: 600;
+        }
+
+        .enquiry-success-panel p {
+            margin: 0 auto 14px;
+            max-width: 390px;
+            color: rgba(58,45,37,0.72);
+            font-family: "Public Sans", sans-serif;
+            font-size: 14px;
+            line-height: 1.65;
+        }
+
+        .enquiry-success-panel small {
+            display: block;
+            color: #936C35;
+            font-family: "Readex Pro", sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 767px) {
+            .homepage-gold-theme .banner-wrapper .slider-banner {
+                border-radius: 0;
+            }
+
+            .homepage-gold-theme .banner-wrapper .item .container {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .homepage-gold-theme .viv-custom-modal .modal-dialog {
+                max-width: calc(100% - 24px);
+            }
+
+            .enquiry-popup-grid {
+                grid-template-columns: 1fr;
+                min-height: 0;
+            }
+
+            .enquiry-popup-media {
+                min-height: 190px;
+            }
+
+            .enquiry-popup-media-content {
+                left: 18px;
+                right: 56px;
+                bottom: 18px;
+            }
+
+            .enquiry-popup-brand,
+            .enquiry-popup-proof {
+                display: none;
+            }
+
+            .enquiry-popup-media h3 {
+                font-size: 23px;
+                max-width: 260px;
+            }
+
+            .enquiry-popup-form {
+                padding: 24px 18px 22px;
+            }
+
+            .enquiry-popup-title {
+                font-size: 23px;
+            }
+
+        }
+
         /* Floating animation */
         @keyframes float {
             0%,100% { transform: translateY(0);}
@@ -4130,7 +4526,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         }
     </style>
 
-    <footer class="main-footer section-padding pb-0">
+            <footer class="main-footer section-padding pb-0">
       <div class="container">
         <div class="row">
           <div class="col-lg-4">
@@ -4141,12 +4537,12 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 <p class="font-family01 text-white">Follow us on</p>
                 <ul class="social-icon d-inline-flex">
                   <li>
-                    <a href="https://www.instagram.com/viraayaweddings/">
+                    <a href="https://www.instagram.com/viraayaweddings/" target="_blank" rel="noopener noreferrer">
                       <i class="fa-brands fa-instagram"></i>
                     </a>
                   </li>
                   <li>
-                    <a href="https://www.linkedin.com/company/viraaya-weddings/">
+                    <a href="https://www.linkedin.com/company/viraaya-weddings/" target="_blank" rel="noopener noreferrer">
                       <i class="fa-brands fa-linkedin-in"></i>
                     </a>
                   </li>
@@ -4158,6 +4554,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             <div class="row">
               <div class="col-lg-4 col-md-4 mt-5 mt-lg-0">
                 <div class="widget">
+                  <h5 class="footer-widget-title">Explore</h5>
                   <ul>
                     <li>
                       <a href="/">Home</a>
@@ -4182,6 +4579,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
               </div>
               <div class="col-lg-4 col-md-4 mt-5 mt-lg-0">
                 <div class="widget">
+                  <h5 class="footer-widget-title">Planning Tools</h5>
                   <ul>
                     <li>
                       <a href="/wedding-consultation">Book Consultation</a>
@@ -4455,6 +4853,13 @@ var checkInPicker = flatpickr('#checkIn', {
                     hotelSelect.empty().prop('disabled', false);
                     hotelSelect.append('<option value="">Select a Hotel</option>');
 
+                    if (!Array.isArray(data) || !data.length) {
+                        hotelSelect.empty().prop('disabled', true);
+                        hotelSelect.append('<option value="">No hotels available for this city</option>');
+                        hotelSelect.trigger('change');
+                        return;
+                    }
+
                     $.each(data, function (key, hotel) {
                         hotelRoomLimits[hotel.id] = parseInt(hotel.total_rooms) || 0;
                         hotelSelect.append(
@@ -4624,6 +5029,9 @@ var checkInPicker = flatpickr('#checkIn', {
    function renderOffcanvas(prices, hotelName) {
     var grandTotal        = 0;
     var offcanvasBodyHtml = '';
+    var hasRateData       = Object.keys(prices || {}).some(function (key) {
+        return (parseFloat(prices[key]) || 0) > 0;
+    });
 
     function convertAndFormat(inrAmount) {
         return '\u20b9' + Math.round(inrAmount).toLocaleString('en-IN');
@@ -4687,6 +5095,18 @@ var checkInPicker = flatpickr('#checkIn', {
         }
     });
 
+    if (!hasRateData) {
+        offcanvasBodyHtml = `
+            <div class="gst-box mt-3 mb-2 p-3" style="background:#fff7ef;border-radius:10px;border:1px solid #f0e0cc;">
+                <h6 class="text-prime-dark fw600 mb-2">Estimate needs planner confirmation</h6>
+                <p class="font-family03 fs-13 mb-0" style="color:#6d5240;line-height:1.7;">We could not find current rate data for this hotel and month. Please share your details and our team will confirm the best available pricing.</p>
+            </div>
+            <div class="text-end mt-4">
+                <a href="/wedding-consultation" class="btn text-uppercase">Book Consultation</a>
+            </div>
+        `;
+    } else {
+
     var cgst       = grandTotal * 0.09;
 var sgst       = grandTotal * 0.09;
 var totalGst   = cgst + sgst;
@@ -4722,6 +5142,7 @@ offcanvasBodyHtml += `
         <a href="/compare-hotel" class="btn text-uppercase">Compare Cost</a>
     </div>
 `;
+    }
 
     var $body      = $('#offcanvasRight .offcanvas-body');
     var disclaimerHtml = $('#cost-summary-disclaimer').prop('outerHTML') || '';
@@ -4838,8 +5259,55 @@ offcanvasBodyHtml += `
         });
     })();
 
-
 });
+</script>
+
+<script>
+(function () {
+    var popupStorageKey = 'viraaya-home-popup-last-shown';
+    var popupInterval = 60 * 60 * 1000;
+
+    function canShowPopup() {
+        try {
+            var lastShown = parseInt(window.localStorage.getItem(popupStorageKey), 10) || 0;
+            return Date.now() - lastShown >= popupInterval;
+        } catch (error) {
+            return true;
+        }
+    }
+
+    function markPopupShown() {
+        try {
+            window.localStorage.setItem(popupStorageKey, String(Date.now()));
+        } catch (error) {}
+    }
+
+    function showPopup() {
+        var modalEl = document.getElementById('BookConsultation');
+        if (!modalEl || window.__viraayaPopupShownThisLoad || !canShowPopup()) return;
+        window.__viraayaPopupShownThisLoad = true;
+        markPopupShown();
+
+        if (window.bootstrap && window.bootstrap.Modal) {
+            window.bootstrap.Modal.getOrCreateInstance(modalEl).show();
+            return;
+        }
+
+        if (window.jQuery && typeof window.jQuery(modalEl).modal === 'function') {
+            window.jQuery(modalEl).modal('show');
+            return;
+        }
+
+        modalEl.style.display = 'block';
+        modalEl.classList.add('show');
+        modalEl.removeAttribute('aria-hidden');
+        modalEl.setAttribute('aria-modal', 'true');
+        modalEl.setAttribute('role', 'dialog');
+        document.body.classList.add('modal-open');
+    }
+
+    window.setTimeout(showPopup, 5000);
+})();
 </script>
 
 

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -205,6 +205,16 @@
         .process-block figure img,
         .why-us-section .quality-block .icon img {
             filter: brightness(0) saturate(100%) invert(56%) sepia(34%) saturate(940%) hue-rotate(356deg) brightness(86%) contrast(87%);
+        }
+        .availability-heading-icon,
+        .availability-option-icon {
+            color: #B98230;
+            font-size: 42px;
+            line-height: 1;
+        }
+        .why-us-section .quality-block .availability-option-icon {
+            color: #fff;
+            font-size: 30px;
         }
         .process-count {
             background: #B98230;
@@ -2413,7 +2423,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         <div class="row gx-md-5 HowItWork mt-3">
                                             <div class="col-md-3 process-block position-relative mb-4" data-aos="fade-up">
                     <figure class="mb-0 bg-light-4 rounded-circle d-flex justify-content-center align-items-center">
-                                                    <img src="/storage/availability/3wolKse7go0QlZMG0IzT0HMAyK2ssoNLyi8UUMtr.png" width="48" height="48" alt="Select Your Hotels">
+                                                    <i class="fa-solid fa-hotel availability-heading-icon" aria-hidden="true"></i>
                                             </figure>
                     <span class="process-count shadow-prime d-inline-flex fs-17 fw-700 rounded-circle p-2 text-white lh100">
                         01
@@ -2423,7 +2433,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 </div>
                                 <div class="col-md-3 process-block position-relative mb-4" data-aos="fade-up">
                     <figure class="mb-0 bg-light-4 rounded-circle d-flex justify-content-center align-items-center">
-                                                    <img src="/storage/availability/bGBolHCSK1CQe24Hu2QZIBEpMCbJblztW7ThV3kc.png" width="48" height="48" alt="Choose Preferred Dates">
+                                                    <i class="fa-solid fa-calendar-days availability-heading-icon" aria-hidden="true"></i>
                                             </figure>
                     <span class="process-count shadow-prime d-inline-flex fs-17 fw-700 rounded-circle p-2 text-white lh100">
                         02
@@ -2433,7 +2443,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 </div>
                                 <div class="col-md-3 process-block position-relative mb-4" data-aos="fade-up">
                     <figure class="mb-0 bg-light-4 rounded-circle d-flex justify-content-center align-items-center">
-                                                    <img src="/storage/availability/hxC91rmMAZJXqOWNa3BySE95Z529i6fkXfgbc7K1.png" width="48" height="48" alt="Confirmation Report">
+                                                    <i class="fa-solid fa-clipboard-check availability-heading-icon" aria-hidden="true"></i>
                                             </figure>
                     <span class="process-count shadow-prime d-inline-flex fs-17 fw-700 rounded-circle p-2 text-white lh100">
                         03
@@ -2443,7 +2453,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 </div>
                                 <div class="col-md-3 process-block position-relative mb-4" data-aos="fade-up">
                     <figure class="mb-0 bg-light-4 rounded-circle d-flex justify-content-center align-items-center">
-                                                    <img src="/storage/availability/QXWllMTZTOG99rfY0onXP80uhXhLNONRZ96bmoNR.png" width="48" height="48" alt="Decide Smarter, Faster">
+                                                    <i class="fa-solid fa-bolt availability-heading-icon" aria-hidden="true"></i>
                                             </figure>
                     <span class="process-count shadow-prime d-inline-flex fs-17 fw-700 rounded-circle p-2 text-white lh100">
                         04
@@ -2735,7 +2745,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                                                     <div class="quality-block d-flex mt-md-5 mt-3">
                             <div class="flex-shrink-0">
                                 <div class="icon d-inline-flex align-items-center justify-content-center text-white">
-                                                                            <img src="/storage/availability/AjvP4p2Y4wMfXQFBOTFtGXrfeffU3nmfpPud0Bad.png" width="36" height="36" alt="Palatial">
+                                                                            <i class="fa-solid fa-landmark availability-option-icon" aria-hidden="true"></i>
                                                                     </div>
                             </div>
                             <div class="flex-grow-1 ps-4">
@@ -2746,7 +2756,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                                 <div class="quality-block d-flex mt-md-5 mt-3">
                             <div class="flex-shrink-0">
                                 <div class="icon d-inline-flex align-items-center justify-content-center text-white">
-                                                                            <img src="/storage/availability/kAWWlXzT1d2jvQGie7FfTAdhFtyEZIO9Pq5HhS1z.png" width="36" height="36" alt="Resort Properties">
+                                                                            <i class="fa-solid fa-umbrella-beach availability-option-icon" aria-hidden="true"></i>
                                                                     </div>
                             </div>
                             <div class="flex-grow-1 ps-4">
@@ -2757,7 +2767,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                                 <div class="quality-block d-flex mt-md-5 mt-3">
                             <div class="flex-shrink-0">
                                 <div class="icon d-inline-flex align-items-center justify-content-center text-white">
-                                                                            <img src="/storage/availability/OP9A9Ia5Ju0igUVlJyPY6B2yn78XRXWyMwY0iNd3.png" width="36" height="36" alt="Luxury Hotels">
+                                                                            <i class="fa-solid fa-building-columns availability-option-icon" aria-hidden="true"></i>
                                                                     </div>
                             </div>
                             <div class="flex-grow-1 ps-4">
@@ -2998,8 +3008,13 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     }
 
     function buildCityOptions() { return '<option value="">Select City</option>' + cities.map(function (city) { return '<option value="' + city.id + '">' + escapeHtml(city.name) + '</option>'; }).join(''); }
-    function buildHotelOptions(cityId) { var hotels = hotelsByCity[String(cityId)] || []; return '<option value="">Select Hotel</option>' + hotels.map(function (hotel) { return '<option value="' + hotel.id + '">' + escapeHtml(hotel.name) + '</option>'; }).join(''); }
-    function initSelect($el, placeholder) { if ($el.hasClass('select2-hidden-accessible')) $el.select2('destroy'); $el.select2({ placeholder: placeholder, allowClear: false, width: '100%' }); }
+    function buildHotelOptions(cityId) { var hotels = hotelsByCity[String(cityId)] || []; return '<option value="">Select Hotel</option>' + hotels.map(function (hotel) { return '<option value="' + hotel.id + '">' + escapeHtml(hotel.name || hotel.hotel_name) + '</option>'; }).join(''); }
+    function initSelect($el, placeholder) {
+      if (window.jQuery && $.fn.select2) {
+        if ($el.hasClass('select2-hidden-accessible')) $el.select2('destroy');
+        $el.select2({ placeholder: placeholder, allowClear: false, width: '100%' });
+      }
+    }
 
     function renderHotelRows() {
       $('#hotel-container .city-select, #hotel-container .hotel-select').each(function () { if ($(this).hasClass('select2-hidden-accessible')) $(this).select2('destroy'); });
@@ -3012,7 +3027,39 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
       $('#hotel-container .hotel-select').each(function () { initSelect($(this), 'Select Hotel'); });
     }
 
-    $(document).on('change', '.city-select', function () { var cityId = $(this).val(); var index = $(this).data('index'); var hotelSelect = $('.hotel-select[data-index="' + index + '"]'); if (hotelSelect.hasClass('select2-hidden-accessible')) hotelSelect.select2('destroy'); if (cityId) hotelSelect.prop('disabled', false).html(buildHotelOptions(cityId)); else hotelSelect.prop('disabled', true).html('<option value="">Select Hotel</option>'); initSelect(hotelSelect, 'Select Hotel'); });
+    function setHotelOptions(hotelSelect, cityId) {
+      if (hotelSelect.hasClass('select2-hidden-accessible')) hotelSelect.select2('destroy');
+      if (!cityId) {
+        hotelSelect.prop('disabled', true).html('<option value="">Select Hotel</option>');
+        initSelect(hotelSelect, 'Select Hotel');
+        return;
+      }
+
+      if (hotelsByCity[String(cityId)]) {
+        hotelSelect.prop('disabled', false).html(buildHotelOptions(cityId));
+        initSelect(hotelSelect, 'Select Hotel');
+        return;
+      }
+
+      hotelSelect.prop('disabled', true).html('<option value="">Loading hotels...</option>');
+      initSelect(hotelSelect, 'Loading hotels...');
+      fetch('/get-hotels-by-city/' + encodeURIComponent(cityId)).then(function (response) {
+        if (!response.ok) throw new Error('Hotel list unavailable');
+        return response.json();
+      }).then(function (hotels) {
+        hotelsByCity[String(cityId)] = hotels || [];
+        if (hotelSelect.hasClass('select2-hidden-accessible')) hotelSelect.select2('destroy');
+        hotelSelect.prop('disabled', false).html(buildHotelOptions(cityId));
+        initSelect(hotelSelect, 'Select Hotel');
+      }).catch(function () {
+        if (hotelSelect.hasClass('select2-hidden-accessible')) hotelSelect.select2('destroy');
+        hotelSelect.prop('disabled', true).html('<option value="">Select Hotel</option>');
+        initSelect(hotelSelect, 'Select Hotel');
+        showAlertAndScroll('Hotel list could not load. Please select the city again.', '#hotel-card');
+      });
+    }
+
+    $(document).on('change', '.city-select', function () { var cityId = $(this).val(); var index = $(this).data('index'); var hotelSelect = $('.hotel-select[data-index="' + index + '"]'); setHotelOptions(hotelSelect, cityId); });
     $('#plan-select').on('change', function () { var opt = $(this).find('option:selected'); maxHotels = parseInt(opt.data('hotels'), 10) || 0; selectedPlanLabel = opt.text(); renderHotelRows(); });
 
     $('#book-btn').on('click', function () {
@@ -3097,8 +3144,10 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
           'Screen Size': window.innerWidth + 'x' + window.innerHeight
         }
       };
-      $('#submit-availability-btn').prop('disabled', true).text('Booking...');
-      $.ajax({
+      $('#submit-availability-btn').prop('disabled', true).text('Sending request...');
+      var sendPayload = function (csrfToken) {
+        payload.csrfToken = csrfToken;
+        $.ajax({
         url: '/api/lead',
         type: 'POST',
         contentType: 'application/json',
@@ -3112,7 +3161,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
           $('#availability-error-message').hide().text('');
           $('#availability-success-message').fadeIn();
           scrollToElement('#availability-success-message');
-          $('#submit-availability-btn').text('BOOKED').prop('disabled', true);
+          $('#submit-availability-btn').text('Request sent').prop('disabled', true);
         },
         error: function (xhr) {
           var response = xhr.responseJSON || {};
@@ -3120,9 +3169,30 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
           $('#submit-availability-btn').prop('disabled', false).text('BOOK NOW');
         }
       });
+      };
+      var csrfLoader = window.viraayaLeadCsrf
+        ? window.viraayaLeadCsrf()
+        : fetch('/api/lead/csrf', { credentials: 'same-origin' }).then(function (response) { return response.json(); }).then(function (data) { return data.token || ''; });
+      csrfLoader.then(sendPayload).catch(function () {
+        showBookingError('Could not submit the request. Refresh the page and try again.');
+        $('#submit-availability-btn').prop('disabled', false).text('BOOK NOW');
+      });
     });
 
-    fetch('/api/calculator/availability-data').then(function (response) { return response.json(); }).then(function (data) { cities = data.cities || []; hotelsByCity = data.hotelsByCity || {}; renderHotelRows(); updateRoomsPaxRows(0);  $('#plan-select').select2({ placeholder: 'Select', allowClear: false, width: '100%' }); }).catch(function () { renderHotelRows(); updateRoomsPaxRows(0);  $('#plan-select').select2({ placeholder: 'Select', allowClear: false, width: '100%' }); });
+    fetch('/data/calculator/cities.json').then(function (response) {
+      if (!response.ok) throw new Error('City data unavailable');
+      return response.json();
+    }).then(function (data) {
+      cities = data || [];
+      renderHotelRows();
+      updateRoomsPaxRows(0);
+      initSelect($('#plan-select'), 'Select');
+    }).catch(function () {
+      showAlertAndScroll('Hotel list could not load. Please refresh and try again.', '#hotel-card');
+      renderHotelRows();
+      updateRoomsPaxRows(0);
+      initSelect($('#plan-select'), 'Select');
+    });
     var slider = $('.check-hotal-aval-slider'); if (slider.length && typeof $.fn.owlCarousel === 'function') slider.owlCarousel({ items: 6, margin: 10, loop: true, nav: true });
   });
 })();
@@ -3141,7 +3211,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         }
     </style>
 
-    <footer class="main-footer section-padding pb-0">
+            <footer class="main-footer section-padding pb-0">
       <div class="container">
         <div class="row">
           <div class="col-lg-4">
@@ -3152,12 +3222,12 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 <p class="font-family01 text-white">Follow us on</p>
                 <ul class="social-icon d-inline-flex">
                   <li>
-                    <a href="https://www.instagram.com/viraayaweddings/">
+                    <a href="https://www.instagram.com/viraayaweddings/" target="_blank" rel="noopener noreferrer">
                       <i class="fa-brands fa-instagram"></i>
                     </a>
                   </li>
                   <li>
-                    <a href="https://www.linkedin.com/company/viraaya-weddings/">
+                    <a href="https://www.linkedin.com/company/viraaya-weddings/" target="_blank" rel="noopener noreferrer">
                       <i class="fa-brands fa-linkedin-in"></i>
                     </a>
                   </li>
@@ -3169,6 +3239,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             <div class="row">
               <div class="col-lg-4 col-md-4 mt-5 mt-lg-0">
                 <div class="widget">
+                  <h5 class="footer-widget-title">Explore</h5>
                   <ul>
                     <li>
                       <a href="/">Home</a>
@@ -3193,6 +3264,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
               </div>
               <div class="col-lg-4 col-md-4 mt-5 mt-lg-0">
                 <div class="widget">
+                  <h5 class="footer-widget-title">Planning Tools</h5>
                   <ul>
                     <li>
                       <a href="/wedding-consultation">Book Consultation</a>

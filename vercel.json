@@ -1,6 +1,6 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist/client",
+  "buildCommand": "NITRO_PRESET=vercel npm run build",
+  "outputDirectory": ".output",
   "installCommand": "npm install",
   "framework": null
 }

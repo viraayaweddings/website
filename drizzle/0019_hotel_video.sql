@@ -1,0 +1,1 @@
+ALTER TABLE `hotels` ADD `video_id` text DEFAULT '' NOT NULL;

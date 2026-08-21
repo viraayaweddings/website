@@ -1,9 +1,11 @@
 import { handleLeadRequest, type LeadEmailEnv, type LeadResponseMode } from "../worker/lead-email";
 
-const env = process.env as LeadEmailEnv;
+function leadEnv(): LeadEmailEnv {
+  return process.env as LeadEmailEnv;
+}
 
 export function leadPost(mode: LeadResponseMode = "lead") {
-  return (request: Request) => handleLeadRequest(request, env, new URL(request.url), mode);
+  return (request: Request) => handleLeadRequest(request, leadEnv(), new URL(request.url), mode);
 }
 
 export function leadOptions() {

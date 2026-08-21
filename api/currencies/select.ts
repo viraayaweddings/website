@@ -1,15 +1,15 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 
+/** @deprecated Vinext dev-only shim. Production uses `worker/index.ts`. */
 export default function handler(request: IncomingMessage, response: ServerResponse) {
-  if (request.method && !["POST", "OPTIONS"].includes(request.method)) {
-    response.statusCode = 405;
-    response.setHeader("allow", "POST, OPTIONS");
-    response.end(JSON.stringify({ ok: false, error: "Method not allowed" }));
-    return;
-  }
-
-  response.statusCode = 200;
+  response.statusCode = 410;
   response.setHeader("content-type", "application/json; charset=utf-8");
-  response.setHeader("cache-control", "no-store");
-  response.end(JSON.stringify({ ok: true }));
+  response.setHeader("x-deprecated-endpoint", "/api/currencies/select");
+  response.end(
+    JSON.stringify({
+      ok: false,
+      deprecated: true,
+      message: "Use POST /api/currencies/select in production or app route during local dev.",
+    }),
+  );
 }

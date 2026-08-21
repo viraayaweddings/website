@@ -1,0 +1,181 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1787294604496,
+      "tag": "0000_admin_foundation",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1787296403480,
+      "tag": "0001_site_settings",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1787296403481,
+      "tag": "0002_seed_hero_slides",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1787299170917,
+      "tag": "0003_blog_posts",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1787299170918,
+      "tag": "0004_seed_blog_posts",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1787301411065,
+      "tag": "0005_hotels",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1787301411066,
+      "tag": "0006_seed_hotels",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1787302583274,
+      "tag": "0007_venue_listings",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1787302583275,
+      "tag": "0008_seed_venue_listings",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1787302809451,
+      "tag": "0009_venue_category",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1787302809452,
+      "tag": "0010_seed_venue_category",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "6",
+      "when": 1787302916664,
+      "tag": "0011_card_pax",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "6",
+      "when": 1787302916665,
+      "tag": "0012_seed_card_pax",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "6",
+      "when": 1787303732494,
+      "tag": "0013_blog_listings",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "6",
+      "when": 1787303732495,
+      "tag": "0014_seed_blog_listings",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "6",
+      "when": 1787306308398,
+      "tag": "0015_page_templates",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "6",
+      "when": 1787306308399,
+      "tag": "0016_seed_page_assignments",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "6",
+      "when": 1787307856155,
+      "tag": "0017_city_totals",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "6",
+      "when": 1787307856156,
+      "tag": "0018_seed_city_totals",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "6",
+      "when": 1787308508777,
+      "tag": "0019_hotel_video",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "6",
+      "when": 1787308508778,
+      "tag": "0020_seed_hotel_video",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "6",
+      "when": 1787308508779,
+      "tag": "0021_seed_contact_details",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "6",
+      "when": 1787310489046,
+      "tag": "0022_site_labels",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "6",
+      "when": 1787310489047,
+      "tag": "0023_seed_site_labels",
+      "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "6",
+      "when": 1787310489048,
+      "tag": "0024_fix_excerpt_entities",
+      "breakpoints": true
+    }
+  ]
+}

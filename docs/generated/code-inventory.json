@@ -1,0 +1,2083 @@
+{
+  "generatedAt": "2026-08-21T15:21:11.639Z",
+  "gitCommit": "101510587d02a2287379fd72e758be37c79241d7",
+  "gitCommitShort": "10151058",
+  "projectVersion": "0.1.0",
+  "counts": {
+    "routes": 34,
+    "serverActions": 28,
+    "dbTables": 15,
+    "workerEndpoints": 28,
+    "adminComponents": 18,
+    "adminFiles": 62,
+    "staticSiteRoutes": 370,
+    "publicJsFiles": 7,
+    "pageTypePatterns": 9,
+    "publicForms": 7,
+    "workerSiteFiles": 18
+  },
+  "routes": [
+    {
+      "file": "app/page.tsx",
+      "route": "/",
+      "kind": "page"
+    },
+    {
+      "file": "app/_lib/deprecated-lead-route.ts",
+      "route": "/_lib/deprecated-lead-route.ts",
+      "kind": "api"
+    },
+    {
+      "file": "app/admin/page.tsx",
+      "route": "/admin",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/activity/page.tsx",
+      "route": "/admin/activity",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/blogs/page.tsx",
+      "route": "/admin/blogs",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/blogs/[id]/page.tsx",
+      "route": "/admin/blogs/:id",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/blogs/new/page.tsx",
+      "route": "/admin/blogs/new",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/blogs/sections/page.tsx",
+      "route": "/admin/blogs/sections",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/calculator/page.tsx",
+      "route": "/admin/calculator",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/cities/page.tsx",
+      "route": "/admin/cities",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/cities/[city]/page.tsx",
+      "route": "/admin/cities/:city",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/hero/page.tsx",
+      "route": "/admin/hero",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/hotels/page.tsx",
+      "route": "/admin/hotels",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/hotels/[id]/page.tsx",
+      "route": "/admin/hotels/:id",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/hotels/new/page.tsx",
+      "route": "/admin/hotels/new",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/labels/page.tsx",
+      "route": "/admin/labels",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/leads/page.tsx",
+      "route": "/admin/leads",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/leads/[id]/page.tsx",
+      "route": "/admin/leads/:id",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/leads/export/route.ts",
+      "route": "/admin/leads/export",
+      "kind": "api"
+    },
+    {
+      "file": "app/admin/login/page.tsx",
+      "route": "/admin/login",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/logout/route.ts",
+      "route": "/admin/logout",
+      "kind": "api"
+    },
+    {
+      "file": "app/admin/media/page.tsx",
+      "route": "/admin/media",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/media/upload/route.ts",
+      "route": "/admin/media/upload",
+      "kind": "api"
+    },
+    {
+      "file": "app/admin/search/route.ts",
+      "route": "/admin/search",
+      "kind": "api"
+    },
+    {
+      "file": "app/admin/settings/page.tsx",
+      "route": "/admin/settings",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/setup/page.tsx",
+      "route": "/admin/setup",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/users/page.tsx",
+      "route": "/admin/users",
+      "kind": "page"
+    },
+    {
+      "file": "app/api/currencies/select/route.ts",
+      "route": "/api/currencies/select",
+      "kind": "api"
+    },
+    {
+      "file": "app/api/lead/route.ts",
+      "route": "/api/lead",
+      "kind": "api"
+    },
+    {
+      "file": "app/blog-form-submit/route.ts",
+      "route": "/blog-form-submit",
+      "kind": "api"
+    },
+    {
+      "file": "app/contact/save/route.ts",
+      "route": "/contact/save",
+      "kind": "api"
+    },
+    {
+      "file": "app/get_in_touch/store/route.ts",
+      "route": "/get_in_touch/store",
+      "kind": "api"
+    },
+    {
+      "file": "app/hotel-search/route.ts",
+      "route": "/hotel-search",
+      "kind": "api"
+    },
+    {
+      "file": "app/lead-route.ts",
+      "route": "/lead-route.ts",
+      "kind": "api"
+    }
+  ],
+  "serverActions": [
+    {
+      "file": "app/admin/leads/actions.ts",
+      "name": "bulkDeleteAction"
+    },
+    {
+      "file": "app/admin/leads/actions.ts",
+      "name": "bulkStatusAction"
+    },
+    {
+      "file": "app/admin/setup/actions.ts",
+      "name": "createFirstAdminAction"
+    },
+    {
+      "file": "app/admin/hotels/actions.ts",
+      "name": "createHotelAction"
+    },
+    {
+      "file": "app/admin/blogs/actions.ts",
+      "name": "createPostAction"
+    },
+    {
+      "file": "app/admin/hero/actions.ts",
+      "name": "createSlideAction"
+    },
+    {
+      "file": "app/admin/users/actions.ts",
+      "name": "createUserAction"
+    },
+    {
+      "file": "app/admin/hotels/actions.ts",
+      "name": "deleteHotelAction"
+    },
+    {
+      "file": "app/admin/leads/actions.ts",
+      "name": "deleteLeadAction"
+    },
+    {
+      "file": "app/admin/media/actions.ts",
+      "name": "deleteMediaAction"
+    },
+    {
+      "file": "app/admin/blogs/actions.ts",
+      "name": "deletePostAction"
+    },
+    {
+      "file": "app/admin/hero/actions.ts",
+      "name": "deleteSlideAction"
+    },
+    {
+      "file": "app/admin/users/actions.ts",
+      "name": "deleteUserAction"
+    },
+    {
+      "file": "app/admin/login/actions.ts",
+      "name": "loginAction"
+    },
+    {
+      "file": "app/admin/blogs/actions.ts",
+      "name": "movePostAction"
+    },
+    {
+      "file": "app/admin/hero/actions.ts",
+      "name": "moveSlideAction"
+    },
+    {
+      "file": "app/admin/leads/actions.ts",
+      "name": "resendLeadEmailAction"
+    },
+    {
+      "file": "app/admin/users/actions.ts",
+      "name": "resetPasswordAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
+      "name": "saveCalculatorPricesAction"
+    },
+    {
+      "file": "app/admin/cities/actions.ts",
+      "name": "saveCityAction"
+    },
+    {
+      "file": "app/admin/labels/actions.ts",
+      "name": "saveLabelsAction"
+    },
+    {
+      "file": "app/admin/blogs/sections/actions.ts",
+      "name": "saveSectionAction"
+    },
+    {
+      "file": "app/admin/settings/actions.ts",
+      "name": "saveSettingsAction"
+    },
+    {
+      "file": "app/admin/hotels/actions.ts",
+      "name": "updateHotelAction"
+    },
+    {
+      "file": "app/admin/leads/actions.ts",
+      "name": "updateLeadAction"
+    },
+    {
+      "file": "app/admin/blogs/actions.ts",
+      "name": "updatePostAction"
+    },
+    {
+      "file": "app/admin/hero/actions.ts",
+      "name": "updateSlideAction"
+    },
+    {
+      "file": "app/admin/users/actions.ts",
+      "name": "updateUserAction"
+    }
+  ],
+  "dbTables": [
+    {
+      "exportName": "auditLog",
+      "tableName": "audit_log"
+    },
+    {
+      "exportName": "blogListings",
+      "tableName": "blog_listings"
+    },
+    {
+      "exportName": "blogPosts",
+      "tableName": "blog_posts"
+    },
+    {
+      "exportName": "cityListings",
+      "tableName": "city_listings"
+    },
+    {
+      "exportName": "cityPages",
+      "tableName": "city_pages"
+    },
+    {
+      "exportName": "heroSlides",
+      "tableName": "hero_slides"
+    },
+    {
+      "exportName": "hotels",
+      "tableName": "hotels"
+    },
+    {
+      "exportName": "leads",
+      "tableName": "leads"
+    },
+    {
+      "exportName": "media",
+      "tableName": "media"
+    },
+    {
+      "exportName": "pageTemplates",
+      "tableName": "page_templates"
+    },
+    {
+      "exportName": "rateLimits",
+      "tableName": "rate_limits"
+    },
+    {
+      "exportName": "sessions",
+      "tableName": "sessions"
+    },
+    {
+      "exportName": "settings",
+      "tableName": "settings"
+    },
+    {
+      "exportName": "siteLabels",
+      "tableName": "site_labels"
+    },
+    {
+      "exportName": "users",
+      "tableName": "users"
+    }
+  ],
+  "workerEndpoints": [
+    "/",
+    "/_vinext/image",
+    "/admin",
+    "/admin/",
+    "/api/calculator/availability-data",
+    "/api/currencies",
+    "/api/currencies/select",
+    "/api/lead",
+    "/api/lead/csrf",
+    "/appointment/slots",
+    "/blog-form-submit",
+    "/contact/save",
+    "/data/calculator/cities.json",
+    "/data/calculator/currencies.json",
+    "/data/calculator/hotels-by-city.json",
+    "/data/calculator/hotels.json",
+    "/data/calculator/prices.json",
+    "/get-cities",
+    "/get-hotel-price/",
+    "/get-hotel-prices",
+    "/get-hotels-by-city",
+    "/get-hotels-by-city/",
+    "/get_in_touch/store",
+    "/hotel-search",
+    "/index.html",
+    "/sitemap.xml",
+    "/storage",
+    "/wedding-consultation"
+  ],
+  "adminComponents": [
+    "app/admin/_components/AdminShell.tsx",
+    "app/admin/_components/BulkBar.tsx",
+    "app/admin/_components/CharCounter.tsx",
+    "app/admin/_components/Charts.tsx",
+    "app/admin/_components/CommandPalette.tsx",
+    "app/admin/_components/ConfirmDelete.tsx",
+    "app/admin/_components/DeleteConfirmTrigger.tsx",
+    "app/admin/_components/FormControls.tsx",
+    "app/admin/_components/ImageInput.tsx",
+    "app/admin/_components/RichText.tsx",
+    "app/admin/_components/ShellChrome.tsx",
+    "app/admin/_components/SideNav.tsx",
+    "app/admin/_components/ThemeToggle.tsx",
+    "app/admin/_components/Toaster.tsx",
+    "app/admin/_components/Uploader.tsx",
+    "app/admin/_components/icons.tsx",
+    "app/admin/_components/nav.ts",
+    "app/admin/_components/ui.tsx"
+  ],
+  "adminFiles": [
+    "app/admin/_components/AdminShell.tsx",
+    "app/admin/_components/BulkBar.tsx",
+    "app/admin/_components/CharCounter.tsx",
+    "app/admin/_components/Charts.tsx",
+    "app/admin/_components/CommandPalette.tsx",
+    "app/admin/_components/ConfirmDelete.tsx",
+    "app/admin/_components/DeleteConfirmTrigger.tsx",
+    "app/admin/_components/FormControls.tsx",
+    "app/admin/_components/ImageInput.tsx",
+    "app/admin/_components/RichText.tsx",
+    "app/admin/_components/ShellChrome.tsx",
+    "app/admin/_components/SideNav.tsx",
+    "app/admin/_components/ThemeToggle.tsx",
+    "app/admin/_components/Toaster.tsx",
+    "app/admin/_components/Uploader.tsx",
+    "app/admin/_components/icons.tsx",
+    "app/admin/_components/nav.ts",
+    "app/admin/_components/ui.tsx",
+    "app/admin/_lib/audit-labels.ts",
+    "app/admin/_lib/auth.ts",
+    "app/admin/_lib/clock.ts",
+    "app/admin/activity/page.tsx",
+    "app/admin/blogs/[id]/page.tsx",
+    "app/admin/blogs/_form.tsx",
+    "app/admin/blogs/actions.ts",
+    "app/admin/blogs/new/page.tsx",
+    "app/admin/blogs/page.tsx",
+    "app/admin/blogs/sections/actions.ts",
+    "app/admin/blogs/sections/page.tsx",
+    "app/admin/calculator/actions.ts",
+    "app/admin/calculator/page.tsx",
+    "app/admin/cities/[city]/page.tsx",
+    "app/admin/cities/actions.ts",
+    "app/admin/cities/page.tsx",
+    "app/admin/hero/actions.ts",
+    "app/admin/hero/page.tsx",
+    "app/admin/hotels/[id]/page.tsx",
+    "app/admin/hotels/actions.ts",
+    "app/admin/hotels/new/page.tsx",
+    "app/admin/hotels/page.tsx",
+    "app/admin/labels/actions.ts",
+    "app/admin/labels/page.tsx",
+    "app/admin/layout.tsx",
+    "app/admin/leads/[id]/page.tsx",
+    "app/admin/leads/_query.ts",
+    "app/admin/leads/actions.ts",
+    "app/admin/leads/export/route.ts",
+    "app/admin/leads/page.tsx",
+    "app/admin/login/actions.ts",
+    "app/admin/login/page.tsx",
+    "app/admin/logout/route.ts",
+    "app/admin/media/actions.ts",
+    "app/admin/media/page.tsx",
+    "app/admin/media/upload/route.ts",
+    "app/admin/page.tsx",
+    "app/admin/search/route.ts",
+    "app/admin/settings/actions.ts",
+    "app/admin/settings/page.tsx",
+    "app/admin/setup/actions.ts",
+    "app/admin/setup/page.tsx",
+    "app/admin/users/actions.ts",
+    "app/admin/users/page.tsx"
+  ],
+  "staticSiteRoutes": [
+    {
+      "file": "site-public/about-us/index.html",
+      "route": "/about-us/"
+    },
+    {
+      "file": "site-public/appointment-booking/index.html",
+      "route": "/appointment-booking/"
+    },
+    {
+      "file": "site-public/appointment/confirmation/index.html",
+      "route": "/appointment/confirmation/"
+    },
+    {
+      "file": "site-public/appointment/payment-failed/index.html",
+      "route": "/appointment/payment-failed/"
+    },
+    {
+      "file": "site-public/appointment/payment-success/index.html",
+      "route": "/appointment/payment-success/"
+    },
+    {
+      "file": "site-public/appointment/request-failed/index.html",
+      "route": "/appointment/request-failed/"
+    },
+    {
+      "file": "site-public/blog-form-submit/index.html",
+      "route": "/blog-form-submit/"
+    },
+    {
+      "file": "site-public/blogs/index.html",
+      "route": "/blogs/"
+    },
+    {
+      "file": "site-public/blogs/arjun-kapoor-sister-anshula-wedding-cost/index.html",
+      "route": "/blogs/arjun-kapoor-sister-anshula-wedding-cost/"
+    },
+    {
+      "file": "site-public/blogs/category/bridal-styling/index.html",
+      "route": "/blogs/category/bridal-styling/"
+    },
+    {
+      "file": "site-public/blogs/category/wedding-planning/index.html",
+      "route": "/blogs/category/wedding-planning/"
+    },
+    {
+      "file": "site-public/blogs/category/weeding-planning/index.html",
+      "route": "/blogs/category/weeding-planning/"
+    },
+    {
+      "file": "site-public/blogs/destination-wedding-venue-checklist/index.html",
+      "route": "/blogs/destination-wedding-venue-checklist/"
+    },
+    {
+      "file": "site-public/blogs/new-luxury-wedding-hotels-in-india/index.html",
+      "route": "/blogs/new-luxury-wedding-hotels-in-india/"
+    },
+    {
+      "file": "site-public/blogs/nupur-sanon-stebin-ben-wedding-cost/index.html",
+      "route": "/blogs/nupur-sanon-stebin-ben-wedding-cost/"
+    },
+    {
+      "file": "site-public/blogs/plan-luxury-destination-wedding-like-nupur-sanon-stebin-ben/index.html",
+      "route": "/blogs/plan-luxury-destination-wedding-like-nupur-sanon-stebin-ben/"
+    },
+    {
+      "file": "site-public/blogs/questions-to-ask-destination-wedding-planner/index.html",
+      "route": "/blogs/questions-to-ask-destination-wedding-planner/"
+    },
+    {
+      "file": "site-public/blogs/tag/bride/index.html",
+      "route": "/blogs/tag/bride/"
+    },
+    {
+      "file": "site-public/blogs/tag/groom/index.html",
+      "route": "/blogs/tag/groom/"
+    },
+    {
+      "file": "site-public/blogs/top-beachside-wedding-venues-goa/index.html",
+      "route": "/blogs/top-beachside-wedding-venues-goa/"
+    },
+    {
+      "file": "site-public/blogs/top-destination-wedding-places-rajasthan/index.html",
+      "route": "/blogs/top-destination-wedding-places-rajasthan/"
+    },
+    {
+      "file": "site-public/blogs/traditional-vs-destination-wedding/index.html",
+      "route": "/blogs/traditional-vs-destination-wedding/"
+    },
+    {
+      "file": "site-public/blogs/vijay-rashmika-udaipur-wedding-cost/index.html",
+      "route": "/blogs/vijay-rashmika-udaipur-wedding-cost/"
+    },
+    {
+      "file": "site-public/blogs/when-to-book-a-wedding-venue/index.html",
+      "route": "/blogs/when-to-book-a-wedding-venue/"
+    },
+    {
+      "file": "site-public/check-hotel-availability/index.html",
+      "route": "/check-hotel-availability/"
+    },
+    {
+      "file": "site-public/compare-hotel/index.html",
+      "route": "/compare-hotel/"
+    },
+    {
+      "file": "site-public/contact/index.html",
+      "route": "/contact/"
+    },
+    {
+      "file": "site-public/contact/save/index.html",
+      "route": "/contact/save/"
+    },
+    {
+      "file": "site-public/cookie-preference-policy/index.html",
+      "route": "/cookie-preference-policy/"
+    },
+    {
+      "file": "site-public/destination-wedding-in-agra/index.html",
+      "route": "/destination-wedding-in-agra/"
+    },
+    {
+      "file": "site-public/destination-wedding-in-dehradun/index.html",
+      "route": "/destination-wedding-in-dehradun/"
+    },
+    {
+      "file": "site-public/destination-wedding-in-delhi/index.html",
+      "route": "/destination-wedding-in-delhi/"
+    },
+    {
+      "file": "site-public/destination-wedding-in-goa/index.html",
+      "route": "/destination-wedding-in-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding-in-jaipur/index.html",
+      "route": "/destination-wedding-in-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding-in-jim-corbett/index.html",
+      "route": "/destination-wedding-in-jim-corbett/"
+    },
+    {
+      "file": "site-public/destination-wedding-in-jodhpur/index.html",
+      "route": "/destination-wedding-in-jodhpur/"
+    },
+    {
+      "file": "site-public/destination-wedding-in-mussoorie/index.html",
+      "route": "/destination-wedding-in-mussoorie/"
+    },
+    {
+      "file": "site-public/destination-wedding-in-rishikesh/index.html",
+      "route": "/destination-wedding-in-rishikesh/"
+    },
+    {
+      "file": "site-public/destination-wedding-in-udaipur/index.html",
+      "route": "/destination-wedding-in-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/agra/index.html",
+      "route": "/destination-wedding/agra/"
+    },
+    {
+      "file": "site-public/destination-wedding/agra/courtyard-by-marriott-agra/index.html",
+      "route": "/destination-wedding/agra/courtyard-by-marriott-agra/"
+    },
+    {
+      "file": "site-public/destination-wedding/agra/doubletree-by-hilton-hotel-agra/index.html",
+      "route": "/destination-wedding/agra/doubletree-by-hilton-hotel-agra/"
+    },
+    {
+      "file": "site-public/destination-wedding/agra/itc-mughal-agra/index.html",
+      "route": "/destination-wedding/agra/itc-mughal-agra/"
+    },
+    {
+      "file": "site-public/destination-wedding/agra/jaypee-palace-hotel-and-convention-centre-agra/index.html",
+      "route": "/destination-wedding/agra/jaypee-palace-hotel-and-convention-centre-agra/"
+    },
+    {
+      "file": "site-public/destination-wedding/agra/laxmi-vilas-palace-bharatpur/index.html",
+      "route": "/destination-wedding/agra/laxmi-vilas-palace-bharatpur/"
+    },
+    {
+      "file": "site-public/destination-wedding/agra/taj-agra/index.html",
+      "route": "/destination-wedding/agra/taj-agra/"
+    },
+    {
+      "file": "site-public/destination-wedding/agra/taj-view-agra/index.html",
+      "route": "/destination-wedding/agra/taj-view-agra/"
+    },
+    {
+      "file": "site-public/destination-wedding/agra/the-oberoi-amarvilas-agra/index.html",
+      "route": "/destination-wedding/agra/the-oberoi-amarvilas-agra/"
+    },
+    {
+      "file": "site-public/destination-wedding/agra/trident-agra/index.html",
+      "route": "/destination-wedding/agra/trident-agra/"
+    },
+    {
+      "file": "site-public/destination-wedding/ahmedabad/index.html",
+      "route": "/destination-wedding/ahmedabad/"
+    },
+    {
+      "file": "site-public/destination-wedding/ahmedabad/doubletree-by-hilton-ahmedabad/index.html",
+      "route": "/destination-wedding/ahmedabad/doubletree-by-hilton-ahmedabad/"
+    },
+    {
+      "file": "site-public/destination-wedding/ahmedabad/gateway-ahmedabad-sindhu-bhavan/index.html",
+      "route": "/destination-wedding/ahmedabad/gateway-ahmedabad-sindhu-bhavan/"
+    },
+    {
+      "file": "site-public/destination-wedding/ahmedabad/itc-narmada-a-luxury-collection-hotel-ahmedabad/index.html",
+      "route": "/destination-wedding/ahmedabad/itc-narmada-a-luxury-collection-hotel-ahmedabad/"
+    },
+    {
+      "file": "site-public/destination-wedding/ahmedabad/novotel-ahmedabad/index.html",
+      "route": "/destination-wedding/ahmedabad/novotel-ahmedabad/"
+    },
+    {
+      "file": "site-public/destination-wedding/ajabgarh/index.html",
+      "route": "/destination-wedding/ajabgarh/"
+    },
+    {
+      "file": "site-public/destination-wedding/ajmer/index.html",
+      "route": "/destination-wedding/ajmer/"
+    },
+    {
+      "file": "site-public/destination-wedding/ajmer/pratap-mahal-ajmer-an-ihcl-seleqtions-hotel/index.html",
+      "route": "/destination-wedding/ajmer/pratap-mahal-ajmer-an-ihcl-seleqtions-hotel/"
+    },
+    {
+      "file": "site-public/destination-wedding/amritsar/index.html",
+      "route": "/destination-wedding/amritsar/"
+    },
+    {
+      "file": "site-public/destination-wedding/amritsar/holiday-inn-amritsar-ranjit-avenue-by-ihg/index.html",
+      "route": "/destination-wedding/amritsar/holiday-inn-amritsar-ranjit-avenue-by-ihg/"
+    },
+    {
+      "file": "site-public/destination-wedding/amritsar/hyatt-regency-amritsar-hotel-and-spa/index.html",
+      "route": "/destination-wedding/amritsar/hyatt-regency-amritsar-hotel-and-spa/"
+    },
+    {
+      "file": "site-public/destination-wedding/amritsar/taj-swarna-amritsar/index.html",
+      "route": "/destination-wedding/amritsar/taj-swarna-amritsar/"
+    },
+    {
+      "file": "site-public/destination-wedding/amritsar/welcomhotel-by-itc-hotels-amritsar/index.html",
+      "route": "/destination-wedding/amritsar/welcomhotel-by-itc-hotels-amritsar/"
+    },
+    {
+      "file": "site-public/destination-wedding/andaman/index.html",
+      "route": "/destination-wedding/andaman/"
+    },
+    {
+      "file": "site-public/destination-wedding/barwara/index.html",
+      "route": "/destination-wedding/barwara/"
+    },
+    {
+      "file": "site-public/destination-wedding/barwara/six-senses-fort-barwara/index.html",
+      "route": "/destination-wedding/barwara/six-senses-fort-barwara/"
+    },
+    {
+      "file": "site-public/destination-wedding/bengal/index.html",
+      "route": "/destination-wedding/bengal/"
+    },
+    {
+      "file": "site-public/destination-wedding/bengal/itc-royal-bengal/index.html",
+      "route": "/destination-wedding/bengal/itc-royal-bengal/"
+    },
+    {
+      "file": "site-public/destination-wedding/bengaluru/index.html",
+      "route": "/destination-wedding/bengaluru/"
+    },
+    {
+      "file": "site-public/destination-wedding/bengaluru/hilton-bangalore-embassy-golflinks/index.html",
+      "route": "/destination-wedding/bengaluru/hilton-bangalore-embassy-golflinks/"
+    },
+    {
+      "file": "site-public/destination-wedding/bengaluru/hilton-garden-inn-bengaluru-embassy-manyata-business-park/index.html",
+      "route": "/destination-wedding/bengaluru/hilton-garden-inn-bengaluru-embassy-manyata-business-park/"
+    },
+    {
+      "file": "site-public/destination-wedding/bengaluru/itc-gardenia-bengaluru/index.html",
+      "route": "/destination-wedding/bengaluru/itc-gardenia-bengaluru/"
+    },
+    {
+      "file": "site-public/destination-wedding/bengaluru/itc-windsor-a-luxury-collection-hotel-bengaluru/index.html",
+      "route": "/destination-wedding/bengaluru/itc-windsor-a-luxury-collection-hotel-bengaluru/"
+    },
+    {
+      "file": "site-public/destination-wedding/bengaluru/jw-marriott-bengaluru-prestige-golfshire-resort-and-spa/index.html",
+      "route": "/destination-wedding/bengaluru/jw-marriott-bengaluru-prestige-golfshire-resort-and-spa/"
+    },
+    {
+      "file": "site-public/destination-wedding/bengaluru/radisson-blu-hotel-bengaluru/index.html",
+      "route": "/destination-wedding/bengaluru/radisson-blu-hotel-bengaluru/"
+    },
+    {
+      "file": "site-public/destination-wedding/bengaluru/shangri-la-bengaluru/index.html",
+      "route": "/destination-wedding/bengaluru/shangri-la-bengaluru/"
+    },
+    {
+      "file": "site-public/destination-wedding/bengaluru/taj-west-end-bengaluru/index.html",
+      "route": "/destination-wedding/bengaluru/taj-west-end-bengaluru/"
+    },
+    {
+      "file": "site-public/destination-wedding/bengaluru/the-leela-bhartiya-city-bengaluru/index.html",
+      "route": "/destination-wedding/bengaluru/the-leela-bhartiya-city-bengaluru/"
+    },
+    {
+      "file": "site-public/destination-wedding/bengaluru/the-leela-palace-bengaluru/index.html",
+      "route": "/destination-wedding/bengaluru/the-leela-palace-bengaluru/"
+    },
+    {
+      "file": "site-public/destination-wedding/bengaluru/the-ritz-carlton-bangalore/index.html",
+      "route": "/destination-wedding/bengaluru/the-ritz-carlton-bangalore/"
+    },
+    {
+      "file": "site-public/destination-wedding/bhopal/index.html",
+      "route": "/destination-wedding/bhopal/"
+    },
+    {
+      "file": "site-public/destination-wedding/bhopal/courtyard-by-marriott-bhopal/index.html",
+      "route": "/destination-wedding/bhopal/courtyard-by-marriott-bhopal/"
+    },
+    {
+      "file": "site-public/destination-wedding/bhopal/radisson-hotel-bhopal/index.html",
+      "route": "/destination-wedding/bhopal/radisson-hotel-bhopal/"
+    },
+    {
+      "file": "site-public/destination-wedding/bhopal/taj-lakefront-bhopal/index.html",
+      "route": "/destination-wedding/bhopal/taj-lakefront-bhopal/"
+    },
+    {
+      "file": "site-public/destination-wedding/bhubaneswar/index.html",
+      "route": "/destination-wedding/bhubaneswar/"
+    },
+    {
+      "file": "site-public/destination-wedding/chandigarh/index.html",
+      "route": "/destination-wedding/chandigarh/"
+    },
+    {
+      "file": "site-public/destination-wedding/chandigarh/hyatt-regency-chandigarh/index.html",
+      "route": "/destination-wedding/chandigarh/hyatt-regency-chandigarh/"
+    },
+    {
+      "file": "site-public/destination-wedding/chandigarh/jw-marriott-hotel-chandigarh/index.html",
+      "route": "/destination-wedding/chandigarh/jw-marriott-hotel-chandigarh/"
+    },
+    {
+      "file": "site-public/destination-wedding/chandigarh/novotel-chandigarh-tribune-chowk/index.html",
+      "route": "/destination-wedding/chandigarh/novotel-chandigarh-tribune-chowk/"
+    },
+    {
+      "file": "site-public/destination-wedding/chandigarh/taj-chandigarh/index.html",
+      "route": "/destination-wedding/chandigarh/taj-chandigarh/"
+    },
+    {
+      "file": "site-public/destination-wedding/chandigarh/the-oberoi-sukhvilas/index.html",
+      "route": "/destination-wedding/chandigarh/the-oberoi-sukhvilas/"
+    },
+    {
+      "file": "site-public/destination-wedding/chennai/index.html",
+      "route": "/destination-wedding/chennai/"
+    },
+    {
+      "file": "site-public/destination-wedding/chennai/hilton-chennai/index.html",
+      "route": "/destination-wedding/chennai/hilton-chennai/"
+    },
+    {
+      "file": "site-public/destination-wedding/chennai/hyatt-regency-chennai/index.html",
+      "route": "/destination-wedding/chennai/hyatt-regency-chennai/"
+    },
+    {
+      "file": "site-public/destination-wedding/chennai/itc-grand-chola-chennai/index.html",
+      "route": "/destination-wedding/chennai/itc-grand-chola-chennai/"
+    },
+    {
+      "file": "site-public/destination-wedding/chennai/le-royal-meridien-chennai/index.html",
+      "route": "/destination-wedding/chennai/le-royal-meridien-chennai/"
+    },
+    {
+      "file": "site-public/destination-wedding/chennai/novotel-chennai-omr/index.html",
+      "route": "/destination-wedding/chennai/novotel-chennai-omr/"
+    },
+    {
+      "file": "site-public/destination-wedding/chennai/taj-club-house-chennai/index.html",
+      "route": "/destination-wedding/chennai/taj-club-house-chennai/"
+    },
+    {
+      "file": "site-public/destination-wedding/chennai/taj-connemara-chennai/index.html",
+      "route": "/destination-wedding/chennai/taj-connemara-chennai/"
+    },
+    {
+      "file": "site-public/destination-wedding/chennai/the-leela-palace-chennai/index.html",
+      "route": "/destination-wedding/chennai/the-leela-palace-chennai/"
+    },
+    {
+      "file": "site-public/destination-wedding/daman/index.html",
+      "route": "/destination-wedding/daman/"
+    },
+    {
+      "file": "site-public/destination-wedding/daman/praveg-lake-resort-daman/index.html",
+      "route": "/destination-wedding/daman/praveg-lake-resort-daman/"
+    },
+    {
+      "file": "site-public/destination-wedding/daman/silver-waves-resort-and-spa-daman/index.html",
+      "route": "/destination-wedding/daman/silver-waves-resort-and-spa-daman/"
+    },
+    {
+      "file": "site-public/destination-wedding/daman/the-deltin-daman/index.html",
+      "route": "/destination-wedding/daman/the-deltin-daman/"
+    },
+    {
+      "file": "site-public/destination-wedding/dehradun/index.html",
+      "route": "/destination-wedding/dehradun/"
+    },
+    {
+      "file": "site-public/destination-wedding/dehradun/hyatt-regency-dehradun-resort-and-spa/index.html",
+      "route": "/destination-wedding/dehradun/hyatt-regency-dehradun-resort-and-spa/"
+    },
+    {
+      "file": "site-public/destination-wedding/dehradun/le-meridien-dehradun-resort-and-spa/index.html",
+      "route": "/destination-wedding/dehradun/le-meridien-dehradun-resort-and-spa/"
+    },
+    {
+      "file": "site-public/destination-wedding/dehradun/taj-mussoorie-foothills-dehradun/index.html",
+      "route": "/destination-wedding/dehradun/taj-mussoorie-foothills-dehradun/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/index.html",
+      "route": "/destination-wedding/delhi-ncr/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/andaz-new-delhi/index.html",
+      "route": "/destination-wedding/delhi-ncr/andaz-new-delhi/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/courtyard-by-marriott-aravali-resort-delhi-ncr/index.html",
+      "route": "/destination-wedding/delhi-ncr/courtyard-by-marriott-aravali-resort-delhi-ncr/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/grand-hyatt-gurgaon/index.html",
+      "route": "/destination-wedding/delhi-ncr/grand-hyatt-gurgaon/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/heritage-village-resort-and-spa-manesar/index.html",
+      "route": "/destination-wedding/delhi-ncr/heritage-village-resort-and-spa-manesar/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/itc-grand-bharat-delhi-ncr/index.html",
+      "route": "/destination-wedding/delhi-ncr/itc-grand-bharat-delhi-ncr/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/itc-maurya-a-luxury-collection-hotel-new-delhi/index.html",
+      "route": "/destination-wedding/delhi-ncr/itc-maurya-a-luxury-collection-hotel-new-delhi/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/jaypee-greens-golf-and-spa-resort-delhi-ncr/index.html",
+      "route": "/destination-wedding/delhi-ncr/jaypee-greens-golf-and-spa-resort-delhi-ncr/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/jw-marriott-hotel-new-delhi-aerocity/index.html",
+      "route": "/destination-wedding/delhi-ncr/jw-marriott-hotel-new-delhi-aerocity/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/karma-lakelands-gurugram/index.html",
+      "route": "/destination-wedding/delhi-ncr/karma-lakelands-gurugram/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/pullman-new-delhi-aerocity/index.html",
+      "route": "/destination-wedding/delhi-ncr/pullman-new-delhi-aerocity/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/radisson-blu-plaza-hotel-delhi-airport/index.html",
+      "route": "/destination-wedding/delhi-ncr/radisson-blu-plaza-hotel-delhi-airport/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/resort-country-club-manesar/index.html",
+      "route": "/destination-wedding/delhi-ncr/resort-country-club-manesar/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/sheraton-new-delhi-hotel/index.html",
+      "route": "/destination-wedding/delhi-ncr/sheraton-new-delhi-hotel/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/taj-damdama-lake-resort-and-spa-gurugram/index.html",
+      "route": "/destination-wedding/delhi-ncr/taj-damdama-lake-resort-and-spa-gurugram/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/taj-mansingh-new-delhi/index.html",
+      "route": "/destination-wedding/delhi-ncr/taj-mansingh-new-delhi/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/taj-palace-new-delhi/index.html",
+      "route": "/destination-wedding/delhi-ncr/taj-palace-new-delhi/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/taj-surajkund-resort-and-spa-delhi-ncr/index.html",
+      "route": "/destination-wedding/delhi-ncr/taj-surajkund-resort-and-spa-delhi-ncr/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/the-lalit-mangar-delhi-ncr/index.html",
+      "route": "/destination-wedding/delhi-ncr/the-lalit-mangar-delhi-ncr/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/the-leela-ambience-convention-hotel-gurugram/index.html",
+      "route": "/destination-wedding/delhi-ncr/the-leela-ambience-convention-hotel-gurugram/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/the-leela-palace-new-delhi/index.html",
+      "route": "/destination-wedding/delhi-ncr/the-leela-palace-new-delhi/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/the-oberoi-gurgaon/index.html",
+      "route": "/destination-wedding/delhi-ncr/the-oberoi-gurgaon/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/the-roseate-new-delhi/index.html",
+      "route": "/destination-wedding/delhi-ncr/the-roseate-new-delhi/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/the-westin-sohna-resort-and-spa-gurgaon/index.html",
+      "route": "/destination-wedding/delhi-ncr/the-westin-sohna-resort-and-spa-gurgaon/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/trident-gurgaon/index.html",
+      "route": "/destination-wedding/delhi-ncr/trident-gurgaon/"
+    },
+    {
+      "file": "site-public/destination-wedding/delhi-ncr/welcomhotel-by-itc-hotels-delhi/index.html",
+      "route": "/destination-wedding/delhi-ncr/welcomhotel-by-itc-hotels-delhi/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/index.html",
+      "route": "/destination-wedding/goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/alila-diwa-goa/index.html",
+      "route": "/destination-wedding/goa/alila-diwa-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/azaya-beach-resort-goa/index.html",
+      "route": "/destination-wedding/goa/azaya-beach-resort-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/caravela-beach-resort/index.html",
+      "route": "/destination-wedding/goa/caravela-beach-resort/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/grand-hyatt-goa/index.html",
+      "route": "/destination-wedding/goa/grand-hyatt-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/holiday-inn-resort-goa/index.html",
+      "route": "/destination-wedding/goa/holiday-inn-resort-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/itc-grand-goa/index.html",
+      "route": "/destination-wedding/goa/itc-grand-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/jw-marriott-goa/index.html",
+      "route": "/destination-wedding/goa/jw-marriott-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/planet-hollywood-beach-resort-goa/index.html",
+      "route": "/destination-wedding/goa/planet-hollywood-beach-resort-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/radisson-blu-resort-goa-cavelossim-beach/index.html",
+      "route": "/destination-wedding/goa/radisson-blu-resort-goa-cavelossim-beach/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/taj-cidade-de-goa-heritage-goa/index.html",
+      "route": "/destination-wedding/goa/taj-cidade-de-goa-heritage-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/taj-cidade-de-goa-horizon-goa/index.html",
+      "route": "/destination-wedding/goa/taj-cidade-de-goa-horizon-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/taj-exotica-resort-and-spa-goa/index.html",
+      "route": "/destination-wedding/goa/taj-exotica-resort-and-spa-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/taj-fort-aguada-resort-and-spa-goa/index.html",
+      "route": "/destination-wedding/goa/taj-fort-aguada-resort-and-spa-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/taj-holiday-village-resort-and-spa-goa/index.html",
+      "route": "/destination-wedding/goa/taj-holiday-village-resort-and-spa-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/the-lalit-golf-and-spa-resort-goa/index.html",
+      "route": "/destination-wedding/goa/the-lalit-golf-and-spa-resort-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/the-st-regis-goa-resort/index.html",
+      "route": "/destination-wedding/goa/the-st-regis-goa-resort/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/the-zuri-white-sands-goa-resort-and-casino/index.html",
+      "route": "/destination-wedding/goa/the-zuri-white-sands-goa-resort-and-casino/"
+    },
+    {
+      "file": "site-public/destination-wedding/goa/w-goa/index.html",
+      "route": "/destination-wedding/goa/w-goa/"
+    },
+    {
+      "file": "site-public/destination-wedding/guwahati/index.html",
+      "route": "/destination-wedding/guwahati/"
+    },
+    {
+      "file": "site-public/destination-wedding/guwahati/mayfair-spring-valley-resort-guwahati/index.html",
+      "route": "/destination-wedding/guwahati/mayfair-spring-valley-resort-guwahati/"
+    },
+    {
+      "file": "site-public/destination-wedding/guwahati/radisson-blu-hotel-guwahati/index.html",
+      "route": "/destination-wedding/guwahati/radisson-blu-hotel-guwahati/"
+    },
+    {
+      "file": "site-public/destination-wedding/gwalior/index.html",
+      "route": "/destination-wedding/gwalior/"
+    },
+    {
+      "file": "site-public/destination-wedding/gwalior/taj-usha-kiran-palace-gwalior/index.html",
+      "route": "/destination-wedding/gwalior/taj-usha-kiran-palace-gwalior/"
+    },
+    {
+      "file": "site-public/destination-wedding/haridwar/index.html",
+      "route": "/destination-wedding/haridwar/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/index.html",
+      "route": "/destination-wedding/hyderabad/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/hyatt-hyderabad-gachibowli/index.html",
+      "route": "/destination-wedding/hyderabad/hyatt-hyderabad-gachibowli/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/hyderabad-marriott-hotel-and-convention-centre/index.html",
+      "route": "/destination-wedding/hyderabad/hyderabad-marriott-hotel-and-convention-centre/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/itc-kakatiya-a-luxury-collection-hotel-hyderabad/index.html",
+      "route": "/destination-wedding/hyderabad/itc-kakatiya-a-luxury-collection-hotel-hyderabad/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/itc-kohenur-a-luxury-collection-hotel-hyderabad/index.html",
+      "route": "/destination-wedding/hyderabad/itc-kohenur-a-luxury-collection-hotel-hyderabad/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/le-meridien-hyderabad/index.html",
+      "route": "/destination-wedding/hyderabad/le-meridien-hyderabad/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/novotel-hyderabad-convention-centre/index.html",
+      "route": "/destination-wedding/hyderabad/novotel-hyderabad-convention-centre/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/radisson-blu-plaza-hotel-hyderabad-banjara-hills/index.html",
+      "route": "/destination-wedding/hyderabad/radisson-blu-plaza-hotel-hyderabad-banjara-hills/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/sheraton-hyderabad-hotel/index.html",
+      "route": "/destination-wedding/hyderabad/sheraton-hyderabad-hotel/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/taj-deccan-hyderabad/index.html",
+      "route": "/destination-wedding/hyderabad/taj-deccan-hyderabad/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/taj-falaknuma-palace-hyderabad/index.html",
+      "route": "/destination-wedding/hyderabad/taj-falaknuma-palace-hyderabad/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/taj-krishna-hyderabad/index.html",
+      "route": "/destination-wedding/hyderabad/taj-krishna-hyderabad/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/the-leela-hyderabad/index.html",
+      "route": "/destination-wedding/hyderabad/the-leela-hyderabad/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/the-park-hyderabad/index.html",
+      "route": "/destination-wedding/hyderabad/the-park-hyderabad/"
+    },
+    {
+      "file": "site-public/destination-wedding/hyderabad/trident-hyderabad/index.html",
+      "route": "/destination-wedding/hyderabad/trident-hyderabad/"
+    },
+    {
+      "file": "site-public/destination-wedding/indore/index.html",
+      "route": "/destination-wedding/indore/"
+    },
+    {
+      "file": "site-public/destination-wedding/indore/indore-marriott-hotel/index.html",
+      "route": "/destination-wedding/indore/indore-marriott-hotel/"
+    },
+    {
+      "file": "site-public/destination-wedding/indore/radisson-blu-hotel-indore/index.html",
+      "route": "/destination-wedding/indore/radisson-blu-hotel-indore/"
+    },
+    {
+      "file": "site-public/destination-wedding/indore/sheraton-grand-palace-indore/index.html",
+      "route": "/destination-wedding/indore/sheraton-grand-palace-indore/"
+    },
+    {
+      "file": "site-public/destination-wedding/indore/the-park-indore/index.html",
+      "route": "/destination-wedding/indore/the-park-indore/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/index.html",
+      "route": "/destination-wedding/jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/alila-fort-bishangarh-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/alila-fort-bishangarh-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/ananta-spa-and-resort-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/ananta-spa-and-resort-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/bhanwar-singh-palace-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/bhanwar-singh-palace-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/buena-vista-luxury-garden-spa-resort/index.html",
+      "route": "/destination-wedding/jaipur/buena-vista-luxury-garden-spa-resort/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/chomu-palace-hotel-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/chomu-palace-hotel-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/doubletree-by-hilton-jaipur-amer/index.html",
+      "route": "/destination-wedding/jaipur/doubletree-by-hilton-jaipur-amer/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/fairmont-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/fairmont-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/hyatt-regency-jaipur-mansarovar/index.html",
+      "route": "/destination-wedding/jaipur/hyatt-regency-jaipur-mansarovar/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/indana-palace-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/indana-palace-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/intercontinental-jaipur-tonk-road-by-ihg/index.html",
+      "route": "/destination-wedding/jaipur/intercontinental-jaipur-tonk-road-by-ihg/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/itc-rajputana-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/itc-rajputana-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/jai-mahal-palace-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/jai-mahal-palace-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/le-meridien-jaipur-resort-and-spa/index.html",
+      "route": "/destination-wedding/jaipur/le-meridien-jaipur-resort-and-spa/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/mementos-by-itc-hotels-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/mementos-by-itc-hotels-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/mundota-fort-and-palace-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/mundota-fort-and-palace-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/novotel-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/novotel-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/pride-amber-vilas-resort-and-convention-centre-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/pride-amber-vilas-resort-and-convention-centre-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/raffles-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/raffles-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/rajasthali-resorts-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/rajasthali-resorts-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/rambagh-palace-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/rambagh-palace-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/samode-bagh-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/samode-bagh-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/shiv-vilas-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/shiv-vilas-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/taj-amer-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/taj-amer-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/taj-devi-ratn-resort-and-spa-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/taj-devi-ratn-resort-and-spa-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/the-gold-palace-and-resorts-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/the-gold-palace-and-resorts-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/the-jaibagh-palace-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/the-jaibagh-palace-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/the-leela-palace-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/the-leela-palace-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/the-oberoi-rajvilas-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/the-oberoi-rajvilas-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/the-palace-aravali-by-park-jewels-hotels-and-resorts-jaipur/index.html",
+      "route": "/destination-wedding/jaipur/the-palace-aravali-by-park-jewels-hotels-and-resorts-jaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaipur/the-westin-jaipur-kant-kalwar-resort-and-spa/index.html",
+      "route": "/destination-wedding/jaipur/the-westin-jaipur-kant-kalwar-resort-and-spa/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaisalmer/index.html",
+      "route": "/destination-wedding/jaisalmer/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaisalmer/fort-rajwada-jaisalmer/index.html",
+      "route": "/destination-wedding/jaisalmer/fort-rajwada-jaisalmer/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaisalmer/gobindgarh-jaisalmer/index.html",
+      "route": "/destination-wedding/jaisalmer/gobindgarh-jaisalmer/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaisalmer/jaisalmer-marriott-resort-and-spa/index.html",
+      "route": "/destination-wedding/jaisalmer/jaisalmer-marriott-resort-and-spa/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaisalmer/storii-by-itc-hotels-jaisalmer/index.html",
+      "route": "/destination-wedding/jaisalmer/storii-by-itc-hotels-jaisalmer/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaisalmer/suryagarh-palace-jaisalmer/index.html",
+      "route": "/destination-wedding/jaisalmer/suryagarh-palace-jaisalmer/"
+    },
+    {
+      "file": "site-public/destination-wedding/jaisalmer/taj-gorbandh-palace-jaisalmer/index.html",
+      "route": "/destination-wedding/jaisalmer/taj-gorbandh-palace-jaisalmer/"
+    },
+    {
+      "file": "site-public/destination-wedding/jim-corbett/index.html",
+      "route": "/destination-wedding/jim-corbett/"
+    },
+    {
+      "file": "site-public/destination-wedding/jim-corbett/aahana-resort-luxury-resorts-in-jim-corbett/index.html",
+      "route": "/destination-wedding/jim-corbett/aahana-resort-luxury-resorts-in-jim-corbett/"
+    },
+    {
+      "file": "site-public/destination-wedding/jim-corbett/lemon-tree-premier-jim-corbett/index.html",
+      "route": "/destination-wedding/jim-corbett/lemon-tree-premier-jim-corbett/"
+    },
+    {
+      "file": "site-public/destination-wedding/jim-corbett/namah-jim-corbett/index.html",
+      "route": "/destination-wedding/jim-corbett/namah-jim-corbett/"
+    },
+    {
+      "file": "site-public/destination-wedding/jim-corbett/resorts-by-the-baagh-jim-corbett/index.html",
+      "route": "/destination-wedding/jim-corbett/resorts-by-the-baagh-jim-corbett/"
+    },
+    {
+      "file": "site-public/destination-wedding/jim-corbett/taj-corbett-resort-and-spa-jim-corbett/index.html",
+      "route": "/destination-wedding/jim-corbett/taj-corbett-resort-and-spa-jim-corbett/"
+    },
+    {
+      "file": "site-public/destination-wedding/jim-corbett/tarangi-jim-corbett-resort-and-spa/index.html",
+      "route": "/destination-wedding/jim-corbett/tarangi-jim-corbett-resort-and-spa/"
+    },
+    {
+      "file": "site-public/destination-wedding/jim-corbett/the-riverview-retreat-jim-corbett/index.html",
+      "route": "/destination-wedding/jim-corbett/the-riverview-retreat-jim-corbett/"
+    },
+    {
+      "file": "site-public/destination-wedding/jim-corbett/welcomhotel-by-itc-hotels-jim-corbett/index.html",
+      "route": "/destination-wedding/jim-corbett/welcomhotel-by-itc-hotels-jim-corbett/"
+    },
+    {
+      "file": "site-public/destination-wedding/jim-corbett/zana-a-luxury-escape-dhikuli-jim-corbet/index.html",
+      "route": "/destination-wedding/jim-corbett/zana-a-luxury-escape-dhikuli-jim-corbet/"
+    },
+    {
+      "file": "site-public/destination-wedding/jodhpur/index.html",
+      "route": "/destination-wedding/jodhpur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jodhpur/indana-palace-jodhpur/index.html",
+      "route": "/destination-wedding/jodhpur/indana-palace-jodhpur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jodhpur/radisson-hotel-jodhpur/index.html",
+      "route": "/destination-wedding/jodhpur/radisson-hotel-jodhpur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jodhpur/ranbanka-palace-jodhpur/index.html",
+      "route": "/destination-wedding/jodhpur/ranbanka-palace-jodhpur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jodhpur/taj-hari-mahal-jodhpur/index.html",
+      "route": "/destination-wedding/jodhpur/taj-hari-mahal-jodhpur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jodhpur/umaid-bhawan-palace-jodhpur/index.html",
+      "route": "/destination-wedding/jodhpur/umaid-bhawan-palace-jodhpur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jodhpur/welcomheritage-bal-samand-lake-palace-jodhpur/index.html",
+      "route": "/destination-wedding/jodhpur/welcomheritage-bal-samand-lake-palace-jodhpur/"
+    },
+    {
+      "file": "site-public/destination-wedding/jodhpur/welcomhotel-by-itc-hotels-jodhpur/index.html",
+      "route": "/destination-wedding/jodhpur/welcomhotel-by-itc-hotels-jodhpur/"
+    },
+    {
+      "file": "site-public/destination-wedding/karjat/index.html",
+      "route": "/destination-wedding/karjat/"
+    },
+    {
+      "file": "site-public/destination-wedding/karnal/index.html",
+      "route": "/destination-wedding/karnal/"
+    },
+    {
+      "file": "site-public/destination-wedding/karnal/noormahal-palace-karnal/index.html",
+      "route": "/destination-wedding/karnal/noormahal-palace-karnal/"
+    },
+    {
+      "file": "site-public/destination-wedding/karnataka/index.html",
+      "route": "/destination-wedding/karnataka/"
+    },
+    {
+      "file": "site-public/destination-wedding/karnataka/coorg-marriott-resort-and-spa/index.html",
+      "route": "/destination-wedding/karnataka/coorg-marriott-resort-and-spa/"
+    },
+    {
+      "file": "site-public/destination-wedding/karnataka/gateway-coorg-karnataka/index.html",
+      "route": "/destination-wedding/karnataka/gateway-coorg-karnataka/"
+    },
+    {
+      "file": "site-public/destination-wedding/karnataka/taj-madikeri-resort-and-spa/index.html",
+      "route": "/destination-wedding/karnataka/taj-madikeri-resort-and-spa/"
+    },
+    {
+      "file": "site-public/destination-wedding/kasauli/index.html",
+      "route": "/destination-wedding/kasauli/"
+    },
+    {
+      "file": "site-public/destination-wedding/kasauli/fortune-select-forest-hill-mahiya-kasauli/index.html",
+      "route": "/destination-wedding/kasauli/fortune-select-forest-hill-mahiya-kasauli/"
+    },
+    {
+      "file": "site-public/destination-wedding/kerala/index.html",
+      "route": "/destination-wedding/kerala/"
+    },
+    {
+      "file": "site-public/destination-wedding/kerala/taj-bekal-resort-and-spa-kerala/index.html",
+      "route": "/destination-wedding/kerala/taj-bekal-resort-and-spa-kerala/"
+    },
+    {
+      "file": "site-public/destination-wedding/kerala/taj-kumarakom-resort-and-spa-kerala/index.html",
+      "route": "/destination-wedding/kerala/taj-kumarakom-resort-and-spa-kerala/"
+    },
+    {
+      "file": "site-public/destination-wedding/kerala/taj-wayanad-resort-and-spa-kerala/index.html",
+      "route": "/destination-wedding/kerala/taj-wayanad-resort-and-spa-kerala/"
+    },
+    {
+      "file": "site-public/destination-wedding/khimsar/index.html",
+      "route": "/destination-wedding/khimsar/"
+    },
+    {
+      "file": "site-public/destination-wedding/khimsar/welcomhotel-by-itc-hotels-fort-and-dunes-khimsar/index.html",
+      "route": "/destination-wedding/khimsar/welcomhotel-by-itc-hotels-fort-and-dunes-khimsar/"
+    },
+    {
+      "file": "site-public/destination-wedding/khopoli/index.html",
+      "route": "/destination-wedding/khopoli/"
+    },
+    {
+      "file": "site-public/destination-wedding/kochi/index.html",
+      "route": "/destination-wedding/kochi/"
+    },
+    {
+      "file": "site-public/destination-wedding/kochi/courtyard-by-marriott-kochi-airport/index.html",
+      "route": "/destination-wedding/kochi/courtyard-by-marriott-kochi-airport/"
+    },
+    {
+      "file": "site-public/destination-wedding/kochi/grand-hyatt-kochi-bolgatty/index.html",
+      "route": "/destination-wedding/kochi/grand-hyatt-kochi-bolgatty/"
+    },
+    {
+      "file": "site-public/destination-wedding/kochi/le-meridien-kochi/index.html",
+      "route": "/destination-wedding/kochi/le-meridien-kochi/"
+    },
+    {
+      "file": "site-public/destination-wedding/kochi/radisson-blu-kochi/index.html",
+      "route": "/destination-wedding/kochi/radisson-blu-kochi/"
+    },
+    {
+      "file": "site-public/destination-wedding/kolkata/index.html",
+      "route": "/destination-wedding/kolkata/"
+    },
+    {
+      "file": "site-public/destination-wedding/kolkata/hyatt-regency-kolkata/index.html",
+      "route": "/destination-wedding/kolkata/hyatt-regency-kolkata/"
+    },
+    {
+      "file": "site-public/destination-wedding/kolkata/itc-sonar-a-luxury-collection-hotel-kolkata/index.html",
+      "route": "/destination-wedding/kolkata/itc-sonar-a-luxury-collection-hotel-kolkata/"
+    },
+    {
+      "file": "site-public/destination-wedding/kolkata/jw-marriott-hotel-kolkata/index.html",
+      "route": "/destination-wedding/kolkata/jw-marriott-hotel-kolkata/"
+    },
+    {
+      "file": "site-public/destination-wedding/kolkata/novotel-kolkata-hotel-and-residences/index.html",
+      "route": "/destination-wedding/kolkata/novotel-kolkata-hotel-and-residences/"
+    },
+    {
+      "file": "site-public/destination-wedding/kolkata/taj-bengal-kolkata/index.html",
+      "route": "/destination-wedding/kolkata/taj-bengal-kolkata/"
+    },
+    {
+      "file": "site-public/destination-wedding/kovalam/index.html",
+      "route": "/destination-wedding/kovalam/"
+    },
+    {
+      "file": "site-public/destination-wedding/kovalam/the-leela-kovalam-a-raviz-hotel/index.html",
+      "route": "/destination-wedding/kovalam/the-leela-kovalam-a-raviz-hotel/"
+    },
+    {
+      "file": "site-public/destination-wedding/lakshadweep/index.html",
+      "route": "/destination-wedding/lakshadweep/"
+    },
+    {
+      "file": "site-public/destination-wedding/lonavala/index.html",
+      "route": "/destination-wedding/lonavala/"
+    },
+    {
+      "file": "site-public/destination-wedding/lucknow/index.html",
+      "route": "/destination-wedding/lucknow/"
+    },
+    {
+      "file": "site-public/destination-wedding/lucknow/hyatt-regency-lucknow/index.html",
+      "route": "/destination-wedding/lucknow/hyatt-regency-lucknow/"
+    },
+    {
+      "file": "site-public/destination-wedding/lucknow/novotel-lucknow-gomti-nagar/index.html",
+      "route": "/destination-wedding/lucknow/novotel-lucknow-gomti-nagar/"
+    },
+    {
+      "file": "site-public/destination-wedding/lucknow/taj-mahal-lucknow/index.html",
+      "route": "/destination-wedding/lucknow/taj-mahal-lucknow/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/index.html",
+      "route": "/destination-wedding/mumbai/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/courtyard-by-marriott-mumbai-international-airport/index.html",
+      "route": "/destination-wedding/mumbai/courtyard-by-marriott-mumbai-international-airport/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/fairmont-mumbai/index.html",
+      "route": "/destination-wedding/mumbai/fairmont-mumbai/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/four-seasons-hotel-mumbai/index.html",
+      "route": "/destination-wedding/mumbai/four-seasons-hotel-mumbai/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/grand-hyatt-mumbai-hotel-and-residences/index.html",
+      "route": "/destination-wedding/mumbai/grand-hyatt-mumbai-hotel-and-residences/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/intercontinental-marine-drive-mumbai-by-ihg/index.html",
+      "route": "/destination-wedding/mumbai/intercontinental-marine-drive-mumbai-by-ihg/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/itc-maratha-mumbai/index.html",
+      "route": "/destination-wedding/mumbai/itc-maratha-mumbai/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/jw-marriott-mumbai-juhu/index.html",
+      "route": "/destination-wedding/mumbai/jw-marriott-mumbai-juhu/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/jw-marriott-mumbai-sahar/index.html",
+      "route": "/destination-wedding/mumbai/jw-marriott-mumbai-sahar/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/novotel-mumbai-juhu-beach/index.html",
+      "route": "/destination-wedding/mumbai/novotel-mumbai-juhu-beach/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/radisson-blu-mumbai-international-airport/index.html",
+      "route": "/destination-wedding/mumbai/radisson-blu-mumbai-international-airport/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/sofitel-mumbai-bkc/index.html",
+      "route": "/destination-wedding/mumbai/sofitel-mumbai-bkc/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/taj-lands-end-mumbai/index.html",
+      "route": "/destination-wedding/mumbai/taj-lands-end-mumbai/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/taj-santacruz-mumbai/index.html",
+      "route": "/destination-wedding/mumbai/taj-santacruz-mumbai/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/the-leela-mumbai/index.html",
+      "route": "/destination-wedding/mumbai/the-leela-mumbai/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/the-oberoi-mumbai/index.html",
+      "route": "/destination-wedding/mumbai/the-oberoi-mumbai/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/the-st-regis-mumbai/index.html",
+      "route": "/destination-wedding/mumbai/the-st-regis-mumbai/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/the-taj-mahal-palace-mumbai/index.html",
+      "route": "/destination-wedding/mumbai/the-taj-mahal-palace-mumbai/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/the-westin-mumbai-powai-lake/index.html",
+      "route": "/destination-wedding/mumbai/the-westin-mumbai-powai-lake/"
+    },
+    {
+      "file": "site-public/destination-wedding/mumbai/trident-nariman-point-mumbai/index.html",
+      "route": "/destination-wedding/mumbai/trident-nariman-point-mumbai/"
+    },
+    {
+      "file": "site-public/destination-wedding/mussoorie/index.html",
+      "route": "/destination-wedding/mussoorie/"
+    },
+    {
+      "file": "site-public/destination-wedding/mussoorie/jaypee-residency-manor/index.html",
+      "route": "/destination-wedding/mussoorie/jaypee-residency-manor/"
+    },
+    {
+      "file": "site-public/destination-wedding/mussoorie/jw-marriott-mussoorie-walnut-grove-resort-and-spa/index.html",
+      "route": "/destination-wedding/mussoorie/jw-marriott-mussoorie-walnut-grove-resort-and-spa/"
+    },
+    {
+      "file": "site-public/destination-wedding/mussoorie/royal-orchid-fort-resort-mussoorie/index.html",
+      "route": "/destination-wedding/mussoorie/royal-orchid-fort-resort-mussoorie/"
+    },
+    {
+      "file": "site-public/destination-wedding/mussoorie/welcomhotel-by-itc-hotels-the-savoy/index.html",
+      "route": "/destination-wedding/mussoorie/welcomhotel-by-itc-hotels-the-savoy/"
+    },
+    {
+      "file": "site-public/destination-wedding/noida/index.html",
+      "route": "/destination-wedding/noida/"
+    },
+    {
+      "file": "site-public/destination-wedding/noida/crown-plaza-greater-noida-by-ihg/index.html",
+      "route": "/destination-wedding/noida/crown-plaza-greater-noida-by-ihg/"
+    },
+    {
+      "file": "site-public/destination-wedding/pune/index.html",
+      "route": "/destination-wedding/pune/"
+    },
+    {
+      "file": "site-public/destination-wedding/pune/conrad-pune/index.html",
+      "route": "/destination-wedding/pune/conrad-pune/"
+    },
+    {
+      "file": "site-public/destination-wedding/pune/jw-marriott-hotel-pune/index.html",
+      "route": "/destination-wedding/pune/jw-marriott-hotel-pune/"
+    },
+    {
+      "file": "site-public/destination-wedding/pune/radisson-blu-hotel-pune-kharadi/index.html",
+      "route": "/destination-wedding/pune/radisson-blu-hotel-pune-kharadi/"
+    },
+    {
+      "file": "site-public/destination-wedding/pune/sheraton-grand-pune-bund-garden-hotel/index.html",
+      "route": "/destination-wedding/pune/sheraton-grand-pune-bund-garden-hotel/"
+    },
+    {
+      "file": "site-public/destination-wedding/pune/the-ritz-carlton-pune/index.html",
+      "route": "/destination-wedding/pune/the-ritz-carlton-pune/"
+    },
+    {
+      "file": "site-public/destination-wedding/pune/the-westin-pune-koregaon-park/index.html",
+      "route": "/destination-wedding/pune/the-westin-pune-koregaon-park/"
+    },
+    {
+      "file": "site-public/destination-wedding/pushkar/index.html",
+      "route": "/destination-wedding/pushkar/"
+    },
+    {
+      "file": "site-public/destination-wedding/pushkar/ananta-resort-pushkar/index.html",
+      "route": "/destination-wedding/pushkar/ananta-resort-pushkar/"
+    },
+    {
+      "file": "site-public/destination-wedding/pushkar/pushkara-resort-and-spa/index.html",
+      "route": "/destination-wedding/pushkar/pushkara-resort-and-spa/"
+    },
+    {
+      "file": "site-public/destination-wedding/pushkar/regenta-spa-and-resort-pushkar/index.html",
+      "route": "/destination-wedding/pushkar/regenta-spa-and-resort-pushkar/"
+    },
+    {
+      "file": "site-public/destination-wedding/raipur/index.html",
+      "route": "/destination-wedding/raipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/raipur/courtyard-by-marriott-raipur/index.html",
+      "route": "/destination-wedding/raipur/courtyard-by-marriott-raipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/raipur/mayfair-lake-resort-raipur/index.html",
+      "route": "/destination-wedding/raipur/mayfair-lake-resort-raipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/ranthambore/index.html",
+      "route": "/destination-wedding/ranthambore/"
+    },
+    {
+      "file": "site-public/destination-wedding/ranthambore/nahargarh-ranthambhore/index.html",
+      "route": "/destination-wedding/ranthambore/nahargarh-ranthambhore/"
+    },
+    {
+      "file": "site-public/destination-wedding/ranthambore/ranthambore-bagh-palace/index.html",
+      "route": "/destination-wedding/ranthambore/ranthambore-bagh-palace/"
+    },
+    {
+      "file": "site-public/destination-wedding/ranthambore/taj-sawai-ranthambore/index.html",
+      "route": "/destination-wedding/ranthambore/taj-sawai-ranthambore/"
+    },
+    {
+      "file": "site-public/destination-wedding/ranthambore/zana-forest-resort-ranthambore/index.html",
+      "route": "/destination-wedding/ranthambore/zana-forest-resort-ranthambore/"
+    },
+    {
+      "file": "site-public/destination-wedding/rishikesh/index.html",
+      "route": "/destination-wedding/rishikesh/"
+    },
+    {
+      "file": "site-public/destination-wedding/rishikesh/taj-rishikesh-resort-and-spa/index.html",
+      "route": "/destination-wedding/rishikesh/taj-rishikesh-resort-and-spa/"
+    },
+    {
+      "file": "site-public/destination-wedding/rishikesh/the-westin-resort-and-spa-himalayas/index.html",
+      "route": "/destination-wedding/rishikesh/the-westin-resort-and-spa-himalayas/"
+    },
+    {
+      "file": "site-public/destination-wedding/sakleshpur/index.html",
+      "route": "/destination-wedding/sakleshpur/"
+    },
+    {
+      "file": "site-public/destination-wedding/shimla/index.html",
+      "route": "/destination-wedding/shimla/"
+    },
+    {
+      "file": "site-public/destination-wedding/shimla/taj-theog-resort-and-spa-shimla/index.html",
+      "route": "/destination-wedding/shimla/taj-theog-resort-and-spa-shimla/"
+    },
+    {
+      "file": "site-public/destination-wedding/surat/index.html",
+      "route": "/destination-wedding/surat/"
+    },
+    {
+      "file": "site-public/destination-wedding/surat/hilton-garden-inn-surat-city-centre/index.html",
+      "route": "/destination-wedding/surat/hilton-garden-inn-surat-city-centre/"
+    },
+    {
+      "file": "site-public/destination-wedding/trivandrum/index.html",
+      "route": "/destination-wedding/trivandrum/"
+    },
+    {
+      "file": "site-public/destination-wedding/trivandrum/hilton-garden-inn-trivandrum/index.html",
+      "route": "/destination-wedding/trivandrum/hilton-garden-inn-trivandrum/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/index.html",
+      "route": "/destination-wedding/udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/aurika-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/aurika-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/chunda-palace-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/chunda-palace-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/fairmont-udaipur-palace/index.html",
+      "route": "/destination-wedding/udaipur/fairmont-udaipur-palace/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/holymont-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/holymont-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/hotel-lakend-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/hotel-lakend-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/justa-sajjangarh-resort-and-spa-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/justa-sajjangarh-resort-and-spa-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/labh-garh-palace-resort-and-spa-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/labh-garh-palace-resort-and-spa-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/mementos-by-itc-hotels-ekaaya-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/mementos-by-itc-hotels-ekaaya-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/raajsa-resort-kumbhalgarh-ihcl-seleqtions-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/raajsa-resort-kumbhalgarh-ihcl-seleqtions-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/raas-devigarh-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/raas-devigarh-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/radisson-blu-palace-resort-and-spa-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/radisson-blu-palace-resort-and-spa-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/raffles-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/raffles-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/ramada-by-wyndham-udaipur-resort-and-spa/index.html",
+      "route": "/destination-wedding/udaipur/ramada-by-wyndham-udaipur-resort-and-spa/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/taj-aravali-resort-and-spa-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/taj-aravali-resort-and-spa-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/taj-fateh-prakash-palace-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/taj-fateh-prakash-palace-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/taj-lake-palace-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/taj-lake-palace-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/taj-lalit-bagh-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/taj-lalit-bagh-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/the-ananta-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/the-ananta-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/the-lalit-laxmi-vilas-palace-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/the-lalit-laxmi-vilas-palace-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/the-leela-palace-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/the-leela-palace-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/the-oberoi-udaivilas-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/the-oberoi-udaivilas-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/trident-udaipur/index.html",
+      "route": "/destination-wedding/udaipur/trident-udaipur/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/udaipur-marriott-hotel/index.html",
+      "route": "/destination-wedding/udaipur/udaipur-marriott-hotel/"
+    },
+    {
+      "file": "site-public/destination-wedding/udaipur/wyndham-grand-udaipur-fatehsagar-lake/index.html",
+      "route": "/destination-wedding/udaipur/wyndham-grand-udaipur-fatehsagar-lake/"
+    },
+    {
+      "file": "site-public/destination-wedding/vrindavan/index.html",
+      "route": "/destination-wedding/vrindavan/"
+    },
+    {
+      "file": "site-public/faqs/index.html",
+      "route": "/faqs/"
+    },
+    {
+      "file": "site-public/get_in_touch/store/index.html",
+      "route": "/get_in_touch/store/"
+    },
+    {
+      "file": "site-public/hotel-cost-calculator/index.html",
+      "route": "/hotel-cost-calculator/"
+    },
+    {
+      "file": "site-public/hotel-listing/index.html",
+      "route": "/hotel-listing/"
+    },
+    {
+      "file": "site-public/index.html",
+      "route": "/index.html/"
+    },
+    {
+      "file": "site-public/package/index.html",
+      "route": "/package/"
+    },
+    {
+      "file": "site-public/past-weddings-all/index.html",
+      "route": "/past-weddings-all/"
+    },
+    {
+      "file": "site-public/privacy-policy/index.html",
+      "route": "/privacy-policy/"
+    },
+    {
+      "file": "site-public/real-weddings/index.html",
+      "route": "/real-weddings/"
+    },
+    {
+      "file": "site-public/real-weddings/aarav-meera/index.html",
+      "route": "/real-weddings/aarav-meera/"
+    },
+    {
+      "file": "site-public/real-weddings/kashyap-prachi/index.html",
+      "route": "/real-weddings/kashyap-prachi/"
+    },
+    {
+      "file": "site-public/real-weddings/ramneek-harleen/index.html",
+      "route": "/real-weddings/ramneek-harleen/"
+    },
+    {
+      "file": "site-public/real-weddings/rohan-aanya/index.html",
+      "route": "/real-weddings/rohan-aanya/"
+    },
+    {
+      "file": "site-public/terms-of-use/index.html",
+      "route": "/terms-of-use/"
+    },
+    {
+      "file": "site-public/wedding-consultation/index.html",
+      "route": "/wedding-consultation/"
+    },
+    {
+      "file": "site-public/wedding-packages/index.html",
+      "route": "/wedding-packages/"
+    },
+    {
+      "file": "site-public/wedding-packages/shobhana/index.html",
+      "route": "/wedding-packages/shobhana/"
+    },
+    {
+      "file": "site-public/wedding-packages/shresht/index.html",
+      "route": "/wedding-packages/shresht/"
+    },
+    {
+      "file": "site-public/wedding-packages/siddhi/index.html",
+      "route": "/wedding-packages/siddhi/"
+    }
+  ],
+  "publicJsFiles": [
+    "site-public/js/city-filter-mobile.js",
+    "site-public/js/cookie-consent.js",
+    "site-public/js/currency-switcher.js",
+    "site-public/js/hotel-listing.js",
+    "site-public/js/lead-forms.js",
+    "site-public/js/mutation-observer-guard.js",
+    "site-public/js/site-search.js"
+  ],
+  "pageTypePatterns": [
+    {
+      "pattern": "/",
+      "type": "homepage",
+      "count": 1
+    },
+    {
+      "pattern": "/destination-wedding/{city}/{slug}/",
+      "type": "venue-detail",
+      "glob": "site-public/destination-wedding/*/*/index.html"
+    },
+    {
+      "pattern": "/destination-wedding/{city}/",
+      "type": "city-index",
+      "glob": "site-public/destination-wedding/*/index.html"
+    },
+    {
+      "pattern": "/destination-wedding-in-{city}/",
+      "type": "city-landing",
+      "glob": "site-public/destination-wedding-in-*/index.html"
+    },
+    {
+      "pattern": "/blogs/{slug}/",
+      "type": "blog-article",
+      "glob": "site-public/blogs/*/index.html"
+    },
+    {
+      "pattern": "/blogs/category/{slug}/",
+      "type": "blog-category",
+      "glob": "site-public/blogs/category/*/index.html"
+    },
+    {
+      "pattern": "/blogs/tag/{slug}/",
+      "type": "blog-tag",
+      "glob": "site-public/blogs/tag/*/index.html"
+    },
+    {
+      "pattern": "/real-weddings/{slug}/",
+      "type": "real-wedding",
+      "glob": "site-public/real-weddings/*/index.html"
+    },
+    {
+      "pattern": "/wedding-packages/{tier}/",
+      "type": "wedding-package",
+      "glob": "site-public/wedding-packages/*/index.html"
+    }
+  ],
+  "publicForms": [
+    {
+      "id": "contactForm",
+      "page": "/contact/",
+      "endpoint": "/api/lead",
+      "handler": "worker/lead-email.ts"
+    },
+    {
+      "id": "consultationForm",
+      "page": "/wedding-consultation/",
+      "endpoint": "/api/lead",
+      "handler": "worker/lead-email.ts"
+    },
+    {
+      "id": "enquiryForm",
+      "page": "/destination-wedding/{city}/{slug}/",
+      "endpoint": "/api/lead",
+      "handler": "worker/lead-email.ts"
+    },
+    {
+      "id": "ctaEnquiryForm",
+      "page": "/destination-wedding-in-{city}/",
+      "endpoint": "/api/lead",
+      "handler": "worker/lead-email.ts"
+    },
+    {
+      "id": "contactForm",
+      "page": "/blogs/{slug}/",
+      "endpoint": "/api/lead",
+      "handler": "worker/lead-email.ts"
+    },
+    {
+      "id": "availabilityWizard",
+      "page": "/check-hotel-availability/",
+      "endpoint": "/api/lead",
+      "handler": "worker/lead-email.ts"
+    },
+    {
+      "id": "filterForm",
+      "page": "/hotel-listing/",
+      "endpoint": "GET /hotel-listing",
+      "handler": "client-side hotel-listing.js"
+    }
+  ],
+  "workerSiteFiles": [
+    "worker/site/blog-inject.ts",
+    "worker/site/blog.ts",
+    "worker/site/calculator-prices.ts",
+    "worker/site/hero.ts",
+    "worker/site/hotel-inject.ts",
+    "worker/site/hotel.ts",
+    "worker/site/inject.ts",
+    "worker/site/json-ld.ts",
+    "worker/site/labels.ts",
+    "worker/site/media.ts",
+    "worker/site/public-html.ts",
+    "worker/site/public-routes.ts",
+    "worker/site/resolve-page.ts",
+    "worker/site/settings.ts",
+    "worker/site/sitemap.ts",
+    "worker/site/static-routes.generated.ts",
+    "worker/site/template.ts",
+    "worker/site/venue-listing.ts"
+  ]
+}

@@ -1,0 +1,1 @@
+ALTER TABLE `hotels` ADD `card_pax` text DEFAULT '' NOT NULL;

@@ -1,12 +1,42 @@
 /** Cloudflare Worker entry point for the Viraaya Weddings static clone. */
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
-import { calculatorData } from "./calculator-data";
-import { handleLeadRequest, type LeadEmailEnv } from "./lead-email";
+import {
+  getCalculatorData,
+  getIndiaCityIds,
+  getIndiaCompareHotelIds,
+  getIndiaHotelIds,
+} from "./calculator-runtime";
+import { handleLeadRequest, issueLeadCsrfToken, type LeadEmailEnv } from "./lead-email";
+import { legacyLeadGetResponse, searchHotels, withDeprecatedLeadHeaders } from "./public-endpoints";
+import { isMediaPath, serveMedia } from "./site/media";
+import { loadCalculatorPrices } from "./site/calculator-prices";
+import { enhancePublicHtml } from "./site/public-html";
+import { CONSULTATION_SLOTS, publicRedirectTarget } from "./site/public-routes";
+import { buildSitemapXml } from "./site/sitemap";
+import { loadSiteSettings } from "./site/settings";
+import { loadHeroSlides } from "./site/hero";
+import { injectManagedContent, isHtmlResponse, needsInjection } from "./site/inject";
+import {
+  BLOG_LISTING_PATHS,
+  BLOG_SHELL_PATH,
+  blogSlugFromPath,
+  blogTaxonomyFromPath,
+  loadPublishedPosts,
+  postsForTaxonomy,
+} from "./site/blog";
+import { HOTEL_SHELL_PATH, hotelPathFrom, loadHotels } from "./site/hotel";
+import { cityFromListingPath, venuesForCity } from "./site/venue-listing";
+import { resolvePage } from "./site/resolve-page";
+import { getDb } from "./db/client";
+import { getSessionUser } from "./admin/session";
+import { loadCityPage, templateResponse } from "./site/template";
+import { loadLabels } from "./site/labels";
 
 interface Env extends LeadEmailEnv {
   ASSETS?: Fetcher;
   DB?: D1Database;
+  MEDIA?: R2Bucket;
   IMAGES?: {
     input(stream: ReadableStream): {
       transform(options: Record<string, unknown>): {
@@ -39,22 +69,6 @@ const STATIC_ASSET_EXTENSIONS = new Set([
   "woff",
   "woff2",
 ]);
-const INDIA_CITY_IDS = new Set([
-  "8", "28", "70", "32", "31", "69", "34", "23", "17", "40", "67", "13", "18", "46", "15", "4",
-  "7", "36", "43", "44", "27", "47", "5", "9", "12", "6", "71", "55", "24", "51", "21", "56",
-  "72", "19", "25", "20", "68", "73", "1", "26", "10", "2", "16", "30", "35", "33", "11",
-  "42", "14", "29", "22", "3", "41",
-]);
-const INDIA_HOTEL_IDS = new Set(
-  Object.entries(calculatorData.hotelsByCity)
-    .filter(([cityId]) => INDIA_CITY_IDS.has(String(cityId)))
-    .flatMap(([, hotels]) => hotels.map((hotel) => String(hotel.id))),
-);
-const INDIA_COMPARE_HOTEL_IDS = new Set(
-  Object.entries(calculatorData.compareHotelsByCity)
-    .filter(([cityId]) => INDIA_CITY_IDS.has(String(cityId)))
-    .flatMap(([, hotels]) => hotels.map((hotel) => String(hotel.id))),
-);
 const BLOCKED_PUBLIC_DATA_PATHS = new Set([
   "/data/calculator/calculator-data.json",
   "/data/calculator/availability-data.json",
@@ -112,12 +126,21 @@ const worker = {
       return withSecurityHeaders(Response.redirect(url, 308), url);
     }
 
+    const redirectTarget = publicRedirectTarget(url.pathname);
+    if ((request.method === "GET" || request.method === "HEAD") && redirectTarget) {
+      return withSecurityHeaders(Response.redirect(new URL(redirectTarget, url.origin), 301), url);
+    }
+
     if (url.pathname === "/_vinext/image") {
       const allowedWidths = [...DEFAULT_DEVICE_SIZES, ...DEFAULT_IMAGE_SIZES];
       const imageResponse = await handleImageOptimization(request, {
         fetchAsset: (path) => {
-          if (!env.ASSETS) return fetch(new URL(path, request.url));
-          return env.ASSETS.fetch(new Request(new URL(path, request.url)));
+          const target = new URL(path, request.url);
+          // Images uploaded through the admin panel live in R2, not the asset
+          // store, so they would otherwise be unreachable to the optimiser.
+          if (isMediaPath(target.pathname)) return serveMedia(env, target.pathname, "GET");
+          if (!env.ASSETS) return fetch(target);
+          return env.ASSETS.fetch(new Request(target));
         },
         transformImage: async (body, { width, format, quality }) => {
           if (!env.IMAGES) {
@@ -135,13 +158,30 @@ const worker = {
       return withSecurityHeaders(imageResponse, url);
     }
 
+    if ((request.method === "GET" || request.method === "HEAD") && isMediaPath(url.pathname)) {
+      return withSecurityHeaders(await serveMedia(env, url.pathname, request.method), url);
+    }
+
+    // The admin panel is app-router rendered and must never be cached or
+    // indexed. Its own static files (favicon) still come from ASSETS below.
+    if (isAdminPath(url.pathname) && !isStaticAssetPath(url.pathname)) {
+      const adminResponse = await handler.fetch(request, env, ctx);
+      return withAdminHeaders(adminResponse, url);
+    }
+
     const localResponse = await getLocalEndpointResponse(request, env, url, localJsonHeaders);
     if (localResponse) return withSecurityHeaders(localResponse, url);
 
     if (request.method === "GET" || request.method === "HEAD") {
+      // Managed pages are built from the database: shell and content both come
+      // from D1, and no file in site-public is consulted. Anything the database
+      // does not own falls through to the static asset handling below.
+      const fromDatabase = await serveFromDatabase(env, url, request);
+      if (fromDatabase) return fromDatabase;
+
       if (!env.ASSETS) {
         const nodeStaticResponse = await getNodeStaticResponse(request, url);
-        if (nodeStaticResponse) return withCacheHeaders(nodeStaticResponse, url);
+        if (nodeStaticResponse) return serveManagedPage(nodeStaticResponse, url, env);
 
         if (!url.pathname.includes(".")) {
           const indexPath = url.pathname.endsWith("/")
@@ -149,15 +189,15 @@ const worker = {
             : `${url.pathname}/index.html`;
           const indexUrl = new URL(indexPath, url.origin);
           const indexResponse = await handler.fetch(new Request(indexUrl, request), env, ctx);
-          if (indexResponse.status !== 404) return withCacheHeaders(indexResponse, indexUrl);
+          if (indexResponse.status !== 404) return serveManagedPage(indexResponse, indexUrl, env);
         }
 
         const response = await handler.fetch(request, env, ctx);
-        return withCacheHeaders(response, url);
+        return serveManagedPage(response, url, env);
       }
 
       const directAsset = await env.ASSETS.fetch(request);
-      if (directAsset.status !== 404) return withCacheHeaders(directAsset, url);
+      if (directAsset.status !== 404) return serveManagedPage(directAsset, url, env);
 
       if (!url.pathname.includes(".")) {
         const indexPath = url.pathname.endsWith("/")
@@ -165,14 +205,28 @@ const worker = {
           : `${url.pathname}/index.html`;
         const indexUrl = new URL(indexPath, url.origin);
         const indexAsset = await env.ASSETS.fetch(new Request(indexUrl, request));
-        if (indexAsset.status !== 404) return withCacheHeaders(indexAsset, indexUrl);
+        if (indexAsset.status !== 404) return serveManagedPage(indexAsset, indexUrl, env);
       }
 
+      // Posts and venues added in the admin panel have no file of their own,
+      // so they are rendered into the shell of an existing page.
+      const shellResponse = await serveBlogFromShell(request, env, url);
+      if (shellResponse) return shellResponse;
+
+      const venueResponse = await serveHotelFromShell(request, env, url);
+      if (venueResponse) return venueResponse;
+
+      const notFound = await serveCustom404(env, request, url);
+      if (notFound) return notFound;
     }
 
     const response = await handler.fetch(request, env, ctx);
+    if ((request.method === "GET" || request.method === "HEAD") && response.status === 404) {
+      const notFound = await serveCustom404(env, request, url);
+      if (notFound) return notFound;
+    }
     return request.method === "GET" || request.method === "HEAD"
-      ? withCacheHeaders(response, url)
+      ? serveManagedPage(response, url, env)
       : withSecurityHeaders(response, url);
   },
 };
@@ -184,28 +238,37 @@ async function getLocalEndpointResponse(
   headers: HeadersInit,
 ): Promise<Response | null> {
   if (BLOCKED_PUBLIC_DATA_PATHS.has(url.pathname)) {
-    return new Response("Not found", {
-      status: 404,
-      headers: {
-        "content-type": "text/plain; charset=utf-8",
-        "cache-control": "no-store",
+    return Response.json(
+      {
+        error: "Not found",
+        hint: "Use /data/calculator/cities.json, /data/calculator/hotels-by-city.json, or /api/calculator/availability-data instead.",
       },
-    });
+      {
+        status: 404,
+        headers: {
+          "content-type": "application/json; charset=utf-8",
+          "cache-control": "no-store",
+        },
+      },
+    );
   }
 
   if (url.pathname === "/data/calculator/cities.json") {
-    const cities = calculatorData.cities.filter((city) => INDIA_CITY_IDS.has(String(city.id)));
+    const [data, indiaCityIds] = await Promise.all([getCalculatorData(), getIndiaCityIds()]);
+    const cities = data.cities.filter((city) => indiaCityIds.has(String(city.id)));
     return Response.json(cities, { headers });
   }
 
   if (url.pathname === "/data/calculator/currencies.json") {
-    return Response.json(calculatorData.currencies.filter((currency) => currency.code === "INR"), { headers });
+    const data = await getCalculatorData();
+    return Response.json(data.currencies.filter((currency) => currency.code === "INR"), { headers });
   }
 
   if (url.pathname === "/data/calculator/hotels-by-city.json") {
+    const [data, indiaCityIds] = await Promise.all([getCalculatorData(), getIndiaCityIds()]);
     const hotelsByCity = Object.fromEntries(
-      Object.entries(calculatorData.hotelsByCity)
-        .filter(([cityId]) => INDIA_CITY_IDS.has(String(cityId)))
+      Object.entries(data.hotelsByCity)
+        .filter(([cityId]) => indiaCityIds.has(String(cityId)))
         .map(([cityId, hotels]) => [
           cityId,
           hotels.map((hotel) => ({
@@ -220,7 +283,8 @@ async function getLocalEndpointResponse(
   }
 
   if (url.pathname === "/data/calculator/hotels.json") {
-    const hotels = Object.values(calculatorData.hotelsByCity)
+    const data = await getCalculatorData();
+    const hotels = Object.values(data.hotelsByCity)
       .flat()
       .map((hotel) => ({
         id: hotel.id,
@@ -232,7 +296,32 @@ async function getLocalEndpointResponse(
   }
 
   if (url.pathname === "/data/calculator/prices.json") {
-    return Response.json(calculatorData.prices, { headers });
+    const prices = await loadCalculatorPrices(env);
+    return Response.json(prices, { headers });
+  }
+
+  if (url.pathname === "/api/lead/csrf" && request.method === "GET") {
+    const issued = issueLeadCsrfToken(url.protocol === "https:");
+    return Response.json(
+      { token: issued.token },
+      {
+        headers: {
+          ...headers,
+          "cache-control": "no-store",
+          "set-cookie": issued.cookie,
+        },
+      },
+    );
+  }
+
+  if (url.pathname === "/sitemap.xml" && (request.method === "GET" || request.method === "HEAD")) {
+    const xml = await buildSitemapXml(url.origin, env);
+    return new Response(request.method === "HEAD" ? null : xml, {
+      headers: {
+        "content-type": "application/xml; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+      },
+    });
   }
 
   if (url.pathname === "/api/lead") {
@@ -240,11 +329,31 @@ async function getLocalEndpointResponse(
   }
 
   if (url.pathname === "/api/currencies") {
-    return Response.json(calculatorData.currencies.filter((currency) => currency.code === "INR"), { headers });
+    const data = await getCalculatorData();
+    return Response.json(data.currencies.filter((currency) => currency.code === "INR"), { headers });
   }
 
-  if (url.pathname === "/api/currencies/select") {
-    return Response.json({ ok: true }, { headers });
+  if (url.pathname === "/api/currencies/select" && request.method === "POST") {
+    const body = (await request.json().catch(() => ({}))) as { currency?: unknown; code?: unknown };
+    const currency = String(body.currency || body.code || "INR")
+      .trim()
+      .toUpperCase()
+      .slice(0, 8);
+    const secure = url.protocol === "https:";
+    return Response.json(
+      { ok: true, currency },
+      {
+        headers: {
+          ...headers,
+          "cache-control": "no-store",
+          "set-cookie": `selected_currency=${currency}; Path=/; Max-Age=31536000; SameSite=Lax${secure ? "; Secure" : ""}`,
+        },
+      },
+    );
+  }
+
+  if (url.pathname.startsWith("/hotel-search")) {
+    return searchHotels(request);
   }
 
   if (url.pathname === "/storage") {
@@ -256,29 +365,12 @@ async function getLocalEndpointResponse(
     });
   }
 
-  if (url.pathname.startsWith("/hotel-search")) {
-    const query = (url.searchParams.get("q") || "").trim().toLowerCase();
-    if (!query) return Response.json([], { headers });
-
-    const results = calculatorData.searchIndex
-      .filter((hotel) => INDIA_HOTEL_IDS.has(String(hotel.id)))
-      .filter((hotel) => hotel.hotel_name.toLowerCase().includes(query))
-      .sort((a, b) => a.hotel_name.localeCompare(b.hotel_name, "en", { sensitivity: "base" }))
-      .slice(0, 8)
-      .map((hotel) => ({
-        id: hotel.id,
-        hotel_name: hotel.hotel_name,
-        city: null,
-      }));
-
-    return Response.json(results, { headers });
-  }
-
   if (url.pathname === "/get-cities") {
     if (!isSameOriginBrowserRequest(request, url)) return blockedDataResponse(headers);
     const query = (url.searchParams.get("search") || "").trim().toLowerCase();
-    const cities = calculatorData.cities
-      .filter((city) => INDIA_CITY_IDS.has(String(city.id)))
+    const [data, indiaCityIds] = await Promise.all([getCalculatorData(), getIndiaCityIds()]);
+    const cities = data.cities
+      .filter((city) => indiaCityIds.has(String(city.id)))
       .filter((city) => city.name.toLowerCase().includes(query));
 
     return Response.json(cities, { headers });
@@ -286,29 +378,34 @@ async function getLocalEndpointResponse(
 
   if (url.pathname === "/api/calculator/availability-data") {
     if (!isSameOriginBrowserRequest(request, url)) return blockedDataResponse(headers);
-    return Response.json(getAvailabilityData(), { headers });
+    return Response.json(await getAvailabilityData(), { headers });
   }
 
   if (url.pathname === "/get-hotels-by-city") {
     if (!isSameOriginBrowserRequest(request, url)) return blockedDataResponse(headers);
     const cityId = url.searchParams.get("city") || "";
-    return Response.json(getCompareHotelsForCity(cityId), { headers });
+    return Response.json(await getCompareHotelsForCity(cityId), { headers });
   }
 
   if (url.pathname.startsWith("/get-hotels-by-city/")) {
     if (!isSameOriginBrowserRequest(request, url)) return blockedDataResponse(headers);
     const cityId = decodeURIComponent(url.pathname.split("/").filter(Boolean)[1] || "");
-    return Response.json(getHotelsForCity(cityId), { headers });
+    return Response.json(await getHotelsForCity(cityId), { headers });
   }
 
   if (url.pathname.startsWith("/get-hotel-price/")) {
     if (!isSameOriginBrowserRequest(request, url)) return blockedDataResponse(headers);
+    const [prices, indiaHotelIds, indiaCompareHotelIds] = await Promise.all([
+      loadCalculatorPrices(env),
+      getIndiaHotelIds(),
+      getIndiaCompareHotelIds(),
+    ]);
     const [, hotelId = "", month = ""] = url.pathname
       .split("/")
       .filter(Boolean)
       .map(decodeURIComponent);
-    const hotelPrices = (INDIA_HOTEL_IDS.has(String(hotelId)) || INDIA_COMPARE_HOTEL_IDS.has(String(hotelId)))
-      ? calculatorData.prices[hotelId as keyof typeof calculatorData.prices]
+    const hotelPrices = (indiaHotelIds.has(String(hotelId)) || indiaCompareHotelIds.has(String(hotelId)))
+      ? prices[hotelId as keyof typeof prices]
       : undefined;
     const price = normalizePrice(hotelPrices?.[month as keyof typeof hotelPrices]);
     return Response.json(price, { headers });
@@ -316,19 +413,20 @@ async function getLocalEndpointResponse(
 
   if (url.pathname === "/get-hotel-prices") {
     if (!isSameOriginBrowserRequest(request, url)) return blockedDataResponse(headers);
+    const prices = await loadCalculatorPrices(env);
     const payload = request.method === "POST" ? await readHotelPricesPayload(request) : { hotelIds: [], checkin: "" };
     const hotelIds = payload.hotelIds;
     const checkin = payload.checkin;
     const month = getMonthName(checkin) || "January";
-    const hotels = hotelIds
-      .map((hotelId) => getComparableHotel(hotelId, month))
-      .filter((hotel) => hotel !== null);
+    const hotels = (
+      await Promise.all(hotelIds.map((hotelId) => getComparableHotel(hotelId, month, prices)))
+    ).filter((hotel) => hotel !== null);
 
     return Response.json(hotels, { headers });
   }
 
   if (url.pathname === "/appointment/slots") {
-    return Response.json(["10:00", "11:00", "12:00", "14:00", "15:00", "16:00"], { headers });
+    return Response.json([...CONSULTATION_SLOTS], { headers });
   }
 
   if (
@@ -336,22 +434,247 @@ async function getLocalEndpointResponse(
     url.pathname === "/get_in_touch/store" ||
     url.pathname === "/blog-form-submit"
   ) {
-    return handleLeadRequest(request, env, url);
+    if (request.method === "GET" || request.method === "HEAD") return legacyLeadGetResponse();
+    const leadResponse = await handleLeadRequest(request, env, url);
+    return withDeprecatedLeadHeaders(leadResponse);
   }
 
   return null;
 }
 
-function withCacheHeaders(response: Response, url: URL) {
+function withCacheHeaders(response: Response, url: URL, cacheControlOverride?: string) {
   const headers = new Headers(response.headers);
 
-  if (isStaticAssetPath(url.pathname)) {
+  if (cacheControlOverride) {
+    headers.delete("cache-control");
+    headers.set("cache-control", cacheControlOverride);
+  } else if (isStaticAssetPath(url.pathname)) {
     headers.delete("cache-control");
     headers.set("cache-control", `public, max-age=${ONE_YEAR}, immutable`);
   } else if (isHtmlPath(url.pathname)) {
     headers.delete("cache-control");
     headers.set("cache-control", "public, max-age=300, stale-while-revalidate=86400");
   }
+
+  return withSecurityHeaders(new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  }), url);
+}
+
+/**
+ * Pages whose content an admin can change are cached far more briefly than the
+ * untouched static HTML, so an edit shows up quickly.
+ */
+const MANAGED_CACHE_CONTROL = "public, max-age=30";
+
+/**
+ * Applies admin-managed content to an HTML response. Pages fall through
+ * untouched — and keep their original cache policy — until something has
+ * actually been customised.
+ */
+/**
+ * Renders a database-only post using a published article's markup as the shell.
+ * Returns null when the path is not a published post, letting the normal 404
+ * handling take over.
+ */
+async function serveBlogFromShell(request: Request, env: Env, url: URL): Promise<Response | null> {
+  const slug = blogSlugFromPath(url.pathname);
+  if (!slug || !env.ASSETS) return null;
+
+  const posts = await loadPublishedPosts(env);
+  const post = posts.find((candidate) => candidate.slug === slug);
+  if (!post) return null;
+
+  const shellUrl = new URL(BLOG_SHELL_PATH, url.origin);
+  const shell = await env.ASSETS.fetch(new Request(shellUrl, request));
+  // Anything other than a straight 200 (a redirect, an error) is not usable as
+  // a template and must not be forwarded to the visitor.
+  if (shell.status !== 200) return null;
+
+  const input = {
+    settings: await loadSiteSettings(env),
+    heroSlides: [],
+    blogPosts: posts,
+    taxonomyPosts: [],
+    blogPost: post,
+    hotel: null,
+    venues: [],
+    cityVenues: [],
+    cityPage: null,
+    labels: await loadLabels(env),
+  };
+
+  return withCacheHeaders(
+    injectManagedContent(shell, `/blogs/${slug}`, input, url.origin),
+    url,
+    MANAGED_CACHE_CONTROL,
+  );
+}
+
+/**
+ * Renders a database-only venue using a published venue's markup as the shell.
+ * Returns null when the path is not a published venue, letting the normal 404
+ * handling take over.
+ */
+async function serveHotelFromShell(request: Request, env: Env, url: URL): Promise<Response | null> {
+  const path = hotelPathFrom(url.pathname);
+  if (!path || !env.ASSETS) return null;
+
+  const venues = await loadHotels(env);
+  const venue = venues.find((candidate) => candidate.city === path.city && candidate.slug === path.slug);
+  if (!venue) return null;
+
+  const shellUrl = new URL(HOTEL_SHELL_PATH, url.origin);
+  const shell = await env.ASSETS.fetch(new Request(shellUrl, request));
+  // Anything other than a straight 200 is not usable as a template.
+  if (shell.status !== 200) return null;
+
+  const input = {
+    settings: await loadSiteSettings(env),
+    heroSlides: [],
+    blogPosts: [],
+    taxonomyPosts: [],
+    blogPost: null,
+    hotel: venue,
+    venues,
+    cityVenues: [],
+    cityPage: await loadCityPage(env, path.city),
+    labels: await loadLabels(env),
+  };
+
+  return withCacheHeaders(
+    injectManagedContent(shell, `/destination-wedding/${path.city}/${path.slug}`, input, url.origin),
+    url,
+    MANAGED_CACHE_CONTROL,
+  );
+}
+
+/**
+ * Renders a page entirely from the database. Returns null when the path is not
+ * database-owned, or when its shell is missing, so the caller can fall back to
+ * the original file rather than lose the page.
+ */
+/**
+ * True when this request may see unpublished content.
+ *
+ * Gated on a real admin session rather than on a token in the URL: a draft is
+ * an unfinished public page, and the people who need to see one are exactly
+ * the people who can already sign in.
+ */
+async function isPreviewRequest(env: Env, url: URL, request: Request): Promise<boolean> {
+  if (url.searchParams.get("preview") !== "1") return false;
+  const db = await getDb(env);
+  if (!db) return false;
+  return Boolean(await getSessionUser(db, request));
+}
+
+async function serveFromDatabase(env: Env, url: URL, request: Request): Promise<Response | null> {
+  const preview = await isPreviewRequest(env, url, request);
+  const resolved = await resolvePage(env, url.pathname, { preview });
+  if (!resolved) return null;
+
+  const response = injectManagedContent(
+    templateResponse(resolved.html),
+    resolved.pathname,
+    resolved.input,
+    url.origin,
+  );
+
+  // A preview may contain unpublished content, so it is never cached and never
+  // indexed, whatever the page's normal headers would have been.
+  if (preview) {
+    const headers = new Headers(response.headers);
+    headers.set("cache-control", "no-store, no-cache, must-revalidate");
+    headers.set("x-robots-tag", "noindex, nofollow, noarchive");
+    return withSecurityHeaders(new Response(response.body, { status: response.status, headers }), url);
+  }
+
+  return withCacheHeaders(response, url, MANAGED_CACHE_CONTROL);
+}
+
+async function serveManagedPage(response: Response, url: URL, env: Env): Promise<Response> {
+  if (!isHtmlResponse(response)) return withCacheHeaders(response, url);
+
+  const input = await loadManagedContent(env, url.pathname);
+  const applyChanges = needsInjection(url.pathname, input);
+  const rewritten = injectManagedContent(response, url.pathname, input, url.origin, applyChanges);
+  const enhanced = await enhancePublicHtml(rewritten, url.pathname);
+  return withCacheHeaders(enhanced, url, applyChanges ? MANAGED_CACHE_CONTROL : undefined);
+}
+
+async function serveCustom404(env: Env, request: Request, url: URL): Promise<Response | null> {
+  if (url.pathname.includes(".")) return null;
+
+  const fetch404 = async (target: URL): Promise<Response | null> => {
+    if (env.ASSETS) {
+      const asset = await env.ASSETS.fetch(new Request(target, request));
+      if (asset.status === 200) return asset;
+    }
+    return getNodeStaticResponse(request, target);
+  };
+
+  const target = new URL("/404.html", url.origin);
+  const page = await fetch404(target);
+  if (!page) return null;
+
+  const input = await loadManagedContent(env, url.pathname);
+  const rewritten = injectManagedContent(page, url.pathname, input, url.origin, false);
+  const enhanced = await enhancePublicHtml(rewritten, url.pathname);
+  return withCacheHeaders(
+    new Response(enhanced.body, { status: 404, headers: enhanced.headers }),
+    url,
+  );
+}
+
+/**
+ * Only the data a given page can actually use is fetched: hero slides are
+ * homepage-only and posts are blog-only, so most pages cost a single lookup.
+ */
+async function loadManagedContent(env: Env, pathname: string) {
+  const wantsHero = pathname === "/" || pathname === "/index.html";
+  const slug = blogSlugFromPath(pathname);
+  const taxonomy = blogTaxonomyFromPath(pathname);
+  const wantsPosts = Boolean(slug) || Boolean(taxonomy) || BLOG_LISTING_PATHS.has(pathname);
+  const hotelPath = hotelPathFrom(pathname);
+  const listingCity = cityFromListingPath(pathname);
+
+  const [settings, heroSlides, blogPosts, venues] = await Promise.all([
+    loadSiteSettings(env),
+    wantsHero ? loadHeroSlides(env) : Promise.resolve([]),
+    wantsPosts ? loadPublishedPosts(env) : Promise.resolve([]),
+    hotelPath || listingCity ? loadHotels(env) : Promise.resolve([]),
+  ]);
+
+  return {
+    settings,
+    heroSlides,
+    blogPosts,
+    blogPost: slug ? blogPosts.find((post) => post.slug === slug) ?? null : null,
+    taxonomyPosts: taxonomy ? await postsForTaxonomy(env, taxonomy, blogPosts) : [],
+    hotel: hotelPath
+      ? venues.find((venue) => venue.city === hotelPath.city && venue.slug === hotelPath.slug) ?? null
+      : null,
+    venues,
+    cityVenues: listingCity ? await venuesForCity(env, listingCity, venues) : [],
+    cityPage: listingCity
+      ? await loadCityPage(env, listingCity)
+      : hotelPath
+        ? await loadCityPage(env, hotelPath.city)
+        : null,
+    labels: await loadLabels(env),
+  };
+}
+
+function isAdminPath(pathname: string) {
+  return pathname === "/admin" || pathname.startsWith("/admin/");
+}
+
+function withAdminHeaders(response: Response, url: URL) {
+  const headers = new Headers(response.headers);
+  headers.set("cache-control", "no-store, no-cache, must-revalidate");
+  headers.set("x-robots-tag", "noindex, nofollow, noarchive");
 
   return withSecurityHeaders(new Response(response.body, {
     status: response.status,
@@ -447,19 +770,21 @@ function contentTypeFor(filePath: string) {
   return types[extension || ""] || "application/octet-stream";
 }
 
-function getHotelsForCity(cityId: string) {
-  if (!INDIA_CITY_IDS.has(String(cityId))) return [];
-  const hotels = calculatorData.hotelsByCity[cityId as keyof typeof calculatorData.hotelsByCity] || [];
+async function getHotelsForCity(cityId: string) {
+  const [data, indiaCityIds] = await Promise.all([getCalculatorData(), getIndiaCityIds()]);
+  if (!indiaCityIds.has(String(cityId))) return [];
+  const hotels = data.hotelsByCity[cityId as keyof typeof data.hotelsByCity] || [];
   return hotels.map((hotel) => ({
     ...hotel,
     hotel_name: hotel.name,
   }));
 }
 
-function getCompareHotelsForCity(cityId: string) {
-  if (!INDIA_CITY_IDS.has(String(cityId))) return [];
-  const hotels = calculatorData.compareHotelsByCity[cityId as keyof typeof calculatorData.compareHotelsByCity]
-    || calculatorData.hotelsByCity[cityId as keyof typeof calculatorData.hotelsByCity]
+async function getCompareHotelsForCity(cityId: string) {
+  const [data, indiaCityIds] = await Promise.all([getCalculatorData(), getIndiaCityIds()]);
+  if (!indiaCityIds.has(String(cityId))) return [];
+  const hotels = data.compareHotelsByCity[cityId as keyof typeof data.compareHotelsByCity]
+    || data.hotelsByCity[cityId as keyof typeof data.hotelsByCity]
     || [];
 
   return hotels.map((hotel) => ({
@@ -470,9 +795,10 @@ function getCompareHotelsForCity(cityId: string) {
   }));
 }
 
-function getAvailabilityData() {
-  const cities = calculatorData.cities
-    .filter((city) => INDIA_CITY_IDS.has(String(city.id)))
+async function getAvailabilityData() {
+  const [data, indiaCityIds] = await Promise.all([getCalculatorData(), getIndiaCityIds()]);
+  const cities = data.cities
+    .filter((city) => indiaCityIds.has(String(city.id)))
     .map((city) => ({
       id: city.id,
       name: city.name,
@@ -481,7 +807,7 @@ function getAvailabilityData() {
   const hotelsByCity = Object.fromEntries(
     cities.map((city) => [
       String(city.id),
-      (calculatorData.hotelsByCity[String(city.id) as keyof typeof calculatorData.hotelsByCity] || []).map((hotel) => ({
+      (data.hotelsByCity[String(city.id) as keyof typeof data.hotelsByCity] || []).map((hotel) => ({
         id: hotel.id,
         name: hotel.name,
       })),
@@ -489,7 +815,7 @@ function getAvailabilityData() {
   );
 
   return {
-    generated_at: calculatorData.generated_at,
+    generated_at: data.generated_at,
     cities,
     hotelsByCity,
   };
@@ -583,15 +909,20 @@ async function readHotelPricesPayload(request: Request) {
   };
 }
 
-function getComparableHotel(hotelId: string, month: string) {
-  for (const [cityId, hotels] of Object.entries(calculatorData.compareHotelsByCity)) {
-    if (!INDIA_CITY_IDS.has(String(cityId))) continue;
+async function getComparableHotel(
+  hotelId: string,
+  month: string,
+  prices: Awaited<ReturnType<typeof getCalculatorData>>["prices"],
+) {
+  const [data, indiaCityIds] = await Promise.all([getCalculatorData(), getIndiaCityIds()]);
+  for (const [cityId, hotels] of Object.entries(data.compareHotelsByCity)) {
+    if (!indiaCityIds.has(String(cityId))) continue;
     const hotel = hotels.find((candidate) => String(candidate.id) === String(hotelId));
     if (!hotel) continue;
 
-    const city = calculatorData.cities.find((candidate) => String(candidate.id) === cityId);
-    const prices = calculatorData.prices[String(hotel.id) as keyof typeof calculatorData.prices];
-    const price = normalizePrice(prices?.[month as keyof typeof prices]);
+    const city = data.cities.find((candidate) => String(candidate.id) === cityId);
+    const hotelPrices = prices[String(hotel.id) as keyof typeof prices];
+    const price = normalizePrice(hotelPrices?.[month as keyof typeof hotelPrices]);
 
     return {
       id: hotel.id,

@@ -113,6 +113,7 @@ button:hover,
 input[type=submit]:hover {cursor: pointer;color: #B98230;}
 
 form .lead-field-invalid {border-color: #c62828 !important;box-shadow: 0 0 0 2px rgba(198, 40, 40, 0.12) !important;}
+.lead-field-error {margin-top: 5px;color: #9f1d1d;font-size: 12px;line-height: 1.3;font-family: "Inter", sans-serif;}
 .lead-form-status {display: none;width: 100%;margin-top: 12px;padding: 10px 12px;border-radius: 8px;font-size: 14px;line-height: 1.35;font-family: "Inter", sans-serif;}
 .lead-form-status--pending,
 .lead-form-status--success,
@@ -122,6 +123,22 @@ form .lead-field-invalid {border-color: #c62828 !important;box-shadow: 0 0 0 2px
 .lead-form-status--error {background: #fff0f0;color: #9f1d1d;border: 1px solid #f0c7c7;}
 
 html, body {overflow-x: hidden;margin-top: 45px;}
+
+body {
+    --site-page-gutter: clamp(24px, 3.6vw, 70px);
+}
+
+.js-header > .container,
+#main > section > .container,
+#main > section > .container-fluid,
+#main > .banner-bottom-list > .container,
+#main > footer.main-footer > .container {
+    max-width: none;
+    width: 100%;
+    padding-left: var(--site-page-gutter);
+    padding-right: var(--site-page-gutter);
+    box-sizing: border-box;
+}
 
 h1 {font-family: "Readex Pro", sans-serif;font-size: 58px;font-weight: 600;color: #ffffff;}
 
@@ -317,14 +334,18 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 /* END BANNER CSS */
 
 /* Luxury Venues CSS */
-.luxury-venues-wrapper {padding: 100px 0px 70px 0px;}
+.luxury-venues-wrapper {padding: 100px 0px 70px 0px;background-color: #ffffff;}
+.luxury-venues-wrapper > .container {max-width: none;width: 100%;}
 
 .luxury-venues-wrapper .content-widget {display: flex;flex-direction: column;height: 100%;justify-content: space-between;}
+.luxury-venues-wrapper:not(.post-wedding-wrapper) .content-widget {justify-content: flex-start;gap: 18px;}
+.luxury-venues-wrapper:not(.post-wedding-wrapper) .content-widget .content02 {margin-top: 0;}
 
 .all-heading {line-height: 41px;margin-top: -7px;}
 
 .luxury-venues-wrapper .content-widget .content p {margin-top: 14px;line-height: 1.60;}
-.venue-card {border-radius: 20px;border: 1px solid rgba(74, 60, 51, 0.16);overflow: hidden;}
+.luxury-venues-wrapper .venue-section-heading {font-size: 32px !important;line-height: 1.18;}
+.venue-card {border-radius: 20px;border: 1px solid rgba(74, 60, 51, 0.16);overflow: hidden;background-color: #ffffff;}
 .venue-card .venue-title {line-height: 1.6;}
  .venue-card .venue-location {color: rgb(58 45 37 / 70%);gap: 5px;line-height: 1.6;letter-spacing: 0.02em;}
 .venue-card .venue-img {overflow: hidden;border-radius: 20px; height: 170px;}
@@ -350,6 +371,8 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .luxury-venues-wrapper .content-widget .content02 a.btn {height: 48px;width: 188px;letter-spacing: 0.04em;}
 .product-slider .slick-slide {padding: 0 12px;box-sizing: border-box;}
 .product-slider .slick-list {margin: 0 -12px;}
+.luxury-venues-wrapper .product-slider .slick-slide {padding: 0 8px;}
+.luxury-venues-wrapper .product-slider .slick-list {margin: 0 -8px;}
 
 /* END CSS */
 
@@ -433,6 +456,10 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .deal-season-wrapper {z-index: 99;padding: 64px 0px;}
 .deal-season-wrapper .container-fluid {max-width: 1600px;width: 94%;}
 .post-wedding-wrapper .content-widget .content02 a.btn {width: 202px;height: 48px;}
+.luxury-venues-wrapper.post-wedding-wrapper .content-widget {justify-content: flex-start;gap: 24px;}
+.luxury-venues-wrapper.post-wedding-wrapper .content-widget .content02 {margin-top: 0;}
+.luxury-venues-wrapper.post-wedding-wrapper .success-stories-heading {font-size: 32px !important;line-height: 1.18;}
+.luxury-venues-wrapper.post-wedding-wrapper .success-stories-line {white-space: nowrap;}
 .luxury-venues-wrapper.post-wedding-wrapper {padding-bottom: 115px;background-color: rgb(255 244 233 / 50%);}
 .deal-season-wrapper:before {position: absolute;content: '';background-image: url('../images/deal-bg.png');width: 100%;height: 100%;background-size: cover;top: 0;z-index: -1;}
 .deal-season-wrapper .widget {padding-bottom: 0px;}
@@ -442,8 +469,11 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .check-in-widget.custom-mt-5 .form-group.dropdown-icon:after {display: none;}
 .deal-season-wrapper .item .img-widget:before {position: absolute;content: '';background: linear-gradient(to top, rgb(0 0 0 / 39%), rgb(255 255 255 / 0%));z-index: 999;width: 100%;height: 100%;left: 0px;border-radius: 32px;}
 .deal-season-wrapper .item .content {position: absolute;bottom: 50px;left: 0;right: 0;text-align: center; width: calc(100% - 41px);margin: 0 auto;z-index: 999;padding: 14px 0px;}
-.deal-season-wrapper .item .content .card-logo img {height: 40px;margin: 0 auto;}
-.deal-season-wrapper .item .content h5 {font-family: 'Felix Titling';font-size: 30px;margin-top: 8px;}
+.deal-season-wrapper .item .content .card-logo {width: 170px;height: 46px;margin: 0 auto;display: flex;align-items: center;justify-content: center;overflow: hidden;}
+.deal-season-wrapper .item .content .card-logo img {width: 150px;height: 42px;margin: 0 auto;object-fit: contain;}
+.deal-season-wrapper .item .content .card-logo--leela img {width: 150px;height: 42px;object-fit: contain;filter: brightness(0) invert(1);}
+.deal-season-wrapper .item .content .card-logo--light-logo img {width: 150px;height: 42px;object-fit: fill;filter: none;}
+.deal-season-wrapper .item .content h5 {font-family: 'Felix Titling';font-size: 30px;margin-top: 8px;line-height: 1.18;}
 .deal-season-slider .slick-slide {padding: 0 12px;box-sizing: border-box;}
 .deal-season-slider .slick-list {margin: 0 -12px;}
 .deal-season-wrapper .item .content p {font-family: "Istok Web", sans-serif;font-size: 11px;margin-top: 6px;margin-bottom: 10px;text-transform: uppercase;}
@@ -511,6 +541,7 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .luxury-feedback {background: linear-gradient(180deg, #FFF8F0, #FBF3E8);padding: 30px 0px;}
 .luxury-feedback .widget .content p {font-size: 13px;color: rgb(80 68 59 / 70%);font-weight: 300;margin-bottom: 0;line-height: 18px;margin-top: 5px;}
 .main-footer .widget .contact-us p {font-family: "Readex Pro", sans-serif;font-size: 13px;text-transform: uppercase;margin-bottom: 10px;font-weight: 500;letter-spacing: 0.04em}
+.main-footer .footer-widget-title {font-family: "Readex Pro", sans-serif;font-size: 12px;letter-spacing: 0.12em;text-transform: uppercase;color: #D0AF73;margin-bottom: 20px;font-weight: 700;}
 
 
 /* Appointment Booking CSS */
@@ -1283,6 +1314,7 @@ body .offcanvas.offcanvas-start {width: 100% !important;min-width: auto;border-r
 
  /* RESPONSIVE */
 @media (max-width: 768px) {
+    body {--site-page-gutter: 12px;}
     .comparison-card .hotel-title { font-size: 0.9rem; }
     .comparison-card .date-cell { font-size: 0.9rem; }
     .comparison-card .total-val { font-size: 1rem; }

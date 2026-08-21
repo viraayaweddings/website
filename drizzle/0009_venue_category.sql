@@ -1,0 +1,1 @@
+ALTER TABLE `hotels` ADD `venue_category` text DEFAULT '' NOT NULL;

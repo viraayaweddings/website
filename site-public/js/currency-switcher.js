@@ -83,6 +83,15 @@ function formatIndianPrice(amount, symbol) {
 
     async function savePreference(code) {
         localStorage.setItem('selected_currency', code);
+        try {
+            await fetch('/api/currencies/select', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({ currency: code }),
+            });
+        } catch (error) {
+            console.warn('Currency preference saved locally only', error);
+        }
     }
 
     return { init, formatPrice };
@@ -201,9 +210,11 @@ const ViraayaCalculatorData = (() => {
         window.fetch = function (input, init) {
             const url = parseRequestUrl(input);
             if (url && url.origin === window.location.origin) {
-                if (url.pathname === '/api/currencies') {
-                    return getCurrencies().then(jsonResponse);
-                }
+            if (url.pathname === '/api/currencies') {
+                return getCurrencies()
+                    .then(jsonResponse)
+                    .catch(() => originalFetch(input, init));
+            }
                 if (url.pathname === '/get-cities') {
                     return getCities(url.searchParams.get('search')).then(jsonResponse);
                 }

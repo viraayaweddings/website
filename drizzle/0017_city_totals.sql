@@ -1,0 +1,1 @@
+ALTER TABLE `city_pages` ADD `total_venues` integer DEFAULT 0 NOT NULL;

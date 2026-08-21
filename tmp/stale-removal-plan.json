@@ -1,6 +1,0 @@
-{
-  "hasHead": true,
-  "len": 10713,
-  "staleStart": 6975,
-  "staleTailSample": "<script type=\"application/ld+json\"> \n\n{ \n\n    \"@context\": \"https://schema.org\", \n\n    \"@type\": \"Article\", \n\n    \"mainEntityOfPage\": { \n\n        \"@type\": \"WebPage\", \n\n        \"@id\": \"https://rategain.com/blog/hotel-booking-engine/\" \n\n    }, \n\n    \"headline\": \"How Hotel Booking Engines Boost Your Business Today\", \n\n    \"description\": \"Discover how modern hotel booking engines increase efficiency and revenue by connecting customers to global travel services. Learn more now.\", \n\n    \"image\": \"https:"
-}

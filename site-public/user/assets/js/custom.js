@@ -398,7 +398,7 @@ initSlick($slider, {
     nextArrow:"<button type='button' class='next custom-arrow'><i class='fa-light fa-angle-right'></i></button>",
     responsive: [
       {
-        breakpoint: 1400,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 2,
           dots: true
@@ -431,7 +431,7 @@ function initProductSlider($el) {
     nextArrow:"<button type='button' class='next custom-arrow'><i class='fa-light fa-angle-right'></i></button>",
     responsive: [
       {
-        breakpoint: 1400,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 2,
           dots: true

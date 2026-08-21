@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /appointment/payment-success/
+Disallow: /appointment/payment-failed/
+Disallow: /appointment-booking/
+
+Sitemap: /sitemap.xml

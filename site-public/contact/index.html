@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -2234,7 +2234,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
                 <div class="section-heading text-center mb-5" data-aos="fade-up">
           <h2 class="all-heading">Contact Us</h2>
-          <p>Have questions or need assistance? We're here to help you 24/7.</p>
+          <p>For wedding venue enquiries, share your details and our team will call you back.</p>
         </div>
         <div class="row">
           <div class="col-lg-4">
@@ -2270,8 +2270,8 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
           </div>
           <div class="col-lg-8 mt-4 mt-lg-0">
             <div class="form-widget" data-aos="fade-up">
-              <h4 class="font-family01 d-flex align-items-center fs-22 text-black"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send w-5 h-5 text-primary"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path><path d="m21.854 2.147-10.94 10.939"></path></svg>Send us a Message</h4>
-                <form action="/contact/save" id="contactForm" method="post"><div class="row">
+              <h4 class="font-family01 d-flex align-items-center fs-22 text-black"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send w-5 h-5 text-primary"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path><path d="m21.854 2.147-10.94 10.939"></path></svg>Client Enquiry</h4>
+                <form action="/contact/save" id="contactForm" method="post" data-form-name="Client Enquiry"><div class="row">
                   <div class="col-lg-6">
                     <div class="form-group">
                       <input type="text" name="name" placeholder="Enter your name" class="form-control " value="" required>
@@ -2283,6 +2283,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                           </div>
                   </div>
                                 <input type="hidden" name="source_page" value="/contact">
+                                <input type="hidden" name="enquiry_type" value="Client Enquiry">
                   <div class="col-lg-6">
                     <div class="form-group">
                       <input type="number" name="number" placeholder="Enter your phone" class="form-control " value="" required>
@@ -2290,12 +2291,12 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
-                      <select name="subject" value="" class="form-control " id="">
-                        <option value="0" selected disabled>SELECT SUBJECT</option>
-                        <option value="Sales">Sales</option>
-                        <option value="Career">Career</option>
-                        <option value="Media">Media</option>
-                        <option value="Other">Other</option>
+                      <select name="subject" value="" class="form-control " id="" required>
+                        <option value="" selected disabled>SELECT ENQUIRY TYPE</option>
+                        <option value="Wedding Venue Enquiry">Wedding Venue Enquiry</option>
+                        <option value="Wedding Package Enquiry">Wedding Package Enquiry</option>
+                        <option value="Consultation Request">Consultation Request</option>
+                        <option value="Other Client Enquiry">Other Client Enquiry</option>
                       </select>
                                            </div>
                 
@@ -2339,7 +2340,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         }
     </style>
 
-    <footer class="main-footer section-padding pb-0">
+            <footer class="main-footer section-padding pb-0">
       <div class="container">
         <div class="row">
           <div class="col-lg-4">
@@ -2350,12 +2351,12 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 <p class="font-family01 text-white">Follow us on</p>
                 <ul class="social-icon d-inline-flex">
                   <li>
-                    <a href="https://www.instagram.com/viraayaweddings/">
+                    <a href="https://www.instagram.com/viraayaweddings/" target="_blank" rel="noopener noreferrer">
                       <i class="fa-brands fa-instagram"></i>
                     </a>
                   </li>
                   <li>
-                    <a href="https://www.linkedin.com/company/viraaya-weddings/">
+                    <a href="https://www.linkedin.com/company/viraaya-weddings/" target="_blank" rel="noopener noreferrer">
                       <i class="fa-brands fa-linkedin-in"></i>
                     </a>
                   </li>
@@ -2367,6 +2368,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             <div class="row">
               <div class="col-lg-4 col-md-4 mt-5 mt-lg-0">
                 <div class="widget">
+                  <h5 class="footer-widget-title">Explore</h5>
                   <ul>
                     <li>
                       <a href="/">Home</a>
@@ -2391,6 +2393,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
               </div>
               <div class="col-lg-4 col-md-4 mt-5 mt-lg-0">
                 <div class="widget">
+                  <h5 class="footer-widget-title">Planning Tools</h5>
                   <ul>
                     <li>
                       <a href="/wedding-consultation">Book Consultation</a>
@@ -2488,18 +2491,6 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
   
 <script>
-
-$(document).ready(function () {
-    $('#contactForm').on('submit', function (e) {
-        e.preventDefault();
-
-        $('#submitBtn').prop('disabled', true);
-        $('#loader').removeClass('d-none');
-        $('.btn-text').text('Processing...');
-
-        this.submit();
-    });
-});
 
 setTimeout(() => {
     const alert = document.getElementById('pageAlert');

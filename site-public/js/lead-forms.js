@@ -3,6 +3,7 @@
     "/api/lead",
     "/contact/save",
     "/blog-form-submit",
+    "/get_in_touch/store",
     "#",
     "",
   ]);
@@ -64,10 +65,16 @@
     }, 50);
   }
 
+  function clearStatus(form) {
+    var status = form.querySelector(".lead-form-status");
+    if (status) status.remove();
+  }
+
   function markInvalid(control, message) {
     control.classList.add("lead-field-invalid");
     control.setAttribute("aria-invalid", "true");
     control.dataset.leadError = message;
+    setFieldError(control, message);
   }
 
   function clearInvalid(form) {
@@ -75,7 +82,37 @@
       control.classList.remove("lead-field-invalid");
       control.removeAttribute("aria-invalid");
       delete control.dataset.leadError;
+      setFieldError(control, "");
     });
+  }
+
+  function fieldErrorId(control) {
+    if (!control.id) control.id = "lead-field-" + Math.random().toString(36).slice(2, 10);
+    return control.id + "-error";
+  }
+
+  function setFieldError(control, message) {
+    var group = control.closest(".form-group") || control.parentElement;
+    if (!group) return;
+
+    var errorId = fieldErrorId(control);
+    var error = group.querySelector("#" + CSS.escape(errorId));
+
+    if (!message) {
+      if (error) error.remove();
+      control.removeAttribute("aria-describedby");
+      return;
+    }
+
+    if (!error) {
+      error = document.createElement("div");
+      error.id = errorId;
+      error.className = "lead-field-error";
+      group.appendChild(error);
+    }
+
+    error.textContent = message;
+    control.setAttribute("aria-describedby", errorId);
   }
 
   function controlValue(control) {
@@ -83,6 +120,41 @@
       return control.checked ? control.value || "Yes" : "";
     }
     return (control.value || "").trim();
+  }
+
+  function validateControl(form, control, showRequired) {
+    if (!control.name || control.disabled || control.type === "hidden" || control.type === "submit" || control.type === "button") {
+      return "";
+    }
+
+    var errors = [];
+    var value = controlValue(control);
+    var label = labelFor(control);
+    var key = fieldKey(control).toLowerCase();
+
+    control.classList.remove("lead-field-invalid");
+    control.removeAttribute("aria-invalid");
+    delete control.dataset.leadError;
+    setFieldError(control, "");
+
+    if (control.required && (!value || /^select\b/i.test(value))) {
+      if (!showRequired) return "";
+      return "Please enter " + label + ".";
+    }
+
+    if (value && (control.type === "email" || key.indexOf("email") !== -1) && !emailPattern.test(value)) {
+      return "Please enter a valid email address.";
+    }
+
+    if (value && /(phone|mobile|number|tel)/i.test(key) && !phonePattern.test(value.replace(/\D/g, ""))) {
+      return "Please enter a valid 10-digit Indian mobile number.";
+    }
+
+    if (value && /name/i.test(key) && value.length < 2) {
+      return "Please enter a valid name.";
+    }
+
+    return errors[0] || "";
   }
 
   function validate(form) {
@@ -93,37 +165,63 @@
     });
 
     controls.forEach(function (control) {
-      var value = controlValue(control);
-      var label = labelFor(control);
-      var key = fieldKey(control).toLowerCase();
-
-      if (control.required && (!value || /^select\b/i.test(value))) {
-        var requiredMessage = "Please enter " + label + ".";
-        errors.push(requiredMessage);
-        markInvalid(control, requiredMessage);
-        return;
-      }
-
-      if (value && (control.type === "email" || key.indexOf("email") !== -1) && !emailPattern.test(value)) {
-        var emailMessage = "Please enter a valid email address.";
-        errors.push(emailMessage);
-        markInvalid(control, emailMessage);
-      }
-
-      if (value && /(phone|mobile|number|tel)/i.test(key) && !phonePattern.test(value.replace(/\D/g, ""))) {
-        var phoneMessage = "Please enter a valid 10-digit Indian mobile number.";
-        errors.push(phoneMessage);
-        markInvalid(control, phoneMessage);
-      }
-
-      if (value && /name/i.test(key) && value.length < 2) {
-        var nameMessage = "Please enter a valid name.";
-        errors.push(nameMessage);
-        markInvalid(control, nameMessage);
-      }
+      var message = validateControl(form, control, true);
+      if (!message) return;
+      errors.push(message);
+      markInvalid(control, message);
     });
 
     return errors;
+  }
+
+  function attachLiveValidation(form) {
+    if (!form) return;
+    form.noValidate = true;
+    form.setAttribute("novalidate", "novalidate");
+    if (form.dataset.leadLiveValidation === "true") return;
+    form.dataset.leadLiveValidation = "true";
+
+    var validateField = function (control, showRequired) {
+      var message = validateControl(form, control, showRequired);
+      if (message) {
+        markInvalid(control, message);
+      }
+      return message;
+    };
+
+    var bindControl = function (control) {
+      if (!control.name || control.disabled || control.type === "hidden" || control.type === "submit" || control.type === "button") return;
+
+      var onInput = function () {
+        validateField(control, false);
+      };
+      var onBlur = function () {
+        validateField(control, true);
+      };
+      var onInvalid = function (event) {
+        event.preventDefault();
+        validateField(control, true);
+      };
+
+      if (window.jQuery) {
+        window.jQuery(control).on("input.leadValidation change.leadValidation", onInput);
+        window.jQuery(control).on("blur.leadValidation", onBlur);
+      } else {
+        control.addEventListener("input", onInput);
+        control.addEventListener("change", onInput);
+        control.addEventListener("blur", onBlur);
+      }
+
+      control.addEventListener("invalid", onInvalid);
+    };
+
+    Array.from(form.elements).forEach(bindControl);
+  }
+
+  function attachLiveValidationToLeadForms(root) {
+    Array.from((root || document).querySelectorAll("form")).forEach(function (form) {
+      if (isLeadForm(form)) attachLiveValidation(form);
+    });
   }
 
   function formTitle(form) {
@@ -136,6 +234,22 @@
     }
     return "Website Query";
   }
+
+  var csrfToken = "";
+
+  async function ensureCsrfToken() {
+    if (csrfToken) return csrfToken;
+    var response = await fetch("/api/lead/csrf", {
+      method: "GET",
+      credentials: "same-origin",
+      headers: { Accept: "application/json" },
+    });
+    var data = await response.json().catch(function () { return {}; });
+    csrfToken = data.token || "";
+    return csrfToken;
+  }
+
+  window.viraayaLeadCsrf = ensureCsrfToken;
 
   function payload(form) {
     var fields = {};
@@ -216,12 +330,40 @@
     }
   }
 
+  function showSuccessPanel(form) {
+    var container = form.closest(".enquiry-popup-form");
+    if (!container) return false;
+
+    var existing = container.querySelector(".enquiry-success-panel");
+    if (!existing) {
+      existing = document.createElement("div");
+      existing.className = "enquiry-success-panel";
+      existing.setAttribute("role", "status");
+      existing.setAttribute("aria-live", "polite");
+      existing.setAttribute("tabindex", "-1");
+      existing.innerHTML = [
+        '<span class="enquiry-success-icon" aria-hidden="true"></span>',
+        '<h5>Your venue shortlist request is in.</h5>',
+        '<p>Our senior wedding planner will call within 24 hours with handpicked venue options for your celebration.</p>',
+        '<small>Thank you for choosing Viraaya Weddings.</small>'
+      ].join("");
+      form.insertAdjacentElement("afterend", existing);
+    }
+
+    form.reset();
+    form.hidden = true;
+    form.setAttribute("aria-hidden", "true");
+    existing.hidden = false;
+    existing.focus({ preventScroll: true });
+    return true;
+  }
+
   async function submitLead(form) {
     var button = submitButton(form);
     var errors = validate(form);
 
     if (errors.length) {
-      setStatus(form, errors[0], "error");
+      clearStatus(form);
       var firstInvalid = form.querySelector(".lead-field-invalid");
       if (firstInvalid) firstInvalid.focus({ preventScroll: false });
       return;
@@ -231,13 +373,15 @@
     setStatus(form, "Sending your enquiry...", "pending");
 
     try {
+      var body = payload(form);
+      body.csrfToken = await ensureCsrfToken();
       var response = await fetch("/api/lead", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
         },
-        body: JSON.stringify(payload(form)),
+        body: JSON.stringify(body),
       });
       var data = await response.json().catch(function () { return {}; });
 
@@ -247,8 +391,10 @@
         return;
       }
 
-      setStatus(form, data.message || "Thanks. We will get back to you shortly.", "success");
-      form.reset();
+      if (!showSuccessPanel(form)) {
+        setStatus(form, data.message || "Thanks. We will get back to you shortly.", "success");
+        form.reset();
+      }
     } catch (error) {
       setStatus(form, "Could not send your enquiry right now.", "error");
     } finally {
@@ -327,9 +473,18 @@
     hideFallbackModal(document.querySelector("#BookConsultation[data-fallback-open='true'], #enquiryModal[data-fallback-open='true']"));
   });
 
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function () {
+      attachLiveValidationToLeadForms(document);
+    });
+  } else {
+    attachLiveValidationToLeadForms(document);
+  }
+
   document.addEventListener("submit", function (event) {
     var form = event.target;
     if (!(form instanceof HTMLFormElement) || !isLeadForm(form)) return;
+    attachLiveValidation(form);
     event.preventDefault();
     event.stopImmediatePropagation();
     submitLead(form);
