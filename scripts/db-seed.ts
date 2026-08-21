@@ -1,7 +1,5 @@
 import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 import { seedSiteContent } from "../worker/db/seed-content.ts";
 import * as schema from "../worker/db/schema.ts";
 
@@ -17,12 +15,11 @@ if (!url) {
   process.exit(1);
 }
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const client = postgres(url, { max: 1, prepare: false, ssl: "require" });
 const db = drizzle(client, { schema });
 
 try {
-  const result = await seedSiteContent(db, root);
+  const result = await seedSiteContent(db);
   console.log(
     `Seeded ${result.statementsRun} statements from ${result.files} files` +
       (result.ignoredErrors ? ` (${result.ignoredErrors} duplicates skipped)` : "") +

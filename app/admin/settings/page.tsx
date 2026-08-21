@@ -1,5 +1,6 @@
 // Reads the session cookie on every request; never prerender or cache.
 export const dynamic = "force-dynamic";
+export const maxDuration = 300;
 
 import { sql } from "drizzle-orm";
 import { hotels } from "@/worker/db/schema";

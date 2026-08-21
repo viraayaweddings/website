@@ -34,3 +34,7 @@ declare module "next/navigation" {
 declare module "next/link" {
   export { default } from "vinext/shims/link";
 }
+
+declare module "next/server" {
+  export { NextRequest, NextResponse } from "vinext/shims/server";
+}
