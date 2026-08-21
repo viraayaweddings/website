@@ -1,4 +1,5 @@
 import vinext from "vinext";
+import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 import { sites } from "./build/sites-vite-plugin.ts";
 
@@ -10,5 +11,5 @@ export default defineConfig({
   server: isCodexSeatbeltSandbox
     ? { watch: { useFsEvents: false, usePolling: true } }
     : undefined,
-  plugins: [vinext(), sites()],
+  plugins: [vinext(), nitro(), sites()],
 });
