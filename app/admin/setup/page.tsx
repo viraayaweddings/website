@@ -6,7 +6,7 @@ import { MIN_PASSWORD_LENGTH } from "@/worker/admin/password";
 import { SubmitButton } from "../_components/FormControls";
 import { Monogram } from "../_components/icons";
 import { Alert, Card, Field } from "../_components/ui";
-import { hasAnyUser, LOGIN_PATH, requireDb } from "../_lib/auth";
+import { hasAnyUser, LOGIN_PATH, requireDb, DatabaseUnavailableError } from "../_lib/auth";
 import { createFirstAdminAction } from "./actions";
 
 const ERRORS: Record<string, string> = {
@@ -16,12 +16,38 @@ const ERRORS: Record<string, string> = {
   weak: `Choose a stronger password: at least ${MIN_PASSWORD_LENGTH} characters, including a letter and a number.`,
 };
 
+function dbErrorMessage(error: unknown): string {
+  if (error instanceof DatabaseUnavailableError) return error.message;
+  if (error instanceof Error && error.message) return error.message;
+  return "Could not connect to the database. Confirm POSTGRES_URL is set in Vercel, redeploy, then open /admin/health.";
+}
+
 export default async function SetupPage({
   searchParams,
 }: {
   searchParams: Promise<{ error?: string }>;
 }) {
-  const db = await requireDb();
+  let db;
+  try {
+    db = await requireDb();
+  } catch (error) {
+    const params = await searchParams;
+    return (
+      <div className="flex min-h-screen items-center justify-center px-4 py-10">
+        <div className="w-full max-w-md">
+          <Card>
+            <Alert tone="error">{dbErrorMessage(error)}</Alert>
+            {params.error ? (
+              <div className="mt-4">
+                <Alert tone="error">{ERRORS[params.error] || "Could not create the account."}</Alert>
+              </div>
+            ) : null}
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
   if (await hasAnyUser(db)) redirect(LOGIN_PATH);
 
   const params = await searchParams;
