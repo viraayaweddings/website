@@ -49,11 +49,6 @@ async function serve(request: Request): Promise<Response> {
     return handler.fetch(new Request(request.url, { method: request.method, headers }));
   }
 
-  if (pathname === "/wedding-consultation") {
-    url.pathname = "/wedding-consultation/";
-    return Response.redirect(url, 308);
-  }
-
   const redirectTarget = publicRedirectTarget(pathname);
   if (redirectTarget) {
     return Response.redirect(new URL(redirectTarget, url.origin), 301);

@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-22T12:00:49.628Z",
-  "gitCommit": "6b1b4eb0e64e72344f05a9b71e9bc8838a8938fa",
-  "gitCommitShort": "6b1b4eb0",
+  "generatedAt": "2026-08-22T12:03:53.452Z",
+  "gitCommit": "5c1d39e60daf5d3592cdc4115a873209191d58a4",
+  "gitCommitShort": "5c1d39e6",
   "projectVersion": "0.1.0",
   "counts": {
     "routes": 47,
     "serverActions": 39,
     "dbTables": 20,
-    "workerEndpoints": 26,
+    "workerEndpoints": 25,
     "adminComponents": 18,
     "adminFiles": 72,
     "staticSiteRoutes": 370,
@@ -518,8 +518,7 @@
     "/get_in_touch",
     "/hotel-search",
     "/index.html",
-    "/media",
-    "/wedding-consultation"
+    "/media"
   ],
   "adminComponents": [
     "app/admin/_components/AdminHeaderBar.tsx",

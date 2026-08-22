@@ -4,9 +4,9 @@
 | ----- | ----- |
 | Documentation version | 1.0.0 |
 | Project version | 0.1.0 |
-| Last updated | 2026-08-22T12:00:50.098Z |
-| Last audited commit | `6b1b4eb0` (`6b1b4eb0e64e72344f05a9b71e9bc8838a8938fa`) |
-| Last sync run | 2026-08-22T12:00:50.098Z |
+| Last updated | 2026-08-22T12:03:53.929Z |
+| Last audited commit | `5c1d39e6` (`5c1d39e60daf5d3592cdc4115a873209191d58a4`) |
+| Last sync run | 2026-08-22T12:03:53.929Z |
 | Synchronization status | Run `npm run docs:validate` for current status |
 | Coverage scope | Admin panel (complete), public website (complete), worker/API/DB (complete) |
 
@@ -17,7 +17,7 @@
 | App routes | 47 |
 | Server actions | 39 |
 | Database tables | 20 |
-| Worker endpoint patterns | 26 |
+| Worker endpoint patterns | 25 |
 | Admin components | 18 |
 | Admin source files | 72 |
 | Static site pages | 370 |
@@ -30,4 +30,4 @@
 
 | Date | Code version | Documentation change | Reason |
 | ---- | ------------ | -------------------- | ------ |
-| 2026-08-22 | `6b1b4eb0` | Initial master documentation system | Full project audit |
+| 2026-08-22 | `5c1d39e6` | Initial master documentation system | Full project audit |

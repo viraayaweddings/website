@@ -53,6 +53,15 @@ function isAlreadyModelled(path) {
   return false;
 }
 
+/**
+ * Form targets and API paths. A cloned page exists for some of them because the
+ * crawl followed a POST target, but the app answers these itself -- storing one
+ * would offer an editor a page no visitor can reach.
+ */
+function isEndpoint(path) {
+  return APP_OWNED_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`));
+}
+
 function decode(value) {
   return String(value)
     .replace(/&amp;/g, "&")
@@ -77,6 +86,7 @@ async function walk(dir) {
 }
 
 const { PUBLIC_REDIRECTS } = await import("../worker/site/public-routes.ts");
+const { APP_OWNED_PREFIXES } = await import("../worker/site/app-routes.ts");
 const redirected = new Set(
   Object.keys(PUBLIC_REDIRECTS).map((path) => (path.length > 1 ? path.replace(/\/$/, "") : path)),
 );
@@ -88,7 +98,7 @@ try {
   for (const file of await walk(publicDir)) {
     const rel = relative(publicDir, file).replaceAll("\\", "/");
     const path = `/${rel.replace(/\/?index\.html$/, "")}`.replace(/\/$/, "") || "/";
-    if (isAlreadyModelled(path)) continue;
+    if (isAlreadyModelled(path) || isEndpoint(path)) continue;
     // A redirect source never renders; storing it would be a page nobody sees.
     if (redirected.has(path)) continue;
 
