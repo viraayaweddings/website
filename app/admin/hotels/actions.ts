@@ -2,8 +2,9 @@
 
 import { redirect } from "next/navigation";
 import { emptyEnv } from "@/worker/env";
-import { and, eq, inArray } from "drizzle-orm";
+import { and, eq, inArray, like, ne } from "drizzle-orm";
 import { releaseImage, uploadImage } from "@/worker/admin/media-store";
+import { mediaKeyFrom, mediaPathFromKey, readMediaPathValue } from "@/worker/admin/media-path";
 import { readRichText } from "@/worker/admin/rich-text";
 import { cityListings, hotels, POST_STATUSES, type BlogFaq, type HotelHighlight, type PostStatus } from "@/worker/db/schema";
 import { invalidateHotelCache } from "@/worker/site/hotel";
@@ -14,16 +15,34 @@ import { recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
 const HOTELS_PATH = "/admin/hotels";
 
 function failed(target: string, message: string): never {
-  redirect(`${target}?error=${encodeURIComponent(message)}`);
+  redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(message)}`);
 }
 
+function done(target: string, message: string): never {
+  redirect(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`);
+}
+
+/** The list view to return to, so filters, sort and page survive an action. */
+function backTo(formData: FormData): string {
+  const raw = String(formData.get("returnTo") || "");
+  return raw.startsWith(HOTELS_PATH) && !raw.startsWith("//") ? raw : HOTELS_PATH;
+}
+
+/**
+ * Image fields are stored as `/media/<key>` and rendered verbatim into `src`
+ * attributes and `url()` values, so a bare key here would resolve relative to
+ * the venue page and the picture would vanish.
+ */
 function readMediaPath(value: string, target: string): string {
-  const trimmed = value.trim();
-  if (!trimmed) return "";
-  if (trimmed.startsWith("/media/")) return trimmed.slice("/media/".length);
-  if (trimmed.startsWith("/")) failed(target, "Use a /media/... path from the image library.");
-  if (trimmed.includes("..")) failed(target, "Use a valid media key from the image library.");
-  return trimmed;
+  const result = readMediaPathValue(value);
+  if ("error" in result) failed(target, result.error);
+  return result.path;
+}
+
+/** Frees a stored image if nothing else points at it. Takes the stored path. */
+async function releaseStoredImage(value: string): Promise<void> {
+  const key = mediaKeyFrom(value);
+  if (key) await releaseImage(emptyEnv(), key);
 }
 
 /**
@@ -133,7 +152,7 @@ export async function createHotelAction(formData: FormData): Promise<void> {
   if (file instanceof File && file.size > 0) {
     const result = await uploadImage(emptyEnv(), file, actor.email);
     if ("error" in result) failed(target, result.error);
-    bannerImage = result.key;
+    bannerImage = mediaPathFromKey(result.key);
   }
 
   const inserted = await db
@@ -184,12 +203,13 @@ export async function createHotelAction(formData: FormData): Promise<void> {
 export async function deleteHotelAction(formData: FormData): Promise<void> {
   const actor = await requireRole("admin");
   const db = await requireDb();
+  const target = backTo(formData);
 
   const id = Number.parseInt(String(formData.get("id") || ""), 10);
-  if (!Number.isInteger(id)) redirect(HOTELS_PATH);
+  if (!Number.isInteger(id) || id <= 0) failed(target, "That venue could not be identified.");
 
   const existing = (await db.select().from(hotels).where(eq(hotels.id, id)).limit(1))[0];
-  if (!existing) redirect(HOTELS_PATH);
+  if (!existing) failed(target, "That venue no longer exists.");
 
   await db.delete(hotels).where(eq(hotels.id, id));
 
@@ -200,7 +220,7 @@ export async function deleteHotelAction(formData: FormData): Promise<void> {
     .where(and(eq(cityListings.venueCity, existing.city), eq(cityListings.venueSlug, existing.slug)));
 
   for (const image of [existing.bannerImage, existing.thumbnailImage, existing.ogImage]) {
-    await releaseImage(emptyEnv(), image);
+    await releaseStoredImage(image);
   }
 
   invalidateHotelCache();
@@ -211,23 +231,25 @@ export async function deleteHotelAction(formData: FormData): Promise<void> {
     name: existing.name,
   });
 
-  redirect(`${HOTELS_PATH}?saved=1`);
+  done(target, `${existing.name || existing.slug} deleted.`);
 }
 
 /** Deletes every selected venue and removes listing rows that pointed at them. */
 export async function bulkDeleteHotelsAction(formData: FormData): Promise<void> {
   const actor = await requireRole("admin");
   const db = await requireDb();
+  const target = backTo(formData);
   const ids = formData
     .getAll("ids")
     .map((value) => Number.parseInt(String(value), 10))
     .filter((id) => Number.isInteger(id) && id > 0);
-  const uniqueIds = [...new Set(ids)].slice(0, 200);
+  const uniqueIds = [...new Set(ids)];
 
-  if (!uniqueIds.length) failed(HOTELS_PATH, "Select at least one venue first.");
+  if (!uniqueIds.length) failed(target, "Select at least one venue first.");
+  if (uniqueIds.length > 200) failed(target, "Delete 200 venues or fewer at a time.");
 
   const existing = await db.select().from(hotels).where(inArray(hotels.id, uniqueIds));
-  if (existing.length !== uniqueIds.length) failed(HOTELS_PATH, "Some selected venues no longer exist. Refresh and try again.");
+  if (existing.length !== uniqueIds.length) failed(target, "Some selected venues no longer exist. Refresh and try again.");
 
   await db.delete(hotels).where(inArray(hotels.id, uniqueIds));
 
@@ -236,7 +258,7 @@ export async function bulkDeleteHotelsAction(formData: FormData): Promise<void> 
       .delete(cityListings)
       .where(and(eq(cityListings.venueCity, venue.city), eq(cityListings.venueSlug, venue.slug)));
     for (const image of [venue.bannerImage, venue.thumbnailImage, venue.ogImage]) {
-      await releaseImage(emptyEnv(), image);
+      await releaseStoredImage(image);
     }
   }
 
@@ -247,7 +269,7 @@ export async function bulkDeleteHotelsAction(formData: FormData): Promise<void> 
     count: uniqueIds.length,
   });
 
-  redirect(`${HOTELS_PATH}?saved=${encodeURIComponent(`${uniqueIds.length} venue${uniqueIds.length === 1 ? "" : "s"} deleted.`)}`);
+  done(target, `${uniqueIds.length} venue${uniqueIds.length === 1 ? "" : "s"} deleted.`);
 }
 
 /**
@@ -284,6 +306,20 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
   const name = text("name", 300);
   if (!name) failed(target, "Enter the venue name.");
 
+  // The URL is editable, so it has to be validated the same way a new venue's
+  // is: a clash would make one of the two pages unreachable.
+  const city = normaliseSlug(String(formData.get("city") || existing.city)) || existing.city;
+  const slug = normaliseSlug(String(formData.get("slug") || existing.slug)) || existing.slug;
+  const moved = city !== existing.city || slug !== existing.slug;
+  if (moved) {
+    const clash = await db
+      .select({ id: hotels.id })
+      .from(hotels)
+      .where(and(eq(hotels.city, city), eq(hotels.slug, slug), ne(hotels.id, id)))
+      .limit(1);
+    if (clash.length) failed(target, `/destination-wedding/${city}/${slug} is already used by another venue.`);
+  }
+
   const requestedStatus = String(formData.get("status") || existing.status);
   const status: PostStatus = (POST_STATUSES as readonly string[]).includes(requestedStatus)
     ? (requestedStatus as PostStatus)
@@ -294,13 +330,14 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
   if ("error" in description) failed(target, description.error);
   const faqs = await readFaqs(formData, target);
 
-  // A new upload replaces the stored path; otherwise the typed path wins.
-  let bannerImage = readMediaPath(text("bannerImage", 400), target) || existing.bannerImage;
+  // The picker always posts the field, so an empty value is a deliberate clear
+  // rather than a field the form left out.
+  let bannerImage = readMediaPath(text("bannerImage", 400), target);
   const file = formData.get("bannerFile");
   if (file instanceof File && file.size > 0) {
     const result = await uploadImage(emptyEnv(), file, actor.email);
     if ("error" in result) failed(target, result.error);
-    bannerImage = result.key;
+    bannerImage = mediaPathFromKey(result.key);
   }
 
   const thumbnailImage = readMediaPath(text("thumbnailImage", 400), target);
@@ -309,6 +346,8 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
   await db
     .update(hotels)
     .set({
+      city,
+      slug,
       status,
       name,
       seoTitle: text("seoTitle", 300),
@@ -340,6 +379,11 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
     })
     .where(eq(hotels.id, id));
 
+  // A venue that moved is still referenced by city pages and by other venues'
+  // nearby strips, and those references are stored as "city/slug" text. Left
+  // alone they would silently drop the venue from every list it appears in.
+  if (moved) await repointVenueReferences(db, existing.city, existing.slug, city, slug);
+
   // Release every image this venue no longer uses, once the replacements are
   // saved; releaseImage keeps one if another venue, post or slide still points
   // at it.
@@ -348,16 +392,71 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
     [existing.thumbnailImage, thumbnailImage],
     [existing.ogImage, ogImage],
   ]) {
-    if (was && was !== now) await releaseImage(emptyEnv(), was);
+    if (was && was !== now) await releaseStoredImage(was);
   }
 
   invalidateHotelCache();
   invalidateTemplateCache();
   invalidateCityListingCache();
   await recordAudit(db, actor, "hotel.updated", "hotel", id, {
-    venue: `${existing.city}/${existing.slug}`,
+    venue: `${city}/${slug}`,
     status: { from: existing.status, to: status },
   });
+  if (moved) {
+    await recordAudit(db, actor, "hotel.moved", "hotel", id, {
+      url: { from: `${existing.city}/${existing.slug}`, to: `${city}/${slug}` },
+    });
+  }
 
   redirect(`${target}?saved=1`);
+}
+
+/**
+ * Rewrites the stored "city/slug" references to a venue that changed URL.
+ *
+ * City listings hold one row per reference; a venue's nearby strip holds a JSON
+ * array, so those are rewritten in memory and written back. Both happen in one
+ * transaction with the rename, or a half-applied move would leave listings
+ * pointing at a page that no longer exists.
+ */
+async function repointVenueReferences(
+  db: Awaited<ReturnType<typeof requireDb>>,
+  fromCity: string,
+  fromSlug: string,
+  toCity: string,
+  toSlug: string,
+): Promise<void> {
+  const was = `${fromCity}/${fromSlug}`;
+  const now = `${toCity}/${toSlug}`;
+
+  await db.transaction(async (tx) => {
+    await tx
+      .update(cityListings)
+      .set({ venueCity: toCity, venueSlug: toSlug })
+      .where(and(eq(cityListings.venueCity, fromCity), eq(cityListings.venueSlug, fromSlug)));
+
+    const referrers = await tx
+      .select({ id: hotels.id, nearbySlugs: hotels.nearbySlugs })
+      .from(hotels)
+      .where(like(hotels.nearbySlugs, `%${was}%`));
+
+    for (const referrer of referrers) {
+      const refs = readNearbyList(referrer.nearbySlugs);
+      if (!refs.includes(was)) continue;
+      const updated = [...new Set(refs.map((ref) => (ref === was ? now : ref)))];
+      await tx
+        .update(hotels)
+        .set({ nearbySlugs: JSON.stringify(updated) })
+        .where(eq(hotels.id, referrer.id));
+    }
+  });
+}
+
+function readNearbyList(value: string): string[] {
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed.map(String) : [];
+  } catch {
+    return [];
+  }
 }

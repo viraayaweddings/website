@@ -1,9 +1,11 @@
 // Reads the session cookie on every request; never prerender or cache.
 export const dynamic = "force-dynamic";
 
+import { asc } from "drizzle-orm";
+import { blogPosts } from "@/worker/db/schema";
 import { AdminShell } from "../../_components/AdminShell";
 import { Alert, LinkButton } from "../../_components/ui";
-import { requireUser } from "../../_lib/auth";
+import { requireDb, requireUser } from "../../_lib/auth";
 import { PostForm } from "../_form";
 import { createPostAction } from "../actions";
 
@@ -13,7 +15,14 @@ export default async function NewPostPage({
   searchParams: Promise<{ error?: string }>;
 }) {
   const user = await requireUser("/admin/blogs/new");
+  const db = await requireDb();
   await searchParams; // The shell's toast reads these straight from the URL.
+
+  const categories = (
+    await db.selectDistinct({ category: blogPosts.category }).from(blogPosts).orderBy(asc(blogPosts.category))
+  )
+    .map((row) => row.category)
+    .filter(Boolean);
 
   return (
     <AdminShell
@@ -33,7 +42,7 @@ export default async function NewPostPage({
         </Alert>
       </div>
 
-      <PostForm faqs={[]} action={createPostAction} submitLabel="Create article" />
+      <PostForm faqs={[]} action={createPostAction} submitLabel="Create article" categories={categories} />
     </AdminShell>
   );
 }

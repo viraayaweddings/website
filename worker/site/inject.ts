@@ -23,6 +23,7 @@ import {
 } from "./json-ld";
 import {
   cityFromListingPath,
+  renderCityHeading,
   renderCityCards,
   renderPagination,
   renderResultsSummary,
@@ -200,6 +201,16 @@ export function injectManagedContent(
         element.setInnerContent(renderResultsSummary(total));
       },
     });
+
+    // The shell ships one city's heading ("Luxury Hotels"). A stored one
+    // replaces it; both halves empty leaves the shipped wording alone.
+    if (cityPage.heading || cityPage.headingEmphasis) {
+      rewriter.on("h1.all-heading", {
+        element(element) {
+          element.setInnerContent(renderCityHeading(cityPage), { html: true });
+        },
+      });
+    }
 
     rewriter.on("title", {
       element(element) {

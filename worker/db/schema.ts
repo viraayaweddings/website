@@ -399,20 +399,37 @@ export const pageTemplates = pgTable("page_templates", {
 });
 
 /** The per-city bits of a city index page; the venue grid comes from city_listings. */
-export const cityPages = pgTable("city_pages", {
-  city: text("city").primaryKey(),
-  seoTitle: text("seo_title").notNull().default(""),
-  metaDescription: text("meta_description").notNull().default(""),
-  /** Numeric id the venue filter form posts back. */
-  cityId: text("city_id").notNull().default(""),
-  /**
-   * How many venues the city has in total. The page shows the first twelve and
-   * paginates the rest onto /hotel-listing, so this drives both the "Showing
-   * 1 - 12 of 30" line and the pager.
-   */
-  totalVenues: integer("total_venues").notNull().default(0),
-  shellKey: text("shell_key").notNull().default("city"),
-});
+export const cityPages = pgTable(
+  "city_pages",
+  {
+    city: text("city").primaryKey(),
+    seoTitle: text("seo_title").notNull().default(""),
+    metaDescription: text("meta_description").notNull().default(""),
+    /** Numeric id the venue filter form posts back. */
+    cityId: text("city_id").notNull().default(""),
+    /**
+     * How many venues the city has in total. The page shows the first twelve and
+     * paginates the rest onto /hotel-listing, so this drives both the "Showing
+     * 1 - 12 of 30" line and the pager.
+     */
+    totalVenues: integer("total_venues").notNull().default(0),
+    shellKey: text("shell_key").notNull().default("city"),
+    /**
+     * 0 serves the markup the page shipped with instead of the stored version,
+     * the same fallback `static_pages.published` gives. Hiding a city never
+     * takes its page offline.
+     */
+    published: integer("published").notNull().default(1),
+    /**
+     * The on-page heading, stored in two halves because the markup styles it as
+     * a plain word plus an emphasised span. Both empty leaves the shell's own
+     * wording alone.
+     */
+    heading: text("heading").notNull().default(""),
+    headingEmphasis: text("heading_emphasis").notNull().default(""),
+  },
+  (table) => [index("city_pages_published_idx").on(table.published)],
+);
 
 /**
  * Pages with no content model of their own -- the calculators, the city landing

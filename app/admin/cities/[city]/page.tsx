@@ -6,9 +6,9 @@ import { asc, eq } from "drizzle-orm";
 import { cityListings, cityPages, hotels } from "@/worker/db/schema";
 import { AdminShell } from "../../_components/AdminShell";
 import { CopyButton, SubmitButton, UnsavedGuard } from "../../_components/FormControls";
-import { Alert, Badge, Card, CardHead, Field, LinkButton, TextArea } from "../../_components/ui";
+import { Alert, Badge, Card, CardHead, Field, LinkButton, StatusBadge, TextArea } from "../../_components/ui";
 import { requireDb, requireRole } from "../../_lib/auth";
-import { saveCityAction } from "../actions";
+import { deleteCityAction, saveCityAction, syncCityTotalAction } from "../actions";
 
 export default async function EditCityPage({
   params,
@@ -30,11 +30,13 @@ export default async function EditCityPage({
   const [listing, available] = await Promise.all([
     db.select().from(cityListings).where(eq(cityListings.city, city)).orderBy(asc(cityListings.position)),
     db
-      .select({ city: hotels.city, slug: hotels.slug, name: hotels.name })
+      .select({ city: hotels.city, slug: hotels.slug, name: hotels.name, status: hotels.status })
       .from(hotels)
       .where(eq(hotels.city, city))
       .orderBy(asc(hotels.name)),
   ]);
+
+  const publishedCount = available.filter((venue) => venue.status === "published").length;
 
   // A venue in this city is written as a bare slug; anything else is qualified.
   const current = listing.map((row) =>
@@ -49,8 +51,16 @@ export default async function EditCityPage({
       subtitle={`/destination-wedding/${city}/ · ${current.length} venue${current.length === 1 ? "" : "s"} listed, ${available.length} available in this city`}
       actions={
         <>
-          <LinkButton href={`/destination-wedding/${city}/`} icon="external" variant="secondary" external>
-            View
+          <StatusBadge status={page.published === 1 ? "published" : "draft"} />
+          {/* A hidden page serves the markup it shipped with, so previewing is
+              the only way to see the stored version before showing it. */}
+          <LinkButton
+            href={page.published === 1 ? `/destination-wedding/${city}/` : `/destination-wedding/${city}/?preview=1`}
+            icon={page.published === 1 ? "external" : "eye"}
+            variant="secondary"
+            external
+          >
+            {page.published === 1 ? "View" : "Preview hidden page"}
           </LinkButton>
           <LinkButton href="/admin/cities" icon="chevronLeft" variant="ghost">
             Back
@@ -89,18 +99,41 @@ export default async function EditCityPage({
             <div className="vw-card-pad space-y-3">
               <Field label="Title tag" name="seoTitle" defaultValue={page.seoTitle} required />
               <TextArea label="Meta description" name="metaDescription" rows={3} defaultValue={page.metaDescription} />
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Field
+                  label="Heading"
+                  name="heading"
+                  defaultValue={page.heading}
+                  hint="Leave both halves empty to keep the wording the page ships with."
+                />
+                <Field
+                  label="Emphasised half"
+                  name="headingEmphasis"
+                  defaultValue={page.headingEmphasis}
+                  hint="Printed in the accent colour after the plain half."
+                />
+              </div>
               <Field
                 label="City ID"
                 name="cityId"
                 defaultValue={page.cityId}
-                hint="Used by the venue filter and the pager links."
+                hint="The number the venue filter and pager links use."
               />
               <Field
                 label="Total venues"
                 name="totalVenues"
                 defaultValue={String(page.totalVenues)}
-                hint="Sets the results count and how many pages the pager offers."
+                hint={`Sets the results count and how many pages the pager offers. ${available.length} venue${available.length === 1 ? " is" : "s are"} recorded for this city.`}
               />
+              <label className="flex items-center gap-2 text-sm" style={{ color: "var(--ink)" }}>
+                <input
+                  type="checkbox"
+                  name="published"
+                  className="vw-check"
+                  defaultChecked={page.published === 1}
+                />
+                <span>Serve this stored version</span>
+              </label>
             </div>
           </Card>
 
@@ -109,6 +142,45 @@ export default async function EditCityPage({
           </div>
         </div>
       </form>
+
+      <div className="mt-4 grid gap-4 lg:grid-cols-2">
+        <Card pad={false}>
+          <CardHead title="Match the total to the venues" icon="refresh" />
+          <form action={syncCityTotalAction} className="vw-card-pad">
+            <input type="hidden" name="city" value={city} />
+            <p className="vw-hint mb-3">
+              The stored total is {page.totalVenues}; {publishedCount} published venue
+              {publishedCount === 1 ? " is" : "s are"} recorded for {city}. Setting them equal keeps the results
+              line and the pager honest.
+            </p>
+            <SubmitButton variant="secondary" icon="refresh" pendingLabel="Updating…">
+              Set total to {publishedCount}
+            </SubmitButton>
+          </form>
+        </Card>
+
+        <Card pad={false}>
+          <CardHead title="Danger zone" icon="warning" />
+          <div className="vw-card-pad">
+            <p className="mb-3 text-sm" style={{ color: "var(--ink-soft)" }}>
+              Deleting removes this page and the venue list that belongs to it. The venues keep their own pages
+              and stay listed anywhere else they appear. Untick &ldquo;Serve this stored version&rdquo; above for
+              the same effect without losing the list.
+            </p>
+            <form action={deleteCityAction}>
+              <input type="hidden" name="id" value={city} />
+              <SubmitButton
+                variant="danger-quiet"
+                icon="trash"
+                pendingLabel="Deleting…"
+                confirm={`Delete the ${city} city page and its venue list?`}
+              >
+                Delete city page
+              </SubmitButton>
+            </form>
+          </div>
+        </Card>
+      </div>
 
       <Card className="mt-4" pad={false}>
         <CardHead
@@ -134,6 +206,7 @@ export default async function EditCityPage({
                       {venue.slug}
                     </span>
                   </span>
+                  {venue.status === "published" ? null : <Badge tone="warn">draft</Badge>}
                   {listedHere ? <Badge tone="ok">listed</Badge> : <Badge tone="neutral">not listed</Badge>}
                   <CopyButton value={venue.slug} label="slug" />
                 </li>

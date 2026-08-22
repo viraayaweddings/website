@@ -8,7 +8,7 @@ import { AdminShell } from "../_components/AdminShell";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { SubmitButton, UnsavedGuard } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
-import { ImageInput } from "../_components/ImageInput";
+import { MediaPicker } from "../_components/MediaPicker";
 import { Alert, Badge, Card, CardHead, EmptyState, Field, TextArea } from "../_components/ui";
 import { isAdmin, requireDb, requireUser } from "../_lib/auth";
 import { bulkDeleteSlidesAction, createSlideAction, deleteSlideAction, moveSlideAction, updateSlideAction } from "./actions";
@@ -66,7 +66,7 @@ function SlideCard({
           )}
           {/* The overlay text sits on this image, so show it the way visitors see it. */}
           <p className="mt-2 text-xs" style={{ color: "var(--ink-faint)" }}>
-            Wide landscape images work best; text is laid over the left side.
+            Shown at the carousel&rsquo;s aspect ratio.
           </p>
         </div>
 
@@ -84,7 +84,13 @@ function SlideCard({
             <Field label="Button link" name="ctaHref" defaultValue={slide.ctaHref} />
           </div>
 
-          <ImageInput label="Replace background image" fileName="image" />
+          <MediaPicker
+            label="Background image"
+            name="imageKey"
+            defaultValue={slide.imageKey}
+            required
+            hint="Wide landscape images work best; the text sits over the left side."
+          />
 
           <label className="flex items-center gap-2 text-sm" style={{ color: "var(--ink)" }}>
             <input type="checkbox" name="published" className="vw-check" defaultChecked={slide.published === 1} />
@@ -130,6 +136,7 @@ export default async function HeroPage({
 
   const slides = await db.select().from(heroSlides).orderBy(asc(heroSlides.position), asc(heroSlides.id));
   const liveCount = slides.filter((slide) => slide.published).length;
+  const brokenSlides = slides.filter((slide) => !slide.imageKey.trim());
 
   return (
     <AdminShell
@@ -137,6 +144,15 @@ export default async function HeroPage({
       title="Hero slider"
       subtitle={`${slides.length} slide${slides.length === 1 ? "" : "s"}, ${liveCount} live on the homepage. They rotate in the order below.`}
     >
+      {brokenSlides.length > 0 ? (
+        <div className="mb-4">
+          <Alert tone="error" title={`${brokenSlides.length} slide${brokenSlides.length === 1 ? " has" : "s have"} no picture`}>
+            The carousel renders a blank panel for a slide with no background. Choose one on{" "}
+            {brokenSlides.map((slide) => slide.title || `slide ${slide.id}`).join(", ")}.
+          </Alert>
+        </div>
+      ) : null}
+
       {liveCount === 0 && slides.length > 0 ? (
         <div className="mb-4">
           <Alert tone="warning" title="Nothing is live">
@@ -203,7 +219,12 @@ export default async function HeroPage({
               name="ctaHref"
               hint="A site path like /contact, or a full https:// URL."
             />
-            <ImageInput label="Background image" fileName="image" required />
+            <MediaPicker
+              label="Background image"
+              name="imageKey"
+              required
+              hint="Wide landscape images work best; the text sits over the left side."
+            />
 
             <label className="flex items-center gap-2 text-sm" style={{ color: "var(--ink)" }}>
               <input type="checkbox" name="published" className="vw-check" defaultChecked />

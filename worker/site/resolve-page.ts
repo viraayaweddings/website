@@ -22,7 +22,7 @@ import { loadSiteSettings } from "./settings";
 import { cityFromListingPath, venuesForCity } from "./venue-listing";
 import { loadCityPage, loadTemplate } from "./template";
 import { loadLabels, type ResolvedLabels } from "./labels";
-import { loadStaticPage, normalizeStaticPath } from "./static-pages";
+import { findStaticPage, loadStaticPage, normalizeStaticPath } from "./static-pages";
 
 export interface ResolvedPage {
   /** Shell markup from page_templates. */
@@ -89,7 +89,8 @@ export async function resolvePage(
   // Checked before the pattern matches below: a stored page is an exact path,
   // and one of them (/destination-wedding-in-goa) sits close enough to the venue
   // patterns that order matters.
-  const stored = await loadStaticPage(env, pathname);
+  const stored =
+    (await loadStaticPage(env, pathname)) ?? (options.preview ? await findStaticPage(env, pathname) : null);
   if (stored) {
     return {
       html: stored.html,
@@ -133,6 +134,9 @@ export async function resolvePage(
   if (listingCity) {
     const cityPage = await loadCityPage(env, listingCity);
     if (!cityPage) return null;
+    // Unpublished serves the markup the page shipped with, the same fallback a
+    // hidden stored page gets. Preview shows the stored version to an admin.
+    if (cityPage.published !== 1 && !options.preview) return null;
 
     const html = await loadTemplate(env, cityPage.shellKey);
     if (!html) return null;

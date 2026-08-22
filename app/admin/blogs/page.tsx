@@ -9,7 +9,7 @@ import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
 import { AutoSubmitControls, LiveSearch, SubmitButton } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
-import { imagePreview } from "../_components/ImageInput";
+import { imageSrc } from "../_components/MediaPicker";
 import { Card, EmptyState, LinkButton, StatusBadge, formatRelative } from "../_components/ui";
 import { currentTime } from "../_lib/clock";
 import { isAdmin, requireDb, requireUser } from "../_lib/auth";
@@ -17,10 +17,27 @@ import { bulkDeletePostsAction, deletePostAction, movePostAction } from "./actio
 
 const BLOGS_BULK_FORM = "blogs-bulk-form";
 
+/** Whitelisted so a crafted query string cannot pick an arbitrary comparator. */
+const SORT_KEYS = ["order", "title", "recent", "oldest"];
+const SORT_LABELS: Record<string, string> = {
+  order: "Listing order",
+  title: "Title (A-Z)",
+  recent: "Recently edited",
+  oldest: "Least recently edited",
+};
+
 export default async function BlogsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; saved?: string; delete?: string; q?: string; status?: string }>;
+  searchParams: Promise<{
+    error?: string;
+    saved?: string;
+    delete?: string;
+    q?: string;
+    status?: string;
+    category?: string;
+    sort?: string;
+  }>;
 }) {
   const user = await requireUser("/admin/blogs");
   const db = await requireDb();
@@ -32,34 +49,56 @@ export default async function BlogsPage({
   const liveCount = posts.filter((post) => post.status === "published").length;
   const query = (params.q || "").trim().slice(0, 120);
   const statusFilter = params.status === "draft" ? "draft" : params.status === "published" ? "published" : "";
+  const categories = [...new Set(posts.map((post) => post.category).filter(Boolean))].sort((a, b) =>
+    a.localeCompare(b),
+  );
+  const categoryFilter = categories.includes(params.category || "") ? params.category || "" : "";
+  const sort = SORT_KEYS.includes(params.sort || "") ? params.sort || "order" : "order";
   const normalizedQuery = query.toLowerCase();
-  const visiblePosts = posts.filter((post) => {
-    if (statusFilter && post.status !== statusFilter) return false;
-    if (!normalizedQuery) return true;
-    return [
-      post.heading,
-      post.cardTitle,
-      post.slug,
-      post.category,
-      post.publishedLabel,
-    ].some((value) => (value || "").toLowerCase().includes(normalizedQuery));
-  });
-  const filtered = Boolean(query || statusFilter);
+  const visiblePosts = posts
+    .filter((post) => {
+      if (statusFilter && post.status !== statusFilter) return false;
+      if (categoryFilter && post.category !== categoryFilter) return false;
+      if (!normalizedQuery) return true;
+      return [
+        post.heading,
+        post.cardTitle,
+        post.slug,
+        post.category,
+        post.publishedLabel,
+        post.author,
+      ].some((value) => (value || "").toLowerCase().includes(normalizedQuery));
+    })
+    .sort((a, b) => {
+      if (sort === "title") return (a.heading || a.slug).localeCompare(b.heading || b.slug);
+      if (sort === "recent") return b.updatedAt.getTime() - a.updatedAt.getTime();
+      if (sort === "oldest") return a.updatedAt.getTime() - b.updatedAt.getTime();
+      // The default is the stored order, which is also the order on /blogs.
+      return a.position - b.position || a.id - b.id;
+    });
+  const filtered = Boolean(query || statusFilter || categoryFilter || sort !== "order");
+  // Reordering moves a post relative to the full list, so the arrows would lie
+  // about what they do while a filter or a different sort is applied.
+  const canReorder = !filtered;
 
   const href = (next: Record<string, string | number>) => {
     const search = new URLSearchParams();
-    const merged = { q: query, status: statusFilter, ...next };
+    const merged = { q: query, status: statusFilter, category: categoryFilter, sort, ...next };
     if (merged.q) search.set("q", String(merged.q));
     if (merged.status) search.set("status", String(merged.status));
+    if (merged.category) search.set("category", String(merged.category));
+    if (merged.sort && merged.sort !== "order") search.set("sort", String(merged.sort));
     const string = search.toString();
     return `/admin/blogs${string ? `?${string}` : ""}`;
   };
+
+  const listHref = href({});
 
   return (
     <AdminShell
       user={user}
       title="Articles"
-      subtitle={`${visiblePosts.length} article${visiblePosts.length === 1 ? "" : "s"} shown from ${posts.length}, ${liveCount} published. The order here is the order they appear on the blog index.`}
+      subtitle={`${visiblePosts.length} article${visiblePosts.length === 1 ? "" : "s"} shown from ${posts.length}, ${liveCount} published.${canReorder ? " The order here is the order they appear on the blog index." : " Clear the filters to reorder them."}`}
       actions={
         <>
           {isAdmin(user) ? (
@@ -99,10 +138,10 @@ export default async function BlogsPage({
               </Link>
             ) : null}
           </div>
-          <div className="grid gap-3 sm:grid-cols-[2fr_1fr_auto] sm:items-end">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr_auto] lg:items-end">
             <div>
               <span className="vw-label">Search</span>
-              <LiveSearch name="q" defaultValue={query} placeholder="Title, slug, category or date" />
+              <LiveSearch name="q" defaultValue={query} placeholder="Title, slug, category, author or date" />
             </div>
             <label className="block">
               <span className="vw-label">Status</span>
@@ -110,6 +149,27 @@ export default async function BlogsPage({
                 <option value="">Any status</option>
                 <option value="published">Published</option>
                 <option value="draft">Draft</option>
+              </select>
+            </label>
+            <label className="block">
+              <span className="vw-label">Category</span>
+              <select name="category" defaultValue={categoryFilter} className="vw-select">
+                <option value="">Any category</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="block">
+              <span className="vw-label">Sort</span>
+              <select name="sort" defaultValue={sort} className="vw-select">
+                {SORT_KEYS.map((key) => (
+                  <option key={key} value={key}>
+                    {SORT_LABELS[key]}
+                  </option>
+                ))}
               </select>
             </label>
             <button type="submit" className="vw-btn vw-btn-secondary">
@@ -140,6 +200,7 @@ export default async function BlogsPage({
         <>
         {isAdmin(user) ? (
           <form id={BLOGS_BULK_FORM}>
+            <input type="hidden" name="returnTo" value={listHref} />
             <BulkSelection noun="article" formId={BLOGS_BULK_FORM}>
               <SubmitButton
                 variant="danger-quiet"
@@ -168,7 +229,7 @@ export default async function BlogsPage({
                   // Plain img: these come from R2 or site-public, not the asset pipeline.
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={imagePreview(post.cardImage || post.bannerImage)}
+                    src={imageSrc(post.cardImage || post.bannerImage)}
                     alt=""
                     className="vw-thumb h-14 w-20 flex-none object-cover"
                     loading="lazy"
@@ -204,20 +265,24 @@ export default async function BlogsPage({
                 </div>
 
                 <div className="flex flex-none items-center gap-1">
-                  <form action={movePostAction}>
-                    <input type="hidden" name="id" value={post.id} />
-                    <input type="hidden" name="direction" value="up" />
-                    <SubmitButton variant="ghost" size="sm" icon="arrowUp" pendingLabel="" label={`Move "${post.cardTitle || post.heading || post.slug}" up`}>
-                      {""}
-                    </SubmitButton>
-                  </form>
-                  <form action={movePostAction}>
-                    <input type="hidden" name="id" value={post.id} />
-                    <input type="hidden" name="direction" value="down" />
-                    <SubmitButton variant="ghost" size="sm" icon="arrowDown" pendingLabel="" label={`Move "${post.cardTitle || post.heading || post.slug}" down`}>
-                      {""}
-                    </SubmitButton>
-                  </form>
+                  {canReorder ? (
+                    <>
+                      <form action={movePostAction}>
+                        <input type="hidden" name="id" value={post.id} />
+                        <input type="hidden" name="direction" value="up" />
+                        <SubmitButton variant="ghost" size="sm" icon="arrowUp" pendingLabel="" label={`Move "${post.cardTitle || post.heading || post.slug}" up`}>
+                          {""}
+                        </SubmitButton>
+                      </form>
+                      <form action={movePostAction}>
+                        <input type="hidden" name="id" value={post.id} />
+                        <input type="hidden" name="direction" value="down" />
+                        <SubmitButton variant="ghost" size="sm" icon="arrowDown" pendingLabel="" label={`Move "${post.cardTitle || post.heading || post.slug}" down`}>
+                          {""}
+                        </SubmitButton>
+                      </form>
+                    </>
+                  ) : null}
                   <LinkButton href={`/admin/blogs/${post.id}`} size="sm" variant="secondary" icon="edit">
                     Edit
                   </LinkButton>
@@ -229,6 +294,7 @@ export default async function BlogsPage({
                       what={post.heading || post.slug}
                       note={`This removes the article permanently and breaks /blogs/${post.slug}. Set it to draft instead if you only want it hidden.`}
                       ariaLabel={`Delete ${post.heading || post.slug}`}
+                      returnTo={listHref}
                     />
                   ) : null}
                 </div>

@@ -12,6 +12,8 @@ type DeleteConfirmTriggerProps = {
   label?: string;
   /** Screen-reader label when the visible label is icon-only. */
   ariaLabel?: string;
+  /** List view to come back to, so filters and page survive the delete. */
+  returnTo?: string;
 };
 
 /**
@@ -24,6 +26,7 @@ export function DeleteConfirmTrigger({
   note,
   label = "Delete",
   ariaLabel,
+  returnTo,
 }: DeleteConfirmTriggerProps) {
   const [open, setOpen] = useState(false);
   const iconOnly = label === "Delete" && Boolean(ariaLabel);
@@ -41,6 +44,7 @@ export function DeleteConfirmTrigger({
             what={what}
             note={note}
             cancelHref="#"
+            returnTo={returnTo}
             onCancel={() => setOpen(false)}
           />
         </div>

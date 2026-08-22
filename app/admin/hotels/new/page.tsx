@@ -5,7 +5,7 @@ import { asc } from "drizzle-orm";
 import { hotels, POST_STATUSES } from "@/worker/db/schema";
 import { AdminShell } from "../../_components/AdminShell";
 import { SubmitButton, UnsavedGuard } from "../../_components/FormControls";
-import { ImageInput } from "../../_components/ImageInput";
+import { MediaPicker } from "../../_components/MediaPicker";
 import { RichText } from "../../_components/RichText";
 import { Alert, Card, CardHead, Field, LinkButton, Select, TextArea } from "../../_components/ui";
 import { requireDb, requireUser } from "../../_lib/auth";
@@ -101,7 +101,7 @@ export default async function NewHotelPage({
                   style={{ borderColor: "var(--line)", background: "var(--surface-2)" }}
                 >
                   <Field label={`Title ${index + 1}`} name={`highlight_title_${index}`} />
-                  <Field label="Image path" name={`highlight_image_${index}`} />
+                  <MediaPicker label="Picture" name={`highlight_image_${index}`} shape="card" />
                 </div>
               ))}
             </div>
@@ -166,7 +166,7 @@ export default async function NewHotelPage({
           <Card pad={false}>
             <CardHead title="Banner" icon="image" />
             <div className="vw-card-pad">
-              <ImageInput label="Banner image" pathName="bannerImage" fileName="bannerFile" />
+              <MediaPicker label="Banner image" name="bannerImage" />
             </div>
           </Card>
 
@@ -191,14 +191,19 @@ export default async function NewHotelPage({
               <Field label="Title tag" name="seoTitle" hint="Defaults to the venue name." />
               <TextArea label="Meta description" name="metaDescription" rows={3} />
               <TextArea label="Meta keywords" name="metaKeywords" rows={2} />
-              <Field label="Social share image" name="ogImage" hint="Defaults to the banner if left empty." />
+              <MediaPicker label="Social share image" name="ogImage" hint="Defaults to the banner if left empty." />
             </div>
           </Card>
 
           <Card pad={false}>
             <CardHead title="Listing card" icon="grid" />
             <div className="vw-card-pad space-y-3">
-              <Field label="Thumbnail image path" name="thumbnailImage" />
+              <MediaPicker
+                label="Thumbnail"
+                name="thumbnailImage"
+                shape="card"
+                hint="Shown on city pages and nearby strips."
+              />
               <Field label="Location" name="cityLabel" hint={'Full form, e.g. "Agra, India".'} />
               <Field label="Venue type" name="venueCategory" />
               <Field label="Guest figure on cards" name="cardPax" />

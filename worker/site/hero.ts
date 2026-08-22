@@ -8,21 +8,18 @@
 import { asc, eq } from "drizzle-orm";
 import { getDb, type DatabaseEnv } from "../db/client";
 import { heroSlides, type HeroSlide } from "../db/schema";
+import { escapeHtml } from "./escape";
+
+// Escaping moved to its own module so the small renderers can be loaded, and
+// tested, without the database client; half the site imports it from here, so
+// it stays available under this name.
+export { escapeHtml };
 
 /** Uploaded files are served from this prefix by the worker. */
 export const MEDIA_PREFIX = "/media/";
 
 const CACHE_TTL_MS = 30_000;
 let cache: { at: number; slides: HeroSlide[] } | null = null;
-
-export function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
 
 /**
  * Resolves a stored image reference to a URL. Values starting with "/" are

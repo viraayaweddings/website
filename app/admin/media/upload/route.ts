@@ -6,7 +6,7 @@
  * it needs a route of its own. GET returns the library so an image already on
  * the site can be reused rather than uploaded twice.
  */
-import { desc } from "drizzle-orm";
+import { desc, like, or, sql } from "drizzle-orm";
 import { emptyEnv } from "@/worker/env";
 import { uploadImage } from "@/worker/admin/media-store";
 import { media } from "@/worker/db/schema";
@@ -38,18 +38,41 @@ function isSameOrigin(request: Request): boolean {
   }
 }
 
-export async function GET(): Promise<Response> {
+export async function GET(request: Request): Promise<Response> {
   const user = await getCurrentUser();
   if (!user) return json({ error: "Sign in again to browse images." }, 401);
 
+  const url = new URL(request.url);
+  // % and _ are wildcards to Postgres and drizzle's like() adds no ESCAPE
+  // clause, so they are neutralised rather than passed through.
+  const query = (url.searchParams.get("q") || "").trim().slice(0, 120).replace(/[%_]/g, " ").trim();
+  const page = Math.max(1, Number.parseInt(url.searchParams.get("page") || "1", 10) || 1);
+
   const db = await requireDb();
-  const rows = await db
+  const where = query
+    ? or(like(media.filename, `%${query}%`), like(media.key, `%${query}%`))
+    : undefined;
+
+  const listQuery = db
     .select({ key: media.key, filename: media.filename, size: media.size, width: media.width, height: media.height })
-    .from(media)
-    .orderBy(desc(media.createdAt))
-    .limit(LIBRARY_LIMIT);
+    .from(media);
+  const countQuery = db.select({ total: sql<number>`count(*)` }).from(media);
+
+  const [rows, totals] = await Promise.all([
+    (where ? listQuery.where(where) : listQuery)
+      .orderBy(desc(media.createdAt))
+      .limit(LIBRARY_LIMIT)
+      .offset((page - 1) * LIBRARY_LIMIT),
+    where ? countQuery.where(where) : countQuery,
+  ]);
+
+  const total = Number(totals[0]?.total ?? 0);
 
   return json({
+    total,
+    page,
+    pageSize: LIBRARY_LIMIT,
+    hasMore: page * LIBRARY_LIMIT < total,
     images: rows.map((row) => ({
       url: `/media/${row.key}`,
       filename: row.filename || row.key,

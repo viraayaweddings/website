@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { emptyEnv } from "@/worker/env";
 import { and, asc, eq, inArray, ne, sql } from "drizzle-orm";
 import { releaseImage, uploadImage } from "@/worker/admin/media-store";
+import { mediaKeyFrom, mediaPathFromKey, readMediaPathValue } from "@/worker/admin/media-path";
 import { readRichText } from "@/worker/admin/rich-text";
 import { blogListings, blogPosts, POST_STATUSES, type BlogFaq, type PostStatus } from "@/worker/db/schema";
 import { invalidateBlogCache, invalidateBlogListingCache } from "@/worker/site/blog";
@@ -16,17 +17,31 @@ function failed(target: string, message: string): never {
   redirect(`${target}?error=${encodeURIComponent(message)}`);
 }
 
-function done(message: string): never {
-  redirect(`${BLOGS_PATH}?saved=${encodeURIComponent(message)}`);
+function done(message: string, target: string = BLOGS_PATH): never {
+  redirect(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`);
 }
 
+/** The list view to return to, so filters, sort and page survive an action. */
+function backTo(formData: FormData): string {
+  const raw = String(formData.get("returnTo") || "");
+  return raw.startsWith(BLOGS_PATH) && !raw.startsWith("//") ? raw : BLOGS_PATH;
+}
+
+/**
+ * Cover and social images are dropped straight into `src` attributes and
+ * `url()` values on the public page, so they are stored as `/media/<key>`; a
+ * bare key would resolve relative to the article and the picture would vanish.
+ */
 function readMediaPath(value: string, target: string): string {
-  const trimmed = value.trim();
-  if (!trimmed) return "";
-  if (trimmed.startsWith("/media/")) return trimmed.slice("/media/".length);
-  if (trimmed.startsWith("/")) failed(target, "Use a /media/... path from the image library.");
-  if (trimmed.includes("..")) failed(target, "Use a valid media key from the image library.");
-  return trimmed;
+  const result = readMediaPathValue(value);
+  if ("error" in result) failed(target, result.error);
+  return result.path;
+}
+
+/** Frees a stored image if nothing else points at it. Takes the stored path. */
+async function releaseStoredImage(value: string): Promise<void> {
+  const key = mediaKeyFrom(value);
+  if (key) await releaseImage(emptyEnv(), key);
 }
 
 /** URL-safe, lowercase, no leading or trailing hyphen. */
@@ -80,11 +95,17 @@ async function readFaqs(formData: FormData, target: string): Promise<BlogFaq[]> 
   return faqs;
 }
 
+/**
+ * The picture for one field.
+ *
+ * The picker always posts its field, so an empty value is a deliberate clear;
+ * `fallback` only covers a form that genuinely omits the field.
+ */
 async function readImage(
   formData: FormData,
   fileField: string,
   pathField: string,
-  existing: string,
+  fallback: string,
   uploadedBy: string,
   target: string,
 ): Promise<string> {
@@ -92,11 +113,11 @@ async function readImage(
   if (file instanceof File && file.size > 0) {
     const result = await uploadImage(emptyEnv(), file, uploadedBy);
     if ("error" in result) failed(target, result.error);
-    return result.key;
+    return mediaPathFromKey(result.key);
   }
 
-  const typed = String(formData.get(pathField) || "").trim();
-  return readMediaPath(typed, target) || existing;
+  if (!formData.has(pathField)) return fallback;
+  return readMediaPath(String(formData.get(pathField) || ""), target);
 }
 
 interface PostFields {
@@ -168,7 +189,7 @@ export async function createPostAction(formData: FormData): Promise<void> {
 
   const bannerImage = await readImage(formData, "bannerFile", "bannerImage", "", actor.email, target);
   const cardImage = await readImage(formData, "cardFile", "cardImage", "", actor.email, target);
-  const ogImage = await readImage(formData, "ogFile", "ogImage", bannerImage, actor.email, target);
+  const ogImage = (await readImage(formData, "ogFile", "ogImage", bannerImage, actor.email, target)) || bannerImage;
 
   // A new article goes to the top of /blogs and of the admin list, which both
   // sort on position ascending. Taking one below the current lowest puts it
@@ -204,7 +225,7 @@ export async function updatePostAction(formData: FormData): Promise<void> {
   const db = await requireDb();
 
   const id = Number.parseInt(String(formData.get("id") || ""), 10);
-  if (!Number.isInteger(id)) redirect(BLOGS_PATH);
+  if (!Number.isInteger(id) || id <= 0) failed(BLOGS_PATH, "That article could not be identified.");
   const target = `/admin/blogs/${id}`;
 
   const existing = (await db.select().from(blogPosts).where(eq(blogPosts.id, id)).limit(1))[0];
@@ -258,7 +279,7 @@ export async function updatePostAction(formData: FormData): Promise<void> {
     [existing.cardImage, cardImage],
     [existing.ogImage, ogImage],
   ]) {
-    if (before && before !== after) await releaseImage(emptyEnv(), before);
+    if (before && before !== after) await releaseStoredImage(before);
   }
 
   invalidateBlogCache();
@@ -275,12 +296,13 @@ export async function updatePostAction(formData: FormData): Promise<void> {
 export async function deletePostAction(formData: FormData): Promise<void> {
   const actor = await requireRole("admin");
   const db = await requireDb();
+  const target = backTo(formData);
 
   const id = Number.parseInt(String(formData.get("id") || ""), 10);
-  if (!Number.isInteger(id)) redirect(BLOGS_PATH);
+  if (!Number.isInteger(id) || id <= 0) failed(target, "That article could not be identified.");
 
   const existing = (await db.select().from(blogPosts).where(eq(blogPosts.id, id)).limit(1))[0];
-  if (!existing) redirect(BLOGS_PATH);
+  if (!existing) failed(target, "That article no longer exists.");
 
   await db.delete(blogPosts).where(eq(blogPosts.id, id));
 
@@ -290,7 +312,7 @@ export async function deletePostAction(formData: FormData): Promise<void> {
   invalidateBlogListingCache();
 
   for (const image of [existing.bannerImage, existing.cardImage, existing.ogImage]) {
-    await releaseImage(emptyEnv(), image);
+    await releaseStoredImage(image);
   }
 
   invalidateBlogCache();
@@ -300,23 +322,25 @@ export async function deletePostAction(formData: FormData): Promise<void> {
     heading: existing.heading,
   });
 
-  done(`"${existing.heading}" deleted.`);
+  done(`"${existing.heading || existing.slug}" deleted.`, target);
 }
 
 /** Deletes every selected article and cleans up listing rows and unused images. */
 export async function bulkDeletePostsAction(formData: FormData): Promise<void> {
   const actor = await requireRole("admin");
   const db = await requireDb();
+  const target = backTo(formData);
   const ids = formData
     .getAll("ids")
     .map((value) => Number.parseInt(String(value), 10))
     .filter((id) => Number.isInteger(id) && id > 0);
-  const uniqueIds = [...new Set(ids)].slice(0, 200);
+  const uniqueIds = [...new Set(ids)];
 
-  if (!uniqueIds.length) failed(BLOGS_PATH, "Select at least one article first.");
+  if (!uniqueIds.length) failed(target, "Select at least one article first.");
+  if (uniqueIds.length > 200) failed(target, "Delete 200 articles or fewer at a time.");
 
   const existing = await db.select().from(blogPosts).where(inArray(blogPosts.id, uniqueIds));
-  if (existing.length !== uniqueIds.length) failed(BLOGS_PATH, "Some selected articles no longer exist. Refresh and try again.");
+  if (existing.length !== uniqueIds.length) failed(target, "Some selected articles no longer exist. Refresh and try again.");
 
   await db.delete(blogPosts).where(inArray(blogPosts.id, uniqueIds));
   await db.delete(blogListings).where(inArray(blogListings.postSlug, existing.map((post) => post.slug)));
@@ -324,7 +348,7 @@ export async function bulkDeletePostsAction(formData: FormData): Promise<void> {
 
   for (const post of existing) {
     for (const image of [post.bannerImage, post.cardImage, post.ogImage]) {
-      await releaseImage(emptyEnv(), image);
+      await releaseStoredImage(image);
     }
   }
 
@@ -334,7 +358,7 @@ export async function bulkDeletePostsAction(formData: FormData): Promise<void> {
     count: uniqueIds.length,
   });
 
-  done(`${uniqueIds.length} article${uniqueIds.length === 1 ? "" : "s"} deleted.`);
+  done(`${uniqueIds.length} article${uniqueIds.length === 1 ? "" : "s"} deleted.`, target);
 }
 
 /** Nudges a post one place up or down the listing. */

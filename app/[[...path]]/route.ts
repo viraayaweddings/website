@@ -1,4 +1,6 @@
 import handler from "vinext/server/app-router-entry";
+import { getSessionUser } from "@/worker/admin/session";
+import { getDb } from "@/worker/db/client";
 import { isAppOwnedPath } from "@/worker/site/app-routes";
 import { publicRedirectTarget } from "@/worker/site/public-routes";
 import { applyManagedContent, renderFromDatabase } from "@/worker/site/render-page";
@@ -57,6 +59,16 @@ async function serve(request: Request): Promise<Response> {
   const wantsShellOnly = request.headers.get(SHELL_HEADER) === "1";
 
   if (!wantsShellOnly) {
+    // `?preview=1` renders the stored version of something that is not live --
+    // a draft venue or article, a hidden city or page -- so the panel's preview
+    // links have something to show. It is gated on a real admin session and the
+    // response is uncached and noindex; a visitor without one gets the ordinary
+    // page, exactly as if the parameter were not there.
+    if (url.searchParams.get("preview") === "1" && (await isSignedIn(request))) {
+      const previewed = await renderFromDatabase(pathname, url.origin, { preview: true });
+      if (previewed) return respond(previewed, request);
+    }
+
     const fromDatabase = await renderFromDatabase(pathname, url.origin);
     if (fromDatabase) return respond(fromDatabase, request);
   }
@@ -76,6 +88,17 @@ async function serve(request: Request): Promise<Response> {
   }
 
   return new Response("Not found", { status: 404 });
+}
+
+/** Whether this request carries a live admin session cookie. */
+async function isSignedIn(request: Request): Promise<boolean> {
+  try {
+    const db = await getDb();
+    if (!db) return false;
+    return Boolean(await getSessionUser(db, request));
+  } catch {
+    return false;
+  }
 }
 
 /**

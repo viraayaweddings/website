@@ -18,11 +18,17 @@ const CALCULATOR_PATH = "/admin/calculator";
 const HOTELS_PATH = "/admin/calculator/hotels";
 
 function failed(target: string, message: string): never {
-  redirect(`${target}?error=${encodeURIComponent(message)}`);
+  redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(message)}`);
 }
 
 function done(target: string, message: string): never {
-  redirect(`${target}?saved=${encodeURIComponent(message)}`);
+  redirect(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`);
+}
+
+/** The hotel list view to return to, so filters and page survive an action. */
+function backToHotels(formData: FormData): string {
+  const raw = String(formData.get("returnTo") || "");
+  return raw.startsWith(HOTELS_PATH) && !raw.startsWith("//") ? raw : HOTELS_PATH;
 }
 
 function text(formData: FormData, name: string, max = 200): string {
@@ -34,11 +40,33 @@ function id(formData: FormData, name: string): number | null {
   return Number.isInteger(value) && value > 0 ? value : null;
 }
 
-/** Accepts a typed "1,20,000.50" as readily as "120000.5". */
-function money(formData: FormData, name: string): string {
-  const raw = String(formData.get(name) || "").replace(/[^0-9.]/g, "");
-  const value = Number.parseFloat(raw);
-  if (!Number.isFinite(value) || value < 0) return "0.00";
+/** No hotel costs this much a night; a figure above it is a typo, not a price. */
+const MAX_PRICE = 100_000_000;
+
+/**
+ * One price cell.
+ *
+ * Accepts a typed "1,20,000.50" as readily as "120000.5", and an empty cell as
+ * zero. Anything else is refused rather than quietly stored as zero, which is
+ * what used to happen and is indistinguishable on screen from a free hotel.
+ */
+function money(formData: FormData, name: string, month: string, field: string, target: string): string {
+  const raw = String(formData.get(name) || "").trim();
+  if (!raw) return "0.00";
+
+  const cleaned = raw.replace(/[\s,\u20b9]/g, "");
+  if (!/^\d*(?:\.\d{1,2})?$/.test(cleaned) || cleaned === "." || cleaned === "") {
+    failed(target, `The ${field} price for ${month} is not a number. Use figures like 145000 or 145000.50.`);
+  }
+
+  const value = Number.parseFloat(cleaned);
+  if (!Number.isFinite(value) || value < 0) {
+    failed(target, `The ${field} price for ${month} cannot be negative.`);
+  }
+  if (value > MAX_PRICE) {
+    failed(target, `The ${field} price for ${month} looks like a typo; keep it under ${MAX_PRICE.toLocaleString("en-IN")}.`);
+  }
+
   return value.toFixed(2);
 }
 
@@ -53,13 +81,31 @@ export async function saveCalculatorCityAction(formData: FormData): Promise<void
 
   const existing = id(formData, "id");
   const published = formData.get("published") === "on" ? 1 : 0;
-  const position = Number.parseInt(String(formData.get("position") || "0"), 10) || 0;
+
+  const rawPosition = String(formData.get("position") || "").trim();
+  if (rawPosition && !/^-?\d+$/.test(rawPosition)) failed(CALCULATOR_PATH, "The order is a whole number.");
+  const position = rawPosition ? Number.parseInt(rawPosition, 10) : 0;
+  if (!Number.isFinite(position) || position < -9999 || position > 9999) {
+    failed(CALCULATOR_PATH, "The order must be between -9999 and 9999.");
+  }
+
+  // Two cities with the same name make the picker unusable: the visitor cannot
+  // tell which one they are choosing.
+  const sameName = await db
+    .select({ id: calculatorCities.id })
+    .from(calculatorCities)
+    .where(sql`lower(${calculatorCities.name}) = ${name.toLowerCase()}`);
+  if (sameName.some((row) => row.id !== existing)) {
+    failed(CALCULATOR_PATH, `The calculator already has a city called "${name}".`);
+  }
 
   if (existing) {
-    await db
+    const updated = await db
       .update(calculatorCities)
       .set({ name, published, position, updatedAt: new Date() })
-      .where(eq(calculatorCities.id, existing));
+      .where(eq(calculatorCities.id, existing))
+      .returning({ id: calculatorCities.id });
+    if (!updated.length) failed(CALCULATOR_PATH, "That city no longer exists.");
     await recordAudit(db, actor, "calculator.city_updated", "calculator_city", existing, { name });
   } else {
     // Ids are the dataset's own. A new one continues the sequence rather than
@@ -136,18 +182,35 @@ export async function saveCalculatorHotelAction(formData: FormData): Promise<voi
 
   const name = text(formData, "name", 200);
   const cityId = id(formData, "cityId");
-  if (!name) failed(HOTELS_PATH, "Enter the hotel name.");
-  if (!cityId) failed(HOTELS_PATH, "Choose a city.");
-
-  const totalRooms = Math.max(0, Number.parseInt(String(formData.get("totalRooms") || "0"), 10) || 0);
-  const published = formData.get("published") === "on" ? 1 : 0;
   const existing = id(formData, "id");
+  const target = existing ? `${HOTELS_PATH}/${existing}` : HOTELS_PATH;
+
+  if (!name) failed(target, "Enter the hotel name.");
+  if (!cityId) failed(target, "Choose a city.");
+
+  // A hotel in a city that does not exist never appears in the picker, which
+  // reads as the save having silently failed.
+  const city = await db
+    .select({ id: calculatorCities.id })
+    .from(calculatorCities)
+    .where(eq(calculatorCities.id, cityId))
+    .limit(1);
+  if (!city.length) failed(target, "That city is no longer in the calculator. Choose another.");
+
+  const rawRooms = String(formData.get("totalRooms") || "").trim();
+  if (rawRooms && !/^\d+$/.test(rawRooms)) failed(target, "Total rooms is a whole number of zero or more.");
+  const totalRooms = rawRooms ? Number.parseInt(rawRooms, 10) : 0;
+  if (totalRooms > 100_000) failed(target, "Total rooms looks like a typo; keep it under 100,000.");
+
+  const published = formData.get("published") === "on" ? 1 : 0;
 
   if (existing) {
-    await db
+    const updated = await db
       .update(calculatorHotels)
       .set({ name, cityId, totalRooms, published, updatedAt: new Date() })
-      .where(eq(calculatorHotels.id, existing));
+      .where(eq(calculatorHotels.id, existing))
+      .returning({ id: calculatorHotels.id });
+    if (!updated.length) failed(HOTELS_PATH, "That hotel no longer exists.");
     await recordAudit(db, actor, "calculator.hotel_updated", "calculator_hotel", existing, { name, cityId });
     invalidateCalculatorCache();
     done(`${HOTELS_PATH}/${existing}`, "Hotel saved.");
@@ -173,29 +236,37 @@ export async function deleteCalculatorHotelAction(formData: FormData): Promise<v
   const actor = await requireRole("admin");
   const db = await requireDb();
 
+  const target = backToHotels(formData);
   const hotelId = id(formData, "id");
-  if (!hotelId) failed(HOTELS_PATH, "That hotel no longer exists.");
+  if (!hotelId) failed(target, "That hotel could not be identified.");
+
+  const hotel = (
+    await db.select().from(calculatorHotels).where(eq(calculatorHotels.id, hotelId)).limit(1)
+  )[0];
+  if (!hotel) failed(target, "That hotel no longer exists.");
 
   await db.transaction(async (tx) => {
     await tx.delete(calculatorPrices).where(eq(calculatorPrices.hotelId, hotelId));
     await tx.delete(calculatorHotels).where(eq(calculatorHotels.id, hotelId));
   });
 
-  await recordAudit(db, actor, "calculator.hotel_deleted", "calculator_hotel", hotelId, {});
+  await recordAudit(db, actor, "calculator.hotel_deleted", "calculator_hotel", hotelId, { name: hotel.name });
   invalidateCalculatorCache();
-  done(HOTELS_PATH, "Hotel and its prices deleted.");
+  done(target, `${hotel.name} and its prices deleted.`);
 }
 
 export async function bulkDeleteCalculatorHotelsAction(formData: FormData): Promise<void> {
   const actor = await requireRole("admin");
   const db = await requireDb();
+  const target = backToHotels(formData);
   const ids = formData
     .getAll("ids")
     .map((value) => Number.parseInt(String(value), 10))
     .filter((value) => Number.isInteger(value) && value > 0);
-  const hotelIds = [...new Set(ids)].slice(0, 200);
+  const hotelIds = [...new Set(ids)];
 
-  if (!hotelIds.length) failed(HOTELS_PATH, "Select at least one hotel first.");
+  if (!hotelIds.length) failed(target, "Select at least one hotel first.");
+  if (hotelIds.length > 200) failed(target, "Delete 200 hotels or fewer at a time.");
 
   await db.transaction(async (tx) => {
     await tx.delete(calculatorPrices).where(inArray(calculatorPrices.hotelId, hotelIds));
@@ -206,7 +277,7 @@ export async function bulkDeleteCalculatorHotelsAction(formData: FormData): Prom
     count: hotelIds.length,
   });
   invalidateCalculatorCache();
-  done(HOTELS_PATH, `${hotelIds.length} hotel${hotelIds.length === 1 ? "" : "s"} and their prices deleted.`);
+  done(target, `${hotelIds.length} hotel${hotelIds.length === 1 ? "" : "s"} and their prices deleted.`);
 }
 
 /** Saves all twelve months for one hotel in a single statement. */
@@ -215,15 +286,25 @@ export async function saveCalculatorPricesAction(formData: FormData): Promise<vo
   const db = await requireDb();
 
   const hotelId = id(formData, "hotelId");
-  if (!hotelId) failed(HOTELS_PATH, "That hotel no longer exists.");
+  if (!hotelId) failed(HOTELS_PATH, "That hotel could not be identified.");
+  const target = `${HOTELS_PATH}/${hotelId}`;
 
+  const hotel = await db
+    .select({ id: calculatorHotels.id })
+    .from(calculatorHotels)
+    .where(eq(calculatorHotels.id, hotelId))
+    .limit(1);
+  if (!hotel.length) failed(HOTELS_PATH, "That hotel no longer exists.");
+
+  // Every cell is parsed before anything is written, so a single bad figure
+  // does not leave eleven months saved and one rejected.
   const rows = CALCULATOR_MONTHS.map((month) => ({
     hotelId,
     month: month as CalculatorMonth,
-    roomPrice: money(formData, `room_${month}`),
-    lunchPrice: money(formData, `lunch_${month}`),
-    hiteaPrice: money(formData, `hitea_${month}`),
-    dinnerPrice: money(formData, `dinner_${month}`),
+    roomPrice: money(formData, `room_${month}`, month, "room", target),
+    lunchPrice: money(formData, `lunch_${month}`, month, "lunch", target),
+    hiteaPrice: money(formData, `hitea_${month}`, month, "hi-tea", target),
+    dinnerPrice: money(formData, `dinner_${month}`, month, "dinner", target),
     updatedAt: new Date(),
   }));
 
@@ -243,7 +324,7 @@ export async function saveCalculatorPricesAction(formData: FormData): Promise<vo
 
   await recordAudit(db, actor, "calculator.prices_updated", "calculator_hotel", hotelId, { months: rows.length });
   invalidateCalculatorCache();
-  done(`${HOTELS_PATH}/${hotelId}`, "Prices saved.");
+  done(target, "Prices saved.");
 }
 
 /* ---------------------------------------------------------- currencies --- */
@@ -257,8 +338,13 @@ export async function saveCurrencyAction(formData: FormData): Promise<void> {
   if (!/^[A-Z]{3,8}$/.test(code)) failed(CALCULATOR_PATH, "Use a currency code like INR or USD.");
   if (!name) failed(CALCULATOR_PATH, "Enter the currency name.");
 
-  const rate = Number.parseFloat(String(formData.get("rateToUsd") || ""));
+  const rawRate = String(formData.get("rateToUsd") || "").trim();
+  if (!/^\d*\.?\d+$/.test(rawRate)) {
+    failed(CALCULATOR_PATH, "The rate is a number, e.g. 94.15 for the rupee.");
+  }
+  const rate = Number.parseFloat(rawRate);
   if (!Number.isFinite(rate) || rate <= 0) failed(CALCULATOR_PATH, "Enter how many of this currency one USD buys.");
+  if (rate > 1_000_000) failed(CALCULATOR_PATH, "That rate looks like a typo; keep it under 1,000,000.");
 
   const symbol = text(formData, "symbol", 8);
   const isDefault = formData.get("isDefault") === "on" ? 1 : 0;
@@ -277,6 +363,9 @@ export async function saveCurrencyAction(formData: FormData): Promise<void> {
       .update(calculatorCurrencies)
       .set({ isDefault: 0 })
       .where(sql`${calculatorCurrencies.code} <> ${code}`);
+  } else {
+    // Unticking the box on the only default would leave the set without one.
+    await ensureOneDefaultCurrency(db);
   }
 
   await recordAudit(db, actor, "calculator.currency_saved", "calculator_currency", code, { name });
@@ -294,20 +383,13 @@ export async function deleteCurrencyAction(formData: FormData): Promise<void> {
   const all = await db.select().from(calculatorCurrencies);
   if (all.length <= 1) failed(CALCULATOR_PATH, "Keep at least one currency.");
 
-  await db.delete(calculatorCurrencies).where(eq(calculatorCurrencies.code, code));
+  const gone = await db
+    .delete(calculatorCurrencies)
+    .where(eq(calculatorCurrencies.code, code))
+    .returning({ code: calculatorCurrencies.code });
+  if (!gone.length) failed(CALCULATOR_PATH, "That currency no longer exists.");
 
-  // Never leave the set without a default.
-  const survivors = await db
-    .select()
-    .from(calculatorCurrencies)
-    .orderBy(asc(calculatorCurrencies.position), asc(calculatorCurrencies.code));
-  if (survivors.length > 0 && !survivors.some((row) => row.isDefault === 1)) {
-    await db
-      .update(calculatorCurrencies)
-      .set({ isDefault: 1 })
-      .where(eq(calculatorCurrencies.code, survivors[0].code));
-  }
-
+  await ensureOneDefaultCurrency(db);
   await recordAudit(db, actor, "calculator.currency_deleted", "calculator_currency", code, {});
   invalidateCalculatorCache();
   done(CALCULATOR_PATH, "Currency deleted.");
@@ -325,23 +407,40 @@ export async function bulkDeleteCurrenciesAction(formData: FormData): Promise<vo
   if (all.length - codes.length < 1) failed(CALCULATOR_PATH, "Keep at least one currency.");
 
   await db.delete(calculatorCurrencies).where(inArray(calculatorCurrencies.code, codes));
-
-  const survivors = await db
-    .select()
-    .from(calculatorCurrencies)
-    .orderBy(asc(calculatorCurrencies.position), asc(calculatorCurrencies.code));
-  if (survivors.length > 0 && !survivors.some((row) => row.isDefault === 1)) {
-    await db
-      .update(calculatorCurrencies)
-      .set({ isDefault: 1 })
-      .where(eq(calculatorCurrencies.code, survivors[0].code));
-  }
+  await ensureOneDefaultCurrency(db);
 
   await recordAudit(db, actor, "calculator.currency_bulk_deleted", "calculator_currency", codes.join(","), {
     count: codes.length,
   });
   invalidateCalculatorCache();
   done(CALCULATOR_PATH, `${codes.length} currenc${codes.length === 1 ? "y" : "ies"} deleted.`);
+}
+
+/**
+ * Leaves exactly one currency marked as the default.
+ *
+ * The switcher opens on the default; with none marked it opens on nothing and
+ * the calculator prices in whatever the page last held.
+ */
+async function ensureOneDefaultCurrency(db: Awaited<ReturnType<typeof requireDb>>): Promise<void> {
+  const all = await db
+    .select()
+    .from(calculatorCurrencies)
+    .orderBy(asc(calculatorCurrencies.position), asc(calculatorCurrencies.code));
+  if (!all.length) return;
+
+  const defaults = all.filter((row) => row.isDefault === 1);
+  if (defaults.length === 1) return;
+
+  const keep = defaults[0] ?? all[0];
+  await db
+    .update(calculatorCurrencies)
+    .set({ isDefault: 0 })
+    .where(sql`${calculatorCurrencies.code} <> ${keep.code}`);
+  await db
+    .update(calculatorCurrencies)
+    .set({ isDefault: 1 })
+    .where(eq(calculatorCurrencies.code, keep.code));
 }
 
 /* ---------------------------------------------------------------- seed --- */

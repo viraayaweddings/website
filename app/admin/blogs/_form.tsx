@@ -1,6 +1,6 @@
 import { POST_STATUSES, type BlogFaq, type BlogPost } from "@/worker/db/schema";
 import { SubmitButton, UnsavedGuard } from "../_components/FormControls";
-import { ImageInput } from "../_components/ImageInput";
+import { MediaPicker } from "../_components/MediaPicker";
 import { RichText } from "../_components/RichText";
 import { Card, CardHead, Field, Select, TextArea } from "../_components/ui";
 
@@ -30,11 +30,14 @@ export function PostForm({
   faqs,
   action,
   submitLabel,
+  categories = [],
 }: {
   post?: BlogPost;
   faqs: BlogFaq[];
   action: (formData: FormData) => Promise<void>;
   submitLabel: string;
+  /** Categories already in use, offered as suggestions rather than a fixed list. */
+  categories?: string[];
 }) {
   const rows = faqs.length + SPARE_FAQ_ROWS;
 
@@ -101,7 +104,18 @@ export function PostForm({
               prefix="/blogs/"
               hint={post ? "Changing this moves the article; its category and tag listings follow it." : undefined}
             />
-            <Field label="Category" name="category" defaultValue={post?.category} />
+            <Field
+              label="Category"
+              name="category"
+              defaultValue={post?.category}
+              list="blog-categories"
+              hint="Pick one already in use, or type a new one."
+            />
+            <datalist id="blog-categories">
+              {categories.map((category) => (
+                <option key={category} value={category} />
+              ))}
+            </datalist>
             <Field
               label="Date shown"
               name="publishedLabel"
@@ -129,13 +143,7 @@ export function PostForm({
               defaultValue={post?.cardExcerpt}
               hint="Plain text. Printed exactly as typed."
             />
-            <ImageInput
-              label="Card image"
-              pathName="cardImage"
-              fileName="cardFile"
-              current={post?.cardImage ?? ""}
-              shape="card"
-            />
+            <MediaPicker label="Card image" name="cardImage" defaultValue={post?.cardImage ?? ""} shape="card" />
           </div>
         </Card>
 
@@ -156,17 +164,11 @@ export function PostForm({
               defaultValue={post?.metaDescription}
               hint="Plain text, around 155 characters."
             />
-            <ImageInput
-              label="Banner image"
-              pathName="bannerImage"
-              fileName="bannerFile"
-              current={post?.bannerImage ?? ""}
-            />
-            <ImageInput
+            <MediaPicker label="Banner image" name="bannerImage" defaultValue={post?.bannerImage ?? ""} />
+            <MediaPicker
               label="Social share image"
-              pathName="ogImage"
-              fileName="ogFile"
-              current={post?.ogImage ?? ""}
+              name="ogImage"
+              defaultValue={post?.ogImage ?? ""}
               hint="Used by og:image and twitter:image."
             />
           </div>

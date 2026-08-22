@@ -29,6 +29,7 @@ export function ConfirmDeleteBanner({
   cancelHref,
   note,
   onCancel,
+  returnTo,
 }: {
   action: (formData: FormData) => Promise<void>;
   id: number | string;
@@ -38,6 +39,8 @@ export function ConfirmDeleteBanner({
   /** Extra consequence worth spelling out before they commit. */
   note?: string;
   onCancel?: () => void;
+  /** List view to come back to, so filters and page survive the delete. */
+  returnTo?: string;
 }) {
   return (
     <div
@@ -65,6 +68,7 @@ export function ConfirmDeleteBanner({
 
         <form action={action} className="mt-3 flex flex-wrap items-center gap-2">
           <input type="hidden" name="id" value={id} />
+          {returnTo ? <input type="hidden" name="returnTo" value={returnTo} /> : null}
           <SubmitButton variant="danger" size="sm" icon="trash" pendingLabel="Deleting…">
             Yes, delete
           </SubmitButton>

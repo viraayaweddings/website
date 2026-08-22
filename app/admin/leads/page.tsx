@@ -23,6 +23,7 @@ import { bulkDeleteAction, bulkStatusAction, deleteLeadAction } from "./actions"
 import {
   PAGE_SIZE,
   EXPORT_LIMIT,
+  countByStatus,
   countLeads,
   filtersToQuery,
   listFormOptions,
@@ -52,16 +53,22 @@ export default async function LeadsPage({
   const db = await requireDb();
   const now = await currentTime();
 
-  const [rows, total, formOptions] = await Promise.all([
-    listLeads(db, filters),
+  const [total, formOptions, statusCounts] = await Promise.all([
     countLeads(db, filters),
     listFormOptions(db),
+    countByStatus(db),
   ]);
 
+  // Clamped before the query runs, so a page number past the end shows the last
+  // page of results rather than an empty table under a "page 9 of 3" label.
   const lastPage = Math.max(1, Math.ceil(total / PAGE_SIZE));
-  const listHref = href(filters);
-  const exportQuery = filtersToQuery(filters, { page: 1 });
-  const filtered = Boolean(filters.q || filters.status || filters.formId || filters.from || filters.to);
+  const safePage = Math.min(Math.max(1, filters.page), lastPage);
+  const view: LeadFilters = { ...filters, page: safePage };
+  const rows = await listLeads(db, view);
+  const listHref = href(view);
+  const exportQuery = filtersToQuery(view, { page: 1 });
+  const filtered = Boolean(view.q || view.status || view.formId || view.from || view.to);
+  const totalAll = Object.values(statusCounts).reduce((sum, value) => sum + value, 0);
 
   return (
     <AdminShell
@@ -88,20 +95,23 @@ export default async function LeadsPage({
       <Card className="mb-4">
         <form method="get" className="space-y-3">
           <AutoSubmitControls />
-          <input type="hidden" name="sort" value={filters.sort} />
-          <input type="hidden" name="dir" value={filters.dir} />
+          <input type="hidden" name="sort" value={view.sort} />
+          <input type="hidden" name="dir" value={view.dir} />
 
           <div className="flex flex-wrap items-center gap-1.5">
-            {QUICK_FILTERS.map((quick) => (
-              <Link
-                key={quick.label}
-                href={href({ ...filters, status: quick.status as LeadFilters["status"], page: 1 })}
-                className="vw-chip"
-                data-on={filters.status === quick.status}
-              >
-                {quick.label}
-              </Link>
-            ))}
+            {QUICK_FILTERS.map((quick) => {
+              const count = quick.status ? statusCounts[quick.status] ?? 0 : totalAll;
+              return (
+                <Link
+                  key={quick.label}
+                  href={href({ ...view, status: quick.status as LeadFilters["status"], page: 1 })}
+                  className="vw-chip"
+                  data-on={view.status === quick.status}
+                >
+                  {quick.label} · {formatCount(count)}
+                </Link>
+              );
+            })}
             {filtered ? (
               <Link href="/admin/leads" className="vw-btn vw-btn-ghost vw-btn-sm ml-auto">
                 <Icon name="close" size={13} />
@@ -116,13 +126,13 @@ export default async function LeadsPage({
                 Search
               </label>
               <span id="lead-q">
-                <LiveSearch name="q" defaultValue={filters.q} placeholder="Name, email, phone or any answer" />
+                <LiveSearch name="q" defaultValue={view.q} placeholder="Name, email, phone or any answer" />
               </span>
             </div>
 
             <label className="block">
               <span className="vw-label">Form</span>
-              <select name="form" defaultValue={filters.formId} className="vw-select">
+              <select name="form" defaultValue={view.formId} className="vw-select">
                 <option value="">Every form</option>
                 {formOptions.map((option) => (
                   <option key={option.formId} value={option.formId}>
@@ -134,12 +144,12 @@ export default async function LeadsPage({
 
             <label className="block">
               <span className="vw-label">From</span>
-              <input type="date" name="from" defaultValue={filters.from} className="vw-input" />
+              <input type="date" name="from" defaultValue={view.from} className="vw-input" />
             </label>
 
             <label className="block">
               <span className="vw-label">To</span>
-              <input type="date" name="to" defaultValue={filters.to} className="vw-input" />
+              <input type="date" name="to" defaultValue={view.to} className="vw-input" />
             </label>
           </div>
 
@@ -205,11 +215,11 @@ export default async function LeadsPage({
                   <th style={{ width: "2.25rem" }}>
                     <span className="sr-only">Select</span>
                   </th>
-                  <SortHeader label="Received" column="received" filters={filters} />
-                  <SortHeader label="Name" column="name" filters={filters} />
+                  <SortHeader label="Received" column="received" filters={view} />
+                  <SortHeader label="Name" column="name" filters={view} />
                   <th>Contact</th>
-                  <SortHeader label="Form" column="form" filters={filters} />
-                  <SortHeader label="Status" column="status" filters={filters} />
+                  <SortHeader label="Form" column="form" filters={view} />
+                  <SortHeader label="Status" column="status" filters={view} />
                   <th />
                 </tr>
               </thead>
@@ -250,6 +260,7 @@ export default async function LeadsPage({
                             what={`the submission from ${lead.name || lead.email || "this visitor"}`}
                             note="This removes the enquiry permanently. Mark it as spam instead if you may need it later."
                             ariaLabel={`Delete submission from ${lead.name || lead.email || "this visitor"}`}
+                            returnTo={listHref}
                           />
                         ) : null}
                       </div>
@@ -265,16 +276,16 @@ export default async function LeadsPage({
       {lastPage > 1 ? (
         <nav className="mt-4 flex items-center justify-between gap-3 text-sm" aria-label="Pages">
           <span style={{ color: "var(--ink-faint)" }}>
-            Page {filters.page} of {lastPage}
+            Page {safePage} of {lastPage}
           </span>
           <div className="flex gap-2">
-            {filters.page > 1 ? (
-              <LinkButton href={href({ ...filters, page: filters.page - 1 })} size="sm" icon="chevronLeft">
+            {safePage > 1 ? (
+              <LinkButton href={href({ ...view, page: safePage - 1 })} size="sm" icon="chevronLeft">
                 Previous
               </LinkButton>
             ) : null}
-            {filters.page < lastPage ? (
-              <LinkButton href={href({ ...filters, page: filters.page + 1 })} size="sm">
+            {safePage < lastPage ? (
+              <LinkButton href={href({ ...view, page: safePage + 1 })} size="sm">
                 Next
               </LinkButton>
             ) : null}

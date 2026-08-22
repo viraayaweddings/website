@@ -11,7 +11,7 @@ import {
 } from "@/worker/db/schema";
 import { AdminShell } from "../../../_components/AdminShell";
 import { SubmitButton, UnsavedGuard } from "../../../_components/FormControls";
-import { Alert, Card, CardHead, Field, LinkButton, Select } from "../../../_components/ui";
+import { Badge, Card, CardHead, Field, LinkButton, Select } from "../../../_components/ui";
 import { requireDb, requireRole } from "../../../_lib/auth";
 import { deleteCalculatorHotelAction, saveCalculatorHotelAction, saveCalculatorPricesAction } from "../../actions";
 
@@ -25,10 +25,12 @@ export default async function CalculatorHotelPage({
   const user = await requireRole("admin", "/admin/calculator/hotels", "calculator data");
   const db = await requireDb();
   const { id } = await params;
-  const query = await searchParams;
+  await searchParams; // The shell's toast reads these straight from the URL.
 
+  // Digits only: parseInt would happily read "12abc" as 12 and serve a record
+  // the URL does not actually name.
+  if (!/^\d+$/.test(id)) notFound();
   const hotelId = Number.parseInt(id, 10);
-  if (!Number.isInteger(hotelId)) notFound();
 
   const [hotelRows, cities, priceRows] = await Promise.all([
     db.select().from(calculatorHotels).where(eq(calculatorHotels.id, hotelId)).limit(1),
@@ -40,21 +42,30 @@ export default async function CalculatorHotelPage({
   if (!hotel) notFound();
 
   const byMonth = new Map(priceRows.map((row) => [row.month, row]));
+  // A month with every figure at zero prices that month as free, which on the
+  // public calculator is indistinguishable from a hotel nobody has priced yet.
+  const unpriced = CALCULATOR_MONTHS.filter((month) => {
+    const row = byMonth.get(month);
+    if (!row) return true;
+    return [row.roomPrice, row.lunchPrice, row.hiteaPrice, row.dinnerPrice].every(
+      (value) => Number.parseFloat(value) === 0,
+    );
+  });
 
   return (
     <AdminShell
       user={user}
       title={hotel.name}
       subtitle={`Calculator hotel #${hotel.id}. The venue page for this hotel prices from these figures.`}
-      actions={<LinkButton href="/admin/calculator/hotels" icon="chevronLeft" variant="secondary">All hotels</LinkButton>}
+      actions={
+        <>
+          {hotel.published === 1 ? <Badge tone="ok">shown</Badge> : <Badge tone="neutral">hidden</Badge>}
+          <LinkButton href="/admin/calculator/hotels" icon="chevronLeft" variant="secondary">
+            All hotels
+          </LinkButton>
+        </>
+      }
     >
-      {query.error ? (
-        <div className="mb-4"><Alert tone="error" title="That did not save">{query.error}</Alert></div>
-      ) : null}
-      {query.saved ? (
-        <div className="mb-4"><Alert tone="success" title="Saved">{query.saved}</Alert></div>
-      ) : null}
-
       <Card pad={false}>
         <CardHead title="Details" icon="venue" />
         <form action={saveCalculatorHotelAction} className="vw-card-pad space-y-3">
@@ -111,7 +122,7 @@ export default async function CalculatorHotelPage({
                     const row = byMonth.get(month);
                     return (
                       <tr key={month}>
-                        <td className="fw-600">{month}</td>
+                        <td className="font-semibold">{month}</td>
                         <td>
                           <input className="vw-input vw-mono" name={`room_${month}`}
                             defaultValue={row?.roomPrice ?? "0.00"} inputMode="decimal"
@@ -142,6 +153,9 @@ export default async function CalculatorHotelPage({
             <p className="vw-hint mt-3">
               Figures are in rupees. The calculator multiplies the room price by rooms per night and each meal price
               by the number of guests, then adds 18% GST.
+              {unpriced.length > 0
+                ? ` ${unpriced.length === CALCULATOR_MONTHS.length ? "Every month is" : `${unpriced.join(", ")} ${unpriced.length === 1 ? "is" : "are"}`} still at zero, so ${unpriced.length === 1 ? "that month prices" : "those months price"} as free.`
+                : ""}
             </p>
 
             <div className="mt-3">
@@ -156,6 +170,7 @@ export default async function CalculatorHotelPage({
           <CardHead title="Delete" icon="trash" />
           <form action={deleteCalculatorHotelAction} className="vw-card-pad">
             <input type="hidden" name="id" value={hotel.id} />
+            <input type="hidden" name="returnTo" value="/admin/calculator/hotels" />
             <p className="vw-hint mb-3">
               Removes the hotel and its twelve prices. The venue page for it stays online but will price at zero
               until the hotel is added back with the same id.

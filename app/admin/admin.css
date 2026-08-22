@@ -731,6 +731,36 @@
   object-fit: cover;
 }
 
+/**
+ * The card grid used by the picture lists -- the page editor's images, the
+ * media picker, the venue highlight tiles.
+ *
+ * Four across on a desktop, and `auto-fill` rather than a fixed count so a
+ * short list keeps card-sized cards instead of stretching two of them across
+ * the row. `min()` stops the track from overflowing a narrow phone.
+ */
+.vw-grid-cards {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+  align-items: stretch;
+}
+@media (min-width: 1024px) {
+  .vw-grid-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* An inline text link inside a table cell or a paragraph. */
+.vw-link {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+.vw-link:hover {
+  text-decoration: underline;
+}
+
 .vw-skeleton {
   background: linear-gradient(90deg, var(--surface-hover) 25%, var(--surface-2) 37%, var(--surface-hover) 63%);
   background-size: 400% 100%;

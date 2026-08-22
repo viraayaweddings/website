@@ -82,6 +82,27 @@ export async function loadStaticPage(env: DatabaseEnv, pathname: string): Promis
   }
 }
 
+/**
+ * One page whether or not it is published, for an admin previewing a hidden
+ * one. Uncached, so a hidden page can never leak into the cache the public
+ * lookup reads from.
+ */
+export async function findStaticPage(env: DatabaseEnv, pathname: string): Promise<StaticPage | null> {
+  try {
+    const db = await getDb(env);
+    if (!db) return null;
+    const rows = await db
+      .select()
+      .from(staticPages)
+      .where(eq(staticPages.path, normalizeStaticPath(pathname)))
+      .limit(1);
+    return rows[0] && rows[0].html ? rows[0] : null;
+  } catch (error) {
+    console.error("[static-pages] preview lookup failed", error instanceof Error ? error.message : error);
+    return null;
+  }
+}
+
 /** The admin listing: everything, published or not, without the markup. */
 export async function listStaticPages(env: DatabaseEnv = {}) {
   const db = await getDb(env);

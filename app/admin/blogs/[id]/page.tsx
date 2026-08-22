@@ -2,7 +2,7 @@
 export const dynamic = "force-dynamic";
 
 import { notFound } from "next/navigation";
-import { eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 import { blogPosts } from "@/worker/db/schema";
 import { parseFaqs, tocEntries } from "@/worker/site/blog";
 import { AdminShell } from "../../_components/AdminShell";
@@ -33,6 +33,11 @@ export default async function EditPostPage({
   if (!post) notFound();
 
   const headings = tocEntries(post.bodyHtml);
+  const categories = (
+    await db.selectDistinct({ category: blogPosts.category }).from(blogPosts).orderBy(asc(blogPosts.category))
+  )
+    .map((row) => row.category)
+    .filter(Boolean);
 
   return (
     <AdminShell
@@ -77,7 +82,13 @@ export default async function EditPostPage({
         )}
       </div>
 
-      <PostForm post={post} faqs={parseFaqs(post.faqs)} action={updatePostAction} submitLabel="Save article" />
+      <PostForm
+        post={post}
+        faqs={parseFaqs(post.faqs)}
+        action={updatePostAction}
+        submitLabel="Save article"
+        categories={categories}
+      />
 
       {isAdmin(user) ? (
         <Card className="mt-4" pad={false}>

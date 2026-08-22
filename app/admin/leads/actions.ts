@@ -12,16 +12,28 @@ export async function updateLeadAction(formData: FormData): Promise<void> {
   const db = await requireDb();
 
   const id = Number.parseInt(String(formData.get("id") || ""), 10);
-  if (!Number.isInteger(id)) redirect("/admin/leads");
+  if (!Number.isInteger(id) || id <= 0) {
+    redirect(`/admin/leads?error=${encodeURIComponent("That submission could not be identified.")}`);
+  }
 
   const requested = String(formData.get("status") || "");
   const status = (LEAD_STATUSES as readonly string[]).includes(requested)
     ? (requested as LeadStatus)
     : null;
-  const notes = String(formData.get("notes") || "").slice(0, 5000);
+  // A status the form did not offer is a rejected save, not a silent no-op.
+  if (requested && !status) {
+    redirect(`/admin/leads/${id}?error=${encodeURIComponent(`"${requested.slice(0, 40)}" is not a status this panel uses.`)}`);
+  }
+  const rawNotes = String(formData.get("notes") || "");
+  if (rawNotes.length > 5000) {
+    redirect(`/admin/leads/${id}?error=${encodeURIComponent("Notes must be 5000 characters or fewer.")}`);
+  }
+  const notes = rawNotes.slice(0, 5000);
 
   const existing = (await db.select().from(leads).where(eq(leads.id, id)).limit(1))[0];
-  if (!existing) redirect("/admin/leads");
+  if (!existing) {
+    redirect(`/admin/leads?error=${encodeURIComponent("That submission no longer exists.")}`);
+  }
 
   await db
     .update(leads)
@@ -50,12 +62,19 @@ export async function updateLeadAction(formData: FormData): Promise<void> {
 export async function deleteLeadAction(formData: FormData): Promise<void> {
   const user = await requireRole("admin");
   const db = await requireDb();
+  // Deleting from a filtered page should land back on that page, not on an
+  // unfiltered list the reader then has to rebuild.
+  const target = backTo(formData);
 
   const id = Number.parseInt(String(formData.get("id") || ""), 10);
-  if (!Number.isInteger(id)) redirect("/admin/leads");
+  if (!Number.isInteger(id) || id <= 0) {
+    redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("That submission could not be identified.")}`);
+  }
 
   const existing = (await db.select().from(leads).where(eq(leads.id, id)).limit(1))[0];
-  if (!existing) redirect("/admin/leads");
+  if (!existing) {
+    redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("That submission no longer exists.")}`);
+  }
 
   await db.delete(leads).where(eq(leads.id, id));
   await recordAudit(db, user, "lead.deleted", "lead", id, {
@@ -64,16 +83,18 @@ export async function deleteLeadAction(formData: FormData): Promise<void> {
     email: existing.email,
   });
 
-  redirect("/admin/leads?deleted=1");
+  redirect(`${target}${target.includes("?") ? "&" : "?"}deleted=${encodeURIComponent("Submission deleted.")}`);
 }
 
 /** Ids arrive as repeated `ids` checkboxes, one per selected row. */
+const BULK_LIMIT = 200;
+
 function readIds(formData: FormData): number[] {
   const ids = formData
     .getAll("ids")
     .map((value) => Number.parseInt(String(value), 10))
     .filter((id) => Number.isInteger(id) && id > 0);
-  return [...new Set(ids)].slice(0, 200);
+  return [...new Set(ids)];
 }
 
 /** Where to send the user back to, preserving their filters and page. */
@@ -94,7 +115,12 @@ export async function bulkStatusAction(formData: FormData): Promise<void> {
   const ids = readIds(formData);
   const requested = String(formData.get("bulkStatus") || "");
   if (!ids.length) redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("Select at least one submission first.")}`);
-  if (!(LEAD_STATUSES as readonly string[]).includes(requested)) redirect(target);
+  if (ids.length > BULK_LIMIT) {
+    redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(`Apply a status to ${BULK_LIMIT} submissions or fewer at a time.`)}`);
+  }
+  if (!(LEAD_STATUSES as readonly string[]).includes(requested)) {
+    redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("Choose a status from the list before applying it.")}`);
+  }
 
   const status = requested as LeadStatus;
   const existing = await db.select({ id: leads.id }).from(leads).where(inArray(leads.id, ids));
@@ -119,6 +145,9 @@ export async function bulkDeleteAction(formData: FormData): Promise<void> {
 
   const ids = readIds(formData);
   if (!ids.length) redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("Select at least one submission first.")}`);
+  if (ids.length > BULK_LIMIT) {
+    redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(`Delete ${BULK_LIMIT} submissions or fewer at a time.`)}`);
+  }
 
   const existing = await db.select({ id: leads.id }).from(leads).where(inArray(leads.id, ids));
   if (existing.length !== ids.length) {

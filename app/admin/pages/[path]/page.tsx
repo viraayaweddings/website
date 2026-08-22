@@ -8,7 +8,8 @@ import { normalizeStaticPath } from "@/worker/site/static-pages";
 import { AdminShell } from "../../_components/AdminShell";
 import { SubmitButton, UnsavedGuard } from "../../_components/FormControls";
 import { Icon } from "../../_components/icons";
-import { Alert, Card, CardHead, Field, LinkButton, TextArea } from "../../_components/ui";
+import { MediaPicker } from "../../_components/MediaPicker";
+import { Card, CardHead, Field, LinkButton, StatusBadge, TextArea } from "../../_components/ui";
 import { requireDb, requireRole } from "../../_lib/auth";
 import { replacePageImageAction, resetStaticPageAction, saveStaticPageAction } from "../actions";
 
@@ -32,12 +33,12 @@ export default async function StaticPageEditor({
   searchParams,
 }: {
   params: Promise<{ path: string }>;
-  searchParams: Promise<{ error?: string; saved?: string }>;
+  searchParams: Promise<{ error?: string; saved?: string; deleted?: string }>;
 }) {
   const user = await requireRole("admin", "/admin/pages", "the pages");
   const db = await requireDb();
   const { path: encoded } = await params;
-  const query = await searchParams;
+  await searchParams; // The shell's toast reads these straight from the URL.
 
   const path = normalizeStaticPath(decodeURIComponent(encoded));
   const rows = await db.select().from(staticPages).where(eq(staticPages.path, path)).limit(1);
@@ -53,18 +54,21 @@ export default async function StaticPageEditor({
       subtitle={`${path} — ${images.length} ${images.length === 1 ? "picture" : "pictures"} on this page`}
       actions={
         <>
-          <LinkButton href={path} icon="external" variant="secondary">View page</LinkButton>
+          <StatusBadge status={page.published === 1 ? "published" : "draft"} />
+          {/* A hidden page serves the markup it shipped with, so previewing is
+              the only way to see the stored version before showing it. */}
+          <LinkButton
+            href={page.published === 1 ? path : `${path}?preview=1`}
+            icon={page.published === 1 ? "external" : "eye"}
+            variant="secondary"
+            external
+          >
+            {page.published === 1 ? "View page" : "Preview hidden page"}
+          </LinkButton>
           <LinkButton href="/admin/pages" icon="chevronLeft" variant="secondary">All pages</LinkButton>
         </>
       }
     >
-      {query.error ? (
-        <div className="mb-4"><Alert tone="error" title="That did not save">{query.error}</Alert></div>
-      ) : null}
-      {query.saved ? (
-        <div className="mb-4"><Alert tone="success" title="Saved">{query.saved}</Alert></div>
-      ) : null}
-
       <Card pad={false}>
         <CardHead title="Search listing" icon="search" hint="What Google shows for this page" />
         <form action={saveStaticPageAction} className="vw-card-pad space-y-3">
@@ -99,12 +103,10 @@ export default async function StaticPageEditor({
             ) : (
               <div className="vw-grid-cards">
                 {images.map((image) => (
-                  <form
-                    key={image}
-                    action={replacePageImageAction}
-                    encType="multipart/form-data"
-                    className="vw-card vw-card-pad"
-                  >
+                  // No encType: a form whose action is a server function is
+                  // always sent as multipart, and setting it by hand makes React
+                  // warn that it overrode it.
+                  <form key={image} action={replacePageImageAction} className="vw-card vw-card-pad space-y-2">
                     <input type="hidden" name="path" value={path} />
                     <input type="hidden" name="current" value={image} />
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -113,16 +115,13 @@ export default async function StaticPageEditor({
                       alt=""
                       className="vw-thumb"
                       style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 8 }}
+                      loading="lazy"
                     />
-                    <p className="vw-hint vw-mono mt-2" style={{ wordBreak: "break-all" }}>{image}</p>
-                    <input
-                      type="file"
-                      name="file"
-                      accept="image/jpeg,image/png,image/webp,image/avif"
-                      className="vw-input mt-2"
-                      aria-label={`Replacement for ${image}`}
-                    />
-                    <SubmitButton size="sm" icon="upload" variant="secondary">Replace</SubmitButton>
+                    <p className="vw-hint vw-mono" style={{ wordBreak: "break-all" }}>{image}</p>
+                    <MediaPicker label="Replace with" name="replacement" shape="card" />
+                    <SubmitButton size="sm" icon="upload" variant="secondary" pendingLabel="Replacing…">
+                      Replace
+                    </SubmitButton>
                   </form>
                 ))}
               </div>
@@ -136,6 +135,7 @@ export default async function StaticPageEditor({
           <CardHead title="Start again" icon="refresh" />
           <form action={resetStaticPageAction} className="vw-card-pad">
             <input type="hidden" name="path" value={path} />
+            <input type="hidden" name="returnTo" value="/admin/pages" />
             <p className="vw-hint mb-3">
               <Icon name="info" /> Drops every change made here and puts the page back to the markup it shipped
               with. The page stays online throughout — that markup is what serves whenever there is no stored

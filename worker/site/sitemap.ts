@@ -6,6 +6,7 @@ import type { DatabaseEnv } from "../db/client";
 import { getDb } from "../db/client";
 import { blogPosts, hotels } from "../db/schema";
 import { STATIC_PUBLIC_ROUTES } from "./static-routes.generated";
+import { loadStaticPagePaths } from "./static-pages";
 
 function escapeXml(value: string): string {
   return value
@@ -28,9 +29,15 @@ async function managedRoutes(env: DatabaseEnv): Promise<string[]> {
       .where(eq(hotels.status, "published")),
   ]);
 
+  // Stored pages are included by path rather than by the file inventory: a page
+  // added through the panel has no file, so it would otherwise never appear.
+  // Hidden ones are left out, the same as a draft article.
+  const stored = await loadStaticPagePaths(env);
+
   return [
     ...posts.map((post) => `/blogs/${post.slug}/`),
     ...venues.map((venue) => `/destination-wedding/${venue.city}/${venue.slug}/`),
+    ...stored,
   ];
 }
 

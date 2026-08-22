@@ -8,6 +8,9 @@
 import { asc } from "drizzle-orm";
 import { getDb, type DatabaseEnv } from "../db/client";
 import { cityListings, type Hotel } from "../db/schema";
+// Re-exported so the city-page renderers keep importing their markup helpers
+// from one place; it lives apart because it needs no database access.
+export { renderCityHeading } from "./city-heading";
 import { escapeHtml } from "./hero";
 import { renderLabel, type ResolvedLabels } from "./labels";
 

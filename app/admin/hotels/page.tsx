@@ -2,7 +2,7 @@
 export const dynamic = "force-dynamic";
 
 import Link from "next/link";
-import { and, asc, eq, like, or, sql, type SQL } from "drizzle-orm";
+import { and, asc, desc, eq, like, or, sql, type SQL } from "drizzle-orm";
 import { hotels } from "@/worker/db/schema";
 import { AdminShell } from "../_components/AdminShell";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
@@ -17,6 +17,17 @@ import { bulkDeleteHotelsAction, deleteHotelAction } from "./actions";
 const PAGE_SIZE = 40;
 const HOTELS_BULK_FORM = "hotels-bulk-form";
 
+/** Whitelisted so a crafted query string cannot order by an arbitrary column. */
+const SORTS = {
+  city: { label: "City, then name", order: [asc(hotels.city), asc(hotels.name)] },
+  name: { label: "Name (A–Z)", order: [asc(hotels.name)] },
+  recent: { label: "Recently edited", order: [desc(hotels.updatedAt)] },
+  oldest: { label: "Least recently edited", order: [asc(hotels.updatedAt)] },
+  newest: { label: "Newest first", order: [desc(hotels.id)] },
+} as const;
+
+type SortKey = keyof typeof SORTS;
+
 export default async function HotelsPage({
   searchParams,
 }: {
@@ -29,7 +40,8 @@ export default async function HotelsPage({
   const query = single(params.q).slice(0, 120);
   const cityFilter = single(params.city).slice(0, 120);
   const statusFilter = single(params.status) === "draft" ? "draft" : single(params.status) === "published" ? "published" : "";
-  const page = Math.max(1, Number.parseInt(single(params.page) || "1", 10) || 1);
+  const sort: SortKey = single(params.sort) in SORTS ? (single(params.sort) as SortKey) : "city";
+  const requestedPage = Math.max(1, Number.parseInt(single(params.page) || "1", 10) || 1);
 
   const user = await requireUser("/admin/hotels");
   const db = await requireDb();
@@ -49,11 +61,7 @@ export default async function HotelsPage({
   const listQuery = db.select().from(hotels);
   const countQuery = db.select({ total: sql<number>`count(*)` }).from(hotels);
 
-  const [rows, totals, cities, drafts] = await Promise.all([
-    (where ? listQuery.where(where) : listQuery)
-      .orderBy(asc(hotels.city), asc(hotels.name))
-      .limit(PAGE_SIZE)
-      .offset((page - 1) * PAGE_SIZE),
+  const [totals, cities, drafts] = await Promise.all([
     where ? countQuery.where(where) : countQuery,
     db.selectDistinct({ city: hotels.city }).from(hotels).orderBy(asc(hotels.city)),
     db.select({ total: sql<number>`count(*)` }).from(hotels).where(eq(hotels.status, "draft")),
@@ -62,18 +70,30 @@ export default async function HotelsPage({
   const total = Number(totals[0]?.total ?? 0);
   const draftCount = Number(drafts[0]?.total ?? 0);
   const lastPage = Math.max(1, Math.ceil(total / PAGE_SIZE));
-  const filtered = Boolean(query || cityFilter || statusFilter);
+  // Clamped, so a stale link lands on the last page instead of an empty table.
+  const page = Math.min(requestedPage, lastPage);
+
+  const rows = await (where ? listQuery.where(where) : listQuery)
+    // Ties broken by id so paging cannot show the same venue twice.
+    .orderBy(...SORTS[sort].order, asc(hotels.id))
+    .limit(PAGE_SIZE)
+    .offset((page - 1) * PAGE_SIZE);
+
+  const filtered = Boolean(query || cityFilter || statusFilter || sort !== "city");
 
   const href = (next: Record<string, string | number>) => {
     const search = new URLSearchParams();
-    const merged = { q: query, city: cityFilter, status: statusFilter, page, ...next };
+    const merged = { q: query, city: cityFilter, status: statusFilter, sort, page, ...next };
     if (merged.q) search.set("q", String(merged.q));
     if (merged.city) search.set("city", String(merged.city));
     if (merged.status) search.set("status", String(merged.status));
+    if (merged.sort && merged.sort !== "city") search.set("sort", String(merged.sort));
     if (Number(merged.page) > 1) search.set("page", String(merged.page));
     const string = search.toString();
     return `/admin/hotels${string ? `?${string}` : ""}`;
   };
+
+  const listHref = href({});
 
   return (
     <AdminShell
@@ -113,7 +133,7 @@ export default async function HotelsPage({
             ) : null}
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-[2fr_1fr_auto] sm:items-end">
+          <div className="grid gap-3 sm:grid-cols-[2fr_1fr_1fr_auto] sm:items-end">
             <div>
               <span className="vw-label">Search</span>
               <LiveSearch name="q" defaultValue={query} placeholder="Venue name, slug or city" />
@@ -126,6 +146,17 @@ export default async function HotelsPage({
                 {cities.map((row) => (
                   <option key={row.city} value={row.city}>
                     {row.city}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="block">
+              <span className="vw-label">Sort</span>
+              <select name="sort" defaultValue={sort} className="vw-select">
+                {Object.entries(SORTS).map(([key, option]) => (
+                  <option key={key} value={key}>
+                    {option.label}
                   </option>
                 ))}
               </select>
@@ -154,6 +185,7 @@ export default async function HotelsPage({
         <>
         {isAdmin(user) ? (
           <form id={HOTELS_BULK_FORM}>
+            <input type="hidden" name="returnTo" value={listHref} />
             <BulkSelection noun="venue" formId={HOTELS_BULK_FORM}>
               <SubmitButton
                 variant="danger-quiet"
@@ -258,6 +290,7 @@ export default async function HotelsPage({
                           what={hotel.name || hotel.slug}
                           note="A venue that shipped with the site keeps its page online and reverts to the original built-in version. One added here disappears completely."
                           ariaLabel={`Delete ${hotel.name || hotel.slug}`}
+                          returnTo={listHref}
                         />
                       ) : null}
                     </div>

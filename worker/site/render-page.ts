@@ -12,7 +12,7 @@
  */
 import { enhancePublicHtml } from "./public-html";
 import { injectManagedContent, isHtmlResponse, needsInjection } from "./inject";
-import { resolvePage } from "./resolve-page";
+import { resolvePage, type ResolveOptions } from "./resolve-page";
 import { templateResponse, loadCityPage } from "./template";
 import { loadSiteSettings } from "./settings";
 import { loadHeroSlides } from "./hero";
@@ -29,6 +29,8 @@ import { cityFromListingPath, venuesForCity } from "./venue-listing";
 
 /** Managed pages are cached briefly so an edit shows up quickly. */
 const MANAGED_CACHE_CONTROL = "public, max-age=30";
+/** A preview shows unpublished content, so it must never be cached or indexed. */
+const PREVIEW_CACHE_CONTROL = "no-store";
 
 /** Paths whose content the database owns. Kept in step with `resolvePage`. */
 export function isDatabaseOwnedPath(pathname: string): boolean {
@@ -43,10 +45,14 @@ export function isDatabaseOwnedPath(pathname: string): boolean {
  * Rebuilds a page from its stored shell. Returns null when this path is not one
  * the database owns, or when its shell has not been seeded.
  */
-export async function renderFromDatabase(pathname: string, origin: string): Promise<Response | null> {
+export async function renderFromDatabase(
+  pathname: string,
+  origin: string,
+  options: ResolveOptions = {},
+): Promise<Response | null> {
   let resolved;
   try {
-    resolved = await resolvePage({}, pathname);
+    resolved = await resolvePage({}, pathname, options);
   } catch {
     return null;
   }
@@ -60,7 +66,8 @@ export async function renderFromDatabase(pathname: string, origin: string): Prom
   );
   const enhanced = await enhancePublicHtml(injected, resolved.pathname);
 
-  return withCacheControl(enhanced, MANAGED_CACHE_CONTROL);
+  if (!options.preview) return withCacheControl(enhanced, MANAGED_CACHE_CONTROL);
+  return withCacheControl(enhanced, PREVIEW_CACHE_CONTROL, { "x-robots-tag": "noindex, nofollow" });
 }
 
 /**
@@ -88,14 +95,25 @@ export async function applyManagedContent(
   return applyChanges ? withCacheControl(enhanced, MANAGED_CACHE_CONTROL) : enhanced;
 }
 
-function withCacheControl(response: Response, value: string): Response {
+function withCacheControl(
+  response: Response,
+  value: string,
+  extra: Record<string, string> = {},
+): Response {
   const headers = new Headers(response.headers);
   headers.set("cache-control", value);
+  for (const [name, headerValue] of Object.entries(extra)) headers.set(name, headerValue);
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,
     headers,
   });
+}
+
+/** Null for a city whose stored version is hidden, so its file shows through. */
+async function publishedCityPage(env: Record<string, never>, city: string) {
+  const page = await loadCityPage(env, city);
+  return page && page.published === 1 ? page : null;
 }
 
 /**
@@ -131,8 +149,11 @@ async function loadManagedContent(pathname: string) {
     venues,
     cityVenues: listingCity ? await venuesForCity(env, listingCity, venues) : [],
     cityPage: listingCity
-      ? await loadCityPage(env, listingCity)
+      ? await publishedCityPage(env, listingCity)
       : hotelPath
+        // A venue page only reads the city's numeric id for its "View All"
+        // link, which is structural rather than content, so it is used whether
+        // or not the city's own index page is published.
         ? await loadCityPage(env, hotelPath.city)
         : null,
     labels,

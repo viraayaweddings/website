@@ -4,8 +4,12 @@
  * Client components (nav rail, top bar, toasts) are siblings of the main
  * column — page content never crosses a client boundary, which breaks vinext
  * production renders when action buttons or tables are server components.
+ *
+ * The toaster is not wrapped in Suspense. Every admin screen is force-dynamic,
+ * so `useSearchParams()` needs no boundary here, and inside one the component
+ * never hydrated at all: its effect did not run on a full page load, and no
+ * server action's success or error message was ever shown.
  */
-import { Suspense } from "react";
 import type { User } from "@/worker/db/schema";
 import { AdminHeaderBar } from "./AdminHeaderBar";
 import { SideNav } from "./SideNav";
@@ -54,9 +58,7 @@ export function AdminShell({
         </main>
       </div>
 
-      <Suspense fallback={null}>
-        <Toaster />
-      </Suspense>
+      <Toaster />
     </div>
   );
 }

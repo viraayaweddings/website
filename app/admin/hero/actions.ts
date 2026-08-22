@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { emptyEnv } from "@/worker/env";
 import { asc, eq, inArray, sql } from "drizzle-orm";
 import { releaseImage, uploadImage } from "@/worker/admin/media-store";
+import { mediaKeyFrom, mediaPathFromKey, readMediaPathValue } from "@/worker/admin/media-path";
 import { heroSlides } from "@/worker/db/schema";
 import { invalidateHeroCache, safeHref } from "@/worker/site/hero";
 import { invalidateTemplateCache } from "@/worker/site/template";
@@ -39,14 +40,30 @@ function validate(fields: ReturnType<typeof readSlideFields>) {
   }
 }
 
-/** Returns the uploaded key, or "" when no file was chosen. */
-async function readUpload(formData: FormData, uploadedBy: string): Promise<string> {
+/**
+ * The slide's background, as the stored `/media/<key>` path.
+ *
+ * The picker posts a path it already holds; a file input is still honoured so
+ * the form keeps working without client-side JavaScript. Empty means the field
+ * was cleared.
+ */
+async function readSlideImage(formData: FormData, uploadedBy: string): Promise<string> {
   const file = formData.get("image");
-  if (!(file instanceof File) || file.size === 0) return "";
+  if (file instanceof File && file.size > 0) {
+    const result = await uploadImage(emptyEnv(), file, uploadedBy);
+    if ("error" in result) failed(result.error);
+    return mediaPathFromKey(result.key);
+  }
 
-  const result = await uploadImage(emptyEnv(), file, uploadedBy);
-  if ("error" in result) failed(result.error);
-  return result.key;
+  const chosen = readMediaPathValue(String(formData.get("imageKey") || ""));
+  if ("error" in chosen) failed(chosen.error);
+  return chosen.path;
+}
+
+/** Frees a stored image if nothing else points at it. Takes the stored path. */
+async function releaseStoredImage(value: string): Promise<void> {
+  const key = mediaKeyFrom(value);
+  if (key) await releaseImage(emptyEnv(), key);
 }
 
 export async function createSlideAction(formData: FormData): Promise<void> {
@@ -56,7 +73,7 @@ export async function createSlideAction(formData: FormData): Promise<void> {
   const fields = readSlideFields(formData);
   validate(fields);
 
-  const imageKey = await readUpload(formData, actor.email);
+  const imageKey = await readSlideImage(formData, actor.email);
   if (!imageKey) failed("Choose a background image for the slide.");
 
   const [{ nextPosition }] = await db
@@ -82,7 +99,7 @@ export async function updateSlideAction(formData: FormData): Promise<void> {
   const db = await requireDb();
 
   const id = Number.parseInt(String(formData.get("id") || ""), 10);
-  if (!Number.isInteger(id)) redirect(HERO_PATH);
+  if (!Number.isInteger(id) || id <= 0) failed("That slide could not be identified.");
 
   const existing = (await db.select().from(heroSlides).where(eq(heroSlides.id, id)).limit(1))[0];
   if (!existing) failed("That slide no longer exists.");
@@ -90,18 +107,17 @@ export async function updateSlideAction(formData: FormData): Promise<void> {
   const fields = readSlideFields(formData);
   validate(fields);
 
-  const uploadedKey = await readUpload(formData, actor.email);
+  const imageKey = await readSlideImage(formData, actor.email);
+  if (!imageKey) failed("A slide needs a background image; the carousel has nothing to show without one.");
 
   await db
     .update(heroSlides)
-    .set({ ...fields, imageKey: uploadedKey || existing.imageKey, updatedAt: new Date() })
+    .set({ ...fields, imageKey, updatedAt: new Date() })
     .where(eq(heroSlides.id, id));
 
   // Release the previous image only after the replacement is safely stored.
   // releaseImage keeps it if anything else still points at it.
-  if (uploadedKey && existing.imageKey !== uploadedKey) {
-    await releaseImage(emptyEnv(), existing.imageKey);
-  }
+  if (existing.imageKey !== imageKey) await releaseStoredImage(existing.imageKey);
 
   invalidateHeroCache();
   invalidateTemplateCache();
@@ -116,13 +132,13 @@ export async function deleteSlideAction(formData: FormData): Promise<void> {
   const db = await requireDb();
 
   const id = Number.parseInt(String(formData.get("id") || ""), 10);
-  if (!Number.isInteger(id)) redirect(HERO_PATH);
+  if (!Number.isInteger(id) || id <= 0) failed("That slide could not be identified.");
 
   const existing = (await db.select().from(heroSlides).where(eq(heroSlides.id, id)).limit(1))[0];
-  if (!existing) redirect(HERO_PATH);
+  if (!existing) failed("That slide no longer exists.");
 
   await db.delete(heroSlides).where(eq(heroSlides.id, id));
-  await releaseImage(emptyEnv(), existing.imageKey);
+  await releaseStoredImage(existing.imageKey);
 
   invalidateHeroCache();
   invalidateTemplateCache();
@@ -139,16 +155,17 @@ export async function bulkDeleteSlidesAction(formData: FormData): Promise<void> 
     .getAll("ids")
     .map((value) => Number.parseInt(String(value), 10))
     .filter((id) => Number.isInteger(id) && id > 0);
-  const uniqueIds = [...new Set(ids)].slice(0, 200);
+  const uniqueIds = [...new Set(ids)];
 
   if (!uniqueIds.length) failed("Select at least one slide first.");
+  if (uniqueIds.length > 200) failed("Delete 200 slides or fewer at a time.");
 
   const existing = await db.select().from(heroSlides).where(inArray(heroSlides.id, uniqueIds));
   if (existing.length !== uniqueIds.length) failed("Some selected slides no longer exist. Refresh and try again.");
 
   await db.delete(heroSlides).where(inArray(heroSlides.id, uniqueIds));
   for (const slide of existing) {
-    await releaseImage(emptyEnv(), slide.imageKey);
+    await releaseStoredImage(slide.imageKey);
   }
 
   invalidateHeroCache();
@@ -167,7 +184,8 @@ export async function moveSlideAction(formData: FormData): Promise<void> {
 
   const id = Number.parseInt(String(formData.get("id") || ""), 10);
   const direction = String(formData.get("direction") || "");
-  if (!Number.isInteger(id) || (direction !== "up" && direction !== "down")) redirect(HERO_PATH);
+  if (!Number.isInteger(id) || id <= 0) failed("That slide could not be identified.");
+  if (direction !== "up" && direction !== "down") failed("Use the up or down control to reorder a slide.");
 
   const ordered = await db
     .select({ id: heroSlides.id })
@@ -175,8 +193,13 @@ export async function moveSlideAction(formData: FormData): Promise<void> {
     .orderBy(asc(heroSlides.position), asc(heroSlides.id));
 
   const index = ordered.findIndex((slide) => slide.id === id);
+  if (index === -1) failed("That slide no longer exists.");
   const target = direction === "up" ? index - 1 : index + 1;
-  if (index === -1 || target < 0 || target >= ordered.length) redirect(HERO_PATH);
+  // Already at the end it is being nudged towards; nothing to do, and saying so
+  // beats a silent reload that looks like the button did nothing.
+  if (target < 0 || target >= ordered.length) {
+    done(`That slide is already ${direction === "up" ? "first" : "last"}.`);
+  }
 
   [ordered[index], ordered[target]] = [ordered[target], ordered[index]];
 

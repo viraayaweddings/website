@@ -2,14 +2,14 @@
 export const dynamic = "force-dynamic";
 
 import { notFound } from "next/navigation";
-import { eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 import { hotels, POST_STATUSES } from "@/worker/db/schema";
 import { parseFaqs } from "@/worker/site/blog";
 import { parseHighlights } from "@/worker/site/hotel";
 import { parseNearby } from "@/worker/site/venue-listing";
 import { AdminShell } from "../../_components/AdminShell";
 import { SubmitButton, UnsavedGuard } from "../../_components/FormControls";
-import { ImageInput } from "../../_components/ImageInput";
+import { MediaPicker } from "../../_components/MediaPicker";
 import { RichText } from "../../_components/RichText";
 import {
   Alert,
@@ -50,6 +50,7 @@ export default async function EditHotelPage({
 
   const highlights = parseHighlights(hotel.highlights);
   const faqs = parseFaqs(hotel.faqs);
+  const cities = await db.selectDistinct({ city: hotels.city }).from(hotels).orderBy(asc(hotels.city));
 
   return (
     <AdminShell
@@ -81,9 +82,10 @@ export default async function EditHotelPage({
     >
       <div className="mb-4">
         <Alert tone="info" title="What this page controls">
-          The URL is fixed and cannot be changed here. Which venues appear in this page&rsquo;s nearby strip is
-          set below; which appear on the <strong>{hotel.city}</strong> city page is set on that city&rsquo;s own
-          screen. The name, image and figures below are used everywhere this venue is listed.
+          Changing the city or slug moves the page and rewrites every list that points at it. Which venues appear
+          in this page&rsquo;s nearby strip is set below; which appear on the <strong>{hotel.city}</strong> city
+          page is set on that city&rsquo;s own screen. The name, image and figures below are used everywhere this
+          venue is listed.
         </Alert>
       </div>
 
@@ -96,6 +98,28 @@ export default async function EditHotelPage({
             <CardHead title="Overview" icon="venue" />
             <div className="vw-card-pad space-y-4">
               <Field label="Venue name" name="name" defaultValue={hotel.name} required />
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Field
+                  label="City"
+                  name="city"
+                  defaultValue={hotel.city}
+                  list="venue-cities"
+                  required
+                  hint="Lowercase, hyphenated. Changing this moves the page."
+                />
+                <Field
+                  label="URL slug"
+                  name="slug"
+                  defaultValue={hotel.slug}
+                  required
+                  hint={`Currently /destination-wedding/${hotel.city}/${hotel.slug}`}
+                />
+              </div>
+              <datalist id="venue-cities">
+                {cities.map((row) => (
+                  <option key={row.city} value={row.city} />
+                ))}
+              </datalist>
               <TextArea label="Address" name="address" rows={2} defaultValue={hotel.address} />
               <RichText
                 label="Description"
@@ -126,10 +150,11 @@ export default async function EditHotelPage({
                     name={`highlight_title_${index}`}
                     defaultValue={highlights[index]?.title}
                   />
-                  <Field
-                    label="Image path"
+                  <MediaPicker
+                    label="Picture"
                     name={`highlight_image_${index}`}
-                    defaultValue={highlights[index]?.image}
+                    defaultValue={highlights[index]?.image ?? ""}
+                    shape="card"
                   />
                 </div>
               ))}
@@ -220,12 +245,7 @@ export default async function EditHotelPage({
           <Card pad={false}>
             <CardHead title="Banner" icon="image" />
             <div className="vw-card-pad">
-              <ImageInput
-                label="Banner image"
-                pathName="bannerImage"
-                fileName="bannerFile"
-                current={hotel.bannerImage}
-              />
+              <MediaPicker label="Banner image" name="bannerImage" defaultValue={hotel.bannerImage} />
             </div>
           </Card>
 
@@ -236,7 +256,13 @@ export default async function EditHotelPage({
               icon="grid"
             />
             <div className="vw-card-pad space-y-3">
-              <Field label="Thumbnail image path" name="thumbnailImage" defaultValue={hotel.thumbnailImage} />
+              <MediaPicker
+                label="Thumbnail"
+                name="thumbnailImage"
+                defaultValue={hotel.thumbnailImage}
+                shape="card"
+                hint="Shown on city pages and nearby strips."
+              />
               <Field
                 label="Location"
                 name="cityLabel"
@@ -259,7 +285,7 @@ export default async function EditHotelPage({
               <Field label="Title tag" name="seoTitle" defaultValue={hotel.seoTitle} />
               <TextArea label="Meta description" name="metaDescription" rows={3} defaultValue={hotel.metaDescription} />
               <TextArea label="Meta keywords" name="metaKeywords" rows={2} defaultValue={hotel.metaKeywords} />
-              <Field label="Social share image" name="ogImage" defaultValue={hotel.ogImage} />
+              <MediaPicker label="Social share image" name="ogImage" defaultValue={hotel.ogImage} />
             </div>
           </Card>
 
