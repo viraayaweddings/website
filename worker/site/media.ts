@@ -46,9 +46,34 @@ function mediaHeaders(contentType: string, size = 0, etag = ""): Headers {
   return headers;
 }
 
-async function legacyFallback(key: string, method: string): Promise<Response | null> {
+async function fetchLegacyFallback(publicPath: string, method: string, requestUrl: string): Promise<Response | null> {
+  const headers: Record<string, string> = {};
+  const bypass = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
+  if (bypass) headers["x-vercel-protection-bypass"] = bypass;
+
+  const response = await fetch(new URL(publicPath, requestUrl), {
+    headers,
+    redirect: "manual",
+    signal: AbortSignal.timeout(5000),
+  }).catch(() => null);
+
+  if (!response?.ok) return null;
+
+  const contentType = response.headers.get("content-type") || "application/octet-stream";
+  const size = Number(response.headers.get("content-length") || 0);
+  return new Response(method === "HEAD" ? null : response.body, {
+    headers: mediaHeaders(contentType, size, response.headers.get("etag") || ""),
+  });
+}
+
+async function legacyFallback(key: string, method: string, requestUrl = ""): Promise<Response | null> {
   const publicPath = legacyFallbackPaths.get(key);
   if (!publicPath) return null;
+
+  if (process.env.VERCEL && requestUrl) {
+    const fetched = await fetchLegacyFallback(publicPath, method, requestUrl);
+    if (fetched) return fetched;
+  }
 
   const file = await readStaticFile(publicPath);
   if (!file) return null;
@@ -58,7 +83,12 @@ async function legacyFallback(key: string, method: string): Promise<Response | n
   });
 }
 
-export async function serveMedia(_env: unknown, pathname: string, method: string): Promise<Response> {
+export async function serveMedia(
+  _env: unknown,
+  pathname: string,
+  method: string,
+  requestUrl = "",
+): Promise<Response> {
   const notFound = new Response("Not found", {
     status: 404,
     headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" },
@@ -68,7 +98,7 @@ export async function serveMedia(_env: unknown, pathname: string, method: string
   if (!key) return notFound;
 
   const object = isR2Configured() ? await r2Get(key) : null;
-  if (!object?.body) return (await legacyFallback(key, method)) ?? notFound;
+  if (!object?.body) return (await legacyFallback(key, method, requestUrl)) ?? notFound;
 
   return new Response(method === "HEAD" ? null : object.body, {
     headers: mediaHeaders(object.contentType, object.size, object.etag),

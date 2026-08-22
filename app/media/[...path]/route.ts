@@ -6,7 +6,7 @@ export const runtime = "nodejs";
 export async function GET(request: Request, { params }: { params: Promise<{ path: string[] }> }) {
   const segments = (await params).path || [];
   const pathname = `/media/${segments.join("/")}`;
-  return serveMedia({}, pathname, request.method);
+  return serveMedia({}, pathname, request.method, request.url);
 }
 
 export async function HEAD(request: Request, context: { params: Promise<{ path: string[] }> }) {
