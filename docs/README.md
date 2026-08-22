@@ -11,6 +11,18 @@
 
 ---
 
+> **These pages still describe the Cloudflare deployment.** The site runs on
+> Vercel with Neon Postgres and Cloudflare R2 for uploads only. Anything below
+> that mentions Cloudflare Workers, D1, the `ASSETS` binding, `worker/index.ts`
+> or the `api/` handlers describes an architecture that is no longer live --
+> the first two files were removed once routing moved to the App Router.
+>
+> Accurate as of now: [03-routes.md](./03-routes.md) for the route map,
+> [deployment/vercel-postgres-r2.md](./deployment/vercel-postgres-r2.md) for how
+> it is deployed, and `02-admin/` for the panel. The rest is being migrated.
+
+---
+
 ## Quick Start
 
 ```bash

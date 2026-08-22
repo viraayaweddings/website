@@ -1,33 +1,39 @@
 {
-  "validatedAt": "2026-08-21T15:21:12.462Z",
-  "gitCommit": "101510587d02a2287379fd72e758be37c79241d7",
-  "gitCommitShort": "10151058",
+  "validatedAt": "2026-08-22T07:13:25.495Z",
+  "gitCommit": "a3cb917888f14a75ed31474bdf20a807690c96e9",
+  "gitCommitShort": "a3cb9178",
   "status": "PASS",
   "inventoryCounts": {
-    "routes": 34,
-    "serverActions": 28,
-    "dbTables": 15,
-    "workerEndpoints": 28,
+    "routes": 41,
+    "serverActions": 29,
+    "dbTables": 0,
+    "workerEndpoints": 25,
     "adminComponents": 18,
-    "adminFiles": 62,
+    "adminFiles": 67,
     "staticSiteRoutes": 370,
     "publicJsFiles": 7,
     "pageTypePatterns": 9,
     "publicForms": 7,
-    "workerSiteFiles": 18
+    "workerSiteFiles": 21
   },
   "issueCount": 0,
-  "warningCount": 9,
+  "warningCount": 15,
   "issues": [],
   "warnings": [
     "serverActions \"saveCalculatorPricesAction\" in manifest but not found in docs text",
     "publicJsFiles \"city-filter-mobile.js\" in manifest but not found in docs text",
+    "Worker site file not referenced in docs: worker/site/app-routes.ts",
     "Worker site file not referenced in docs: worker/site/calculator-prices.ts",
     "Worker site file not referenced in docs: worker/site/json-ld.ts",
     "Worker site file not referenced in docs: worker/site/public-html.ts",
+    "Worker site file not referenced in docs: worker/site/render-page.ts",
+    "Worker site file not referenced in docs: worker/site/serve-static.ts",
     "Worker site file not referenced in docs: worker/site/sitemap.ts",
     "Worker site file not referenced in docs: worker/site/static-routes.generated.ts",
+    "Admin file not referenced in docs: app/admin/_components/AdminHeaderBar.tsx",
     "Admin file not referenced in docs: app/admin/_components/CharCounter.tsx",
-    "Admin file not referenced in docs: app/admin/_components/DeleteConfirmTrigger.tsx"
+    "Admin file not referenced in docs: app/admin/_components/DeleteConfirmTrigger.tsx",
+    "Admin file not referenced in docs: app/admin/error.tsx",
+    "Admin file not referenced in docs: app/admin/settings/seed-actions.ts"
   ]
 }

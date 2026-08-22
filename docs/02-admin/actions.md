@@ -180,6 +180,17 @@ Every exported server action in `app/admin/**/actions.ts`.
 
 ---
 
+## Content seeding
+
+| Action | Auth | Input | Writes | Audit |
+| --- | --- | --- | --- | --- |
+| `importSiteContentAction` | admin | none | Bundled seed SQL, then `page_templates` | `content.imported` |
+
+Runs the same import as `POST /admin/seed`, from the Contact details screen, so
+an empty database can be filled without a shell.
+
+---
+
 ## Action Count Summary
 
 Total server actions: **28** (verified by inventory scan).

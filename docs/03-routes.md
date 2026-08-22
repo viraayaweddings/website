@@ -44,7 +44,7 @@ See [Admin Routes](./02-admin/routes.md) for complete `/admin/*` inventory.
 
 ---
 
-## Worker Routes (`worker/index.ts`)
+## Server Routes (`app/[[...path]]/route.ts`)
 
 ### Lead & Form Endpoints
 
@@ -100,15 +100,27 @@ See [Admin Routes](./02-admin/routes.md) for complete `/admin/*` inventory.
 
 ---
 
-## Legacy Node Handlers (`api/`)
+## Catch-all and diagnostics
 
-Used for non-Worker local dev only:
+Everything that is not an App Router page is served by the catch-all,
+`/:[...path]`. It renders the pages the database owns, falls back to the
+original `site-public` markup for the rest, and answers with `404.html` when
+neither exists. Only app-owned prefixes are handed to the App Router -- the
+public paths have no page behind them, so delegating them recurses.
 
-| File | Path |
-| --- | --- |
-| `api/lead.ts` | `/api/lead` |
-| `api/currencies.ts` | `/api/currencies` |
-| `api/currencies/select.ts` | `/api/currencies/select` |
+| Route | Method | Auth | Purpose |
+| --- | --- | --- | --- |
+| `/:[...path]` | GET, HEAD | Public | Catch-all: database-rendered pages, static fallback, 404 |
+| `/media/:...path` | GET, HEAD | Public | Serves uploads from R2 by content-addressed key |
+| `/api/health/db` | GET | Public | Postgres reachable; reports `schemaReady` |
+| `/api/health/html` | GET | Public | HTML rewriting works in this runtime |
+| `/admin/health` | GET | Public status, admin detail | Same DB check; the driver error is admin-only |
+| `/admin/health/r2` | GET | Admin | Round-trips an object through R2 and reports the real S3 error |
+| `/admin/seed` | GET, POST | Admin | Imports the bundled content seed into an empty database |
+
+The former Cloudflare worker entry and the `api/` dev handlers are gone: the
+first was dead once routing moved to the App Router, and the second shadowed
+`app/api/*` as Serverless Functions on Vercel.
 
 ---
 

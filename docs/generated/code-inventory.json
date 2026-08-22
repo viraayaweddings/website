@@ -1,30 +1,30 @@
 {
-  "generatedAt": "2026-08-21T15:21:11.639Z",
-  "gitCommit": "101510587d02a2287379fd72e758be37c79241d7",
-  "gitCommitShort": "10151058",
+  "generatedAt": "2026-08-22T07:12:01.045Z",
+  "gitCommit": "a3cb917888f14a75ed31474bdf20a807690c96e9",
+  "gitCommitShort": "a3cb9178",
   "projectVersion": "0.1.0",
   "counts": {
-    "routes": 34,
-    "serverActions": 28,
-    "dbTables": 15,
-    "workerEndpoints": 28,
+    "routes": 41,
+    "serverActions": 29,
+    "dbTables": 0,
+    "workerEndpoints": 25,
     "adminComponents": 18,
-    "adminFiles": 62,
+    "adminFiles": 67,
     "staticSiteRoutes": 370,
     "publicJsFiles": 7,
     "pageTypePatterns": 9,
     "publicForms": 7,
-    "workerSiteFiles": 18
+    "workerSiteFiles": 21
   },
   "routes": [
     {
-      "file": "app/page.tsx",
-      "route": "/",
-      "kind": "page"
-    },
-    {
       "file": "app/_lib/deprecated-lead-route.ts",
       "route": "/_lib/deprecated-lead-route.ts",
+      "kind": "api"
+    },
+    {
+      "file": "app/[[...path]]/route.ts",
+      "route": "/:[...path]",
       "kind": "api"
     },
     {
@@ -71,6 +71,16 @@
       "file": "app/admin/cities/[city]/page.tsx",
       "route": "/admin/cities/:city",
       "kind": "page"
+    },
+    {
+      "file": "app/admin/health/route.ts",
+      "route": "/admin/health",
+      "kind": "api"
+    },
+    {
+      "file": "app/admin/health/r2/route.ts",
+      "route": "/admin/health/r2",
+      "kind": "api"
     },
     {
       "file": "app/admin/hero/page.tsx",
@@ -138,6 +148,11 @@
       "kind": "api"
     },
     {
+      "file": "app/admin/seed/route.ts",
+      "route": "/admin/seed",
+      "kind": "api"
+    },
+    {
       "file": "app/admin/settings/page.tsx",
       "route": "/admin/settings",
       "kind": "page"
@@ -153,8 +168,23 @@
       "kind": "page"
     },
     {
+      "file": "app/api/currencies/route.ts",
+      "route": "/api/currencies",
+      "kind": "api"
+    },
+    {
       "file": "app/api/currencies/select/route.ts",
       "route": "/api/currencies/select",
+      "kind": "api"
+    },
+    {
+      "file": "app/api/health/db/route.ts",
+      "route": "/api/health/db",
+      "kind": "api"
+    },
+    {
+      "file": "app/api/health/html/route.ts",
+      "route": "/api/health/html",
       "kind": "api"
     },
     {
@@ -185,6 +215,11 @@
     {
       "file": "app/lead-route.ts",
       "route": "/lead-route.ts",
+      "kind": "api"
+    },
+    {
+      "file": "app/media/[...path]/route.ts",
+      "route": "/media/:...path",
       "kind": "api"
     }
   ],
@@ -240,6 +275,10 @@
     {
       "file": "app/admin/users/actions.ts",
       "name": "deleteUserAction"
+    },
+    {
+      "file": "app/admin/settings/seed-actions.ts",
+      "name": "importSiteContentAction"
     },
     {
       "file": "app/admin/login/actions.ts",
@@ -302,99 +341,36 @@
       "name": "updateUserAction"
     }
   ],
-  "dbTables": [
-    {
-      "exportName": "auditLog",
-      "tableName": "audit_log"
-    },
-    {
-      "exportName": "blogListings",
-      "tableName": "blog_listings"
-    },
-    {
-      "exportName": "blogPosts",
-      "tableName": "blog_posts"
-    },
-    {
-      "exportName": "cityListings",
-      "tableName": "city_listings"
-    },
-    {
-      "exportName": "cityPages",
-      "tableName": "city_pages"
-    },
-    {
-      "exportName": "heroSlides",
-      "tableName": "hero_slides"
-    },
-    {
-      "exportName": "hotels",
-      "tableName": "hotels"
-    },
-    {
-      "exportName": "leads",
-      "tableName": "leads"
-    },
-    {
-      "exportName": "media",
-      "tableName": "media"
-    },
-    {
-      "exportName": "pageTemplates",
-      "tableName": "page_templates"
-    },
-    {
-      "exportName": "rateLimits",
-      "tableName": "rate_limits"
-    },
-    {
-      "exportName": "sessions",
-      "tableName": "sessions"
-    },
-    {
-      "exportName": "settings",
-      "tableName": "settings"
-    },
-    {
-      "exportName": "siteLabels",
-      "tableName": "site_labels"
-    },
-    {
-      "exportName": "users",
-      "tableName": "users"
-    }
-  ],
+  "dbTables": [],
   "workerEndpoints": [
     "/",
-    "/_vinext/image",
+    "/_vinext",
     "/admin",
-    "/admin/",
-    "/api/calculator/availability-data",
-    "/api/currencies",
-    "/api/currencies/select",
-    "/api/lead",
-    "/api/lead/csrf",
-    "/appointment/slots",
+    "/api",
+    "/appointment-booking",
+    "/appointment-booking/",
+    "/appointment/payment-failed",
+    "/appointment/payment-failed/",
+    "/appointment/payment-success",
+    "/appointment/payment-success/",
+    "/assets",
     "/blog-form-submit",
+    "/blogs",
+    "/blogs/",
+    "/blogs/category/weeding-planning",
+    "/blogs/category/weeding-planning/",
+    "/contact",
+    "/contact/",
     "/contact/save",
-    "/data/calculator/cities.json",
-    "/data/calculator/currencies.json",
-    "/data/calculator/hotels-by-city.json",
-    "/data/calculator/hotels.json",
-    "/data/calculator/prices.json",
-    "/get-cities",
-    "/get-hotel-price/",
-    "/get-hotel-prices",
-    "/get-hotels-by-city",
-    "/get-hotels-by-city/",
-    "/get_in_touch/store",
+    "/destination-wedding/",
+    "/get_in_touch",
     "/hotel-search",
     "/index.html",
-    "/sitemap.xml",
-    "/storage",
+    "/media",
     "/wedding-consultation"
   ],
   "adminComponents": [
+    "app/admin/_components/AdminHeaderBar.tsx",
     "app/admin/_components/AdminShell.tsx",
     "app/admin/_components/BulkBar.tsx",
     "app/admin/_components/CharCounter.tsx",
@@ -405,7 +381,6 @@
     "app/admin/_components/FormControls.tsx",
     "app/admin/_components/ImageInput.tsx",
     "app/admin/_components/RichText.tsx",
-    "app/admin/_components/ShellChrome.tsx",
     "app/admin/_components/SideNav.tsx",
     "app/admin/_components/ThemeToggle.tsx",
     "app/admin/_components/Toaster.tsx",
@@ -415,6 +390,7 @@
     "app/admin/_components/ui.tsx"
   ],
   "adminFiles": [
+    "app/admin/_components/AdminHeaderBar.tsx",
     "app/admin/_components/AdminShell.tsx",
     "app/admin/_components/BulkBar.tsx",
     "app/admin/_components/CharCounter.tsx",
@@ -425,7 +401,6 @@
     "app/admin/_components/FormControls.tsx",
     "app/admin/_components/ImageInput.tsx",
     "app/admin/_components/RichText.tsx",
-    "app/admin/_components/ShellChrome.tsx",
     "app/admin/_components/SideNav.tsx",
     "app/admin/_components/ThemeToggle.tsx",
     "app/admin/_components/Toaster.tsx",
@@ -449,6 +424,9 @@
     "app/admin/cities/[city]/page.tsx",
     "app/admin/cities/actions.ts",
     "app/admin/cities/page.tsx",
+    "app/admin/error.tsx",
+    "app/admin/health/r2/route.ts",
+    "app/admin/health/route.ts",
     "app/admin/hero/actions.ts",
     "app/admin/hero/page.tsx",
     "app/admin/hotels/[id]/page.tsx",
@@ -471,8 +449,10 @@
     "app/admin/media/upload/route.ts",
     "app/admin/page.tsx",
     "app/admin/search/route.ts",
+    "app/admin/seed/route.ts",
     "app/admin/settings/actions.ts",
     "app/admin/settings/page.tsx",
+    "app/admin/settings/seed-actions.ts",
     "app/admin/setup/actions.ts",
     "app/admin/setup/page.tsx",
     "app/admin/users/actions.ts",
@@ -2061,6 +2041,7 @@
     }
   ],
   "workerSiteFiles": [
+    "worker/site/app-routes.ts",
     "worker/site/blog-inject.ts",
     "worker/site/blog.ts",
     "worker/site/calculator-prices.ts",
@@ -2073,7 +2054,9 @@
     "worker/site/media.ts",
     "worker/site/public-html.ts",
     "worker/site/public-routes.ts",
+    "worker/site/render-page.ts",
     "worker/site/resolve-page.ts",
+    "worker/site/serve-static.ts",
     "worker/site/settings.ts",
     "worker/site/sitemap.ts",
     "worker/site/static-routes.generated.ts",

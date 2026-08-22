@@ -63,18 +63,42 @@ function extractDbTables() {
   return tables.sort((a, b) => a.tableName.localeCompare(b.tableName));
 }
 
+/**
+ * Paths the server matches on, gathered from wherever routing is decided.
+ *
+ * This used to read the Cloudflare worker entry alone. Routing now lives in the
+ * catch-all route and the helpers beside it, so every source is scanned and a
+ * missing one is skipped rather than throwing -- the list should survive a file
+ * being retired.
+ */
 function extractWorkerEndpoints() {
-  const src = read("worker/index.ts");
+  const sources = [
+    "app/[[...path]]/route.ts",
+    "worker/site/app-routes.ts",
+    "worker/site/public-routes.ts",
+    "worker/site/render-page.ts",
+    "worker/public-endpoints.ts",
+    "worker/index.ts",
+  ];
+
   const paths = new Set();
   const patterns = [
     /pathname\s*===\s*["']([^"']+)["']/g,
     /pathname\.startsWith\(["']([^"']+)["']\)/g,
     /["'](\/[^"']+)["']\s*:\s*handle/g,
+    // Prefix and redirect tables are plain string literals in an array or a map.
+    /^\s*["'](\/[^"']*)["']\s*[,:]/gm,
   ];
-  for (const re of patterns) {
-    let m;
-    while ((m = re.exec(src))) paths.add(m[1]);
+
+  for (const source of sources) {
+    if (!existsSync(join(ROOT, source))) continue;
+    const src = read(source);
+    for (const re of patterns) {
+      let m;
+      while ((m = re.exec(src))) paths.add(m[1]);
+    }
   }
+
   return [...paths].sort();
 }
 
