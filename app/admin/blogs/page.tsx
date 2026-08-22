@@ -105,14 +105,14 @@ export default async function BlogsPage({
                   <form action={movePostAction}>
                     <input type="hidden" name="id" value={post.id} />
                     <input type="hidden" name="direction" value="up" />
-                    <SubmitButton variant="ghost" size="sm" icon="arrowUp" pendingLabel="">
+                    <SubmitButton variant="ghost" size="sm" icon="arrowUp" pendingLabel="" label={`Move "${post.cardTitle || post.heading || post.slug}" up`}>
                       {""}
                     </SubmitButton>
                   </form>
                   <form action={movePostAction}>
                     <input type="hidden" name="id" value={post.id} />
                     <input type="hidden" name="direction" value="down" />
-                    <SubmitButton variant="ghost" size="sm" icon="arrowDown" pendingLabel="">
+                    <SubmitButton variant="ghost" size="sm" icon="arrowDown" pendingLabel="" label={`Move "${post.cardTitle || post.heading || post.slug}" down`}>
                       {""}
                     </SubmitButton>
                   </form>

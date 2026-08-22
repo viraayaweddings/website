@@ -32,14 +32,14 @@ function SlideCard({
         <form action={moveSlideAction} className="inline">
           <input type="hidden" name="id" value={slide.id} />
           <input type="hidden" name="direction" value="up" />
-          <SubmitButton variant="ghost" size="sm" icon="arrowUp" pendingLabel="">
+          <SubmitButton variant="ghost" size="sm" icon="arrowUp" pendingLabel="" label={`Move slide ${index + 1} up`}>
             {""}
           </SubmitButton>
         </form>
         <form action={moveSlideAction} className="inline">
           <input type="hidden" name="id" value={slide.id} />
           <input type="hidden" name="direction" value="down" />
-          <SubmitButton variant="ghost" size="sm" icon="arrowDown" pendingLabel="">
+          <SubmitButton variant="ghost" size="sm" icon="arrowDown" pendingLabel="" label={`Move slide ${index + 1} down`}>
             {""}
           </SubmitButton>
         </form>

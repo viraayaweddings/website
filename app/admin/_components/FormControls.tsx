@@ -23,6 +23,7 @@ export function SubmitButton({
   value,
   confirm,
   formAction,
+  label,
 }: {
   children: React.ReactNode;
   variant?: "primary" | "secondary" | "ghost" | "danger" | "danger-quiet";
@@ -36,6 +37,8 @@ export function SubmitButton({
   confirm?: string;
   /** Sends this button's submit to a different action than the form's own. */
   formAction?: (formData: FormData) => void | Promise<void>;
+  /** Accessible name for an icon-only button, which has no text to read. */
+  label?: string;
 }) {
   const { pending } = useFormStatus();
 
@@ -47,6 +50,7 @@ export function SubmitButton({
       formAction={formAction}
       disabled={pending}
       aria-busy={pending}
+      aria-label={label}
       onClick={(event) => {
         if (confirm && !window.confirm(confirm)) event.preventDefault();
       }}
