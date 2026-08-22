@@ -1,5 +1,5 @@
 import handler from "vinext/server/app-router-entry";
-import { isAppOwnedPath, isNextInternalRequest } from "@/worker/site/app-routes";
+import { isAppOwnedPath } from "@/worker/site/app-routes";
 import { publicRedirectTarget } from "@/worker/site/public-routes";
 import { applyManagedContent, renderFromDatabase } from "@/worker/site/render-page";
 import { cacheControlFor, readStaticFile } from "@/worker/site/serve-static";
@@ -19,10 +19,15 @@ async function serve(request: Request): Promise<Response> {
   const url = new URL(request.url);
   const pathname = url.pathname;
 
-  if (isAppOwnedPath(pathname) || isNextInternalRequest(request)) {
-    // `.fetch`, not a call: the entry's default export is an object. Calling it
-    // threw, so any RSC or prefetch request for a database-owned path -- which
-    // is what a client-side navigation to the homepage sends -- answered 500.
+  // `.fetch`, not a call: the entry's default export is an object, so calling
+  // it threw.
+  //
+  // Only app-owned paths are delegated. An RSC or prefetch header on a public
+  // path used to be delegated too, but there is no App Router page behind any
+  // of them -- the app router resolves them straight back to this handler, so
+  // it recursed until the invocation timed out. Those requests are served the
+  // page like any other, and the client falls back to a full navigation.
+  if (isAppOwnedPath(pathname)) {
     return handler.fetch(request);
   }
 
