@@ -117,6 +117,8 @@ public paths have no page behind them, so delegating them recurses.
 | `/admin/health` | GET | Public status, admin detail | Same DB check; the driver error is admin-only |
 | `/admin/health/r2` | GET | Admin | Round-trips an object through R2 and reports the real S3 error |
 | `/admin/seed` | GET, POST | Admin | Imports the bundled content seed into an empty database |
+| `/admin/pages` | GET | Admin | The pages stored whole in `static_pages` |
+| `/admin/pages/:path` | GET | Admin | One stored page: its search listing and its pictures |
 | `/admin/calculator/hotels` | GET | Admin | Calculator hotels, filterable by city and name |
 | `/admin/calculator/hotels/:id` | GET | Admin | One hotel and its twelve monthly prices |
 | `/api/calculator/data` | GET | Public | The whole calculator dataset, from the database |

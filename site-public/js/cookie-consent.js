@@ -43,15 +43,28 @@
     if (banner) banner.remove();
   }
 
+  function ensureBannerStyles() {
+    if (document.getElementById("viraaya-cookie-banner-styles")) return;
+
+    var style = document.createElement("style");
+    style.id = "viraaya-cookie-banner-styles";
+    style.textContent =
+      "#viraaya-cookie-banner a,#viraaya-cookie-banner a:hover,#viraaya-cookie-banner a:focus{color:#fde68a!important}" +
+      '#viraaya-cookie-banner button[data-consent="all"],#viraaya-cookie-banner button[data-consent="all"]:hover,#viraaya-cookie-banner button[data-consent="all"]:focus{background:#f59e0b!important;color:#111!important}' +
+      '#viraaya-cookie-banner button[data-consent="essential"],#viraaya-cookie-banner button[data-consent="essential"]:hover,#viraaya-cookie-banner button[data-consent="essential"]:focus{background:transparent!important;color:#fff!important;border-color:rgba(255,255,255,.35)!important}';
+    document.head.appendChild(style);
+  }
+
   function showBanner() {
     if (document.getElementById("viraaya-cookie-banner")) return;
+    ensureBannerStyles();
 
     var banner = document.createElement("div");
     banner.id = "viraaya-cookie-banner";
     banner.setAttribute("role", "dialog");
     banner.setAttribute("aria-live", "polite");
     banner.style.cssText =
-      "position:fixed;left:1rem;right:1rem;bottom:1rem;z-index:9999;max-width:42rem;margin:0 auto;padding:1rem 1.25rem;border-radius:12px;background:#0f172a;color:#fff;box-shadow:0 10px 30px rgba(15,23,42,.35);font:14px/1.5 system-ui,sans-serif;";
+      "position:fixed;left:0;right:0;bottom:0;z-index:9999;width:100%;box-sizing:border-box;margin:0;padding:1rem 1.25rem;border-radius:0;background:#0f172a;color:#fff;box-shadow:0 -10px 30px rgba(15,23,42,.25);font:14px/1.5 system-ui,sans-serif;";
 
     banner.innerHTML =
       '<p style="margin:0 0 .75rem">We use optional analytics cookies to understand how the site is used. You can accept or reject them. See our <a href="/cookie-preference-policy/" style="color:#fde68a">cookie policy</a>.</p>' +

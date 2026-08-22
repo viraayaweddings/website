@@ -1,20 +1,20 @@
 {
-  "validatedAt": "2026-08-22T11:32:24.491Z",
-  "gitCommit": "1496fed9bebc1e38e389a69108bfc293554d66bb",
-  "gitCommitShort": "1496fed9",
+  "validatedAt": "2026-08-22T11:44:41.757Z",
+  "gitCommit": "72d2d6d3229b5dd8ae374e05c7737b254333415b",
+  "gitCommitShort": "72d2d6d3",
   "status": "PASS",
   "inventoryCounts": {
-    "routes": 45,
-    "serverActions": 36,
-    "dbTables": 19,
+    "routes": 47,
+    "serverActions": 39,
+    "dbTables": 20,
     "workerEndpoints": 26,
     "adminComponents": 18,
-    "adminFiles": 69,
+    "adminFiles": 72,
     "staticSiteRoutes": 370,
     "publicJsFiles": 7,
     "pageTypePatterns": 9,
     "publicForms": 7,
-    "workerSiteFiles": 22
+    "workerSiteFiles": 24
   },
   "issueCount": 0,
   "warningCount": 0,

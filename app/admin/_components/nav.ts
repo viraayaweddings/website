@@ -36,6 +36,7 @@ export const NAV: NavGroup[] = [
       { href: "/admin/cities", label: "City pages", icon: "city", adminOnly: true, hint: "Which venues each city lists" },
       { href: "/admin/hero", label: "Hero slider", icon: "slides", hint: "The homepage carousel" },
       { href: "/admin/media", label: "Images", icon: "image", hint: "Everything uploaded through the panel" },
+      { href: "/admin/pages", label: "Pages", icon: "grid", adminOnly: true, hint: "The calculators, landing, policy and story pages" },
     ],
   },
   {

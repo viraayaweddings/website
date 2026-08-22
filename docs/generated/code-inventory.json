@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-08-22T11:32:23.524Z",
-  "gitCommit": "1496fed9bebc1e38e389a69108bfc293554d66bb",
-  "gitCommitShort": "1496fed9",
+  "generatedAt": "2026-08-22T11:44:41.095Z",
+  "gitCommit": "72d2d6d3229b5dd8ae374e05c7737b254333415b",
+  "gitCommitShort": "72d2d6d3",
   "projectVersion": "0.1.0",
   "counts": {
-    "routes": 45,
-    "serverActions": 36,
-    "dbTables": 19,
+    "routes": 47,
+    "serverActions": 39,
+    "dbTables": 20,
     "workerEndpoints": 26,
     "adminComponents": 18,
-    "adminFiles": 69,
+    "adminFiles": 72,
     "staticSiteRoutes": 370,
     "publicJsFiles": 7,
     "pageTypePatterns": 9,
     "publicForms": 7,
-    "workerSiteFiles": 22
+    "workerSiteFiles": 24
   },
   "routes": [
     {
@@ -151,6 +151,16 @@
       "file": "app/admin/media/upload/route.ts",
       "route": "/admin/media/upload",
       "kind": "api"
+    },
+    {
+      "file": "app/admin/pages/page.tsx",
+      "route": "/admin/pages",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/pages/[path]/page.tsx",
+      "route": "/admin/pages/:path",
+      "kind": "page"
     },
     {
       "file": "app/admin/search/route.ts",
@@ -329,12 +339,20 @@
       "name": "moveSlideAction"
     },
     {
+      "file": "app/admin/pages/actions.ts",
+      "name": "replacePageImageAction"
+    },
+    {
       "file": "app/admin/leads/actions.ts",
       "name": "resendLeadEmailAction"
     },
     {
       "file": "app/admin/users/actions.ts",
       "name": "resetPasswordAction"
+    },
+    {
+      "file": "app/admin/pages/actions.ts",
+      "name": "resetStaticPageAction"
     },
     {
       "file": "app/admin/calculator/actions.ts",
@@ -367,6 +385,10 @@
     {
       "file": "app/admin/settings/actions.ts",
       "name": "saveSettingsAction"
+    },
+    {
+      "file": "app/admin/pages/actions.ts",
+      "name": "saveStaticPageAction"
     },
     {
       "file": "app/admin/hotels/actions.ts",
@@ -461,6 +483,10 @@
     {
       "exportName": "siteLabels",
       "tableName": "site_labels"
+    },
+    {
+      "exportName": "staticPages",
+      "tableName": "static_pages"
     },
     {
       "exportName": "users",
@@ -576,6 +602,9 @@
     "app/admin/media/page.tsx",
     "app/admin/media/upload/route.ts",
     "app/admin/page.tsx",
+    "app/admin/pages/[path]/page.tsx",
+    "app/admin/pages/actions.ts",
+    "app/admin/pages/page.tsx",
     "app/admin/search/route.ts",
     "app/admin/seed/route.ts",
     "app/admin/settings/actions.ts",
@@ -2188,6 +2217,8 @@
     "worker/site/serve-static.ts",
     "worker/site/settings.ts",
     "worker/site/sitemap.ts",
+    "worker/site/static-page-paths.generated.ts",
+    "worker/site/static-pages.ts",
     "worker/site/static-routes.generated.ts",
     "worker/site/template.ts",
     "worker/site/venue-listing.ts"

@@ -1,5 +1,5 @@
 {
-  "buildCommand": "NITRO_PRESET=vercel npm run build",
+  "buildCommand": "NITRO_PRESET=vercel npm run build && node --experimental-strip-types scripts/seed-static-pages.mjs --apply --if-configured",
   "installCommand": "npm install",
   "framework": null,
   "regions": [

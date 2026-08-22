@@ -30,6 +30,8 @@
       "/admin/logout",
       "/admin/media",
       "/admin/media/upload",
+      "/admin/pages",
+      "/admin/pages/:path",
       "/admin/search",
       "/admin/seed",
       "/admin/settings",
@@ -72,8 +74,10 @@
       "loginAction",
       "movePostAction",
       "moveSlideAction",
+      "replacePageImageAction",
       "resendLeadEmailAction",
       "resetPasswordAction",
+      "resetStaticPageAction",
       "saveCalculatorCityAction",
       "saveCalculatorHotelAction",
       "saveCalculatorPricesAction",
@@ -84,6 +88,7 @@
       "savePricesAction",
       "saveSectionAction",
       "saveSettingsAction",
+      "saveStaticPageAction",
       "updateHotelAction",
       "updateLeadAction",
       "updatePostAction",
@@ -109,6 +114,7 @@
       "sessions",
       "settings",
       "site_labels",
+      "static_pages",
       "users"
     ],
     "workerEndpoints": [
@@ -265,7 +271,7 @@
       "/destination-wedding/ahmedabad/itc-narmada-a-luxury-collection-hotel-ahmedabad/"
     ]
   },
-  "lastUpdated": "2026-08-22T11:32:24.213Z",
-  "lastAuditedCommit": "1496fed9bebc1e38e389a69108bfc293554d66bb",
+  "lastUpdated": "2026-08-22T11:44:41.582Z",
+  "lastAuditedCommit": "72d2d6d3229b5dd8ae374e05c7737b254333415b",
   "projectVersion": "0.1.0"
 }

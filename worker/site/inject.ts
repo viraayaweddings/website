@@ -27,7 +27,7 @@ import {
   renderPagination,
   renderResultsSummary,
 } from "./venue-listing";
-import type { CityPage } from "../db/schema";
+import type { CityPage, StaticPage } from "../db/schema";
 import type { ResolvedLabels } from "./labels";
 
 export interface InjectionInput {
@@ -49,6 +49,8 @@ export interface InjectionInput {
   cityPage: CityPage | null;
   /** Editable section headings and field labels. */
   labels?: ResolvedLabels;
+  /** Set only for a page stored whole in static_pages. */
+  staticPage?: StaticPage | null;
 }
 
 /** Labels on the contact page, matched against the <h3> above each value. */
@@ -76,6 +78,7 @@ export function needsInjection(pathname: string, input: InjectionInput): boolean
   if (blogTaxonomyFromPath(pathname) && input.blogPosts.length > 0) return true;
   if (hotelPathFrom(pathname) && input.hotel) return true;
   if (cityFromListingPath(pathname) && input.cityPage) return true;
+  if (input.staticPage) return true;
   return false;
 }
 
@@ -227,6 +230,26 @@ export function injectManagedContent(
       },
     });
   }
+  }
+
+  // A stored page carries its own title and description. The markup came from
+  // the clone and already has both; these make them editable rather than frozen.
+  if (input.staticPage) {
+    const page = input.staticPage;
+    if (page.title) {
+      rewriter.on("title", {
+        element(element) {
+          element.setInnerContent(page.title);
+        },
+      });
+    }
+    if (page.metaDescription) {
+      rewriter.on('meta[name="description"]', {
+        element(element) {
+          element.setAttribute("content", page.metaDescription);
+        },
+      });
+    }
   }
 
   const siteOrigin = origin || "https://viraayaweddings.com";

@@ -7,7 +7,7 @@
  * behaviour instead of losing the page.
  */
 import type { DatabaseEnv } from "../db/client";
-import type { BlogPost, CityPage, Hotel } from "../db/schema";
+import type { BlogPost, CityPage, Hotel, StaticPage } from "../db/schema";
 import {
   BLOG_LISTING_PATHS,
   blogSlugFromPath,
@@ -22,6 +22,7 @@ import { loadSiteSettings } from "./settings";
 import { cityFromListingPath, venuesForCity } from "./venue-listing";
 import { loadCityPage, loadTemplate } from "./template";
 import { loadLabels, type ResolvedLabels } from "./labels";
+import { loadStaticPage, normalizeStaticPath } from "./static-pages";
 
 export interface ResolvedPage {
   /** Shell markup from page_templates. */
@@ -39,6 +40,8 @@ export interface ResolvedPage {
     cityVenues: Hotel[];
     cityPage: CityPage | null;
     labels: ResolvedLabels;
+    /** Set only for a stored page; carries its SEO fields. */
+    staticPage: StaticPage | null;
   };
 }
 
@@ -51,6 +54,7 @@ const EMPTY = {
   venues: [] as Hotel[],
   cityVenues: [] as Hotel[],
   cityPage: null,
+  staticPage: null,
 };
 
 function isHomepage(pathname: string): boolean {
@@ -81,6 +85,18 @@ export async function resolvePage(
   const settings = await loadSiteSettings(env);
   const labels = await loadLabels(env);
   const base = { settings, labels, ...EMPTY };
+
+  // Checked before the pattern matches below: a stored page is an exact path,
+  // and one of them (/destination-wedding-in-goa) sits close enough to the venue
+  // patterns that order matters.
+  const stored = await loadStaticPage(env, pathname);
+  if (stored) {
+    return {
+      html: stored.html,
+      pathname: normalizeStaticPath(pathname),
+      input: { ...base, staticPage: stored },
+    };
+  }
 
   if (isHomepage(pathname)) {
     const html = await loadTemplate(env, "home");

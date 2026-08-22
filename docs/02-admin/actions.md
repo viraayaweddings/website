@@ -192,6 +192,35 @@ filled without a shell.
 
 ---
 
+## Stored pages
+
+Venues, articles and city indexes are rebuilt from a shell plus content rows.
+The remaining 35 pages -- the calculators, the ten city landing pages, the
+policy and story pages -- have no repeating structure to model, so `static_pages`
+holds each one whole.
+
+| Action | Auth | Input | Writes | Audit |
+| --- | --- | --- | --- | --- |
+| `saveStaticPageAction` | admin | path, title, metaDescription, published | `static_pages` | `page.updated` |
+| `replacePageImageAction` | admin | path, current image, an upload | `static_pages.html`, and `media` for the upload | `page.image_replaced` |
+| `resetStaticPageAction` | admin | path | Deletes the row | `page.reset` |
+
+The panel does not expose the markup. Several of these pages carry the inline
+scripts the calculators need, and the save-time sanitiser strips `script` -- so
+a raw-HTML field would quietly break the page it was meant to edit. What it
+exposes instead is the part that is safe and is what people actually want to
+change: the search listing, and which picture sits in each slot.
+
+`replacePageImageAction` swaps every occurrence of a path, not the first. The
+same image is often on a page twice, full size and as a thumbnail, and changing
+one of them looks like a bug.
+
+Resetting deletes the row rather than restoring a backup. The cloned file is
+still on disk and is still what serves when there is no stored copy, so dropping
+the row *is* the undo, and the page stays up throughout.
+
+---
+
 ## Cost calculator
 
 | Action | Auth | Input | Writes | Audit |

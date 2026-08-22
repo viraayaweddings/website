@@ -412,6 +412,34 @@ export const cityPages = pgTable("city_pages", {
   shellKey: text("shell_key").notNull().default("city"),
 });
 
+/**
+ * Pages with no content model of their own -- the calculators, the city landing
+ * pages, the policy and story pages. They were served straight from their cloned
+ * file, so nothing an admin changed ever reached them.
+ *
+ * The whole page is stored, not a shell plus fields: there is no repeating
+ * structure to model here, and the point is to make the markup itself something
+ * the panel owns. The panel edits the parts that are safe to edit -- the SEO
+ * fields, and which image sits in each slot -- rather than exposing the markup,
+ * because several of these pages carry inline scripts the calculators need.
+ */
+export const staticPages = pgTable(
+  "static_pages",
+  {
+    /** Request path, no trailing slash: "/about-us". */
+    path: text("path").primaryKey(),
+    title: text("title").notNull().default(""),
+    metaDescription: text("meta_description").notNull().default(""),
+    html: text("html").notNull().default(""),
+    published: integer("published").notNull().default(1),
+    updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
+    updatedBy: text("updated_by").notNull().default(""),
+  },
+  (table) => [index("static_pages_published_idx").on(table.published)],
+);
+
+export type StaticPage = typeof staticPages.$inferSelect;
+
 export type PageTemplate = typeof pageTemplates.$inferSelect;
 export type CityPage = typeof cityPages.$inferSelect;
 

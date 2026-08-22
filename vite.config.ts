@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/postcss";
 import { defineConfig } from "vite";
 import { sites } from "./build/sites-vite-plugin.ts";
 import { PUBLIC_REDIRECTS } from "./worker/site/public-routes.ts";
+import { STORED_PAGE_PATHS } from "./worker/site/static-page-paths.generated.ts";
 
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
@@ -49,6 +50,10 @@ const databaseOwnedRoutes = [
   // handler answers from the database and falls back to the bundle, so the
   // pages that read these paths directly get edited prices too.
   "/data/calculator/[^/]+[.]json",
+  // Pages stored whole in static_pages. Both spellings: the site links to some
+  // of these with a trailing slash and some without, and only an exact match
+  // reaches the function.
+  ...STORED_PAGE_PATHS.flatMap((path) => [path, `${path}/`]),
 ].map((src) => ({
   src,
   missing: [{ type: "header", key: SHELL_HEADER }],

@@ -24,6 +24,7 @@
 | `city_listings` | Curated venue order per city | `/admin/cities` |
 | `blog_listings` | Curated post order per category/tag | `/admin/blogs/sections` |
 | `page_templates` | Full HTML page shells | (internal, seeded) |
+| `static_pages` | Whole pages with no content model of their own | `/admin/pages` |
 | `city_pages` | City index SEO + pagination | `/admin/cities` |
 | `site_labels` | Section heading text | `/admin/labels` |
 
@@ -48,6 +49,25 @@ media ── referenced by hero_slides.image_key, hotels.*_image, blog_posts.*_i
 ```
 
 Only formal FKs: `sessions.user_id → users.id` (CASCADE), `audit_log.user_id → users.id` (SET NULL).
+
+### `static_pages`
+
+`path` (PK, no trailing slash), `title`, `meta_description`, `html`,
+`published`, `updated_at`, `updated_by`. 35 rows, about 9MB.
+
+It holds the third kind of page. Venues, articles and city indexes are rebuilt
+from a shell plus content rows; the rest of the site was served straight from
+its cloned file, so nothing an admin changed reached it. These pages have no
+repeating structure worth modelling — a calculator and a privacy policy have
+nothing in common — so each is stored whole.
+
+`resolvePage` checks this table **before** the pattern matches, because a stored
+path is exact and `/destination-wedding-in-goa` sits close enough to the venue
+patterns that order decides which wins.
+
+Unpublishing a row does not take the page offline: it falls through to the
+cloned file, which is the same page without any of the edits. That is also what
+the reset action relies on.
 
 ---
 
