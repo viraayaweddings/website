@@ -7,22 +7,23 @@ import { media } from "@/worker/db/schema";
 import { buildImageUsage } from "@/worker/admin/image-references";
 import { AdminShell } from "../_components/AdminShell";
 import { Donut } from "../_components/Charts";
-import { CopyButton, LiveSearch, SubmitButton } from "../_components/FormControls";
+import { LiveSearch } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
 import { Uploader } from "../_components/Uploader";
 import {
   Alert,
-  Badge,
   Card,
   EmptyState,
   LinkButton,
   formatBytes,
   formatCount,
+  formatDateTime,
   formatRelative,
 } from "../_components/ui";
 import { currentTime } from "../_lib/clock";
 import { isAdmin, requireDb, requireUser } from "../_lib/auth";
-import { deleteMediaAction } from "./actions";
+import { bulkDeleteMediaAction, deleteMediaAction } from "./actions";
+import { MediaLibrary, type MediaLibraryItem } from "./MediaLibrary";
 
 const PAGE_SIZE = 48;
 
@@ -68,6 +69,18 @@ export default async function MediaPage({
   const unused = withUsage.filter((entry) => entry.references.length === 0);
   const unusedBytes = unused.reduce((sum, entry) => sum + entry.file.size, 0);
   const shown = onlyUnused ? unused : withUsage;
+  const items: MediaLibraryItem[] = shown.map(({ file, references }) => ({
+    key: file.key,
+    filename: file.filename,
+    contentType: file.contentType,
+    size: file.size,
+    sizeLabel: formatBytes(file.size),
+    uploadedBy: file.uploadedBy,
+    createdAt: file.createdAt.toISOString(),
+    createdLabel: formatDateTime(file.createdAt),
+    relativeLabel: formatRelative(file.createdAt, now),
+    references,
+  }));
 
   const href = (next: Record<string, string | number>) => {
     const search = new URLSearchParams();
@@ -147,74 +160,12 @@ export default async function MediaPage({
           </EmptyState>
         </Card>
       ) : (
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-          {shown.map(({ file, references }) => (
-            <Card key={file.key} pad={false} className="overflow-hidden">
-              {/* Plain img: these come from R2, not the static asset pipeline. */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`/media/${file.key}`}
-                alt=""
-                className="h-40 w-full object-cover"
-                style={{ background: "var(--surface-2)" }}
-                loading="lazy"
-              />
-
-              <div className="vw-card-pad">
-                <div className="mb-1 flex items-start gap-1">
-                  <p className="min-w-0 flex-1 truncate text-sm font-medium" style={{ color: "var(--ink)" }}>
-                    {file.filename || file.key}
-                  </p>
-                  <CopyButton value={`/media/${file.key}`} label="image path" />
-                </div>
-
-                <p className="text-xs" style={{ color: "var(--ink-faint)" }}>
-                  {file.contentType.replace("image/", "").toUpperCase()} · {formatBytes(file.size)} ·{" "}
-                  {formatRelative(file.createdAt, now)}
-                </p>
-
-                <div className="mt-2.5">
-                  {references.length === 0 ? (
-                    <Badge tone="warn">Not used anywhere</Badge>
-                  ) : (
-                    <ul className="space-y-1 text-xs" style={{ color: "var(--ink-soft)" }}>
-                      {references.slice(0, 3).map((reference, index) => (
-                        <li key={index} className="flex items-start gap-1.5">
-                          <span className="mt-0.5 flex-none" style={{ color: "var(--ink-faint)" }}>
-                            <Icon name="link" size={11} />
-                          </span>
-                          <span className="min-w-0 truncate">
-                            <Link href={reference.adminPath} className="hover:underline">
-                              {reference.what}: {reference.where}
-                            </Link>
-                          </span>
-                        </li>
-                      ))}
-                      {references.length > 3 ? (
-                        <li style={{ color: "var(--ink-faint)" }}>and {references.length - 3} more</li>
-                      ) : null}
-                    </ul>
-                  )}
-                </div>
-
-                {isAdmin(user) && references.length === 0 ? (
-                  <form action={deleteMediaAction} className="mt-3">
-                    <input type="hidden" name="key" value={file.key} />
-                    <SubmitButton
-                      variant="danger-quiet"
-                      size="sm"
-                      icon="trash"
-                      pendingLabel="Deleting…"
-                      confirm="Delete this image permanently?"
-                    >
-                      Delete
-                    </SubmitButton>
-                  </form>
-                ) : null}
-              </div>
-            </Card>
-          ))}
-        </div>
+        <MediaLibrary
+          items={items}
+          isAdmin={isAdmin(user)}
+          deleteAction={deleteMediaAction}
+          bulkDeleteAction={bulkDeleteMediaAction}
+        />
       )}
 
       {lastPage > 1 ? (

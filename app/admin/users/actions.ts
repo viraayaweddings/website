@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { and, eq, ne } from "drizzle-orm";
+import { and, eq, inArray, ne } from "drizzle-orm";
 import { hashPassword, validatePasswordStrength } from "@/worker/admin/password";
 import { destroyUserSessions } from "@/worker/admin/session";
 import { users, USER_ROLES, type UserRole } from "@/worker/db/schema";
@@ -144,4 +144,44 @@ export async function deleteUserAction(formData: FormData): Promise<void> {
 
   await recordAudit(db, actor, "user.deleted", "user", id, { email: target.email, role: target.role });
   done(`${target.email} deleted.`);
+}
+
+/** Deletes selected accounts without allowing self-delete or last-admin lockout. */
+export async function bulkDeleteUsersAction(formData: FormData): Promise<void> {
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+  const ids = [...new Set(formData.getAll("ids").map((value) => String(value || "").trim()).filter(Boolean))]
+    .slice(0, 200);
+
+  if (!ids.length) failed("Select at least one account first.");
+  if (ids.includes(actor.id)) failed("You cannot delete the account you are signed in with.");
+
+  const targets = await db.select().from(users).where(inArray(users.id, ids));
+  if (targets.length !== ids.length) failed("Some selected accounts no longer exist. Refresh and try again.");
+
+  const deletingActiveAdmins = new Set(
+    targets.filter((user) => user.role === "admin" && user.status === "active").map((user) => user.id),
+  );
+  if (deletingActiveAdmins.size > 0) {
+    const remainingAdmin = await db
+      .select({ id: users.id })
+      .from(users)
+      .where(and(eq(users.role, "admin"), eq(users.status, "active")))
+      .limit(200);
+    if (!remainingAdmin.some((user) => !deletingActiveAdmins.has(user.id))) {
+      failed("This would delete the last active admin. Promote someone else first.");
+    }
+  }
+
+  for (const target of targets) {
+    await destroyUserSessions(db, target.id);
+  }
+  await db.delete(users).where(inArray(users.id, ids));
+
+  await recordAudit(db, actor, "user.bulk_deleted", "user", ids.join(","), {
+    count: ids.length,
+    emails: targets.map((target) => target.email),
+  });
+
+  done(`${ids.length} account${ids.length === 1 ? "" : "s"} deleted.`);
 }

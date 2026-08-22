@@ -131,6 +131,35 @@ export async function deleteSlideAction(formData: FormData): Promise<void> {
   done("Slide deleted.");
 }
 
+/** Deletes every selected hero slide and releases their images if unused. */
+export async function bulkDeleteSlidesAction(formData: FormData): Promise<void> {
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+  const ids = formData
+    .getAll("ids")
+    .map((value) => Number.parseInt(String(value), 10))
+    .filter((id) => Number.isInteger(id) && id > 0);
+  const uniqueIds = [...new Set(ids)].slice(0, 200);
+
+  if (!uniqueIds.length) failed("Select at least one slide first.");
+
+  const existing = await db.select().from(heroSlides).where(inArray(heroSlides.id, uniqueIds));
+  if (existing.length !== uniqueIds.length) failed("Some selected slides no longer exist. Refresh and try again.");
+
+  await db.delete(heroSlides).where(inArray(heroSlides.id, uniqueIds));
+  for (const slide of existing) {
+    await releaseImage(emptyEnv(), slide.imageKey);
+  }
+
+  invalidateHeroCache();
+  invalidateTemplateCache();
+  await recordAudit(db, actor, "hero.bulk_deleted", "hero_slide", uniqueIds.join(","), {
+    count: uniqueIds.length,
+  });
+
+  done(`${uniqueIds.length} slide${uniqueIds.length === 1 ? "" : "s"} deleted.`);
+}
+
 /** Swaps a slide with its neighbour so the order can be nudged one step at a time. */
 export async function moveSlideAction(formData: FormData): Promise<void> {
   const actor = await requireUser();

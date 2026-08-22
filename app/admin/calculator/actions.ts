@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { asc, eq, sql } from "drizzle-orm";
+import { asc, eq, inArray, sql } from "drizzle-orm";
 import {
   CALCULATOR_MONTHS,
   calculatorCities,
@@ -101,6 +101,33 @@ export async function deleteCalculatorCityAction(formData: FormData): Promise<vo
   done(CALCULATOR_PATH, "City deleted.");
 }
 
+export async function bulkDeleteCalculatorCitiesAction(formData: FormData): Promise<void> {
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+  const ids = formData
+    .getAll("ids")
+    .map((value) => Number.parseInt(String(value), 10))
+    .filter((value) => Number.isInteger(value) && value > 0);
+  const cityIds = [...new Set(ids)].slice(0, 200);
+
+  if (!cityIds.length) failed(CALCULATOR_PATH, "Select at least one city first.");
+
+  const linkedHotels = await db
+    .select({ id: calculatorHotels.id })
+    .from(calculatorHotels)
+    .where(inArray(calculatorHotels.cityId, cityIds))
+    .limit(1);
+  if (linkedHotels.length > 0) failed(CALCULATOR_PATH, "Move or delete the hotels in the selected cities first.");
+
+  await db.delete(calculatorCities).where(inArray(calculatorCities.id, cityIds));
+  await recordAudit(db, actor, "calculator.city_bulk_deleted", "calculator_city", cityIds.join(","), {
+    count: cityIds.length,
+  });
+
+  invalidateCalculatorCache();
+  done(CALCULATOR_PATH, `${cityIds.length} cit${cityIds.length === 1 ? "y" : "ies"} deleted.`);
+}
+
 /* -------------------------------------------------------------- hotels --- */
 
 export async function saveCalculatorHotelAction(formData: FormData): Promise<void> {
@@ -157,6 +184,29 @@ export async function deleteCalculatorHotelAction(formData: FormData): Promise<v
   await recordAudit(db, actor, "calculator.hotel_deleted", "calculator_hotel", hotelId, {});
   invalidateCalculatorCache();
   done(HOTELS_PATH, "Hotel and its prices deleted.");
+}
+
+export async function bulkDeleteCalculatorHotelsAction(formData: FormData): Promise<void> {
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+  const ids = formData
+    .getAll("ids")
+    .map((value) => Number.parseInt(String(value), 10))
+    .filter((value) => Number.isInteger(value) && value > 0);
+  const hotelIds = [...new Set(ids)].slice(0, 200);
+
+  if (!hotelIds.length) failed(HOTELS_PATH, "Select at least one hotel first.");
+
+  await db.transaction(async (tx) => {
+    await tx.delete(calculatorPrices).where(inArray(calculatorPrices.hotelId, hotelIds));
+    await tx.delete(calculatorHotels).where(inArray(calculatorHotels.id, hotelIds));
+  });
+
+  await recordAudit(db, actor, "calculator.hotel_bulk_deleted", "calculator_hotel", hotelIds.join(","), {
+    count: hotelIds.length,
+  });
+  invalidateCalculatorCache();
+  done(HOTELS_PATH, `${hotelIds.length} hotel${hotelIds.length === 1 ? "" : "s"} and their prices deleted.`);
 }
 
 /** Saves all twelve months for one hotel in a single statement. */
@@ -261,6 +311,37 @@ export async function deleteCurrencyAction(formData: FormData): Promise<void> {
   await recordAudit(db, actor, "calculator.currency_deleted", "calculator_currency", code, {});
   invalidateCalculatorCache();
   done(CALCULATOR_PATH, "Currency deleted.");
+}
+
+export async function bulkDeleteCurrenciesAction(formData: FormData): Promise<void> {
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+  const codes = [...new Set(formData.getAll("ids").map((value) => String(value || "").trim().toUpperCase()).filter(Boolean))]
+    .slice(0, 200);
+
+  if (!codes.length) failed(CALCULATOR_PATH, "Select at least one currency first.");
+
+  const all = await db.select().from(calculatorCurrencies);
+  if (all.length - codes.length < 1) failed(CALCULATOR_PATH, "Keep at least one currency.");
+
+  await db.delete(calculatorCurrencies).where(inArray(calculatorCurrencies.code, codes));
+
+  const survivors = await db
+    .select()
+    .from(calculatorCurrencies)
+    .orderBy(asc(calculatorCurrencies.position), asc(calculatorCurrencies.code));
+  if (survivors.length > 0 && !survivors.some((row) => row.isDefault === 1)) {
+    await db
+      .update(calculatorCurrencies)
+      .set({ isDefault: 1 })
+      .where(eq(calculatorCurrencies.code, survivors[0].code));
+  }
+
+  await recordAudit(db, actor, "calculator.currency_bulk_deleted", "calculator_currency", codes.join(","), {
+    count: codes.length,
+  });
+  invalidateCalculatorCache();
+  done(CALCULATOR_PATH, `${codes.length} currenc${codes.length === 1 ? "y" : "ies"} deleted.`);
 }
 
 /* ---------------------------------------------------------------- seed --- */

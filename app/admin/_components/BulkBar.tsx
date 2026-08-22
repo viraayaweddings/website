@@ -15,19 +15,22 @@ import { Icon } from "./icons";
 export function BulkSelection({
   children,
   noun = "item",
+  formId,
 }: {
   /** The action buttons, shown once at least one row is ticked. */
   children: React.ReactNode;
   noun?: string;
+  /** Optional external form id for lists whose rows contain their own forms. */
+  formId?: string;
 }) {
   const anchor = useRef<HTMLDivElement>(null);
   const [count, setCount] = useState(0);
   const [total, setTotal] = useState(0);
 
   const boxes = useCallback((): HTMLInputElement[] => {
-    const form = anchor.current?.closest("form");
+    const form = formId ? document.getElementById(formId) : anchor.current?.closest("form");
     return form ? [...form.querySelectorAll<HTMLInputElement>('input[type="checkbox"][name="ids"]')] : [];
-  }, []);
+  }, [formId]);
 
   const recount = useCallback(() => {
     const all = boxes();
@@ -100,12 +103,22 @@ export function BulkSelection({
 }
 
 /** The per-row checkbox. Kept here so the name stays in step with the bar. */
-export function RowCheckbox({ id, label }: { id: number | string; label: string }) {
+export function RowCheckbox({
+  id,
+  label,
+  form,
+}: {
+  id: number | string;
+  label: string;
+  /** External bulk form id, used when the checkbox cannot live inside the form. */
+  form?: string;
+}) {
   return (
     <input
       type="checkbox"
       name="ids"
       value={String(id)}
+      form={form}
       className="vw-check"
       aria-label={`Select ${label}`}
       onClick={(event) => event.stopPropagation()}

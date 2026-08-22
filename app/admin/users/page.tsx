@@ -5,6 +5,7 @@ import { asc } from "drizzle-orm";
 import { MIN_PASSWORD_LENGTH } from "@/worker/admin/password";
 import { USER_ROLES, users } from "@/worker/db/schema";
 import { AdminShell } from "../_components/AdminShell";
+import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
 import { SubmitButton } from "../_components/FormControls";
 import {
@@ -19,7 +20,9 @@ import {
 } from "../_components/ui";
 import { currentTime } from "../_lib/clock";
 import { requireDb, requireRole } from "../_lib/auth";
-import { createUserAction, deleteUserAction, resetPasswordAction, updateUserAction } from "./actions";
+import { bulkDeleteUsersAction, createUserAction, deleteUserAction, resetPasswordAction, updateUserAction } from "./actions";
+
+const USERS_BULK_FORM = "users-bulk-form";
 
 export default async function UsersPage({
   searchParams,
@@ -52,6 +55,21 @@ export default async function UsersPage({
 
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="min-w-0 space-y-4 lg:col-span-2">
+          <form id={USERS_BULK_FORM}>
+            <BulkSelection noun="account" formId={USERS_BULK_FORM}>
+              <SubmitButton
+                variant="danger-quiet"
+                size="sm"
+                icon="trash"
+                pendingLabel="Deleting…"
+                formAction={bulkDeleteUsersAction}
+                confirm="Delete every selected account? This signs them out immediately."
+              >
+                Delete
+              </SubmitButton>
+            </BulkSelection>
+          </form>
+
           {accounts.map((account) => (
             <Card key={account.id} pad={false}>
               <CardHead
@@ -59,6 +77,9 @@ export default async function UsersPage({
                 hint={account.email}
                 icon="users"
               >
+                {account.id === currentUser.id ? null : (
+                  <RowCheckbox id={account.id} label={account.email} form={USERS_BULK_FORM} />
+                )}
                 <StatusBadge status={account.role} />
                 <StatusBadge status={account.status} />
                 {account.id === currentUser.id ? <Badge tone="info">you</Badge> : null}

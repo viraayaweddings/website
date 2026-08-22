@@ -33,3 +33,39 @@ export async function deleteMediaAction(formData: FormData): Promise<void> {
 
   redirect(`${MEDIA_PATH}?saved=1`);
 }
+
+/** Removes selected uploaded images, refusing the batch if any are still used. */
+export async function bulkDeleteMediaAction(formData: FormData): Promise<void> {
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+
+  const keys = [...new Set(formData.getAll("ids").map((value) => String(value || "").trim()).filter(Boolean))]
+    .slice(0, 200);
+  if (!keys.length) redirect(`${MEDIA_PATH}?error=${encodeURIComponent("Select at least one image first.")}`);
+
+  const blocked: string[] = [];
+  for (const key of keys) {
+    const references = await findImageReferences(db, key);
+    if (references.length) blocked.push(key);
+  }
+
+  if (blocked.length) {
+    redirect(
+      `${MEDIA_PATH}?error=${encodeURIComponent(
+        `${blocked.length} selected image${blocked.length === 1 ? " is" : "s are"} still used. Change those references first.`,
+      )}`,
+    );
+  }
+
+  const outcomes: Record<string, string> = {};
+  for (const key of keys) {
+    outcomes[key] = await releaseImage(emptyEnv(), key);
+  }
+
+  await recordAudit(db, actor, "media.bulk_deleted", "media", keys.join(","), {
+    count: keys.length,
+    outcomes,
+  });
+
+  redirect(`${MEDIA_PATH}?saved=${encodeURIComponent(`${keys.length} image${keys.length === 1 ? "" : "s"} deleted.`)}`);
+}

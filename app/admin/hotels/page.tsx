@@ -5,15 +5,17 @@ import Link from "next/link";
 import { and, asc, eq, like, or, sql, type SQL } from "drizzle-orm";
 import { hotels } from "@/worker/db/schema";
 import { AdminShell } from "../_components/AdminShell";
+import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
-import { LiveSearch } from "../_components/FormControls";
+import { LiveSearch, SubmitButton } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
 import { Card, EmptyState, LinkButton, StatusBadge, formatCount, formatRelative } from "../_components/ui";
 import { currentTime } from "../_lib/clock";
 import { isAdmin, requireDb, requireUser } from "../_lib/auth";
-import { deleteHotelAction } from "./actions";
+import { bulkDeleteHotelsAction, deleteHotelAction } from "./actions";
 
 const PAGE_SIZE = 40;
+const HOTELS_BULK_FORM = "hotels-bulk-form";
 
 export default async function HotelsPage({
   searchParams,
@@ -148,10 +150,33 @@ export default async function HotelsPage({
           </EmptyState>
         </Card>
       ) : (
+        <>
+        {isAdmin(user) ? (
+          <form id={HOTELS_BULK_FORM}>
+            <BulkSelection noun="venue" formId={HOTELS_BULK_FORM}>
+              <SubmitButton
+                variant="danger-quiet"
+                size="sm"
+                icon="trash"
+                pendingLabel="Deleting…"
+                formAction={bulkDeleteHotelsAction}
+                confirm="Delete every selected venue? This cannot be undone."
+              >
+                Delete
+              </SubmitButton>
+            </BulkSelection>
+          </form>
+        ) : null}
+
         <div className="vw-table-wrap">
           <table className="vw-table">
             <thead>
               <tr>
+                {isAdmin(user) ? (
+                  <th style={{ width: "2.25rem" }}>
+                    <span className="sr-only">Select</span>
+                  </th>
+                ) : null}
                 <th>Venue</th>
                 <th>City</th>
                 <th>Rooms</th>
@@ -163,6 +188,11 @@ export default async function HotelsPage({
             <tbody>
               {rows.map((hotel) => (
                 <tr key={hotel.id}>
+                  {isAdmin(user) ? (
+                    <td>
+                      <RowCheckbox id={hotel.id} label={hotel.name || hotel.slug} form={HOTELS_BULK_FORM} />
+                    </td>
+                  ) : null}
                   <td>
                     <div className="flex items-center gap-2.5">
                       {hotel.thumbnailImage || hotel.bannerImage ? (
@@ -236,6 +266,7 @@ export default async function HotelsPage({
             </tbody>
           </table>
         </div>
+        </>
       )}
 
       {lastPage > 1 ? (

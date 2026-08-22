@@ -6,7 +6,7 @@
  * updating it. A query is cheap and always tells the truth.
  */
 import type { Db } from "../db/client";
-import { blogPosts, heroSlides, hotels } from "../db/schema";
+import { blogPosts, heroSlides, hotels, staticPages } from "../db/schema";
 
 export interface ImageReference {
   /** Human description, e.g. "Venue banner". */
@@ -14,6 +14,8 @@ export interface ImageReference {
   /** Where to go and change it. */
   where: string;
   adminPath: string;
+  /** Public page that renders the image, when there is one. */
+  publicPath?: string;
 }
 
 /**
@@ -37,13 +39,29 @@ export async function findImageReferences(db: Db, key: string): Promise<ImageRef
  * in a body of HTML without parsing it. Missing these would let the media
  * screen offer to delete a picture that is live inside an article.
  */
-const INLINE_KEY = /\/media\/([0-9a-f]{64}\.[a-z0-9]+)/gi;
+const INLINE_KEY = /\/media\/([A-Za-z0-9/_.-]+?\.(?:jpg|jpeg|png|webp|avif|gif|svg))/gi;
+
+function mediaKey(value: string): string {
+  const raw = value.trim();
+  if (!raw) return "";
+
+  try {
+    const url = raw.startsWith("http://") || raw.startsWith("https://") ? new URL(raw) : null;
+    if (url?.pathname.startsWith("/media/")) return decodeURIComponent(url.pathname.slice("/media/".length));
+  } catch {
+    /* Invalid URLs are handled as plain stored values below. */
+  }
+
+  if (raw.startsWith("/media/")) return raw.slice("/media/".length);
+  if (raw.startsWith("/")) return "";
+  return raw;
+}
 
 function inlineKeys(...html: string[]): string[] {
   const keys = new Set<string>();
   for (const source of html) {
     if (!source) continue;
-    for (const match of source.matchAll(INLINE_KEY)) keys.add(match[1].toLowerCase());
+    for (const match of source.matchAll(INLINE_KEY)) keys.add(mediaKey(`/media/${match[1]}`));
   }
   return [...keys];
 }
@@ -58,10 +76,11 @@ function inlineKeys(...html: string[]): string[] {
 export async function buildImageUsage(db: Db): Promise<Map<string, ImageReference[]>> {
   const usage = new Map<string, ImageReference[]>();
   const add = (key: string, reference: ImageReference) => {
-    if (!key || key.startsWith("/")) return;
-    const list = usage.get(key);
+    const normalized = mediaKey(key);
+    if (!normalized) return;
+    const list = usage.get(normalized);
     if (list) list.push(reference);
-    else usage.set(key, [reference]);
+    else usage.set(normalized, [reference]);
   };
 
   for (const slide of await db
@@ -71,12 +90,14 @@ export async function buildImageUsage(db: Db): Promise<Map<string, ImageReferenc
       what: "Hero slide",
       where: slide.title || `Slide ${slide.id}`,
       adminPath: "/admin/hero",
+      publicPath: "/",
     });
   }
 
   for (const post of await db
     .select({
       id: blogPosts.id,
+      slug: blogPosts.slug,
       heading: blogPosts.heading,
       banner: blogPosts.bannerImage,
       card: blogPosts.cardImage,
@@ -87,17 +108,20 @@ export async function buildImageUsage(db: Db): Promise<Map<string, ImageReferenc
     .from(blogPosts)) {
     const where = post.heading || `Post ${post.id}`;
     const adminPath = `/admin/blogs/${post.id}`;
-    add(post.banner, { what: "Blog banner image", where, adminPath });
-    add(post.card, { what: "Blog card image", where, adminPath });
-    add(post.og, { what: "Blog social image", where, adminPath });
+    const publicPath = `/blogs/${post.slug}`;
+    add(post.banner, { what: "Blog banner image", where, adminPath, publicPath });
+    add(post.card, { what: "Blog card image", where, adminPath, publicPath: "/blogs" });
+    add(post.og, { what: "Blog social image", where, adminPath, publicPath });
     for (const key of inlineKeys(post.body, post.faqs)) {
-      add(key, { what: "Image inside the article", where, adminPath });
+      add(key, { what: "Image inside the article", where, adminPath, publicPath });
     }
   }
 
   for (const venue of await db
     .select({
       id: hotels.id,
+      city: hotels.city,
+      slug: hotels.slug,
       name: hotels.name,
       banner: hotels.bannerImage,
       thumbnail: hotels.thumbnailImage,
@@ -109,14 +133,25 @@ export async function buildImageUsage(db: Db): Promise<Map<string, ImageReferenc
     .from(hotels)) {
     const where = venue.name || `Venue ${venue.id}`;
     const adminPath = `/admin/hotels/${venue.id}`;
-    add(venue.banner, { what: "Venue banner image", where, adminPath });
-    add(venue.thumbnail, { what: "Venue thumbnail", where, adminPath });
-    add(venue.og, { what: "Venue social image", where, adminPath });
+    const publicPath = `/destination-wedding/${venue.city}/${venue.slug}`;
+    add(venue.banner, { what: "Venue banner image", where, adminPath, publicPath });
+    add(venue.thumbnail, { what: "Venue thumbnail", where, adminPath, publicPath });
+    add(venue.og, { what: "Venue social image", where, adminPath, publicPath });
     for (const image of highlightImages(venue.highlights)) {
-      add(image, { what: "Venue highlight image", where, adminPath });
+      add(image, { what: "Venue highlight image", where, adminPath, publicPath });
     }
     for (const key of inlineKeys(venue.description, venue.faqs)) {
-      add(key, { what: "Image inside the venue description", where, adminPath });
+      add(key, { what: "Image inside the venue description", where, adminPath, publicPath });
+    }
+  }
+
+  for (const page of await db
+    .select({ path: staticPages.path, title: staticPages.title, html: staticPages.html })
+    .from(staticPages)) {
+    const where = page.title || page.path;
+    const adminPath = `/admin/pages/${encodeURIComponent(page.path)}`;
+    for (const key of inlineKeys(page.html)) {
+      add(key, { what: "Static page image", where, adminPath, publicPath: page.path });
     }
   }
 

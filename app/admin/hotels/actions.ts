@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { emptyEnv } from "@/worker/env";
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { releaseImage, uploadImage } from "@/worker/admin/media-store";
 import { readRichText } from "@/worker/admin/rich-text";
 import { cityListings, hotels, POST_STATUSES, type BlogFaq, type HotelHighlight, type PostStatus } from "@/worker/db/schema";
@@ -203,6 +203,42 @@ export async function deleteHotelAction(formData: FormData): Promise<void> {
   });
 
   redirect(`${HOTELS_PATH}?saved=1`);
+}
+
+/** Deletes every selected venue and removes listing rows that pointed at them. */
+export async function bulkDeleteHotelsAction(formData: FormData): Promise<void> {
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+  const ids = formData
+    .getAll("ids")
+    .map((value) => Number.parseInt(String(value), 10))
+    .filter((id) => Number.isInteger(id) && id > 0);
+  const uniqueIds = [...new Set(ids)].slice(0, 200);
+
+  if (!uniqueIds.length) failed(HOTELS_PATH, "Select at least one venue first.");
+
+  const existing = await db.select().from(hotels).where(inArray(hotels.id, uniqueIds));
+  if (existing.length !== uniqueIds.length) failed(HOTELS_PATH, "Some selected venues no longer exist. Refresh and try again.");
+
+  await db.delete(hotels).where(inArray(hotels.id, uniqueIds));
+
+  for (const venue of existing) {
+    await db
+      .delete(cityListings)
+      .where(and(eq(cityListings.venueCity, venue.city), eq(cityListings.venueSlug, venue.slug)));
+    for (const image of [venue.bannerImage, venue.thumbnailImage, venue.ogImage]) {
+      await releaseImage(emptyEnv(), image);
+    }
+  }
+
+  invalidateHotelCache();
+  invalidateTemplateCache();
+  invalidateCityListingCache();
+  await recordAudit(db, actor, "hotel.bulk_deleted", "hotel", uniqueIds.join(","), {
+    count: uniqueIds.length,
+  });
+
+  redirect(`${HOTELS_PATH}?saved=${encodeURIComponent(`${uniqueIds.length} venue${uniqueIds.length === 1 ? "" : "s"} deleted.`)}`);
 }
 
 /**

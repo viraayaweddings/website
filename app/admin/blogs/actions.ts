@@ -294,6 +294,40 @@ export async function deletePostAction(formData: FormData): Promise<void> {
   done(`"${existing.heading}" deleted.`);
 }
 
+/** Deletes every selected article and cleans up listing rows and unused images. */
+export async function bulkDeletePostsAction(formData: FormData): Promise<void> {
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+  const ids = formData
+    .getAll("ids")
+    .map((value) => Number.parseInt(String(value), 10))
+    .filter((id) => Number.isInteger(id) && id > 0);
+  const uniqueIds = [...new Set(ids)].slice(0, 200);
+
+  if (!uniqueIds.length) failed(BLOGS_PATH, "Select at least one article first.");
+
+  const existing = await db.select().from(blogPosts).where(inArray(blogPosts.id, uniqueIds));
+  if (existing.length !== uniqueIds.length) failed(BLOGS_PATH, "Some selected articles no longer exist. Refresh and try again.");
+
+  await db.delete(blogPosts).where(inArray(blogPosts.id, uniqueIds));
+  await db.delete(blogListings).where(inArray(blogListings.postSlug, existing.map((post) => post.slug)));
+  invalidateBlogListingCache();
+
+  for (const post of existing) {
+    for (const image of [post.bannerImage, post.cardImage, post.ogImage]) {
+      await releaseImage(emptyEnv(), image);
+    }
+  }
+
+  invalidateBlogCache();
+  invalidateTemplateCache();
+  await recordAudit(db, actor, "blog.bulk_deleted", "blog_post", uniqueIds.join(","), {
+    count: uniqueIds.length,
+  });
+
+  done(`${uniqueIds.length} article${uniqueIds.length === 1 ? "" : "s"} deleted.`);
+}
+
 /** Nudges a post one place up or down the listing. */
 export async function movePostAction(formData: FormData): Promise<void> {
   const actor = await requireUser();

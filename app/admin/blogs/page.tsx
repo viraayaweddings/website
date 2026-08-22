@@ -5,6 +5,7 @@ import Link from "next/link";
 import { asc } from "drizzle-orm";
 import { blogPosts } from "@/worker/db/schema";
 import { AdminShell } from "../_components/AdminShell";
+import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
 import { SubmitButton } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
@@ -12,7 +13,9 @@ import { imagePreview } from "../_components/ImageInput";
 import { Card, EmptyState, LinkButton, StatusBadge, formatRelative } from "../_components/ui";
 import { currentTime } from "../_lib/clock";
 import { isAdmin, requireDb, requireUser } from "../_lib/auth";
-import { deletePostAction, movePostAction } from "./actions";
+import { bulkDeletePostsAction, deletePostAction, movePostAction } from "./actions";
+
+const BLOGS_BULK_FORM = "blogs-bulk-form";
 
 export default async function BlogsPage({
   searchParams,
@@ -58,10 +61,33 @@ export default async function BlogsPage({
           </EmptyState>
         </Card>
       ) : (
+        <>
+        {isAdmin(user) ? (
+          <form id={BLOGS_BULK_FORM}>
+            <BulkSelection noun="article" formId={BLOGS_BULK_FORM}>
+              <SubmitButton
+                variant="danger-quiet"
+                size="sm"
+                icon="trash"
+                pendingLabel="Deleting…"
+                formAction={bulkDeletePostsAction}
+                confirm="Delete every selected article? This cannot be undone."
+              >
+                Delete
+              </SubmitButton>
+            </BulkSelection>
+          </form>
+        ) : null}
+
         <div className="space-y-2.5">
           {posts.map((post, index) => (
             <Card key={post.id} className="transition hover:-translate-y-px">
               <div className="flex flex-wrap items-start gap-3">
+                {isAdmin(user) ? (
+                  <div className="pt-4">
+                    <RowCheckbox id={post.id} label={post.heading || post.slug} form={BLOGS_BULK_FORM} />
+                  </div>
+                ) : null}
                 {post.cardImage || post.bannerImage ? (
                   // Plain img: these come from R2 or site-public, not the asset pipeline.
                   // eslint-disable-next-line @next/next/no-img-element
@@ -135,6 +161,7 @@ export default async function BlogsPage({
             </Card>
           ))}
         </div>
+        </>
       )}
     </AdminShell>
   );

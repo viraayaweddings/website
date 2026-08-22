@@ -5,12 +5,14 @@ import Link from "next/link";
 import { and, asc, eq, ilike, sql } from "drizzle-orm";
 import { calculatorCities, calculatorHotels, calculatorPrices } from "@/worker/db/schema";
 import { AdminShell } from "../../_components/AdminShell";
+import { BulkSelection, RowCheckbox } from "../../_components/BulkBar";
 import { LiveSearch, SubmitButton } from "../../_components/FormControls";
 import { Alert, Badge, Card, CardHead, EmptyState, Field, LinkButton, Select, formatCount } from "../../_components/ui";
 import { requireDb, requireRole } from "../../_lib/auth";
-import { saveCalculatorHotelAction } from "../actions";
+import { bulkDeleteCalculatorHotelsAction, saveCalculatorHotelAction } from "../actions";
 
 const PER_PAGE = 50;
+const CALC_HOTELS_BULK_FORM = "calculator-hotels-bulk-form";
 
 export default async function CalculatorHotelsPage({
   searchParams,
@@ -126,50 +128,68 @@ export default async function CalculatorHotelsPage({
           {hotels.length === 0 ? (
             <EmptyState icon="venue" title="No hotels match">Clear the filters, or add one above.</EmptyState>
           ) : (
-            <div className="vw-table-wrap">
-              <table className="vw-table">
-                <thead>
-                  <tr>
-                    <th>Hotel</th>
-                    <th>City</th>
-                    <th>Rooms</th>
-                    <th>Priced</th>
-                    <th>Shown</th>
-                    <th className="text-end">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {hotels.map((hotel) => {
-                    const months = monthsPriced.get(hotel.id) ?? 0;
-                    return (
-                      <tr key={hotel.id}>
-                        <td>
-                          <Link href={`/admin/calculator/hotels/${hotel.id}`} className="fw-600">{hotel.name}</Link>
-                          <span className="vw-hint vw-mono"> #{hotel.id}</span>
-                        </td>
-                        <td>{cityName.get(hotel.cityId) ?? <span className="vw-hint">unassigned</span>}</td>
-                        <td>{hotel.totalRooms || <span className="vw-hint">—</span>}</td>
-                        <td>
-                          {months === 12 ? (
-                            <Badge tone="ok">12 months</Badge>
-                          ) : months === 0 ? (
-                            <Badge tone="bad">no prices</Badge>
-                          ) : (
-                            <Badge tone="warn">{months}/12</Badge>
-                          )}
-                        </td>
-                        <td>{hotel.published === 1 ? <Badge tone="ok">shown</Badge> : <Badge tone="neutral">hidden</Badge>}</td>
-                        <td className="text-end">
-                          <LinkButton href={`/admin/calculator/hotels/${hotel.id}`} size="sm" variant="secondary" icon="edit">
-                            Edit
-                          </LinkButton>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+            <>
+              <form id={CALC_HOTELS_BULK_FORM} className="vw-card-pad pb-0">
+                <BulkSelection noun="hotel" formId={CALC_HOTELS_BULK_FORM}>
+                  <SubmitButton
+                    size="sm"
+                    variant="danger-quiet"
+                    icon="trash"
+                    pendingLabel="Deleting…"
+                    formAction={bulkDeleteCalculatorHotelsAction}
+                    confirm="Delete every selected calculator hotel and its monthly prices?"
+                  >
+                    Delete
+                  </SubmitButton>
+                </BulkSelection>
+              </form>
+              <div className="vw-table-wrap">
+                <table className="vw-table">
+                  <thead>
+                    <tr>
+                      <th style={{ width: "2.25rem" }}><span className="sr-only">Select</span></th>
+                      <th>Hotel</th>
+                      <th>City</th>
+                      <th>Rooms</th>
+                      <th>Priced</th>
+                      <th>Shown</th>
+                      <th className="text-end">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {hotels.map((hotel) => {
+                      const months = monthsPriced.get(hotel.id) ?? 0;
+                      return (
+                        <tr key={hotel.id}>
+                          <td><RowCheckbox id={hotel.id} label={hotel.name} form={CALC_HOTELS_BULK_FORM} /></td>
+                          <td>
+                            <Link href={`/admin/calculator/hotels/${hotel.id}`} className="fw-600">{hotel.name}</Link>
+                            <span className="vw-hint vw-mono"> #{hotel.id}</span>
+                          </td>
+                          <td>{cityName.get(hotel.cityId) ?? <span className="vw-hint">unassigned</span>}</td>
+                          <td>{hotel.totalRooms || <span className="vw-hint">—</span>}</td>
+                          <td>
+                            {months === 12 ? (
+                              <Badge tone="ok">12 months</Badge>
+                            ) : months === 0 ? (
+                              <Badge tone="bad">no prices</Badge>
+                            ) : (
+                              <Badge tone="warn">{months}/12</Badge>
+                            )}
+                          </td>
+                          <td>{hotel.published === 1 ? <Badge tone="ok">shown</Badge> : <Badge tone="neutral">hidden</Badge>}</td>
+                          <td className="text-end">
+                            <LinkButton href={`/admin/calculator/hotels/${hotel.id}`} size="sm" variant="secondary" icon="edit">
+                              Edit
+                            </LinkButton>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
 
           {pages > 1 ? (

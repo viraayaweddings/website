@@ -10,16 +10,22 @@ import {
   calculatorPrices,
 } from "@/worker/db/schema";
 import { AdminShell } from "../_components/AdminShell";
+import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { SubmitButton } from "../_components/FormControls";
 import { Alert, Badge, Card, CardHead, EmptyState, Field, LinkButton, formatCount } from "../_components/ui";
 import { requireDb, requireRole } from "../_lib/auth";
 import {
+  bulkDeleteCalculatorCitiesAction,
+  bulkDeleteCurrenciesAction,
   deleteCalculatorCityAction,
   deleteCurrencyAction,
   importCalculatorDataAction,
   saveCalculatorCityAction,
   saveCurrencyAction,
 } from "./actions";
+
+const CALC_CITIES_BULK_FORM = "calculator-cities-bulk-form";
+const CALC_CURRENCIES_BULK_FORM = "calculator-currencies-bulk-form";
 
 export default async function CalculatorAdminPage({
   searchParams,
@@ -92,62 +98,80 @@ export default async function CalculatorAdminPage({
           {cities.length === 0 ? (
             <EmptyState icon="city" title="No cities yet">Add one below.</EmptyState>
           ) : (
-            <div className="vw-table-wrap">
-              <table className="vw-table">
-                <thead>
-                  <tr>
-                    <th>City</th>
-                    <th>Hotels</th>
-                    <th>Shown</th>
-                    <th className="text-end">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cities.map((city) => (
-                    <tr key={city.id}>
-                      <td>
-                        <span className="fw-600">{city.name}</span>
-                        <span className="vw-hint vw-mono"> #{city.id}</span>
-                      </td>
-                      <td>
-                        <Link href={`/admin/calculator/hotels?city=${city.id}`}>
-                          {formatCount(hotelsPerCity.get(city.id) ?? 0)}
-                        </Link>
-                      </td>
-                      <td>
-                        {city.published === 1 ? <Badge tone="ok">shown</Badge> : <Badge tone="neutral">hidden</Badge>}
-                      </td>
-                      <td className="text-end">
-                        <details>
-                          <summary className="vw-btn vw-btn-secondary vw-btn-sm">Edit</summary>
-                          <form action={saveCalculatorCityAction} className="mt-2 space-y-2 text-start">
-                            <input type="hidden" name="id" value={city.id} />
-                            <Field label="Name" name="name" defaultValue={city.name} />
-                            <Field label="Order" name="position" defaultValue={String(city.position)} />
-                            <label className="vw-check">
-                              <input type="checkbox" name="published" defaultChecked={city.published === 1} />
-                              <span>Show in the city dropdown</span>
-                            </label>
-                            <SubmitButton size="sm" icon="check">Save city</SubmitButton>
-                          </form>
-                          <form action={deleteCalculatorCityAction} className="mt-2 text-start">
-                            <input type="hidden" name="id" value={city.id} />
-                            <SubmitButton
-                              size="sm"
-                              variant="danger-quiet"
-                              icon="trash"
-                              confirm={`Delete ${city.name}? Its hotels must be moved or deleted first.`}
-                            >
-                              Delete
-                            </SubmitButton>
-                          </form>
-                        </details>
-                      </td>
+            <>
+              <form id={CALC_CITIES_BULK_FORM} className="vw-card-pad pb-0">
+                <BulkSelection noun="city" formId={CALC_CITIES_BULK_FORM}>
+                  <SubmitButton
+                    size="sm"
+                    variant="danger-quiet"
+                    icon="trash"
+                    pendingLabel="Deleting…"
+                    formAction={bulkDeleteCalculatorCitiesAction}
+                    confirm="Delete every selected city? Their hotels must be moved or deleted first."
+                  >
+                    Delete
+                  </SubmitButton>
+                </BulkSelection>
+              </form>
+              <div className="vw-table-wrap">
+                <table className="vw-table">
+                  <thead>
+                    <tr>
+                      <th style={{ width: "2.25rem" }}><span className="sr-only">Select</span></th>
+                      <th>City</th>
+                      <th>Hotels</th>
+                      <th>Shown</th>
+                      <th className="text-end">Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {cities.map((city) => (
+                      <tr key={city.id}>
+                        <td><RowCheckbox id={city.id} label={city.name} form={CALC_CITIES_BULK_FORM} /></td>
+                        <td>
+                          <span className="fw-600">{city.name}</span>
+                          <span className="vw-hint vw-mono"> #{city.id}</span>
+                        </td>
+                        <td>
+                          <Link href={`/admin/calculator/hotels?city=${city.id}`}>
+                            {formatCount(hotelsPerCity.get(city.id) ?? 0)}
+                          </Link>
+                        </td>
+                        <td>
+                          {city.published === 1 ? <Badge tone="ok">shown</Badge> : <Badge tone="neutral">hidden</Badge>}
+                        </td>
+                        <td className="text-end">
+                          <details>
+                            <summary className="vw-btn vw-btn-secondary vw-btn-sm">Edit</summary>
+                            <form action={saveCalculatorCityAction} className="mt-2 space-y-2 text-start">
+                              <input type="hidden" name="id" value={city.id} />
+                              <Field label="Name" name="name" defaultValue={city.name} />
+                              <Field label="Order" name="position" defaultValue={String(city.position)} />
+                              <label className="vw-check">
+                                <input type="checkbox" name="published" defaultChecked={city.published === 1} />
+                                <span>Show in the city dropdown</span>
+                              </label>
+                              <SubmitButton size="sm" icon="check">Save city</SubmitButton>
+                            </form>
+                            <form action={deleteCalculatorCityAction} className="mt-2 text-start">
+                              <input type="hidden" name="id" value={city.id} />
+                              <SubmitButton
+                                size="sm"
+                                variant="danger-quiet"
+                                icon="trash"
+                                confirm={`Delete ${city.name}? Its hotels must be moved or deleted first.`}
+                              >
+                                Delete
+                              </SubmitButton>
+                            </form>
+                          </details>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
 
           <div className="vw-card-pad" style={{ borderTop: "1px solid var(--line)" }}>
@@ -165,10 +189,26 @@ export default async function CalculatorAdminPage({
           {currencies.length === 0 ? (
             <EmptyState icon="grid" title="No currencies yet">Add at least one; the calculator prices in it.</EmptyState>
           ) : (
+            <>
+            <form id={CALC_CURRENCIES_BULK_FORM} className="vw-card-pad pb-0">
+              <BulkSelection noun="currency" formId={CALC_CURRENCIES_BULK_FORM}>
+                <SubmitButton
+                  size="sm"
+                  variant="danger-quiet"
+                  icon="trash"
+                  pendingLabel="Deleting…"
+                  formAction={bulkDeleteCurrenciesAction}
+                  confirm="Delete every selected currency? At least one currency must remain."
+                >
+                  Delete
+                </SubmitButton>
+              </BulkSelection>
+            </form>
             <div className="vw-table-wrap">
               <table className="vw-table">
                 <thead>
                   <tr>
+                    <th style={{ width: "2.25rem" }}><span className="sr-only">Select</span></th>
                     <th>Code</th>
                     <th>Name</th>
                     <th>Symbol</th>
@@ -180,6 +220,7 @@ export default async function CalculatorAdminPage({
                 <tbody>
                   {currencies.map((currency) => (
                     <tr key={currency.code}>
+                      <td><RowCheckbox id={currency.code} label={currency.code} form={CALC_CURRENCIES_BULK_FORM} /></td>
                       <td className="vw-mono">{currency.code}</td>
                       <td>{currency.name}</td>
                       <td>{currency.symbol}</td>
@@ -217,6 +258,7 @@ export default async function CalculatorAdminPage({
                 </tbody>
               </table>
             </div>
+            </>
           )}
 
           <div className="vw-card-pad" style={{ borderTop: "1px solid var(--line)" }}>

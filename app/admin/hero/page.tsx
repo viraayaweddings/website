@@ -5,29 +5,37 @@ import { asc } from "drizzle-orm";
 import { heroSlides, type HeroSlide } from "@/worker/db/schema";
 import { heroImageUrl } from "@/worker/site/hero";
 import { AdminShell } from "../_components/AdminShell";
+import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { SubmitButton, UnsavedGuard } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
 import { ImageInput } from "../_components/ImageInput";
 import { Alert, Badge, Card, CardHead, EmptyState, Field, TextArea } from "../_components/ui";
 import { isAdmin, requireDb, requireUser } from "../_lib/auth";
-import { createSlideAction, deleteSlideAction, moveSlideAction, updateSlideAction } from "./actions";
+import { bulkDeleteSlidesAction, createSlideAction, deleteSlideAction, moveSlideAction, updateSlideAction } from "./actions";
+
+const HERO_BULK_FORM = "hero-bulk-form";
 
 function SlideCard({
   slide,
   index,
   total,
   canDelete,
+  bulkFormId,
 }: {
   slide: HeroSlide;
   index: number;
   total: number;
   canDelete: boolean;
+  bulkFormId?: string;
 }) {
   const preview = heroImageUrl(slide.imageKey);
 
   return (
     <Card pad={false}>
       <CardHead title={`Slide ${index + 1} of ${total}`} icon="slides">
+        {canDelete && bulkFormId ? (
+          <RowCheckbox id={slide.id} label={slide.title || `slide ${index + 1}`} form={bulkFormId} />
+        ) : null}
         {slide.published ? <Badge tone="ok">live</Badge> : <Badge tone="neutral">hidden</Badge>}
         <form action={moveSlideAction} className="inline">
           <input type="hidden" name="id" value={slide.id} />
@@ -147,15 +155,37 @@ export default async function HeroPage({
               </EmptyState>
             </Card>
           ) : (
-            slides.map((slide, index) => (
-              <SlideCard
-                key={slide.id}
-                slide={slide}
-                index={index}
-                total={slides.length}
-                canDelete={isAdmin(user)}
-              />
-            ))
+            <>
+              {isAdmin(user) ? (
+                <form id={HERO_BULK_FORM}>
+                  <BulkSelection noun="slide" formId={HERO_BULK_FORM}>
+                    <SubmitButton
+                      variant="danger-quiet"
+                      size="sm"
+                      icon="trash"
+                      pendingLabel="Deleting…"
+                      formAction={bulkDeleteSlidesAction}
+                      confirm="Delete every selected slide? This cannot be undone."
+                    >
+                      Delete
+                    </SubmitButton>
+                  </BulkSelection>
+                </form>
+              ) : null}
+
+              <div className="space-y-4">
+                {slides.map((slide, index) => (
+                  <SlideCard
+                    key={slide.id}
+                    slide={slide}
+                    index={index}
+                    total={slides.length}
+                    canDelete={isAdmin(user)}
+                    bulkFormId={HERO_BULK_FORM}
+                  />
+                ))}
+              </div>
+            </>
           )}
         </div>
 
