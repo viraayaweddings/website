@@ -7,6 +7,7 @@
  */
 import { readdir, readFile } from "node:fs/promises";
 import { relative, resolve, sep } from "node:path";
+import { eq } from "drizzle-orm";
 import type { Db } from "../db/client";
 import imageMigrationMap from "../../scripts/image-migration-map.json";
 import { blogPosts, heroSlides, hotels, pageTemplates, staticPages } from "../db/schema";
@@ -68,6 +69,38 @@ function mediaKey(value: string): string {
   if (raw.startsWith("/")) return "";
   return raw;
 }
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function replaceStoredImageValue(value: string, oldKey: string, newKey: string): string {
+  const raw = String(value || "");
+  if (!raw) return raw;
+  if (mediaKey(raw) === oldKey) {
+    if (raw.startsWith("/media/")) return `/media/${newKey}`;
+    if (raw.startsWith("http://") || raw.startsWith("https://")) return raw.replace(new RegExp(escapeRegExp(oldKey), "g"), newKey);
+    return newKey;
+  }
+  return replaceImageReferencesInText(raw, oldKey, newKey);
+}
+
+function replaceImageReferencesInText(value: string, oldKey: string, newKey: string): string {
+  const raw = String(value || "");
+  if (!raw) return raw;
+
+  let next = raw.replace(new RegExp(escapeRegExp(`/media/${oldKey}`), "g"), `/media/${newKey}`);
+  next = next.replace(new RegExp(escapeRegExp(oldKey), "g"), newKey);
+
+  for (const [legacyPath, migratedPath] of Object.entries(STATIC_MEDIA_KEYS)) {
+    if (mediaKey(migratedPath) === oldKey) {
+      next = next.replace(new RegExp(escapeRegExp(legacyPath), "g"), `/media/${newKey}`);
+    }
+  }
+
+  return next;
+}
+
 
 function keysFromHtml(source: string, basePath = ""): string[] {
   const keys = new Set<string>();
@@ -294,6 +327,80 @@ function highlightImages(json: string): string[] {
   } catch {
     return [];
   }
+}
+
+/**
+ * Repoints every database-managed occurrence of one media key to another.
+ *
+ * This is used by the media-library replace action. Static fallback files are
+ * intentionally not edited here; database-owned pages and templates are.
+ */
+export async function replaceImageReferences(db: Db, oldKey: string, newKey: string): Promise<number> {
+  if (!oldKey || !newKey || oldKey === newKey) return 0;
+
+  let changed = 0;
+
+  for (const slide of await db.select().from(heroSlides)) {
+    const nextImage = replaceStoredImageValue(slide.imageKey, oldKey, newKey);
+    if (nextImage !== slide.imageKey) {
+      await db.update(heroSlides).set({ imageKey: nextImage }).where(eq(heroSlides.id, slide.id));
+      changed += 1;
+    }
+  }
+
+  for (const post of await db.select().from(blogPosts)) {
+    const next = {
+      bannerImage: replaceStoredImageValue(post.bannerImage, oldKey, newKey),
+      cardImage: replaceStoredImageValue(post.cardImage, oldKey, newKey),
+      ogImage: replaceStoredImageValue(post.ogImage, oldKey, newKey),
+      bodyHtml: replaceImageReferencesInText(post.bodyHtml, oldKey, newKey),
+      faqs: replaceImageReferencesInText(post.faqs, oldKey, newKey),
+    };
+    const set = Object.fromEntries(
+      Object.entries(next).filter(([key, value]) => value !== post[key as keyof typeof post]),
+    );
+    if (Object.keys(set).length > 0) {
+      await db.update(blogPosts).set(set).where(eq(blogPosts.id, post.id));
+      changed += Object.keys(set).length;
+    }
+  }
+
+  for (const venue of await db.select().from(hotels)) {
+    const next = {
+      bannerImage: replaceStoredImageValue(venue.bannerImage, oldKey, newKey),
+      thumbnailImage: replaceStoredImageValue(venue.thumbnailImage, oldKey, newKey),
+      ogImage: replaceStoredImageValue(venue.ogImage, oldKey, newKey),
+      highlights: replaceImageReferencesInText(venue.highlights, oldKey, newKey),
+      description: replaceImageReferencesInText(venue.description, oldKey, newKey),
+      faqs: replaceImageReferencesInText(venue.faqs, oldKey, newKey),
+    };
+    const set = Object.fromEntries(
+      Object.entries(next).filter(([key, value]) => value !== venue[key as keyof typeof venue]),
+    );
+    if (Object.keys(set).length > 0) {
+      await db.update(hotels).set(set).where(eq(hotels.id, venue.id));
+      changed += Object.keys(set).length;
+    }
+  }
+
+  for (const page of await db.select().from(staticPages)) {
+    const html = replaceImageReferencesInText(page.html, oldKey, newKey);
+    if (html !== page.html) {
+      await db.update(staticPages).set({ html }).where(eq(staticPages.path, page.path));
+      changed += 1;
+    }
+  }
+
+  for (const template of await db.select().from(pageTemplates)) {
+    const html = replaceImageReferencesInText(template.html, oldKey, newKey);
+    if (html !== template.html) {
+      await db.update(pageTemplates).set({ html }).where(eq(pageTemplates.key, template.key));
+      changed += 1;
+    }
+  }
+
+  staticHtmlUsage = null;
+  return changed;
 }
 
 /** True when nothing on the site points at this image any more. */

@@ -22,7 +22,7 @@ import {
 } from "../_components/ui";
 import { currentTime } from "../_lib/clock";
 import { isAdmin, requireDb, requireUser } from "../_lib/auth";
-import { bulkDeleteMediaAction, deleteMediaAction } from "./actions";
+import { bulkDeleteMediaAction, deleteMediaAction, replaceMediaAction } from "./actions";
 import { MediaLibrary, type MediaLibraryItem } from "./MediaLibrary";
 
 const PAGE_SIZE = 48;
@@ -110,6 +110,8 @@ export default async function MediaPage({
     contentType: file.contentType,
     size: file.size,
     sizeLabel: formatBytes(file.size),
+    width: file.width,
+    height: file.height,
     uploadedBy: file.uploadedBy,
     createdAt: file.createdAt.toISOString(),
     createdLabel: formatDateTime(file.createdAt),
@@ -239,6 +241,7 @@ export default async function MediaPage({
           items={items}
           isAdmin={isAdmin(user)}
           deleteAction={deleteMediaAction}
+          replaceAction={replaceMediaAction}
           bulkDeleteAction={bulkDeleteMediaAction}
         />
       )}

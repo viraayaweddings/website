@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 const MEDIA_PATH = "/admin/media";
 
 async function serverDependencies() {
-  const [{ emptyEnv }, { releaseImage }, { findImageReferences }, { recordAudit, requireDb, requireRole }] =
+  const [{ emptyEnv }, { releaseImage, uploadImage }, { findImageReferences, replaceImageReferences }, { recordAudit, requireDb, requireRole }] =
     await Promise.all([
       import("@/worker/env"),
       import("@/worker/admin/media-store"),
@@ -13,7 +13,7 @@ async function serverDependencies() {
       import("../_lib/auth"),
     ]);
 
-  return { emptyEnv, releaseImage, findImageReferences, recordAudit, requireDb, requireRole };
+  return { emptyEnv, releaseImage, uploadImage, findImageReferences, replaceImageReferences, recordAudit, requireDb, requireRole };
 }
 
 /**
@@ -80,4 +80,42 @@ export async function bulkDeleteMediaAction(formData: FormData): Promise<void> {
   });
 
   redirect(`${MEDIA_PATH}?saved=${encodeURIComponent(`${keys.length} image${keys.length === 1 ? "" : "s"} deleted.`)}`);
+}
+
+/** Uploads a new image and repoints every database-managed reference to it. */
+export async function replaceMediaAction(formData: FormData): Promise<void> {
+  const { emptyEnv, uploadImage, releaseImage, replaceImageReferences, recordAudit, requireDb, requireRole } =
+    await serverDependencies();
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+
+  const oldKey = String(formData.get("key") || "").trim();
+  const file = formData.get("file");
+  if (!oldKey) redirect(MEDIA_PATH);
+  if (!(file instanceof File) || file.size === 0) {
+    redirect(`${MEDIA_PATH}?error=${encodeURIComponent("Choose an image to replace it with.")}`);
+  }
+
+  const result = await uploadImage(emptyEnv(), file, actor.email);
+  if ("error" in result) redirect(`${MEDIA_PATH}?error=${encodeURIComponent(result.error)}`);
+
+  if (result.key === oldKey) {
+    redirect(`${MEDIA_PATH}?saved=${encodeURIComponent("That image is already the same file.")}`);
+  }
+
+  const referencesChanged = await replaceImageReferences(db, oldKey, result.key);
+  const oldOutcome = await releaseImage(emptyEnv(), oldKey);
+
+  await recordAudit(db, actor, "media.replaced", "media", oldKey, {
+    oldKey,
+    newKey: result.key,
+    referencesChanged,
+    oldOutcome,
+  });
+
+  redirect(
+    `${MEDIA_PATH}?saved=${encodeURIComponent(
+      `Image replaced. ${referencesChanged} reference${referencesChanged === 1 ? "" : "s"} updated.`,
+    )}`,
+  );
 }

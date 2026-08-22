@@ -44,7 +44,7 @@ export async function GET(): Promise<Response> {
 
   const db = await requireDb();
   const rows = await db
-    .select({ key: media.key, filename: media.filename, size: media.size })
+    .select({ key: media.key, filename: media.filename, size: media.size, width: media.width, height: media.height })
     .from(media)
     .orderBy(desc(media.createdAt))
     .limit(LIBRARY_LIMIT);
@@ -54,6 +54,8 @@ export async function GET(): Promise<Response> {
       url: `/media/${row.key}`,
       filename: row.filename || row.key,
       size: row.size,
+      width: row.width,
+      height: row.height,
     })),
   });
 }

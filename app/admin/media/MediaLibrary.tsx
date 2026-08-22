@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { ACCEPTED_UPLOAD_MIME_LIST } from "@/worker/admin/media-config";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { CopyButton, SubmitButton } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
@@ -20,6 +21,8 @@ export type MediaLibraryItem = {
   contentType: string;
   size: number;
   sizeLabel: string;
+  width: number;
+  height: number;
   uploadedBy: string;
   createdAt: string;
   createdLabel: string;
@@ -28,7 +31,9 @@ export type MediaLibraryItem = {
 };
 
 type DeleteMediaAction = (formData: FormData) => Promise<void>;
+type ReplaceMediaAction = (formData: FormData) => Promise<void>;
 const MEDIA_BULK_FORM = "media-bulk-form";
+type PixelSize = { width: number; height: number };
 
 function imagePath(item: MediaLibraryItem): string {
   return `/media/${item.key}`;
@@ -40,6 +45,15 @@ function fileLabel(item: MediaLibraryItem): string {
 
 function fileKind(item: MediaLibraryItem): string {
   return item.contentType.replace("image/", "").toUpperCase();
+}
+
+function storedSize(item: MediaLibraryItem): PixelSize | null {
+  return item.width > 0 && item.height > 0 ? { width: item.width, height: item.height } : null;
+}
+
+function resolutionLabel(item: MediaLibraryItem, naturalSize?: PixelSize): string {
+  const size = storedSize(item) ?? naturalSize;
+  return size ? `${size.width} x ${size.height} px` : "Reading pixels...";
 }
 
 function DetailRows({ rows }: { rows: { label: string; value: React.ReactNode }[] }) {
@@ -107,11 +121,17 @@ function MediaDetailsDrawer({
   item,
   isAdmin,
   deleteAction,
+  replaceAction,
+  naturalSize,
+  onNaturalSize,
   onClose,
 }: {
   item: MediaLibraryItem;
   isAdmin: boolean;
   deleteAction: DeleteMediaAction;
+  replaceAction: ReplaceMediaAction;
+  naturalSize?: PixelSize;
+  onNaturalSize: (key: string, size: PixelSize) => void;
   onClose: () => void;
 }) {
   const [origin] = useState(() => (typeof window === "undefined" ? "" : window.location.origin));
@@ -148,7 +168,18 @@ function MediaDetailsDrawer({
         <div className="vw-scroll min-h-0 flex-1 overflow-y-auto">
         {/* Plain img: media is served by the app, not the static asset pipeline. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={path} alt="" className="max-h-72 w-full object-contain" style={{ background: "var(--surface-2)" }} />
+        <img
+          src={path}
+          alt=""
+          className="max-h-72 w-full object-contain"
+          style={{ background: "var(--surface-2)" }}
+          onLoad={(event) => {
+            const image = event.currentTarget;
+            if (image.naturalWidth > 0 && image.naturalHeight > 0) {
+              onNaturalSize(item.key, { width: image.naturalWidth, height: image.naturalHeight });
+            }
+          }}
+        />
 
         <div className="vw-card-pad space-y-4">
           <div>
@@ -184,6 +215,7 @@ function MediaDetailsDrawer({
                 { label: "Type", value: item.contentType },
                 { label: "Format", value: fileKind(item) },
                 { label: "Size", value: item.sizeLabel },
+                { label: "Resolution", value: resolutionLabel(item, naturalSize) },
                 { label: "Uploaded", value: `${item.createdLabel} (${item.relativeLabel})` },
                 { label: "Uploaded by", value: item.uploadedBy || "Unknown" },
                 { label: "Used on", value: `${item.references.length} ${item.references.length === 1 ? "place" : "places"}` },
@@ -239,6 +271,36 @@ function MediaDetailsDrawer({
             </div>
           </section>
 
+          {isAdmin ? (
+            <section className="border-t pt-4" style={{ borderColor: "var(--line)" }}>
+              <p className="vw-eyebrow mb-2">Replace</p>
+              <form action={replaceAction} className="space-y-2">
+                <input type="hidden" name="key" value={item.key} />
+                <input
+                  type="file"
+                  name="file"
+                  accept={ACCEPTED_UPLOAD_MIME_LIST}
+                  required
+                  className="vw-file"
+                  aria-label={`Choose replacement for ${fileLabel(item)}`}
+                />
+                <SubmitButton
+                  variant="secondary"
+                  size="sm"
+                  icon="refresh"
+                  pendingLabel="Replacing..."
+                  confirm={`Replace ${fileLabel(item)} everywhere it is used?`}
+                  block
+                >
+                  Replace image
+                </SubmitButton>
+              </form>
+              <p className="vw-hint">
+                Replaces database-managed uses with the new upload. The old file is removed only after nothing points at it.
+              </p>
+            </section>
+          ) : null}
+
           {isAdmin && canDelete ? (
             <form action={deleteAction} className="border-t pt-4" style={{ borderColor: "var(--line)" }}>
               <input type="hidden" name="key" value={item.key} />
@@ -272,19 +334,29 @@ export function MediaLibrary({
   items,
   isAdmin,
   deleteAction,
+  replaceAction,
   bulkDeleteAction,
 }: {
   items: MediaLibraryItem[];
   isAdmin: boolean;
   deleteAction: DeleteMediaAction;
+  replaceAction: ReplaceMediaAction;
   bulkDeleteAction: DeleteMediaAction;
 }) {
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  const [naturalSizes, setNaturalSizes] = useState<Record<string, PixelSize>>({});
 
   const selected = useMemo(
     () => items.find((item) => item.key === selectedKey) ?? null,
     [items, selectedKey],
   );
+  const rememberNaturalSize = (key: string, size: PixelSize) => {
+    setNaturalSizes((current) => {
+      const existing = current[key];
+      if (existing?.width === size.width && existing.height === size.height) return current;
+      return { ...current, [key]: size };
+    });
+  };
 
   return (
     <>
@@ -333,6 +405,12 @@ export function MediaLibrary({
                     className="h-40 w-full object-cover"
                     style={{ background: "var(--surface-2)" }}
                     loading="lazy"
+                    onLoad={(event) => {
+                      const image = event.currentTarget;
+                      if (image.naturalWidth > 0 && image.naturalHeight > 0) {
+                        rememberNaturalSize(item.key, { width: image.naturalWidth, height: image.naturalHeight });
+                      }
+                    }}
                   />
 
                   <span className="vw-card-pad flex flex-1 flex-col">
@@ -344,7 +422,11 @@ export function MediaLibrary({
                     </span>
 
                     <span className="block text-xs" style={{ color: "var(--ink-faint)" }}>
-                      {fileKind(item)} · {item.sizeLabel} · {item.relativeLabel}
+                      {fileKind(item)} · {item.sizeLabel} · {resolutionLabel(item, naturalSizes[item.key])}
+                    </span>
+
+                    <span className="mt-1 block text-xs" style={{ color: "var(--ink-faint)" }}>
+                      {item.relativeLabel}
                     </span>
 
                     <span className="mt-auto block pt-2.5">
@@ -369,6 +451,9 @@ export function MediaLibrary({
         item={selected}
         isAdmin={isAdmin}
         deleteAction={deleteAction}
+        replaceAction={replaceAction}
+        naturalSize={naturalSizes[selected.key]}
+        onNaturalSize={rememberNaturalSize}
         onClose={() => setSelectedKey(null)}
       />
     ) : null}

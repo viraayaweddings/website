@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import { isR2Configured, r2Delete, r2Head, r2Put } from "../storage/r2";
 import { getDb, type DatabaseEnv } from "../db/client";
 import { media } from "../db/schema";
-import { ACCEPTED_IMAGE_TYPES, contentKey, sniffImageType } from "./image-type";
+import { ACCEPTED_IMAGE_TYPES, contentKey, imageDimensions, sniffImageType } from "./image-type";
 import { isImageUnused } from "./image-references";
 import { ACCEPTED_UPLOAD_MIME_TYPES, MAX_UPLOAD_BYTES } from "./media-config";
 
@@ -26,6 +26,7 @@ export async function uploadImage(
   const bytes = new Uint8Array(await file.arrayBuffer());
   const kind = sniffImageType(bytes);
   if (!kind) return { error: "That file is not a JPEG, PNG, WebP or AVIF image." };
+  const naturalSize = imageDimensions(bytes, kind.mime);
 
   const key = await contentKey(bytes, kind.extension);
 
@@ -50,9 +51,21 @@ export async function uploadImage(
           filename: file.name.slice(0, 200),
           contentType: kind.mime,
           size: file.size,
+          width: naturalSize?.width ?? 0,
+          height: naturalSize?.height ?? 0,
           uploadedBy,
         })
-        .onConflictDoNothing();
+        .onConflictDoUpdate({
+          target: media.key,
+          set: {
+            filename: file.name.slice(0, 200),
+            contentType: kind.mime,
+            size: file.size,
+            width: naturalSize?.width ?? 0,
+            height: naturalSize?.height ?? 0,
+            uploadedBy,
+          },
+        });
     }
   } catch (error) {
     console.error("[media] record failed", error instanceof Error ? error.message : error);

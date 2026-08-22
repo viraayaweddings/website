@@ -131,6 +131,8 @@ export const media = pgTable(
     filename: text("filename").notNull().default(""),
     contentType: text("content_type").notNull().default("application/octet-stream"),
     size: integer("size").notNull().default(0),
+    width: integer("width").notNull().default(0),
+    height: integer("height").notNull().default(0),
     uploadedBy: text("uploaded_by").notNull().default(""),
     createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
   },
