@@ -1,5 +1,5 @@
 {
-  "buildCommand": "NITRO_PRESET=vercel npm run build && node scripts/migrate-images-to-r2.mjs --apply --if-configured",
+  "buildCommand": "NITRO_PRESET=vercel npm run build",
   "installCommand": "npm install",
   "framework": null,
   "regions": [

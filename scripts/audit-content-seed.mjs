@@ -94,15 +94,30 @@ try {
   ]) {
     check(
       `${table}.${column} points at /media`,
-      await sql.unsafe(`select ${column} as value from ${table} where ${column} like '/storage/%' limit 20`),
+      await sql.unsafe(
+        `select ${column} as value from ${table} where ${column} <> '' and ${column} not like '/media/%' limit 20`,
+      ),
       (row) => row.value,
     );
   }
 
+  // Not just /storage: user/assets and vendor were migrated too, so any absolute
+  // image path that is not /media is one something put back.
+  const STATIC_IMAGE = /(?<=["'\s(=,])\/(?!media\/)[A-Za-z0-9_][^"'\s),]*?\.(?:jpg|jpeg|png|webp|avif|gif|svg)/i;
   check(
     "page shells hold no static image paths",
-    await sql`select key from page_templates where html like '%/storage/%' order by key`,
+    (await sql`select key, html from page_templates order by key`).filter((row) =>
+      STATIC_IMAGE.test(String(row.html)),
+    ),
     (row) => row.key,
+  );
+
+  check(
+    "hotels.highlights holds no static image paths",
+    (await sql`select id, highlights from hotels where highlights <> ''`).filter((row) =>
+      STATIC_IMAGE.test(String(row.highlights)),
+    ),
+    (row) => `hotel ${row.id}`,
   );
 
   const shells = await sql`select count(*)::int n from page_templates`;
