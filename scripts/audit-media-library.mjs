@@ -144,6 +144,20 @@ async function staticReferences(mapping) {
   return refs;
 }
 
+async function runtimeSourceReferences(mapping) {
+  const refs = [];
+  const roots = [join(root, "worker", "site")];
+  for (const rootDir of roots) {
+    for (const file of await walk(rootDir)) {
+      if (![".ts", ".tsx", ".js"].includes(extensionOf(file))) continue;
+      const rel = relative(root, file).replaceAll("\\", "/");
+      refs.push(...extractFromText(await readFile(file, "utf8").catch(() => ""), rel, mapping));
+    }
+  }
+  refs.push(...extractFromText(await readFile(join(root, "app", "layout.tsx"), "utf8").catch(() => ""), "app/layout.tsx", mapping));
+  return refs;
+}
+
 function summarizeIssues(refs, mediaKeys, mapping) {
   const legacyRefs = [];
   const missingMap = [];
@@ -181,16 +195,19 @@ try {
 
   const dbRefs = await databaseReferences(sql, mapping);
   const fileRefs = await staticReferences(mapping);
+  const runtimeRefs = await runtimeSourceReferences(mapping);
   const dbIssues = summarizeIssues(dbRefs, mediaKeys, mapping);
   const staticIssues = summarizeIssues(fileRefs, mediaKeys, mapping);
+  const runtimeIssues = summarizeIssues(runtimeRefs, mediaKeys, mapping);
 
-  const allKeys = new Set([...dbRefs, ...fileRefs].map((ref) => ref.key).filter(Boolean));
+  const allKeys = new Set([...dbRefs, ...fileRefs, ...runtimeRefs].map((ref) => ref.key).filter(Boolean));
   const unusedMediaRows = rows.filter((row) => !allKeys.has(row.key));
 
   console.log(`[media-audit] media rows: ${rows.length}`);
   console.log(`[media-audit] migration map paths: ${mapping.size}`);
   console.log(`[media-audit] database image references: ${dbRefs.length}`);
   console.log(`[media-audit] static fallback image references: ${fileRefs.length}`);
+  console.log(`[media-audit] runtime source image references: ${runtimeRefs.length}`);
   console.log(`[media-audit] referenced media keys: ${allKeys.size}`);
   console.log(`[media-audit] unused media rows: ${unusedMediaRows.length}`);
   console.log(`[media-audit] zero-size rows: ${zeroSize.length}`);
@@ -198,6 +215,8 @@ try {
   console.log(`[media-audit] database missing media rows: ${dbIssues.missingMedia.length}`);
   console.log(`[media-audit] static legacy refs: ${staticIssues.legacyRefs.length}`);
   console.log(`[media-audit] static missing media rows: ${staticIssues.missingMedia.length}`);
+  console.log(`[media-audit] runtime legacy refs: ${runtimeIssues.legacyRefs.length}`);
+  console.log(`[media-audit] runtime missing media rows: ${runtimeIssues.missingMedia.length}`);
 
   const failures = [
     ...zeroSize.map((row) => `zero-size media row: ${row.key}`),
@@ -207,6 +226,9 @@ try {
     ...staticIssues.legacyRefs.map((ref) => `static fallback still uses legacy path: ${ref.raw} (${ref.where})`),
     ...staticIssues.missingMap.map((ref) => `static unmapped legacy path: ${ref.raw} (${ref.where})`),
     ...staticIssues.missingMedia.map((ref) => `static missing media row: ${ref.raw} (${ref.where})`),
+    ...runtimeIssues.legacyRefs.map((ref) => `runtime source still uses legacy path: ${ref.raw} (${ref.where})`),
+    ...runtimeIssues.missingMap.map((ref) => `runtime source unmapped legacy path: ${ref.raw} (${ref.where})`),
+    ...runtimeIssues.missingMedia.map((ref) => `runtime source missing media row: ${ref.raw} (${ref.where})`),
   ];
 
   if (failures.length) {

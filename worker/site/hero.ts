@@ -67,9 +67,9 @@ export function renderHeroSlide(slide: HeroSlide): string {
                     <p class="dis text-white fw-300 font-family03 fs-16">${escapeHtml(slide.description)}</p>
                     <div class="luxury-venues-widget d-flex align-items-center">
                         <div class="luxury-img d-flex">
-                            <img src="/user/assets/images/img-icon01.png" width="42" height="42" loading="lazy" alt="luxury-venues" decoding="async">
-                            <img src="/user/assets/images/img-icon02.png" width="42" height="42" loading="lazy" alt="luxury-venues" decoding="async">
-                            <img src="/user/assets/images/img-icon03.png" width="42" height="42" loading="lazy" alt="luxury-venues" decoding="async">
+                            <img src="/media/legacy/437e15b54021aebc.png" width="42" height="42" loading="lazy" alt="luxury-venues" decoding="async">
+                            <img src="/media/legacy/cb669b4edec4ba6c.png" width="42" height="42" loading="lazy" alt="luxury-venues" decoding="async">
+                            <img src="/media/legacy/0653908ebba8610a.png" width="42" height="42" loading="lazy" alt="luxury-venues" decoding="async">
                         </div>
                         <div class="content">
                             <h5 class="font-family01 text-white fs-15 fw-500">${escapeHtml(slide.badgeTitle)}</h5>

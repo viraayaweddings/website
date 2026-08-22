@@ -66,7 +66,7 @@ export function renderCityCard(hotel: Hotel, labels?: ResolvedLabels): string {
                 </h4>
             </a>
             <p class="text-muted mb-2">
-                <img src="/user/assets/images/map-icon.svg" width="14" alt="" decoding="async" loading="lazy">
+                <img src="/media/legacy/128f0249f07c980b.svg" width="14" alt="" decoding="async" loading="lazy">
                 ${escapeHtml(shortLocation(hotel.cityLabel))}
             </p>
             <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
@@ -107,7 +107,7 @@ export function renderNearbyCard(hotel: Hotel, labels?: ResolvedLabels): string 
             <div class="">
                 <h5 class="venue-title fs-16 fw-500 text-maroon-900 font-family01">${escapeHtml(shortenName(hotel.name))}</h5>
                 <p class="venue-location fs-13 d-flex align-items-center">
-                    <img src="/user/assets/images/map-icon.svg" width="14" height="14" alt="" decoding="async" loading="lazy"> ${escapeHtml(hotel.cityLabel)}
+                    <img src="/media/legacy/128f0249f07c980b.svg" width="14" height="14" alt="" decoding="async" loading="lazy"> ${escapeHtml(hotel.cityLabel)}
                 </p>
             </div>
             <div class="d-flex gap-2-custom mt-3-custom">
@@ -230,4 +230,3 @@ export async function venuesForCity(env: DatabaseEnv, city: string, hotels: Hote
   const refs = rows.filter((row) => row.city === city).map((row) => `${row.venueCity}/${row.venueSlug}`);
   return resolveVenues(refs, hotels);
 }
-
