@@ -316,10 +316,12 @@ export async function movePostAction(formData: FormData): Promise<void> {
   await db
     .update(blogPosts)
     .set({
-      position: sql`case ${blogPosts.id} ${sql.join(
+      // Cast: the bound positions arrive untyped, so Postgres infers the whole
+      // CASE as text and refuses to store it in an integer column.
+      position: sql`(case ${blogPosts.id} ${sql.join(
         ordered.map((post, position) => sql`when ${post.id} then ${position}`),
         sql` `,
-      )} end`,
+      )} end)::int`,
     })
     .where(inArray(blogPosts.id, ordered.map((post) => post.id)));
 

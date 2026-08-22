@@ -157,10 +157,12 @@ export async function moveSlideAction(formData: FormData): Promise<void> {
   await db
     .update(heroSlides)
     .set({
-      position: sql`case ${heroSlides.id} ${sql.join(
+      // Cast: the bound positions arrive untyped, so Postgres infers the whole
+      // CASE as text and refuses to store it in an integer column.
+      position: sql`(case ${heroSlides.id} ${sql.join(
         ordered.map((slide, position) => sql`when ${slide.id} then ${position}`),
         sql` `,
-      )} end`,
+      )} end)::int`,
     })
     .where(inArray(heroSlides.id, ordered.map((slide) => slide.id)));
 
