@@ -148,8 +148,13 @@ room count but `published = 0`. Eighteen have since been published to fill
 cities that had no hotel at all in the picker. Publishing another is a tick on
 its page in `/admin/calculator/hotels`.
 
-Andaman and Haridwar still have an empty dropdown. Neither has a hotel in the
-dataset at all, published or hidden.
+Andaman and Haridwar are no longer in the picker. Neither has a hotel in the
+dataset at all, published or hidden, so both are `published = 0` on
+`calculator_cities` -- the rows are kept because the ids are the dataset's own
+and a delete would leave a gap. Their `/destination-wedding/` landing pages are
+unaffected: those come from `city_pages`, a different table.
+
+Every city the picker offers now has at least one hotel behind it.
 
 ### Price on request
 
