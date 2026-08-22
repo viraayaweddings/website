@@ -140,18 +140,43 @@ answer from those tables, so every page that prices — the homepage, the
 dedicated page, the ten landing pages and all 259 venue pages — picks an edit up
 within a minute.
 
-**320 hotels are priced; 259 are published.** The source dataset carries prices
-for 320 hotels but lists only the 259 active ones under `hotels` and
-`hotelsByCity`. The other 61 are named in `compareHotelsByCity`, which is what
-the seed reads for them, and every one is marked `is_active: false` there — so
-they are imported with their real name, city and room count but `published = 0`,
-matching what the original site showed. Publishing one is a tick on its page in
-`/admin/calculator/hotels`; its prices are already loaded.
+**320 hotels, 277 published.** The source dataset carries prices for 320 hotels
+but lists only 259 under `hotels` and `hotelsByCity`. The other 61 are named in
+`compareHotelsByCity`, which is what the seed reads for them, and all 61 are
+marked `is_active: false` there, so they import with their real name, city and
+room count but `published = 0`. Eighteen have since been published to fill
+cities that had no hotel at all in the picker. Publishing another is a tick on
+its page in `/admin/calculator/hotels`.
 
-Ten cities therefore have no hotel in the picker (Ajabgarh, Andaman,
-Bhubaneswar, Haridwar, Karjat, Khopoli, Lakshadweep, Lonavala, Sakleshpur,
-Vrindavan). Every hotel in them is one of the 61. This is inherited behaviour,
-not a regression.
+Andaman and Haridwar still have an empty dropdown. Neither has a hotel in the
+dataset at all, published or hidden.
+
+### Price on request
+
+Thirty-three published hotels have no room rate: 24 with every price at 0.00,
+and 9 carrying meal prices but no room rate. The calculators all read a rate as
+`parseFloat(price.room_price) || 0` and render the result, so without a guard
+those hotels quote a wedding at zero — or worse, charge for the catering and
+nothing for the rooms.
+
+The guard is the last block of `site-public/js/currency-switcher.js`, which all
+272 calculator pages already load, so it needs no page markup or stored shell
+changes:
+
+- A `click` listener on `document` in the **capture** phase runs ahead of each
+  page's own handler. The rate test needs the dataset promise, so the first
+  click is swallowed and replayed with `data-viraaya-rates-checked` once the
+  answer is known.
+- The hotel comes from `.hotel-select` (comparison), `#hotelSelect` (homepage,
+  dedicated page, city pages) or `#hotelId` (venue pages), in that order.
+- Unpriced means no room rate in any of the twelve months. `hasRates` is keyed
+  on the room rate alone, not on any of the four prices.
+- `getHotelPrices` drops unpriced hotels, so the comparison table never shows
+  one at zero beside real rates. A comparison where every choice is unpriced
+  falls through to the same panel.
+
+The panel is built in JS with inline styles — no Bootstrap dependency — and its
+CTA opens `#BookConsultation` where the page has it, or goes to `/contact`.
 
 ---
 
@@ -163,6 +188,7 @@ not a regression.
 | Cross-origin calculator API call | 403 blocked |
 | Offline/static fallback | `currency-switcher.js` serves local JSON |
 | Hotel not in calculator data | No pricing shown on venue calculator |
+| Hotel published with no room rate | "Price on request" panel, enquiry CTA instead of a quote |
 
 ---
 

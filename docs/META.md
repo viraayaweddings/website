@@ -4,9 +4,9 @@
 | ----- | ----- |
 | Documentation version | 1.0.0 |
 | Project version | 0.1.0 |
-| Last updated | 2026-08-22T09:18:29.368Z |
-| Last audited commit | `fde2e393` (`fde2e393ca86ddd3b31f8f8307f15065660ad4b9`) |
-| Last sync run | 2026-08-22T09:18:29.368Z |
+| Last updated | 2026-08-22T09:38:02.780Z |
+| Last audited commit | `e6741429` (`e67414291935cd7706e42e161422e3a0a9e6df9e`) |
+| Last sync run | 2026-08-22T09:38:02.780Z |
 | Synchronization status | Run `npm run docs:validate` for current status |
 | Coverage scope | Admin panel (complete), public website (complete), worker/API/DB (complete) |
 
@@ -30,4 +30,4 @@
 
 | Date | Code version | Documentation change | Reason |
 | ---- | ------------ | -------------------- | ------ |
-| 2026-08-22 | `fde2e393` | Initial master documentation system | Full project audit |
+| 2026-08-22 | `e6741429` | Initial master documentation system | Full project audit |
