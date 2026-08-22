@@ -5,8 +5,11 @@
  * in a counter, because a counter drifts the moment anything writes without
  * updating it. A query is cheap and always tells the truth.
  */
+import { readdir, readFile } from "node:fs/promises";
+import { relative, resolve, sep } from "node:path";
 import type { Db } from "../db/client";
-import { blogPosts, heroSlides, hotels, staticPages } from "../db/schema";
+import imageMigrationMap from "../../scripts/image-migration-map.json";
+import { blogPosts, heroSlides, hotels, pageTemplates, staticPages } from "../db/schema";
 
 export interface ImageReference {
   /** Human description, e.g. "Venue banner". */
@@ -40,6 +43,11 @@ export async function findImageReferences(db: Db, key: string): Promise<ImageRef
  * screen offer to delete a picture that is live inside an article.
  */
 const INLINE_KEY = /\/media\/([A-Za-z0-9/_.-]+?\.(?:jpg|jpeg|png|webp|avif|gif|svg))/gi;
+const STATIC_IMAGE = /(?<=["'\s(=,])\/(?!media\/)[A-Za-z0-9_][^"'\s),]*?\.(?:jpg|jpeg|png|webp|avif|gif|svg)/gi;
+const RELATIVE_IMAGE = /(?<=["'\s(=,])\.\/([^"'\s),]*?\.(?:jpg|jpeg|png|webp|avif|gif|svg))/gi;
+const YOUTUBE_LOCAL_HTML = /\/vendor\/youtube-local\/([A-Za-z0-9_-]+)\.html/gi;
+const STATIC_MEDIA_KEYS = imageMigrationMap as Record<string, string>;
+let staticHtmlUsage: Promise<Array<{ key: string; reference: ImageReference }>> | null = null;
 
 function mediaKey(value: string): string {
   const raw = value.trim();
@@ -48,22 +56,114 @@ function mediaKey(value: string): string {
   try {
     const url = raw.startsWith("http://") || raw.startsWith("https://") ? new URL(raw) : null;
     if (url?.pathname.startsWith("/media/")) return decodeURIComponent(url.pathname.slice("/media/".length));
+    if (url?.pathname) return mediaKey(url.pathname);
   } catch {
     /* Invalid URLs are handled as plain stored values below. */
   }
+
+  const migrated = STATIC_MEDIA_KEYS[raw];
+  if (migrated) return mediaKey(migrated);
 
   if (raw.startsWith("/media/")) return raw.slice("/media/".length);
   if (raw.startsWith("/")) return "";
   return raw;
 }
 
-function inlineKeys(...html: string[]): string[] {
+function keysFromHtml(source: string, basePath = ""): string[] {
   const keys = new Set<string>();
-  for (const source of html) {
-    if (!source) continue;
-    for (const match of source.matchAll(INLINE_KEY)) keys.add(mediaKey(`/media/${match[1]}`));
+  if (!source) return [];
+
+  for (const match of source.matchAll(INLINE_KEY)) keys.add(mediaKey(`/media/${match[1]}`));
+  for (const match of source.matchAll(STATIC_IMAGE)) {
+    const key = mediaKey(match[0]);
+    if (key) keys.add(key);
   }
+  if (basePath) {
+    const base = basePath.endsWith("/") ? basePath.slice(0, -1) : basePath;
+    for (const match of source.matchAll(RELATIVE_IMAGE)) {
+      const key = mediaKey(`${base}/${match[1]}`);
+      if (key) keys.add(key);
+    }
+  }
+  for (const match of source.matchAll(YOUTUBE_LOCAL_HTML)) {
+    const key = mediaKey(`/vendor/youtube-local/${match[1]}.jpg`);
+    if (key) keys.add(key);
+  }
+
   return [...keys];
+}
+
+function inlineKeys(...html: string[]): string[] {
+  return [...new Set(html.flatMap((source) => keysFromHtml(source)))];
+}
+
+function publicPathForHtml(root: string, filePath: string): { publicPath: string; basePath: string } {
+  const rel = relative(root, filePath).split(sep).join("/");
+  const rawPath = `/${rel}`;
+  const publicPath = rawPath.endsWith("/index.html") ? rawPath.slice(0, -"index.html".length) : rawPath;
+  const basePath = publicPath.endsWith("/")
+    ? publicPath.slice(0, -1)
+    : publicPath.includes("/")
+      ? publicPath.slice(0, publicPath.lastIndexOf("/"))
+      : "";
+  return { publicPath: publicPath || "/", basePath: basePath || "/" };
+}
+
+async function walkHtml(root: string, dir = root): Promise<string[]> {
+  let entries;
+  try {
+    entries = await readdir(dir, { withFileTypes: true });
+  } catch {
+    return [];
+  }
+
+  const files: string[] = [];
+  for (const entry of entries) {
+    const path = resolve(dir, entry.name);
+    if (entry.isDirectory()) files.push(...(await walkHtml(root, path)));
+    else if (entry.isFile() && entry.name.toLowerCase().endsWith(".html")) files.push(path);
+  }
+  return files;
+}
+
+async function buildStaticHtmlUsage(): Promise<Array<{ key: string; reference: ImageReference }>> {
+  const roots = [
+    resolve(process.cwd(), ".vercel", "output", "static"),
+    resolve(process.cwd(), ".output", "public"),
+    resolve(process.cwd(), "site-public"),
+  ];
+  const usage: Array<{ key: string; reference: ImageReference }> = [];
+  const seen = new Set<string>();
+
+  for (const root of roots) {
+    for (const file of await walkHtml(root)) {
+      const { publicPath, basePath } = publicPathForHtml(root, file);
+      const html = await readFile(file, "utf8").catch(() => "");
+      if (!html) continue;
+
+      for (const key of keysFromHtml(html, basePath)) {
+        const marker = `${key}\n${publicPath}`;
+        if (seen.has(marker)) continue;
+        seen.add(marker);
+        usage.push({
+          key,
+          reference: {
+            what: publicPath.startsWith("/vendor/") ? "Legacy embedded asset" : "Legacy static page image",
+            where: publicPath,
+            adminPath: "/admin/pages",
+            publicPath,
+          },
+        });
+      }
+    }
+  }
+
+  return usage;
+}
+
+function loadStaticHtmlUsage(): Promise<Array<{ key: string; reference: ImageReference }>> {
+  staticHtmlUsage ??= buildStaticHtmlUsage();
+  return staticHtmlUsage;
 }
 
 /**
@@ -79,7 +179,19 @@ export async function buildImageUsage(db: Db): Promise<Map<string, ImageReferenc
     const normalized = mediaKey(key);
     if (!normalized) return;
     const list = usage.get(normalized);
-    if (list) list.push(reference);
+    if (list) {
+      if (
+        !list.some(
+          (item) =>
+            item.what === reference.what &&
+            item.where === reference.where &&
+            item.adminPath === reference.adminPath &&
+            item.publicPath === reference.publicPath,
+        )
+      ) {
+        list.push(reference);
+      }
+    }
     else usage.set(normalized, [reference]);
   };
 
@@ -153,6 +265,19 @@ export async function buildImageUsage(db: Db): Promise<Map<string, ImageReferenc
     for (const key of inlineKeys(page.html)) {
       add(key, { what: "Static page image", where, adminPath, publicPath: page.path });
     }
+  }
+
+  for (const template of await db
+    .select({ key: pageTemplates.key, kind: pageTemplates.kind, html: pageTemplates.html })
+    .from(pageTemplates)) {
+    const where = `${template.kind || "Page"} template`;
+    for (const key of inlineKeys(template.html)) {
+      add(key, { what: "Page template image", where, adminPath: "/admin/pages" });
+    }
+  }
+
+  for (const { key, reference } of await loadStaticHtmlUsage()) {
+    add(key, reference);
   }
 
   return usage;

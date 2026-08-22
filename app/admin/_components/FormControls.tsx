@@ -214,6 +214,7 @@ export function LiveSearch({
         placeholder={placeholder}
         aria-label={label || placeholder || "Search"}
         className="vw-input pl-8"
+        style={{ paddingLeft: "2.25rem" }}
       />
     </span>
   );

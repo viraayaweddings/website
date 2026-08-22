@@ -29,7 +29,14 @@ export function BulkSelection({
 
   const boxes = useCallback((): HTMLInputElement[] => {
     const form = formId ? document.getElementById(formId) : anchor.current?.closest("form");
-    return form ? [...form.querySelectorAll<HTMLInputElement>('input[type="checkbox"][name="ids"]')] : [];
+    if (!form) return [];
+    if (form instanceof HTMLFormElement) {
+      return [...form.elements].filter(
+        (element): element is HTMLInputElement =>
+          element instanceof HTMLInputElement && element.type === "checkbox" && element.name === "ids",
+      );
+    }
+    return [...form.querySelectorAll<HTMLInputElement>('input[type="checkbox"][name="ids"]')];
   }, [formId]);
 
   const recount = useCallback(() => {
@@ -39,11 +46,12 @@ export function BulkSelection({
   }, [boxes]);
 
   useEffect(() => {
-    const form = anchor.current?.closest("form");
-    if (!form) return;
-    recount();
-    form.addEventListener("change", recount);
-    return () => form.removeEventListener("change", recount);
+    const refresh = window.setTimeout(recount, 0);
+    document.addEventListener("change", recount);
+    return () => {
+      window.clearTimeout(refresh);
+      document.removeEventListener("change", recount);
+    };
   }, [recount]);
 
   const setAll = (checked: boolean) => {

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { CopyButton, SubmitButton } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
@@ -103,23 +103,49 @@ function UsageList({ references }: { references: MediaReferenceView[] }) {
   );
 }
 
-function MediaSidebar({
+function MediaDetailsDrawer({
   item,
   isAdmin,
   deleteAction,
+  onClose,
 }: {
   item: MediaLibraryItem;
   isAdmin: boolean;
   deleteAction: DeleteMediaAction;
+  onClose: () => void;
 }) {
   const [origin] = useState(() => (typeof window === "undefined" ? "" : window.location.origin));
   const path = imagePath(item);
   const fullUrl = origin ? `${origin}${path}` : path;
   const canDelete = isAdmin && item.references.length === 0;
 
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [onClose]);
+
   return (
-    <aside className="xl:sticky xl:top-6 xl:self-start">
-      <div className="vw-card overflow-hidden">
+    <div className="fixed inset-0 z-[70]" role="dialog" aria-modal="true" aria-label={`Image details for ${fileLabel(item)}`}>
+      <button type="button" className="vw-scrim" onClick={onClose} aria-label="Close image details" />
+      <aside className="vw-dialog fixed inset-y-0 right-0 z-[71] flex w-full max-w-[28rem] flex-col overflow-hidden rounded-none">
+        <div className="flex items-center justify-between gap-3 border-b px-4 py-3" style={{ borderColor: "var(--line)" }}>
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold" style={{ color: "var(--ink)" }}>
+              Image details
+            </p>
+            <p className="truncate text-xs" style={{ color: "var(--ink-faint)" }}>
+              {fileLabel(item)}
+            </p>
+          </div>
+          <button type="button" className="vw-btn vw-btn-ghost vw-btn-icon vw-btn-sm" onClick={onClose} aria-label="Close image details">
+            <Icon name="close" size={14} />
+          </button>
+        </div>
+
+        <div className="vw-scroll min-h-0 flex-1 overflow-y-auto">
         {/* Plain img: media is served by the app, not the static asset pipeline. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={path} alt="" className="max-h-72 w-full object-contain" style={{ background: "var(--surface-2)" }} />
@@ -236,8 +262,9 @@ function MediaSidebar({
             </div>
           ) : null}
         </div>
-      </div>
-    </aside>
+        </div>
+      </aside>
+    </div>
   );
 }
 
@@ -252,17 +279,16 @@ export function MediaLibrary({
   deleteAction: DeleteMediaAction;
   bulkDeleteAction: DeleteMediaAction;
 }) {
-  const [selectedKey, setSelectedKey] = useState(items[0]?.key ?? "");
+  const [selectedKey, setSelectedKey] = useState<string | null>(null);
 
   const selected = useMemo(
-    () => items.find((item) => item.key === selectedKey) ?? items[0],
+    () => items.find((item) => item.key === selectedKey) ?? null,
     [items, selectedKey],
   );
 
-  if (!selected) return null;
-
   return (
-    <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_24rem]">
+    <>
+    <div>
       <div>
         {isAdmin ? (
           <form id={MEDIA_BULK_FORM}>
@@ -283,12 +309,10 @@ export function MediaLibrary({
 
         <div className="grid gap-3 sm:grid-cols-2 2xl:grid-cols-3">
           {items.map((item) => {
-            const selectedItem = item.key === selected.key;
             return (
               <article
                 key={item.key}
                 className="vw-card relative overflow-hidden text-left transition hover:-translate-y-px"
-                style={selectedItem ? { borderColor: "var(--accent)", boxShadow: "var(--ring)" } : undefined}
               >
                 {isAdmin ? (
                   <span className="absolute left-2 top-2 z-10 rounded-[7px] border p-1" style={{ borderColor: "var(--line)", background: "var(--surface)" }}>
@@ -300,7 +324,6 @@ export function MediaLibrary({
                   type="button"
                   onClick={() => setSelectedKey(item.key)}
                   className="block w-full text-left"
-                  aria-pressed={selectedItem}
                 >
                   {/* Plain img: media is served by the app, not the static asset pipeline. */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -340,8 +363,15 @@ export function MediaLibrary({
           })}
         </div>
       </div>
-
-      <MediaSidebar item={selected} isAdmin={isAdmin} deleteAction={deleteAction} />
     </div>
+    {selected ? (
+      <MediaDetailsDrawer
+        item={selected}
+        isAdmin={isAdmin}
+        deleteAction={deleteAction}
+        onClose={() => setSelectedKey(null)}
+      />
+    ) : null}
+    </>
   );
 }
