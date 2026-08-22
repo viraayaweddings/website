@@ -193,6 +193,38 @@ const ViraayaCalculatorData = (() => {
         };
     }
 
+    /**
+     * True when a hotel has a real rate in at least one month.
+     *
+     * A venue can be listed with all twelve months at 0.00 -- the dataset
+     * carries the hotel but no rate card. Every calculator on the site reads a
+     * missing price as zero, so without this test such a hotel is quoted at
+     * zero rather than declared unpriced.
+     */
+    function hasRates(prices, hotelId) {
+        const byMonth = (prices || {})[String(hotelId)];
+        if (!byMonth) return false;
+        return Object.keys(byMonth).some(function (month) {
+            const price = normalizePrice(byMonth[month]);
+            return price.room_price > 0 || price.lunch_price > 0
+                || price.hitea_price > 0 || price.dinner_price > 0;
+        });
+    }
+
+    async function hotelHasRates(hotelId) {
+        return hasRates((await loadCalculatorData()).prices, hotelId);
+    }
+
+    async function getHotelName(hotelId) {
+        const hotelsByCity = (await loadCalculatorData()).hotelsByCity || {};
+        const id = String(hotelId);
+        for (const hotels of Object.values(hotelsByCity)) {
+            const match = hotels.find(hotel => String(hotel.id) === id);
+            if (match) return match.hotel_name || match.name || '';
+        }
+        return '';
+    }
+
     function monthFromDateString(value) {
         if (!value) return 'January';
         const parts = String(value).split('-');
@@ -252,7 +284,8 @@ const ViraayaCalculatorData = (() => {
 
         const month = monthFromDateString(checkin);
         return ids
-            .filter(id => hotelRecords[id])
+            // An unpriced hotel would compare at zero against real rates.
+            .filter(id => hotelRecords[id] && hasRates(prices, id))
             .map(id => ({
                 id,
                 hotel_name: hotelRecords[id].hotel_name || hotelRecords[id].name,
@@ -383,9 +416,193 @@ const ViraayaCalculatorData = (() => {
         getHotelPrice,
         getHotelPrices,
         normalizePrice,
+        hotelHasRates,
+        getHotelName,
     };
 })();
 
 window.ViraayaCalculatorData = ViraayaCalculatorData;
 
 document.addEventListener('DOMContentLoaded', () => CurrencySwitcher.init());
+
+/* ---------------------------------------------------------------------------
+ * Price on request.
+ *
+ * Every calculator on the site -- the venue pages, the homepage, the dedicated
+ * page, the city landing pages and the comparison tool -- reads a rate with
+ * `parseFloat(price.room_price) || 0` and renders whatever comes out. A hotel
+ * listed without a rate card therefore quotes a wedding at zero.
+ *
+ * This runs ahead of each page's own click handler, in the capture phase, and
+ * asks for an enquiry instead. The check needs the dataset, which is a promise,
+ * so the first click is swallowed and replayed once the answer is known.
+ * ------------------------------------------------------------------------ */
+(function () {
+    'use strict';
+
+    const OVERLAY_ID = 'viraaya-price-on-request';
+    const GOLD = '#B98230';
+    const INK = '#4A3C33';
+
+    function api() {
+        const data = window.ViraayaCalculatorData;
+        return data && typeof data.hotelHasRates === 'function' ? data : null;
+    }
+
+    /** The hotels the visitor is asking about, whichever picker the page uses. */
+    function selectedHotelIds() {
+        const compare = Array.prototype.slice.call(document.querySelectorAll('.hotel-select'));
+        if (compare.length) {
+            return compare.map(el => String(el.value || '').trim()).filter(Boolean);
+        }
+        const picker = document.getElementById('hotelSelect');
+        if (picker) {
+            const value = String(picker.value || '').trim();
+            return value ? [value] : [];
+        }
+        // Venue pages carry the hotel in a hidden input; there is no picker.
+        const fixed = document.getElementById('hotelId');
+        if (fixed) {
+            const value = String(fixed.value || '').trim();
+            return value ? [value] : [];
+        }
+        return [];
+    }
+
+    function unpricedAmong(ids) {
+        const data = api();
+        if (!data) return Promise.resolve([]);
+        return Promise.all(ids.map(id => data.hotelHasRates(id).then(has => (has ? null : id))))
+            .then(rows => rows.filter(Boolean))
+            .catch(() => []);
+    }
+
+    function namesFor(ids) {
+        const data = api();
+        if (!data) return Promise.resolve([]);
+        return Promise.all(ids.map(id => data.getHotelName(id).catch(() => '')))
+            .then(names => names.filter(Boolean))
+            .catch(() => []);
+    }
+
+    function sentence(names) {
+        if (names.length === 0) return 'This hotel does not have published rates yet.';
+        if (names.length === 1) return names[0] + ' does not have published rates yet.';
+        const last = names[names.length - 1];
+        return names.slice(0, -1).join(', ') + ' and ' + last + ' do not have published rates yet.';
+    }
+
+    function close() {
+        const existing = document.getElementById(OVERLAY_ID);
+        if (existing) existing.remove();
+        document.removeEventListener('keydown', onKeydown, true);
+    }
+
+    function onKeydown(event) {
+        if (event.key === 'Escape') close();
+    }
+
+    function enquire() {
+        close();
+        const modal = document.getElementById('BookConsultation');
+        if (modal && window.bootstrap && window.bootstrap.Modal) {
+            new window.bootstrap.Modal(modal).show();
+            return;
+        }
+        window.location.href = '/contact';
+    }
+
+    function show(names) {
+        close();
+
+        const overlay = document.createElement('div');
+        overlay.id = OVERLAY_ID;
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-label', 'Price on request');
+        overlay.style.cssText = [
+            'position:fixed', 'inset:0', 'z-index:20000',
+            'background:rgba(30,22,18,0.55)',
+            'display:flex', 'align-items:center', 'justify-content:center',
+            'padding:24px'
+        ].join(';');
+
+        const card = document.createElement('div');
+        card.style.cssText = [
+            'background:#ffffff', 'border-radius:16px', 'max-width:420px', 'width:100%',
+            'padding:32px 28px', 'text-align:center', 'box-shadow:0 24px 60px rgba(0,0,0,0.25)',
+            'color:' + INK, 'font-family:inherit'
+        ].join(';');
+
+        const heading = document.createElement('h3');
+        heading.textContent = 'Price on request';
+        heading.style.cssText = 'margin:0 0 12px;font-size:22px;font-weight:700;color:' + INK;
+
+        const body = document.createElement('p');
+        body.textContent = sentence(names) + ' Tell us your dates and we will send a quote.';
+        body.style.cssText = 'margin:0 0 24px;font-size:15px;line-height:1.6;color:' + INK;
+
+        const cta = document.createElement('button');
+        cta.type = 'button';
+        cta.textContent = 'REQUEST A QUOTE';
+        cta.style.cssText = [
+            'display:block', 'width:100%', 'border:none', 'cursor:pointer',
+            'background:' + GOLD, 'color:#ffffff', 'border-radius:40px',
+            'padding:16px 24px', 'font-size:12px', 'font-weight:700', 'letter-spacing:0.04em'
+        ].join(';');
+        cta.addEventListener('click', enquire);
+
+        const dismiss = document.createElement('button');
+        dismiss.type = 'button';
+        dismiss.textContent = 'Close';
+        dismiss.style.cssText = [
+            'display:block', 'width:100%', 'margin-top:12px', 'border:none', 'cursor:pointer',
+            'background:transparent', 'color:' + INK, 'font-size:13px', 'padding:8px',
+            'text-decoration:underline'
+        ].join(';');
+        dismiss.addEventListener('click', close);
+
+        card.appendChild(heading);
+        card.appendChild(body);
+        card.appendChild(cta);
+        card.appendChild(dismiss);
+        overlay.appendChild(card);
+        overlay.addEventListener('click', function (event) {
+            if (event.target === overlay) close();
+        });
+
+        document.body.appendChild(overlay);
+        document.addEventListener('keydown', onKeydown, true);
+        cta.focus();
+    }
+
+    document.addEventListener('click', function (event) {
+        const target = event.target;
+        const button = target && target.closest ? target.closest('#calculateCost') : null;
+        if (!button) return;
+
+        // The replayed click, once the rates are known.
+        if (button.dataset.viraayaRatesChecked === '1') {
+            delete button.dataset.viraayaRatesChecked;
+            return;
+        }
+
+        const ids = selectedHotelIds();
+        // Nothing chosen yet: leave the page's own validation to say so.
+        if (!ids.length || !api()) return;
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        unpricedAmong(ids).then(function (unpriced) {
+            // On the comparison page a mixed selection still compares the
+            // priced hotels; getHotelPrices drops the rest.
+            if (unpriced.length && unpriced.length === ids.length) {
+                namesFor(unpriced).then(show);
+                return;
+            }
+            button.dataset.viraayaRatesChecked = '1';
+            button.click();
+        });
+    }, true);
+})();
