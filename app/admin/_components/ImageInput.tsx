@@ -6,11 +6,10 @@
  * time. One component keeps them consistent and makes the rule — uploading
  * replaces the path — visible in the same place every time.
  */
-import { MAX_UPLOAD_BYTES } from "@/worker/admin/media-store";
+import { ACCEPTED_UPLOAD_MIME_LIST, MAX_UPLOAD_BYTES } from "@/worker/admin/media-config";
 import { Icon } from "./icons";
 
 const MAX_MB = Math.floor(MAX_UPLOAD_BYTES / 1024 / 1024);
-const ACCEPT = "image/jpeg,image/png,image/webp,image/avif";
 
 /** Stored values are media paths or R2 media keys. */
 export function imagePreview(value: string): string {
@@ -73,7 +72,14 @@ export function ImageInput({
               aria-label={`${label} path`}
             />
           ) : null}
-          <input type="file" name={fileName} accept={ACCEPT} required={required} className="vw-file" aria-label={`Upload a new ${label.toLowerCase()}`} />
+          <input
+            type="file"
+            name={fileName}
+            accept={ACCEPTED_UPLOAD_MIME_LIST}
+            required={required}
+            className="vw-file"
+            aria-label={`Upload a new ${label.toLowerCase()}`}
+          />
         </div>
       </div>
 

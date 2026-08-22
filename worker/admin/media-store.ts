@@ -4,9 +4,11 @@ import { getDb, type DatabaseEnv } from "../db/client";
 import { media } from "../db/schema";
 import { ACCEPTED_IMAGE_TYPES, contentKey, sniffImageType } from "./image-type";
 import { isImageUnused } from "./image-references";
+import { ACCEPTED_UPLOAD_MIME_TYPES, MAX_UPLOAD_BYTES } from "./media-config";
 
-export const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
-export const ACCEPTED_TYPES = ACCEPTED_IMAGE_TYPES;
+export const ACCEPTED_TYPES = ACCEPTED_IMAGE_TYPES.filter((type) =>
+  ACCEPTED_UPLOAD_MIME_TYPES.includes(type),
+);
 
 export type UploadResult = { key: string } | { error: string };
 

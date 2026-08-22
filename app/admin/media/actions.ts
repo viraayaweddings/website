@@ -1,18 +1,28 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { emptyEnv } from "@/worker/env";
-import { releaseImage } from "@/worker/admin/media-store";
-import { findImageReferences } from "@/worker/admin/image-references";
-import { recordAudit, requireDb, requireRole } from "../_lib/auth";
 
 const MEDIA_PATH = "/admin/media";
+
+async function serverDependencies() {
+  const [{ emptyEnv }, { releaseImage }, { findImageReferences }, { recordAudit, requireDb, requireRole }] =
+    await Promise.all([
+      import("@/worker/env"),
+      import("@/worker/admin/media-store"),
+      import("@/worker/admin/image-references"),
+      import("../_lib/auth"),
+    ]);
+
+  return { emptyEnv, releaseImage, findImageReferences, recordAudit, requireDb, requireRole };
+}
 
 /**
  * Removes an uploaded image. Refuses while anything still points at it, so a
  * picture shared by two venues cannot be pulled out from under one of them.
  */
 export async function deleteMediaAction(formData: FormData): Promise<void> {
+  const { emptyEnv, releaseImage, findImageReferences, recordAudit, requireDb, requireRole } =
+    await serverDependencies();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -36,6 +46,8 @@ export async function deleteMediaAction(formData: FormData): Promise<void> {
 
 /** Removes selected uploaded images, refusing the batch if any are still used. */
 export async function bulkDeleteMediaAction(formData: FormData): Promise<void> {
+  const { emptyEnv, releaseImage, findImageReferences, recordAudit, requireDb, requireRole } =
+    await serverDependencies();
   const actor = await requireRole("admin");
   const db = await requireDb();
 

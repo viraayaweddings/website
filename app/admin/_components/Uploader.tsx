@@ -10,13 +10,12 @@
 
 import { useCallback, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { MAX_UPLOAD_BYTES } from "@/worker/admin/media-store";
+import { ACCEPTED_UPLOAD_MIME_LIST, MAX_UPLOAD_BYTES } from "@/worker/admin/media-config";
 import { Icon } from "./icons";
 import { Spinner } from "./FormControls";
 import { formatBytes } from "./ui";
 
-const ACCEPT = "image/jpeg,image/png,image/webp,image/avif";
-const ACCEPTED = new Set(ACCEPT.split(","));
+const ACCEPTED = new Set(ACCEPTED_UPLOAD_MIME_LIST.split(","));
 
 export function Uploader() {
   const router = useRouter();
@@ -112,7 +111,7 @@ export function Uploader() {
         <input
           ref={inputRef}
           type="file"
-          accept={ACCEPT}
+          accept={ACCEPTED_UPLOAD_MIME_LIST}
           multiple
           aria-label="Choose images to upload"
           className="hidden"
