@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./admin.css";
-import { THEME_BOOTSTRAP } from "./_components/ThemeToggle";
+import { THEME_BOOTSTRAP } from "./_lib/theme";
 
 export const metadata: Metadata = {
   title: "Admin · Viraaya Weddings",

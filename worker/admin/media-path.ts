@@ -54,3 +54,15 @@ export function mediaPathFromKey(key: string): string {
   if (!trimmed) return "";
   return trimmed.startsWith("/") ? trimmed : `${MEDIA_PREFIX}${trimmed}`;
 }
+
+/**
+ * The URL a stored reference is served from, for a preview or an `img` tag.
+ *
+ * The same operation as `mediaPathFromKey`, under the name the display side
+ * reaches for. It lives here, in a plain module, rather than beside the picker:
+ * exports of a `"use client"` module become client references, so a server
+ * component that called one crashed the page it was rendering.
+ */
+export function mediaSrc(value: string): string {
+  return mediaPathFromKey(value);
+}

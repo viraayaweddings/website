@@ -9,7 +9,7 @@ import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
 import { AutoSubmitControls, LiveSearch, SubmitButton } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
-import { imageSrc } from "../_components/MediaPicker";
+import { mediaSrc } from "@/worker/admin/media-path";
 import { Card, EmptyState, LinkButton, StatusBadge, formatRelative } from "../_components/ui";
 import { currentTime } from "../_lib/clock";
 import { isAdmin, requireDb, requireUser } from "../_lib/auth";
@@ -229,7 +229,7 @@ export default async function BlogsPage({
                   // Plain img: these come from R2 or site-public, not the asset pipeline.
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={imageSrc(post.cardImage || post.bannerImage)}
+                    src={mediaSrc(post.cardImage || post.bannerImage)}
                     alt=""
                     className="vw-thumb h-14 w-20 flex-none object-cover"
                     loading="lazy"

@@ -12,6 +12,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ACCEPTED_UPLOAD_MIME_LIST, MAX_UPLOAD_BYTES } from "@/worker/admin/media-config";
+import { mediaSrc } from "@/worker/admin/media-path";
 import { Spinner } from "./FormControls";
 import { Icon } from "./icons";
 
@@ -23,13 +24,6 @@ interface LibraryImage {
   size: number;
   width: number;
   height: number;
-}
-
-/** Stored values are already `/media/...`; a bare key is tolerated on read. */
-export function imageSrc(value: string): string {
-  const trimmed = (value || "").trim();
-  if (!trimmed) return "";
-  return trimmed.startsWith("/") ? trimmed : `/media/${trimmed}`;
 }
 
 export function MediaPicker({
@@ -53,7 +47,7 @@ export function MediaPicker({
   const [open, setOpen] = useState(false);
 
   const box = shape === "wide" ? "h-24 w-40" : "h-24 w-24";
-  const preview = imageSrc(value);
+  const preview = mediaSrc(value);
 
   return (
     <div>

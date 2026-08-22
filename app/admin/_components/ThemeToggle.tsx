@@ -5,7 +5,8 @@
  *
  * The choice is stored per browser and applied by an inline script in the
  * layout before first paint, so this component only has to keep the two in
- * step after a click.
+ * step after a click. The key and that script live in _lib/theme.ts, which
+ * the layout can import without crossing a client boundary.
  *
  * The current theme lives on the DOM rather than in React state — the
  * bootstrap script owns it before React exists — so it is read through
@@ -14,21 +15,8 @@
  */
 
 import { useCallback, useSyncExternalStore } from "react";
+import { THEME_KEY } from "../_lib/theme";
 import { Icon } from "./icons";
-
-export const THEME_KEY = "vw-admin-theme";
-
-/**
- * Runs before paint. Kept as a string so it can be inlined in the layout: a
- * React effect would run after the first frame and flash the wrong theme.
- */
-export const THEME_BOOTSTRAP = `(function(){try{
-var stored=localStorage.getItem('${THEME_KEY}');
-var dark=stored?stored==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
-var root=document.currentScript&&document.currentScript.parentElement;
-while(root&&!root.classList.contains('vw-admin'))root=root.parentElement;
-if(root)root.setAttribute('data-theme',dark?'dark':'light');
-}catch(e){}})();`;
 
 /** Subscribers are notified by the toggle itself; nothing else changes it. */
 const listeners = new Set<() => void>();
