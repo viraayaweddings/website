@@ -8,6 +8,9 @@ import { users, USER_ROLES, type UserRole } from "@/worker/db/schema";
 import { recordAudit, requireDb, requireRole } from "../_lib/auth";
 
 const USERS_PATH = "/admin/users";
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const MAX_NAME_LENGTH = 120;
+const MAX_EMAIL_LENGTH = 254;
 
 function failed(message: string): never {
   redirect(`${USERS_PATH}?error=${encodeURIComponent(message)}`);
@@ -32,7 +35,9 @@ export async function createUserAction(formData: FormData): Promise<void> {
   const role = readRole(formData);
 
   if (!name || !email) failed("Enter a name and email.");
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) failed("Enter a valid email address.");
+  if (name.length > MAX_NAME_LENGTH) failed(`Name must be ${MAX_NAME_LENGTH} characters or fewer.`);
+  if (email.length > MAX_EMAIL_LENGTH) failed(`Email must be ${MAX_EMAIL_LENGTH} characters or fewer.`);
+  if (!EMAIL_PATTERN.test(email)) failed("Enter a valid email address.");
 
   const weak = validatePasswordStrength(password);
   if (weak) failed(weak);
@@ -65,6 +70,10 @@ export async function updateUserAction(formData: FormData): Promise<void> {
   const role = readRole(formData);
   const status = String(formData.get("status") || "active") === "disabled" ? "disabled" : "active";
 
+  if (id === actor.id && (role !== target.role || status !== target.status)) {
+    failed("You cannot change your own role or status. Ask another active admin to update your access.");
+  }
+
   // Without this an admin can lock the whole team out of user management.
   if (target.role === "admin" && (role !== "admin" || status !== "active")) {
     const otherAdmins = await db
@@ -74,6 +83,8 @@ export async function updateUserAction(formData: FormData): Promise<void> {
       .limit(1);
     if (!otherAdmins.length) failed("This is the last active admin. Promote someone else first.");
   }
+
+  if (role === target.role && status === target.status) done(`${target.email} is already up to date.`);
 
   await db.update(users).set({ role, status, updatedAt: new Date() }).where(eq(users.id, id));
 
@@ -150,10 +161,11 @@ export async function deleteUserAction(formData: FormData): Promise<void> {
 export async function bulkDeleteUsersAction(formData: FormData): Promise<void> {
   const actor = await requireRole("admin");
   const db = await requireDb();
-  const ids = [...new Set(formData.getAll("ids").map((value) => String(value || "").trim()).filter(Boolean))]
-    .slice(0, 200);
+  const selected = formData.getAll("ids").map((value) => String(value || "").trim()).filter(Boolean);
+  const ids = [...new Set(selected)];
 
   if (!ids.length) failed("Select at least one account first.");
+  if (ids.length > 200) failed("Select 200 accounts or fewer at a time.");
   if (ids.includes(actor.id)) failed("You cannot delete the account you are signed in with.");
 
   const targets = await db.select().from(users).where(inArray(users.id, ids));
