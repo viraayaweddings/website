@@ -11,13 +11,20 @@
  * decision from making them editable.
  *
  * Usage:
+ *   node --env-file=.env.local scripts/migrate-images-to-r2.mjs --dry-run
  *   node --env-file=.env.local --env-file=.env.vercel.local \
- *     scripts/migrate-images-to-r2.mjs --dry-run
- *   ... --apply            upload, record and rewrite
- *   ... --apply --no-upload  rewrite only, for a resumed run
+ *     scripts/migrate-images-to-r2.mjs --apply
  *
- * A dry run needs DATABASE_URL alone; it reads the database and the filesystem
- * and writes nothing.
+ * `--if-configured` turns a missing R2 credential into a no-op exit rather than
+ * a failure, which is what lets this run from the build: the credentials live
+ * only in the Vercel project, so the build is the one place that has both them
+ * and the checked-out files.
+ *
+ * Every run records its outcome in `settings.image_migration_status`, because
+ * when it runs from the build that row is the only way to see what happened.
+ *
+ * It is safe to run twice. Keys are content hashes, so the second pass finds
+ * every object already in the bucket and every reference already repointed.
  */
 import { createHash } from "node:crypto";
 import { readdir, readFile, writeFile } from "node:fs/promises";
@@ -30,7 +37,11 @@ const publicDir = join(root, "site-public");
 
 const apply = process.argv.includes("--apply");
 const skipUpload = process.argv.includes("--no-upload");
+const ifConfigured = process.argv.includes("--if-configured");
 const dryRun = !apply;
+
+/** How many objects to push at once. R2 is happy with far more; the build is not. */
+const UPLOAD_CONCURRENCY = 8;
 
 /**
  * Only content images. site-public/user/assets and site-public/vendor are the
@@ -72,6 +83,10 @@ const REFERENCE_RE =
 
 const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL;
 if (!databaseUrl) {
+  if (ifConfigured) {
+    console.log("[images] no database here; nothing to do.");
+    process.exit(0);
+  }
   console.error("Set DATABASE_URL.");
   process.exit(1);
 }
@@ -81,8 +96,14 @@ const accessKeyId = process.env.R2_ACCESS_KEY_ID || "";
 const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY || "";
 const bucket = process.env.R2_BUCKET_NAME || process.env.R2_BUCKET || "";
 
+const configured = Boolean(accountId && accessKeyId && secretAccessKey && bucket);
 const needsR2 = apply && !skipUpload;
-if (needsR2 && (!accountId || !accessKeyId || !secretAccessKey || !bucket)) {
+
+if (needsR2 && !configured) {
+  if (ifConfigured) {
+    console.log("[images] R2 not configured here; nothing to do.");
+    process.exit(0);
+  }
   console.error(
     "R2 credentials missing. Run `vercel env pull .env.vercel.local` and pass it with --env-file.",
   );
@@ -134,6 +155,24 @@ async function collectReferences() {
   return paths;
 }
 
+/** Runs `worker` over `items`, `limit` at a time. */
+async function pooled(items, limit, worker) {
+  const queue = [...items];
+  const runners = Array.from({ length: Math.min(limit, queue.length) }, async () => {
+    while (queue.length) await worker(queue.pop());
+  });
+  await Promise.all(runners);
+}
+
+async function record(status, detail) {
+  const value = JSON.stringify({ status, ...detail });
+  await sql`
+    insert into settings (key, value, updated_by, updated_at)
+    values ('image_migration_status', ${value}, 'migration', now())
+    on conflict (key) do update set value = excluded.value,
+      updated_by = excluded.updated_by, updated_at = excluded.updated_at`;
+}
+
 async function main() {
   const referenced = await collectReferences();
 
@@ -146,10 +185,10 @@ async function main() {
   }
 
   const missing = [...referenced].filter((path) => !onDisk.has(path));
-  console.log(`referenced by the database: ${referenced.size}`);
-  console.log(`content images on disk:     ${onDisk.size}`);
+  console.log(`[images] referenced by the database: ${referenced.size}`);
+  console.log(`[images] content images on disk:     ${onDisk.size}`);
   if (missing.length) {
-    console.log(`referenced but not on disk: ${missing.length}`);
+    console.log(`[images] referenced but not on disk: ${missing.length}`);
     missing.slice(0, 10).forEach((path) => console.log(`   ${path}`));
   }
 
@@ -166,28 +205,27 @@ async function main() {
       byKey.set(key, { key, bytes, ext, filename: path.slice(path.lastIndexOf("/") + 1) });
     }
   }
-  console.log(`distinct objects after dedupe: ${byKey.size}`);
-
-  await writeFile(
-    join(root, "scripts", "image-migration-map.json"),
-    JSON.stringify(Object.fromEntries([...mapping].map(([k, v]) => [k, `/media/${v}`])), null, 1),
-    "utf8",
-  );
-  console.log("wrote scripts/image-migration-map.json");
+  console.log(`[images] distinct objects after dedupe: ${byKey.size}`);
 
   if (dryRun) {
-    console.log("\ndry run: nothing uploaded, nothing rewritten");
+    await writeFile(
+      join(root, "scripts", "image-migration-map.json"),
+      JSON.stringify(Object.fromEntries([...mapping].map(([k, v]) => [k, `/media/${v}`])), null, 1),
+      "utf8",
+    );
+    console.log("[images] wrote scripts/image-migration-map.json");
+    console.log("[images] dry run: nothing uploaded, nothing rewritten");
     return;
   }
 
   let uploaded = 0;
   let present = 0;
   if (!skipUpload) {
-    for (const entry of byKey.values()) {
+    await pooled([...byKey.values()], UPLOAD_CONCURRENCY, async (entry) => {
       try {
         await client.send(new HeadObjectCommand({ Bucket: bucket, Key: entry.key }));
         present += 1;
-        continue;
+        return;
       } catch {
         // Not there yet.
       }
@@ -201,9 +239,9 @@ async function main() {
         }),
       );
       uploaded += 1;
-      if (uploaded % 100 === 0) console.log(`  uploaded ${uploaded}...`);
-    }
-    console.log(`uploaded ${uploaded}, already in the bucket ${present}`);
+      if (uploaded % 200 === 0) console.log(`[images]   uploaded ${uploaded}...`);
+    });
+    console.log(`[images] uploaded ${uploaded}, already in the bucket ${present}`);
   }
 
   // The library row is what makes an image visible in the panel.
@@ -217,7 +255,23 @@ async function main() {
   for (let i = 0; i < rows.length; i += 200) {
     await sql`insert into media ${sql(rows.slice(i, i + 200))} on conflict (key) do nothing`;
   }
-  console.log(`media rows ensured: ${rows.length}`);
+  console.log(`[images] media rows ensured: ${rows.length}`);
+
+  // One statement per column rather than one per path. The build machine is a
+  // long way from the database and 12,000 round trips would outlast the build.
+  const pairs = [...mapping].map(([path, key]) => [path, `/media/${key}`]);
+  let columnUpdates = 0;
+  for (const [table, column] of IMAGE_COLUMNS) {
+    const result = await sql.unsafe(
+      `update ${table} as t set ${column} = m.next
+         from (values ${pairs.map((_, i) => `($${i * 2 + 1}, $${i * 2 + 2})`).join(",")})
+              as m(old, next)
+        where t.${column} = m.old`,
+      pairs.flat(),
+    );
+    columnUpdates += result.count || 0;
+  }
+  console.log(`[images] column values repointed: ${columnUpdates}`);
 
   const replaceAll = (value) => {
     let out = String(value);
@@ -227,18 +281,6 @@ async function main() {
     return out;
   };
 
-  let columnUpdates = 0;
-  for (const [table, column] of IMAGE_COLUMNS) {
-    for (const [path, key] of mapping) {
-      const result = await sql.unsafe(
-        `update ${table} set ${column} = $1 where ${column} = $2`,
-        [`/media/${key}`, path],
-      );
-      columnUpdates += result.count || 0;
-    }
-  }
-  console.log(`column values repointed: ${columnUpdates}`);
-
   let highlightUpdates = 0;
   for (const row of await sql`select id, highlights from hotels where highlights <> ''`) {
     const next = replaceAll(row.highlights);
@@ -247,7 +289,7 @@ async function main() {
       highlightUpdates += 1;
     }
   }
-  console.log(`hotels.highlights rewritten: ${highlightUpdates}`);
+  console.log(`[images] hotels.highlights rewritten: ${highlightUpdates}`);
 
   let shellUpdates = 0;
   for (const row of await sql`select key, html from page_templates`) {
@@ -257,11 +299,33 @@ async function main() {
       shellUpdates += 1;
     }
   }
-  console.log(`page shells rewritten: ${shellUpdates}`);
+  console.log(`[images] page shells rewritten: ${shellUpdates}`);
+
+  await record("done", {
+    objects: byKey.size,
+    uploaded,
+    alreadyPresent: present,
+    mediaRows: rows.length,
+    columnUpdates,
+    highlightUpdates,
+    shellUpdates,
+    missingOnDisk: missing.length,
+  });
 }
 
 try {
   await main();
+} catch (error) {
+  const message = error instanceof Error ? error.message : String(error);
+  console.error(`[images] failed: ${message}`);
+  if (apply) {
+    try {
+      await record("failed", { message });
+    } catch {
+      // The status row is a convenience, not a reason to lose the real error.
+    }
+  }
+  process.exitCode = 1;
 } finally {
   await sql.end({ timeout: 5 });
 }
