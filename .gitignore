@@ -67,3 +67,5 @@ scripts/image-migration-map.json
 
 # Scratch scripts used while investigating; never part of the app.
 /.[a-z]*.mjs
+/.[a-z]*.html
+/.[a-z]*.py
