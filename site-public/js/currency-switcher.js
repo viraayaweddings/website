@@ -148,6 +148,40 @@ const ViraayaCalculatorData = (() => {
         return cache[path];
     }
 
+    /**
+     * The calculator dataset, from the database.
+     *
+     * This block has its own fetchJson and its own cache, so it needs its own
+     * loader -- the one in the block above is not in scope here.
+     *
+     * The exported JSON files remain a fallback: if the API cannot be reached
+     * the calculator still prices, from whatever shipped with the build.
+     */
+    let datasetPromise = null;
+
+    function loadCalculatorData() {
+        if (datasetPromise) return datasetPromise;
+
+        datasetPromise = fetchJson('/api/calculator/data')
+            .then(function (data) {
+                if (!data || !data.prices) throw new Error('Malformed calculator data');
+                return data;
+            })
+            .catch(function () {
+                datasetPromise = null;
+                return Promise.all([
+                    fetchJson('/data/calculator/cities.json').catch(function () { return []; }),
+                    fetchJson('/data/calculator/hotels-by-city.json').catch(function () { return {}; }),
+                    fetchJson('/data/calculator/prices.json').catch(function () { return {}; }),
+                    fetchJson('/data/calculator/currencies.json').catch(function () { return []; }),
+                ]).then(function (parts) {
+                    return { cities: parts[0], hotelsByCity: parts[1], prices: parts[2], currencies: parts[3], hotels: [] };
+                });
+            });
+
+        return datasetPromise;
+    }
+
     function normalizePrice(price) {
         price = price || {};
         return {
