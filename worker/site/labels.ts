@@ -8,6 +8,7 @@
 import { getDb, type DatabaseEnv, type Db } from "../db/client";
 import { siteLabels } from "../db/schema";
 import { escapeHtml } from "./hero";
+import { eq } from "drizzle-orm";
 
 export interface LabelDefinition {
   key: string;
@@ -77,6 +78,7 @@ export const GLANCE_LABEL_KEYS = [
 ] as const;
 
 export type ResolvedLabels = Map<string, { value: string; emphasis: string }>;
+const DEFINITIONS_BY_KEY = new Map(LABEL_DEFINITIONS.map((label) => [label.key, label]));
 
 function defaults(): ResolvedLabels {
   return new Map(
@@ -91,6 +93,40 @@ export function invalidateLabelCache(): void {
   cache = null;
 }
 
+export async function ensureDefaultLabels(db: Db, updatedBy = "seed"): Promise<number> {
+  const existingRows = await db.select({ key: siteLabels.key, value: siteLabels.value }).from(siteLabels);
+  const existing = new Map(existingRows.map((row) => [row.key, row.value]));
+  const missing = LABEL_DEFINITIONS.filter((definition) => !existing.has(definition.key));
+
+  const now = new Date();
+  if (missing.length) {
+    await db
+      .insert(siteLabels)
+      .values(
+        missing.map((definition) => ({
+          key: definition.key,
+          value: definition.value,
+          emphasis: definition.emphasis,
+          updatedAt: now,
+          updatedBy,
+        })),
+      )
+      .onConflictDoNothing({ target: siteLabels.key });
+  }
+
+  const blank = LABEL_DEFINITIONS.filter((definition) => existing.get(definition.key)?.trim() === "");
+  for (const definition of blank) {
+    await db
+      .update(siteLabels)
+      .set({ value: definition.value, emphasis: definition.emphasis, updatedAt: now, updatedBy })
+      .where(eq(siteLabels.key, definition.key));
+  }
+
+  const changed = missing.length + blank.length;
+  if (changed > 0) invalidateLabelCache();
+  return changed;
+}
+
 /** Never throws: wording problems must not take a page down. */
 export async function loadLabels(env: DatabaseEnv): Promise<ResolvedLabels> {
   const now = Date.now();
@@ -101,6 +137,8 @@ export async function loadLabels(env: DatabaseEnv): Promise<ResolvedLabels> {
   try {
     const db = await getDb(env);
     if (!db) return labels;
+
+    await ensureDefaultLabels(db);
 
     for (const row of await db.select().from(siteLabels)) {
       if (!labels.has(row.key)) continue;
@@ -116,6 +154,8 @@ export async function loadLabels(env: DatabaseEnv): Promise<ResolvedLabels> {
 }
 
 export async function readLabels(db: Db): Promise<ResolvedLabels> {
+  await ensureDefaultLabels(db);
+
   const labels = defaults();
   for (const row of await db.select().from(siteLabels)) {
     if (labels.has(row.key)) labels.set(row.key, { value: row.value, emphasis: row.emphasis });
@@ -129,10 +169,9 @@ export async function writeLabels(
   patch: { key: string; value: string; emphasis: string }[],
 ): Promise<void> {
   const now = new Date();
-  const known = new Set(LABEL_DEFINITIONS.map((label) => label.key));
 
   for (const entry of patch) {
-    if (!known.has(entry.key)) continue;
+    if (!DEFINITIONS_BY_KEY.has(entry.key)) continue;
     await db
       .insert(siteLabels)
       .values({ key: entry.key, value: entry.value, emphasis: entry.emphasis, updatedAt: now, updatedBy })

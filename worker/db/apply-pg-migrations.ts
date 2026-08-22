@@ -7,6 +7,7 @@ import migration0000 from "../../drizzle-pg/0000_magenta_dust.sql?raw";
 import migration0001 from "../../drizzle-pg/0001_calculator.sql?raw";
 import migration0002 from "../../drizzle-pg/0002_static_pages.sql?raw";
 import migration0003 from "../../drizzle-pg/0003_media_dimensions.sql?raw";
+import migration0004 from "../../drizzle-pg/0004_seed_site_labels.sql?raw";
 import type { Db } from "./client";
 import { splitStatements } from "./migrations";
 
@@ -15,6 +16,7 @@ const PG_MIGRATIONS: ReadonlyArray<{ name: string; sql: string }> = [
   { name: "0001_calculator", sql: migration0001 },
   { name: "0002_static_pages", sql: migration0002 },
   { name: "0003_media_dimensions", sql: migration0003 },
+  { name: "0004_seed_site_labels", sql: migration0004 },
 ];
 
 const MIGRATION_LOCK_KEY = 842_001;
