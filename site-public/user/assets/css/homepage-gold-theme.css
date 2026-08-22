@@ -288,12 +288,12 @@
 }
 
 .homepage-gold-theme .testimonials-slider .item .outline .user::before {
-    background-image: url("../images/gradient-border.svg") !important;
+    background-image: url("/media/legacy/af92d498ffa79158.svg") !important;
     background-repeat: no-repeat !important;
     background-position: bottom !important;
     background-size: 100% !important;
     background-color: transparent !important;
-    background: url("../images/gradient-border.svg") no-repeat bottom / 100% !important;
+    background: url("/media/legacy/af92d498ffa79158.svg") no-repeat bottom / 100% !important;
     opacity: 1 !important;
 }
 

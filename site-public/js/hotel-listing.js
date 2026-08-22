@@ -154,7 +154,7 @@
                             <h4 class="font-family01 fs-16 fw-500 mb-0 text-maroon-900" title="${esc(hotel.name)}">${esc(hotel.name)}</h4>
                         </a>
                         <p class="text-muted mb-2">
-                            <img src="/user/assets/images/map-icon.svg" width="14" alt="" decoding="async" loading="lazy">
+                            <img src="/media/legacy/128f0249f07c980b.svg" width="14" alt="" decoding="async" loading="lazy">
                             ${esc(hotel.city)}
                         </p>
                         <div class="d-flex flex-wrap align-items-center gap-3 mb-4">

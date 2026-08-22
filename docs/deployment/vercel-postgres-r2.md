@@ -89,11 +89,23 @@ no-op. It repoints all three shapes the references take: the seven single-image
 columns, the `hotels.highlights` JSON, and the `<img>` tags inside the sixteen
 stored page shells.
 
-Two deliberate exclusions. SVG stays on the static path -- the panel refuses SVG
-uploads because the format can carry script, and serving one from `/media`
-would route around that. `site-public/user/assets` and `site-public/vendor` stay
-too: they are the theme's own chrome, referenced from stylesheets rather than
-from anything the panel edits.
+Nothing is excluded any more. The first pass took only `storage/` and
+`uploads/`, on the reasoning that `user/assets` and `vendor` were theme chrome;
+they turned out to be referenced 410 times from the stored page shells, so the
+panel does have a claim on them. All 1,852 image files are in R2.
+
+SVG is included too, and the reason it was held back is now handled at the
+serving end rather than by leaving the files behind. `/media` sends
+`X-Content-Type-Options: nosniff` on everything and, for `image/svg+xml`,
+`Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline';
+sandbox`. Inside `<img>` an SVG never executes script, which is how every one of
+them is used; the risk is someone opening the URL directly, and that is what the
+sandbox closes. The panel still refuses SVG *uploads* -- that guard is about
+what strangers can put on the origin and is untouched.
+
+Stylesheets reach their images relatively, `url("../images/x.svg")`, so there is
+no absolute path to look up. The repoint pass resolves those against the
+stylesheet's own directory.
 
 The image files under `site-public` are left in place as the fallback, but their
 *references* are repointed too, by `scripts/repoint-static-images.mjs`:
@@ -107,8 +119,8 @@ That second pass matters more than it looks. Thirteen of the fifty-three cities
 have no `city_pages` row, so their pages are served from the cloned file rather
 than rendered from a shell, and every managed page falls back to its file when a
 shell is missing. Without it, changing a picture in the panel would visibly fail
-to take on exactly those pages. It rewrote 5,749 references across 349 files and
-found no path without an object.
+to take on exactly those pages. It rewrote 10,067 references across 375 files, seven of them resolved from
+relative `url()` in stylesheets, and found no path without an object.
 
 Note that `/media/<key>` sets a one-year immutable cache while the static path is
 served `max-age=0, must-revalidate`, so migrating an image makes it cheaper to

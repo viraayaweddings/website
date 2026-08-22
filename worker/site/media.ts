@@ -37,6 +37,14 @@ export async function serveMedia(_env: unknown, pathname: string, method: string
   const headers = new Headers();
   headers.set("content-type", object.contentType);
   headers.set("cache-control", `public, max-age=${ONE_YEAR}, immutable`);
+  // An SVG opened directly is a document, and a document on this origin can run
+  // script and read the session cookie. Inside <img> it never executes, which is
+  // how every one of them is used, so locking the direct view costs nothing.
+  // Uploads still refuse SVG outright; this covers the site's own files.
+  headers.set("x-content-type-options", "nosniff");
+  if (object.contentType === "image/svg+xml") {
+    headers.set("content-security-policy", "default-src 'none'; style-src 'unsafe-inline'; sandbox");
+  }
   if (object.etag) headers.set("etag", object.etag);
   if (object.size) headers.set("content-length", String(object.size));
 

@@ -44,19 +44,21 @@ const dryRun = !apply;
 const UPLOAD_CONCURRENCY = 8;
 
 /**
- * Only content images. site-public/user/assets and site-public/vendor are the
- * theme's own chrome, referenced from stylesheets rather than from anything the
- * panel edits, so pulling them into the library would be clutter that still
- * could not be replaced.
+ * Every image the site ships, wherever it sits. The first pass took only
+ * storage/ and uploads/ on the reasoning that user/assets and vendor are the
+ * theme's own chrome; they turned out to be referenced 410 times from the
+ * stored page shells, so the panel does have a claim on them.
  */
-const CONTENT_ROOTS = ["storage/", "uploads/"];
+const CONTENT_ROOTS = [""];
 
 /**
- * SVG stays on the static path. The panel refuses SVG uploads because the
- * format can carry script, and serving one from /media would route around that
- * decision for no gain.
+ * SVG included. The panel still refuses SVG *uploads* -- that guard is about
+ * what strangers can put on the origin, and it is untouched. These are the
+ * site's own files, already served from this origin today, and /media now
+ * answers for them with `sandbox` and a null CSP, which the static path never
+ * did.
  */
-const IMAGE_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif"]);
+const IMAGE_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".svg"]);
 
 const CONTENT_TYPE = {
   ".jpg": "image/jpeg",
@@ -65,6 +67,7 @@ const CONTENT_TYPE = {
   ".webp": "image/webp",
   ".avif": "image/avif",
   ".gif": "image/gif",
+  ".svg": "image/svg+xml",
 };
 
 /** Every column that holds a single image path. */
@@ -79,7 +82,7 @@ const IMAGE_COLUMNS = [
 ];
 
 const REFERENCE_RE =
-  /\/(?:storage|uploads)\/[^"'\s)\\]+?\.(?:jpg|jpeg|png|webp|avif|gif)/gi;
+  /(?<=["'\s(=,])\/(?!media\/)[A-Za-z0-9_][^"'\s),]*?\.(?:jpg|jpeg|png|webp|avif|gif|svg)/gi;
 
 const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL;
 if (!databaseUrl) {

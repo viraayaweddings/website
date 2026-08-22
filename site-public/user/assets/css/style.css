@@ -413,7 +413,7 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 
 /* Service */
 .service-wrapper {position: relative;background-color: #4A3C33;overflow: hidden;z-index: 9;padding: 80px 0px 116px 0px;}
-.service-wrapper::before {content: "";position: absolute;inset: 0;background-image: url("../images/service-bg.png");background-repeat: no-repeat;background-size: cover;opacity: 0.24;/* 24% transparent */z-index: -1;}
+.service-wrapper::before {content: "";position: absolute;inset: 0;background-image: url("/media/legacy/a2c65631ef8f8813.png");background-repeat: no-repeat;background-size: cover;opacity: 0.24;/* 24% transparent */z-index: -1;}
 .service-wrapper .widget {background-color: #ffffff;border-radius: 24px;padding: 3px;height: 100%;display: flex;flex-direction: column; justify-content: space-between;}
 .service-wrapper .widget .wodget-heading {background-color: #FFE7CE;border-radius: 20px 20px 0px 0px;padding: 9px 0px;}
 .service-wrapper .widget .widget-content {padding: 33px 30px;}
@@ -461,7 +461,7 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .luxury-venues-wrapper.post-wedding-wrapper .success-stories-heading {font-size: 32px !important;line-height: 1.18;}
 .luxury-venues-wrapper.post-wedding-wrapper .success-stories-line {white-space: nowrap;}
 .luxury-venues-wrapper.post-wedding-wrapper {padding-bottom: 115px;background-color: rgb(255 244 233 / 50%);}
-.deal-season-wrapper:before {position: absolute;content: '';background-image: url('../images/deal-bg.png');width: 100%;height: 100%;background-size: cover;top: 0;z-index: -1;}
+.deal-season-wrapper:before {position: absolute;content: '';background-image: url('/media/legacy/42c10307d6b99f68.png');width: 100%;height: 100%;background-size: cover;top: 0;z-index: -1;}
 .deal-season-wrapper .widget {padding-bottom: 0px;}
 .deal-season-wrapper .item {border-radius: 32px;position: relative;z-index: 9;}
 .deal-season-wrapper .item .img-widget {position: relative;box-shadow: 0px 16px 24px 0px rgba(0, 0, 0, 0.2);margin: 50px 9px;border-radius: 32px;margin-top: 0;height: 650px; overflow: hidden;}
@@ -512,7 +512,7 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .testimonials-slider .item .outline .user .img img {border-radius: 50% 0px 50% 50%;}
 .testimonials-slider .item .outline .user .img .quote {background: linear-gradient(180deg, #F8BD7F, #D0AF73);width: 74px;aspect-ratio: 1;border-radius: 50% 50% 50% 0%;display: flex;align-items: center;justify-content: center;position: absolute;top: -73px;right: -73px;}
 .testimonials-slider .item .outline .user .img .quote img {border-radius: 0;}
-.testimonials-slider .item .outline .user::before {position: absolute;content: '';background-image: url('../images/gradient-border.svg');width: 140px;height: 140px;background-repeat: no-repeat;background-position: bottom;background-size: 100%;bottom: 0;left: 0;}
+.testimonials-slider .item .outline .user::before {position: absolute;content: '';background-image: url('/media/legacy/af92d498ffa79158.svg');width: 140px;height: 140px;background-repeat: no-repeat;background-position: bottom;background-size: 100%;bottom: 0;left: 0;}
 .testimonials-slider .item .outline .user {padding: 12px;position: relative;}
 .testimonials-slider .slick-list {padding-top: 30px !important;}
 .testimonials-slider .slick-list {margin: 0 -12px;}
@@ -870,7 +870,7 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 .price-label span span {font-size: 27px;font-weight: 700;}
 
 
-.top-hotal-widget .logo-heading::after {content: "";position: absolute;right: 1px;top: 0;width: 30px;height: 100%; background-image: url('/assets/images/triangle.svg');}
+.top-hotal-widget .logo-heading::after {content: "";position: absolute;right: 1px;top: 0;width: 30px;height: 100%; background-image: url('/media/legacy/f8918feedf9c615b.svg');}
 .top-hotal-widget .all-logo img {height: 45px;}
 .top-hotal-logo {margin-top: -45px;z-index: 999;position: relative;}
 .package-details-wrapper .feature-items .item {background-color: #FFF8F3;padding: 15px;border-radius: 12px;}
@@ -1198,7 +1198,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 .inclusions-card {border: solid 2px #D6C9B7;border-radius: 12px;padding: 28px 32px;height: 100%;}
 .inclusions-card .title {font-size: 17px;color: #4A3C33;margin-bottom: 10px;font-weight: 500;}
 .inclusions-card .disc {font-size: 14px;color: rgb(80 68 59 / 60%);margin-bottom: 0;}
-.story-awaits-widget{background-image: url('../images/awaits-bg.jpg');background-size: cover;position: relative;text-align: center;border-radius: 12px;padding: 70px 0px 30px 0px;margin-top: 86px;}
+.story-awaits-widget{background-image: url('/media/legacy/a487759e740dc982.jpg');background-size: cover;position: relative;text-align: center;border-radius: 12px;padding: 70px 0px 30px 0px;margin-top: 86px;}
 .story-awaits-widget .awaits-icon img {width: 86px;}
 .story-awaits-widget .awaits-icon {top: -43px;position: absolute;left: 0;right: 0;}
 .story-awaits-widget .content {max-width: 410px;margin: 0 auto;}
