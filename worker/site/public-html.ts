@@ -1,7 +1,20 @@
 /**
  * Public-site HTML transforms: cookie consent, lazy images, inline analytics removal.
  */
+import imageMigrationMap from "../../scripts/image-migration-map.json";
 import { isHtmlResponse } from "./inject";
+
+const legacyMediaPaths = imageMigrationMap as Record<string, string>;
+
+const IMAGE_EXT = "jpg|jpeg|png|webp|avif|gif|svg";
+const ABSOLUTE_LEGACY_IMAGE = new RegExp(
+  `(?<=["'\\s(=,])/(?!media/)[A-Za-z0-9_][^"'\\s),]*?\\.(?:${IMAGE_EXT})(?:[?#][^"'\\s),]*)?`,
+  "gi",
+);
+const RELATIVE_LEGACY_IMAGE = new RegExp(
+  `(?<=["'\\s(=,])(\\.{1,2}/[^"'\\s),]*?\\.(?:${IMAGE_EXT})(?:[?#][^"'\\s),]*)?)`,
+  "gi",
+);
 
 const GTAG_INLINE =
   /<!-- Google tag \(gtag\.js\) -->[\s\S]*?gtag\('config',\s*'G-8KV1YV2GD8'\);\s*<\/script>/gi;
@@ -25,6 +38,48 @@ const BLOG_FORM_EMAIL_FIELD =
   '<input type="email" name="email" placeholder="Your email (optional)" class="form-control" autocomplete="email">';
 
 const DEFER_EXEMPT = /mutation-observer-guard|cookie-consent|lead-forms|gtag|googletagmanager/i;
+
+function splitUrlSuffix(value: string): { path: string; suffix: string } {
+  const marker = value.search(/[?#]/);
+  if (marker === -1) return { path: value, suffix: "" };
+  return { path: value.slice(0, marker), suffix: value.slice(marker) };
+}
+
+function pageBaseUrl(pathname: string): string {
+  const path = pathname.startsWith("/") ? pathname : `/${pathname || ""}`;
+  if (path.endsWith("/")) return `https://viraaya.local${path}`;
+
+  const lastSegment = path.slice(path.lastIndexOf("/") + 1);
+  if (lastSegment.includes(".")) {
+    return `https://viraaya.local${path.slice(0, path.lastIndexOf("/") + 1)}`;
+  }
+
+  return `https://viraaya.local${path}/`;
+}
+
+function mediaPathFor(publicPath: string, suffix = ""): string | null {
+  const migrated = legacyMediaPaths[publicPath];
+  return migrated ? `${migrated}${suffix}` : null;
+}
+
+function rewriteLegacyMediaPaths(html: string, pathname: string): string {
+  const baseUrl = pageBaseUrl(pathname || "/");
+
+  return html
+    .replace(ABSOLUTE_LEGACY_IMAGE, (value) => {
+      const { path, suffix } = splitUrlSuffix(value);
+      return mediaPathFor(path, suffix) ?? value;
+    })
+    .replace(RELATIVE_LEGACY_IMAGE, (value) => {
+      const { path, suffix } = splitUrlSuffix(value);
+      try {
+        const resolved = new URL(path, baseUrl).pathname;
+        return mediaPathFor(resolved, suffix) ?? value;
+      } catch {
+        return value;
+      }
+    });
+}
 
 function deferExternalScripts(html: string): string {
   return html.replace(/<script(\s[^>]*\ssrc="[^"]+"[^>]*)>/gi, (match) => {
@@ -78,6 +133,7 @@ export async function enhancePublicHtml(response: Response, pathname = ""): Prom
 
   let html = await response.text();
   html = injectEnhancements(html, pathname);
+  html = rewriteLegacyMediaPaths(html, pathname);
 
   const headers = new Headers(response.headers);
   headers.delete("content-length");

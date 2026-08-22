@@ -46,6 +46,9 @@ const databaseOwnedRoutes = [
   "/contact(/.*)?",
   "/blogs(/.*)?",
   "/destination-wedding/.*",
+  // Local YouTube wrappers are HTML files with image fallbacks inside them, so
+  // they also need the public HTML transform before Vercel's filesystem wins.
+  "/vendor/youtube-local/[^/]+[.]html",
   // The calculator data files. They still exist under site-public, but the
   // handler answers from the database and falls back to the bundle, so the
   // pages that read these paths directly get edited prices too.
