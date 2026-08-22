@@ -194,20 +194,23 @@ const ViraayaCalculatorData = (() => {
     }
 
     /**
-     * True when a hotel has a real rate in at least one month.
+     * True when a hotel has a room rate in at least one month.
      *
      * A venue can be listed with all twelve months at 0.00 -- the dataset
      * carries the hotel but no rate card. Every calculator on the site reads a
      * missing price as zero, so without this test such a hotel is quoted at
      * zero rather than declared unpriced.
+     *
+     * The room rate is what decides it, not any of the four. Nine hotels carry
+     * meal prices with no room rate, and those quote a wedding with real money
+     * for the catering and nothing for the rooms -- a wrong total rather than
+     * an obviously empty one, which is the worse of the two to show.
      */
     function hasRates(prices, hotelId) {
         const byMonth = (prices || {})[String(hotelId)];
         if (!byMonth) return false;
         return Object.keys(byMonth).some(function (month) {
-            const price = normalizePrice(byMonth[month]);
-            return price.room_price > 0 || price.lunch_price > 0
-                || price.hitea_price > 0 || price.dinner_price > 0;
+            return normalizePrice(byMonth[month]).room_price > 0;
         });
     }
 
