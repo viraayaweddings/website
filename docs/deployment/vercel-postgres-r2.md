@@ -53,15 +53,39 @@ ignores admin edits.
 
 ## 3. Images
 
-Admin uploads already go to R2. To bulk-upload existing files:
+Admin uploads go to R2 and are recorded in `media`, which is what makes an
+image appear at `/admin/media`.
+
+The images that shipped with the clone are a separate matter: 1,768 content
+files under `site-public/storage` and `site-public/uploads`, referenced from
+1,431 places in the database, none of them in `media` and none replaceable from
+the panel. `scripts/migrate-images-to-r2.mjs` moves them:
 
 ```bash
-node scripts/upload-static-images-to-r2.mjs --dry-run
-node scripts/upload-static-images-to-r2.mjs
+vercel env pull .env.vercel.local     # R2 credentials live only in Vercel
+node --env-file=.env.local scripts/migrate-images-to-r2.mjs --dry-run
+node --env-file=.env.local --env-file=.env.vercel.local   scripts/migrate-images-to-r2.mjs --apply
 ```
 
-The `/storage/...` paths in the cloned HTML are served from the CDN and do not
-need migrating; only uploads use R2.
+It hashes first, so identical files share one object and a second run is a
+no-op. It repoints all three shapes the references take: the seven single-image
+columns, the `hotels.highlights` JSON, and the `<img>` tags inside the sixteen
+stored page shells.
+
+Two deliberate exclusions. SVG stays on the static path -- the panel refuses SVG
+uploads because the format can carry script, and serving one from `/media`
+would route around that. `site-public/user/assets` and `site-public/vendor` stay
+too: they are the theme's own chrome, referenced from stylesheets rather than
+from anything the panel edits.
+
+The files under `site-public` are left in place as the fallback. Note that
+`/media/<key>` sets a one-year immutable cache while the static path is served
+`max-age=0, must-revalidate`, so migrating an image makes it cheaper to serve,
+not dearer.
+
+The render-diff harnesses in `build/` compare rendered pages against the static
+originals and will report every migrated `<img src>` as a difference. That is
+the migration showing up, not a regression.
 
 ## 4. Deploy
 
