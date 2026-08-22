@@ -166,10 +166,14 @@ export function LiveSearch({
   name,
   defaultValue,
   placeholder,
+  label,
 }: {
   name: string;
   defaultValue?: string;
   placeholder?: string;
+  /** Accessible name. Falls back to the placeholder, which on its own is not
+   *  one: assistive tech may skip it, and it vanishes as soon as typing starts. */
+  label?: string;
 }) {
   const ref = useRef<HTMLInputElement>(null);
 
@@ -204,6 +208,7 @@ export function LiveSearch({
         name={name}
         defaultValue={defaultValue}
         placeholder={placeholder}
+        aria-label={label || placeholder || "Search"}
         className="vw-input pl-8"
       />
     </span>

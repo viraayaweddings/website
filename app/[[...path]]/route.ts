@@ -20,7 +20,10 @@ async function serve(request: Request): Promise<Response> {
   const pathname = url.pathname;
 
   if (isAppOwnedPath(pathname) || isNextInternalRequest(request)) {
-    return handler(request);
+    // `.fetch`, not a call: the entry's default export is an object. Calling it
+    // threw, so any RSC or prefetch request for a database-owned path -- which
+    // is what a client-side navigation to the homepage sends -- answered 500.
+    return handler.fetch(request);
   }
 
   if (pathname === "/wedding-consultation") {

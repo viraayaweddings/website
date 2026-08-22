@@ -6,7 +6,11 @@
  *
  * Stored format: `pbkdf2$<iterations>$<salt-base64>$<hash-base64>`
  */
-const ITERATIONS = 100_000;
+// OWASP's floor for PBKDF2-SHA256. Measured at ~104ms here against ~40ms for
+// the old 100k, which is a fine trade on a login. Only new hashes use this:
+// verifyPassword reads the count out of the stored string, so existing
+// passwords keep working until their owner next changes one.
+const ITERATIONS = 600_000;
 const KEY_LENGTH_BITS = 256;
 const SALT_BYTES = 16;
 

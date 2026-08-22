@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { emptyEnv } from "@/worker/env";
-import { asc, eq, sql } from "drizzle-orm";
+import { asc, eq, inArray, sql } from "drizzle-orm";
 import { releaseImage, uploadImage } from "@/worker/admin/media-store";
 import { heroSlides } from "@/worker/db/schema";
 import { invalidateHeroCache, safeHref } from "@/worker/site/hero";
@@ -151,10 +151,18 @@ export async function moveSlideAction(formData: FormData): Promise<void> {
 
   [ordered[index], ordered[target]] = [ordered[target], ordered[index]];
 
-  // Rewrite the whole sequence so positions stay dense and unambiguous.
-  for (const [position, slide] of ordered.entries()) {
-    await db.update(heroSlides).set({ position }).where(eq(heroSlides.id, slide.id));
-  }
+  // Rewrite the whole sequence so positions stay dense and unambiguous. One
+  // statement rather than one per row: a partial rewrite would leave the
+  // carousel in an order nobody asked for.
+  await db
+    .update(heroSlides)
+    .set({
+      position: sql`case ${heroSlides.id} ${sql.join(
+        ordered.map((slide, position) => sql`when ${slide.id} then ${position}`),
+        sql` `,
+      )} end`,
+    })
+    .where(inArray(heroSlides.id, ordered.map((slide) => slide.id)));
 
   invalidateHeroCache();
   invalidateTemplateCache();

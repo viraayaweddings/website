@@ -1,6 +1,7 @@
 import { fileURLToPath } from "node:url";
 import vinext from "vinext";
 import { nitro } from "nitro/vite";
+import type { NitroConfig } from "nitro/types";
 import tailwindcss from "@tailwindcss/postcss";
 import { defineConfig } from "vite";
 import { sites } from "./build/sites-vite-plugin.ts";
@@ -21,10 +22,10 @@ const staticSiteDir = fileURLToPath(new URL("./site-public", import.meta.url));
  * a file in site-public, so without these the retired page wins over the
  * redirect.
  */
-const redirectRules = Object.fromEntries(
+const redirectRules: NitroConfig["routeRules"] = Object.fromEntries(
   Object.entries(PUBLIC_REDIRECTS).map(([from, to]) => [
     from,
-    { redirect: { to, status: 301 } },
+    { redirect: { to, status: 301 as const } },
   ]),
 );
 
@@ -78,7 +79,7 @@ export default defineConfig({
       ],
       routeRules: redirectRules,
       traceDeps: ["html-rewriter-wasm*"],
-      vercel: { config: { routes: databaseOwnedRoutes } },
+      vercel: { config: { version: 3, routes: databaseOwnedRoutes } },
     }),
     sites(),
   ],

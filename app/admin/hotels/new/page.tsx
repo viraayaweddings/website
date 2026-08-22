@@ -191,14 +191,14 @@ export default async function NewHotelPage({
               <Field label="Title tag" name="seoTitle" hint="Defaults to the venue name." />
               <TextArea label="Meta description" name="metaDescription" rows={3} />
               <TextArea label="Meta keywords" name="metaKeywords" rows={2} />
-              <ImageInput label="Social share image" pathName="ogImage" hint="Defaults to the banner if left empty." />
+              <Field label="Social share image" name="ogImage" hint="Defaults to the banner if left empty." />
             </div>
           </Card>
 
           <Card pad={false}>
             <CardHead title="Listing card" icon="grid" />
             <div className="vw-card-pad space-y-3">
-              <ImageInput label="Thumbnail" pathName="thumbnailImage" />
+              <Field label="Thumbnail image path" name="thumbnailImage" />
               <Field label="Location" name="cityLabel" hint={'Full form, e.g. "Agra, India".'} />
               <Field label="Venue type" name="venueCategory" />
               <Field label="Guest figure on cards" name="cardPax" />

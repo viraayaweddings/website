@@ -61,10 +61,6 @@ export function SideNav({
     return () => window.removeEventListener(ADMIN_NAV_OPEN_EVENT, onOpen);
   }, []);
 
-  useEffect(() => {
-    close();
-  }, [pathname, close]);
-
   // Expanded on the server: the stored choice is not knowable until hydration.
   const collapsed = useSyncExternalStore(subscribe, readCollapsed, () => false);
 

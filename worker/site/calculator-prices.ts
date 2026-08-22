@@ -14,20 +14,39 @@ export const CALCULATOR_PRICES_KEY = "calculator_prices";
 
 type PriceTable = typeof calculatorData.prices;
 
+/** One month's prices, as stored. */
+type PriceRow = {
+  room_price: string;
+  lunch_price: string;
+  hitea_price: string;
+  dinner_price: string;
+};
+
+/**
+ * The shape the merge works in: hotel id -> month -> prices.
+ *
+ * The bundled table is a const-asserted literal, so every one of its ~320
+ * entries is readonly and has its own literal type. Merging against that gives
+ * a union too large for the checker to represent, and the override is arbitrary
+ * stored JSON that could never satisfy it anyway.
+ */
+type LoosePriceTable = Record<string, Record<string, PriceRow>>;
+
 let cache: { at: number; prices: PriceTable } | null = null;
 const CACHE_TTL_MS = 30_000;
 
 function mergePrices(base: PriceTable, override: unknown): PriceTable {
   if (!override || typeof override !== "object" || Array.isArray(override)) return base;
-  const merged: PriceTable = { ...base };
+  // A fresh copy nobody else holds, viewed loosely for the duration of the
+  // merge and handed back as a PriceTable so callers keep the precise type.
+  const merged = { ...base } as unknown as LoosePriceTable;
+
   for (const [hotelId, months] of Object.entries(override as Record<string, unknown>)) {
     if (!months || typeof months !== "object" || Array.isArray(months)) continue;
-    merged[hotelId as keyof PriceTable] = {
-      ...(merged[hotelId as keyof PriceTable] ?? {}),
-      ...(months as Record<string, { room_price: string; lunch_price: string; hitea_price: string; dinner_price: string }>),
-    };
+    merged[hotelId] = { ...(merged[hotelId] ?? {}), ...(months as Record<string, PriceRow>) };
   }
-  return merged;
+
+  return merged as unknown as PriceTable;
 }
 
 export async function loadCalculatorPrices(env: DatabaseEnv): Promise<PriceTable> {

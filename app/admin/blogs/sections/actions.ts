@@ -31,14 +31,20 @@ export async function saveSectionAction(formData: FormData): Promise<void> {
       return true;
     });
 
-  // Replaced wholesale: order is easiest to express as the order typed.
-  await db
-    .delete(blogListings)
-    .where(and(eq(blogListings.taxonomy, taxonomy), eq(blogListings.taxonomySlug, slug)));
+  // Replaced wholesale: order is easiest to express as the order typed. The
+  // clear and the rewrite are one transaction, so a failure part-way cannot
+  // leave the section empty, and the rows go in as a single insert.
+  await db.transaction(async (tx) => {
+    await tx
+      .delete(blogListings)
+      .where(and(eq(blogListings.taxonomy, taxonomy), eq(blogListings.taxonomySlug, slug)));
 
-  for (const [position, postSlug] of posts.entries()) {
-    await db.insert(blogListings).values({ taxonomy, taxonomySlug: slug, postSlug, position });
-  }
+    if (posts.length > 0) {
+      await tx.insert(blogListings).values(
+        posts.map((postSlug, position) => ({ taxonomy, taxonomySlug: slug, postSlug, position })),
+      );
+    }
+  });
 
   invalidateBlogListingCache();
   invalidateTemplateCache();

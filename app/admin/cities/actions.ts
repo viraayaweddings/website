@@ -68,11 +68,18 @@ export async function saveCityAction(formData: FormData): Promise<void> {
     .where(eq(cityPages.city, city));
 
   // Replace the list wholesale: order matters and is easiest to express as the
-  // order the lines were typed in.
-  await db.delete(cityListings).where(eq(cityListings.city, city));
-  for (const [position, venue] of venues.entries()) {
-    await db.insert(cityListings).values({ city, ...venue, position });
-  }
+  // order the lines were typed in. The clear and the rewrite are one
+  // transaction, so a failure part-way cannot leave the city with no venues,
+  // and the rows go in as a single insert.
+  await db.transaction(async (tx) => {
+    await tx.delete(cityListings).where(eq(cityListings.city, city));
+
+    if (venues.length > 0) {
+      await tx.insert(cityListings).values(
+        venues.map((venue, position) => ({ city, ...venue, position })),
+      );
+    }
+  });
 
   invalidateCityListingCache();
   invalidateTemplateCache();

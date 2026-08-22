@@ -35,6 +35,14 @@ const eslintConfig = defineConfig([
         version: "detect",
       },
     },
+    rules: {
+      // A leading underscore is how this codebase marks a parameter that is
+      // kept for its signature rather than used, e.g. getDb(_env).
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_", caughtErrorsIgnorePattern: "^_" },
+      ],
+    },
   },
 ]);
 

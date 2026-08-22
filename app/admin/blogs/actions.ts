@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { emptyEnv } from "@/worker/env";
-import { and, asc, eq, ne, sql } from "drizzle-orm";
+import { and, asc, eq, inArray, ne, sql } from "drizzle-orm";
 import { releaseImage, uploadImage } from "@/worker/admin/media-store";
 import { readRichText } from "@/worker/admin/rich-text";
 import { blogListings, blogPosts, POST_STATUSES, type BlogFaq, type PostStatus } from "@/worker/db/schema";
@@ -310,10 +310,18 @@ export async function movePostAction(formData: FormData): Promise<void> {
 
   [ordered[index], ordered[target]] = [ordered[target], ordered[index]];
 
-  // Rewrite the whole sequence so positions stay dense and unambiguous.
-  for (const [position, post] of ordered.entries()) {
-    await db.update(blogPosts).set({ position }).where(eq(blogPosts.id, post.id));
-  }
+  // Rewrite the whole sequence so positions stay dense and unambiguous. One
+  // statement rather than one per row: a partial rewrite would leave the list
+  // in an order nobody asked for, and every row is a separate round trip.
+  await db
+    .update(blogPosts)
+    .set({
+      position: sql`case ${blogPosts.id} ${sql.join(
+        ordered.map((post, position) => sql`when ${post.id} then ${position}`),
+        sql` `,
+      )} end`,
+    })
+    .where(inArray(blogPosts.id, ordered.map((post) => post.id)));
 
   invalidateBlogCache();
   invalidateTemplateCache();

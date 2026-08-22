@@ -5,6 +5,23 @@ import type { BlogPost, Hotel } from "../db/schema";
 import type { SiteSettings } from "./settings";
 import { parseFaqs } from "./blog";
 
+/**
+ * ISO publish date for an article.
+ *
+ * There is no `publishedAt` column -- this used to read one, so every article
+ * shipped its structured data without a `datePublished` at all. The date an
+ * editor actually controls is `publishedLabel` ("August 07, 2026"), which is
+ * what readers see, so that wins; `createdAt` is the fallback when it is blank
+ * or not a date anyone can parse.
+ */
+function publishedIso(post: BlogPost): string | undefined {
+  if (post.publishedLabel) {
+    const labelled = new Date(post.publishedLabel);
+    if (!Number.isNaN(labelled.getTime())) return labelled.toISOString();
+  }
+  return post.createdAt instanceof Date ? post.createdAt.toISOString() : undefined;
+}
+
 function absolute(origin: string, path: string): string {
   if (!path) return origin;
   if (/^https?:\/\//i.test(path)) return path;
@@ -46,7 +63,7 @@ export function articleJsonLd(post: BlogPost, origin: string) {
     description: post.metaDescription,
     image: post.ogImage ? absolute(origin, post.ogImage) : undefined,
     url: absolute(origin, `/blogs/${post.slug}`),
-    datePublished: post.publishedAt instanceof Date ? post.publishedAt.toISOString() : undefined,
+    datePublished: publishedIso(post),
     dateModified: post.updatedAt instanceof Date ? post.updatedAt.toISOString() : undefined,
     author: {
       "@type": "Organization",

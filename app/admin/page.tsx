@@ -82,13 +82,18 @@ async function loadDashboard(db: Db, now: number) {
 
   const [venues, venueDrafts, posts, postDrafts, cities, liveSlides, images] = content;
 
-  const [[totalRows], [lastWeekRows], [unsentRows]] = leadCounts;
+  // One level of destructuring, not two: each entry is the array of rows the
+  // query returned. Unwrapping to the row here and then indexing it with [0]
+  // below reads undefined, which is why these three tiles always showed zero.
+  // `count(*)` also arrives as a string, so each is coerced like the content
+  // figures below.
+  const [totalRows, lastWeekRows, unsentRows] = leadCounts;
 
   return {
     totals: {
-      total: totalRows[0]?.total ?? 0,
-      lastWeek: lastWeekRows[0]?.lastWeek ?? 0,
-      unsent: unsentRows[0]?.unsent ?? 0,
+      total: Number(totalRows[0]?.total ?? 0),
+      lastWeek: Number(lastWeekRows[0]?.lastWeek ?? 0),
+      unsent: Number(unsentRows[0]?.unsent ?? 0),
     },
     byStatus,
     recent,

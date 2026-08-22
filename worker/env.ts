@@ -54,8 +54,13 @@ export function getR2Config(): R2Config | null {
   };
 }
 
-/** Legacy env shape kept so worker/site modules compile during migration. */
-export interface DatabaseEnv {}
+/**
+ * Legacy env shape kept so worker/site modules compile during migration.
+ * An empty `interface` would accept any non-nullish value, including `0` and
+ * `""`. `object` rejects those while staying extendable, which LeadEmailEnv
+ * relies on.
+ */
+export type DatabaseEnv = object;
 
 export function emptyEnv(): DatabaseEnv {
   return {};

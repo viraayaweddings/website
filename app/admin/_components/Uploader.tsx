@@ -98,6 +98,7 @@ export function Uploader() {
           type="file"
           accept={ACCEPT}
           multiple
+          aria-label="Choose images to upload"
           className="hidden"
           onChange={(event) => {
             void send([...(event.target.files ?? [])]);
