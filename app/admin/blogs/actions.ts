@@ -161,15 +161,19 @@ export async function createPostAction(formData: FormData): Promise<void> {
   const cardImage = await readImage(formData, "cardFile", "cardImage", "", actor.email, target);
   const ogImage = await readImage(formData, "ogFile", "ogImage", bannerImage, actor.email, target);
 
-  const [{ nextPosition }] = await db
-    .select({ nextPosition: sql<number>`coalesce(max(${blogPosts.position}), -1) + 1` })
+  // A new article goes to the top of /blogs and of the admin list, which both
+  // sort on position ascending. Taking one below the current lowest puts it
+  // there without touching the order of anything already placed; the next
+  // reorder renumbers the whole sequence from zero anyway.
+  const [{ topPosition }] = await db
+    .select({ topPosition: sql<number>`coalesce(min(${blogPosts.position}), 0) - 1` })
     .from(blogPosts);
 
   const inserted = await db
     .insert(blogPosts)
     .values({
       ...fields,
-      position: Number(nextPosition),
+      position: Number(topPosition),
       bannerImage,
       cardImage,
       ogImage,

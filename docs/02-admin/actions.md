@@ -37,8 +37,13 @@ Every exported server action in `app/admin/**/actions.ts`.
 
 **Auth:** `requireUser`  
 **Validation:** Slug normalized + unique; required heading/seoTitle/cardTitle; rich text sanitized; FAQ via `readRichText`; images uploaded after validation  
-**DB:** INSERT `blog_posts` (position=max+1); cache invalidation  
+**DB:** INSERT `blog_posts` (position=min−1, so a new article lands at the top of
+`/blogs`, of its category page and of the admin list — all three sort on
+position ascending); cache invalidation  
 **Audit:** `blog.created`
+
+Positions go negative and that is fine. `movePostAction` renumbers the whole
+sequence from zero whenever anyone reorders, so they stay dense in practice.
 
 ### `updatePostAction`
 
