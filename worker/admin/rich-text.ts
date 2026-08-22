@@ -30,6 +30,7 @@ const URL_ATTRIBUTES = ["href", "src", "action", "formaction", "xlink:href", "po
  * document's links.
  */
 const REMOVED_ELEMENTS = "script, base";
+const IMG_SRC_RE = /<img\b[^>]*\bsrc=(["'])(.*?)\1/gi;
 
 /** Generous, but bounded: a runaway paste should fail loudly, not corrupt a row. */
 export const MAX_RICH_TEXT_BYTES = 200_000;
@@ -54,6 +55,14 @@ function codePoint(value: number, fallback: string): string {
   return Number.isInteger(value) && value >= 0 && value <= 0x10ffff
     ? String.fromCodePoint(value)
     : fallback;
+}
+
+function invalidImageSource(html: string): string {
+  for (const match of html.matchAll(IMG_SRC_RE)) {
+    const src = match[2].trim();
+    if (src && !src.startsWith("/media/")) return src;
+  }
+  return "";
 }
 
 /**
@@ -109,6 +118,10 @@ export async function readRichText(
   label: string,
 ): Promise<{ html: string } | { error: string }> {
   const html = await sanitiseRichText(value.trim());
+  const badImage = invalidImageSource(html);
+  if (badImage) {
+    return { error: `${label} has an image outside the media library. Use a /media/... image path.` };
+  }
   if (new TextEncoder().encode(html).length > MAX_RICH_TEXT_BYTES) {
     return {
       error: `${label} is too long to save. Keep it under ${Math.floor(MAX_RICH_TEXT_BYTES / 1000)}KB of HTML.`,

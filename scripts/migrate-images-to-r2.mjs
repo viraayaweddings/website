@@ -256,7 +256,12 @@ async function main() {
     uploaded_by: "migration",
   }));
   for (let i = 0; i < rows.length; i += 200) {
-    await sql`insert into media ${sql(rows.slice(i, i + 200))} on conflict (key) do nothing`;
+    await sql`
+      insert into media ${sql(rows.slice(i, i + 200))}
+      on conflict (key) do update set
+        content_type = excluded.content_type,
+        size = excluded.size,
+        filename = case when media.filename = '' then excluded.filename else media.filename end`;
   }
   console.log(`[images] media rows ensured: ${rows.length}`);
 
@@ -294,6 +299,26 @@ async function main() {
   }
   console.log(`[images] hotels.highlights rewritten: ${highlightUpdates}`);
 
+  let hotelDescriptionUpdates = 0;
+  for (const row of await sql`select id, description from hotels where description <> ''`) {
+    const next = replaceAll(row.description);
+    if (next !== row.description) {
+      await sql`update hotels set description = ${next} where id = ${row.id}`;
+      hotelDescriptionUpdates += 1;
+    }
+  }
+  console.log(`[images] hotels.description rewritten: ${hotelDescriptionUpdates}`);
+
+  let hotelFaqUpdates = 0;
+  for (const row of await sql`select id, faqs from hotels where faqs <> ''`) {
+    const next = replaceAll(row.faqs);
+    if (next !== row.faqs) {
+      await sql`update hotels set faqs = ${next} where id = ${row.id}`;
+      hotelFaqUpdates += 1;
+    }
+  }
+  console.log(`[images] hotels.faqs rewritten: ${hotelFaqUpdates}`);
+
   // The article body is markup, not a path column, so it carries its own
   // pictures. Missing it left every inline image in the blog on the old path.
   let bodyUpdates = 0;
@@ -305,6 +330,16 @@ async function main() {
     }
   }
   console.log(`[images] blog_posts.body_html rewritten: ${bodyUpdates}`);
+
+  let blogFaqUpdates = 0;
+  for (const row of await sql`select id, faqs from blog_posts where faqs <> ''`) {
+    const next = replaceAll(row.faqs);
+    if (next !== row.faqs) {
+      await sql`update blog_posts set faqs = ${next} where id = ${row.id}`;
+      blogFaqUpdates += 1;
+    }
+  }
+  console.log(`[images] blog_posts.faqs rewritten: ${blogFaqUpdates}`);
 
   // Same for the pages stored whole.
   let storedPageUpdates = 0;
@@ -330,6 +365,9 @@ async function main() {
   await record("done", {
     objects: byKey.size,
     bodyUpdates,
+    blogFaqUpdates,
+    hotelDescriptionUpdates,
+    hotelFaqUpdates,
     storedPageUpdates,
     uploaded,
     alreadyPresent: present,

@@ -12,7 +12,7 @@ import { Icon } from "./icons";
 const MAX_MB = Math.floor(MAX_UPLOAD_BYTES / 1024 / 1024);
 const ACCEPT = "image/jpeg,image/png,image/webp,image/avif";
 
-/** Stored values are either a site-relative file or an R2 media key. */
+/** Stored values are media paths or R2 media keys. */
 export function imagePreview(value: string): string {
   if (!value) return "";
   return value.startsWith("/") ? value : `/media/${value}`;
@@ -69,7 +69,7 @@ export function ImageInput({
               type="text"
               name={pathName}
               defaultValue={current}
-              placeholder="/user/assets/images/… or a media key"
+              placeholder="/media/… or a media key"
               aria-label={`${label} path`}
             />
           ) : null}
@@ -79,7 +79,7 @@ export function ImageInput({
 
       <span className="vw-hint">
         {hint ? `${hint} ` : ""}
-        JPEG, PNG, WebP or AVIF up to {MAX_MB}MB. Uploading replaces whatever is stored.
+        Use an image from the media library. JPEG, PNG, WebP or AVIF uploads up to {MAX_MB}MB replace whatever is stored.
       </span>
     </div>
   );

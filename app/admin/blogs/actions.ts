@@ -20,6 +20,15 @@ function done(message: string): never {
   redirect(`${BLOGS_PATH}?saved=${encodeURIComponent(message)}`);
 }
 
+function readMediaPath(value: string, target: string): string {
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  if (trimmed.startsWith("/media/")) return trimmed.slice("/media/".length);
+  if (trimmed.startsWith("/")) failed(target, "Use a /media/... path from the image library.");
+  if (trimmed.includes("..")) failed(target, "Use a valid media key from the image library.");
+  return trimmed;
+}
+
 /** URL-safe, lowercase, no leading or trailing hyphen. */
 function normaliseSlug(value: string): string {
   return value
@@ -87,7 +96,7 @@ async function readImage(
   }
 
   const typed = String(formData.get(pathField) || "").trim();
-  return typed || existing;
+  return readMediaPath(typed, target) || existing;
 }
 
 interface PostFields {

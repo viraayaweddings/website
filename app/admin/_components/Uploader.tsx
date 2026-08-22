@@ -10,10 +10,13 @@
 
 import { useCallback, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { MAX_UPLOAD_BYTES } from "@/worker/admin/media-store";
 import { Icon } from "./icons";
 import { Spinner } from "./FormControls";
+import { formatBytes } from "./ui";
 
 const ACCEPT = "image/jpeg,image/png,image/webp,image/avif";
+const ACCEPTED = new Set(ACCEPT.split(","));
 
 export function Uploader() {
   const router = useRouter();
@@ -24,13 +27,26 @@ export function Uploader() {
 
   const send = useCallback(
     async (files: File[]) => {
-      const images = files.filter((file) => file.type.startsWith("image/"));
-      if (!images.length) return;
+      const problems: string[] = [];
+      const images = files.filter((file) => {
+        if (!ACCEPTED.has(file.type)) {
+          problems.push(`${file.name}: choose a JPEG, PNG, WebP or AVIF image`);
+          return false;
+        }
+        if (file.size > MAX_UPLOAD_BYTES) {
+          problems.push(`${file.name}: must be under ${formatBytes(MAX_UPLOAD_BYTES)}`);
+          return false;
+        }
+        return true;
+      });
+      if (!images.length) {
+        setFailures(problems);
+        return;
+      }
 
       setFailures([]);
       setBusy(images.length);
 
-      const problems: string[] = [];
       for (const file of images) {
         try {
           const body = new FormData();
@@ -90,7 +106,7 @@ export function Uploader() {
           {busy > 0 ? `Uploading ${busy} file${busy === 1 ? "" : "s"}…` : "Drop images here, or click to choose"}
         </p>
         <p className="text-xs" style={{ color: "var(--ink-faint)" }}>
-          JPEG, PNG, WebP or AVIF. Identical files are stored once and shared.
+          JPEG, PNG, WebP or AVIF up to {formatBytes(MAX_UPLOAD_BYTES)}. Identical files are stored once and shared.
         </p>
 
         <input

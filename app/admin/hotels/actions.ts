@@ -17,6 +17,15 @@ function failed(target: string, message: string): never {
   redirect(`${target}?error=${encodeURIComponent(message)}`);
 }
 
+function readMediaPath(value: string, target: string): string {
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  if (trimmed.startsWith("/media/")) return trimmed.slice("/media/".length);
+  if (trimmed.startsWith("/")) failed(target, "Use a /media/... path from the image library.");
+  if (trimmed.includes("..")) failed(target, "Use a valid media key from the image library.");
+  return trimmed;
+}
+
 /**
  * FAQ and highlight rows arrive as parallel indexed inputs, which keeps the
  * form working without client-side JavaScript. Clearing the first field of a
@@ -56,7 +65,7 @@ async function readFaqs(formData: FormData, target: string): Promise<BlogFaq[]> 
   return faqs;
 }
 
-function readHighlights(formData: FormData): HotelHighlight[] {
+function readHighlights(formData: FormData, target: string): HotelHighlight[] {
   const highlights: HotelHighlight[] = [];
 
   for (const [key, value] of formData.entries()) {
@@ -64,7 +73,7 @@ function readHighlights(formData: FormData): HotelHighlight[] {
     if (!match) continue;
 
     const title = String(value).trim();
-    const image = String(formData.get(`highlight_image_${match[1]}`) || "").trim();
+    const image = readMediaPath(String(formData.get(`highlight_image_${match[1]}`) || ""), target);
     if (title && image) highlights.push({ title: title.slice(0, 300), image: image.slice(0, 400) });
   }
 
@@ -119,7 +128,7 @@ export async function createHotelAction(formData: FormData): Promise<void> {
   if ("error" in description) failed(target, description.error);
   const faqs = await readFaqs(formData, target);
 
-  let bannerImage = text("bannerImage", 400);
+  let bannerImage = readMediaPath(text("bannerImage", 400), target);
   const file = formData.get("bannerFile");
   if (file instanceof File && file.size > 0) {
     const result = await uploadImage(emptyEnv(), file, actor.email);
@@ -137,7 +146,7 @@ export async function createHotelAction(formData: FormData): Promise<void> {
       seoTitle: text("seoTitle", 300) || name,
       metaDescription: text("metaDescription", 500),
       metaKeywords: text("metaKeywords", 500),
-      ogImage: text("ogImage", 400) || bannerImage,
+      ogImage: readMediaPath(text("ogImage", 400), target) || bannerImage,
       bannerImage,
       address: text("address", 500),
       airportTime: text("airportTime", 60),
@@ -148,10 +157,10 @@ export async function createHotelAction(formData: FormData): Promise<void> {
       outdoorVenues: text("outdoorVenues", 400),
       guestCapacity: text("guestCapacity", 60),
       receptionCapacity: text("receptionCapacity", 60),
-      highlights: JSON.stringify(readHighlights(formData)),
+      highlights: JSON.stringify(readHighlights(formData, target)),
       faqs: JSON.stringify(faqs),
       nearbySlugs: JSON.stringify(readNearby(formData)),
-      thumbnailImage: text("thumbnailImage", 400),
+      thumbnailImage: readMediaPath(text("thumbnailImage", 400), target),
       cityLabel: text("cityLabel", 200),
       venueCategory: text("venueCategory", 120),
       cardPax: text("cardPax", 60),
@@ -286,7 +295,7 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
   const faqs = await readFaqs(formData, target);
 
   // A new upload replaces the stored path; otherwise the typed path wins.
-  let bannerImage = text("bannerImage", 400) || existing.bannerImage;
+  let bannerImage = readMediaPath(text("bannerImage", 400), target) || existing.bannerImage;
   const file = formData.get("bannerFile");
   if (file instanceof File && file.size > 0) {
     const result = await uploadImage(emptyEnv(), file, actor.email);
@@ -294,8 +303,8 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
     bannerImage = result.key;
   }
 
-  const thumbnailImage = text("thumbnailImage", 400);
-  const ogImage = text("ogImage", 400);
+  const thumbnailImage = readMediaPath(text("thumbnailImage", 400), target);
+  const ogImage = readMediaPath(text("ogImage", 400), target);
 
   await db
     .update(hotels)
@@ -316,7 +325,7 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
       outdoorVenues: text("outdoorVenues", 400),
       guestCapacity: text("guestCapacity", 60),
       receptionCapacity: text("receptionCapacity", 60),
-      highlights: JSON.stringify(readHighlights(formData)),
+      highlights: JSON.stringify(readHighlights(formData, target)),
       faqs: JSON.stringify(faqs),
       // The edit form is the only place this list can be changed, so leaving it
       // out of the update made the "Browse Similar Hotels" strip uneditable.

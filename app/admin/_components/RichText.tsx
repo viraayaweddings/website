@@ -909,7 +909,7 @@ export function RichText({ label, name, defaultValue = "", hint, minHeight = 320
                   <input
                     value={imageSrc}
                     onChange={(event) => setImageSrc(event.target.value)}
-                    placeholder="/media/… or /user/assets/images/…"
+                    placeholder="/media/…"
                     className="w-full"
                   />
                 </label>
