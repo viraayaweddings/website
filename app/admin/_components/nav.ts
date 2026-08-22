@@ -42,7 +42,7 @@ export const NAV: NavGroup[] = [
     title: "Configuration",
     items: [
       { href: "/admin/settings", label: "Contact details", icon: "settings", adminOnly: true, hint: "Phone, email, address, social" },
-      { href: "/admin/calculator", label: "Calculator pricing", icon: "grid", adminOnly: true, hint: "Hotel cost calculator price overrides" },
+      { href: "/admin/calculator", label: "Cost calculator", icon: "grid", adminOnly: true, hint: "Cities, hotels, monthly prices and currencies" },
       { href: "/admin/labels", label: "Section headings", icon: "type", adminOnly: true, hint: "Fixed wording across the site" },
       { href: "/admin/users", label: "Users", icon: "users", adminOnly: true, hint: "Who can sign in, and as what" },
     ],

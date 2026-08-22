@@ -33,8 +33,44 @@ const CurrencySwitcher = (() => {
         return res.json();
     }
 
+    /**
+     * The calculator dataset, from the database.
+     *
+     * The admin panel owns cities, hotels, prices and currencies now, so this
+     * asks the API rather than the exported JSON. One request covers all four,
+     * and it is kept for the life of the page -- the calculator asks for the
+     * same data several times as the visitor changes city, hotel or month.
+     *
+     * The old static files remain as a fallback: if the API cannot be reached
+     * the calculator still prices, using whatever shipped with the build.
+     */
+    let calculatorDataPromise = null;
+
+    function loadCalculatorData() {
+        if (calculatorDataPromise) return calculatorDataPromise;
+
+        calculatorDataPromise = fetchJson('/api/calculator/data')
+            .then(function (data) {
+                if (!data || !data.prices) throw new Error('Malformed calculator data');
+                return data;
+            })
+            .catch(function () {
+                calculatorDataPromise = null;
+                return Promise.all([
+                    fetchJson('/data/calculator/cities.json').catch(function () { return []; }),
+                    fetchJson('/data/calculator/hotels-by-city.json').catch(function () { return {}; }),
+                    fetchJson('/data/calculator/prices.json').catch(function () { return {}; }),
+                    fetchJson('/data/calculator/currencies.json').catch(function () { return []; }),
+                ]).then(function (parts) {
+                    return { cities: parts[0], hotelsByCity: parts[1], prices: parts[2], currencies: parts[3], hotels: [] };
+                });
+            });
+
+        return calculatorDataPromise;
+    }
+
     async function loadCurrencies() {
-        return fetchJson('/data/calculator/currencies.json');
+        return (await loadCalculatorData()).currencies || [];
     }
 
     function getCurrency(code) {
@@ -140,34 +176,33 @@ const ViraayaCalculatorData = (() => {
     }
 
     async function getCurrencies() {
-        return fetchJson('/data/calculator/currencies.json');
+        return (await loadCalculatorData()).currencies || [];
     }
 
     async function getCities(search) {
         const query = String(search || '').trim().toLowerCase();
-        const cities = await fetchJson('/data/calculator/cities.json');
+        const cities = (await loadCalculatorData()).cities || [];
         return query
             ? cities.filter(city => String(city.name || '').toLowerCase().includes(query))
             : cities;
     }
 
     async function getHotelsByCity(cityId) {
-        const hotelsByCity = await fetchJson('/data/calculator/hotels-by-city.json');
+        const hotelsByCity = (await loadCalculatorData()).hotelsByCity || {};
         return hotelsByCity[String(cityId)] || [];
     }
 
     async function getHotelPrice(hotelId, month) {
-        const prices = await fetchJson('/data/calculator/prices.json');
+        const prices = (await loadCalculatorData()).prices || {};
         return normalizePrice((prices[String(hotelId)] || {})[month]);
     }
 
     async function getHotelPrices(hotelIds, checkin) {
         const ids = (Array.isArray(hotelIds) ? hotelIds : [hotelIds]).filter(Boolean).map(String);
-        const [cities, hotelsByCity, prices] = await Promise.all([
-            fetchJson('/data/calculator/cities.json'),
-            fetchJson('/data/calculator/hotels-by-city.json'),
-            fetchJson('/data/calculator/prices.json'),
-        ]);
+        const dataset = await loadCalculatorData();
+        const cities = dataset.cities || [];
+        const hotelsByCity = dataset.hotelsByCity || {};
+        const prices = dataset.prices || {};
         const cityById = Object.fromEntries(cities.map(city => [String(city.id), city]));
         const hotelRecords = {};
 

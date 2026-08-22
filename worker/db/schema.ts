@@ -441,3 +441,97 @@ export const rateLimits = pgTable("rate_limits", {
 });
 
 export type RateLimit = typeof rateLimits.$inferSelect;
+
+/* ---------------------------------------------------------------------------
+ * Hotel cost calculator
+ *
+ * The dataset the public calculator prices from. It used to be a 748KB bundled
+ * file plus a copy under site-public, editable only by redeploying; these are
+ * the same records, owned by the admin panel.
+ *
+ * Ids are the originals from that dataset, not new ones: the venue pages carry
+ * `<input id="hotelId" value="100">` in their markup, so renumbering would
+ * silently unprice every venue page.
+ * ------------------------------------------------------------------------- */
+
+/** Months the calculator prices, in calendar order. */
+export const CALCULATOR_MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+] as const;
+export type CalculatorMonth = (typeof CALCULATOR_MONTHS)[number];
+
+export const calculatorCities = pgTable(
+  "calculator_cities",
+  {
+    /** Original dataset id, referenced by the public pages. */
+    id: integer("id").primaryKey(),
+    name: text("name").notNull(),
+    /** Hidden from the picker without losing its hotels or their prices. */
+    published: integer("published").notNull().default(1),
+    position: integer("position").notNull().default(0),
+    updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
+  },
+  (table) => [index("calculator_cities_name_idx").on(table.name)],
+);
+
+export type CalculatorCity = typeof calculatorCities.$inferSelect;
+
+export const calculatorHotels = pgTable(
+  "calculator_hotels",
+  {
+    /** Original dataset id; the venue pages hardcode it. */
+    id: integer("id").primaryKey(),
+    cityId: integer("city_id").notNull(),
+    name: text("name").notNull(),
+    /** Caps the rooms-per-night input on the venue calculator. */
+    totalRooms: integer("total_rooms").notNull().default(0),
+    published: integer("published").notNull().default(1),
+    position: integer("position").notNull().default(0),
+    updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("calculator_hotels_city_idx").on(table.cityId),
+    index("calculator_hotels_name_idx").on(table.name),
+  ],
+);
+
+export type CalculatorHotel = typeof calculatorHotels.$inferSelect;
+
+/**
+ * One row per hotel per month. Prices are text, matching the dataset: they
+ * arrive as "145000.00" and the calculator parses them, so storing them as
+ * numeric would change what the page receives for no benefit.
+ */
+export const calculatorPrices = pgTable(
+  "calculator_prices",
+  {
+    id: serial("id").primaryKey(),
+    hotelId: integer("hotel_id").notNull(),
+    month: text("month").$type<CalculatorMonth>().notNull(),
+    roomPrice: text("room_price").notNull().default("0.00"),
+    lunchPrice: text("lunch_price").notNull().default("0.00"),
+    hiteaPrice: text("hitea_price").notNull().default("0.00"),
+    dinnerPrice: text("dinner_price").notNull().default("0.00"),
+    updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("calculator_prices_hotel_month_idx").on(table.hotelId, table.month),
+  ],
+);
+
+export type CalculatorPrice = typeof calculatorPrices.$inferSelect;
+
+export const calculatorCurrencies = pgTable("calculator_currencies", {
+  /** ISO code, e.g. INR. */
+  code: text("code").primaryKey(),
+  name: text("name").notNull(),
+  symbol: text("symbol").notNull().default(""),
+  /** How many of this currency one USD buys; the calculator converts through USD. */
+  rateToUsd: text("rate_to_usd").notNull().default("1"),
+  isDefault: integer("is_default").notNull().default(0),
+  position: integer("position").notNull().default(0),
+  updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
+});
+
+export type CalculatorCurrency = typeof calculatorCurrencies.$inferSelect;
