@@ -78,10 +78,24 @@ would route around that. `site-public/user/assets` and `site-public/vendor` stay
 too: they are the theme's own chrome, referenced from stylesheets rather than
 from anything the panel edits.
 
-The files under `site-public` are left in place as the fallback. Note that
-`/media/<key>` sets a one-year immutable cache while the static path is served
-`max-age=0, must-revalidate`, so migrating an image makes it cheaper to serve,
-not dearer.
+The image files under `site-public` are left in place as the fallback, but their
+*references* are repointed too, by `scripts/repoint-static-images.mjs`:
+
+```bash
+node scripts/repoint-static-images.mjs --dry-run
+node scripts/repoint-static-images.mjs --apply
+```
+
+That second pass matters more than it looks. Thirteen of the fifty-three cities
+have no `city_pages` row, so their pages are served from the cloned file rather
+than rendered from a shell, and every managed page falls back to its file when a
+shell is missing. Without it, changing a picture in the panel would visibly fail
+to take on exactly those pages. It rewrote 5,749 references across 349 files and
+found no path without an object.
+
+Note that `/media/<key>` sets a one-year immutable cache while the static path is
+served `max-age=0, must-revalidate`, so migrating an image makes it cheaper to
+serve, not dearer.
 
 The render-diff harnesses in `build/` compare rendered pages against the static
 originals and will report every migrated `<img src>` as a difference. That is
