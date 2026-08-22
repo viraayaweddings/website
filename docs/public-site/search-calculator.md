@@ -24,7 +24,7 @@ Discovery and pricing tools on the public site.
 | --- | --- |
 | **API** | `GET /get-cities?search={term}` |
 | **Auth** | Same-origin required |
-| **Data** | `worker/calculator-data.ts` (India cities only) |
+| **Data** | Postgres calculator tables, edited at `/admin/calculator` (India cities only) |
 | **Fallback** | `currency-switcher.js` → static JSON |
 
 ---
@@ -33,9 +33,9 @@ Discovery and pricing tools on the public site.
 
 | Source | Location | Updates require |
 | --- | --- | --- |
-| Worker bundle | `worker/calculator-data.ts` (~30k lines) | Code change + redeploy |
+| Postgres | `calculator_*` tables | Admin panel, live within a minute |
 | Static JSON | `site-public/data/calculator/*.json` | File edit + deploy |
-| Postgres | Used only for the `calculator_prices` overrides | `settings` |
+| Bundled table | `worker/calculator-data.ts` | Seed and fallback only |
 
 ### Static JSON files
 
@@ -133,7 +133,12 @@ Discovery and pricing tools on the public site.
 | `city_pages.city_id` | City filter on listing pages |
 | `city_pages.total_venues` | Pagination count display |
 
-**Calculator prices themselves are NOT admin-editable** — they live in `worker/calculator-data.ts` and static JSON.
+**Calculator prices are admin-editable.** Cities, hotels, the twelve monthly
+prices per hotel and the currency list all live in Postgres and are managed at
+`/admin/calculator`. `/api/calculator/data` and `/data/calculator/*.json` both
+answer from those tables, so every page that prices — the homepage, the
+dedicated page, the ten landing pages and all 259 venue pages — picks an edit up
+within a minute.
 
 ---
 

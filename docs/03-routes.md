@@ -117,6 +117,10 @@ public paths have no page behind them, so delegating them recurses.
 | `/admin/health` | GET | Public status, admin detail | Same DB check; the driver error is admin-only |
 | `/admin/health/r2` | GET | Admin | Round-trips an object through R2 and reports the real S3 error |
 | `/admin/seed` | GET, POST | Admin | Imports the bundled content seed into an empty database |
+| `/admin/calculator/hotels` | GET | Admin | Calculator hotels, filterable by city and name |
+| `/admin/calculator/hotels/:id` | GET | Admin | One hotel and its twelve monthly prices |
+| `/api/calculator/data` | GET | Public | The whole calculator dataset, from the database |
+| `/data/calculator/:file` | GET | Public | The legacy data files, answered from the same tables |
 
 The former Cloudflare worker entry and the `api/` dev handlers are gone: the
 first was dead once routing moved to the App Router, and the second shadowed

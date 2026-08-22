@@ -44,7 +44,7 @@ function money(formData: FormData, name: string): string {
 
 /* -------------------------------------------------------------- cities --- */
 
-export async function saveCityAction(formData: FormData): Promise<void> {
+export async function saveCalculatorCityAction(formData: FormData): Promise<void> {
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -76,7 +76,7 @@ export async function saveCityAction(formData: FormData): Promise<void> {
   done(CALCULATOR_PATH, "City saved.");
 }
 
-export async function deleteCityAction(formData: FormData): Promise<void> {
+export async function deleteCalculatorCityAction(formData: FormData): Promise<void> {
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -103,7 +103,7 @@ export async function deleteCityAction(formData: FormData): Promise<void> {
 
 /* -------------------------------------------------------------- hotels --- */
 
-export async function saveHotelAction(formData: FormData): Promise<void> {
+export async function saveCalculatorHotelAction(formData: FormData): Promise<void> {
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -142,7 +142,7 @@ export async function saveHotelAction(formData: FormData): Promise<void> {
   done(`${HOTELS_PATH}/${nextId}`, "Hotel added. Set its prices below.");
 }
 
-export async function deleteHotelAction(formData: FormData): Promise<void> {
+export async function deleteCalculatorHotelAction(formData: FormData): Promise<void> {
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -160,7 +160,7 @@ export async function deleteHotelAction(formData: FormData): Promise<void> {
 }
 
 /** Saves all twelve months for one hotel in a single statement. */
-export async function savePricesAction(formData: FormData): Promise<void> {
+export async function saveCalculatorPricesAction(formData: FormData): Promise<void> {
   const actor = await requireRole("admin");
   const db = await requireDb();
 

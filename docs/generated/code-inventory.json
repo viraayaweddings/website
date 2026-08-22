@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-08-22T07:34:33.382Z",
-  "gitCommit": "729620b53e13bba9e5ac46a29b7ef2fc08c456dc",
-  "gitCommitShort": "729620b5",
+  "generatedAt": "2026-08-22T09:04:52.319Z",
+  "gitCommit": "c2268a27895399c5a071244f67f95b2936f91b1f",
+  "gitCommitShort": "c2268a27",
   "projectVersion": "0.1.0",
   "counts": {
-    "routes": 41,
-    "serverActions": 29,
-    "dbTables": 15,
-    "workerEndpoints": 25,
+    "routes": 45,
+    "serverActions": 36,
+    "dbTables": 19,
+    "workerEndpoints": 26,
     "adminComponents": 18,
-    "adminFiles": 67,
+    "adminFiles": 69,
     "staticSiteRoutes": 370,
     "publicJsFiles": 7,
     "pageTypePatterns": 9,
     "publicForms": 7,
-    "workerSiteFiles": 21
+    "workerSiteFiles": 22
   },
   "routes": [
     {
@@ -60,6 +60,16 @@
     {
       "file": "app/admin/calculator/page.tsx",
       "route": "/admin/calculator",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/calculator/hotels/page.tsx",
+      "route": "/admin/calculator/hotels",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/calculator/hotels/[id]/page.tsx",
+      "route": "/admin/calculator/hotels/:id",
       "kind": "page"
     },
     {
@@ -168,6 +178,11 @@
       "kind": "page"
     },
     {
+      "file": "app/api/calculator/data/route.ts",
+      "route": "/api/calculator/data",
+      "kind": "api"
+    },
+    {
       "file": "app/api/currencies/route.ts",
       "route": "/api/currencies",
       "kind": "api"
@@ -200,6 +215,11 @@
     {
       "file": "app/contact/save/route.ts",
       "route": "/contact/save",
+      "kind": "api"
+    },
+    {
+      "file": "app/data/calculator/[file]/route.ts",
+      "route": "/data/calculator/:file",
       "kind": "api"
     },
     {
@@ -253,6 +273,18 @@
       "name": "createUserAction"
     },
     {
+      "file": "app/admin/calculator/actions.ts",
+      "name": "deleteCalculatorCityAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
+      "name": "deleteCalculatorHotelAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
+      "name": "deleteCurrencyAction"
+    },
+    {
       "file": "app/admin/hotels/actions.ts",
       "name": "deleteHotelAction"
     },
@@ -275,6 +307,10 @@
     {
       "file": "app/admin/users/actions.ts",
       "name": "deleteUserAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
+      "name": "importCalculatorDataAction"
     },
     {
       "file": "app/admin/settings/seed-actions.ts",
@@ -302,11 +338,23 @@
     },
     {
       "file": "app/admin/calculator/actions.ts",
+      "name": "saveCalculatorCityAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
+      "name": "saveCalculatorHotelAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
       "name": "saveCalculatorPricesAction"
     },
     {
       "file": "app/admin/cities/actions.ts",
       "name": "saveCityAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
+      "name": "saveCurrencyAction"
     },
     {
       "file": "app/admin/labels/actions.ts",
@@ -353,6 +401,22 @@
     {
       "exportName": "blogPosts",
       "tableName": "blog_posts"
+    },
+    {
+      "exportName": "calculatorCities",
+      "tableName": "calculator_cities"
+    },
+    {
+      "exportName": "calculatorCurrencies",
+      "tableName": "calculator_currencies"
+    },
+    {
+      "exportName": "calculatorHotels",
+      "tableName": "calculator_hotels"
+    },
+    {
+      "exportName": "calculatorPrices",
+      "tableName": "calculator_prices"
     },
     {
       "exportName": "cityListings",
@@ -423,6 +487,7 @@
     "/contact",
     "/contact/",
     "/contact/save",
+    "/data/calculator",
     "/destination-wedding/",
     "/get_in_touch",
     "/hotel-search",
@@ -481,6 +546,8 @@
     "app/admin/blogs/sections/actions.ts",
     "app/admin/blogs/sections/page.tsx",
     "app/admin/calculator/actions.ts",
+    "app/admin/calculator/hotels/[id]/page.tsx",
+    "app/admin/calculator/hotels/page.tsx",
     "app/admin/calculator/page.tsx",
     "app/admin/cities/[city]/page.tsx",
     "app/admin/cities/actions.ts",
@@ -2106,6 +2173,7 @@
     "worker/site/blog-inject.ts",
     "worker/site/blog.ts",
     "worker/site/calculator-prices.ts",
+    "worker/site/calculator-store.ts",
     "worker/site/hero.ts",
     "worker/site/hotel-inject.ts",
     "worker/site/hotel.ts",

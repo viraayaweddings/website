@@ -14,10 +14,10 @@ import { SubmitButton } from "../_components/FormControls";
 import { Alert, Badge, Card, CardHead, EmptyState, Field, LinkButton, formatCount } from "../_components/ui";
 import { requireDb, requireRole } from "../_lib/auth";
 import {
-  deleteCityAction,
+  deleteCalculatorCityAction,
   deleteCurrencyAction,
   importCalculatorDataAction,
-  saveCityAction,
+  saveCalculatorCityAction,
   saveCurrencyAction,
 } from "./actions";
 
@@ -120,7 +120,7 @@ export default async function CalculatorAdminPage({
                       <td className="text-end">
                         <details>
                           <summary className="vw-btn vw-btn-secondary vw-btn-sm">Edit</summary>
-                          <form action={saveCityAction} className="mt-2 space-y-2 text-start">
+                          <form action={saveCalculatorCityAction} className="mt-2 space-y-2 text-start">
                             <input type="hidden" name="id" value={city.id} />
                             <Field label="Name" name="name" defaultValue={city.name} />
                             <Field label="Order" name="position" defaultValue={String(city.position)} />
@@ -130,7 +130,7 @@ export default async function CalculatorAdminPage({
                             </label>
                             <SubmitButton size="sm" icon="check">Save city</SubmitButton>
                           </form>
-                          <form action={deleteCityAction} className="mt-2 text-start">
+                          <form action={deleteCalculatorCityAction} className="mt-2 text-start">
                             <input type="hidden" name="id" value={city.id} />
                             <SubmitButton
                               size="sm"
@@ -151,7 +151,7 @@ export default async function CalculatorAdminPage({
           )}
 
           <div className="vw-card-pad" style={{ borderTop: "1px solid var(--line)" }}>
-            <form action={saveCityAction} className="space-y-2">
+            <form action={saveCalculatorCityAction} className="space-y-2">
               <Field label="Add a city" name="name" placeholder="e.g. Coorg" />
               <SubmitButton size="sm" icon="plus">Add city</SubmitButton>
             </form>

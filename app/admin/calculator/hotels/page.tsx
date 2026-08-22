@@ -8,7 +8,7 @@ import { AdminShell } from "../../_components/AdminShell";
 import { LiveSearch, SubmitButton } from "../../_components/FormControls";
 import { Alert, Badge, Card, CardHead, EmptyState, Field, LinkButton, Select, formatCount } from "../../_components/ui";
 import { requireDb, requireRole } from "../../_lib/auth";
-import { saveHotelAction } from "../actions";
+import { saveCalculatorHotelAction } from "../actions";
 
 const PER_PAGE = 50;
 
@@ -79,7 +79,7 @@ export default async function CalculatorHotelsPage({
 
       <Card pad={false}>
         <CardHead title="Add a hotel" icon="plus" />
-        <form action={saveHotelAction} className="vw-card-pad space-y-3">
+        <form action={saveCalculatorHotelAction} className="vw-card-pad space-y-3">
           <Field label="Name" name="name" required placeholder="e.g. The Leela Palace Udaipur" />
           <Select
             label="City"

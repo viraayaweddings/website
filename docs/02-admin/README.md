@@ -174,7 +174,13 @@ Editors hitting admin-only URLs are redirected to `/admin?denied=1`.
 
 ## Calculator pricing
 
-`/admin/calculator` edits the price overrides that sit on top of the bundled
-calculator table. `saveCalculatorPricesAction` writes them to the `settings` row
-`calculator_prices`; `worker/site/calculator-prices.ts` merges them at request
-time, so a price change needs no redeploy.
+`/admin/calculator` owns the whole calculator dataset: cities and currencies on
+the first screen, hotels and their twelve monthly prices under **Hotels &
+prices**. Everything is add, edit and delete; a city or hotel can also be hidden
+without losing its prices.
+
+Deleting a city that still has hotels is refused rather than cascaded — the
+hotels would keep their prices but lose the city that puts them in the picker.
+
+Reads are cached for 30 seconds and the data files carry a short CDN cache, so
+an edit reaches the public calculator within about a minute.

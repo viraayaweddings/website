@@ -13,7 +13,7 @@ import { AdminShell } from "../../../_components/AdminShell";
 import { SubmitButton, UnsavedGuard } from "../../../_components/FormControls";
 import { Alert, Card, CardHead, Field, LinkButton, Select } from "../../../_components/ui";
 import { requireDb, requireRole } from "../../../_lib/auth";
-import { deleteHotelAction, saveHotelAction, savePricesAction } from "../../actions";
+import { deleteCalculatorHotelAction, saveCalculatorHotelAction, saveCalculatorPricesAction } from "../../actions";
 
 export default async function CalculatorHotelPage({
   params,
@@ -57,7 +57,7 @@ export default async function CalculatorHotelPage({
 
       <Card pad={false}>
         <CardHead title="Details" icon="venue" />
-        <form action={saveHotelAction} className="vw-card-pad space-y-3">
+        <form action={saveCalculatorHotelAction} className="vw-card-pad space-y-3">
           <UnsavedGuard />
           <input type="hidden" name="id" value={hotel.id} />
           <Field label="Name" name="name" defaultValue={hotel.name} required />
@@ -91,7 +91,7 @@ export default async function CalculatorHotelPage({
             icon="grid"
             hint="Per room per night, and per person for meals"
           />
-          <form action={savePricesAction} className="vw-card-pad">
+          <form action={saveCalculatorPricesAction} className="vw-card-pad">
             <UnsavedGuard />
             <input type="hidden" name="hotelId" value={hotel.id} />
 
@@ -154,7 +154,7 @@ export default async function CalculatorHotelPage({
       <div className="mt-4">
         <Card pad={false}>
           <CardHead title="Delete" icon="trash" />
-          <form action={deleteHotelAction} className="vw-card-pad">
+          <form action={deleteCalculatorHotelAction} className="vw-card-pad">
             <input type="hidden" name="id" value={hotel.id} />
             <p className="vw-hint mb-3">
               Removes the hotel and its twelve prices. The venue page for it stays online but will price at zero

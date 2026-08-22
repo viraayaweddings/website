@@ -192,6 +192,28 @@ filled without a shell.
 
 ---
 
+## Cost calculator
+
+| Action | Auth | Input | Writes | Audit |
+| --- | --- | --- | --- | --- |
+| `saveCalculatorCityAction` | admin | id?, name, position, published | `calculator_cities` | `calculator.city_created` / `_updated` |
+| `deleteCalculatorCityAction` | admin | id | `calculator_cities` | `calculator.city_deleted` |
+| `saveCalculatorHotelAction` | admin | id?, name, cityId, totalRooms, published | `calculator_hotels`, and twelve blank prices for a new one | `calculator.hotel_created` / `_updated` |
+| `deleteCalculatorHotelAction` | admin | id | `calculator_hotels` + `calculator_prices`, in one transaction | `calculator.hotel_deleted` |
+| `saveCalculatorPricesAction` | admin | hotelId, four prices per month | `calculator_prices`, twelve rows in one upsert | `calculator.prices_updated` |
+| `saveCurrencyAction` | admin | code, name, symbol, rateToUsd, isDefault | `calculator_currencies` | `calculator.currency_saved` |
+| `deleteCurrencyAction` | admin | code | `calculator_currencies` | `calculator.currency_deleted` |
+| `importCalculatorDataAction` | admin | none | Seeds all four tables from the bundle | `calculator.imported` |
+
+Named `Calculator*` deliberately: `saveCityAction` and `deleteHotelAction`
+already exist for city pages and venues, and the two sets are unrelated.
+
+Deleting a city that still has hotels is refused rather than cascaded. Deleting
+a currency is refused when it is the last one, and promotes another to default
+so the picker never opens empty.
+
+---
+
 ## Action Count Summary
 
 Total server actions: **28** (verified by inventory scan).

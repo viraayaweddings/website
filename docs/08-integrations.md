@@ -109,13 +109,15 @@ into every managed page. `wa.me` links only; no API.
 
 | | |
 | --- | --- |
-| **Source** | `worker/calculator-data.ts`, bundled |
-| **Overrides** | `settings` row `calculator_prices`, merged at runtime |
+| **Source** | Postgres: `calculator_cities`, `calculator_hotels`, `calculator_prices`, `calculator_currencies` |
+| **Seed** | `worker/calculator-data.ts`, imported once into empty tables |
 | **Editing** | Admin → Calculator pricing |
 | **Scope** | India-only cities, hotels and prices |
 
-Price overrides are stored JSON, so the bundled table is merged through a loose
-view rather than typed against its own literals.
+Reads go through `worker/site/calculator-store.ts`, cached 30 seconds per
+instance. The bundled table is only a seed and a fallback: if the tables are
+empty the data files still answer from it, so an unseeded deployment prices
+normally rather than quoting zero.
 
 ---
 
