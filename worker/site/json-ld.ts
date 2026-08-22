@@ -28,13 +28,23 @@ function absolute(origin: string, path: string): string {
   return `${origin}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
+/**
+ * The logo, as R2 serves it.
+ *
+ * Written out rather than looked up: structured data is emitted on every page
+ * and must not wait on a query. The key is a content hash, so it only changes
+ * if the logo file itself does -- and the file is not something the panel
+ * edits.
+ */
+const LOGO_PATH = "/media/legacy/9ec389ce6da07c48.png";
+
 export function organizationJsonLd(settings: SiteSettings, origin: string) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Viraaya Weddings",
     url: origin,
-    logo: absolute(origin, "/user/assets/images/logo.png"),
+    logo: absolute(origin, LOGO_PATH),
     email: settings.email,
     telephone: settings.phone,
     address: {
@@ -74,7 +84,7 @@ export function articleJsonLd(post: BlogPost, origin: string) {
       name: "Viraaya Weddings",
       logo: {
         "@type": "ImageObject",
-        url: absolute(origin, "/user/assets/images/logo.png"),
+        url: absolute(origin, LOGO_PATH),
       },
     },
   };
