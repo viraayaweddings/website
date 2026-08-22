@@ -26,6 +26,15 @@ interface BundledCalculatorData {
   hotelsByCity: Record<string, Array<{ id: number; name: string; total_rooms: number }>>;
   prices: Record<string, Record<string, Record<string, string>>>;
   currencies: Array<{ name: string; code: string; symbol: string; rate_to_usd: number }>;
+  /**
+   * The comparison tool's list. It is the only structure that covers all 320
+   * priced hotels -- `hotels` and `hotelsByCity` carry the 259 active ones
+   * only -- so it is what names and places the rest.
+   */
+  compareHotelsByCity?: Record<
+    string,
+    Array<{ id: number; name: string; total_rooms: number; is_active?: boolean }>
+  >;
 }
 
 export interface CalculatorSeedResult {
@@ -87,19 +96,38 @@ export async function seedCalculatorData(db: Db): Promise<CalculatorSeedResult> 
   }
 
   // Hotels that have prices but never appeared in the hotel list would
-  // otherwise be dropped, taking their prices with them.
+  // otherwise be dropped, taking their prices with them. compareHotelsByCity
+  // still names them, so they arrive with a real name, city and room count
+  // rather than as "Hotel 62".
+  const fromCompare = new Map<
+    number,
+    { name: string; cityId: number; totalRooms: number; isActive: boolean }
+  >();
+  for (const [cityId, hotels] of Object.entries(data.compareHotelsByCity ?? {})) {
+    for (const hotel of hotels) {
+      fromCompare.set(Number(hotel.id), {
+        name: String(hotel.name ?? ""),
+        cityId: Number(cityId),
+        totalRooms: Number(hotel.total_rooms) || 0,
+        isActive: hotel.is_active !== false,
+      });
+    }
+  }
+
   for (const hotelId of Object.keys(data.prices ?? {})) {
     const id = Number(hotelId);
     if (seenHotel.has(id)) continue;
     seenHotel.add(id);
-    const fromCity = cityOfHotel.get(id);
+    const known = fromCompare.get(id);
     hotelRows.push({
       id,
-      cityId: fromCity ?? 0,
-      name: `Hotel ${id}`,
-      totalRooms: 0,
-      // Unnamed and unplaced, so kept out of the picker until an admin fixes it.
-      published: 0,
+      cityId: known?.cityId ?? cityOfHotel.get(id) ?? 0,
+      name: known?.name || `Hotel ${id}`,
+      totalRooms: known?.totalRooms ?? 0,
+      // The source marks every one of these inactive, and the live site hid
+      // them accordingly. They stay out of the picker until an admin publishes
+      // one, which is now a single tick rather than a data-entry job.
+      published: known?.isActive ? 1 : 0,
       position: 9999,
     });
   }

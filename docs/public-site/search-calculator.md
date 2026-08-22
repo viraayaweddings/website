@@ -140,6 +140,19 @@ answer from those tables, so every page that prices — the homepage, the
 dedicated page, the ten landing pages and all 259 venue pages — picks an edit up
 within a minute.
 
+**320 hotels are priced; 259 are published.** The source dataset carries prices
+for 320 hotels but lists only the 259 active ones under `hotels` and
+`hotelsByCity`. The other 61 are named in `compareHotelsByCity`, which is what
+the seed reads for them, and every one is marked `is_active: false` there — so
+they are imported with their real name, city and room count but `published = 0`,
+matching what the original site showed. Publishing one is a tick on its page in
+`/admin/calculator/hotels`; its prices are already loaded.
+
+Ten cities therefore have no hotel in the picker (Ajabgarh, Andaman,
+Bhubaneswar, Haridwar, Karjat, Khopoli, Lakshadweep, Lonavala, Sakleshpur,
+Vrindavan). Every hotel in them is one of the 61. This is inherited behaviour,
+not a regression.
+
 ---
 
 ## Edge Cases
