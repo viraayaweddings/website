@@ -15,6 +15,16 @@ export const runtime = "nodejs";
  */
 const SHELL_HEADER = "x-vw-shell";
 
+/**
+ * Marks the request this handler passes to the App Router.
+ *
+ * This route is an optional catch-all, so it also matches every app-owned path
+ * the App Router itself has no route for. Handing such a request over sends it
+ * straight back here, and it recurses until the invocation times out. The
+ * marked request is answered with a 404 on re-entry instead.
+ */
+const DELEGATED_HEADER = "x-vw-delegated";
+
 async function serve(request: Request): Promise<Response> {
   const url = new URL(request.url);
   const pathname = url.pathname;
@@ -28,7 +38,15 @@ async function serve(request: Request): Promise<Response> {
   // it recursed until the invocation timed out. Those requests are served the
   // page like any other, and the client falls back to a full navigation.
   if (isAppOwnedPath(pathname)) {
-    return handler.fetch(request);
+    // Second time through means the App Router matched nothing but this route.
+    if (request.headers.get(DELEGATED_HEADER) === "1") {
+      return new Response("Not found", { status: 404 });
+    }
+
+    const headers = new Headers(request.headers);
+    headers.set(DELEGATED_HEADER, "1");
+    // GET and HEAD only, so there is no body to forward.
+    return handler.fetch(new Request(request.url, { method: request.method, headers }));
   }
 
   if (pathname === "/wedding-consultation") {
