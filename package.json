@@ -20,7 +20,8 @@
     "db:migrate": "node scripts/db-migrate.mjs",
     "db:seed": "node --experimental-strip-types scripts/db-seed.ts",
     "media:upload-static": "node scripts/upload-static-images-to-r2.mjs",
-    "media:migrate": "node --env-file=.env.local --env-file=.env.vercel.local scripts/migrate-images-to-r2.mjs"
+    "media:migrate": "node --env-file=.env.local --env-file=.env.vercel.local scripts/migrate-images-to-r2.mjs",
+    "db:audit": "node --env-file=.env.local scripts/audit-content-seed.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.888.0",

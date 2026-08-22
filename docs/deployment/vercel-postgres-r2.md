@@ -51,6 +51,23 @@ stops before the shells are written, `page_templates` will be empty and every
 managed page falls back to its original markup — visible as a public site that
 ignores admin edits.
 
+**Check it finished.** A partial import fails quietly: rows are simply absent,
+and what that looks like is a page that ignores admin edits, a venue count that
+contradicts the grid under it, or a card with no picture. None of that reads as
+"the seed stopped".
+
+```bash
+npm run db:audit
+```
+
+It exits non-zero on any gap. The real import left three: thirteen of the
+fifty-three cities had no `city_pages` row and so were served from their cloned
+file, every `total_venues` was still zero — which made six cities claim twelve
+venues when they had up to thirty, and dropped their pager — and one venue,
+`agra/courtyard-by-marriott-agra`, was missing from `hotels` entirely while
+still being listed, so Agra rendered eight cards under a heading that said
+nine.
+
 ## 3. Images
 
 Admin uploads go to R2 and are recorded in `media`, which is what makes an
