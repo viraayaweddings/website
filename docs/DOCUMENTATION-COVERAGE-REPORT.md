@@ -56,7 +56,7 @@ Generated after complete website audit expansion (v1.1.0).
 - Worker routing, caching, security headers
 - Database schema (website + admin usage)
 - API inventory (public + admin)
-- Integrations (Resend, R2, D1)
+- Integrations (Neon, R2, Resend)
 - Security (public + admin)
 - Architecture, dependency maps, change impact
 

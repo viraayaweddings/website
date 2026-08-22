@@ -204,3 +204,19 @@ Icon names match `nav.ts` icon references.
 | LiveSearch | Hotels list |
 | Uploader | Media page |
 | Charts | Dashboard, media page |
+
+---
+
+## Smaller pieces
+
+| Component | File | Purpose |
+| --- | --- | --- |
+| `AdminHeaderBar` | `AdminHeaderBar.tsx` | Breadcrumb, search trigger, theme toggle, account menu |
+| `CharCounter` | `CharCounter.tsx` | Live character count beside length-limited fields |
+| `DeleteConfirmTrigger` | `DeleteConfirmTrigger.tsx` | Opens the delete confirmation for a row |
+
+## Error boundary
+
+`app/admin/error.tsx` catches render failures anywhere under `/admin`. It
+re-throws redirects so navigation still works, and recognises a database
+failure to say so plainly instead of showing a digest with no explanation.

@@ -144,7 +144,7 @@ Sessions destroyed when:
 
 ## Preview Mode (Public Site)
 
-`?preview=1` on public URLs requires valid admin session (`worker/index.ts` → `isPreviewRequest()`). Allows viewing draft content with noindex/no-cache headers.
+`?preview=1` on public URLs requires valid admin session (`worker/site/resolve-page.ts`, via the `preview` option). Allows viewing draft content with noindex/no-cache headers.
 
 ---
 

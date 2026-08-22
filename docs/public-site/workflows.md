@@ -53,7 +53,7 @@ GET /destination-wedding/{city}/{slug}/
 **Enquiry:**
 ```
 Fill #enquiryForm → lead-forms.js → POST /api/lead
-  → D1 leads + Resend email → success message
+  → Postgres leads + Resend email → success message
 ```
 
 ---
@@ -129,7 +129,7 @@ Admin logged in → visit public URL?preview=1
 
 ```
 Admin saves venue at /admin/hotels/:id
-  → UPDATE hotels in D1
+  → UPDATE hotels in Postgres
   → Cache invalidation
   → Within 60s: visitor GET sees updated content
 ```
@@ -142,7 +142,7 @@ Admin saves venue at /admin/hotels/:id
 | --- | --- |
 | Lead API rate limit | "Too many submissions" error on form |
 | Lead validation fail | Inline field errors |
-| D1 unavailable | Falls back to static HTML (unmanaged content) |
+| Database unavailable | Falls back to the page's original markup |
 | Resend email fail | Form shows success; admin sees email_sent=0 |
 | Calculator API blocked (cross-origin) | Empty/broken calculator |
 | Unknown URL | Platform 404 |

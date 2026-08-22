@@ -1,12 +1,12 @@
 {
-  "validatedAt": "2026-08-22T07:13:25.495Z",
-  "gitCommit": "a3cb917888f14a75ed31474bdf20a807690c96e9",
-  "gitCommitShort": "a3cb9178",
+  "validatedAt": "2026-08-22T07:35:22.777Z",
+  "gitCommit": "729620b53e13bba9e5ac46a29b7ef2fc08c456dc",
+  "gitCommitShort": "729620b5",
   "status": "PASS",
   "inventoryCounts": {
     "routes": 41,
     "serverActions": 29,
-    "dbTables": 0,
+    "dbTables": 15,
     "workerEndpoints": 25,
     "adminComponents": 18,
     "adminFiles": 67,
@@ -17,23 +17,7 @@
     "workerSiteFiles": 21
   },
   "issueCount": 0,
-  "warningCount": 15,
+  "warningCount": 0,
   "issues": [],
-  "warnings": [
-    "serverActions \"saveCalculatorPricesAction\" in manifest but not found in docs text",
-    "publicJsFiles \"city-filter-mobile.js\" in manifest but not found in docs text",
-    "Worker site file not referenced in docs: worker/site/app-routes.ts",
-    "Worker site file not referenced in docs: worker/site/calculator-prices.ts",
-    "Worker site file not referenced in docs: worker/site/json-ld.ts",
-    "Worker site file not referenced in docs: worker/site/public-html.ts",
-    "Worker site file not referenced in docs: worker/site/render-page.ts",
-    "Worker site file not referenced in docs: worker/site/serve-static.ts",
-    "Worker site file not referenced in docs: worker/site/sitemap.ts",
-    "Worker site file not referenced in docs: worker/site/static-routes.generated.ts",
-    "Admin file not referenced in docs: app/admin/_components/AdminHeaderBar.tsx",
-    "Admin file not referenced in docs: app/admin/_components/CharCounter.tsx",
-    "Admin file not referenced in docs: app/admin/_components/DeleteConfirmTrigger.tsx",
-    "Admin file not referenced in docs: app/admin/error.tsx",
-    "Admin file not referenced in docs: app/admin/settings/seed-actions.ts"
-  ]
+  "warnings": []
 }

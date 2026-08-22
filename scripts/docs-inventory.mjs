@@ -57,7 +57,9 @@ function extractServerActions() {
 function extractDbTables() {
   const src = read("worker/db/schema.ts");
   const tables = [];
-  const re = /export\s+const\s+(\w+)\s*=\s*sqliteTable\s*\(\s*["']([^"']+)["']/g;
+  // Matches both dialects: the schema moved from sqliteTable to pgTable with
+  // Postgres, and this quietly reported zero tables for the whole of that time.
+  const re = /export\s+const\s+(\w+)\s*=\s*(?:pgTable|sqliteTable)\s*\(\s*["']([^"']+)["']/g;
   let m;
   while ((m = re.exec(src))) tables.push({ exportName: m[1], tableName: m[2] });
   return tables.sort((a, b) => a.tableName.localeCompare(b.tableName));

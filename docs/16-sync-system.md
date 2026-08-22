@@ -41,8 +41,8 @@ Documentation Sync Status: PASS / FAIL
 | App routes | Files matching `app/**/page.tsx` and `app/**/route.ts` |
 | Static site routes | All `site-public/**/index.html` paths |
 | Server actions | `export async function` in `app/**/actions.ts` |
-| DB tables | `sqliteTable("name")` in `worker/db/schema.ts` |
-| Worker endpoints | Path patterns in `worker/index.ts` |
+| DB tables | `pgTable("name")` in `worker/db/schema.ts` |
+| Server endpoints | Path patterns across the catch-all and `worker/site/*-routes.ts` |
 | Admin components | Files in `app/admin/_components/` |
 | Admin files | All `.ts`/`.tsx` in `app/admin/` |
 | Public JS files | Files in `site-public/js/` |

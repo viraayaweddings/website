@@ -3,7 +3,7 @@
 Complete URL inventory for the customer-facing site.
 
 **Total static pages:** 367 (`index.html` files in `site-public/`)  
-**Dynamic behavior:** Worker resolves some paths from D1 even without static files.
+**Dynamic behaviour:** the function resolves managed paths from the database, even where no file exists.
 
 ---
 
@@ -106,7 +106,7 @@ See [API Reference](../04-api.md). Key public endpoints:
 
 | From | To | Code | File |
 | --- | --- | --- | --- |
-| `/wedding-consultation` | `/wedding-consultation/` | 308 | `worker/index.ts` |
+| `/wedding-consultation` | `/wedding-consultation/` | 308 | `app/[[...path]]/route.ts` |
 
 ---
 

@@ -1,6 +1,6 @@
 # Complete Route Map
 
-All routes in the Vinext app router and Cloudflare Worker.
+Every route: App Router pages, API routes, and the public catch-all.
 
 ---
 

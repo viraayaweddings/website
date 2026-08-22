@@ -8,18 +8,18 @@ What content comes from where, and how it reaches visitors.
 
 | Content | Source | Admin location | Rendering |
 | --- | --- | --- | --- |
-| Homepage hero | D1 `hero_slides` | `/admin/hero` | `hero.ts` → inject |
-| Contact details | D1 `settings` | `/admin/settings` | `settings.ts` → inject |
-| Social links | D1 `settings` | `/admin/settings` | inject (footer) |
-| Section headings | D1 `site_labels` | `/admin/labels` | `labels.ts` → inject |
-| Venue pages | D1 `hotels` | `/admin/hotels` | `hotel-inject.ts` |
-| City listings | D1 `city_pages` + `city_listings` | `/admin/cities` | `venue-listing.ts` |
-| Blog articles | D1 `blog_posts` | `/admin/blogs` | `blog-inject.ts` |
-| Blog taxonomies | D1 `blog_listings` | `/admin/blogs/sections` | `blog-inject.ts` |
-| Uploaded images | R2 + D1 `media` | `/admin/media` | `/media/{key}` |
-| Page shells | D1 `page_templates` | *(seeded, not editable in admin UI)* | `template.ts` |
+| Homepage hero | Postgres `hero_slides` | `/admin/hero` | `hero.ts` → inject |
+| Contact details | Postgres `settings` | `/admin/settings` | `settings.ts` → inject |
+| Social links | Postgres `settings` | `/admin/settings` | inject (footer) |
+| Section headings | Postgres `site_labels` | `/admin/labels` | `labels.ts` → inject |
+| Venue pages | Postgres `hotels` | `/admin/hotels` | `hotel-inject.ts` |
+| City listings | Postgres `city_pages` + `city_listings` | `/admin/cities` | `venue-listing.ts` |
+| Blog articles | Postgres `blog_posts` | `/admin/blogs` | `blog-inject.ts` |
+| Blog taxonomies | Postgres `blog_listings` | `/admin/blogs/sections` | `blog-inject.ts` |
+| Uploaded images | R2 + Postgres `media` | `/admin/media` | `/media/{key}` |
+| Page shells | Postgres `page_templates` | *(seeded, not editable in admin UI)* | `template.ts` |
 | Calculator prices | Worker bundle | *(code change)* | API endpoints |
-| Static images | ASSETS `/storage/` | *(HTML edit)* | Direct serve |
+| Static images | `site-public/storage/` | *(HTML edit)* | Direct serve |
 | Real weddings | Static HTML | *(HTML edit)* | Direct serve |
 | Packages | Static HTML | *(HTML edit)* | Direct serve |
 | Legal pages | Static HTML | *(HTML edit)* | Direct serve |
@@ -31,9 +31,9 @@ What content comes from where, and how it reaches visitors.
 
 | Mechanism | When used | Files |
 | --- | --- | --- |
-| **Full D1 render** | `resolvePage()` match | `resolve-page.ts`, `inject.ts` |
+| **Database render** | `resolvePage()` match | `resolve-page.ts`, `inject.ts` |
 | **HTMLRewriter injection** | Static file + managed content | `inject.ts`, `*-inject.ts` |
-| **Static serve** | Unmanaged pages | ASSETS binding |
+| **Static serve** | Unmanaged pages | Vercel CDN |
 | **Shell + inject** | DB-only slug without static file | `blog.ts`, `hotel.ts` shells |
 
 ---
@@ -67,7 +67,7 @@ Public static HTML is **not** sanitized at serve time — trusted clone content.
 
 ```
 Admin sets seo_title, meta_description on venue/blog/city
-  → Stored in D1
+  → Stored in Postgres
   → inject handler replaces <title>, <meta>, OG tags
   → Crawler sees updated metadata after cache expiry
 ```
@@ -81,7 +81,7 @@ See [SEO](./seo.md).
 For non-CMS pages (real-weddings, packages, legal):
 
 1. Edit HTML file in `site-public/{path}/index.html`
-2. Redeploy worker (ASSETS binding picks up changes)
+2. Redeploy; the file ships with the next build
 3. No admin panel involvement
 4. Run `npm run docs:sync` if routes/structure changed
 

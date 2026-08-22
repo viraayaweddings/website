@@ -6,17 +6,20 @@ How static HTML becomes CMS-managed content at request time.
 
 ## Request Flow
 
-**Entry:** `worker/index.ts`
+**Entry:** `app/[[...path]]/route.ts`
+
+Only paths the database owns are rewritten to the function; everything else is
+served straight from the CDN and never gets here.
 
 ```
 GET /path
-  1. Admin route? → Vinext app (no cache)
-  2. JSON/API path? → calculator/lead handlers
-  3. resolvePage() succeeds? → Full D1 HTML + inject (60s cache)
-  4. Fetch static HTML from ASSETS (site-public)
-  5. needsInjection()? → HTMLRewriter patches (60s cache)
-  6. 404 + DB slug? → serveBlogFromShell / serveHotelFromShell
-  7. Fallback → Vinext handler or platform 404
+  1. App-owned prefix? → App Router (no cache)
+  2. Retired URL? → 301
+  3. resolvePage() succeeds? → shell from page_templates + inject (30s cache)
+  4. Otherwise fetch the original markup back through the origin
+       (marked x-vw-shell so the rewrite treats it as a miss)
+  5. needsInjection()? → HTMLRewriter patches the managed pieces
+  6. Neither? → the site's own 404.html
 ```
 
 ---
@@ -25,17 +28,19 @@ GET /path
 
 | Model | When | Source |
 | --- | --- | --- |
-| **Database-only** | `resolvePage()` returns content | `page_templates` HTML + D1 data |
-| **Static + injection** | Static file exists + `needsInjection()` | `site-public` shell + HTMLRewriter patches |
-| **Static only** | No injection needed | `site-public` as-is (300s cache) |
+| **Database-rendered** | `resolvePage()` returns content | `page_templates` shell + Postgres data |
+| **Original + injection** | The path is managed but its shell is missing | Original markup + HTMLRewriter patches |
+| **Static only** | The path is not managed | Served by the CDN, untouched |
 
-If D1 fails, database-only pages fall back to static files where they exist.
+If Postgres is unreachable or a shell was never seeded, a managed page falls
+back to its original markup rather than failing. A page is never lost to a
+database problem.
 
 ---
 
 ## Page Resolution (`worker/site/resolve-page.ts`)
 
-Maps URL → D1 template + content bundle.
+Maps URL → stored shell + the content that fills it.
 
 | Path | Template key | Content loaded |
 | --- | --- | --- |
@@ -77,33 +82,39 @@ Patches static HTML without replacing the entire file.
 | `worker/site/hero.ts` | Hero slide HTML generation |
 | `worker/site/settings.ts` | Contact/social settings (30s cache) |
 | `worker/site/labels.ts` | Section heading text |
-| `worker/site/template.ts` | `page_templates` loader |
+| `worker/site/template.ts` | `page_templates` loader (30s cache) |
+| `worker/site/render-page.ts` | Chooses database render or injected fallback |
 
 ---
 
 ## Shell Pages for DB-Only Content
 
-When a venue/blog exists in D1 but has no static file:
+When a venue or article exists in the database but has no file of its own:
 
 | Content type | Shell borrowed from | Constant |
 | --- | --- | --- |
 | Blog post | `/blogs/when-to-book-a-wedding-venue/` | `BLOG_SHELL_PATH` in `blog.ts` |
 | Venue | `/destination-wedding/agra/itc-mughal-agra/` | `HOTEL_SHELL_PATH` in `hotel.ts` |
 
-Worker fetches shell HTML from ASSETS, then applies injection handlers.
+The shell is loaded from `page_templates` by `shellKey`; if that row is
+missing, the borrowed page's own markup is fetched back through the origin and
+injected instead.
 
 ---
 
 ## Caching
 
-| Content | Cache-Control | File |
+| Content | Cache-Control | Served by |
 | --- | --- | --- |
-| Static assets (CSS/JS/images) | `max-age=31536000, immutable` | `worker/index.ts` |
-| Unmanaged HTML | `max-age=300, stale-while-revalidate=86400` | |
-| Injected/managed HTML | `max-age=60` | |
-| Preview / admin | `no-store`, `X-Robots-Tag: noindex` | |
+| Hashed assets (`/assets/*`) | `max-age=31536000, immutable` | Vercel CDN |
+| Static HTML and `/storage/*` | `max-age=0, must-revalidate` | Vercel CDN |
+| Managed HTML | `max-age=30` | Function |
+| `/media/*` uploads | `max-age=31536000, immutable` | Function → R2 |
+| Preview / admin | `no-store`, `X-Robots-Tag: noindex` | Function |
 
-**Admin content change → public visibility:** Up to 60 seconds delay for injected pages.
+**Admin content change → public visibility:** up to 30 seconds on managed
+pages. Pages the database does not own are static and do not change until the
+next deploy.
 
 ---
 
@@ -114,7 +125,7 @@ Worker fetches shell HTML from ASSETS, then applies injection handlers.
 | **URL** | Any managed page + `?preview=1` |
 | **Auth** | Valid admin session cookie |
 | **Effect** | Shows draft blogs/venues; no-cache, noindex |
-| **Implementation** | `isPreviewRequest()` in `worker/index.ts` |
+| **Implementation** | `resolvePage(..., { preview })` in `worker/site/resolve-page.ts` |
 
 ---
 
@@ -132,9 +143,11 @@ Injected by `labels.ts` → used in `hotel-inject.ts`, `blog-inject.ts`.
 
 | Source | URL pattern | Served by |
 | --- | --- | --- |
-| Static clone | `/storage/hotels/thumbnails/...` | ASSETS |
+| Static clone | `/storage/hotels/thumbnails/...` | Vercel CDN |
 | Admin upload | `/media/{key}` | R2 via `worker/site/media.ts` |
-| Optimized | `/_vinext/image?url=...` | Cloudflare Images |
+
+Upload keys are the SHA-256 of the file, so the same picture uploaded twice is
+stored once, and an immutable cache is safe.
 
 ---
 

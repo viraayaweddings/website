@@ -8,10 +8,10 @@ Security documentation for the full project.
 
 | Control | Implementation | File |
 | --- | --- | --- |
-| CSP | Restricts scripts, frames, connect sources | `worker/index.ts` SECURITY_HEADERS |
-| HSTS | Strict-Transport-Security on HTTPS | `worker/index.ts` |
-| X-Frame-Options | SAMEORIGIN | `worker/index.ts` |
-| Same-origin API guard | Calculator + lead endpoints | `worker/index.ts` |
+| CSP | Restricts scripts, frames, connect sources | `build/sites-vite-plugin.ts` (`_headers`) |
+| HSTS | Strict-Transport-Security on HTTPS | Vercel + `_headers` |
+| X-Frame-Options | SAMEORIGIN | `build/sites-vite-plugin.ts` |
+| Same-origin API guard | Lead endpoints, admin upload, logout | `worker/lead-email.ts`, `app/admin/*/route.ts` |
 | Lead honeypot | Hidden fields rejected server-side | `worker/lead-email.ts` |
 | Lead rate limit | 8/10min/IP (in-memory) | `worker/lead-email.ts` |
 | Form same-origin | POST must match origin | `worker/lead-email.ts` |
@@ -19,7 +19,7 @@ Security documentation for the full project.
 | HTML sanitization | Admin rich text only | `worker/admin/rich-text.ts` |
 | Image upload validation | Magic-byte type check | `worker/admin/image-type.ts` |
 | No public auth | Anonymous site — no attack surface for user accounts | — |
-| Preview gate | Admin session required for `?preview=1` | `worker/index.ts` |
+| Preview gate | Admin session required for `?preview=1` | `worker/site/resolve-page.ts` |
 
 **Website security issues:** [WEBSITE-AUDIT-FINDINGS.md](../WEBSITE-AUDIT-FINDINGS.md) — Security Issues
 
@@ -48,9 +48,9 @@ Security documentation for the full project.
 
 | Data | Storage | Exposure |
 | --- | --- | --- |
-| Lead PII | D1 `leads` table | Admin panel only |
-| Admin passwords | D1 `users.password_hash` | Never returned to client |
-| Session tokens | Cookie + D1 hash | HttpOnly cookie |
+| Lead PII | Postgres `leads` table | Admin panel only |
+| Admin passwords | Postgres `users.password_hash`, PBKDF2-SHA256 at 600k iterations | Never returned to the client |
+| Session tokens | Cookie; only the SHA-256 is stored | HttpOnly, SameSite=Lax |
 | Uploaded media | R2 (private bucket, served via worker) | Public URLs when referenced |
 | Resend API key | Environment variable | Server-side only |
 | Calculator data | Worker bundle | Public (non-sensitive pricing) |
@@ -74,7 +74,7 @@ Security documentation for the full project.
 
 ## Security Headers (All Responses)
 
-Set in `worker/index.ts`:
+Written into `_headers` by `build/sites-vite-plugin.ts`:
 
 - Content-Security-Policy
 - Strict-Transport-Security
@@ -90,7 +90,7 @@ Set in `worker/index.ts`:
 
 See audit findings documents for full list. Top priorities:
 
-1. D1/KV-based rate limiting (public + admin)
+1. Postgres-backed rate limiting, already used for admin login
 2. CSRF tokens on state-changing endpoints
 3. Schema.org + SEO hardening (not security but trust)
 4. Cookie consent integration with analytics

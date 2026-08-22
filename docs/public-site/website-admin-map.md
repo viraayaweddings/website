@@ -19,7 +19,7 @@ flowchart TB
     MediaAdmin["/admin/media"]
   end
 
-  subgraph D1["D1 Tables"]
+  subgraph DB["Postgres Tables"]
     hero_slides
     settings
     site_labels
@@ -210,7 +210,7 @@ flowchart TB
 | Legal pages | Static HTML | `/privacy-policy/`, etc. |
 | About, FAQs, package pages | Static HTML | respective routes |
 | Calculator pricing data | Worker bundle | `worker/calculator-data.ts` |
-| Static images in clone | ASSETS | `/storage/*` |
+| Static images in clone | Vercel CDN | `/storage/*` |
 | Page chrome (nav, footer structure) | Static HTML shells | All pages |
 
 ---

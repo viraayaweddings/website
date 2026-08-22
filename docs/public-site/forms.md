@@ -4,7 +4,7 @@ Every customer-facing form on the website.
 
 **Universal handler:** `worker/lead-email.ts` → `handleLeadRequest()`  
 **Client interceptor:** `site-public/js/lead-forms.js` — intercepts POST forms and submits JSON to `/api/lead`  
-**Storage:** D1 `leads` table + Resend notification email
+**Storage:** Postgres `leads` table + Resend notification email
 
 ---
 
@@ -14,16 +14,16 @@ Every customer-facing form on the website.
 sequenceDiagram
   participant User
   participant lead-forms.js
-  participant Worker
-  participant D1
+  participant Fn
+  participant DB as Postgres
   participant Resend
 
   User->>lead-forms.js: Submit form
   lead-forms.js->>lead-forms.js: Client validation
   lead-forms.js->>Worker: POST /api/lead (JSON)
-  Worker->>Worker: Same-origin + honeypot + rate limit
-  Worker->>D1: INSERT leads
-  Worker->>Resend: Notification email
+  Fn->>Worker: Same-origin + honeypot + rate limit
+  Fn->>DB: INSERT leads
+  Fn->>Resend: Notification email
   Worker-->>lead-forms.js: { ok: true }
   lead-forms.js->>User: Success message / enquiry panel
 ```

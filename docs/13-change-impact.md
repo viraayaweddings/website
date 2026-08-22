@@ -83,7 +83,7 @@ What else could be affected when modifying a feature or module.
 
 ## Worker Modules
 
-### `worker/index.ts` (Router)
+### `app/[[...path]]/route.ts` (Catch-all)
 
 **If changed, may affect:**
 - All request routing (admin, API, static, injection)
@@ -153,7 +153,7 @@ updateUserAction
 ```
 New drizzle/*.sql
   → worker/db/migrations.ts import
-  → Runtime auto-apply on first D1 access
+  → Applied automatically on first database access per instance
   → Admin forms may need new fields
   → Public inject may need new patches
   → Documentation must update (docs:sync)

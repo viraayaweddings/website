@@ -40,7 +40,7 @@ flowchart TB
     LabelsMod[labels.ts]
   end
 
-  subgraph Database["D1 Database"]
+  subgraph Database["Neon Postgres"]
     Schema[schema.ts]
     Client[client.ts]
   end
@@ -102,10 +102,10 @@ flowchart TB
 
 | Integration | Required by | Optional when |
 | --- | --- | --- |
-| D1 (`DB`) | All admin + content injection | Never optional in prod |
+| Postgres | All admin data and content injection | Never optional in prod |
 | R2 (`MEDIA`) | Media upload/serve | Static paths work without R2 |
 | Resend | Lead email notifications | Leads still saved without key |
-| ASSETS | Static site serving | Required |
+| Vercel CDN | Serves `site-public` | Required |
 | IMAGES | Image optimization | Falls back without binding |
 
 ---
@@ -140,7 +140,7 @@ ImageInput.tsx
 ```
 Content change in admin
   → Server action
-  → D1 UPDATE
+  → Postgres UPDATE
   → Cache invalidation (module-level)
   → Next public request loads fresh data
   → HTMLRewriter injects into shell

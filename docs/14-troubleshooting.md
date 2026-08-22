@@ -11,7 +11,7 @@ Common problems, causes, and resolutions.
 | | |
 | --- | --- |
 | **Symptom** | Visiting `/admin` redirects to `/admin/setup` |
-| **Cause** | Zero users in D1 database |
+| **Cause** | Zero users in the database |
 | **Verify** | Check `users` table is empty |
 | **Resolution** | Complete setup form to create first admin |
 | **Files** | `app/admin/_lib/auth.ts` → `hasAnyUser` |
@@ -31,9 +31,9 @@ Common problems, causes, and resolutions.
 | | |
 | --- | --- |
 | **Symptom** | `DatabaseUnavailableError` |
-| **Cause** | D1 binding missing in deployment |
-| **Verify** | Check `.openai/hosting.json` has `"d1": "DB"` |
-| **Resolution** | Configure D1 binding and redeploy |
+| **Cause** | No Postgres URL configured for this environment |
+| **Verify** | `GET /api/health/db`; check `DATABASE_URL` or `POSTGRES_URL` is set for this environment |
+| **Resolution** | Set `DATABASE_URL` or link the Neon integration, then redeploy. `GET /api/health/db` reports the state |
 | **Files** | `app/admin/_lib/auth.ts`, `worker/db/client.ts` |
 
 ### Editor sees "Access denied"
@@ -58,7 +58,7 @@ Common problems, causes, and resolutions.
 | **Cause** | Content not saved, cache delay, or draft status |
 | **Verify** | Check content saved; wait 60s for cache; check status |
 | **Resolution** | Save content; publish if draft; hard refresh |
-| **Files** | Worker cache headers in `worker/index.ts` |
+| **Files** | Cache headers in `worker/site/render-page.ts` |
 
 ### Cannot delete media — "in use"
 
@@ -122,9 +122,9 @@ Common problems, causes, and resolutions.
 | | |
 | --- | --- |
 | **Symptom** | Missing tables or columns |
-| **Cause** | Migration not in bundle or D1 not bound |
+| **Cause** | Migration not bundled, or no Postgres URL |
 | **Verify** | Check `worker/db/migrations.ts` includes migration; check `__migrations` table |
-| **Resolution** | Add migration import; redeploy with D1 binding |
+| **Resolution** | Add the migration import in `worker/db/apply-pg-migrations.ts`, then redeploy |
 | **Files** | `worker/db/client.ts`, `worker/db/migrations.ts` |
 
 ### Static pages show old content
@@ -135,7 +135,7 @@ Common problems, causes, and resolutions.
 | **Cause** | 60s worker cache or browser cache |
 | **Verify** | Add `?preview=1` as admin to bypass cache |
 | **Resolution** | Wait 60s; hard refresh; use preview mode |
-| **Files** | `worker/index.ts` cache headers |
+| **Files** | `worker/site/render-page.ts` cache headers |
 
 ---
 

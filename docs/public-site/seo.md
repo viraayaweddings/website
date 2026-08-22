@@ -134,7 +134,7 @@ Reported separately in [WEBSITE-AUDIT-FINDINGS.md](../WEBSITE-AUDIT-FINDINGS.md)
 
 ```
 Admin edits seo_title / meta_description on venue or blog
-  → save action updates D1
+  → save action updates Postgres
   → Next request: inject handler replaces <title> and <meta>
   → Visible to crawlers after cache expiry (≤60s)
 ```

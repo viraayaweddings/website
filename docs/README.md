@@ -11,18 +11,6 @@
 
 ---
 
-> **These pages still describe the Cloudflare deployment.** The site runs on
-> Vercel with Neon Postgres and Cloudflare R2 for uploads only. Anything below
-> that mentions Cloudflare Workers, D1, the `ASSETS` binding, `worker/index.ts`
-> or the `api/` handlers describes an architecture that is no longer live --
-> the first two files were removed once routing moved to the App Router.
->
-> Accurate as of now: [03-routes.md](./03-routes.md) for the route map,
-> [deployment/vercel-postgres-r2.md](./deployment/vercel-postgres-r2.md) for how
-> it is deployed, and `02-admin/` for the panel. The rest is being migrated.
-
----
-
 ## Quick Start
 
 ```bash
@@ -42,12 +30,12 @@ npm run docs:inventory # Scan codebase only
 | — | [META.md](./META.md) | Version, timestamps, change history |
 | 1 | [Architecture](./01-architecture.md) | System design, deployment, data flow |
 | 2 | [Admin Panel](./02-admin/README.md) | **Complete** admin CMS documentation |
-| 3 | [Route Map](./03-routes.md) | All app + worker routes |
+| 3 | [Route Map](./03-routes.md) | Every public, admin and API route |
 | 4 | [API Reference](./04-api.md) | HTTP endpoints, request/response |
-| 5 | [Database](./05-database.md) | D1 schema, tables, relationships |
+| 5 | [Database](./05-database.md) | Postgres schema, tables, relationships |
 | 6 | [Authentication & Authorization](./06-auth.md) | Sessions, roles, guards |
 | 7 | [Workflows](./07-workflows.md) | End-to-end process flows |
-| 8 | [Integrations](./08-integrations.md) | Resend, R2, Cloudflare bindings |
+| 8 | [Integrations](./08-integrations.md) | Neon, R2, Resend |
 | 9 | [Configuration](./09-configuration.md) | Env vars, build config |
 | 10 | [Reusable Components](./10-components.md) | Shared admin UI primitives |
 | 11 | [File Index](./11-file-index.md) | Searchable file inventory |
@@ -77,7 +65,7 @@ npm run docs:inventory # Scan codebase only
 | [Page Types](./public-site/page-types.md) | Page taxonomy and UI anatomy |
 | [Public Forms](./public-site/forms.md) | Every lead/enquiry form |
 | [JavaScript](./public-site/javascript.md) | Client-side behavior |
-| [Rendering & Injection](./public-site/rendering.md) | HTMLRewriter, D1 shells |
+| [Rendering & Injection](./public-site/rendering.md) | HTMLRewriter, stored shells |
 | [Search & Calculator](./public-site/search-calculator.md) | Discovery and pricing tools |
 | [Booking & Consultation](./public-site/booking-consultation.md) | Appointment flows |
 | [SEO](./public-site/seo.md) | Metadata, gaps, admin overrides |
@@ -90,9 +78,9 @@ npm run docs:inventory # Scan codebase only
 
 | Section | Status |
 | --- | --- |
-| [Backend / Worker](./backend/README.md) | Worker modules documented |
+| [Backend](./backend/README.md) | Server modules documented |
 | [Testing](./testing/README.md) | Placeholder |
-| [Deployment](./deployment/README.md) | Partial — see Architecture |
+| [Deployment](./deployment/vercel-postgres-r2.md) | Vercel, Neon and R2 setup |
 | [Security](./security/README.md) | Public + admin security |
 | [Technical Debt](./technical-debt/README.md) | See audit findings |
 
@@ -109,12 +97,15 @@ npm run docs:inventory # Scan codebase only
 
 **Viraaya Weddings** is a hybrid static-site + CMS deployment:
 
-- **Public site**: Cloned HTML in `site-public/`, served via Cloudflare Workers with runtime HTML injection from D1.
-- **Admin panel**: Next.js-compatible App Router UI at `/admin/*` (Vinext on Vite).
-- **Database**: Cloudflare D1 (SQLite) via Drizzle ORM — schema at `worker/db/schema.ts`.
-- **Storage**: Cloudflare R2 for admin-uploaded images.
-- **Email**: Resend API for lead notifications.
-- **Deployment**: OpenAI Sites / Cloudflare Workers via `.openai/hosting.json`.
+- **Public site**: cloned HTML in `site-public/`, served by the Vercel CDN.
+  The pages the CMS owns are rendered by a serverless function instead, from a
+  stored shell filled with database content.
+- **Admin panel**: App Router UI at `/admin/*` (Vinext on Vite).
+- **Database**: Neon Postgres via Drizzle ORM — schema at `worker/db/schema.ts`.
+- **Storage**: Cloudflare R2 for admin-uploaded images, over the S3 API.
+- **Email**: Resend for lead notifications.
+- **Deployment**: Vercel, built through Nitro's `vercel` preset. The function is
+  pinned to `sin1` to sit beside the database.
 
 ---
 
@@ -123,9 +114,9 @@ npm run docs:inventory # Scan codebase only
 | Term | Meaning |
 | --- | --- |
 | **Vinext** | Vite-based Next.js App Router compatibility layer |
-| **D1** | Cloudflare's SQLite edge database |
-| **R2** | Cloudflare object storage (media bucket) |
-| **Shell** | HTML page template in `page_templates` table |
-| **Injection** | HTMLRewriter patches static HTML with DB content at request time |
+| **Nitro** | Build layer that turns the Vite output into a Vercel deployment |
+| **R2** | Cloudflare object storage, used for admin uploads only |
+| **Shell** | Stored page markup in `page_templates`, filled by injection |
+| **Injection** | HTMLRewriter patches a page's markup with database content at request time |
 | **Lead** | Form submission stored in `leads` table |
 | **Venue** | Hotel/venue page (`hotels` table) at `/destination-wedding/<city>/<slug>` |

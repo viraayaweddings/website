@@ -9,7 +9,7 @@ Many marketing and legal pages still live only as HTML under `site-public/`. The
 | Legal (privacy, cookies, terms) | `site-public/*/` | None — edit HTML directly |
 | Real weddings, packages | `site-public/real-weddings/`, `site-public/packages/` | None |
 | City landing intros (non-listing copy) | `site-public/destination-wedding-in-*/` | City totals and hero copy in `/admin/cities` |
-| Venue and blog pages | Built from D1 shells | `/admin/hotels`, `/admin/blogs` |
+| Venue and blog pages | Built from stored shells | `/admin/hotels`, `/admin/blogs` |
 
 ## Safe edit workflow
 
@@ -21,7 +21,7 @@ Many marketing and legal pages still live only as HTML under `site-public/`. The
 ## Migrating a page into the CMS
 
 1. Capture the page shell in `page_templates` (see existing seeds in `drizzle/`).
-2. Move editable fields into the appropriate D1 table (`hotels`, `blog_posts`, `city_pages`, etc.).
+2. Move editable fields into the appropriate table (`hotels`, `blog_posts`, `city_pages`, etc.).
 3. Add injection logic in `worker/site/inject.ts` if new placeholders are required.
 4. Remove or redirect the old static path via `worker/site/public-routes.ts`.
 

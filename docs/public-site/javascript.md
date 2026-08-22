@@ -15,6 +15,7 @@ Client-side behavior on the public site.
 | `hotel-listing.js` | City/hotel listing filter + pagination | City indexes, `/hotel-listing/` |
 | `currency-switcher.js` | INR display; intercepts calculator API calls to static JSON | Calculator, compare, venue pages |
 | `mutation-observer-guard.js` | Popper stub + safe MutationObserver | Global (prevents clone JS errors) |
+| `city-filter-mobile.js` | Opens the city filter sidebar as a sheet on narrow screens | Injected into city and venue pages |
 
 ---
 

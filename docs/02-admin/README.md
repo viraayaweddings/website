@@ -169,3 +169,12 @@ Editors hitting admin-only URLs are redirected to `/admin?denied=1`.
 - [Components](../10-components.md)
 - [Workflows](../07-workflows.md)
 - [Change Impact](../13-change-impact.md)
+
+---
+
+## Calculator pricing
+
+`/admin/calculator` edits the price overrides that sit on top of the bundled
+calculator table. `saveCalculatorPricesAction` writes them to the `settings` row
+`calculator_prices`; `worker/site/calculator-prices.ts` merges them at request
+time, so a price change needs no redeploy.

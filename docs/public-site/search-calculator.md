@@ -13,7 +13,7 @@ Discovery and pricing tools on the public site.
 | **UI** | `#searchbox` overlay on all pages |
 | **Script** | `site-public/js/site-search.js` |
 | **API** | `GET /hotel-search?q={term}` |
-| **Handler** | `worker/index.ts` → `calculator-data.searchIndex` |
+| **Handler** | `worker/public-endpoints.ts` → `calculator-data.searchIndex` |
 | **Results** | Max 8 hotel name matches |
 | **Fallback** | Client filter on `/data/hotel-listing-data.json` |
 | **Auth** | None |
@@ -35,7 +35,7 @@ Discovery and pricing tools on the public site.
 | --- | --- | --- |
 | Worker bundle | `worker/calculator-data.ts` (~30k lines) | Code change + redeploy |
 | Static JSON | `site-public/data/calculator/*.json` | File edit + deploy |
-| D1 database | **Not used** for calculator pricing | — |
+| Postgres | Used only for the `calculator_prices` overrides | `settings` |
 
 ### Static JSON files
 

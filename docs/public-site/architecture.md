@@ -1,6 +1,6 @@
 # Public Website — Architecture
 
-Technical architecture of the customer-facing application layer.
+Technical architecture of the customer-facing layer.
 
 ---
 
@@ -8,10 +8,10 @@ Technical architecture of the customer-facing application layer.
 
 | Layer | Technology |
 | --- | --- |
-| Pages | Static HTML (cloned site) |
-| Runtime | Cloudflare Worker |
-| Content | D1 SQLite + HTMLRewriter |
-| Media | R2 + static `/storage/` |
+| Pages | Static HTML, cloned from the original site |
+| Runtime | Vercel serverless function (Node 24), plus the Vercel CDN |
+| Content | Neon Postgres, injected through HTMLRewriter |
+| Media | R2 uploads at `/media/*`, plus static `/storage/` |
 | Client JS | jQuery, Bootstrap, vanilla JS |
 | CSS | `site-public/user/assets/css/style.css` |
 | No SPA framework | — |
@@ -21,43 +21,47 @@ Technical architecture of the customer-facing application layer.
 ## Layer Diagram
 
 ```
-┌─────────────────────────────────────────────────┐
-│  Browser                                         │
-│  ├── Static HTML (from ASSETS or D1 template)   │
-│  ├── site-public/js/*.js                        │
-│  ├── user/assets/js/custom.js                   │
-│  └── Inline page scripts                         │
-└──────────────────────┬──────────────────────────┘
+┌──────────────────────────────────────────────────┐
+│  Browser                                          │
+│  ├── HTML (CDN file, or rendered from the DB)    │
+│  ├── site-public/js/*.js                         │
+│  ├── user/assets/js/custom.js                    │
+│  └── Inline page scripts                          │
+└──────────────────────┬───────────────────────────┘
                        │ HTTP
-┌──────────────────────▼──────────────────────────┐
-│  Cloudflare Worker (worker/index.ts)             │
-│  ├── Route to ASSETS (site-public)               │
-│  ├── resolvePage() → D1 full render              │
-│  ├── inject.ts → HTMLRewriter patches            │
-│  ├── Lead API → lead-email.ts                   │
-│  ├── Calculator API → calculator-data.ts         │
-│  └── /media/* → R2                               │
-└──────────────────────┬──────────────────────────┘
-                       │
-        ┌──────────────┼──────────────┐
-        ▼              ▼              ▼
-    ASSETS          D1 DB         R2 MEDIA
- (site-public)   (CMS content)  (uploads)
+┌──────────────────────▼───────────────────────────┐
+│  Vercel routing (.vercel/output/config.json)      │
+│  ├── redirects                                    │
+│  ├── rewrite database-owned paths → function      │
+│  ├── handle: filesystem → CDN                     │
+│  └── catch-all → function                         │
+└──────────┬───────────────────────────┬───────────┘
+           │                           │
+           ▼                           ▼
+   Static file from CDN        Serverless function
+   (about-us, faqs, images)    ├── render-page.ts
+                               ├── inject via HTMLRewriter
+                               └── shell fallback via origin
+                                        │
+                            ┌───────────┴──────────┐
+                            ▼                      ▼
+                      Neon Postgres            R2 (uploads)
 ```
+
+Most of the site never reaches the function at all. Only the paths the database
+owns are rewritten to it.
 
 ---
 
-## Content Sources by Priority
+## Content sources by priority
 
-For any URL, worker tries in order:
+For a URL that reaches the function:
 
-1. **Admin/API routes** → Vinext app
-2. **JSON/API endpoints** → worker handlers
-3. **D1 resolvePage** → full template from `page_templates`
-4. **Static ASSETS** → `site-public/{path}/index.html`
-5. **Injection** → patch static HTML with D1 content
-6. **Shell fallback** → DB-only blog/venue via borrowed shell
-7. **404** → platform default
+1. **App-owned prefix** (`/admin`, `/api`, `/media`, …) → App Router
+2. **Redirect** → 301 for a retired URL
+3. **`resolvePage()`** → shell from `page_templates`, filled with database content
+4. **Original markup** → fetched back through the origin, then injected
+5. **404** → the site's own `404.html`
 
 ---
 
@@ -68,49 +72,52 @@ For any URL, worker tries in order:
 | CSP | `form-action 'self'` — forms submit same-origin only |
 | HSTS | On HTTPS responses |
 | X-Frame-Options | SAMEORIGIN |
-| Same-origin API guard | Calculator + lead endpoints |
-| No public auth | All visitor pages anonymous |
-| Preview gate | Admin session for `?preview=1` |
-
-Full security audit: [WEBSITE-AUDIT-FINDINGS.md](../WEBSITE-AUDIT-FINDINGS.md)
+| Same-origin guard | Lead endpoints and the admin upload route |
+| No public auth | Every visitor page is anonymous |
+| Preview gate | Admin session required for `?preview=1` |
 
 ---
 
 ## Performance Characteristics
 
-| Aspect | Behavior |
+| Aspect | Behaviour |
 | --- | --- |
-| SSR | Worker-side HTML injection (not React SSR) |
-| Static assets | 1-year immutable cache |
-| HTML cache | 60s (managed) / 300s (static) |
-| JS bundle | Multiple separate files, no bundler |
-| Images | Large static `/storage/` (~280MB) + R2 uploads |
-| Calculator data | In-memory in worker (large bundle) |
+| Rendering | Server-side HTML rewriting, not React SSR |
+| Static pages | Served by the CDN; no function invocation |
+| Managed pages | ~0.3–0.9s, `max-age=30` |
+| Hashed assets | 1-year immutable cache |
+| Images | ~280MB of static `/storage/` plus R2 uploads |
+| Calculator data | Bundled into the function |
 | Third-party scripts | Google Analytics only |
+
+The function runs in `sin1` alongside the database. Splitting them across
+regions previously cost ~250ms on every query.
 
 ---
 
 ## Deployment
 
-Public site deploys with the worker — no separate frontend build.
+The public site deploys as part of the same build — there is no separate
+frontend build.
 
 ```
-npm run build → dist/ → Cloudflare Workers + ASSETS binding
+npm run build → .vercel/output/{static,functions,config.json}
 ```
 
-See [Architecture](../01-architecture.md) and [Deployment](../deployment/README.md).
+See [Architecture](../01-architecture.md) and
+[Deployment](../deployment/vercel-postgres-r2.md).
 
 ---
 
-## Relationship to Admin Panel
+## Relationship to the Admin Panel
 
 | Concern | Public | Admin |
 | --- | --- | --- |
-| URL prefix | `/` (except `/admin`) | `/admin/*` |
-| Framework | Static HTML + injection | Vinext/React SSR |
+| URL prefix | `/` (except app-owned prefixes) | `/admin/*` |
+| Rendering | Static HTML, or shell + injection | Vinext/React on the server |
 | Auth | None | Session cookie |
-| Cache | 60–300s | no-store |
-| Data writes | Leads only (forms) | Full CMS CRUD |
+| Cache | `max-age=30` managed, revalidate for static | `no-store` |
+| Data writes | Leads only, via forms | Full CMS CRUD |
 
 See [Website ↔ Admin Map](./website-admin-map.md).
 
@@ -120,10 +127,11 @@ See [Website ↔ Admin Map](./website-admin-map.md).
 
 | File | Role |
 | --- | --- |
-| `worker/index.ts` | Public request router |
-| `worker/site/inject.ts` | HTMLRewriter |
-| `worker/site/resolve-page.ts` | D1 page resolution |
+| `app/[[...path]]/route.ts` | Public request handler |
+| `worker/site/render-page.ts` | Database render, or patch the original markup |
+| `worker/site/resolve-page.ts` | URL → stored shell + content |
+| `worker/site/inject.ts` | HTMLRewriter orchestrator |
 | `worker/lead-email.ts` | Form handler |
-| `worker/calculator-data.ts` | Pricing/search data |
+| `worker/calculator-data.ts` | Pricing and search data |
 | `site-public/js/lead-forms.js` | Form client |
-| `site-public/index.html` | Homepage shell |
+| `site-public/index.html` | Homepage markup |

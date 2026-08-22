@@ -186,8 +186,9 @@ Every exported server action in `app/admin/**/actions.ts`.
 | --- | --- | --- | --- | --- |
 | `importSiteContentAction` | admin | none | Bundled seed SQL, then `page_templates` | `content.imported` |
 
-Runs the same import as `POST /admin/seed`, from the Contact details screen, so
-an empty database can be filled without a shell.
+Defined in `app/admin/settings/seed-actions.ts`. Runs the same import as
+`POST /admin/seed`, from the Contact details screen, so an empty database can be
+filled without a shell.
 
 ---
 

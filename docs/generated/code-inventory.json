@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-22T07:12:01.045Z",
-  "gitCommit": "a3cb917888f14a75ed31474bdf20a807690c96e9",
-  "gitCommitShort": "a3cb9178",
+  "generatedAt": "2026-08-22T07:34:33.382Z",
+  "gitCommit": "729620b53e13bba9e5ac46a29b7ef2fc08c456dc",
+  "gitCommitShort": "729620b5",
   "projectVersion": "0.1.0",
   "counts": {
     "routes": 41,
     "serverActions": 29,
-    "dbTables": 0,
+    "dbTables": 15,
     "workerEndpoints": 25,
     "adminComponents": 18,
     "adminFiles": 67,
@@ -341,7 +341,68 @@
       "name": "updateUserAction"
     }
   ],
-  "dbTables": [],
+  "dbTables": [
+    {
+      "exportName": "auditLog",
+      "tableName": "audit_log"
+    },
+    {
+      "exportName": "blogListings",
+      "tableName": "blog_listings"
+    },
+    {
+      "exportName": "blogPosts",
+      "tableName": "blog_posts"
+    },
+    {
+      "exportName": "cityListings",
+      "tableName": "city_listings"
+    },
+    {
+      "exportName": "cityPages",
+      "tableName": "city_pages"
+    },
+    {
+      "exportName": "heroSlides",
+      "tableName": "hero_slides"
+    },
+    {
+      "exportName": "hotels",
+      "tableName": "hotels"
+    },
+    {
+      "exportName": "leads",
+      "tableName": "leads"
+    },
+    {
+      "exportName": "media",
+      "tableName": "media"
+    },
+    {
+      "exportName": "pageTemplates",
+      "tableName": "page_templates"
+    },
+    {
+      "exportName": "rateLimits",
+      "tableName": "rate_limits"
+    },
+    {
+      "exportName": "sessions",
+      "tableName": "sessions"
+    },
+    {
+      "exportName": "settings",
+      "tableName": "settings"
+    },
+    {
+      "exportName": "siteLabels",
+      "tableName": "site_labels"
+    },
+    {
+      "exportName": "users",
+      "tableName": "users"
+    }
+  ],
   "workerEndpoints": [
     "/",
     "/_vinext",

@@ -25,7 +25,7 @@ sequenceDiagram
   participant User
   participant Page as wedding-consultation
   participant lead-forms.js
-  participant Worker
+  participant Fn
   participant Resend
 
   User->>Page: Select date (flatpickr)
@@ -33,8 +33,8 @@ sequenceDiagram
   User->>Page: Fill name/email/phone
   User->>lead-forms.js: Submit #consultationForm
   lead-forms.js->>Worker: POST /api/lead
-  Worker->>Worker: storeLead in D1
-  Worker->>Resend: Notification email
+  Fn->>DB: storeLead
+  Fn->>Resend: Notification email
   Worker-->>lead-forms.js: success
   lead-forms.js->>User: Confirmation message
 ```

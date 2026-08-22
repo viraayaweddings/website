@@ -159,8 +159,8 @@ Admin: /admin/users → resetPasswordAction
 Developer: npm run build
   → Vinext build → dist/client + dist/server
   → sites-vite-plugin copies .openai/ + drizzle/
-  → Patches wrangler.json routing
-  → Deploy to OpenAI Sites / Cloudflare Workers
+  → Verifies the output is deployable
+  → Vercel deploys .vercel/output
 
 Runtime first request
   → worker/db/client.ts applies pending migrations
@@ -174,17 +174,17 @@ Runtime first request
 ```mermaid
 sequenceDiagram
   participant Admin as Admin Panel
-  participant D1 as D1 Database
+  participant DB as Postgres
   participant R2 as R2 Storage
-  participant Worker
+  participant Fn
   participant Browser as Public Browser
 
-  Admin->>D1: Server action UPDATE
+  Admin->>DB: Server action UPDATE
   Admin->>R2: Upload image (optional)
-  Admin->>D1: recordAudit
+  Admin->>DB: recordAudit
 
   Browser->>Worker: GET public URL
-  Worker->>D1: Load content + template
+  Fn->>DB: Load content + template
   Worker->>Worker: HTMLRewriter inject
   Worker-->>Browser: Patched HTML
 ```

@@ -13,7 +13,7 @@ All lead endpoints share `handleLeadRequest` from `worker/lead-email.ts`.
 | | |
 | --- | --- |
 | **App route** | `app/api/lead/route.ts` |
-| **Worker** | `worker/index.ts` |
+| **Catch-all** | `app/[[...path]]/route.ts` |
 | **Auth** | Same-origin check on POST |
 | **Body** | Form fields (varies by form) |
 | **Validation** | Honeypot, rate limit, field extraction |
@@ -59,7 +59,7 @@ Data source: `worker/calculator-data.ts` (static in-memory, no DB).
 | `/data/calculator/prices.json` | GET | None | Price matrix | JSON |
 | `/data/calculator/currencies.json` | GET | None | INR only | JSON |
 | `/api/currencies` | GET | None | Currency list | JSON |
-| `/api/currencies/select` | GET | None | Selection stub | `{ok:true}` |
+| `/api/currencies/select` | POST | Same-origin | Stores the chosen currency in a cookie | `{ok:true, currency}` |
 | `/appointment/slots` | GET | None | Time slots | JSON array |
 
 ---
@@ -81,7 +81,7 @@ Data source: `worker/calculator-data.ts` (static in-memory, no DB).
 | --- | --- |
 | **Handler** | Vinext image optimization |
 | **Auth** | None |
-| **Source** | ASSETS + R2 + IMAGES binding |
+| **Source** | `site-public/storage/` on the CDN, plus R2 for uploads |
 
 ---
 
@@ -174,15 +174,15 @@ Admin CRUD uses Next.js server actions (POST with form data), not REST endpoints
 ```mermaid
 sequenceDiagram
   participant Browser
-  participant Worker
-  participant D1
+  participant Fn
+  participant DB as Postgres
   participant Resend
 
   Browser->>Worker: POST /contact/save
   Worker->>Worker: validate + rate limit
-  Worker->>D1: INSERT leads
+  Fn->>DB: INSERT leads
   Worker->>Resend: POST /emails
   Resend-->>Worker: 200
-  Worker->>D1: UPDATE email_sent
+  Fn->>DB: UPDATE email_sent
   Worker-->>Browser: { ok: true }
 ```

@@ -1,19 +1,65 @@
 # Integrations
 
-External services and Cloudflare bindings.
+External services the site depends on.
 
 ---
 
-## Cloudflare Bindings
+## Platform
 
-Configured in `.openai/hosting.json`, applied at build via Vite Cloudflare plugin.
+| Service | Purpose | Configured in |
+| --- | --- | --- |
+| Vercel | Hosting, CDN, serverless function | `vercel.json` |
+| Neon | Postgres database, `ap-southeast-1` | `DATABASE_URL` / `POSTGRES_URL` |
+| Cloudflare R2 | Admin-uploaded images, over the S3 API | `R2_*` variables |
+| Resend | Lead notification email | `RESEND_*` variables |
 
-| Binding | Name | Purpose | Files |
-| --- | --- | --- | --- |
-| D1 Database | `DB` | All persistent data | `worker/db/client.ts` |
-| R2 Bucket | `MEDIA` | Admin-uploaded images | `worker/admin/media-store.ts` |
-| Static Assets | `ASSETS` | `site-public/` files | `worker/index.ts` |
-| Cloudflare Images | `IMAGES` | On-the-fly transforms | `worker/index.ts` (`/_vinext/image`) |
+There are no Cloudflare Workers, D1, KV or ASSETS bindings. R2 is the only
+Cloudflare service still in use, and it is reached as plain S3 — no binding,
+no Wrangler.
+
+---
+
+## Neon (Postgres)
+
+| | |
+| --- | --- |
+| **Purpose** | All persistent data: leads, users, content, sessions |
+| **Client** | `postgres.js` through Drizzle ORM (`worker/db/client.ts`) |
+| **Pool** | One connection per function instance, 20s idle, 10min lifetime |
+| **Migrations** | Bundled SQL, applied on first use per instance |
+| **Health** | `GET /api/health/db` |
+
+The connection is memoised per instance, and the schema check runs once behind
+the same promise, so a warm instance pays neither cost again.
+
+Keep the function in the same region as the database — see
+[Configuration](./09-configuration.md#function-region).
+
+---
+
+## Cloudflare R2 (Object Storage)
+
+| | |
+| --- | --- |
+| **Purpose** | Store images uploaded through the admin panel |
+| **Access** | S3 API via `@aws-sdk/client-s3` (`worker/storage/r2.ts`) |
+| **Endpoint** | `https://<account>.r2.cloudflarestorage.com` |
+| **Upload** | `worker/admin/media-store.ts` → `uploadImage` |
+| **Serve** | `GET /media/<key>` via `worker/site/media.ts` |
+| **Dedup** | Keys are the SHA-256 of the file, so identical uploads share one object |
+| **Delete** | Reference-aware, via `worker/admin/image-references.ts` |
+| **Health** | `GET /admin/health/r2` — round-trips an object, admin only |
+
+### Allowed types
+
+Magic-byte detection in `worker/admin/image-type.ts`: JPEG, PNG, WebP, AVIF.
+SVG is rejected outright — it can carry script.
+
+### Credentials
+
+The R2 token screen shows three values. The S3 API needs **Secret Access Key**
+(64 hex), not **Token value** (53 chars, mixed case). The wrong one produces
+`SignatureDoesNotMatch`.
 
 ---
 
@@ -26,112 +72,59 @@ Configured in `.openai/hosting.json`, applied at build via Vite Cloudflare plugi
 | **API** | `POST https://api.resend.com/emails` |
 | **Trigger** | Public form submission; admin resend |
 
-### Environment Variables
+### Data exchanged
 
-| Variable | Required | Purpose |
-| --- | --- | --- |
-| `RESEND_API_KEY` | Yes (prod) | API authentication |
-| `RESEND_FROM_EMAIL` | Yes | Sender address |
-| `RESEND_REPLY_TO` | Yes | Reply-to header |
-| `RESEND_TO_EMAIL` | Yes | Notification recipient(s) |
-| `LEAD_EMAIL_SUBJECT` | No | Subject prefix (default in code) |
-| `RESEND_ALLOW_INSECURE_LOCAL_TLS` | No | Dev-only TLS bypass |
+- **Outbound:** lead name, email, phone, submitted fields, page URL
+- **Inbound:** Resend response (email id on success)
 
-### Data Exchanged
+### Failure behaviour
 
-- **Outbound:** Lead name, email, phone, form fields, page URL
-- **Inbound:** Resend API response (email ID on success)
-
-### Failure Behavior
-
-- Lead saved to D1 regardless of email success
-- `leads.email_sent` set to 0 on failure
-- Admin can resend via `resendLeadEmailAction`
-
-### Retry
-
-No automatic retry. Manual resend from admin lead detail page.
+The lead is written to Postgres regardless of whether the email sends;
+`leads.email_sent` stays `0` on failure and the dashboard surfaces the count.
+There is no automatic retry — an admin resends from the lead detail screen via
+`resendLeadEmailAction`.
 
 ---
 
-## Cloudflare R2 (Object Storage)
-
-| | |
-| --- | --- |
-| **Purpose** | Store admin-uploaded images |
-| **Upload** | `worker/admin/media-store.ts` → `uploadImage` |
-| **Serve** | GET `/media/<key>` via `worker/site/media.ts` |
-| **Dedup** | Content-hash based keys |
-| **Delete** | Reference-aware via `image-references.ts` |
-
-### Allowed Types
-
-Magic-byte detection in `worker/admin/image-type.ts`:
-- JPEG, PNG, WebP, AVIF
-- SVG explicitly rejected
-
----
-
-## YouTube (Embed Only)
+## YouTube (embed only)
 
 | | |
 | --- | --- |
 | **Purpose** | Venue tour videos |
 | **Field** | `hotels.video_id` |
-| **Integration** | Embedded iframe in injected HTML |
-| **CSP** | `frame-src` allows YouTube in worker security headers |
-| **API key** | None — embed only |
+| **Integration** | Iframe injected into the page shell |
+| **CSP** | `frame-src` allows YouTube |
+| **API key** | None |
 
 ---
 
-## WhatsApp / Social (Client-Side Links)
+## WhatsApp and social links
+
+Generated from the `settings` table by `worker/site/settings.ts` and injected
+into every managed page. `wa.me` links only; no API.
+
+---
+
+## Calculator data
 
 | | |
 | --- | --- |
-| **Purpose** | Contact links from site settings |
-| **Source** | `settings` table via `worker/site/settings.ts` |
-| **Behavior** | `wa.me` links generated client-side; no API |
+| **Source** | `worker/calculator-data.ts`, bundled |
+| **Overrides** | `settings` row `calculator_prices`, merged at runtime |
+| **Editing** | Admin → Calculator pricing |
+| **Scope** | India-only cities, hotels and prices |
+
+Price overrides are stored JSON, so the bundled table is merged through a loose
+view rather than typed against its own literals.
 
 ---
 
-## Calculator Data (Static, No External Service)
-
-| | |
-| --- | --- |
-| **Source** | `worker/calculator-data.ts` |
-| **Storage** | In-memory in Worker bundle |
-| **Updates** | Code change + redeploy required |
-| **Scope** | India-only cities/hotels/prices |
-
----
-
-## OpenAI Sites Deployment
-
-| | |
-| --- | --- |
-| **Config** | `.openai/hosting.json` |
-| **Project ID** | `appgprj_6a782449ea908191bd4dbbd0a7fbd7a1` |
-| **Bindings** | D1 as `DB`, R2 as `MEDIA` |
-| **Build plugin** | `build/sites-vite-plugin.ts` copies config to `dist/` |
-
----
-
-## Legacy Node API Handlers
-
-| File | Purpose | When used |
-| --- | --- | --- |
-| `api/lead.ts` | Lead handler | Non-Worker local dev |
-| `api/currencies.ts` | Currency API | Non-Worker local dev |
-
-Production uses Worker handlers exclusively.
-
----
-
-## Integration Dependency Chain
+## Integration dependency chain
 
 ```
-Form submit → D1 (leads) → Resend (email)
-Admin upload → R2 (MEDIA) → D1 (media metadata)
-Public page → D1 (content) → ASSETS (shell) → HTMLRewriter
-Image optimize → R2/ASSETS → IMAGES binding
+Form submit      → Postgres (leads) → Resend (email)
+Admin upload     → R2 (object)      → Postgres (media metadata)
+Managed page     → Postgres (shell + content) → HTMLRewriter → HTML
+Static page      → Vercel CDN, function not involved
+Media request    → Postgres (key lookup) → R2 → response
 ```

@@ -1,6 +1,6 @@
 # Database Documentation
 
-**Technology:** Cloudflare D1 (SQLite)  
+**Technology:** Neon Postgres via Drizzle ORM (`postgres.js`)  
 **ORM:** Drizzle ORM 0.45  
 **Schema file:** `worker/db/schema.ts`  
 **Client:** `worker/db/client.ts` (auto-applies migrations on first access)  

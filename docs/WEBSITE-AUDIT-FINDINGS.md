@@ -7,6 +7,12 @@
 **Audit date:** 2026-08-21  
 **Scope:** 367 static HTML pages, worker public routing, forms, calculator, SEO, security
 
+> **Historical record — written against the Cloudflare deployment.** References
+> below to Workers, D1, the `ASSETS` binding or `worker/index.ts` describe the
+> stack as it was when the audit ran. The findings and their fixes are still
+> accurate; only the file and service names have moved. For how the system works
+> now, start at [Architecture](./01-architecture.md).
+
 See also: [Admin Audit Findings](./AUDIT-FINDINGS.md)
 
 ---

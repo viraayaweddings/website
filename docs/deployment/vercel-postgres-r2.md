@@ -1,25 +1,34 @@
-# Vercel + PostgreSQL + R2
-
-The app no longer uses Cloudflare Workers or D1. Runtime target is **Vercel** with:
+# Vercel + Postgres + R2
 
 | Concern | Service |
-|--------|---------|
-| App (admin, APIs, `/media/*`) | Vercel (Vinext / Nitro `vercel` preset) |
-| Database | PostgreSQL (`DATABASE_URL` — Neon or Vercel Postgres) |
-| Uploaded images | Cloudflare **R2 only** (S3-compatible API) |
-| Static marketing HTML | `site-public/` (served as static assets) |
+| --- | --- |
+| App (admin, APIs, `/media/*`, managed pages) | Vercel serverless function, Nitro `vercel` preset |
+| Database | Neon Postgres (`ap-southeast-1`) |
+| Uploaded images | Cloudflare R2, over the S3 API |
+| Static marketing HTML | `site-public/`, served by the Vercel CDN |
 
-R2 is the only remaining Cloudflare product. Workers, D1, and Wrangler bindings are removed from the build.
+R2 is the only Cloudflare product still in use, and it is reached as plain S3.
+There are no Workers, no D1 and no Wrangler bindings.
 
-## 1. Environment variables (Vercel project settings)
+## 1. Environment variables
 
-Copy from `.env.example`:
+Set in **Project → Environment Variables**, for Production and Preview. See
+[Configuration](../09-configuration.md#environment-variables) for the full list
+and what each one does.
 
-- `DATABASE_URL` — Postgres connection string
+- `DATABASE_URL`, or let the Neon integration provide `POSTGRES_URL`
 - `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET_NAME`
-- Resend keys for lead email (unchanged)
+- `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `RESEND_TO_EMAIL` / `LEAD_EMAIL_TO`
 
-Optional: `R2_PUBLIC_BASE_URL` if you front R2 with a custom CDN domain.
+Two traps worth knowing before you start:
+
+- **Team-level variables do nothing until linked.** A variable added on the
+  team's Environment Variables page still has to be linked to the project on
+  the project's own **Shared** tab, or the runtime never sees it.
+- **`R2_SECRET_ACCESS_KEY` is not the token value.** The R2 token screen shows
+  *Token value* (53 chars), *Access Key ID* (32 hex) and *Secret Access Key*
+  (64 hex). The S3 API wants the last one. The wrong one gives
+  `SignatureDoesNotMatch`, which reads like a bad key rather than a wrong field.
 
 ## 2. Database
 
@@ -28,37 +37,58 @@ npm install
 npm run db:migrate
 ```
 
-Migrations live in `drizzle-pg/`. On first admin request, the app also runs migrations and seeds page templates.
+Migrations live in `drizzle-pg/` and are also bundled, so the app applies them
+itself on the first request to a new instance. Create the first admin at
+`/admin/setup` — that screen disables itself permanently once any user exists.
 
-Create the first admin user at `/admin/setup` after deploy.
+**Seed content.** Venues, articles, hero slides, labels and the page shells all
+ship with the app. Import them from **Contact details → Import site content**,
+or `POST /admin/seed` as a signed-in admin.
 
-**Seed content** (blogs, hotels, hero slides, etc.) previously lived in SQLite `drizzle/*.sql` files. Those are not applied to Postgres automatically. Options:
+The import can exceed the function's time limit on a cold database and stop
+part-way; it is safe to run again, and it only inserts what is missing. If it
+stops before the shells are written, `page_templates` will be empty and every
+managed page falls back to its original markup — visible as a public site that
+ignores admin edits.
 
-- Re-enter content via admin, or
-- Export from a D1 backup and import into Postgres (contact dev for a one-off import script).
+## 3. Images
 
-## 3. Move images to R2
-
-Admin uploads already go to R2. To bulk-upload existing files from `site-public/`:
+Admin uploads already go to R2. To bulk-upload existing files:
 
 ```bash
 node scripts/upload-static-images-to-r2.mjs --dry-run
 node scripts/upload-static-images-to-r2.mjs
 ```
 
-Then update DB image keys / HTML references to `/media/<key>` as needed. A full reference rewrite is a follow-up task if you want every legacy `/storage/...` path migrated.
+The `/storage/...` paths in the cloned HTML are served from the CDN and do not
+need migrating; only uploads use R2.
 
-## 4. Deploy on Vercel
+## 4. Deploy
 
-`vercel.json` uses:
+`vercel.json` sets the build command, the install command, `framework: null`,
+and pins the function to `sin1`. Connect the GitHub repo and add the variables
+above.
 
-- `NITRO_PRESET=vercel npm run build`
-- Output directory `.output`
+**Keep the region pin.** Neon is in Singapore; Vercel defaults to Washington,
+and the split cost ~250ms on every query — an admin page went from ~300ms to
+over two seconds. See
+[Configuration](../09-configuration.md#function-region).
 
-Connect the GitHub repo and add the env vars above.
+The build ends with `scripts/verify-vercel-output.mjs`, which fails rather than
+shipping an output with no routing config. That failure mode is otherwise
+silent: the build reports success and every URL on the deployed site returns a
+platform 404.
 
-## 5. Known gap: public HTML injection
+## 5. Verifying a deployment
 
-The old Cloudflare Worker rewrote static HTML at request time (hero, blogs, hotels, contact details). That worker entry is **not** used on Vercel yet. Static pages still serve from `site-public/` as exported HTML; live CMS-driven changes on the public site require porting that logic to Vinext middleware or SSR (next migration phase).
+| Check | Expected |
+| --- | --- |
+| `GET /api/health/db` | `{"ok":true}` |
+| `GET /api/health/html` | `{"ok":true,"rewriter":"available"}` |
+| `GET /admin/health/r2` (admin) | `{"ok":true,...,"roundTrip":"put/head/delete"}` |
+| `x-vercel-id` response header | `bom1::sin1::…` |
+| `GET /` | 200, `cache-control: public, max-age=30` |
+| `GET /about-us` | 200, `max-age=0, must-revalidate` (CDN) |
 
-Admin panel, lead capture, and `/media/*` work on Vercel once env vars and Postgres are configured.
+The `max-age` difference is how you tell a database-rendered page from a static
+one without opening either.

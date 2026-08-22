@@ -77,7 +77,7 @@ Searchable inventory of meaningful project files.
 | `lead-email.ts` | Lead capture + Resend | `db/client`, `admin/lead-store` |
 | `calculator-data.ts` | Static calculator JSON | — |
 | `db/schema.ts` | Drizzle schema | drizzle-orm |
-| `db/client.ts` | D1 client + migrations | schema, migrations |
+| `db/client.ts` | Postgres client + migrations | schema, migrations |
 | `db/migrations.ts` | Migration SQL bundle | drizzle/*.sql |
 | `db/seed-templates.ts` | Page template seeder | page-templates.generated |
 | `admin/session.ts` | Cookie sessions | schema |

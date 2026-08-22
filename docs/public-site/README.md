@@ -5,8 +5,8 @@ Complete documentation for the customer-facing Viraaya Weddings website.
 | | |
 | --- | --- |
 | **Static source** | `site-public/` (367 HTML pages) |
-| **Runtime** | Cloudflare Worker (`worker/index.ts`) |
-| **Rendering** | Static HTML + D1 injection via HTMLRewriter |
+| **Runtime** | Vercel CDN, plus a serverless function for managed pages |
+| **Rendering** | Static HTML, or a stored shell filled via HTMLRewriter |
 | **Auth** | None (anonymous visitors) |
 | **Payments** | None — all forms are lead capture |
 | **Admin connection** | See [Website ↔ Admin Map](./website-admin-map.md) |
@@ -17,15 +17,16 @@ Complete documentation for the customer-facing Viraaya Weddings website.
 
 ```mermaid
 flowchart LR
-  Visitor[Visitor Browser] --> Worker[worker/index.ts]
-  Worker --> Static[ASSETS: site-public HTML]
-  Worker --> D1[(D1 CMS content)]
-  Worker --> R2[(R2 media)]
-  Worker --> APIs[Calculator + Lead APIs]
+  Visitor[Visitor Browser] --> Routes[Vercel routing]
+  Routes --> Static[CDN: site-public HTML]
+  Routes --> Fn[Serverless function]
+  Fn --> DB[(Postgres CMS content)]
+  Fn --> R2[(R2 media)]
+  Fn --> APIs[Calculator + Lead APIs]
   Static --> Inject[HTMLRewriter inject.ts]
-  D1 --> Inject
+  DB --> Inject
   Inject --> HTML[Rendered HTML]
-  APIs --> D1
+  APIs --> DB
   APIs --> Resend[Resend email]
 ```
 
@@ -42,7 +43,7 @@ The public site is a **cloned static HTML website** augmented at request time by
 | [Page Types](./page-types.md) | Page taxonomy and shared chrome |
 | [Forms](./forms.md) | Every lead/enquiry form |
 | [JavaScript](./javascript.md) | Client-side behavior |
-| [Rendering & Injection](./rendering.md) | HTMLRewriter, D1 shells |
+| [Rendering & Injection](./rendering.md) | HTMLRewriter, stored shells |
 | [Search & Calculator](./search-calculator.md) | Discovery tools and pricing APIs |
 | [Booking & Consultation](./booking-consultation.md) | Appointment flows (lead-only) |
 | [SEO](./seo.md) | Metadata, gaps, admin overrides |
@@ -63,7 +64,7 @@ The public site is a **cloned static HTML website** augmented at request time by
 | Onboarding | **Does not exist** |
 | Blog | 11 articles + listing + 2 categories + 2 tags |
 | Venues | 259 detail pages across 53 cities |
-| Lead capture | All enquiry forms → D1 `leads` + Resend email |
+| Lead capture | All enquiry forms → Postgres `leads` + Resend email |
 | Preview drafts | `?preview=1` requires admin session |
 
 ---

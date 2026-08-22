@@ -4,10 +4,10 @@
 
 ---
 
-## Primary: OpenAI Sites / Cloudflare Workers
+## Vercel
 
 1. `npm run build`
-2. Deploy `dist/` via OpenAI Sites platform
+2. Vercel deploys `.vercel/output` directly (Build Output API)
 3. Bindings from `.openai/hosting.json`
 
 ## Secondary: Vercel
@@ -21,4 +21,4 @@
 - Step-by-step deployment guide
 - Environment setup per stage
 - Rollback procedures
-- D1 migration in production
+- Postgres migrations, applied on first request per instance

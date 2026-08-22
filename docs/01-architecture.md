@@ -8,103 +8,142 @@ flowchart TB
     Browser[Browser]
   end
 
-  subgraph CloudflareWorker["Cloudflare Worker (worker/index.ts)"]
-    Router[Request Router]
-    Vinext[Vinext App Router]
-    Inject[HTMLRewriter Injection]
-    CalcAPI[Calculator / Lead APIs]
+  subgraph Edge["Vercel Edge"]
+    Routes[Build Output routes]
+    CDN[Static files - site-public]
+  end
+
+  subgraph Fn["Serverless Function (sin1)"]
+    CatchAll["Catch-all app/[[...path]]/route.ts"]
+    AppRouter[Vinext App Router - admin and APIs]
+    Render[resolve-page + HTMLRewriter injection]
   end
 
   subgraph Storage
-    ASSETS[ASSETS - site-public]
-    DB[(D1 Database)]
-    R2[(R2 MEDIA bucket)]
-    IMAGES[Cloudflare Images]
+    DB[(Neon Postgres)]
+    R2[(Cloudflare R2 - uploads)]
   end
 
   subgraph External
     Resend[Resend Email API]
   end
 
-  Browser --> Router
-  Router -->|"/admin/*"| Vinext
-  Router -->|"HTML pages"| Inject
-  Router -->|"JSON APIs"| CalcAPI
-  Router --> ASSETS
-  Vinext --> DB
-  Vinext --> R2
-  Inject --> DB
-  Inject --> ASSETS
-  CalcAPI --> DB
-  CalcAPI --> Resend
-  Router --> R2
-  Router --> IMAGES
+  Browser --> Routes
+  Routes -->|"redirects"| Browser
+  Routes -->|"database-owned paths"| CatchAll
+  Routes -->|"everything else on disk"| CDN
+  Routes -->|"no file matched"| CatchAll
+  CatchAll -->|"/admin, /api, /media"| AppRouter
+  CatchAll --> Render
+  CatchAll -->|"shell fallback"| CDN
+  Render --> DB
+  AppRouter --> DB
+  AppRouter --> R2
+  AppRouter --> Resend
 ```
 
 ## Technology Stack
 
 | Layer | Technology | Location |
 | --- | --- | --- |
-| Framework | Vinext 0.0.45 (Next.js App Router on Vite) | `vite.config.ts` |
+| Framework | Vinext 0.0.45 (Next.js App Router on Vite 8) | `vite.config.ts` |
 | UI | React 19, Tailwind CSS 4 | `app/`, `app/globals.css` |
-| Runtime | Cloudflare Workers (`nodejs_compat`) | `worker/index.ts` |
-| Database | Cloudflare D1 + Drizzle ORM 0.45 | `worker/db/` |
-| Object storage | Cloudflare R2 | `worker/admin/media-store.ts` |
-| Static assets | `site-public/` via ASSETS binding | ~1000+ HTML pages |
+| Runtime | Vercel serverless function, Node 24, region `sin1` | `vercel.json` |
+| Build | `vinext build` + Nitro `vercel` preset | `npm run build` → `.vercel/output` |
+| Database | Neon Postgres + Drizzle ORM 0.45 (`postgres.js`) | `worker/db/` |
+| Object storage | Cloudflare R2 over the S3 API | `worker/storage/r2.ts` |
+| HTML rewriting | `html-rewriter-wasm` (lol-html), same engine Cloudflare runs | `worker/html-rewriter.ts` |
+| Static site | `site-public/` copied into the deploy output | ~2,300 files |
 | Email | Resend HTTP API | `worker/lead-email.ts` |
-| Build | Vite 8 + `@cloudflare/vite-plugin` | `npm run build` → `dist/` |
-| Deployment | OpenAI Sites | `.openai/hosting.json` |
+
+The function is pinned to `sin1` because Neon is in `ap-southeast-1`. Both are
+Singapore. See [Configuration](./09-configuration.md#function-region).
 
 ## Repository Layout
 
 ```
 viraayaweddings.com/
-├── app/                    # Vinext App Router (admin + API routes)
-│   ├── admin/              # Full CMS admin panel (58 files)
+├── app/                    # Vinext App Router
+│   ├── [[...path]]/        # Catch-all: public pages, redirects, 404
+│   ├── admin/              # CMS admin panel
 │   ├── api/                # Public API routes
-│   └── */route.ts          # Lead/calculator route handlers
-├── worker/                 # Cloudflare Worker entry + site logic
-│   ├── index.ts            # Main fetch router (861 lines)
-│   ├── db/                 # Schema, client, migrations
-│   ├── admin/              # Session, passwords, media, leads
-│   ├── site/               # HTML injection layer
+│   ├── media/[...path]/    # Serves R2 uploads
+│   └── */route.ts          # Legacy form endpoints
+├── worker/                 # Server logic, shared by every route
+│   ├── db/                 # Schema, client, migrations, seeds
+│   ├── admin/              # Sessions, passwords, media, rich text
+│   ├── site/               # Page resolution and content injection
+│   ├── storage/r2.ts       # R2 through @aws-sdk/client-s3
+│   ├── html-rewriter.ts    # Installs HTMLRewriter on Node
 │   └── lead-email.ts       # Lead capture + Resend
-├── site-public/            # Static cloned website
-├── drizzle/                # SQL migrations (0000–0024)
-├── build/                  # Vite plugin + Python verify scripts
-├── docs/                   # This documentation system
-├── scripts/                # docs:inventory, docs:validate, docs:sync
-└── .openai/hosting.json    # D1/R2 binding config for deployment
+├── site-public/            # Static site: HTML, CSS, JS, images
+├── drizzle-pg/             # Postgres migrations (applied at runtime)
+├── drizzle/                # Legacy SQLite migrations, kept as content seeds
+├── build/                  # Vite plugin + Python render checks
+├── scripts/                # docs tooling, migrations, output verification
+└── vercel.json             # Build command, install command, region
 ```
 
 ## Request Flow
 
-### Public HTML Page (managed content)
+Routing is decided twice: once by Vercel's Build Output config, then again
+inside the function. The generated order is in `.vercel/output/config.json`.
+
+### Vercel routes, in order
+
+1. **Redirects** — retired URLs, emitted from `PUBLIC_REDIRECTS`. These come
+   first because several of them still have a file in `site-public`, which
+   would otherwise win.
+2. **Database-owned rewrites** — `/`, `/contact`, `/blogs/**` and
+   `/destination-wedding/**` go to the function. Each carries
+   `missing: x-vw-shell`, so a request that already has that header falls
+   through instead of matching.
+3. **`handle: filesystem`** — everything else that exists on disk is served
+   straight from the CDN.
+4. **Catch-all** — anything left goes to the function.
+
+### Public page the database owns
 
 ```
-GET /destination-wedding/udaipur/taj-lake-palace
-  → worker/index.ts matches path
-  → resolve-page.ts loads page_templates + hotels + labels + settings
-  → ASSETS fetches static shell HTML
-  → HTMLRewriter (hotel-inject.ts) patches content
-  → Response with 60s cache, security headers
+GET /destination-wedding/agra/itc-mughal-agra
+  → Vercel rewrites to the function
+  → app/[[...path]]/route.ts
+  → resolvePage() loads the shell from page_templates, plus hotel, labels, settings
+  → injectManagedContent() rewrites the shell through HTMLRewriter
+  → enhancePublicHtml() adds the skip link, cookie script, lazy images
+  → 200, cache-control public, max-age=30
 ```
 
-### Admin Panel
+If the shell is missing or the database is unreachable, the handler fetches the
+page's original markup back through its own origin with `x-vw-shell: 1` — which
+the rewrite treats as a miss — and injects into that instead. A page is never
+lost to a database problem.
+
+### Public page the database does not own
+
+```
+GET /about-us
+  → no rewrite matches
+  → handle: filesystem serves site-public/about-us/index.html from the CDN
+  → the function is never invoked
+```
+
+### Admin panel
 
 ```
 GET /admin/blogs
-  → worker routes /admin/* to Vinext (no-cache, noindex)
+  → catch-all is not involved; the App Router owns /admin
   → app/admin/layout.tsx → requireUser()
-  → app/admin/blogs/page.tsx renders with D1 queries
+  → app/admin/blogs/page.tsx queries Postgres
+  → no-store, noindex
 ```
 
-### Lead Form Submission
+### Lead form submission
 
 ```
-POST /contact/save (same-origin)
+POST /api/lead (same-origin)
   → handleLeadRequest (worker/lead-email.ts)
-  → Validate + rate limit + honeypot
+  → validate + rate limit + honeypot
   → INSERT leads
   → POST Resend API
   → UPDATE leads.email_sent
@@ -114,46 +153,48 @@ POST /contact/save (same-origin)
 
 | Model | Description | Example |
 | --- | --- | --- |
-| **Static** | Served as-is from `site-public/` | Legacy pages without DB overrides |
-| **Injected** | Static shell + HTMLRewriter patches | Venue pages, blog posts, homepage hero |
-| **Database-only** | Full HTML from `page_templates` | Pages with no static file |
-| **Preview** | `?preview=1` + admin session | Draft content, noindex |
+| **Static** | Served from the CDN, untouched | `/about-us`, `/faqs` |
+| **Database-rendered** | Shell from `page_templates`, filled by injection | Homepage, venue pages, articles |
+| **Injected fallback** | Original markup with managed content patched in | A managed path whose shell is missing |
+| **Preview** | `?preview=1` with an admin session | Draft content, noindex |
 
-## Deployment Architecture
+## Deployment
 
-1. `npm run build` produces `dist/client` (static) + `dist/server` (worker).
-2. `build/sites-vite-plugin.ts` copies `.openai/` and `drizzle/` to `dist/`.
-3. Patches `dist/server/wrangler.json` for asset routing.
-4. Worker bindings configured via `.openai/hosting.json`:
-   - `DB` → D1 database
-   - `MEDIA` → R2 bucket
-   - `ASSETS` → static files (added at build)
+1. `npm run build` runs `vinext build`, which invokes Nitro's `vercel` preset.
+2. Nitro writes `.vercel/output`: `static/` (the whole of `site-public` plus
+   hashed assets), `functions/__server.func/`, and `config.json`.
+3. `scripts/verify-vercel-output.mjs` then fails the build unless the output is
+   actually deployable — config present, filesystem handler, a route to the
+   function, and `static/index.html`.
+4. Vercel deploys the Build Output directly. There is no framework preset.
 
-**No checked-in `wrangler.toml`** — generated at build time.
+`site-public` is registered with Nitro explicitly. Nitro only picks up Vite's
+own client build directory, so without that the deploy ships an empty static
+directory and every public URL 404s.
 
 ## Security Headers
 
-Applied to all worker responses (`worker/index.ts`):
+`build/sites-vite-plugin.ts` writes a `_headers` file with the CSP, HSTS,
+COOP/CORP, Referrer-Policy and frame options. Same-origin checks guard the
+admin upload route, logout, and the lead endpoints.
 
-- Content-Security-Policy (restricts scripts, frames, connect)
-- Strict-Transport-Security
-- Cross-Origin-Opener-Policy / Cross-Origin-Resource-Policy
-- Referrer-Policy
-- Same-origin checks on sensitive calculator and lead endpoints
-
-## Caching Strategy
+## Caching
 
 | Content | Cache |
 | --- | --- |
-| Static assets (`/assets/*`, `/storage/*`) | Long-lived, bypass worker |
-| Injected HTML pages | 60 seconds |
+| Hashed assets (`/assets/*`) | `max-age=31536000, immutable` |
+| Static pages and media from the CDN | `max-age=0, must-revalidate` |
+| Database-rendered pages | `max-age=30` |
+| `/media/*` R2 objects | `max-age=31536000, immutable` (keys are content hashes) |
 | Admin panel | `no-store`, `noindex` |
-| Preview mode | `no-store`, `noindex` |
-| `/media/*` R2 objects | Immutable long cache |
+
+Because media keys are the SHA-256 of the file, a key can never point at
+different bytes, so an immutable cache is safe — but a deleted object can still
+be served from the edge for a while.
 
 ## Related Documents
 
 - [Route Map](./03-routes.md)
 - [Database](./05-database.md)
 - [Configuration](./09-configuration.md)
-- [Deployment placeholder](./deployment/README.md)
+- [Deployment](./deployment/vercel-postgres-r2.md)
