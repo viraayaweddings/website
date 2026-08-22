@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { desc, like, or, sql, type SQL } from "drizzle-orm";
 import { media } from "@/worker/db/schema";
-import { buildImageUsage } from "@/worker/admin/image-references";
+import { buildImageUsage, migrationInventoryReferencesForMedia } from "@/worker/admin/image-references";
 import { AdminShell } from "../_components/AdminShell";
 import { Donut } from "../_components/Charts";
 import { AutoSubmitControls, LiveSearch } from "../_components/FormControls";
@@ -80,7 +80,10 @@ export default async function MediaPage({
 
   // One pass over the content tables, rather than three queries per file.
   const usage = await buildImageUsage(db);
-  const withUsage = matchingFiles.map((file) => ({ file, references: usage.get(file.key) ?? [] }));
+  const withUsage = matchingFiles.map((file) => {
+    const references = usage.get(file.key) ?? migrationInventoryReferencesForMedia(file);
+    return { file, references };
+  });
 
   const filtered = withUsage
     .filter((entry) => {

@@ -21,6 +21,7 @@ const MEDIA_RE = new RegExp(`/media/([A-Za-z0-9/_.-]+?\\.(?:${IMAGE_EXT}))`, "gi
 const STATIC_RE = new RegExp(`(?<=["'\\s(=,])/(?!media/)[A-Za-z0-9_][^"'\\s),]*?\\.(?:${IMAGE_EXT})`, "gi");
 const RELATIVE_RE = new RegExp(`(?<=["'\\s(=,])\\.\\/([^"'\\s),]*?\\.(?:${IMAGE_EXT}))`, "gi");
 const CSS_URL_RE = new RegExp(`url\\((\\s*["']?)(\\.{1,2}/[^"')]+?\\.(?:${IMAGE_EXT}))(["']?\\s*)\\)`, "gi");
+const YOUTUBE_LOCAL_RE = /\/vendor\/youtube-local\/([A-Za-z0-9_-]+)\.html/gi;
 const REWRITABLE = new Set([".html", ".json", ".js", ".css", ".xml", ".txt"]);
 const IMAGE_COLUMNS = [
   ["hero_slides", "image_key"],
@@ -63,17 +64,21 @@ function databaseUrl() {
 function mediaKey(value, mapping) {
   const raw = String(value || "").trim();
   if (!raw) return "";
-  if (raw.startsWith("/media/")) return raw.slice("/media/".length);
+  const normalized = raw.startsWith("/") ? posix.normalize(raw) : raw;
+  if (normalized.startsWith("/media/")) return normalized.slice("/media/".length);
   if (mapping.has(raw)) return mediaKey(mapping.get(raw), mapping);
-  if (raw.startsWith("/")) return "";
+  if (mapping.has(normalized)) return mediaKey(mapping.get(normalized), mapping);
+  if (normalized.startsWith("/")) return "";
   return raw;
 }
 
-function addReference(refs, value, where, mapping) {
+function addReference(refs, value, where, mapping, options = {}) {
   const raw = String(value || "").trim();
   if (!raw) return;
   if (/\/fonts\/[^/]+\.svg(?:$|[?#])/i.test(raw)) return;
-  refs.push({ raw, key: mediaKey(raw, mapping), where });
+  const normalized = raw.startsWith("/") ? posix.normalize(raw) : raw;
+  const storedRaw = options.synthetic && mapping.has(normalized) ? mapping.get(normalized) : raw;
+  refs.push({ raw: storedRaw, key: mediaKey(raw, mapping), where });
 }
 
 function extractFromText(text, where, mapping, basePath = "") {
@@ -84,6 +89,9 @@ function extractFromText(text, where, mapping, basePath = "") {
   if (basePath) {
     const base = basePath.endsWith("/") ? basePath.slice(0, -1) : basePath;
     for (const match of source.matchAll(RELATIVE_RE)) addReference(refs, `${base}/${match[1]}`, where, mapping);
+  }
+  for (const match of source.matchAll(YOUTUBE_LOCAL_RE)) {
+    addReference(refs, `/vendor/youtube-local/${match[1]}.jpg`, where, mapping, { synthetic: true });
   }
   return refs;
 }
@@ -111,6 +119,59 @@ async function databaseReferences(sql, mapping) {
       refs.push(...extractFromText(row.value, `${label}:${row.id}`, mapping));
     }
   }
+
+  for (const row of await sql`select id::text as id, name, video_id from hotels where video_id <> ''`) {
+    addReference(
+      refs,
+      `/vendor/youtube-local/${row.video_id}.jpg`,
+      `hotels.video_id:${row.id}:${row.name}`,
+      mapping,
+      { synthetic: true },
+    );
+  }
+
+  const cityCards = await sql`
+    select cl.city as page_city, h.thumbnail_image as value, h.name
+    from city_listings cl
+    join hotels h on h.city = cl.venue_city and h.slug = cl.venue_slug
+    where h.thumbnail_image <> ''
+  `;
+  cityCards.forEach((row) =>
+    addReference(refs, row.value, `city_listing:${row.page_city}:${row.name}`, mapping),
+  );
+
+  const venueRows = await sql`
+    select city, slug, name, thumbnail_image, nearby_slugs
+    from hotels
+    where nearby_slugs <> '[]' or thumbnail_image <> ''
+  `;
+  const venuesByPath = new Map(venueRows.map((row) => [`${row.city}/${row.slug}`, row]));
+  for (const row of venueRows) {
+    let nearby = [];
+    try {
+      const parsed = JSON.parse(row.nearby_slugs || "[]");
+      nearby = Array.isArray(parsed) ? parsed.map(String) : [];
+    } catch {
+      nearby = [];
+    }
+    for (const nearbyPath of nearby) {
+      const target = venuesByPath.get(nearbyPath);
+      if (target?.thumbnail_image) {
+        addReference(refs, target.thumbnail_image, `nearby_venue:${row.city}/${row.slug}:${target.name}`, mapping);
+      }
+    }
+  }
+
+  const blogCards = await sql`
+    select bl.taxonomy, bl.taxonomy_slug, bp.card_image as value, bp.slug
+    from blog_listings bl
+    join blog_posts bp on bp.slug = bl.post_slug
+    where bp.card_image <> ''
+  `;
+  blogCards.forEach((row) =>
+    addReference(refs, row.value, `blog_listing:${row.taxonomy}/${row.taxonomy_slug}:${row.slug}`, mapping),
+  );
+
   return refs;
 }
 
@@ -179,6 +240,31 @@ function summarizeIssues(refs, mediaKeys, mapping) {
   return { legacyRefs, missingMap, missingMedia };
 }
 
+function migrationInventoryReferences(mapping, mediaRows) {
+  const refs = [...mapping.entries()]
+    .map(([source, target]) => ({
+      raw: target,
+      key: mediaKey(target, mapping),
+      where: `migration:${source}`,
+    }))
+    .filter((ref) => ref.key);
+
+  const sourcesByFilename = new Map();
+  for (const source of mapping.keys()) {
+    const filename = posix.basename(source);
+    sourcesByFilename.set(filename, [...(sourcesByFilename.get(filename) ?? []), source]);
+  }
+
+  for (const row of mediaRows) {
+    if (row.uploaded_by !== "migration" || !row.filename || !sourcesByFilename.has(row.filename)) continue;
+    for (const source of sourcesByFilename.get(row.filename)) {
+      refs.push({ raw: `/media/${row.key}`, key: row.key, where: `migration-duplicate:${source}` });
+    }
+  }
+
+  return refs;
+}
+
 const url = databaseUrl();
 if (!url) {
   console.error("No Postgres URL found.");
@@ -189,18 +275,19 @@ const mapping = new Map(Object.entries(JSON.parse(await readFile(mapPath, "utf8"
 const sql = postgres(url, { max: 1, prepare: false, ssl: "require" });
 
 try {
-  const rows = await sql`select key, size from media`;
+  const rows = await sql`select key, filename, uploaded_by, size from media`;
   const mediaKeys = new Set(rows.map((row) => row.key));
   const zeroSize = rows.filter((row) => Number(row.size || 0) <= 0);
 
   const dbRefs = await databaseReferences(sql, mapping);
   const fileRefs = await staticReferences(mapping);
   const runtimeRefs = await runtimeSourceReferences(mapping);
+  const migrationRefs = migrationInventoryReferences(mapping, rows);
   const dbIssues = summarizeIssues(dbRefs, mediaKeys, mapping);
   const staticIssues = summarizeIssues(fileRefs, mediaKeys, mapping);
   const runtimeIssues = summarizeIssues(runtimeRefs, mediaKeys, mapping);
 
-  const allKeys = new Set([...dbRefs, ...fileRefs, ...runtimeRefs].map((ref) => ref.key).filter(Boolean));
+  const allKeys = new Set([...dbRefs, ...fileRefs, ...runtimeRefs, ...migrationRefs].map((ref) => ref.key).filter(Boolean));
   const unusedMediaRows = rows.filter((row) => !allKeys.has(row.key));
 
   console.log(`[media-audit] media rows: ${rows.length}`);
@@ -208,6 +295,7 @@ try {
   console.log(`[media-audit] database image references: ${dbRefs.length}`);
   console.log(`[media-audit] static fallback image references: ${fileRefs.length}`);
   console.log(`[media-audit] runtime source image references: ${runtimeRefs.length}`);
+  console.log(`[media-audit] migration inventory references: ${migrationRefs.length}`);
   console.log(`[media-audit] referenced media keys: ${allKeys.size}`);
   console.log(`[media-audit] unused media rows: ${unusedMediaRows.length}`);
   console.log(`[media-audit] zero-size rows: ${zeroSize.length}`);
