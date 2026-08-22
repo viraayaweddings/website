@@ -199,11 +199,8 @@ export function LiveSearch({
   }, []);
 
   return (
-    <span className="relative block">
-      <span
-        className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2"
-        style={{ color: "var(--ink-faint)" }}
-      >
+    <span className="vw-search-field">
+      <span className="vw-search-icon" style={{ color: "var(--ink-faint)" }}>
         <Icon name="search" size={15} />
       </span>
       <input
@@ -213,9 +210,42 @@ export function LiveSearch({
         defaultValue={defaultValue}
         placeholder={placeholder}
         aria-label={label || placeholder || "Search"}
-        className="vw-input pl-8"
-        style={{ paddingLeft: "2.25rem" }}
+        className="vw-input vw-search-input"
       />
     </span>
   );
+}
+
+/**
+ * Submits filter forms when a dropdown, date field, checkbox, or radio changes.
+ *
+ * Use this only inside GET/filter forms. Edit forms should keep their explicit
+ * save button so a user can change several fields before posting.
+ */
+export function AutoSubmitControls({
+  selector = "select,input[type='date'],input[type='checkbox'],input[type='radio']",
+}: {
+  selector?: string;
+}) {
+  const anchor = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const form = anchor.current?.closest("form");
+    if (!form) return;
+
+    let timer = 0;
+    const onChange = (event: Event) => {
+      if (!(event.target instanceof HTMLElement) || !event.target.matches(selector)) return;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => form.requestSubmit(), 0);
+    };
+
+    form.addEventListener("change", onChange);
+    return () => {
+      window.clearTimeout(timer);
+      form.removeEventListener("change", onChange);
+    };
+  }, [selector]);
+
+  return <span ref={anchor} hidden />;
 }

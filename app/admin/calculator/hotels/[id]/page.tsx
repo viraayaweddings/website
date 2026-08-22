@@ -76,8 +76,8 @@ export default async function CalculatorHotelPage({
             defaultValue={String(hotel.totalRooms)}
             hint="Caps the rooms-per-night input on the venue page."
           />
-          <label className="vw-check">
-            <input type="checkbox" name="published" defaultChecked={hotel.published === 1} />
+          <label className="flex items-center gap-2 text-sm" style={{ color: "var(--ink)" }}>
+            <input type="checkbox" name="published" className="vw-check" defaultChecked={hotel.published === 1} />
             <span>Show in the hotel dropdown</span>
           </label>
           <SubmitButton icon="check">Save details</SubmitButton>

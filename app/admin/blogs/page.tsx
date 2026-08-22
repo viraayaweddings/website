@@ -7,7 +7,7 @@ import { blogPosts } from "@/worker/db/schema";
 import { AdminShell } from "../_components/AdminShell";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
-import { SubmitButton } from "../_components/FormControls";
+import { AutoSubmitControls, LiveSearch, SubmitButton } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
 import { imagePreview } from "../_components/ImageInput";
 import { Card, EmptyState, LinkButton, StatusBadge, formatRelative } from "../_components/ui";
@@ -20,22 +20,46 @@ const BLOGS_BULK_FORM = "blogs-bulk-form";
 export default async function BlogsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; saved?: string; delete?: string }>;
+  searchParams: Promise<{ error?: string; saved?: string; delete?: string; q?: string; status?: string }>;
 }) {
   const user = await requireUser("/admin/blogs");
   const db = await requireDb();
-  await searchParams; // The shell's toast reads these straight from the URL.
+  const params = await searchParams;
   const now = await currentTime();
 
   const posts = await db.select().from(blogPosts).orderBy(asc(blogPosts.position), asc(blogPosts.id));
 
   const liveCount = posts.filter((post) => post.status === "published").length;
+  const query = (params.q || "").trim().slice(0, 120);
+  const statusFilter = params.status === "draft" ? "draft" : params.status === "published" ? "published" : "";
+  const normalizedQuery = query.toLowerCase();
+  const visiblePosts = posts.filter((post) => {
+    if (statusFilter && post.status !== statusFilter) return false;
+    if (!normalizedQuery) return true;
+    return [
+      post.heading,
+      post.cardTitle,
+      post.slug,
+      post.category,
+      post.publishedLabel,
+    ].some((value) => (value || "").toLowerCase().includes(normalizedQuery));
+  });
+  const filtered = Boolean(query || statusFilter);
+
+  const href = (next: Record<string, string | number>) => {
+    const search = new URLSearchParams();
+    const merged = { q: query, status: statusFilter, ...next };
+    if (merged.q) search.set("q", String(merged.q));
+    if (merged.status) search.set("status", String(merged.status));
+    const string = search.toString();
+    return `/admin/blogs${string ? `?${string}` : ""}`;
+  };
 
   return (
     <AdminShell
       user={user}
       title="Articles"
-      subtitle={`${posts.length} article${posts.length === 1 ? "" : "s"}, ${liveCount} published. The order here is the order they appear on the blog index.`}
+      subtitle={`${visiblePosts.length} article${visiblePosts.length === 1 ? "" : "s"} shown from ${posts.length}, ${liveCount} published. The order here is the order they appear on the blog index.`}
       actions={
         <>
           {isAdmin(user) ? (
@@ -50,14 +74,66 @@ export default async function BlogsPage({
       }
     >
 
-      {posts.length === 0 ? (
+      <Card className="mb-4">
+        <form method="get" className="space-y-3">
+          <AutoSubmitControls />
+          <div className="flex flex-wrap items-center gap-1.5">
+            {[
+              { value: "", label: "All" },
+              { value: "published", label: `Published · ${liveCount}` },
+              { value: "draft", label: `Drafts · ${posts.length - liveCount}` },
+            ].map((option) => (
+              <Link
+                key={option.label}
+                href={href({ status: option.value })}
+                className="vw-chip"
+                data-on={statusFilter === option.value}
+              >
+                {option.label}
+              </Link>
+            ))}
+            {filtered ? (
+              <Link href="/admin/blogs" className="vw-btn vw-btn-ghost vw-btn-sm ml-auto">
+                <Icon name="close" size={13} />
+                Reset filters
+              </Link>
+            ) : null}
+          </div>
+          <div className="grid gap-3 sm:grid-cols-[2fr_1fr_auto] sm:items-end">
+            <div>
+              <span className="vw-label">Search</span>
+              <LiveSearch name="q" defaultValue={query} placeholder="Title, slug, category or date" />
+            </div>
+            <label className="block">
+              <span className="vw-label">Status</span>
+              <select name="status" defaultValue={statusFilter} className="vw-select">
+                <option value="">Any status</option>
+                <option value="published">Published</option>
+                <option value="draft">Draft</option>
+              </select>
+            </label>
+            <button type="submit" className="vw-btn vw-btn-secondary">
+              <Icon name="filter" size={15} />
+              Apply
+            </button>
+          </div>
+        </form>
+      </Card>
+
+      {visiblePosts.length === 0 ? (
         <Card>
           <EmptyState
             icon="article"
-            title="No articles yet"
-            action={<LinkButton href="/admin/blogs/new" variant="primary" icon="plus">Write the first one</LinkButton>}
+            title={filtered ? "No articles match these filters" : "No articles yet"}
+            action={
+              filtered
+                ? <LinkButton href="/admin/blogs" variant="secondary">Clear filters</LinkButton>
+                : <LinkButton href="/admin/blogs/new" variant="primary" icon="plus">Write the first one</LinkButton>
+            }
           >
-            Articles you publish appear on the blog index and in their category and tag pages.
+            {filtered
+              ? "Try a different search term or status."
+              : "Articles you publish appear on the blog index and in their category and tag pages."}
           </EmptyState>
         </Card>
       ) : (
@@ -80,7 +156,7 @@ export default async function BlogsPage({
         ) : null}
 
         <div className="space-y-2.5">
-          {posts.map((post, index) => (
+          {visiblePosts.map((post, index) => (
             <Card key={post.id} className="transition hover:-translate-y-px">
               <div className="flex flex-wrap items-start gap-3">
                 {isAdmin(user) ? (

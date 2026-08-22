@@ -5,6 +5,7 @@ import Link from "next/link";
 import { and, desc, eq, like, sql, type SQL } from "drizzle-orm";
 import { auditLog } from "@/worker/db/schema";
 import { AdminShell } from "../_components/AdminShell";
+import { AutoSubmitControls } from "../_components/FormControls";
 import { Icon, type IconName } from "../_components/icons";
 import {
   Badge,
@@ -128,6 +129,7 @@ export default async function ActivityPage({
     >
       <Card className="mb-4">
         <form method="get" className="grid gap-3 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
+          <AutoSubmitControls selector="select" />
           <label className="block">
             <span className="vw-label">Area</span>
             <select name="entity" defaultValue={entity} className="vw-select">

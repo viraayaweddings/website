@@ -172,6 +172,7 @@
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-1);
+  min-width: 0;
 }
 
 .vw-card-pad {
@@ -316,6 +317,7 @@
 .vw-select,
 .vw-textarea {
   width: 100%;
+  box-sizing: border-box;
   background: var(--surface);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
@@ -357,6 +359,26 @@
   background-repeat: no-repeat;
   background-position: right 0.6rem center;
   background-size: 12px;
+}
+
+.vw-search-field {
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+.vw-search-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  z-index: 1;
+  display: grid;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.vw-search-input {
+  padding-left: 2.75rem !important;
 }
 
 .vw-file {

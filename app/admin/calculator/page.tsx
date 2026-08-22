@@ -147,8 +147,8 @@ export default async function CalculatorAdminPage({
                               <input type="hidden" name="id" value={city.id} />
                               <Field label="Name" name="name" defaultValue={city.name} />
                               <Field label="Order" name="position" defaultValue={String(city.position)} />
-                              <label className="vw-check">
-                                <input type="checkbox" name="published" defaultChecked={city.published === 1} />
+                              <label className="flex items-center gap-2 text-sm" style={{ color: "var(--ink)" }}>
+                                <input type="checkbox" name="published" className="vw-check" defaultChecked={city.published === 1} />
                                 <span>Show in the city dropdown</span>
                               </label>
                               <SubmitButton size="sm" icon="check">Save city</SubmitButton>
@@ -234,8 +234,8 @@ export default async function CalculatorAdminPage({
                             <Field label="Name" name="currencyName" defaultValue={currency.name} />
                             <Field label="Symbol" name="symbol" defaultValue={currency.symbol} />
                             <Field label="Units per USD" name="rateToUsd" defaultValue={currency.rateToUsd} />
-                            <label className="vw-check">
-                              <input type="checkbox" name="isDefault" defaultChecked={currency.isDefault === 1} />
+                            <label className="flex items-center gap-2 text-sm" style={{ color: "var(--ink)" }}>
+                              <input type="checkbox" name="isDefault" className="vw-check" defaultChecked={currency.isDefault === 1} />
                               <span>Use as the default</span>
                             </label>
                             <SubmitButton size="sm" icon="check">Save currency</SubmitButton>

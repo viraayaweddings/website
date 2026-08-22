@@ -6,7 +6,7 @@ import { and, asc, eq, ilike, sql } from "drizzle-orm";
 import { calculatorCities, calculatorHotels, calculatorPrices } from "@/worker/db/schema";
 import { AdminShell } from "../../_components/AdminShell";
 import { BulkSelection, RowCheckbox } from "../../_components/BulkBar";
-import { LiveSearch, SubmitButton } from "../../_components/FormControls";
+import { AutoSubmitControls, LiveSearch, SubmitButton } from "../../_components/FormControls";
 import { Alert, Badge, Card, CardHead, EmptyState, Field, LinkButton, Select, formatCount } from "../../_components/ui";
 import { requireDb, requireRole } from "../../_lib/auth";
 import { bulkDeleteCalculatorHotelsAction, saveCalculatorHotelAction } from "../actions";
@@ -93,8 +93,8 @@ export default async function CalculatorHotelsPage({
             ]}
           />
           <Field label="Total rooms" name="totalRooms" defaultValue="0" hint="Caps the rooms-per-night input on the venue page." />
-          <label className="vw-check">
-            <input type="checkbox" name="published" defaultChecked />
+          <label className="flex items-center gap-2 text-sm" style={{ color: "var(--ink)" }}>
+            <input type="checkbox" name="published" className="vw-check" defaultChecked />
             <span>Show in the hotel dropdown</span>
           </label>
           <SubmitButton icon="plus">Add hotel</SubmitButton>
@@ -105,6 +105,7 @@ export default async function CalculatorHotelsPage({
         <Card pad={false}>
           <CardHead title="All hotels" icon="venue" />
           <form className="vw-card-pad" style={{ borderBottom: "1px solid var(--line)" }}>
+            <AutoSubmitControls selector="select" />
             <div className="row gx-2" style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
               <div style={{ flex: "1 1 240px" }}>
                 <LiveSearch name="q" defaultValue={query} placeholder="Hotel name" label="Search hotels" />

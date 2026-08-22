@@ -7,7 +7,7 @@ import { hotels } from "@/worker/db/schema";
 import { AdminShell } from "../_components/AdminShell";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
-import { LiveSearch, SubmitButton } from "../_components/FormControls";
+import { AutoSubmitControls, LiveSearch, SubmitButton } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
 import { Card, EmptyState, LinkButton, StatusBadge, formatCount, formatRelative } from "../_components/ui";
 import { currentTime } from "../_lib/clock";
@@ -89,6 +89,7 @@ export default async function HotelsPage({
 
       <Card className="mb-4">
         <form method="get" className="space-y-3">
+          <AutoSubmitControls />
           <div className="flex flex-wrap items-center gap-1.5">
             {[
               { value: "", label: "All" },

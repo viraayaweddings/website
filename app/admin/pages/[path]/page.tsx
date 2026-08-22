@@ -78,8 +78,8 @@ export default async function StaticPageEditor({
             rows={3}
             hint="Around 155 characters is what fits in a result."
           />
-          <label className="vw-check">
-            <input type="checkbox" name="published" defaultChecked={page.published === 1} />
+          <label className="flex items-center gap-2 text-sm" style={{ color: "var(--ink)" }}>
+            <input type="checkbox" name="published" className="vw-check" defaultChecked={page.published === 1} />
             <span>Serve this stored version</span>
           </label>
           <SubmitButton icon="check">Save</SubmitButton>

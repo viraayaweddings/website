@@ -6,7 +6,7 @@ import { LEAD_STATUSES } from "@/worker/db/schema";
 import { AdminShell } from "../_components/AdminShell";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
-import { LiveSearch, SubmitButton } from "../_components/FormControls";
+import { AutoSubmitControls, LiveSearch, SubmitButton } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
 import {
   Card,
@@ -87,6 +87,7 @@ export default async function LeadsPage({
       {/* Filters live in the URL so a view can be bookmarked or shared. */}
       <Card className="mb-4">
         <form method="get" className="space-y-3">
+          <AutoSubmitControls />
           <input type="hidden" name="sort" value={filters.sort} />
           <input type="hidden" name="dir" value={filters.dir} />
 

@@ -67,7 +67,7 @@ export function Uploader() {
   );
 
   return (
-    <div>
+    <div className="h-full">
       <div
         onDragOver={(event) => {
           event.preventDefault();
@@ -89,7 +89,7 @@ export function Uploader() {
         role="button"
         tabIndex={0}
         aria-label="Upload images"
-        className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[16px] border-2 border-dashed px-6 py-9 text-center transition"
+        className="flex h-full min-h-[14.5rem] cursor-pointer flex-col items-center justify-center gap-2 rounded-[16px] border-2 border-dashed px-6 py-9 text-center transition"
         style={{
           borderColor: over ? "var(--accent)" : "var(--line-strong)",
           background: over ? "var(--accent-wash)" : "var(--surface-2)",

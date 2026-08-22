@@ -7,7 +7,7 @@ import { media } from "@/worker/db/schema";
 import { buildImageUsage } from "@/worker/admin/image-references";
 import { AdminShell } from "../_components/AdminShell";
 import { Donut } from "../_components/Charts";
-import { LiveSearch } from "../_components/FormControls";
+import { AutoSubmitControls, LiveSearch } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
 import { Uploader } from "../_components/Uploader";
 import {
@@ -142,10 +142,10 @@ export default async function MediaPage({
       title="Images"
       subtitle={`${formatCount(total)} file${total === 1 ? "" : "s"} shown from ${formatCount(matchingTotal)} matching · ${formatBytes(filteredBytes)} shown · page ${safePage} of ${lastPage}.`}
     >
-      <div className="mb-4 grid gap-4 lg:grid-cols-[1fr_20rem]">
+      <div className="mb-4 grid items-stretch gap-4 lg:grid-cols-[1fr_20rem]">
         <Uploader />
 
-        <Card>
+        <Card className="h-full">
           <p className="vw-eyebrow mb-2">Space in use</p>
           <Donut
             value={matchingFiles.length - unused.length}
@@ -169,6 +169,7 @@ export default async function MediaPage({
 
       <Card className="mb-4">
         <form method="get" className="flex flex-wrap items-end gap-3">
+          <AutoSubmitControls />
           <div className="min-w-[14rem] flex-1">
             <span className="vw-label">Search</span>
             <LiveSearch name="q" defaultValue={query} placeholder="Filename or path" />

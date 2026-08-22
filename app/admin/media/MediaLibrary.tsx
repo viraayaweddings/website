@@ -307,12 +307,12 @@ export function MediaLibrary({
           </form>
         ) : null}
 
-        <div className="grid gap-3 sm:grid-cols-2 2xl:grid-cols-3">
+        <div className="grid items-stretch gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {items.map((item) => {
             return (
               <article
                 key={item.key}
-                className="vw-card relative overflow-hidden text-left transition hover:-translate-y-px"
+                className="vw-card relative flex h-full flex-col overflow-hidden text-left transition hover:-translate-y-px"
               >
                 {isAdmin ? (
                   <span className="absolute left-2 top-2 z-10 rounded-[7px] border p-1" style={{ borderColor: "var(--line)", background: "var(--surface)" }}>
@@ -323,7 +323,7 @@ export function MediaLibrary({
                 <button
                   type="button"
                   onClick={() => setSelectedKey(item.key)}
-                  className="block w-full text-left"
+                  className="flex h-full w-full flex-col text-left"
                 >
                   {/* Plain img: media is served by the app, not the static asset pipeline. */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -335,7 +335,7 @@ export function MediaLibrary({
                     loading="lazy"
                   />
 
-                  <span className="vw-card-pad block">
+                  <span className="vw-card-pad flex flex-1 flex-col">
                     <span className="mb-1 flex items-start gap-2">
                       <span className="min-w-0 flex-1 truncate text-sm font-medium" style={{ color: "var(--ink)" }}>
                         {fileLabel(item)}
@@ -347,7 +347,7 @@ export function MediaLibrary({
                       {fileKind(item)} · {item.sizeLabel} · {item.relativeLabel}
                     </span>
 
-                    <span className="mt-2.5 block">
+                    <span className="mt-auto block pt-2.5">
                       {item.references.length === 0 ? (
                         <Badge tone="warn">Not used anywhere</Badge>
                       ) : (
