@@ -9,6 +9,8 @@ export const APP_OWNED_PREFIXES = [
   "/get_in_touch",
   "/hotel-search",
   "/media",
+  // Served from the database by app/data/calculator/[file]/route.ts.
+  "/data/calculator",
 ] as const;
 
 export function isAppOwnedPath(pathname: string): boolean {

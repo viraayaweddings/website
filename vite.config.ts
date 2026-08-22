@@ -45,6 +45,10 @@ const databaseOwnedRoutes = [
   "/contact(/.*)?",
   "/blogs(/.*)?",
   "/destination-wedding/.*",
+  // The calculator data files. They still exist under site-public, but the
+  // handler answers from the database and falls back to the bundle, so the
+  // pages that read these paths directly get edited prices too.
+  "/data/calculator/[^/]+[.]json",
 ].map((src) => ({
   src,
   missing: [{ type: "header", key: SHELL_HEADER }],
