@@ -51,7 +51,8 @@
     style.textContent =
       "#viraaya-cookie-banner a,#viraaya-cookie-banner a:hover,#viraaya-cookie-banner a:focus{color:#fde68a!important}" +
       '#viraaya-cookie-banner button[data-consent="all"],#viraaya-cookie-banner button[data-consent="all"]:hover,#viraaya-cookie-banner button[data-consent="all"]:focus{background:#f59e0b!important;color:#111!important}' +
-      '#viraaya-cookie-banner button[data-consent="essential"],#viraaya-cookie-banner button[data-consent="essential"]:hover,#viraaya-cookie-banner button[data-consent="essential"]:focus{background:transparent!important;color:#fff!important;border-color:rgba(255,255,255,.35)!important}';
+      '#viraaya-cookie-banner button[data-consent="essential"],#viraaya-cookie-banner button[data-consent="essential"]:hover,#viraaya-cookie-banner button[data-consent="essential"]:focus{background:transparent!important;color:#fff!important;border-color:rgba(255,255,255,.35)!important}' +
+      "@media (max-width:720px){#viraaya-cookie-banner{display:block!important}#viraaya-cookie-banner p{margin-bottom:.75rem!important}#viraaya-cookie-banner div{justify-content:flex-start!important;margin-left:0!important}}";
     document.head.appendChild(style);
   }
 
@@ -64,11 +65,11 @@
     banner.setAttribute("role", "dialog");
     banner.setAttribute("aria-live", "polite");
     banner.style.cssText =
-      "position:fixed;left:0;right:0;bottom:0;z-index:9999;width:100%;box-sizing:border-box;margin:0;padding:1rem 1.25rem;border-radius:0;background:#0f172a;color:#fff;box-shadow:0 -10px 30px rgba(15,23,42,.25);font:14px/1.5 system-ui,sans-serif;";
+      "position:fixed;left:0;right:0;bottom:0;z-index:9999;width:100%;box-sizing:border-box;margin:0;padding:1rem 1.25rem;border-radius:0;background:#0f172a;color:#fff;box-shadow:0 -10px 30px rgba(15,23,42,.25);font:14px/1.5 system-ui,sans-serif;display:flex;align-items:center;gap:1rem;";
 
     banner.innerHTML =
-      '<p style="margin:0 0 .75rem">We use optional analytics cookies to understand how the site is used. You can accept or reject them. See our <a href="/cookie-preference-policy/" style="color:#fde68a">cookie policy</a>.</p>' +
-      '<div style="display:flex;flex-wrap:wrap;gap:.5rem">' +
+      '<p style="margin:0;flex:1 1 auto;min-width:0">We use optional analytics cookies to understand how the site is used. You can accept or reject them. See our <a href="/cookie-preference-policy/" style="color:#fde68a">cookie policy</a>.</p>' +
+      '<div style="display:flex;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end;gap:.5rem;margin-left:auto">' +
       '<button type="button" data-consent="all" style="border:0;border-radius:999px;padding:.45rem 1rem;background:#f59e0b;color:#111;font-weight:600;cursor:pointer">Accept analytics</button>' +
       '<button type="button" data-consent="essential" style="border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:.45rem 1rem;background:transparent;color:#fff;cursor:pointer">Essential only</button>' +
       "</div>";

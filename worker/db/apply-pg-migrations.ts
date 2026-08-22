@@ -36,6 +36,10 @@ function isAlreadyAppliedError(error: unknown): boolean {
 /** Concurrent Vercel lambdas can both run bundled DDL on cold start. */
 function idempotentStatement(statement: string): string {
   const trimmed = statement.trim();
+  // A migration that already says IF NOT EXISTS would otherwise get a second
+  // one bolted on, and `CREATE INDEX IF NOT EXISTS IF NOT EXISTS` fails to
+  // parse -- taking every later migration, and the database client with it.
+  if (/^CREATE (?:TABLE|(?:UNIQUE )?INDEX) IF NOT EXISTS /i.test(trimmed)) return trimmed;
   if (/^CREATE TABLE /i.test(trimmed)) {
     return trimmed.replace(/^CREATE TABLE /i, "CREATE TABLE IF NOT EXISTS ");
   }

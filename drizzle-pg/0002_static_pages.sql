@@ -1,7 +1,7 @@
 -- Pages that had no content model: the calculators, the landing pages, the
 -- policy and story pages. They were served straight from their cloned file, so
 -- nothing an admin changed ever reached them.
-CREATE TABLE IF NOT EXISTS "static_pages" (
+CREATE TABLE "static_pages" (
 	"path" text PRIMARY KEY NOT NULL,
 	"title" text DEFAULT '' NOT NULL,
 	"meta_description" text DEFAULT '' NOT NULL,
@@ -11,4 +11,4 @@ CREATE TABLE IF NOT EXISTS "static_pages" (
 	"updated_by" text DEFAULT '' NOT NULL
 );
 --> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "static_pages_published_idx" ON "static_pages" ("published");
+CREATE INDEX "static_pages_published_idx" ON "static_pages" ("published");
