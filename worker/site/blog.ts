@@ -309,6 +309,15 @@ export async function loadBlogListings(env: DatabaseEnv) {
 }
 
 /** Posts a category or tag page lists, in order. */
+/** "Wedding Planning" -> "wedding-planning", the form the URL uses. */
+function categorySlug(category: string): string {
+  return category
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 export async function postsForTaxonomy(
   env: DatabaseEnv,
   target: BlogTaxonomy,
@@ -317,10 +326,23 @@ export async function postsForTaxonomy(
   const rows = await loadBlogListings(env);
   const bySlug = new Map(posts.map((post) => [post.slug, post]));
 
-  return rows
+  const curated = rows
     .filter((row) => row.taxonomy === target.taxonomy && row.taxonomySlug === target.slug)
     .map((row) => bySlug.get(row.postSlug))
     .filter((post): post is BlogPost => Boolean(post));
+
+  // Tags exist only as curation; there is no field on a post to match against.
+  if (target.taxonomy !== "category") return curated;
+
+  // A post carries its category, and its own page links to that category page.
+  // Without this a newly published article sends readers to a page that does
+  // not list it -- the curated order stays in front, the rest follow.
+  const listed = new Set(curated.map((post) => post.slug));
+  const byCategory = posts.filter(
+    (post) => !listed.has(post.slug) && categorySlug(post.category) === target.slug,
+  );
+
+  return [...curated, ...byCategory];
 }
 
 export async function loadPost(env: DatabaseEnv, slug: string): Promise<BlogPost | null> {

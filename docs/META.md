@@ -4,9 +4,9 @@
 | ----- | ----- |
 | Documentation version | 1.0.0 |
 | Project version | 0.1.0 |
-| Last updated | 2026-08-22T12:03:53.929Z |
-| Last audited commit | `5c1d39e6` (`5c1d39e60daf5d3592cdc4115a873209191d58a4`) |
-| Last sync run | 2026-08-22T12:03:53.929Z |
+| Last updated | 2026-08-22T12:18:28.218Z |
+| Last audited commit | `570cd68a` (`570cd68a46b3c9979ef863ef1f2ce96d063c55a1`) |
+| Last sync run | 2026-08-22T12:18:28.218Z |
 | Synchronization status | Run `npm run docs:validate` for current status |
 | Coverage scope | Admin panel (complete), public website (complete), worker/API/DB (complete) |
 
@@ -14,7 +14,7 @@
 
 | Category | Count |
 | -------- | ----- |
-| App routes | 47 |
+| App routes | 48 |
 | Server actions | 39 |
 | Database tables | 20 |
 | Worker endpoint patterns | 25 |
@@ -30,4 +30,4 @@
 
 | Date | Code version | Documentation change | Reason |
 | ---- | ------------ | -------------------- | ------ |
-| 2026-08-22 | `5c1d39e6` | Initial master documentation system | Full project audit |
+| 2026-08-22 | `570cd68a` | Initial master documentation system | Full project audit |

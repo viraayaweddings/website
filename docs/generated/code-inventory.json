@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-22T12:03:53.452Z",
-  "gitCommit": "5c1d39e60daf5d3592cdc4115a873209191d58a4",
-  "gitCommitShort": "5c1d39e6",
+  "generatedAt": "2026-08-22T12:18:27.830Z",
+  "gitCommit": "570cd68a46b3c9979ef863ef1f2ce96d063c55a1",
+  "gitCommitShort": "570cd68a",
   "projectVersion": "0.1.0",
   "counts": {
-    "routes": 47,
+    "routes": 48,
     "serverActions": 39,
     "dbTables": 20,
     "workerEndpoints": 25,
@@ -250,6 +250,11 @@
     {
       "file": "app/media/[...path]/route.ts",
       "route": "/media/:...path",
+      "kind": "api"
+    },
+    {
+      "file": "app/sitemap.xml/route.ts",
+      "route": "/sitemap.xml",
       "kind": "api"
     }
   ],

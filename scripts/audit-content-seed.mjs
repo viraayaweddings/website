@@ -113,6 +113,22 @@ try {
   );
 
   check(
+    "blog article bodies hold no static image paths",
+    (await sql`select slug, body_html from blog_posts where body_html <> ''`).filter((row) =>
+      STATIC_IMAGE.test(String(row.body_html)),
+    ),
+    (row) => row.slug,
+  );
+
+  check(
+    "stored pages hold no static image paths",
+    (await sql`select path, html from static_pages where html <> ''`).filter((row) =>
+      STATIC_IMAGE.test(String(row.html)),
+    ),
+    (row) => row.path,
+  );
+
+  check(
     "hotels.highlights holds no static image paths",
     (await sql`select id, highlights from hotels where highlights <> ''`).filter((row) =>
       STATIC_IMAGE.test(String(row.highlights)),

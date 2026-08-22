@@ -50,6 +50,9 @@ const databaseOwnedRoutes = [
   // handler answers from the database and falls back to the bundle, so the
   // pages that read these paths directly get edited prices too.
   "/data/calculator/[^/]+[.]json",
+  // A generated sitemap.xml shipped with the clone and was what served, so
+  // anything published since was missing from it.
+  "/sitemap[.]xml",
   // Pages stored whole in static_pages. Both spellings: the site links to some
   // of these with a trailing slash and some without, and only an exact match
   // reaches the function.

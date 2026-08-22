@@ -294,6 +294,29 @@ async function main() {
   }
   console.log(`[images] hotels.highlights rewritten: ${highlightUpdates}`);
 
+  // The article body is markup, not a path column, so it carries its own
+  // pictures. Missing it left every inline image in the blog on the old path.
+  let bodyUpdates = 0;
+  for (const row of await sql`select id, body_html from blog_posts where body_html <> ''`) {
+    const next = replaceAll(row.body_html);
+    if (next !== row.body_html) {
+      await sql`update blog_posts set body_html = ${next} where id = ${row.id}`;
+      bodyUpdates += 1;
+    }
+  }
+  console.log(`[images] blog_posts.body_html rewritten: ${bodyUpdates}`);
+
+  // Same for the pages stored whole.
+  let storedPageUpdates = 0;
+  for (const row of await sql`select path, html from static_pages where html <> ''`) {
+    const next = replaceAll(row.html);
+    if (next !== row.html) {
+      await sql`update static_pages set html = ${next} where path = ${row.path}`;
+      storedPageUpdates += 1;
+    }
+  }
+  console.log(`[images] static_pages rewritten: ${storedPageUpdates}`);
+
   let shellUpdates = 0;
   for (const row of await sql`select key, html from page_templates`) {
     const next = replaceAll(row.html);
@@ -306,6 +329,8 @@ async function main() {
 
   await record("done", {
     objects: byKey.size,
+    bodyUpdates,
+    storedPageUpdates,
     uploaded,
     alreadyPresent: present,
     mediaRows: rows.length,
