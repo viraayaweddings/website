@@ -24,6 +24,7 @@ import { humanAuditAction } from "../../_lib/audit-labels";
 import { versionOf } from "../../_lib/concurrency";
 import { isAdmin, requireDb, requireUser } from "../../_lib/auth";
 import { deleteLeadAction, resendLeadEmailAction, updateLeadAction } from "../actions";
+import { parseRecordId } from "@/worker/admin/record-id";
 import { humanFieldLabel } from "@/worker/lead-fields";
 import { leadStatusLabel } from "../_status";
 
@@ -48,10 +49,12 @@ export default async function LeadDetailPage({
   searchParams: Promise<{ saved?: string }>;
 }) {
   const { id: rawId } = await params;
-  // Digits only: parseInt would happily read "12abc" as 12 and serve a record
-  // the URL does not actually name.
-  if (!/^\d+$/.test(rawId)) notFound();
-  const id = Number.parseInt(rawId, 10);
+  // Bounded, not just numeric: parseInt would read "12abc" as 12 and serve a
+  // record the URL does not name, and a twenty-digit id would reach Postgres as
+  // a bigint against an integer column and raise an overflow -- answered with
+  // the crash page rather than a 404.
+  const id = parseRecordId(rawId);
+  if (id === null) notFound();
 
   const user = await requireUser(`/admin/leads/${id}`);
   const db = await requireDb();

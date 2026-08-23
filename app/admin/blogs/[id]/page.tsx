@@ -2,6 +2,7 @@
 export const dynamic = "force-dynamic";
 
 import { notFound } from "next/navigation";
+import { parseRecordId } from "@/worker/admin/record-id";
 import { asc, eq } from "drizzle-orm";
 import { blogPosts } from "@/worker/db/schema";
 import { parseFaqs, tocEntries } from "@/worker/site/blog";
@@ -20,10 +21,11 @@ export default async function EditPostPage({
   searchParams: Promise<{ error?: string }>;
 }) {
   const { id: rawId } = await params;
-  // Digits only: parseInt would happily read "12abc" as 12 and serve a record
-  // the URL does not actually name.
-  if (!/^\d+$/.test(rawId)) notFound();
-  const id = Number.parseInt(rawId, 10);
+  // Bounded, not just numeric: a twenty-digit id passes a digits check,
+  // parses to 1e20 and reaches Postgres as a bigint against an integer
+  // column — an overflow, answered with the crash page rather than a 404.
+  const id = parseRecordId(rawId);
+  if (id === null) notFound();
 
   const user = await requireUser(`/admin/blogs/${id}`);
   const db = await requireDb();

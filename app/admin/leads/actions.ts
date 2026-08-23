@@ -6,6 +6,7 @@ import { eq, inArray } from "drizzle-orm";
 import { resendStoredLeadEmail } from "@/worker/lead-email";
 import { leads, LEAD_STATUSES, type LeadStatus } from "@/worker/db/schema";
 import { assertSameOrigin, recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
+import { parseRecordId } from "@/worker/admin/record-id";
 import { hasMoved, readExpectedVersion, STALE_MESSAGE } from "../_lib/concurrency";
 import { withFlashKey } from "../_lib/flash";
 
@@ -14,8 +15,8 @@ export async function updateLeadAction(formData: FormData): Promise<void> {
   const user = await requireUser();
   const db = await requireDb();
 
-  const id = Number.parseInt(String(formData.get("id") || ""), 10);
-  if (!Number.isInteger(id) || id <= 0) {
+  const id = parseRecordId(formData.get("id"));
+  if (id === null) {
     redirect(withFlashKey(`/admin/leads?error=${encodeURIComponent("That submission could not be identified.")}`));
   }
 
@@ -76,8 +77,8 @@ export async function deleteLeadAction(formData: FormData): Promise<void> {
   // unfiltered list the reader then has to rebuild.
   const target = backTo(formData);
 
-  const id = Number.parseInt(String(formData.get("id") || ""), 10);
-  if (!Number.isInteger(id) || id <= 0) {
+  const id = parseRecordId(formData.get("id"));
+  if (id === null) {
     redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("That submission could not be identified.")}`));
   }
 
@@ -102,8 +103,8 @@ const BULK_LIMIT = 200;
 function readIds(formData: FormData): number[] {
   const ids = formData
     .getAll("ids")
-    .map((value) => Number.parseInt(String(value), 10))
-    .filter((id) => Number.isInteger(id) && id > 0);
+    .map((value) => parseRecordId(value))
+    .filter((id): id is number => id !== null);
   return [...new Set(ids)];
 }
 
@@ -187,8 +188,8 @@ export async function resendLeadEmailAction(formData: FormData): Promise<void> {
   const user = await requireUser();
   const db = await requireDb();
 
-  const id = Number.parseInt(String(formData.get("id") || ""), 10);
-  if (!Number.isInteger(id)) redirect("/admin/leads");
+  const id = parseRecordId(formData.get("id"));
+  if (id === null) redirect("/admin/leads");
 
   const lead = (await db.select().from(leads).where(eq(leads.id, id)).limit(1))[0];
   if (!lead) redirect("/admin/leads");
