@@ -85,7 +85,7 @@
       .replace(/[-_]+/g, " ")
       .replace(/([a-z])([A-Z])/g, "$1 $2")
       .trim()
-      .replace(/\w/g, function (letter) { return letter.toUpperCase(); });
+      .replace(/\b\w/g, function (letter) { return letter.toUpperCase(); });
   }
 
   /** Selects are chosen, boxes are ticked, everything else is typed into. */
