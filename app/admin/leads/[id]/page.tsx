@@ -24,6 +24,7 @@ import { humanAuditAction } from "../../_lib/audit-labels";
 import { versionOf } from "../../_lib/concurrency";
 import { isAdmin, requireDb, requireUser } from "../../_lib/auth";
 import { deleteLeadAction, resendLeadEmailAction, updateLeadAction } from "../actions";
+import { humanFieldLabel } from "@/worker/lead-fields";
 import { leadStatusLabel } from "../_status";
 
 /** Submitted payloads are free-form JSON; render whatever is in there. */
@@ -129,7 +130,9 @@ export default async function LeadDetailPage({
               ) : (
                 <DetailList
                   rows={Object.entries(fields).map(([key, value]) => ({
-                    label: key,
+                    // Rows stored before the labels were applied at submission
+                    // time still carry their raw field names.
+                    label: humanFieldLabel(key),
                     value: value ? (
                       <span className="flex items-start gap-1">
                         <span className="min-w-0 break-words">{value}</span>
@@ -151,7 +154,10 @@ export default async function LeadDetailPage({
                 <EmptyState icon="info" title="Nothing recorded" />
               ) : (
                 <DetailList
-                  rows={Object.entries(metadata).map(([key, value]) => ({ label: key, value: value || "—" }))}
+                  rows={Object.entries(metadata).map(([key, value]) => ({
+                    label: humanFieldLabel(key),
+                    value: value || "—",
+                  }))}
                 />
               )}
             </div>

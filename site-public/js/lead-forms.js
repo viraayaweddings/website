@@ -453,7 +453,9 @@
         "Source Page": fields.source_page || "",
         "Submission Endpoint": normalizeAction(form),
         "Referrer": document.referrer || "",
-        "Browser": navigator.userAgent,
+        // The user agent is not sent from here: the server records the same
+        // string from the request header, and two identical rows under
+        // "Browser" and "Request Browser" read as two different facts.
         "Browser Language": navigator.language || "",
         "Browser Languages": navigator.languages ? navigator.languages.join(", ") : "",
         "Platform": navigator.platform || "",

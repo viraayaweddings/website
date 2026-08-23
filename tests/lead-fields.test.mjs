@@ -5,6 +5,7 @@ import {
   findContactEmail,
   findContactName,
   findContactPhone,
+  humanFieldLabel,
   normalizePhone,
 } from "../worker/lead-fields.ts";
 
@@ -62,4 +63,36 @@ test("normalizePhone accepts the shapes visitors type and refuses the rest", () 
   assert.equal(normalizePhone("919876543210"), "+919876543210");
   assert.equal(normalizePhone("1234567890"), "");
   assert.equal(normalizePhone("354"), "");
+});
+
+/**
+ * The panel lists a submission's fields under these. displayLeadFields maps the
+ * ones it recognises and passes the rest through, so on a form it does not know
+ * half the list read as copy and half as `rooms_and_pax`.
+ */
+test("a raw field name is turned into something readable", () => {
+  assert.equal(humanFieldLabel("plan"), "Plan");
+  assert.equal(humanFieldLabel("source_page"), "Source Page");
+  assert.equal(humanFieldLabel("alternate_dates_1"), "Alternate Dates 1");
+  assert.equal(humanFieldLabel("preferredDate"), "Preferred Date");
+});
+
+test("small words stay lower-case and initialisms stay upper", () => {
+  assert.equal(humanFieldLabel("rooms_and_pax"), "Rooms and Pax");
+  assert.equal(humanFieldLabel("complete_selection_json"), "Complete Selection JSON");
+  assert.equal(humanFieldLabel("hotel_id"), "Hotel ID");
+  assert.equal(humanFieldLabel("page_url"), "Page URL");
+  assert.equal(humanFieldLabel("utm_source"), "UTM Source");
+});
+
+test("a key that is already a label is left exactly as it is", () => {
+  for (const label of ["Name", "Phone Number", "City / Location", "Preferred Date", "Email"]) {
+    assert.equal(humanFieldLabel(label), label);
+  }
+});
+
+test("an empty or junk key does not become a stray label", () => {
+  assert.equal(humanFieldLabel(""), "");
+  assert.equal(humanFieldLabel("   "), "");
+  assert.equal(humanFieldLabel("___"), "___");
 });

@@ -5,6 +5,7 @@ import {
   findContactEmail,
   findContactName,
   findContactPhone,
+  humanFieldLabel,
   normalizeKey,
   normalizePhone,
 } from "./lead-fields";
@@ -242,10 +243,15 @@ function displayLeadFields(fields: Record<string, string>, pageUrl: string) {
   if (time) output["Appointment Time"] = time;
   if (message) output["Message"] = message;
 
+  // Anything the mapping above does not know about, under a label rather than
+  // its raw field name: these sit in the same list as "Phone Number" and
+  // "City / Location", in the panel and in the notification email.
   for (const [key, value] of Object.entries(fields)) {
     const normalized = normalizeKey(key);
-    if (!value || consumed.has(normalized) || output[key] || Object.values(output).includes(value)) continue;
-    output[key] = value;
+    if (!value || consumed.has(normalized) || Object.values(output).includes(value)) continue;
+    const label = humanFieldLabel(key);
+    if (output[label]) continue;
+    output[label] = value;
   }
 
   return output;
@@ -337,7 +343,7 @@ function requestMetadata(request: Request, url: URL, clientIp: string) {
       "Request Host": url.host,
       "Request Path": url.pathname,
       "Request Method": request.method,
-      "Request Browser": request.headers.get("user-agent") || "",
+      Browser: request.headers.get("user-agent") || "",
       "Accept Language": request.headers.get("accept-language") || "",
       "Forwarded For": request.headers.get("x-forwarded-for") || "",
       "Real IP": request.headers.get("x-real-ip") || "",
