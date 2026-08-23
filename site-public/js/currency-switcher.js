@@ -37,12 +37,9 @@ const CurrencySwitcher = (() => {
      * The calculator dataset, from the database.
      *
      * The admin panel owns cities, hotels, prices and currencies now, so this
-     * asks the API rather than the exported JSON. One request covers all four,
-     * and it is kept for the life of the page -- the calculator asks for the
-     * same data several times as the visitor changes city, hotel or month.
-     *
-     * The old static files remain as a fallback: if the API cannot be reached
-     * the calculator still prices, using whatever shipped with the build.
+     * asks the API rather than exported JSON. The legacy /data/calculator/*.json
+     * paths are still requested by older inline scripts, but those paths are
+     * app routes backed by the same database tables, not files under site-public.
      */
     let calculatorDataPromise = null;
 
@@ -81,10 +78,14 @@ const CurrencySwitcher = (() => {
         const toCurrency = getCurrency(toCode);
         if (!toCurrency) return;
 
+        const inrCurrency = currencies.find(c => c.code === INR_CODE);
+        const inrRate = parseFloat(inrCurrency && inrCurrency.rate_to_usd) || 0;
+        if (!inrRate) return;
+
         document.querySelectorAll('[data-price-inr]').forEach(el => {
             const inrValue = parseFloat(el.getAttribute('data-price-inr'));
             if (isNaN(inrValue)) return;
-            const usd       = inrValue / (currencies.find(c => c.code === INR_CODE)?.rate_to_usd || 83.50);
+            const usd       = inrValue / inrRate;
             const converted = usd * toCurrency.rate_to_usd;
             el.textContent  = formatPrice(converted, toCurrency);
         });
@@ -243,7 +244,7 @@ const ViraayaCalculatorData = (() => {
         if (!cache[path]) {
             cache[path] = originalFetch(path, { headers: { 'Accept': 'application/json' } })
                 .then(response => {
-                    if (!response.ok) throw new Error('Local calculator data unavailable: ' + path);
+                    if (!response.ok) throw new Error('Database calculator endpoint unavailable: ' + path);
                     return response.json();
                 });
         }
@@ -256,8 +257,9 @@ const ViraayaCalculatorData = (() => {
      * This block has its own fetchJson and its own cache, so it needs its own
      * loader -- the one in the block above is not in scope here.
      *
-     * The exported JSON files remain a fallback: if the API cannot be reached
-     * the calculator still prices, from whatever shipped with the build.
+     * The legacy /data/calculator/*.json paths remain as compatibility routes:
+     * if the combined API cannot be reached, those handlers still answer from
+     * the database tables rather than a checked-in JSON copy.
      */
     let datasetPromise = null;
 

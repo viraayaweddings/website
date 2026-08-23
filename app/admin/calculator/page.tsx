@@ -610,7 +610,7 @@ export default async function CalculatorAdminPage({
                 name="rateToUsd"
                 placeholder="1"
                 required
-                hint="How many of this currency one USD buys. INR is about 94."
+                hint="How many of this currency one USD buys."
               />
               <div className="sm:col-span-2 lg:col-span-4">
                 <SubmitButton size="sm" icon="plus" pendingLabel="Adding…">

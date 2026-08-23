@@ -10,7 +10,8 @@
  *   3. the city list itself -- 53 literal <option> rows in `#citySelect` on the
  *      12 pages carrying the full picker;
  *   4. the wedding-type filter -- six literal checkboxes in `#weddingType` on
- *      /hotel-listing and all 53 city index pages.
+ *      /hotel-listing and all 53 city index pages;
+ *   5. a hardcoded INR exchange-rate fallback in the inline currency formatters.
  *
  * All four become calls into `ViraayaTax` (currency-switcher.js) and empty
  * containers that worker/site/calculator-inject.ts and
@@ -32,13 +33,14 @@
 
 /** Markers that make a page worth transforming at all. */
 export const PAGE_DATA_MARKER =
-  /indiaCityIds|grandTotal \* 0\.09|totals\[h\.id\] \|\| 0\) \* 1\.18|id="citySelect"|name="wedding_types\[\]"/;
+  /indiaCityIds|grandTotal \* 0\.09|totals\[h\.id\] \|\| 0\) \* 1\.18|id="citySelect"|name="wedding_types\[\]"|rate_to_usd \|\| 83\.50/;
 
 /** Values that must not survive anywhere. Used by the audit too. */
 export const BANNED_PATTERNS = [
   [/grandTotal \* 0\.09/, "hardcoded 9% tax"],
   [/\* 1\.18\b/, "hardcoded 18% tax multiplier"],
   [/indiaCityIds/, "hardcoded city allowlist"],
+  [/rate_to_usd \|\| 83\.50/, "hardcoded INR exchange rate"],
 ];
 
 export const BAKED_CITY_OPTIONS =
@@ -84,6 +86,26 @@ const WEDDING_TYPE_CHECKBOX =
 const ALLOWLIST_DECL = /\s*var indiaCityIds = new Set\(\[[\s\S]*?\]\);/;
 const ALLOWLIST_FILTER =
   /\s*\$\('#citySelect option'\)\.each\(function \(\) \{\s*var value = String\(\$\(this\)\.val\(\) \|\| ''\);\s*if \(value && !indiaCityIds\.has\(value\)\) \$\(this\)\.remove\(\);\s*\}\);/;
+
+const CURRENCY_RATE_SETUP =
+  /const INR_RATE\s*=\s*allCurrencies\.find\(c => c\.code === 'INR'\)\?\.rate_to_usd \|\| 83\.50;\s*const toCurrency\s*=\s*allCurrencies\.find\(c => c\.code === selectedCode\)\s*\|\| \{ code: 'INR', symbol: '₹', rate_to_usd: INR_RATE \};/g;
+
+const CURRENCY_RATE_REPLACEMENT = [
+  "const inrCurrency  = allCurrencies.find(c => c.code === 'INR');",
+  "    const INR_RATE     = parseFloat(inrCurrency && inrCurrency.rate_to_usd) || 0;",
+  "    const toCurrency   = allCurrencies.find(c => c.code === selectedCode) || inrCurrency || null;",
+].join("\n");
+
+const CONVERSION_CALC =
+  /const usd\s*=\s*inrAmount \/ INR_RATE;\s*const converted\s*=\s*usd \* toCurrency\.rate_to_usd;/g;
+
+const CONVERSION_REPLACEMENT = [
+  "if (!INR_RATE || !toCurrency) {",
+  "            return '₹' + Math.round(inrAmount).toLocaleString('en-IN');",
+  "        }",
+  "        const usd       = inrAmount / INR_RATE;",
+  "        const converted = usd * toCurrency.rate_to_usd;",
+].join("\n");
 
 /**
  * Rewrites one page.
@@ -140,6 +162,23 @@ export function transform(html) {
         problems.push("some wedding_types[] checkboxes are not plain form-check blocks");
         out = before;
       }
+    }
+  }
+
+  // --- inline currency conversion -----------------------------------------
+  if (/rate_to_usd \|\| 83\.50/.test(out)) {
+    const setupMatches = out.match(CURRENCY_RATE_SETUP);
+    if (!setupMatches) {
+      problems.push("found a hardcoded exchange rate but could not rewrite its currency setup");
+    } else {
+      out = out.replace(CURRENCY_RATE_SETUP, CURRENCY_RATE_REPLACEMENT);
+    }
+
+    const calcMatches = out.match(CONVERSION_CALC);
+    if (!calcMatches) {
+      problems.push("found a hardcoded exchange rate but could not guard its conversion math");
+    } else {
+      out = out.replace(CONVERSION_CALC, CONVERSION_REPLACEMENT);
     }
   }
 

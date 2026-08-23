@@ -41,6 +41,11 @@ test("no page filters cities through a hardcoded allowlist", () => {
   assert.deepEqual(offenders, [], "publication in calculator_cities is what hides a city");
 });
 
+test("no page hardcodes an INR exchange rate", () => {
+  const offenders = PAGES.filter((file) => /rate_to_usd \|\| 83\.50/.test(readFileSync(file, "utf8")));
+  assert.deepEqual(offenders, [], "currency conversion rates come from calculator_currencies");
+});
+
 test("no city picker carries its own option list", () => {
   const offenders = PAGES.filter((file) => {
     const html = readFileSync(file, "utf8");
@@ -72,6 +77,13 @@ test("the static data files are gone", () => {
   }
 });
 
+test("the Vercel shell proxy drops stale transport encoding headers", () => {
+  const route = readFileSync("app/[[...path]]/route.ts", "utf8");
+  assert.match(route, /headers\.delete\("content-encoding"\)/);
+  assert.match(route, /headers\.delete\("content-length"\)/);
+  assert.match(route, /withoutTransportEncoding\(response\)/);
+});
+
 test("no page carries its own wedding-type filter list", () => {
   const offenders = PAGES.filter((file) => /name="wedding_types\[\]"/.test(readFileSync(file, "utf8")));
   assert.deepEqual(offenders, [], "the checkboxes are injected from venue_types");
@@ -100,7 +112,8 @@ test("the generated shells match the sources they were taken from", async () => 
     (template) =>
       /grandTotal \* 0\.09/.test(template.html) ||
       /\* 1\.18\b/.test(template.html) ||
-      /indiaCityIds/.test(template.html),
+      /indiaCityIds/.test(template.html) ||
+      /rate_to_usd \|\| 83\.50/.test(template.html),
   ).map((template) => template.key);
   assert.deepEqual(stale, [], "run scripts/detach-hardcoded-data.mjs --apply");
 
@@ -206,6 +219,26 @@ const ALLOWLIST_BEFORE = [
   "    $('#citySelect').val('').trigger('change.select2');",
 ].join("\r\n");
 
+const CURRENCY_BEFORE = [
+  "    const selectedCode  = localStorage.getItem('selected_currency') || 'INR';",
+  "    const allCurrencies = window.__currencies || [];",
+  "    const INR_RATE      = allCurrencies.find(c => c.code === 'INR')?.rate_to_usd || 83.50;",
+  "    const toCurrency    = allCurrencies.find(c => c.code === selectedCode)",
+  "                       || { code: 'INR', symbol: '₹', rate_to_usd: INR_RATE };",
+  "",
+  "    function cf(inrAmount) {",
+  "        const usd       = inrAmount / INR_RATE;",
+  "        const converted = usd * toCurrency.rate_to_usd;",
+  "        if (toCurrency.code === 'INR') {",
+  "            return '₹' + Math.round(converted).toLocaleString('en-IN');",
+  "        }",
+  "        return toCurrency.symbol + ' ' + new Intl.NumberFormat('en-US', {",
+  "            minimumFractionDigits: 2,",
+  "            maximumFractionDigits: 2,",
+  "        }).format(converted);",
+  "    }",
+].join("\r\n");
+
 test("the venue copy loses its hardcoded rate", () => {
   const { html, problems, changed } = transform(VENUE_BEFORE);
   assert.deepEqual(problems, []);
@@ -249,8 +282,17 @@ test("the city allowlist goes, the reset it guarded stays", () => {
   assert.match(html, /\$\('#citySelect'\)\.val\(''\)\.trigger\('change\.select2'\);/);
 });
 
+test("the inline currency converter loses its exchange-rate fallback", () => {
+  const { html, problems, changed } = transform(CURRENCY_BEFORE);
+  assert.deepEqual(problems, []);
+  assert.ok(changed);
+  assert.doesNotMatch(html, /83\.50/);
+  assert.match(html, /parseFloat\(inrCurrency && inrCurrency\.rate_to_usd\) \|\| 0/);
+  assert.match(html, /if \(!INR_RATE \|\| !toCurrency\)/);
+});
+
 test("the transform is idempotent, so the database pass can run every deploy", () => {
-  for (const before of [VENUE_BEFORE, PICKER_BEFORE, COMPARE_BEFORE, CITY_SELECT_BEFORE, ALLOWLIST_BEFORE]) {
+  for (const before of [VENUE_BEFORE, PICKER_BEFORE, COMPARE_BEFORE, CITY_SELECT_BEFORE, ALLOWLIST_BEFORE, CURRENCY_BEFORE]) {
     const once = transform(before);
     const twice = transform(once.html);
     assert.equal(twice.changed, false);

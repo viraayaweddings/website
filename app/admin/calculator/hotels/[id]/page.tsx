@@ -152,7 +152,7 @@ export default async function CalculatorHotelPage({
 
             <p className="vw-hint mt-3">
               Figures are in rupees. The calculator multiplies the room price by rooms per night and each meal price
-              by the number of guests, then adds 18% GST.
+              by the number of guests, then applies the published tax lines from the calculator settings.
               {unpriced.length > 0
                 ? ` ${unpriced.length === CALCULATOR_MONTHS.length ? "Every month is" : `${unpriced.join(", ")} ${unpriced.length === 1 ? "is" : "are"}`} still at zero, so ${unpriced.length === 1 ? "that month prices" : "those months price"} as free.`
                 : ""}

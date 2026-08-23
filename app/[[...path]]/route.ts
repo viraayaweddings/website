@@ -137,7 +137,7 @@ async function readOriginalPage(url: URL): Promise<Response | null> {
 
     if (!response || !response.ok) return null;
     if (!response.headers.get("content-type")?.includes("text/html")) return null;
-    return response;
+    return withoutTransportEncoding(response);
   }
 
   const file = await readStaticFile(url.pathname);
@@ -149,6 +149,25 @@ async function readOriginalPage(url: URL): Promise<Response | null> {
       "content-type": file.contentType,
       "cache-control": cacheControlFor(file.contentType),
     },
+  });
+}
+
+/**
+ * Vercel's fetch gives this function the decoded body, but keeps transport
+ * headers from the CDN response. Forwarding `content-encoding: br` with plain
+ * HTML makes browsers try to decompress markup that is already decoded, which
+ * renders public pages blank. Strip the hop-by-hop/body-shape headers whenever
+ * a static shell is proxied through the function.
+ */
+export function withoutTransportEncoding(response: Response): Response {
+  const headers = new Headers(response.headers);
+  headers.delete("content-encoding");
+  headers.delete("content-length");
+  headers.delete("content-disposition");
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
   });
 }
 
