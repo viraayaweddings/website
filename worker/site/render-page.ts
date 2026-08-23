@@ -18,6 +18,8 @@ import { templateResponse, loadCityPage } from "./template";
 import { loadSiteSettings } from "./settings";
 import { loadHeroSlides } from "./hero";
 import { loadLabels } from "./labels";
+import { loadCalculatorConfig } from "./calculator-store";
+import { loadVenueTypes } from "./venue-types";
 import {
   BLOG_LISTING_PATHS,
   blogSlugFromPath,
@@ -137,12 +139,14 @@ async function loadManagedContent(pathname: string) {
   const hotelPath = hotelPathFrom(pathname);
   const listingCity = cityFromListingPath(pathname);
 
-  const [settings, heroSlides, blogPosts, venues, labels] = await Promise.all([
+  const [settings, heroSlides, blogPosts, venues, labels, calculator, venueTypes] = await Promise.all([
     loadSiteSettings(env),
     wantsHero ? loadHeroSlides(env) : Promise.resolve([]),
     wantsPosts ? loadPublishedPosts(env) : Promise.resolve([]),
     hotelPath || listingCity ? loadHotels(env) : Promise.resolve([]),
     loadLabels(env),
+    loadCalculatorConfig(),
+    loadVenueTypes(env),
   ]);
 
   return {
@@ -165,5 +169,7 @@ async function loadManagedContent(pathname: string) {
         ? await loadCityPage(env, hotelPath.city)
         : null,
     labels,
+    calculator,
+    venueTypes,
   };
 }

@@ -26,14 +26,19 @@
         '8': (pax) => pax >= 350 && pax <= 400
     };
 
-    const weddingTypes = {
-        '2': 'destination',
-        '3': 'city',
-        '4': 'resort',
-        '5': 'palace',
-        '6': 'luxury',
-        '7': 'intimate'
-    };
+    /**
+     * Checkbox value to the tag stored on a venue.
+     *
+     * Injected as window.__VIRAAYA_LISTING__ by
+     * worker/site/venue-listing-inject.ts, from `venue_types` -- the same rows
+     * that render the checkboxes themselves and populate the tag list on the
+     * venue form. This file used to carry its own copy of the six, so adding a
+     * type meant editing the table, this map and 54 pages of markup.
+     *
+     * Empty when the injection has not run. The checkboxes are injected from
+     * the same place, so there is then nothing checked to look up.
+     */
+    const weddingTypes = (window.__VIRAAYA_LISTING__ && window.__VIRAAYA_LISTING__.weddingTypes) || {};
 
     function selectedValues(name) {
         return qsa(`input[name="${name}"]:checked`).map((input) => input.value);

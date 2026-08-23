@@ -8,6 +8,8 @@ import {
   calculatorCurrencies,
   calculatorHotels,
   calculatorPrices,
+  calculatorTaxes,
+  hotels,
 } from "@/worker/db/schema";
 import { AdminShell } from "../_components/AdminShell";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
@@ -26,7 +28,10 @@ import {
 import { requireDb, requireRole } from "../_lib/auth";
 import {
   bulkDeleteCalculatorCitiesAction,
+  bulkDeleteCalculatorTaxesAction,
   bulkDeleteCurrenciesAction,
+  deleteCalculatorTaxAction,
+  saveCalculatorTaxAction,
   deleteCalculatorCityAction,
   deleteCurrencyAction,
   importCalculatorDataAction,
@@ -36,6 +41,7 @@ import {
 
 const CALC_CITIES_BULK_FORM = "calculator-cities-bulk-form";
 const CALC_CURRENCIES_BULK_FORM = "calculator-currencies-bulk-form";
+const CALC_TAXES_BULK_FORM = "calculator-taxes-bulk-form";
 
 /** Whitelisted so a crafted query string cannot pick an arbitrary comparator. */
 const SORT_KEYS = ["order", "name", "hotels"] as const;
@@ -64,14 +70,29 @@ export default async function CalculatorAdminPage({
     : "order";
   const editingCity = Number.parseInt(single(params.city) || "", 10);
 
-  const [cities, currencies, hotelCounts, priceCount] = await Promise.all([
+  const [cities, currencies, taxes, hotelCounts, priceCount, unlinkedVenues] = await Promise.all([
     db.select().from(calculatorCities).orderBy(asc(calculatorCities.position), asc(calculatorCities.name)),
     db.select().from(calculatorCurrencies).orderBy(asc(calculatorCurrencies.position), asc(calculatorCurrencies.code)),
+    db.select().from(calculatorTaxes).orderBy(asc(calculatorTaxes.position), asc(calculatorTaxes.code)),
     db
       .select({ cityId: calculatorHotels.cityId, total: sql<number>`count(*)` })
       .from(calculatorHotels)
       .groupBy(calculatorHotels.cityId),
     db.select({ total: sql<number>`count(*)` }).from(calculatorPrices),
+    // Venue pages whose calculator points at nothing. Their cost calculator
+    // renders, prices every line at zero and totals to zero, and nothing on the
+    // page says so -- this is the only place it is visible.
+    db
+      .select({ city: hotels.city, slug: hotels.slug, hotelId: hotels.externalHotelId })
+      .from(hotels)
+      .where(
+        sql`${hotels.status} = 'published' and (
+          ${hotels.externalHotelId} = ''
+          or not exists (select 1 from calculator_hotels c where c.id::text = ${hotels.externalHotelId})
+        )`,
+      )
+      .orderBy(asc(hotels.city), asc(hotels.slug))
+      .limit(20),
   ]);
 
   const hotelsPerCity = new Map(hotelCounts.map((row) => [row.cityId, Number(row.total)]));
@@ -80,6 +101,9 @@ export default async function CalculatorAdminPage({
   const empty = cities.length === 0 && totalHotels === 0;
   const shownCities = cities.filter((city) => city.published === 1).length;
   const defaultCurrency = currencies.find((currency) => currency.isDefault === 1);
+  const liveTaxes = taxes.filter((tax) => tax.published === 1);
+  const taxTotal = liveTaxes.reduce((sum, tax) => sum + (Number(tax.percent) || 0), 0);
+  const taxPercent = (value: string) => String(Math.round((Number(value) || 0) * 100) / 100);
 
   const visibleCities = cities
     .filter((city) => {
@@ -124,6 +148,23 @@ export default async function CalculatorAdminPage({
         </LinkButton>
       }
     >
+      {unlinkedVenues.length > 0 ? (
+        <Alert tone="error" title={`${unlinkedVenues.length} venue page(s) not linked to the calculator`}>
+          Their cost calculator prices every line at zero and totals to zero, with nothing on the page to
+          say so. Give each one a hotel here, then set its Hotel ID on the venue.
+          <ul className="mt-2 space-y-1">
+            {unlinkedVenues.map((venue) => (
+              <li key={`${venue.city}/${venue.slug}`} className="vw-mono text-xs">
+                <Link href={`/destination-wedding/${venue.city}/${venue.slug}`} style={{ textDecoration: "underline" }}>
+                  /{venue.city}/{venue.slug}
+                </Link>{" "}
+                {venue.hotelId ? `→ hotel ${venue.hotelId} does not exist here` : "→ no hotel id"}
+              </li>
+            ))}
+          </ul>
+        </Alert>
+      ) : null}
+
       {empty ? (
         <Card pad={false}>
           <CardHead title="Import the shipped data" icon="grid" />
@@ -321,6 +362,145 @@ export default async function CalculatorAdminPage({
               <SubmitButton size="sm" icon="plus" pendingLabel="Adding…">
                 Add city
               </SubmitButton>
+            </form>
+          </div>
+        </Card>
+      </div>
+
+      <div className="mt-4">
+        <Card pad={false}>
+          <CardHead
+            title="Tax rates"
+            icon="grid"
+            hint={
+              liveTaxes.length
+                ? `Every calculator adds ${taxPercent(String(taxTotal))}% to the subtotal`
+                : "No tax is being added to any quote"
+            }
+          />
+          <div className="vw-card-pad" style={{ borderBottom: "1px solid var(--line)" }}>
+            <p className="text-sm" style={{ color: "var(--ink-soft)" }}>
+              Each published line becomes one row on every cost summary, in order, and the total is the
+              subtotal plus all of them. All five calculators read these rates &mdash; the venue pages, the
+              home page, /hotel-cost-calculator, the city landing pages and /compare-hotel.
+            </p>
+            {liveTaxes.length === 0 ? (
+              <Alert tone="warning" title="No tax on any quote">
+                Nothing is published, so every quote on the site shows its subtotal as the total. Add a line,
+                or leave it if that is intended.
+              </Alert>
+            ) : null}
+          </div>
+          {taxes.length === 0 ? (
+            <EmptyState icon="grid" title="No tax lines yet">
+              Add one; the calculators show the subtotal as the total until you do.
+            </EmptyState>
+          ) : (
+            <>
+              <form id={CALC_TAXES_BULK_FORM} className="vw-card-pad pb-0">
+                <BulkSelection noun="tax line" formId={CALC_TAXES_BULK_FORM}>
+                  <SubmitButton
+                    size="sm"
+                    variant="danger-quiet"
+                    icon="trash"
+                    pendingLabel="Deleting…"
+                    formAction={bulkDeleteCalculatorTaxesAction}
+                    confirm="Delete every selected tax line? Quotes across the site will drop it immediately."
+                  >
+                    Delete
+                  </SubmitButton>
+                </BulkSelection>
+              </form>
+              <div className="vw-table-wrap">
+                <table className="vw-table">
+                  <thead>
+                    <tr>
+                      <th style={{ width: "2.25rem" }}>
+                        <span className="sr-only">Select</span>
+                      </th>
+                      <th>Code</th>
+                      <th>Label</th>
+                      <th>Rate</th>
+                      <th>Shown</th>
+                      <th className="text-end">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {taxes.map((tax) => (
+                      <tr key={tax.code}>
+                        <td>
+                          <RowCheckbox id={tax.code} label={tax.label} form={CALC_TAXES_BULK_FORM} />
+                        </td>
+                        <td className="vw-mono">{tax.code}</td>
+                        <td>{tax.label}</td>
+                        <td className="vw-mono">{taxPercent(tax.percent)}%</td>
+                        <td>
+                          {tax.published === 1 ? (
+                            <Badge tone="ok">shown</Badge>
+                          ) : (
+                            <Badge tone="neutral">hidden</Badge>
+                          )}
+                        </td>
+                        <td className="text-end">
+                          <form
+                            action={saveCalculatorTaxAction}
+                            className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4 lg:items-end"
+                          >
+                            <input type="hidden" name="code" value={tax.code} />
+                            <Field label="Label" name="label" defaultValue={tax.label} required />
+                            <Field label="Rate %" name="percent" defaultValue={taxPercent(tax.percent)} required />
+                            <Field label="Order" name="position" defaultValue={String(tax.position)} />
+                            <div className="space-y-2 text-start">
+                              <label className="flex items-center gap-2 text-sm" style={{ color: "var(--ink)" }}>
+                                <input
+                                  type="checkbox"
+                                  name="published"
+                                  className="vw-check"
+                                  defaultChecked={tax.published === 1}
+                                />
+                                <span>Shown</span>
+                              </label>
+                              <SubmitButton size="sm" icon="check">
+                                Save
+                              </SubmitButton>
+                            </div>
+                          </form>
+                          <form action={deleteCalculatorTaxAction} className="mt-2 flex justify-end">
+                            <input type="hidden" name="code" value={tax.code} />
+                            <SubmitButton
+                              size="sm"
+                              variant="danger-quiet"
+                              icon="trash"
+                              pendingLabel="Removing…"
+                              confirm={`Remove ${tax.label} from every cost summary?`}
+                            >
+                              Remove
+                            </SubmitButton>
+                          </form>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+
+          <div className="vw-card-pad" style={{ borderTop: "1px solid var(--line)" }}>
+            <form action={saveCalculatorTaxAction} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:items-end">
+              <Field label="Code" name="code" placeholder="igst" required hint="Short key, letters and digits." />
+              <Field label="Label" name="label" placeholder="IGST" required hint="Shown on the cost summary." />
+              <Field label="Rate %" name="percent" placeholder="18" required />
+              <Field label="Order" name="position" placeholder="2" />
+              <div className="sm:col-span-2 lg:col-span-4 flex items-center gap-4">
+                <label className="flex items-center gap-2 text-sm" style={{ color: "var(--ink)" }}>
+                  <input type="checkbox" name="published" className="vw-check" defaultChecked />
+                  <span>Shown on quotes</span>
+                </label>
+                <SubmitButton size="sm" icon="plus" pendingLabel="Adding…">
+                  Add tax line
+                </SubmitButton>
+              </div>
             </form>
           </div>
         </Card>

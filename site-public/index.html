@@ -3235,61 +3235,8 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                     <div class="form-group">
                                         <label class="font-family01 fs-13 fw-500 position-absolute bg-white text-maroon-900">City</label>
                                         <select class="form-control font-family01 fs-14 select2-city" id="citySelect">
-                                            <option value="">Select a City</option>
-                                                                                        <option value="8">Agra</option>
-                                                                                        <option value="28">Ahmedabad</option>
-                                                                                        <option value="70">Ajabgarh</option>
-                                                                                        <option value="32">Ajmer</option>
-                                                                                        <option value="31">Amritsar</option>
-                                                                                        <option value="69">Andaman</option>
-                                                                                        <option value="34">Barwara</option>
-                                                                                        <option value="23">Bengal</option>
-                                                                                        <option value="17">Bengaluru</option>
-                                                                                        <option value="40">Bhopal</option>
-                                                                                        <option value="67">Bhubaneswar</option>
-                                                                                        <option value="13">Chandigarh</option>
-                                                                                        <option value="18">Chennai</option>
-                                                                                        <option value="46">Daman</option>
-                                                                                        <option value="15">Dehradun</option>
-                                                                                        <option value="4">Delhi NCR</option>
-                                                                                        <option value="7">Goa</option>
-                                                                                        <option value="36">Guwahati</option>
-                                                                                        <option value="43">Gwalior</option>
-                                                                                        <option value="44">Haridwar</option>
-                                                                                        <option value="27">Hyderabad</option>
-                                                                                        <option value="47">Indore</option>
-                                                                                        <option value="5">Jaipur</option>
-                                                                                        <option value="9">Jaisalmer</option>
-                                                                                        <option value="12">Jim Corbett</option>
-                                                                                        <option value="6">Jodhpur</option>
-                                                                                        <option value="71">Karjat</option>
-                                                                                        <option value="55">Karnal</option>
-                                                                                        <option value="24">Karnataka</option>
-                                                                                        <option value="51">kasauli</option>
-                                                                                        <option value="21">kerala</option>
-                                                                                        <option value="56">khimsar</option>
-                                                                                        <option value="72">Khopoli</option>
-                                                                                        <option value="19">kochi</option>
-                                                                                        <option value="25">Kolkata</option>
-                                                                                        <option value="20">Kovalam</option>
-                                                                                        <option value="68">Lakshadweep</option>
-                                                                                        <option value="73">Lonavala</option>
-                                                                                        <option value="1">Lucknow</option>
-                                                                                        <option value="26">Mumbai</option>
-                                                                                        <option value="10">Mussoorie</option>
-                                                                                        <option value="2">Noida</option>
-                                                                                        <option value="16">Pune</option>
-                                                                                        <option value="30">Pushkar</option>
-                                                                                        <option value="35">Raipur</option>
-                                                                                        <option value="33">Ranthambore</option>
-                                                                                        <option value="11">Rishikesh</option>
-                                                                                        <option value="42">Sakleshpur</option>
-                                                                                        <option value="14">Shimla</option>
-                                                                                        <option value="29">Surat</option>
-                                                                                        <option value="22">Trivandrum</option>
-                                                                                        <option value="3">Udaipur</option>
-                                                                                        <option value="41">Vrindavan</option>
-                                                                                    </select>
+<option value="">Select a City</option>
+</select>
                                         <img src="/media/legacy/4c4a6c49e3fdee7b.png" alt="city" decoding="async" loading="lazy">
                                     </div>
                                 </div>
@@ -4731,23 +4678,13 @@ $(document).ready(function () {
         .then(function (data) { window.__currencies = data; });
 
     var hotelRoomLimits = {};
-    var indiaCityIds = new Set([
-        '8','28','70','32','31','69','34','23','17','40','67','13','18','46','15','4',
-        '7','36','43','44','27','47','5','9','12','6','71','55','24','51','21','56',
-        '72','19','25','20','68','73','1','26','10','2','16','30','35','33','11',
-        '42','14','29','22','3','41'
-    ]);
+    // The city list is injected from calculator_cities; nothing here filters it.
 
     $('.select2-city').select2({
         placeholder: 'Select a City',
         allowClear: true,
         width: '100%',
         language: { noResults: function () { return 'No cities found'; } }
-    });
-
-    $('#citySelect option').each(function () {
-        var value = String($(this).val() || '');
-        if (value && !indiaCityIds.has(value)) $(this).remove();
     });
     $('#citySelect').val('').trigger('change.select2');
 
@@ -5107,31 +5044,17 @@ var checkInPicker = flatpickr('#checkIn', {
         `;
     } else {
 
-    var cgst       = grandTotal * 0.09;
-var sgst       = grandTotal * 0.09;
-var totalGst   = cgst + sgst;
-var grandWithGst = grandTotal + totalGst;
+    var grandWithGst = ViraayaTax.total(grandTotal);
 
 offcanvasBodyHtml += `
     <div class="gst-box mt-3 mb-2 p-3" style="background:#fdf6f0;border-radius:10px;border:1px solid #f0e0cc;">
-        <div class="d-flex justify-content-between mb-1" style="font-size:13px;color:#666;">
-            <span>Subtotal (Before GST)</span>
-            <span class="fw-600 text-dark">${convertAndFormat(grandTotal)}</span>
-        </div>
-        <div class="d-flex justify-content-between mb-1" style="font-size:13px;color:#666;">
-            <span>CGST (9%)</span>
-            <span class="fw-600 text-dark">${convertAndFormat(cgst)}</span>
-        </div>
-        <div class="d-flex justify-content-between mb-1" style="font-size:13px;color:#666;">
-            <span>SGST (9%)</span>
-            <span class="fw-600 text-dark">${convertAndFormat(sgst)}</span>
-        </div>
+        ${ViraayaTax.rowsHtml(grandTotal, convertAndFormat)}
         
     </div>
 
     <div class="cost-row total mb-2 d-flex justify-content-between align-items-center mt-3 p-3"
          style="background:linear-gradient(57deg,#FFF8F3,#FBF3E8);border-radius:10px;">
-        <span style="font-size:14px;font-weight:600;color:#2d2d2d;">Total Estimated Cost <small style="font-size:11px;color:#999;">(incl. GST)</small></span>
+        <span style="font-size:14px;font-weight:600;color:#2d2d2d;">Total Estimated Cost <small style="font-size:11px;color:#999;">(${ViraayaTax.totalNote()})</small></span>
         <span class="grandTotal text-prime">${convertAndFormat(grandWithGst)}</span>
     </div>
 

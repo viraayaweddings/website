@@ -133,6 +133,108 @@ function formatIndianPrice(amount, symbol) {
     return { init, formatPrice };
 })();
 
+/* ---------------------------------------------------------------------------
+ * Tax lines.
+ *
+ * Every calculator used to hardcode CGST 9% and SGST 9% -- four copies wrote
+ * the two rows out by hand, and /compare-hotel multiplied by a bare 1.18. The
+ * rates now come from `calculator_taxes`, injected into the page head as
+ * window.__VIRAAYA_CALC__.taxes by worker/site/calculator-inject.ts, so one
+ * admin edit moves every quote on the site and adding a third line needs no
+ * deploy.
+ *
+ * When the injection has not run -- an old cached shell, a database that could
+ * not be read -- `available()` is false and the callers show the subtotal with
+ * "taxes confirmed with your quote" rather than a total. Inventing 18% here is
+ * the one thing this must not do: it is the behaviour we are removing, and a
+ * wrong total presented confidently is worse than an honest partial one.
+ * ------------------------------------------------------------------------ */
+const ViraayaTax = (() => {
+    function rows() {
+        const config = window.__VIRAAYA_CALC__;
+        if (!config || !Array.isArray(config.taxes)) return null;
+        return config.taxes
+            .map(function (tax) {
+                return {
+                    label: String(tax && tax.label ? tax.label : ''),
+                    percent: parseFloat(tax && tax.percent) || 0,
+                };
+            })
+            .filter(function (tax) { return tax.label !== ''; });
+    }
+
+    function available() {
+        return rows() !== null;
+    }
+
+    /** "9.00" reads as "9%", "2.50" as "2.5%". */
+    function formatPercent(value) {
+        return String(Math.round(value * 100) / 100);
+    }
+
+    function totalPercent() {
+        const list = rows();
+        if (!list) return 0;
+        return list.reduce(function (sum, tax) { return sum + tax.percent; }, 0);
+    }
+
+    function multiplier() {
+        return 1 + totalPercent() / 100;
+    }
+
+    function total(subtotal) {
+        return (Number(subtotal) || 0) * multiplier();
+    }
+
+    function lines(subtotal) {
+        const base = Number(subtotal) || 0;
+        return (rows() || []).map(function (tax) {
+            return { label: tax.label, percent: tax.percent, amount: base * tax.percent / 100 };
+        });
+    }
+
+    function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, function (character) {
+            return {
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+            }[character];
+        });
+    }
+
+    /**
+     * The subtotal row plus one row per tax, in the markup all four
+     * offcanvas summaries already used. `format` is the page's own currency
+     * formatter, which differs between copies.
+     */
+    function rowsHtml(subtotal, format) {
+        const row = function (label, amount) {
+            return '<div class="d-flex justify-content-between mb-1" style="font-size:13px;color:#666;">'
+                + '<span>' + escapeHtml(label) + '</span>'
+                + '<span class="fw-600 text-dark">' + format(amount) + '</span>'
+                + '</div>';
+        };
+
+        let html = row(available() ? 'Subtotal (Before Tax)' : 'Subtotal', Number(subtotal) || 0);
+        lines(subtotal).forEach(function (tax) {
+            html += row(tax.label + ' (' + formatPercent(tax.percent) + '%)', tax.amount);
+        });
+        return html;
+    }
+
+    /** The small print beside "Total Estimated Cost". */
+    function totalNote() {
+        if (!available()) return 'taxes confirmed with your quote';
+        const list = rows();
+        if (!list.length) return 'no tax applied';
+        return 'incl. ' + formatPercent(totalPercent()) + '% '
+            + list.map(function (tax) { return tax.label; }).join(' + ');
+    }
+
+    return { available, lines, rowsHtml, totalNote, totalPercent, multiplier, total };
+})();
+
+window.ViraayaTax = ViraayaTax;
+
 const ViraayaCalculatorData = (() => {
     const cache = {};
     const originalFetch = window.fetch.bind(window);

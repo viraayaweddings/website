@@ -8,6 +8,7 @@ import {
   calculatorCurrencies,
   calculatorHotels,
   calculatorPrices,
+  calculatorTaxes,
   type CalculatorMonth,
 } from "@/worker/db/schema";
 import { invalidateCalculatorCache } from "@/worker/site/calculator-store";
@@ -367,6 +368,98 @@ export async function saveCalculatorPricesAction(formData: FormData): Promise<vo
   // only reach this one.
   await publishContentChange();
   done(target, "Prices saved.");
+}
+
+/* --------------------------------------------------------------- taxes --- */
+
+/**
+ * Save (or add) one tax line.
+ *
+ * Every calculator renders one summary row per published tax, in `position`
+ * order, and totals with the sum of their percentages. Nothing here is
+ * hardcoded on the pages any more, so this is the only place an Indian GST
+ * change, a new state levy or a service charge needs to be entered.
+ */
+export async function saveCalculatorTaxAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+
+  const code = text(formData, "code", 24).toLowerCase().replace(/[^a-z0-9_-]/g, "");
+  const label = text(formData, "label", 60);
+  if (!code) failed(CALCULATOR_PATH, "Give the tax a short code, e.g. cgst.");
+  if (!label) failed(CALCULATOR_PATH, "Enter the label shown on the cost summary, e.g. CGST.");
+
+  const rawPercent = String(formData.get("percent") || "").trim();
+  if (!/^\d*\.?\d+$/.test(rawPercent)) failed(CALCULATOR_PATH, "The rate is a number of percent, e.g. 9 or 2.5.");
+  const percent = Number.parseFloat(rawPercent);
+  if (!Number.isFinite(percent) || percent < 0) failed(CALCULATOR_PATH, "Enter the rate as a percentage.");
+  // A rate above this is a typo, and a typo here multiplies every quote on the
+  // site. There is no second place the number is checked.
+  if (percent > 100) failed(CALCULATOR_PATH, "That rate is over 100%; check the number.");
+
+  const published = formData.get("published") === "on" ? 1 : 0;
+  const rawPosition = String(formData.get("position") || "").trim();
+  const position = rawPosition ? Number.parseInt(rawPosition, 10) || 0 : 0;
+
+  await db
+    .insert(calculatorTaxes)
+    .values({ code, label, percent: percent.toFixed(2), published, position })
+    .onConflictDoUpdate({
+      target: calculatorTaxes.code,
+      set: { label, percent: percent.toFixed(2), published, position, updatedAt: new Date() },
+    });
+
+  await recordAudit(db, actor, "calculator.tax_saved", "calculator_tax", code, { label, percent });
+  invalidateCalculatorCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
+  done(CALCULATOR_PATH, `${label} saved.`);
+}
+
+export async function deleteCalculatorTaxAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+
+  const code = text(formData, "code", 24).toLowerCase();
+  if (!code) failed(CALCULATOR_PATH, "That tax no longer exists.");
+
+  const gone = await db
+    .delete(calculatorTaxes)
+    .where(eq(calculatorTaxes.code, code))
+    .returning({ code: calculatorTaxes.code });
+  if (!gone.length) failed(CALCULATOR_PATH, "That tax no longer exists.");
+
+  await recordAudit(db, actor, "calculator.tax_deleted", "calculator_tax", code, {});
+  invalidateCalculatorCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
+  done(CALCULATOR_PATH, "Tax removed. Every calculator now totals without it.");
+}
+
+export async function bulkDeleteCalculatorTaxesAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+  const codes = [
+    ...new Set(formData.getAll("ids").map((value) => String(value || "").trim().toLowerCase()).filter(Boolean)),
+  ].slice(0, 200);
+
+  if (!codes.length) failed(CALCULATOR_PATH, "Select at least one tax first.");
+
+  await db.delete(calculatorTaxes).where(inArray(calculatorTaxes.code, codes));
+
+  await recordAudit(db, actor, "calculator.tax_bulk_deleted", "calculator_tax", codes.join(","), {
+    count: codes.length,
+  });
+  invalidateCalculatorCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
+  done(CALCULATOR_PATH, `${codes.length} tax line${codes.length === 1 ? "" : "s"} deleted.`);
 }
 
 /* ---------------------------------------------------------- currencies --- */

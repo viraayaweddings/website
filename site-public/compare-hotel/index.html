@@ -3226,14 +3226,14 @@ function renderTable(hotelsData, selectedHotels) {
     bodyHtml += `</tr>`;
 
     const grandTotals      = {};
-    selectedHotels.forEach(h => { grandTotals[h.id] = (totals[h.id] || 0) * 1.18; });
+    selectedHotels.forEach(h => { grandTotals[h.id] = (totals[h.id] || 0) * ViraayaTax.multiplier(); });
     const grandTotalValues = selectedHotels.map(h => grandTotals[h.id]).filter(v => v > 0);
     const minGrandTotal    = grandTotalValues.length ? Math.min(...grandTotalValues) : null;
 
     bodyHtml += `<tr class="total-row align-middle">
         <td class="px-3 py-3">
             <span class="total-label">Total</span>
-            <small class="d-block" style="font-size:10px;color:#94a3b8;font-weight:400;">(incl. 18% GST)</small>
+            <small class="d-block" style="font-size:10px;color:#94a3b8;font-weight:400;">(${ViraayaTax.totalNote()})</small>
         </td>
         <td style="background:#FFF8F3;"></td>`;
 

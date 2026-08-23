@@ -24,6 +24,10 @@
     "media:audit": "node --env-file=.env.local scripts/audit-media-library.mjs",
     "db:audit": "node --env-file=.env.local scripts/audit-content-seed.mjs",
     "pages:seed": "node --experimental-strip-types --env-file=.env.local scripts/seed-static-pages.mjs --apply",
+    "templates:seed": "node --experimental-strip-types --env-file=.env.local scripts/seed-page-templates.mjs --apply",
+    "data:detach": "node scripts/detach-hardcoded-data.mjs --apply",
+    "data:audit": "node --experimental-strip-types --env-file=.env.local scripts/audit-page-data-sources.mjs",
+    "data:migrate": "node --experimental-strip-types --env-file=.env.local scripts/migrate-stored-pages.mjs --apply",
     "leads:purge": "node --experimental-strip-types scripts/purge-old-leads.mjs"
   },
   "dependencies": {

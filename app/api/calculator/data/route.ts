@@ -1,4 +1,4 @@
-import { loadCalculatorDataset } from "@/worker/site/calculator-store";
+import { CALCULATOR_CACHE_CONTROL, loadCalculatorDataset } from "@/worker/site/calculator-store";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -21,12 +21,14 @@ export async function GET(): Promise<Response> {
       hotelsByCity: data.hotelsByCity,
       prices: data.prices,
       currencies: data.currencies,
+      taxes: data.taxes,
+      roomsByHotel: data.roomsByHotel,
     },
     {
       headers: {
         // Short: an admin edit should show up quickly, and the payload is
         // served from the same region as the database.
-        "cache-control": "public, max-age=60, stale-while-revalidate=300",
+        "cache-control": CALCULATOR_CACHE_CONTROL,
       },
     },
   );

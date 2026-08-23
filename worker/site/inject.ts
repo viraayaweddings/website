@@ -12,6 +12,10 @@ import { whatsappHref, type ResolvedSettings } from "./settings";
 import { BLOG_LISTING_PATHS, blogSlugFromPath, blogTaxonomyFromPath, renderTaxonomyGrid } from "./blog";
 import { applyListingHandlers, applyPostHandlers } from "./blog-inject";
 import { hotelPathFrom } from "./hotel";
+import { applyCalculatorHandlers } from "./calculator-inject";
+import type { CalculatorConfig } from "./calculator-store";
+import { applyVenueListingHandlers } from "./venue-listing-inject";
+import type { VenueTypeOption } from "./venue-types";
 import { applyHotelHandlers } from "./hotel-inject";
 import {
   appendJsonLd,
@@ -52,6 +56,15 @@ export interface InjectionInput {
   labels?: ResolvedLabels;
   /** Set only for a page stored whole in static_pages. */
   staticPage?: StaticPage | null;
+  /**
+   * Cities, tax rates and currencies for the calculators.
+   *
+   * Null only where the caller has no database at all; an unreadable database
+   * yields a config with `loaded: false`, which the handlers skip.
+   */
+  calculator?: CalculatorConfig | null;
+  /** The wedding-type vocabulary the listing filters offer. */
+  venueTypes?: VenueTypeOption[];
 }
 
 /** Labels on the contact page, matched against the <h3> above each value. */
@@ -71,6 +84,10 @@ function isBlogListing(pathname: string): boolean {
 
 export function needsInjection(pathname: string, input: InjectionInput): boolean {
   if (input.settings.hasStoredValues) return true;
+  // A page with a calculator has data to receive even when nothing else on it
+  // is admin-managed: /hotel-cost-calculator has no stored settings of its own.
+  if (input.calculator?.loaded) return true;
+  if (input.venueTypes?.length) return true;
   if (isHomepage(pathname) && input.heroSlides.length > 0) return true;
   if (isBlogListing(pathname) && input.blogPosts.length > 0) return true;
   if (blogSlugFromPath(pathname) && input.blogPost) return true;
@@ -174,7 +191,14 @@ export function injectManagedContent(
 
   const hotelPath = hotelPathFrom(pathname);
   if (input.hotel && hotelPath?.slug === input.hotel.slug && hotelPath.city === input.hotel.city) {
-    applyHotelHandlers(rewriter, input.hotel, input.venues, input.cityPage?.cityId ?? "", input.labels);
+    applyHotelHandlers(
+      rewriter,
+      input.hotel,
+      input.venues,
+      input.cityPage?.cityId ?? "",
+      input.labels,
+      input.calculator,
+    );
   }
 
   // Gated on the city record rather than on it having venues: a city that
@@ -262,6 +286,14 @@ export function injectManagedContent(
       });
     }
   }
+
+  // Outside the `applyChanges` gate: the calculator config is the page's own
+  // data, not an admin override of it, and a page that skipped the rest still
+  // needs its dropdown and its tax rates.
+  if (input.calculator) applyCalculatorHandlers(rewriter, input.calculator);
+  // Same reasoning: the filter list is the page's own data, and the selector
+  // only matches the 54 pages that carry the filter.
+  if (input.venueTypes) applyVenueListingHandlers(rewriter, input.venueTypes);
 
   const siteOrigin = origin || "https://viraayaweddings.com";
   const structuredData = [

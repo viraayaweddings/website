@@ -1,6 +1,7 @@
 // Reads the session cookie on every request; never prerender or cache.
 export const dynamic = "force-dynamic";
 
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { parseRecordId } from "@/worker/admin/record-id";
 import { versionOf } from "../../_lib/concurrency";
@@ -9,6 +10,7 @@ import { hotels, POST_STATUSES } from "@/worker/db/schema";
 import { parseFaqs } from "@/worker/site/blog";
 import { parseHighlights } from "@/worker/site/hotel";
 import { parseNearby } from "@/worker/site/venue-listing";
+import { loadAllVenueTypes, parseWeddingTypes } from "@/worker/site/venue-types";
 import { AdminShell } from "../../_components/AdminShell";
 import { SubmitButton, UnsavedGuard, VersionField } from "../../_components/FormControls";
 import { MediaPicker } from "../../_components/MediaPicker";
@@ -54,6 +56,10 @@ export default async function EditHotelPage({
   const highlights = parseHighlights(hotel.highlights);
   const faqs = parseFaqs(hotel.faqs);
   const cities = await db.selectDistinct({ city: hotels.city }).from(hotels).orderBy(asc(hotels.city));
+  // Hidden types are offered too: a venue already tagged with one should not
+  // lose the tag just because the filter is currently switched off.
+  const venueTypeOptions = await loadAllVenueTypes();
+  const selectedTypes = new Set(parseWeddingTypes(hotel.weddingTypes));
 
   return (
     <AdminShell
@@ -280,6 +286,47 @@ export default async function EditHotelPage({
                 defaultValue={hotel.cardPax}
                 hint="Leave blank to use the guest capacity above."
               />
+              <Field
+                label="Listing order"
+                name="listingPosition"
+                defaultValue={String(hotel.listingPosition)}
+                hint="Lower comes first on /hotel-listing. Leave high to sort to the end."
+              />
+              <div className="space-y-2">
+                {/*
+                  The filters on /hotel-listing and the city index pages read
+                  these tags, and the list itself comes from `venue_types`, so
+                  the boxes here and the boxes a visitor sees are the same rows.
+                */}
+                <span className="text-sm font-medium" style={{ color: "var(--ink)" }}>
+                  Wedding types
+                </span>
+                <p className="text-xs" style={{ color: "var(--ink-faint)" }}>
+                  What /hotel-listing filters this venue under.
+                </p>
+                {venueTypeOptions.length === 0 ? (
+                  <p className="text-xs" style={{ color: "var(--ink-faint)" }}>
+                    No wedding types are set up yet.
+                  </p>
+                ) : (
+                  venueTypeOptions.map((type) => (
+                    <label
+                      key={type.id}
+                      className="flex items-center gap-2 text-sm"
+                      style={{ color: "var(--ink)" }}
+                    >
+                      <input
+                        type="checkbox"
+                        name="weddingTypes"
+                        value={type.slug}
+                        className="vw-check"
+                        defaultChecked={selectedTypes.has(type.slug)}
+                      />
+                      <span>{type.label}</span>
+                    </label>
+                  ))
+                )}
+              </div>
             </div>
           </Card>
 
@@ -300,9 +347,20 @@ export default async function EditHotelPage({
                 label="Hotel ID"
                 name="externalHotelId"
                 defaultValue={hotel.externalHotelId}
-                hint="Used by the enquiry form and cost calculator. Change only if you know it moved."
+                hint="Links this venue to its rates in the cost calculator. Must name a hotel that exists there, or be blank."
               />
-              <Field label="Total rooms" name="totalRooms" defaultValue={hotel.totalRooms} />
+              {/*
+                "Total rooms" used to sit here, holding the same number as the
+                calculator's own field with nothing keeping the two in step.
+                The calculator is the single source; edit it there.
+              */}
+              <p className="text-xs" style={{ color: "var(--ink-faint)" }}>
+                Room capacity is set under{" "}
+                <Link href="/admin/calculator/hotels" style={{ textDecoration: "underline" }}>
+                  Cost calculator → Hotels
+                </Link>
+                , which is what caps the rooms input on this venue&rsquo;s calculator.
+              </p>
             </div>
           </Card>
 

@@ -2,6 +2,7 @@
  * HTMLRewriter handlers that fill the venue page shell with database content.
  */
 import type { Hotel } from "../db/schema";
+import type { CalculatorConfig } from "./calculator-store";
 import { parseNearby, renderNearbyCards, resolveVenues } from "./venue-listing";
 import { GLANCE_LABEL_KEYS, renderLabel, type ResolvedLabels } from "./labels";
 import { parseFaqs } from "./blog";
@@ -31,6 +32,8 @@ export function applyHotelHandlers(
   cityId = "",
   /** Editable section headings and field labels. */
   labels?: ResolvedLabels,
+  /** Cities, taxes and room capacities from the calculator tables. */
+  calculator?: CalculatorConfig | null,
 ): void {
   const canonical = `/destination-wedding/${hotel.city}/${hotel.slug}`;
 
@@ -241,9 +244,22 @@ export function applyHotelHandlers(
     },
   });
 
+  /**
+   * Room capacity, from `calculator_hotels`.
+   *
+   * `hotels.total_rooms` held the same number in a second admin field that
+   * nothing kept in step with this one -- the venue calculator capped from one,
+   * /compare-hotel capped from the other, and the two could disagree without
+   * anything saying so. The calculator table is the single source now; the
+   * venue field is gone. Falling back to whatever the shell already carries is
+   * deliberate: an id that names no calculator hotel is a link to fix in the
+   * panel, not a reason to uncap the input.
+   */
   rewriter.on("#hotelTotalRooms", {
     element(element) {
-      element.setAttribute("value", hotel.totalRooms);
+      const cap = calculator?.roomsByHotel?.[String(hotel.externalHotelId).trim()];
+      if (cap === undefined) return;
+      element.setAttribute("value", String(cap));
     },
   });
 

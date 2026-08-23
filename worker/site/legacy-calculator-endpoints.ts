@@ -11,10 +11,16 @@
  * so an admin's price edit reaches these pages too. Response shapes are dictated
  * by the page scripts, which cannot be changed per page -- see the comments on
  * each handler.
+ *
+ * There is no bundled fallback behind any of these. An empty answer here reads
+ * to the visitor as "nothing to price", which currency-switcher.js turns into
+ * the "Price on request" overlay; a fallback would instead quote confidently
+ * from prices frozen at the clone.
  */
-import { calculatorData } from "../calculator-data";
 import {
+  loadCalculatorConfig,
   loadCalculatorDataset,
+  type CalculatorConfig,
   type CalculatorDataset,
   type HotelRow,
   type PriceCell,
@@ -50,17 +56,14 @@ const EMPTY_PRICE: PriceCell = {
   dinner_price: "0.00",
 };
 
-/**
- * The dataset, falling back to the bundled copy.
- *
- * An unseeded or unreachable database returns empty collections, and an empty
- * hotel list here reads to the visitor as "no hotels in this city" rather than
- * as a fault. The bundle is the same table the pages shipped with.
- */
+/** The price table. Only the two price handlers need it. */
 async function dataset(): Promise<CalculatorDataset> {
-  const live = await loadCalculatorDataset();
-  if (live.hotels.length || Object.keys(live.prices).length) return live;
-  return calculatorData as unknown as CalculatorDataset;
+  return loadCalculatorDataset();
+}
+
+/** Everything but the price table, which is all the list handlers read. */
+async function config(): Promise<CalculatorConfig> {
+  return loadCalculatorConfig();
 }
 
 function json(body: unknown, status = 200): Response {
@@ -75,7 +78,7 @@ export function consultationSlots(): Response {
 /** GET /get-cities?search=<term> — select2 on /compare-hotel reads {id, name}. */
 export async function getCities(request: Request): Promise<Response> {
   const search = (new URL(request.url).searchParams.get("search") || "").trim().toLowerCase();
-  const { cities } = await dataset();
+  const { cities } = await config();
   const matches = search ? cities.filter((city) => city.name.toLowerCase().includes(search)) : cities;
   return json(matches.map((city) => ({ id: city.id, name: city.name })));
 }
@@ -100,7 +103,7 @@ function hotelPayload(hotel: HotelRow) {
 export async function getHotelsByCity(request: Request, cityId?: string): Promise<Response> {
   const id = (cityId ?? new URL(request.url).searchParams.get("city") ?? "").trim();
   if (!id) return json([]);
-  const { hotelsByCity } = await dataset();
+  const { hotelsByCity } = await config();
   return json((hotelsByCity[id] ?? []).map(hotelPayload));
 }
 

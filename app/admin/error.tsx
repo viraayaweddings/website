@@ -1,5 +1,7 @@
 "use client";
 
+import { isDatabaseError } from "./_lib/db-errors";
+
 function isRedirectError(error: unknown): boolean {
   if (typeof error !== "object" || error === null) return false;
   const digest = "digest" in error ? String((error as { digest?: unknown }).digest ?? "") : "";
@@ -15,16 +17,18 @@ export default function AdminError({ error, reset }: { error: Error & { digest?:
    * Fixed wording only.
    *
    * This used to fall through to `error.message`, and a postgres driver error
-   * names the host, port and role it could not reach. /admin/health already
-   * does the right thing -- full detail for a signed-in admin, a bare status
-   * for anyone else -- so the detail is pointed at rather than printed.
+   * names the host, port and role it could not reach -- while a drizzle query
+   * error puts the whole statement and its bound parameters there. /admin/health
+   * already does the right thing -- full detail for a signed-in admin, a bare
+   * status for anyone else -- so the detail is pointed at rather than printed.
+   *
+   * Classification is best-effort: in production Next replaces the message with
+   * a generic string before this component ever sees it, leaving only `digest`.
+   * The fallback wording is written to be right in that case too.
    */
-  const message =
-    error.name === "DatabaseUnavailableError" ||
-    error.name === "SchemaOutOfDateError" ||
-    /database|postgres|DATABASE_URL|POSTGRES_URL/i.test(error.message)
-      ? "The admin panel cannot reach Postgres. In Vercel, confirm POSTGRES_URL is set for Production, redeploy, then open /admin/health to see the exact error."
-      : "Something went wrong loading the admin panel. Open /admin/health for the details, or quote the reference below.";
+  const message = isDatabaseError(error)
+    ? "The admin panel cannot reach Postgres. In Vercel, confirm POSTGRES_URL is set for Production, redeploy, then open /admin/health to see the exact error."
+    : "Something went wrong loading the admin panel. Open /admin/health for the details, or quote the reference below.";
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-10">

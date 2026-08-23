@@ -15,6 +15,11 @@
  *   node --env-file=.env.local scripts/seed-static-pages.mjs --apply
  *   node --env-file=.env.local scripts/seed-static-pages.mjs --apply  *     --refresh /check-hotel-availability
  *
+ * `--refresh-calculators` overwrites every stored page that carries a
+ * calculator, matched on the file's own contents rather than a path list so it
+ * cannot go stale. Use it after scripts/detach-hardcoded-data.mjs, or the
+ * stored copies keep quoting the tax rate that was compiled into them.
+ *
  * `--refresh <path>` (repeatable) overwrites a stored page from its file. The
  * insert below deliberately never overwrites, so a fix made to a cloned file --
  * a script the page needs, a broken handler -- could not otherwise reach a page
@@ -45,6 +50,10 @@ const refreshPaths = new Set(
     return paths;
   }, []),
 );
+
+/** Every page whose markup calls into the shared calculator helpers. */
+const refreshCalculators = process.argv.includes("--refresh-calculators");
+const CALCULATOR_MARKER = /ViraayaTax|id="citySelect"|id="hotelId"/;
 
 const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL;
 if (!databaseUrl) {
@@ -134,6 +143,13 @@ try {
   const existing = new Set((await sql`select path from static_pages`).map((r) => r.path));
   const missing = candidates.filter((c) => !existing.has(c.path));
   console.log(`[pages] already stored: ${existing.size}, to insert: ${missing.length}`);
+
+  if (refreshCalculators) {
+    for (const candidate of candidates) {
+      if (CALCULATOR_MARKER.test(candidate.html)) refreshPaths.add(candidate.path);
+    }
+    console.log(`[pages] --refresh-calculators matched ${refreshPaths.size} page(s)`);
+  }
 
   const refreshing = candidates.filter((c) => refreshPaths.has(c.path) && existing.has(c.path));
   for (const path of refreshPaths) {

@@ -22,6 +22,8 @@ import { loadSiteSettings } from "./settings";
 import { cityFromListingPath, venuesForCity } from "./venue-listing";
 import { loadCityPage, loadTemplate } from "./template";
 import { loadLabels, type ResolvedLabels } from "./labels";
+import { loadCalculatorConfig } from "./calculator-store";
+import { loadVenueTypes } from "./venue-types";
 import { findStaticPage, loadStaticPage, normalizeStaticPath } from "./static-pages";
 
 export interface ResolvedPage {
@@ -84,7 +86,14 @@ export async function resolvePage(
 ): Promise<ResolvedPage | null> {
   const settings = await loadSiteSettings(env);
   const labels = await loadLabels(env);
-  const base = { settings, labels, ...EMPTY };
+  // Cities and tax rates for whichever calculator this page carries. Loaded for
+  // every page rather than gated on a path list: the config is cached per
+  // instance and shared, and a gate is what goes stale when a calculator is
+  // added to a page nobody remembered to add to the list.
+  const calculator = await loadCalculatorConfig();
+  // The wedding-type filter list, for the 54 pages that carry one.
+  const venueTypes = await loadVenueTypes(env);
+  const base = { settings, labels, calculator, venueTypes, ...EMPTY };
 
   // Checked before the pattern matches below: a stored page is an exact path,
   // and one of them (/destination-wedding-in-goa) sits close enough to the venue

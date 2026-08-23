@@ -213,8 +213,19 @@ export default async function NewHotelPage({
           <Card pad={false}>
             <CardHead title="Booking identifiers" icon="link" />
             <div className="vw-card-pad space-y-3">
-              <Field label="Hotel ID" name="externalHotelId" hint="Used by the enquiry form and cost calculator." />
-              <Field label="Total rooms" name="totalRooms" />
+              <Field
+                label="Hotel ID"
+                name="externalHotelId"
+                hint="Links this venue to its rates in the cost calculator. Must name a hotel that exists there, or be blank."
+              />
+              <p className="text-xs" style={{ color: "var(--ink-faint)" }}>
+                Room capacity is set under Cost calculator → Hotels.
+              </p>
+              {/*
+                The wedding-type tags and the listing order decide where this
+                venue appears on /hotel-listing. Both are editable after it is
+                created; a new venue starts untagged and at the end of the list.
+              */}
             </div>
           </Card>
 

@@ -31,7 +31,7 @@ export const NAV: NavGroup[] = [
   {
     title: "Content",
     items: [
-      { href: "/admin/hotels", label: "Venues", icon: "venue", hint: "Every venue page" },
+      { href: "/admin/hotels", label: "Venues", icon: "venue", hint: "Every venue page, and the wedding types they list under" },
       { href: "/admin/blogs", label: "Articles", icon: "article", hint: "Blog posts, categories and tags" },
       { href: "/admin/cities", label: "City pages", icon: "city", adminOnly: true, hint: "Which venues each city lists" },
       { href: "/admin/hero", label: "Hero slider", icon: "slides", hint: "The homepage carousel" },
@@ -43,7 +43,7 @@ export const NAV: NavGroup[] = [
     title: "Configuration",
     items: [
       { href: "/admin/settings", label: "Contact details", icon: "settings", adminOnly: true, hint: "Phone, email, address, social" },
-      { href: "/admin/calculator", label: "Cost calculator", icon: "grid", adminOnly: true, hint: "Cities, hotels, monthly prices and currencies" },
+      { href: "/admin/calculator", label: "Cost calculator", icon: "grid", adminOnly: true, hint: "Cities, hotels, monthly prices, tax rates and currencies" },
       { href: "/admin/labels", label: "Section headings", icon: "type", adminOnly: true, hint: "Fixed wording across the site" },
       { href: "/admin/users", label: "Users", icon: "users", adminOnly: true, hint: "Who can sign in, and as what" },
       // Open to every role: this is the only place anyone can change their own

@@ -7,8 +7,10 @@ import { releaseImage, uploadImage } from "@/worker/admin/media-store";
 import { mediaKeyFrom, mediaPathFromKey, readMediaPathValue } from "@/worker/admin/media-path";
 import { readRichText } from "@/worker/admin/rich-text";
 import { highestId, readRowIndices, TooManyRowsError } from "@/worker/admin/form-rows";
-import { cityListings, hotels, POST_STATUSES, type BlogFaq, type HotelHighlight, type PostStatus } from "@/worker/db/schema";
+import { cityListings, hotels, venueTypes, POST_STATUSES, type BlogFaq, type HotelHighlight, type PostStatus } from "@/worker/db/schema";
 import { invalidateHotelCache } from "@/worker/site/hotel";
+import { loadCalculatorConfig } from "@/worker/site/calculator-store";
+import { invalidateVenueTypeCache, loadAllVenueTypes } from "@/worker/site/venue-types";
 import { invalidateTemplateCache } from "@/worker/site/template";
 import { invalidateCityListingCache } from "@/worker/site/venue-listing";
 import { assertSameOrigin, recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
@@ -24,6 +26,62 @@ function failed(target: string, message: string): never {
 
 function done(target: string, message: string): never {
   redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`));
+}
+
+/**
+ * Checks the venue's calculator link before it is stored.
+ *
+ * `external_hotel_id` is what joins a venue page to its rates and its room cap.
+ * Left blank or pointing at nothing, the page still renders a working-looking
+ * calculator that quotes the wedding at zero: the price lookup misses, every
+ * rate reads as 0, and the "Price on request" guard does not fire because it
+ * has no hotel id to check. Refusing the save is the only point at which that
+ * is visible to anyone.
+ *
+ * Blank is still allowed -- a venue can legitimately be published before it is
+ * priced -- but a value that names no calculator hotel is not.
+ */
+async function readCalculatorHotelId(value: string, target: string): Promise<string> {
+  const id = value.trim();
+  if (!id) return "";
+
+  const { roomsByHotel } = await loadCalculatorConfig();
+  if (!Object.prototype.hasOwnProperty.call(roomsByHotel, id)) {
+    failed(
+      target,
+      `Hotel ID ${id} is not in the cost calculator. Add it under Cost calculator → Hotels first, or leave the field blank.`,
+    );
+  }
+  return id;
+}
+
+/**
+ * The wedding-type tags, checked against the vocabulary before they are stored.
+ *
+ * A slug that names no `venue_types` row would tag the venue for a filter that
+ * does not exist -- invisible on the venue page, and quietly missing from the
+ * listing. Storing a sorted array keeps the column stable across saves.
+ */
+async function readWeddingTypes(formData: FormData): Promise<string> {
+  const known = new Set((await loadAllVenueTypes()).map((type) => type.slug));
+  const chosen = [
+    ...new Set(
+      formData
+        .getAll("weddingTypes")
+        .map((value) => String(value || "").trim())
+        .filter((slug) => known.has(slug)),
+    ),
+  ].sort();
+  return JSON.stringify(chosen);
+}
+
+/** Lower sorts first on /hotel-listing; anything unreadable goes to the end. */
+function readListingPosition(formData: FormData): number {
+  const raw = String(formData.get("listingPosition") || "").trim();
+  if (!raw) return 9999;
+  const value = Number.parseInt(raw, 10);
+  if (!Number.isFinite(value) || value < 0) return 9999;
+  return Math.min(value, 999_999);
 }
 
 /** The list view to return to, so filters, sort and page survive an action. */
@@ -197,8 +255,9 @@ export async function createHotelAction(formData: FormData): Promise<void> {
       cityLabel: text("cityLabel", 200),
       venueCategory: text("venueCategory", 120),
       cardPax: text("cardPax", 60),
-      externalHotelId: text("externalHotelId", 20),
-      totalRooms: text("totalRooms", 20),
+      externalHotelId: await readCalculatorHotelId(text("externalHotelId", 20), target),
+      weddingTypes: await readWeddingTypes(formData),
+      listingPosition: readListingPosition(formData),
     })
     .returning({ id: hotels.id });
 
@@ -416,8 +475,9 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
       cityLabel: text("cityLabel", 200),
       venueCategory: text("venueCategory", 120),
       cardPax: text("cardPax", 60),
-      externalHotelId: text("externalHotelId", 20),
-      totalRooms: text("totalRooms", 20),
+      externalHotelId: await readCalculatorHotelId(text("externalHotelId", 20), target),
+      weddingTypes: await readWeddingTypes(formData),
+      listingPosition: readListingPosition(formData),
       updatedAt: new Date(),
     })
       .where(eq(hotels.id, id))
@@ -517,4 +577,96 @@ function readNearbyList(value: string): string[] {
   } catch {
     return [];
   }
+}
+
+/* -------------------------------------------------------- wedding types --- */
+
+/**
+ * Save (or add) one wedding type.
+ *
+ * The same rows render the filter checkboxes on /hotel-listing and the 53 city
+ * index pages, the tag checkboxes on the venue form, and the `types` array in
+ * the listing dataset. Before this they were three separate copies of the same
+ * six values, and nothing kept them in step.
+ */
+export async function saveVenueTypeAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+
+  const slug = String(formData.get("slug") || "").trim().toLowerCase().replace(/[^a-z0-9-]/g, "");
+  const label = String(formData.get("label") || "").trim().slice(0, 60);
+  if (!slug) failed(HOTELS_PATH, "Give the wedding type a short slug, e.g. palace.");
+  if (!label) failed(HOTELS_PATH, "Enter the label shown beside the checkbox, e.g. Palace Wedding.");
+
+  const rawId = String(formData.get("typeId") || "").trim();
+  const rawPosition = String(formData.get("position") || "").trim();
+  const position = rawPosition ? Number.parseInt(rawPosition, 10) || 0 : 0;
+  const published = formData.get("published") === "on" ? 1 : 0;
+
+  const existing = await db.select().from(venueTypes);
+
+  let id: number;
+  if (rawId) {
+    id = Number.parseInt(rawId, 10);
+    if (!Number.isFinite(id)) failed(HOTELS_PATH, "That wedding type no longer exists.");
+  } else {
+    // The id is the `wedding_types[]=N` value. Continuing the sequence keeps
+    // every existing listing link pointing at the type it always did.
+    id = existing.reduce((highest, row) => Math.max(highest, row.id), 0) + 1;
+  }
+
+  const clash = existing.find((row) => row.slug === slug && row.id !== id);
+  if (clash) failed(HOTELS_PATH, `The slug "${slug}" is already used by ${clash.label}.`);
+
+  await db
+    .insert(venueTypes)
+    .values({ id, slug, label, published, position })
+    .onConflictDoUpdate({
+      target: venueTypes.id,
+      set: { slug, label, published, position, updatedAt: new Date() },
+    });
+
+  await recordAudit(db, actor, "venue_type.saved", "venue_type", id, { slug, label });
+  invalidateVenueTypeCache();
+  // Tells the other instances their caches are stale; the local call above
+  // only reaches this one.
+  await publishContentChange();
+  done(HOTELS_PATH, `${label} saved.`);
+}
+
+/**
+ * Remove a wedding type.
+ *
+ * Refused while a venue still carries the tag: deleting it would leave that
+ * venue tagged for a filter nobody can select, and no page would say so.
+ * Unpublishing is the way to take a filter down without untagging anything.
+ */
+export async function deleteVenueTypeAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+
+  const id = Number.parseInt(String(formData.get("typeId") || "").trim(), 10);
+  if (!Number.isFinite(id)) failed(HOTELS_PATH, "That wedding type no longer exists.");
+
+  const row = (await db.select().from(venueTypes).where(eq(venueTypes.id, id)).limit(1))[0];
+  if (!row) failed(HOTELS_PATH, "That wedding type no longer exists.");
+
+  const tagged = await db
+    .select({ id: hotels.id })
+    .from(hotels)
+    .where(like(hotels.weddingTypes, `%"${row.slug}"%`));
+  if (tagged.length) {
+    failed(
+      HOTELS_PATH,
+      `${tagged.length} venue(s) are still tagged "${row.label}". Untag them first, or hide the type instead.`,
+    );
+  }
+
+  await db.delete(venueTypes).where(eq(venueTypes.id, id));
+  await recordAudit(db, actor, "venue_type.deleted", "venue_type", id, { slug: row.slug });
+  invalidateVenueTypeCache();
+  await publishContentChange();
+  done(HOTELS_PATH, `${row.label} removed.`);
 }

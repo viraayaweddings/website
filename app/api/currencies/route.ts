@@ -1,18 +1,18 @@
-import { loadCalculatorDataset } from "@/worker/site/calculator-store";
+import { CALCULATOR_CACHE_CONTROL, loadCalculatorConfig } from "@/worker/site/calculator-store";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-/** Currency list consumed by site-public/js/currency-switcher.js. */
-const FALLBACK = [
-  { name: "Indian Rupee", code: "INR", symbol: "₹", rate_to_usd: 94.15, is_default: true },
-] as const;
-
+/**
+ * Currency list consumed by site-public/js/currency-switcher.js.
+ *
+ * There is no hardcoded fallback. A currency list this handler invented would
+ * be a rate nobody can edit, quietly converting every price on the site.
+ */
 export async function GET(): Promise<Response> {
-  const data = await loadCalculatorDataset();
-  const currencies = data.currencies.length > 0 ? data.currencies : FALLBACK;
+  const { currencies } = await loadCalculatorConfig();
 
   return Response.json(currencies, {
-    headers: { "cache-control": "public, max-age=60, stale-while-revalidate=300" },
+    headers: { "cache-control": CALCULATOR_CACHE_CONTROL },
   });
 }

@@ -4,15 +4,17 @@ export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { and, asc, desc, eq, like, or, sql, type SQL } from "drizzle-orm";
 import { hotels } from "@/worker/db/schema";
+import { loadCalculatorConfig } from "@/worker/site/calculator-store";
+import { loadAllVenueTypes } from "@/worker/site/venue-types";
 import { AdminShell } from "../_components/AdminShell";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
 import { AutoSubmitControls, LiveSearch, SubmitButton } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
-import { Card, EmptyState, LinkButton, StatusBadge, formatCount, formatRelative } from "../_components/ui";
+import { Badge, Card, CardHead, EmptyState, Field, LinkButton, StatusBadge, formatCount, formatRelative } from "../_components/ui";
 import { currentTime } from "../_lib/clock";
 import { isAdmin, requireDb, requireUser } from "../_lib/auth";
-import { bulkDeleteHotelsAction, deleteHotelAction } from "./actions";
+import { bulkDeleteHotelsAction, deleteHotelAction, deleteVenueTypeAction, saveVenueTypeAction } from "./actions";
 
 const PAGE_SIZE = 40;
 const HOTELS_BULK_FORM = "hotels-bulk-form";
@@ -61,10 +63,12 @@ export default async function HotelsPage({
   const listQuery = db.select().from(hotels);
   const countQuery = db.select({ total: sql<number>`count(*)` }).from(hotels);
 
-  const [totals, cities, drafts] = await Promise.all([
+  const [totals, cities, drafts, calculator, weddingTypeRows] = await Promise.all([
     where ? countQuery.where(where) : countQuery,
     db.selectDistinct({ city: hotels.city }).from(hotels).orderBy(asc(hotels.city)),
     db.select({ total: sql<number>`count(*)` }).from(hotels).where(eq(hotels.status, "draft")),
+    loadCalculatorConfig(),
+    loadAllVenueTypes(),
   ]);
 
   const total = Number(totals[0]?.total ?? 0);
@@ -262,8 +266,15 @@ export default async function HotelsPage({
                   <td className="capitalize" style={{ color: "var(--ink-soft)" }}>
                     {hotel.city}
                   </td>
+                  {/*
+                    Room count comes from the cost calculator, which is the only
+                    place it is stored now. "Not linked" is not cosmetic: that
+                    venue's calculator has no rates and no cap behind it.
+                  */}
                   <td className="tabular-nums" style={{ color: "var(--ink-soft)" }}>
-                    {hotel.totalRooms || "—"}
+                    {calculator.roomsByHotel[hotel.externalHotelId.trim()] ?? (
+                      <span className="vw-hint">not linked</span>
+                    )}
                   </td>
                   <td>
                     <StatusBadge status={hotel.status} />
@@ -321,6 +332,113 @@ export default async function HotelsPage({
             ) : null}
           </div>
         </nav>
+      ) : null}
+
+      {isAdmin(user) ? (
+        <div className="mt-4">
+          <Card pad={false}>
+            <CardHead
+              title="Wedding types"
+              icon="grid"
+              hint="The filter list on /hotel-listing and every city page"
+            />
+            <div className="vw-card-pad" style={{ borderBottom: "1px solid var(--line)" }}>
+              <p className="text-sm" style={{ color: "var(--ink-soft)" }}>
+                These rows render three things at once: the Wedding Type filters a visitor sees, the tag
+                checkboxes on each venue, and the tags in the listing dataset. The number is what appears in
+                a listing URL as <code>wedding_types[]</code>, so it is kept rather than reassigned.
+              </p>
+            </div>
+            {weddingTypeRows.length === 0 ? (
+              <EmptyState icon="grid" title="No wedding types yet">
+                Add one; until then /hotel-listing shows no Wedding Type filter.
+              </EmptyState>
+            ) : (
+              <div className="vw-table-wrap">
+                <table className="vw-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Slug</th>
+                      <th>Label</th>
+                      <th>Shown</th>
+                      <th className="text-end">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {weddingTypeRows.map((type) => (
+                      <tr key={type.id}>
+                        <td className="vw-mono">{type.id}</td>
+                        <td className="vw-mono">{type.slug}</td>
+                        <td>{type.label}</td>
+                        <td>
+                          {type.published === 1 ? (
+                            <Badge tone="ok">shown</Badge>
+                          ) : (
+                            <Badge tone="neutral">hidden</Badge>
+                          )}
+                        </td>
+                        <td className="text-end">
+                          <form
+                            action={saveVenueTypeAction}
+                            className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4 lg:items-end"
+                          >
+                            <input type="hidden" name="typeId" value={type.id} />
+                            <Field label="Slug" name="slug" defaultValue={type.slug} required />
+                            <Field label="Label" name="label" defaultValue={type.label} required />
+                            <Field label="Order" name="position" defaultValue={String(type.position)} />
+                            <div className="space-y-2 text-start">
+                              <label className="flex items-center gap-2 text-sm" style={{ color: "var(--ink)" }}>
+                                <input
+                                  type="checkbox"
+                                  name="published"
+                                  className="vw-check"
+                                  defaultChecked={type.published === 1}
+                                />
+                                <span>Shown</span>
+                              </label>
+                              <SubmitButton size="sm" icon="check">
+                                Save
+                              </SubmitButton>
+                            </div>
+                          </form>
+                          <form action={deleteVenueTypeAction} className="mt-2 flex justify-end">
+                            <input type="hidden" name="typeId" value={type.id} />
+                            <SubmitButton
+                              size="sm"
+                              variant="danger-quiet"
+                              icon="trash"
+                              pendingLabel="Removing…"
+                              confirm={`Remove ${type.label}? Only possible while no venue is tagged with it.`}
+                            >
+                              Remove
+                            </SubmitButton>
+                          </form>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            <div className="vw-card-pad" style={{ borderTop: "1px solid var(--line)" }}>
+              <form action={saveVenueTypeAction} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:items-end">
+                <Field label="Slug" name="slug" placeholder="beach" required hint="Letters, digits and hyphens." />
+                <Field label="Label" name="label" placeholder="Beach Wedding" required />
+                <Field label="Order" name="position" placeholder="6" />
+                <div className="flex items-center gap-4">
+                  <label className="flex items-center gap-2 text-sm" style={{ color: "var(--ink)" }}>
+                    <input type="checkbox" name="published" className="vw-check" defaultChecked />
+                    <span>Shown</span>
+                  </label>
+                  <SubmitButton size="sm" icon="plus" pendingLabel="Adding…">
+                    Add type
+                  </SubmitButton>
+                </div>
+              </form>
+            </div>
+          </Card>
+        </div>
       ) : null}
     </AdminShell>
   );

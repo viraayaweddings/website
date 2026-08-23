@@ -1,9 +1,0 @@
-[
-  {
-    "name": "Indian Rupee",
-    "code": "INR",
-    "symbol": "\u20b9",
-    "rate_to_usd": 94.15,
-    "is_default": true
-  }
-]

@@ -1,6 +1,7 @@
 import { sql } from "drizzle-orm";
 import { getDb } from "@/worker/db/client";
 import { getDatabaseUrl } from "@/worker/env";
+import { logDatabaseError } from "@/worker/db/errors";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -22,7 +23,15 @@ export async function GET(): Promise<Response> {
     await db.execute(sql`SELECT 1`);
     return Response.json({ ok: true });
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    return Response.json({ ok: false, error: message }, { status: 500 });
+    // Public and unauthenticated, so the reason is logged rather than returned:
+    // a postgres connection failure names the host, port and role it could not
+    // reach, and a query failure carries the statement and its parameters.
+    // /admin/health answers the same question with the detail, for a signed-in
+    // admin.
+    logDatabaseError("api/health/db", error);
+    return Response.json(
+      { ok: false, error: "Database unreachable. Sign in as an admin and open /admin/health for the details." },
+      { status: 500 },
+    );
   }
 }

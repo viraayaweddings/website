@@ -21,6 +21,7 @@ import {
 } from "./_components/ui";
 import { currentTime } from "./_lib/clock";
 import { isAdmin, requireDb, requireUser } from "./_lib/auth";
+import { adminDatabaseMessage, logDatabaseError } from "./_lib/db-errors";
 
 const WINDOW_DAYS = 14;
 const IST_OFFSET_MS = 5.5 * 60 * 60 * 1000;
@@ -211,11 +212,15 @@ export default async function AdminDashboard({
   try {
     ({ totals, byStatus, recent, topForms, daily, content } = await loadDashboard(db, now));
   } catch (error) {
-    const detail = error instanceof Error ? error.message : String(error);
+    // `error.message` here is drizzle's wrapper: the whole SQL statement and
+    // its bound parameters, which on this page are dates and on others are
+    // lead addresses and search terms. The reason lives on `cause`, and used
+    // to be dropped -- so the panel printed the query and hid the fault.
+    logDatabaseError("dashboard", error);
     return (
       <AdminShell user={user} title="Dashboard" subtitle="Could not load dashboard data.">
-        <Alert tone="error" title="Database query failed">
-          {detail}
+        <Alert tone="error" title="The dashboard could not be loaded">
+          {adminDatabaseMessage(error, isAdmin(user))}
         </Alert>
       </AdminShell>
     );

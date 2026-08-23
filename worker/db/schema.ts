@@ -296,14 +296,43 @@ export const hotels = pgTable(
     cityLabel: text("city_label").notNull().default(""),
     /** JSON array of "city/slug" shown in this venue's nearby strip, in order. */
     nearbySlugs: text("nearby_slugs").notNull().default("[]"),
+    /**
+     * JSON array of `venue_types.slug`, e.g. ["destination","palace"].
+     *
+     * What /hotel-listing and the city index pages filter on. Held here rather
+     * than in a join table because it is a short tag list read as a whole every
+     * time and never queried across.
+     */
+    weddingTypes: text("wedding_types").notNull().default("[]"),
+    /**
+     * Where this venue sits on /hotel-listing.
+     *
+     * The generated file it replaced opened with six chosen venues and then
+     * followed no rule, so the order is data rather than something to
+     * recompute. A venue with no position sorts to the end, by name.
+     */
+    listingPosition: integer("listing_position").notNull().default(9999),
 
     /** Which page_templates row renders this venue. */
     shellKey: text("shell_key").notNull().default("venue:a"),
     /** YouTube id for the tour video, when the venue has one. */
     videoId: text("video_id").notNull().default(""),
 
-    /** Identifiers the enquiry form and cost calculator post back. */
+    /**
+     * Joins this venue to its rates in `calculator_hotels`. The enquiry form
+     * posts it back too. Validated on save: a value naming no calculator hotel
+     * is refused, because the page would otherwise render a calculator that
+     * quotes zero.
+     */
     externalHotelId: text("external_hotel_id").notNull().default(""),
+    /**
+     * @deprecated Room capacity now lives only in `calculator_hotels`.
+     *
+     * This held the same number in a second admin field with nothing keeping
+     * the two in step -- the venue calculator capped from this one and
+     * /compare-hotel from the other. Nothing reads or writes it any more; the
+     * column is kept so an operator can still see what it used to say.
+     */
     totalRooms: text("total_rooms").notNull().default(""),
 
     createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
@@ -620,3 +649,58 @@ export const calculatorCurrencies = pgTable("calculator_currencies", {
 });
 
 export type CalculatorCurrency = typeof calculatorCurrencies.$inferSelect;
+
+/**
+ * Tax lines applied to a calculator subtotal.
+ *
+ * The calculators hardcoded CGST 9% and SGST 9% in four script copies and the
+ * same 18% as a bare `* 1.18` in a fifth. Holding them as rows means the rate
+ * is edited in one place, and a site that needs a third line (IGST, a service
+ * charge) adds it without a deploy: every calculator renders one summary row
+ * per published tax, in `position` order.
+ *
+ * `percent` is text for the same reason prices are -- it is parsed by the page
+ * scripts and round-trips as typed.
+ */
+export const calculatorTaxes = pgTable(
+  "calculator_taxes",
+  {
+    /** Stable key, e.g. "cgst". */
+    code: text("code").primaryKey(),
+    /** Shown on the summary row, e.g. "CGST". */
+    label: text("label").notNull(),
+    percent: text("percent").notNull().default("0.00"),
+    /** Unpublished drops the line from every calculator without losing the rate. */
+    published: integer("published").notNull().default(1),
+    position: integer("position").notNull().default(0),
+    updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
+  },
+  (table) => [index("calculator_taxes_position_idx").on(table.position)],
+);
+
+export type CalculatorTax = typeof calculatorTaxes.$inferSelect;
+
+/**
+ * The wedding-type vocabulary the venue listing filters by.
+ *
+ * `id` is the `wedding_types[]=N` value in the filter checkboxes and in every
+ * shared listing URL, so it is assigned rather than serial: renumbering would
+ * silently change what an existing link filters for.
+ */
+export const venueTypes = pgTable(
+  "venue_types",
+  {
+    id: integer("id").primaryKey(),
+    /** Stored on a venue's `wedding_types`, e.g. "palace". */
+    slug: text("slug").notNull(),
+    /** Shown beside the checkbox, e.g. "Palace Wedding". */
+    label: text("label").notNull(),
+    /** Unpublished drops the filter without untagging any venue. */
+    published: integer("published").notNull().default(1),
+    position: integer("position").notNull().default(0),
+    updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
+  },
+  (table) => [uniqueIndex("venue_types_slug_idx").on(table.slug)],
+);
+
+export type VenueType = typeof venueTypes.$inferSelect;

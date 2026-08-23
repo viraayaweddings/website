@@ -3379,29 +3379,15 @@ checkOutPicker = flatpickr("#checkOut", {
         html += '  </ul></div></div>';
     });
 
-    var cgst         = grandTotal * 0.09;
-var sgst         = grandTotal * 0.09;
-var totalGst     = cgst + sgst;
-var grandWithGst = grandTotal + totalGst;
+    var grandWithGst = ViraayaTax.total(grandTotal);
 
 html += '<div class="gst-box mt-3 mb-2 p-3" style="background:#fdf6f0;border-radius:10px;border:1px solid #f0e0cc;">';
-html += '  <div class="d-flex justify-content-between mb-1" style="font-size:13px;color:#666;">';
-html += '    <span>Subtotal (Before GST)</span>';
-html += '    <span class="fw-600 text-dark">' + cf(grandTotal) + '</span>';
-html += '  </div>';
-html += '  <div class="d-flex justify-content-between mb-1" style="font-size:13px;color:#666;">';
-html += '    <span>CGST (9%)</span>';
-html += '    <span class="fw-600 text-dark">' + cf(cgst) + '</span>';
-html += '  </div>';
-html += '  <div class="d-flex justify-content-between mb-1" style="font-size:13px;color:#666;">';
-html += '    <span>SGST (9%)</span>';
-html += '    <span class="fw-600 text-dark">' + cf(sgst) + '</span>';
-html += '  </div>';
+html += ViraayaTax.rowsHtml(grandTotal, cf);
 
 html += '</div>';
 
 html += '<div class="cost-row total mb-2 d-flex justify-content-between align-items-center mt-3 p-3" style="background:linear-gradient(57deg,#FFF8F0,#FBF3E8);border-radius:10px;">';
-html += '  <span style="font-size:14px;font-weight:600;color:#2d2d2d;">Total Estimated Cost <small style="font-size:11px;color:#999;">(incl. GST)</small></span>';
+html += '  <span style="font-size:14px;font-weight:600;color:#2d2d2d;">Total Estimated Cost <small style="font-size:11px;color:#999;">(' + ViraayaTax.totalNote() + ')</small></span>';
 html += '  <span class="grandTotal text-prime">' + cf(grandWithGst) + '</span>';
 html += '</div>';
 

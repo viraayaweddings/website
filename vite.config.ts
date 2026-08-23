@@ -53,6 +53,10 @@ const databaseOwnedRoutes = [
   // handler answers from the database and falls back to the bundle, so the
   // pages that read these paths directly get edited prices too.
   "/data/calculator/[^/]+[.]json",
+  // The venue listing's dataset, for the same reason: /hotel-listing and the
+  // city index pages filter on it, and the copy that shipped could not receive
+  // an admin's edits.
+  "/data/hotel-listing-data[.]json",
   // A generated sitemap.xml shipped with the clone and was what served, so
   // anything published since was missing from it.
   "/sitemap[.]xml",

@@ -7,6 +7,7 @@ import { SubmitButton } from "../_components/FormControls";
 import { Monogram } from "../_components/icons";
 import { Alert, Card, Field } from "../_components/ui";
 import { hasAnyUser, LOGIN_PATH, requireDb, DatabaseUnavailableError } from "../_lib/auth";
+import { logDatabaseError } from "../_lib/db-errors";
 import { createFirstAdminAction } from "./actions";
 
 const ERRORS: Record<string, string> = {
@@ -16,9 +17,20 @@ const ERRORS: Record<string, string> = {
   weak: `Choose a stronger password: at least ${MIN_PASSWORD_LENGTH} characters, including a letter and a number.`,
 };
 
+/**
+ * Wording only, with no detail at all.
+ *
+ * Nobody is signed in on this page -- it is the one that exists before the
+ * first account does -- so there is no admin to show a driver error to. It
+ * used to fall through to `error.message`, which names the host and role for a
+ * connection failure and prints the statement and its parameters for a query
+ * one.
+ */
 function dbErrorMessage(error: unknown): string {
-  if (error instanceof DatabaseUnavailableError) return error.message;
-  if (error instanceof Error && error.message) return error.message;
+  if (error instanceof DatabaseUnavailableError) {
+    return "No database is configured for this deployment. Set POSTGRES_URL in the Vercel project settings and redeploy.";
+  }
+  logDatabaseError("setup", error);
   return "Could not connect to the database. Confirm POSTGRES_URL is set in Vercel, redeploy, then open /admin/health.";
 }
 
