@@ -1826,6 +1826,8 @@ ul#hotelTabs .nav-link.active {
     }
     body .offcanvas.offcanvas-start.CostSummary,
     body .offcanvas.offcanvas-start {
+        min-width: 0 !important;
+        width: 100vw !important;
         max-width: 100vw !important;
     }
     .estimator-wrapper .cost-calculator-widget {
@@ -1835,6 +1837,16 @@ ul#hotelTabs .nav-link.active {
 }
 
 @media only screen and (max-width: 767.98px) {
+    .CostSummary {
+        min-width: 0 !important;
+        width: 100vw !important;
+    }
+    .CostSummary .offcanvas-body,
+    .CostSummary .gst-box,
+    .CostSummary .cost-row {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
     .past-wedding-details .row.g-5,
     .past-wedding-details .row[class*="g-"],
     .post-wedding-wrapper > .container > .row.g-5,

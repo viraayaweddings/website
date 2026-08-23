@@ -30,11 +30,13 @@ export async function uploadImage(
 
   const key = await contentKey(bytes, kind.extension);
 
+  let uploadedNewObject = false;
   try {
     const existing = await r2Head(key);
     if (!existing) {
       const ok = await r2Put(key, bytes, kind.mime);
       if (!ok) return { error: "Could not store the image. Try again." };
+      uploadedNewObject = true;
     }
   } catch (error) {
     console.error("[media] put failed", error instanceof Error ? error.message : error);
@@ -43,32 +45,37 @@ export async function uploadImage(
 
   try {
     const db = await getDb();
-    if (db) {
-      await db
-        .insert(media)
-        .values({
-          key,
+    if (!db) {
+      if (uploadedNewObject) await r2Delete(key).catch(() => undefined);
+      return { error: "Database unavailable. The image was not saved." };
+    }
+
+    await db
+      .insert(media)
+      .values({
+        key,
+        filename: file.name.slice(0, 200),
+        contentType: kind.mime,
+        size: file.size,
+        width: naturalSize?.width ?? 0,
+        height: naturalSize?.height ?? 0,
+        uploadedBy,
+      })
+      .onConflictDoUpdate({
+        target: media.key,
+        set: {
           filename: file.name.slice(0, 200),
           contentType: kind.mime,
           size: file.size,
           width: naturalSize?.width ?? 0,
           height: naturalSize?.height ?? 0,
           uploadedBy,
-        })
-        .onConflictDoUpdate({
-          target: media.key,
-          set: {
-            filename: file.name.slice(0, 200),
-            contentType: kind.mime,
-            size: file.size,
-            width: naturalSize?.width ?? 0,
-            height: naturalSize?.height ?? 0,
-            uploadedBy,
-          },
-        });
-    }
+        },
+      });
   } catch (error) {
     console.error("[media] record failed", error instanceof Error ? error.message : error);
+    if (uploadedNewObject) await r2Delete(key).catch(() => undefined);
+    return { error: "Could not save the image record. Try again." };
   }
 
   return { key };

@@ -33,11 +33,12 @@
 
 /** Markers that make a page worth transforming at all. */
 export const PAGE_DATA_MARKER =
-  /indiaCityIds|grandTotal \* 0\.09|totals\[h\.id\] \|\| 0\) \* 1\.18|id="citySelect"|name="wedding_types\[\]"|rate_to_usd \|\| 83\.50/;
+  /indiaCityIds|\b0\.09\b|CGST \(9%\)|SGST \(9%\)|totals\[h\.id\] \|\| 0\) \* 1\.18|id="citySelect"|name="wedding_types\[\]"|rate_to_usd \|\| 83\.50/;
 
 /** Values that must not survive anywhere. Used by the audit too. */
 export const BANNED_PATTERNS = [
-  [/grandTotal \* 0\.09/, "hardcoded 9% tax"],
+  [/\b0\.09\b/, "hardcoded 9% tax"],
+  [/CGST \(9%\)|SGST \(9%\)/, "hardcoded tax labels"],
   [/\* 1\.18\b/, "hardcoded 18% tax multiplier"],
   [/indiaCityIds/, "hardcoded city allowlist"],
   [/rate_to_usd \|\| 83\.50/, "hardcoded INR exchange rate"],
@@ -71,6 +72,26 @@ const ROW_CONCAT = (label, value) =>
   );
 
 const CITY_SELECT = /(<select[^>]*\bid="citySelect"[^>]*>)([\s\S]*?)(<\/select>)/;
+
+const COMPARE_TAX_ROWS =
+  /\s*bodyHtml \+= `<tr style="background:#FFF8F3;">\s*<td class="px-3 py-2" style="font-size:12px;color:#8A7358;">CGST \(9%\)<\/td>[\s\S]*?bodyHtml \+= `<\/tr>`;\s*bodyHtml \+= `<tr style="background:#FFF8F3;">\s*<td class="px-3 py-2" style="font-size:12px;color:#8A7358;">SGST \(9%\)<\/td>[\s\S]*?bodyHtml \+= `<\/tr>`;/;
+
+const COMPARE_TAX_ROWS_REPLACEMENT = `
+    ViraayaTax.lines(100).forEach(function (tax) {
+        const percent = Number(tax.amount) || 0;
+        const label = \`\${tax.label} (\${percent}%)\`.replace(/[&<>"']/g, function (character) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
+        });
+
+        bodyHtml += \`<tr style="background:#FFF8F3;">
+            <td class="px-3 py-2" style="font-size:12px;color:#8A7358;">\${label}</td>
+            <td style="background:#fafafa;"></td>\`;
+        selectedHotels.forEach(function (h) {
+            const val = totals[h.id] || 0;
+            bodyHtml += \`<td class="px-3 py-2" style="font-size:13px;color:#8A7358;text-align:right;">\${val > 0 ? formatINR(val * percent / 100) : '—'}</td>\`;
+        });
+        bodyHtml += \`</tr>\`;
+    });`;
 
 /**
  * One wedding-type checkbox.
@@ -186,6 +207,7 @@ export function transform(html) {
   const isVenueCopy = ROW_CONCAT("Subtotal \\(Before GST\\)", "grandTotal").test(out);
   const isPickerCopy = ROW_TPL("Subtotal \\(Before GST\\)", "grandTotal").test(out);
   const isCompare = /grandTotals\[h\.id\] = \(totals\[h\.id\] \|\| 0\) \* 1\.18;/.test(out);
+  const isCompareRows = COMPARE_TAX_ROWS.test(out);
 
   if (isVenueCopy || isPickerCopy) {
     swap("tax variables", TAX_VARS, "var grandWithGst = ViraayaTax.total(grandTotal);");
@@ -226,6 +248,10 @@ export function transform(html) {
       /Total Estimated Cost <small style="font-size:11px;color:#999;">\(\$\{ViraayaTax\.totalNote\(\)\}\)<\/small><\/span>';/,
       "Total Estimated Cost <small style=\"font-size:11px;color:#999;\">(' + ViraayaTax.totalNote() + ')</small></span>';",
     );
+  }
+
+  if (isCompareRows) {
+    swap("compare tax rows", COMPARE_TAX_ROWS, COMPARE_TAX_ROWS_REPLACEMENT);
   }
 
   if (isCompare) {

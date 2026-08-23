@@ -18,13 +18,7 @@ import { useCallback, useSyncExternalStore } from "react";
 import { THEME_KEY } from "../_lib/theme";
 import { Icon } from "./icons";
 
-/** Subscribers are notified by the toggle itself; nothing else changes it. */
-const listeners = new Set<() => void>();
-
-function subscribe(listener: () => void): () => void {
-  listeners.add(listener);
-  return () => listeners.delete(listener);
-}
+const THEME_CHANGE_EVENT = "vw-admin-theme-change";
 
 function root(): HTMLElement | null {
   return document.querySelector(".vw-admin");
@@ -34,10 +28,25 @@ function isDark(): boolean {
   return root()?.getAttribute("data-theme") === "dark";
 }
 
+function subscribe(callback: () => void): () => void {
+  window.addEventListener(THEME_CHANGE_EVENT, callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    window.removeEventListener(THEME_CHANGE_EVENT, callback);
+    window.removeEventListener("storage", callback);
+  };
+}
+
+function serverSnapshot(): boolean {
+  return false;
+}
+
 export function ThemeToggle() {
-  // Light on the server: the markup is rendered before the browser's stored
-  // choice is known, and the bootstrap script corrects it before paint.
-  const dark = useSyncExternalStore(subscribe, isDark, () => false);
+  // Light for the server and the first client render. The bootstrap script may
+  // already have applied a stored dark theme before hydration; reading it only
+  // after mount prevents the button text/icon from disagreeing with the HTML
+  // React is hydrating.
+  const dark = useSyncExternalStore(subscribe, isDark, serverSnapshot);
 
   const toggle = useCallback(() => {
     const next = !isDark();
@@ -54,7 +63,7 @@ export function ThemeToggle() {
     } catch {
       /* private browsing; the choice simply does not persist */
     }
-    for (const listener of listeners) listener();
+    window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
   }, []);
 
   return (

@@ -82,6 +82,17 @@ function isBlogListing(pathname: string): boolean {
   return BLOG_LISTING_PATHS.has(pathname);
 }
 
+function absoluteUrl(origin: string, value: string): string {
+  if (!value) return origin;
+  if (/^https?:\/\//i.test(value)) return value;
+  return `${origin}${value.startsWith("/") ? value : `/${value}`}`;
+}
+
+function publicCanonical(origin: string, pathname: string): string {
+  const clean = pathname === "/" || pathname === "/index.html" ? "/" : pathname.replace(/\/$/, "");
+  return absoluteUrl(origin, clean || "/");
+}
+
 export function needsInjection(pathname: string, input: InjectionInput): boolean {
   if (input.settings.hasStoredValues) return true;
   // A page with a calculator has data to receive even when nothing else on it
@@ -296,6 +307,24 @@ export function injectManagedContent(
   if (input.venueTypes) applyVenueListingHandlers(rewriter, input.venueTypes);
 
   const siteOrigin = origin || "https://viraayaweddings.com";
+  const canonical = publicCanonical(siteOrigin, pathname);
+  rewriter.on('link[rel="canonical"]', {
+    element(element) {
+      element.setAttribute("href", canonical);
+    },
+  });
+  rewriter.on('meta[property="og:url"]', {
+    element(element) {
+      element.setAttribute("content", canonical);
+    },
+  });
+  rewriter.on('meta[property="og:image"], meta[name="twitter:image"]', {
+    element(element) {
+      const value = element.getAttribute("content");
+      if (value) element.setAttribute("content", absoluteUrl(siteOrigin, value));
+    },
+  });
+
   const structuredData = [
     organizationJsonLd(values, siteOrigin),
     isHomepage(pathname) ? websiteJsonLd(siteOrigin) : null,

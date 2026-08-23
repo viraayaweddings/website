@@ -11,24 +11,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useSyncExternalStore, useState } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { Icon, Monogram } from "./icons";
 import { ADMIN_NAV_OPEN_EVENT } from "./AdminHeaderBar";
 import { navGroupsFor } from "./nav";
 
 const COLLAPSE_KEY = "vw-admin-rail";
-
-/**
- * The collapsed choice lives in localStorage, which React cannot see during
- * render. Reading it through a store subscription avoids a mount effect that
- * would set state — and therefore re-render — on every single page.
- */
-const listeners = new Set<() => void>();
-
-function subscribe(listener: () => void): () => void {
-  listeners.add(listener);
-  return () => listeners.delete(listener);
-}
+const COLLAPSE_CHANGE_EVENT = "vw-admin-rail-change";
 
 function readCollapsed(): boolean {
   try {
@@ -42,6 +31,19 @@ function isCurrent(pathname: string, href: string): boolean {
   return href === "/admin" ? pathname === "/admin" : pathname === href || pathname.startsWith(`${href}/`);
 }
 
+function subscribeCollapsed(callback: () => void): () => void {
+  window.addEventListener(COLLAPSE_CHANGE_EVENT, callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    window.removeEventListener(COLLAPSE_CHANGE_EVENT, callback);
+    window.removeEventListener("storage", callback);
+  };
+}
+
+function serverCollapsedSnapshot(): boolean {
+  return false;
+}
+
 export function SideNav({
   role,
   name,
@@ -53,6 +55,10 @@ export function SideNav({
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  // Expanded for the server and the first client render. The stored browser
+  // choice is read through useSyncExternalStore so hydration keeps the same
+  // text/link tree and React updates it immediately after.
+  const collapsed = useSyncExternalStore(subscribeCollapsed, readCollapsed, serverCollapsedSnapshot);
   const close = useCallback(() => setOpen(false), []);
 
   useEffect(() => {
@@ -61,16 +67,14 @@ export function SideNav({
     return () => window.removeEventListener(ADMIN_NAV_OPEN_EVENT, onOpen);
   }, []);
 
-  // Expanded on the server: the stored choice is not knowable until hydration.
-  const collapsed = useSyncExternalStore(subscribe, readCollapsed, () => false);
-
   const toggleCollapsed = useCallback(() => {
+    const next = !readCollapsed();
     try {
-      localStorage.setItem(COLLAPSE_KEY, readCollapsed() ? "0" : "1");
+      localStorage.setItem(COLLAPSE_KEY, next ? "1" : "0");
     } catch {
       /* private browsing; the rail simply stays expanded */
     }
-    for (const listener of listeners) listener();
+    window.dispatchEvent(new Event(COLLAPSE_CHANGE_EVENT));
   }, []);
 
   const groups = navGroupsFor(role);

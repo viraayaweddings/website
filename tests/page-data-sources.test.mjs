@@ -28,10 +28,29 @@ function walk(dir, out = []) {
 
 const PAGES = walk("site-public");
 
+/**
+ * The venue pages and the city index pages, counted rather than written down.
+ *
+ * Both used to be fixed numbers here, which turned withdrawing a city into two
+ * unrelated-looking test failures. What these tests are actually guarding is
+ * that no page in the set has quietly lost its calculator or its filter, so the
+ * set is what they should be measured against.
+ */
+const CITY_INDEX_PAGES = PAGES.filter((file) =>
+  /destination-wedding[\\/][^\\/]+[\\/]index\.html$/.test(file),
+);
+const VENUE_PAGES = PAGES.filter((file) =>
+  /destination-wedding[\\/][^\\/]+[\\/][^\\/]+[\\/]index\.html$/.test(file),
+);
+
+/** Pages outside the venue set that carry a cost calculator of their own. */
+const STANDALONE_CALCULATORS = 13;
+
 test("no page hardcodes a tax rate", () => {
   const offenders = PAGES.filter((file) => {
     const html = readFileSync(file, "utf8");
-    return /grandTotal \* 0\.09/.test(html) || /\* 1\.18\b/.test(html);
+    if (!/id="calculateCost"/.test(html)) return false;
+    return /\b0\.09\b/.test(html) || /\* 1\.18\b/.test(html) || /CGST \(9%\)|SGST \(9%\)/.test(html);
   });
   assert.deepEqual(offenders, [], "tax rates come from calculator_taxes");
 });
@@ -62,7 +81,10 @@ test("every calculator reaches the shared tax helper", () => {
     const html = readFileSync(file, "utf8");
     return /id="calculateCost"/.test(html);
   });
-  assert.ok(calculators.length >= 272, `expected the full set of calculators, found ${calculators.length}`);
+  assert.ok(
+    calculators.length >= VENUE_PAGES.length + STANDALONE_CALCULATORS,
+    `expected the full set of calculators, found ${calculators.length}`,
+  );
 
   const missing = calculators.filter((file) => !/ViraayaTax\./.test(readFileSync(file, "utf8")));
   assert.deepEqual(missing, [], "every calculator totals through ViraayaTax");
@@ -93,7 +115,11 @@ test("every page with the filter still has a container to inject into", () => {
   // Stripping the checkboxes without leaving #weddingType behind would remove
   // the filter permanently rather than move where it comes from.
   const listingPages = PAGES.filter((file) => /data-bs-target="#weddingType"/.test(readFileSync(file, "utf8")));
-  assert.equal(listingPages.length, 54, "expected /hotel-listing plus the 53 city index pages");
+  assert.equal(
+    listingPages.length,
+    CITY_INDEX_PAGES.length + 1,
+    "expected /hotel-listing plus every city index page",
+  );
 
   const broken = listingPages.filter((file) => {
     const html = readFileSync(file, "utf8");
@@ -197,6 +223,22 @@ const PICKER_BEFORE = [
 ].join("\r\n");
 
 const COMPARE_BEFORE =
+  '    bodyHtml += `<tr style="background:#FFF8F3;">\r\n' +
+  '        <td class="px-3 py-2" style="font-size:12px;color:#8A7358;">CGST (9%)</td>\r\n' +
+  '        <td style="background:#fafafa;"></td>`;\r\n' +
+  "    selectedHotels.forEach(function (h) {\r\n" +
+  "        const val  = totals[h.id] || 0;\r\n" +
+  "        bodyHtml += `<td>${val > 0 ? formatINR(val * 0.09) : '—'}</td>`;\r\n" +
+  "    });\r\n" +
+  "    bodyHtml += `</tr>`;\r\n" +
+  '    bodyHtml += `<tr style="background:#FFF8F3;">\r\n' +
+  '        <td class="px-3 py-2" style="font-size:12px;color:#8A7358;">SGST (9%)</td>\r\n' +
+  '        <td style="background:#fafafa;"></td>`;\r\n' +
+  "    selectedHotels.forEach(function (h) {\r\n" +
+  "        const val  = totals[h.id] || 0;\r\n" +
+  "        bodyHtml += `<td>${val > 0 ? formatINR(val * 0.09) : '—'}</td>`;\r\n" +
+  "    });\r\n" +
+  "    bodyHtml += `</tr>`;\r\n" +
   "    selectedHotels.forEach(h => { grandTotals[h.id] = (totals[h.id] || 0) * 1.18; });\r\n" +
   '    <small class="d-block" style="font-size:10px;color:#94a3b8;font-weight:400;">(incl. 18% GST)</small>';
 
@@ -261,11 +303,14 @@ test("the picker copy loses its hardcoded rate", () => {
   assert.doesNotMatch(html, /0\.09/);
 });
 
-test("the comparison copy loses its 1.18", () => {
+test("the comparison copy loses its hardcoded tax values", () => {
   const { html, problems } = transform(COMPARE_BEFORE);
   assert.deepEqual(problems, []);
   assert.match(html, /\* ViraayaTax\.multiplier\(\)/);
+  assert.match(html, /ViraayaTax\.lines\(100\)/);
   assert.doesNotMatch(html, /1\.18/);
+  assert.doesNotMatch(html, /\b0\.09\b/);
+  assert.doesNotMatch(html, /CGST \(9%\)|SGST \(9%\)/);
 });
 
 test("a baked city list is reduced to its placeholder", () => {
