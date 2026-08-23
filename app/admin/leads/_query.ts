@@ -27,6 +27,13 @@ export {
   type SortKey,
 };
 
+/**
+ * What the panel calls a form: its name, or its id when it was submitted
+ * without one. The filter, the dropdown and the table cell all read this, so a
+ * chosen option cannot return a form it did not name.
+ */
+const FORM_LABEL = sql<string>`coalesce(nullif(${leads.formName}, ''), ${leads.formId})`;
+
 /** Whitelisted so a crafted query string cannot order by an arbitrary column. */
 const SORTABLE = {
   received: leads.createdAt,
@@ -54,7 +61,12 @@ function buildWhere(filters: LeadFilters): SQL | undefined {
   }
 
   if (filters.status) clauses.push(eq(leads.status, filters.status));
-  if (filters.formId) clauses.push(eq(leads.formId, filters.formId));
+  // The label, matching what the dropdown offered. An id is still accepted so
+  // links bookmarked before the filter keyed on the label keep working.
+  if (filters.form) {
+    const byLabel = or(eq(FORM_LABEL, filters.form), eq(leads.formId, filters.form));
+    if (byLabel) clauses.push(byLabel);
+  }
 
   // Dates are entered as IST calendar days; convert to the stored instants.
   if (filters.from) clauses.push(gte(leads.createdAt, istDayStart(filters.from)));
@@ -91,28 +103,22 @@ export async function listAllMatchingLeads(db: Db, filters: LeadFilters) {
 }
 
 /**
- * Distinct forms that have ever submitted, for the filter dropdown.
+ * Every form that has ever submitted, for the filter dropdown.
  *
- * Collapsed to one entry per form id: the same form has been renamed over the
- * years, and a plain DISTINCT over both columns would offer the same id several
- * times under different labels.
+ * Grouped by the label rather than the id. Grouping by id collapsed four
+ * genuinely different forms into one option -- they all post as
+ * `consultationForm` -- and then labelled it with whichever name sorted first.
  */
-export async function listFormOptions(db: Db): Promise<{ formId: string; formName: string }[]> {
+export async function listFormOptions(db: Db): Promise<{ label: string; total: number }[]> {
   const rows = await db
-    .selectDistinct({ formId: leads.formId, formName: leads.formName })
+    .select({ label: FORM_LABEL, total: sql<number>`count(*)` })
     .from(leads)
-    .orderBy(leads.formName);
+    .groupBy(FORM_LABEL);
 
-  const byId = new Map<string, string>();
-  for (const row of rows) {
-    // The first non-empty name wins, so an id that was once submitted without
-    // a label still reads as something.
-    if (!byId.get(row.formId)) byId.set(row.formId, row.formName || "");
-  }
-
-  return [...byId.entries()]
-    .map(([formId, formName]) => ({ formId, formName }))
-    .sort((a, b) => (a.formName || a.formId).localeCompare(b.formName || b.formId));
+  return rows
+    .filter((row) => row.label)
+    .map((row) => ({ label: row.label, total: Number(row.total) }))
+    .sort((a, b) => a.label.localeCompare(b.label));
 }
 
 /** How many submissions sit in each status, for the quick filter chips. */

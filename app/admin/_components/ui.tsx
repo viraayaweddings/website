@@ -326,7 +326,10 @@ export function StatusBadge({ status, dot = true }: { status: string; dot?: bool
   return (
     <span className={`vw-badge ${STATUS_TONES[status] || "vw-badge-neutral"}`}>
       {dot ? <span className="vw-dot" /> : null}
-      {status}
+      {/* The stored value is lower-case throughout -- "new", "draft", "admin" --
+          and printing it raw read as a stray identifier next to otherwise
+          sentence-cased copy. Display only; the value is untouched. */}
+      {status ? status.charAt(0).toUpperCase() + status.slice(1) : status}
     </span>
   );
 }

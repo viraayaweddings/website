@@ -24,7 +24,16 @@ export type SortKey = (typeof SORT_KEYS)[number];
 export interface LeadFilters {
   q: string;
   status: LeadStatus | "";
-  formId: string;
+  /**
+   * The form's label, not its id.
+   *
+   * Several different forms share an id -- `consultationForm` is the homepage
+   * popup, the venue consultation, the wedding-consultation booking and the
+   * package pages, and every unnamed CTA block posts as `/api/lead`. Keying the
+   * filter on the id meant the dropdown offered one name and then returned all
+   * four forms' enquiries. It matches what the option says instead.
+   */
+  form: string;
   from: string;
   to: string;
   page: number;
@@ -49,7 +58,7 @@ export function parseFilters(params: RawParams): LeadFilters {
     dir: dir === "asc" ? "asc" : "desc",
     q: single(params.q).slice(0, 120),
     status: (LEAD_STATUSES as readonly string[]).includes(status) ? (status as LeadStatus) : "",
-    formId: single(params.form).slice(0, 120),
+    form: single(params.form).slice(0, 120),
     from: /^\d{4}-\d{2}-\d{2}$/.test(single(params.from)) ? single(params.from) : "",
     to: /^\d{4}-\d{2}-\d{2}$/.test(single(params.to)) ? single(params.to) : "",
     page: Number.isFinite(page) && page > 0 ? page : 1,
@@ -63,7 +72,7 @@ export function filtersToQuery(filters: LeadFilters, overrides: Partial<LeadFilt
 
   if (merged.q) params.set("q", merged.q);
   if (merged.status) params.set("status", merged.status);
-  if (merged.formId) params.set("form", merged.formId);
+  if (merged.form) params.set("form", merged.form);
   if (merged.from) params.set("from", merged.from);
   if (merged.to) params.set("to", merged.to);
   if (merged.page > 1) params.set("page", String(merged.page));

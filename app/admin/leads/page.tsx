@@ -20,6 +20,7 @@ import {
 import { currentTime } from "../_lib/clock";
 import { isAdmin, requireDb, requireUser } from "../_lib/auth";
 import { bulkDeleteAction, bulkStatusAction, deleteLeadAction } from "./actions";
+import { LEAD_QUICK_FILTERS, leadStatusLabel } from "./_status";
 import {
   PAGE_SIZE,
   EXPORT_LIMIT,
@@ -32,15 +33,6 @@ import {
   type LeadFilters,
   type SortKey,
 } from "./_query";
-
-const QUICK_FILTERS = [
-  { status: "", label: "All" },
-  { status: "new", label: "New" },
-  { status: "contacted", label: "Contacted" },
-  { status: "qualified", label: "Qualified" },
-  { status: "won", label: "Won" },
-  { status: "spam", label: "Spam" },
-] as const;
 
 export default async function LeadsPage({
   searchParams,
@@ -67,7 +59,7 @@ export default async function LeadsPage({
   const rows = await listLeads(db, view);
   const listHref = href(view);
   const exportQuery = filtersToQuery(view, { page: 1 });
-  const filtered = Boolean(view.q || view.status || view.formId || view.from || view.to);
+  const filtered = Boolean(view.q || view.status || view.form || view.from || view.to);
   const totalAll = Object.values(statusCounts).reduce((sum, value) => sum + value, 0);
 
   return (
@@ -99,12 +91,12 @@ export default async function LeadsPage({
           <input type="hidden" name="dir" value={view.dir} />
 
           <div className="flex flex-wrap items-center gap-1.5">
-            {QUICK_FILTERS.map((quick) => {
+            {LEAD_QUICK_FILTERS.map((quick) => {
               const count = quick.status ? statusCounts[quick.status] ?? 0 : totalAll;
               return (
                 <Link
                   key={quick.label}
-                  href={href({ ...view, status: quick.status as LeadFilters["status"], page: 1 })}
+                  href={href({ ...view, status: quick.status, page: 1 })}
                   className="vw-chip"
                   data-on={view.status === quick.status}
                 >
@@ -132,11 +124,11 @@ export default async function LeadsPage({
 
             <label className="block">
               <span className="vw-label">Form</span>
-              <select name="form" defaultValue={view.formId} className="vw-select">
+              <select name="form" defaultValue={view.form} className="vw-select">
                 <option value="">Every form</option>
                 {formOptions.map((option) => (
-                  <option key={option.formId} value={option.formId}>
-                    {option.formName || option.formId || "(unnamed)"}
+                  <option key={option.label} value={option.label}>
+                    {option.label} ({formatCount(option.total)})
                   </option>
                 ))}
               </select>
@@ -186,7 +178,7 @@ export default async function LeadsPage({
               <select name="bulkStatus" defaultValue="contacted" className="vw-select vw-btn-sm py-1" aria-label="Status to apply">
                 {LEAD_STATUSES.map((status) => (
                   <option key={status} value={status}>
-                    {status}
+                    {leadStatusLabel(status)}
                   </option>
                 ))}
               </select>

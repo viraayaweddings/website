@@ -330,7 +330,10 @@ function requestMetadata(request: Request, url: URL, clientIp: string) {
       City: headerValue(request, ["x-vercel-ip-city", "x-city"]),
       Latitude: headerValue(request, ["x-vercel-ip-latitude"]),
       Longitude: headerValue(request, ["x-vercel-ip-longitude"]),
-      "Hosting Region": headerValue(request, ["x-vercel-id", "cf-ray"]),
+      // x-vercel-id / cf-ray are per-request trace ids, not locations. Labelled
+      // "Hosting Region", they read in the panel as the visitor's whereabouts
+      // sitting directly under Country/Region/City, which is what they are not.
+      "Request ID": headerValue(request, ["x-vercel-id", "cf-ray"]),
       "Request Host": url.host,
       "Request Path": url.pathname,
       "Request Method": request.method,

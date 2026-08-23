@@ -2,7 +2,7 @@
 export const dynamic = "force-dynamic";
 
 import { notFound } from "next/navigation";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 import { auditLog, leads, LEAD_STATUSES } from "@/worker/db/schema";
 import { AdminShell } from "../../_components/AdminShell";
 import { CharCounter } from "../../_components/CharCounter";
@@ -24,6 +24,7 @@ import { humanAuditAction } from "../../_lib/audit-labels";
 import { versionOf } from "../../_lib/concurrency";
 import { isAdmin, requireDb, requireUser } from "../../_lib/auth";
 import { deleteLeadAction, resendLeadEmailAction, updateLeadAction } from "../actions";
+import { leadStatusLabel } from "../_status";
 
 /** Submitted payloads are free-form JSON; render whatever is in there. */
 function parseRecord(value: string): Record<string, string> {
@@ -59,10 +60,19 @@ export default async function LeadDetailPage({
   const lead = (await db.select().from(leads).where(eq(leads.id, id)).limit(1))[0];
   if (!lead) notFound();
 
+  // A bulk action records every id it touched in one row, comma-separated, so
+  // an exact match found only the single-row edits: a status set from the list
+  // view's bulk bar left no trace on the enquiry's own timeline, under a card
+  // that says it shows every change.
   const history = await db
     .select()
     .from(auditLog)
-    .where(and(eq(auditLog.entity, "lead"), eq(auditLog.entityId, String(id))))
+    .where(
+      and(
+        eq(auditLog.entity, "lead"),
+        sql`string_to_array(${auditLog.entityId}, ',') @> ARRAY[${String(id)}]`,
+      ),
+    )
     .orderBy(desc(auditLog.createdAt))
     .limit(20);
 
@@ -77,12 +87,15 @@ export default async function LeadDetailPage({
       actions={
         <>
           {lead.email ? (
-            <LinkButton href={`mailto:${encodeURIComponent(lead.email)}`} icon="mail" variant="secondary">
+            <LinkButton href={`mailto:${encodeURI(lead.email)}`} icon="mail" variant="secondary">
               Reply
             </LinkButton>
           ) : null}
+          {/* Not encodeURIComponent for the dial link: it percent-encodes the
+              leading "+", and a tel: URI wants the international prefix
+              literal. */}
           {lead.phone ? (
-            <LinkButton href={`tel:${encodeURIComponent(lead.phone)}`} icon="phone" variant="secondary">
+            <LinkButton href={`tel:${lead.phone.replace(/[^\d+]/g, "")}`} icon="phone" variant="secondary">
               Call
             </LinkButton>
           ) : null}
@@ -98,7 +111,6 @@ export default async function LeadDetailPage({
             <p>The enquiry itself is safely stored — only the alert failed.</p>
             <form action={resendLeadEmailAction} className="mt-2">
               <input type="hidden" name="id" value={lead.id} />
-              <VersionField value={versionOf(lead)} />
               <SubmitButton variant="secondary" size="sm" icon="refresh" pendingLabel="Sending…">
                 Send it again
               </SubmitButton>
@@ -228,13 +240,18 @@ export default async function LeadDetailPage({
             <form action={updateLeadAction} className="vw-card-pad space-y-3">
               <UnsavedGuard />
               <input type="hidden" name="id" value={lead.id} />
+              {/* updateLeadAction refuses a stale save, but only if the form
+                  says which version it was rendered from. This field sat on the
+                  resend form, which never reads it, so two people triaging the
+                  same enquiry silently overwrote each other's notes. */}
+              <VersionField value={versionOf(lead)} />
 
               <label className="block">
                 <span className="vw-label">Status</span>
                 <select name="status" defaultValue={lead.status} className="vw-select">
                   {LEAD_STATUSES.map((status) => (
                     <option key={status} value={status}>
-                      {status}
+                      {leadStatusLabel(status)}
                     </option>
                   ))}
                 </select>
