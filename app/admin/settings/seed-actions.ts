@@ -2,11 +2,13 @@
 
 import { redirect } from "next/navigation";
 import { seedSiteContent } from "@/worker/db/seed-content";
-import { recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { withFlashKey } from "../_lib/flash";
 
 const SETTINGS_PATH = "/admin/settings";
 
 export async function importSiteContentAction(): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin", SETTINGS_PATH, "site settings");
   const db = await requireDb();
 
@@ -19,8 +21,8 @@ export async function importSiteContentAction(): Promise<void> {
   });
 
   if (result.errors.length) {
-    redirect(`${SETTINGS_PATH}?error=${encodeURIComponent("Import finished with errors. Check Vercel logs or run npm run db:seed locally.")}`);
+    redirect(withFlashKey(`${SETTINGS_PATH}?error=${encodeURIComponent("Import finished with errors. Check Vercel logs or run npm run db:seed locally.")}`));
   }
 
-  redirect(`${SETTINGS_PATH}?saved=${encodeURIComponent("Site content imported into Postgres.")}`);
+  redirect(withFlashKey(`${SETTINGS_PATH}?saved=${encodeURIComponent("Site content imported into Postgres.")}`));
 }

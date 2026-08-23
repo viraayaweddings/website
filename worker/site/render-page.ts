@@ -13,6 +13,7 @@
 import { enhancePublicHtml } from "./public-html";
 import { injectManagedContent, isHtmlResponse, needsInjection } from "./inject";
 import { resolvePage, type ResolveOptions } from "./resolve-page";
+import { syncContentVersion } from "./content-version";
 import { templateResponse, loadCityPage } from "./template";
 import { loadSiteSettings } from "./settings";
 import { loadHeroSlides } from "./hero";
@@ -50,6 +51,10 @@ export async function renderFromDatabase(
   origin: string,
   options: ResolveOptions = {},
 ): Promise<Response | null> {
+  // Before anything cached is read: if another instance saved since this one
+  // last looked, its caches are dropped here rather than at the end of a TTL.
+  await syncContentVersion();
+
   let resolved;
   try {
     resolved = await resolvePage({}, pathname, options);
@@ -80,6 +85,9 @@ export async function applyManagedContent(
   origin: string,
 ): Promise<Response> {
   if (!isHtmlResponse(response)) return response;
+
+  // Same reason as renderFromDatabase: this reads the same caches.
+  await syncContentVersion();
 
   let input;
   try {

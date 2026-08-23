@@ -53,3 +53,23 @@ test("password strength rules", () => {
   assert.match(validatePasswordStrength("abcdefghij"), /number/);
   assert.equal(validatePasswordStrength("abcdefghi1"), null);
 });
+
+test("the unknown-account decoy uses the current iteration count", async () => {
+  const { decoyHash, hashPassword, ITERATIONS } = await import("../worker/admin/password.ts");
+
+  const decoy = await decoyHash();
+  const real = await hashPassword("a-real-password-1");
+
+  const decoyIterations = Number(decoy.split("$")[1]);
+  const realIterations = Number(real.split("$")[1]);
+
+  assert.equal(decoyIterations, ITERATIONS);
+  assert.equal(decoyIterations, realIterations);
+});
+
+test("the decoy never verifies", async () => {
+  const { decoyHash, verifyPassword } = await import("../worker/admin/password.ts");
+  const decoy = await decoyHash();
+  assert.equal(await verifyPassword("", decoy), false);
+  assert.equal(await verifyPassword("password123", decoy), false);
+});

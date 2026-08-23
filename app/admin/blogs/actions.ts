@@ -6,19 +6,23 @@ import { and, asc, eq, inArray, ne, sql } from "drizzle-orm";
 import { releaseImage, uploadImage } from "@/worker/admin/media-store";
 import { mediaKeyFrom, mediaPathFromKey, readMediaPathValue } from "@/worker/admin/media-path";
 import { readRichText } from "@/worker/admin/rich-text";
+import { highestId, readRowIndices, TooManyRowsError } from "@/worker/admin/form-rows";
 import { blogListings, blogPosts, POST_STATUSES, type BlogFaq, type PostStatus } from "@/worker/db/schema";
 import { invalidateBlogCache, invalidateBlogListingCache } from "@/worker/site/blog";
 import { invalidateTemplateCache } from "@/worker/site/template";
-import { recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
+import { assertSameOrigin, recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
+import { hasMoved, readExpectedVersion, STALE_MESSAGE } from "../_lib/concurrency";
+import { publishContentChange } from "@/worker/site/content-version";
+import { withFlashKey } from "../_lib/flash";
 
 const BLOGS_PATH = "/admin/blogs";
 
 function failed(target: string, message: string): never {
-  redirect(`${target}?error=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}?error=${encodeURIComponent(message)}`));
 }
 
 function done(message: string, target: string = BLOGS_PATH): never {
-  redirect(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`));
 }
 
 /** The list view to return to, so filters, sort and page survive an action. */
@@ -62,14 +66,19 @@ function normaliseSlug(value: string): string {
 async function readFaqs(formData: FormData, target: string): Promise<BlogFaq[]> {
   const faqs: BlogFaq[] = [];
 
-  for (const [key, value] of formData.entries()) {
-    const match = /^faq_question_(\d+)$/.exec(key);
-    if (!match) continue;
+  // Indices are collected and capped before any answer is sanitised: each one
+  // costs an HTMLRewriter instance, and the loop used to have no ceiling.
+  let indices: string[];
+  try {
+    indices = readRowIndices(formData, "faq_question_", "FAQ entries");
+  } catch (error) {
+    failed(target, error instanceof TooManyRowsError ? error.message : "Too many FAQ entries.");
+  }
 
-    const question = String(value).trim();
+  for (const index of indices) {
+    const question = String(formData.get(`faq_question_${index}`) || "").trim();
     if (!question) continue;
 
-    const index = match[1];
     // Answers are HTML written in the editor, so they are sanitised and
     // length-checked rather than cut to a byte count, which would split a tag.
     const answer = await readRichText(String(formData.get(`faq_answer_${index}`) || ""), `The answer to "${question.slice(0, 40)}"`);
@@ -83,8 +92,7 @@ async function readFaqs(formData: FormData, target: string): Promise<BlogFaq[]> 
   }
 
   // Anchors must be unique and stable; assign ids to genuinely new entries only.
-  const used = new Set(faqs.map((faq) => faq.id).filter(Boolean));
-  let next = Math.max(0, ...used) + 1;
+  let next = highestId(faqs.map((faq) => faq.id).filter(Boolean)) + 1;
   for (const faq of faqs) {
     if (!faq.id) {
       faq.id = next;
@@ -170,6 +178,7 @@ async function readFields(formData: FormData, target: string): Promise<PostField
 }
 
 export async function createPostAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireUser();
   const db = await requireDb();
   const target = "/admin/blogs/new";
@@ -213,6 +222,12 @@ export async function createPostAction(formData: FormData): Promise<void> {
 
   invalidateBlogCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "blog.created", "blog_post", inserted[0]?.id ?? 0, {
     slug: fields.slug,
   });
@@ -221,6 +236,7 @@ export async function createPostAction(formData: FormData): Promise<void> {
 }
 
 export async function updatePostAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireUser();
   const db = await requireDb();
 
@@ -230,6 +246,10 @@ export async function updatePostAction(formData: FormData): Promise<void> {
 
   const existing = (await db.select().from(blogPosts).where(eq(blogPosts.id, id)).limit(1))[0];
   if (!existing) failed(BLOGS_PATH, "That post no longer exists.");
+
+  // Refused before anything is uploaded, so a losing save leaves nothing behind.
+  const expectedVersion = readExpectedVersion(formData);
+  if (hasMoved(expectedVersion, existing.updatedAt)) failed(target, STALE_MESSAGE);
 
   const fields = await readFields(formData, target);
 
@@ -250,28 +270,40 @@ export async function updatePostAction(formData: FormData): Promise<void> {
   const ogImage = await readImage(
     formData, "ogFile", "ogImage", existing.ogImage, actor.email, target);
 
-  await db
-    .update(blogPosts)
-    .set({
-      ...fields,
-      bannerImage,
-      cardImage,
-      ogImage,
-      faqs: JSON.stringify(faqs),
-      updatedAt: new Date(),
-    })
-    .where(eq(blogPosts.id, id));
+  // One transaction: a slug rename touches two tables, and a failure between
+  // them would drop the article from every category and tag page it appears on
+  // while leaving the article itself renamed.
+  const saved = await db.transaction(async (tx) => {
+    const rows = await tx
+      .update(blogPosts)
+      .set({
+        ...fields,
+        bannerImage,
+        cardImage,
+        ogImage,
+        faqs: JSON.stringify(faqs),
+        updatedAt: new Date(),
+      })
+      .where(eq(blogPosts.id, id))
+      .returning({ id: blogPosts.id });
 
-  // Category and tag pages select posts by slug, so a rename would otherwise
-  // leave those listings pointing at a slug that no longer exists and the
-  // article would quietly vanish from every section it was in.
-  if (existing.slug !== fields.slug) {
-    await db
-      .update(blogListings)
-      .set({ postSlug: fields.slug })
-      .where(eq(blogListings.postSlug, existing.slug));
-    invalidateBlogListingCache();
-  }
+    if (!rows.length) return false;
+
+    // Category and tag pages select posts by slug, so a rename would otherwise
+    // leave those listings pointing at a slug that no longer exists and the
+    // article would quietly vanish from every section it was in.
+    if (existing.slug !== fields.slug) {
+      await tx
+        .update(blogListings)
+        .set({ postSlug: fields.slug })
+        .where(eq(blogListings.postSlug, existing.slug));
+    }
+
+    return true;
+  });
+
+  if (!saved) failed(target, "That post no longer exists.");
+  if (existing.slug !== fields.slug) invalidateBlogListingCache();
 
   // Release any image this post no longer uses, once the new one is saved.
   for (const [before, after] of [
@@ -284,6 +316,12 @@ export async function updatePostAction(formData: FormData): Promise<void> {
 
   invalidateBlogCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "blog.updated", "blog_post", id, {
     slug: fields.slug,
     status: { from: existing.status, to: fields.status },
@@ -294,6 +332,7 @@ export async function updatePostAction(formData: FormData): Promise<void> {
 
 /** Removing an article breaks its URL, so this is restricted to admins. */
 export async function deletePostAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -310,6 +349,9 @@ export async function deletePostAction(formData: FormData): Promise<void> {
   // a reference to an article that no longer exists.
   await db.delete(blogListings).where(eq(blogListings.postSlug, existing.slug));
   invalidateBlogListingCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
 
   for (const image of [existing.bannerImage, existing.cardImage, existing.ogImage]) {
     await releaseStoredImage(image);
@@ -317,6 +359,12 @@ export async function deletePostAction(formData: FormData): Promise<void> {
 
   invalidateBlogCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "blog.deleted", "blog_post", id, {
     slug: existing.slug,
     heading: existing.heading,
@@ -327,6 +375,7 @@ export async function deletePostAction(formData: FormData): Promise<void> {
 
 /** Deletes every selected article and cleans up listing rows and unused images. */
 export async function bulkDeletePostsAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -345,6 +394,9 @@ export async function bulkDeletePostsAction(formData: FormData): Promise<void> {
   await db.delete(blogPosts).where(inArray(blogPosts.id, uniqueIds));
   await db.delete(blogListings).where(inArray(blogListings.postSlug, existing.map((post) => post.slug)));
   invalidateBlogListingCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
 
   for (const post of existing) {
     for (const image of [post.bannerImage, post.cardImage, post.ogImage]) {
@@ -354,6 +406,12 @@ export async function bulkDeletePostsAction(formData: FormData): Promise<void> {
 
   invalidateBlogCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "blog.bulk_deleted", "blog_post", uniqueIds.join(","), {
     count: uniqueIds.length,
   });
@@ -363,6 +421,7 @@ export async function bulkDeletePostsAction(formData: FormData): Promise<void> {
 
 /** Nudges a post one place up or down the listing. */
 export async function movePostAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireUser();
   const db = await requireDb();
 
@@ -398,6 +457,12 @@ export async function movePostAction(formData: FormData): Promise<void> {
 
   invalidateBlogCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "blog.reordered", "blog_post", id, { direction });
 
   done("Order updated.");

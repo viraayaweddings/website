@@ -7,12 +7,20 @@
  * Kept transport-agnostic: the worker gate passes a `Request`, while server
  * actions and server components pass a token read from `next/headers`.
  */
-import { and, eq, gt, lt } from "drizzle-orm";
+import { and, eq, gt, lt, or } from "drizzle-orm";
 import type { Db } from "../db/client";
 import { sessions, users, type User } from "../db/schema";
 
 export const SESSION_COOKIE = "vw_admin_session";
 export const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+/**
+ * The longest a session may live, however often it is used.
+ *
+ * The sliding expiry alone meant a session touched once a week never ended, so
+ * a stolen token stayed valid for as long as somebody kept using it. Past this
+ * point the person signs in again.
+ */
+export const SESSION_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
 /** Re-issue the expiry when a session is more than this far from fresh. */
 const SESSION_REFRESH_AFTER_MS = 24 * 60 * 60 * 1000;
 const TOKEN_BYTES = 32;
@@ -75,7 +83,16 @@ export async function createSession(
   });
 
   // Opportunistic cleanup; cheap and keeps the table from growing unbounded.
-  await db.delete(sessions).where(lt(sessions.expiresAt, new Date())).catch(() => undefined);
+  // Anything past the absolute age goes too, whatever its sliding expiry says.
+  await db
+    .delete(sessions)
+    .where(
+      or(
+        lt(sessions.expiresAt, new Date()),
+        lt(sessions.createdAt, new Date(Date.now() - SESSION_MAX_AGE_MS)),
+      ),
+    )
+    .catch(() => undefined);
 
   return token;
 }
@@ -86,7 +103,12 @@ export async function getUserByToken(db: Db, token: string): Promise<User | null
 
   const tokenHash = await hashToken(token);
   const rows = await db
-    .select({ user: users, sessionId: sessions.id, expiresAt: sessions.expiresAt })
+    .select({
+      user: users,
+      sessionId: sessions.id,
+      expiresAt: sessions.expiresAt,
+      createdAt: sessions.createdAt,
+    })
     .from(sessions)
     .innerJoin(users, eq(users.id, sessions.userId))
     .where(and(eq(sessions.tokenHash, tokenHash), gt(sessions.expiresAt, new Date())))
@@ -94,6 +116,12 @@ export async function getUserByToken(db: Db, token: string): Promise<User | null
 
   const row = rows[0];
   if (!row || row.user.status !== "active") return null;
+
+  // Past the absolute age no amount of activity keeps it alive.
+  if (Date.now() - row.createdAt.getTime() > SESSION_MAX_AGE_MS) {
+    await db.delete(sessions).where(eq(sessions.id, row.sessionId)).catch(() => undefined);
+    return null;
+  }
 
   const remaining = row.expiresAt.getTime() - Date.now();
   if (remaining < SESSION_TTL_MS - SESSION_REFRESH_AFTER_MS) {

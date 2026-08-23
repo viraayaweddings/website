@@ -1,15 +1,13 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { and, eq, inArray, lt, sql } from "drizzle-orm";
+import { eq, inArray, lt, sql } from "drizzle-orm";
 import { auditLog } from "@/worker/db/schema";
-import { recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { withFlashKey } from "../_lib/flash";
+import { PRUNE_DAYS } from "./constants";
 
 const ACTIVITY_PATH = "/admin/activity";
-
-/** Retention windows the panel offers. Anything else is refused. */
-export const PRUNE_DAYS = [30, 90, 180, 365] as const;
-
 const BULK_LIMIT = 200;
 
 function backTo(formData: FormData): string {
@@ -18,7 +16,7 @@ function backTo(formData: FormData): string {
 }
 
 function withMessage(target: string, key: "error" | "deleted" | "saved", message: string): never {
-  redirect(`${target}${target.includes("?") ? "&" : "?"}${key}=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}${key}=${encodeURIComponent(message)}`));
 }
 
 /**
@@ -28,6 +26,7 @@ function withMessage(target: string, key: "error" | "deleted" | "saved", message
  * erased: a gap always has an entry beside it saying who made it.
  */
 export async function bulkDeleteActivityAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -62,6 +61,7 @@ export async function bulkDeleteActivityAction(formData: FormData): Promise<void
  * by one is for the odd mistake, not for housekeeping.
  */
 export async function pruneActivityAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -91,6 +91,7 @@ export async function pruneActivityAction(formData: FormData): Promise<void> {
 
 /** Deletes one entry, used by the row control. */
 export async function deleteActivityEntryAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -101,9 +102,8 @@ export async function deleteActivityEntryAction(formData: FormData): Promise<voi
   const existing = (await db.select().from(auditLog).where(eq(auditLog.id, id)).limit(1))[0];
   if (!existing) withMessage(target, "error", "That entry has already been removed.");
 
-  await db.delete(auditLog).where(and(eq(auditLog.id, id)));
-  await recordAudit(db, actor, "activity.bulk_deleted", "activity", String(id), {
-    count: 1,
+  await db.delete(auditLog).where(eq(auditLog.id, id));
+  await recordAudit(db, actor, "activity.deleted", "activity", String(id), {
     was: existing.action,
   });
 

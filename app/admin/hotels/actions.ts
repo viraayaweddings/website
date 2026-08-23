@@ -6,20 +6,24 @@ import { and, eq, inArray, like, ne } from "drizzle-orm";
 import { releaseImage, uploadImage } from "@/worker/admin/media-store";
 import { mediaKeyFrom, mediaPathFromKey, readMediaPathValue } from "@/worker/admin/media-path";
 import { readRichText } from "@/worker/admin/rich-text";
+import { highestId, readRowIndices, TooManyRowsError } from "@/worker/admin/form-rows";
 import { cityListings, hotels, POST_STATUSES, type BlogFaq, type HotelHighlight, type PostStatus } from "@/worker/db/schema";
 import { invalidateHotelCache } from "@/worker/site/hotel";
 import { invalidateTemplateCache } from "@/worker/site/template";
 import { invalidateCityListingCache } from "@/worker/site/venue-listing";
-import { recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
+import { assertSameOrigin, recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
+import { hasMoved, readExpectedVersion, STALE_MESSAGE } from "../_lib/concurrency";
+import { publishContentChange } from "@/worker/site/content-version";
+import { withFlashKey } from "../_lib/flash";
 
 const HOTELS_PATH = "/admin/hotels";
 
 function failed(target: string, message: string): never {
-  redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(message)}`));
 }
 
 function done(target: string, message: string): never {
-  redirect(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`));
 }
 
 /** The list view to return to, so filters, sort and page survive an action. */
@@ -53,27 +57,32 @@ async function releaseStoredImage(value: string): Promise<void> {
 async function readFaqs(formData: FormData, target: string): Promise<BlogFaq[]> {
   const faqs: BlogFaq[] = [];
 
-  for (const [key, value] of formData.entries()) {
-    const match = /^faq_question_(\d+)$/.exec(key);
-    if (!match) continue;
+  // Capped before any answer is sanitised; see worker/admin/form-rows.ts.
+  let indices: string[];
+  try {
+    indices = readRowIndices(formData, "faq_question_", "FAQ entries");
+  } catch (error) {
+    failed(target, error instanceof TooManyRowsError ? error.message : "Too many FAQ entries.");
+  }
 
-    const question = String(value).trim();
+  for (const index of indices) {
+    const question = String(formData.get(`faq_question_${index}`) || "").trim();
     if (!question) continue;
 
     // Answers are HTML written in the editor, so they are sanitised and
     // length-checked rather than cut to a byte count, which would split a tag.
-    const answer = await readRichText(String(formData.get(`faq_answer_${match[1]}`) || ""), `The answer to "${question.slice(0, 40)}"`);
+    const answer = await readRichText(String(formData.get(`faq_answer_${index}`) || ""), `The answer to "${question.slice(0, 40)}"`);
     if ("error" in answer) failed(target, answer.error);
 
     faqs.push({
-      id: Number.parseInt(String(formData.get(`faq_id_${match[1]}`) || "0"), 10) || 0,
+      id: Number.parseInt(String(formData.get(`faq_id_${index}`) || "0"), 10) || 0,
       question: question.slice(0, 400),
       answer: answer.html,
     });
   }
 
   // Anchors must stay unique; only genuinely new rows get a fresh id.
-  let next = Math.max(0, ...faqs.map((faq) => faq.id)) + 1;
+  let next = highestId(faqs.map((faq) => faq.id)) + 1;
   for (const faq of faqs) {
     if (!faq.id) {
       faq.id = next;
@@ -87,12 +96,16 @@ async function readFaqs(formData: FormData, target: string): Promise<BlogFaq[]> 
 function readHighlights(formData: FormData, target: string): HotelHighlight[] {
   const highlights: HotelHighlight[] = [];
 
-  for (const [key, value] of formData.entries()) {
-    const match = /^highlight_title_(\d+)$/.exec(key);
-    if (!match) continue;
+  let indices: string[];
+  try {
+    indices = readRowIndices(formData, "highlight_title_", "highlights");
+  } catch (error) {
+    failed(target, error instanceof TooManyRowsError ? error.message : "Too many highlights.");
+  }
 
-    const title = String(value).trim();
-    const image = readMediaPath(String(formData.get(`highlight_image_${match[1]}`) || ""), target);
+  for (const index of indices) {
+    const title = String(formData.get(`highlight_title_${index}`) || "").trim();
+    const image = readMediaPath(String(formData.get(`highlight_image_${index}`) || ""), target);
     if (title && image) highlights.push({ title: title.slice(0, 300), image: image.slice(0, 400) });
   }
 
@@ -115,6 +128,7 @@ function normaliseSlug(value: string): string {
  * are handled.
  */
 export async function createHotelAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireUser();
   const db = await requireDb();
   const target = "/admin/hotels/new";
@@ -191,9 +205,15 @@ export async function createHotelAction(formData: FormData): Promise<void> {
   invalidateHotelCache();
   invalidateTemplateCache();
   invalidateCityListingCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "hotel.created", "hotel", inserted[0]?.id ?? 0, { venue: `${city}/${slug}` });
 
-  redirect(`${HOTELS_PATH}?saved=1`);
+  redirect(withFlashKey(`${HOTELS_PATH}?saved=1`));
 }
 
 /**
@@ -201,6 +221,7 @@ export async function createHotelAction(formData: FormData): Promise<void> {
  * keep their original page; only ones added here disappear entirely.
  */
 export async function deleteHotelAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -226,6 +247,12 @@ export async function deleteHotelAction(formData: FormData): Promise<void> {
   invalidateHotelCache();
   invalidateTemplateCache();
   invalidateCityListingCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "hotel.deleted", "hotel", id, {
     venue: `${existing.city}/${existing.slug}`,
     name: existing.name,
@@ -236,6 +263,7 @@ export async function deleteHotelAction(formData: FormData): Promise<void> {
 
 /** Deletes every selected venue and removes listing rows that pointed at them. */
 export async function bulkDeleteHotelsAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -265,6 +293,12 @@ export async function bulkDeleteHotelsAction(formData: FormData): Promise<void> 
   invalidateHotelCache();
   invalidateTemplateCache();
   invalidateCityListingCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "hotel.bulk_deleted", "hotel", uniqueIds.join(","), {
     count: uniqueIds.length,
   });
@@ -290,6 +324,7 @@ function readNearby(formData: FormData): string[] {
 }
 
 export async function updateHotelAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireUser();
   const db = await requireDb();
 
@@ -299,6 +334,10 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
 
   const existing = (await db.select().from(hotels).where(eq(hotels.id, id)).limit(1))[0];
   if (!existing) failed(HOTELS_PATH, "That venue no longer exists.");
+
+  // Refused before anything is uploaded, so a losing save leaves nothing behind.
+  const expectedVersion = readExpectedVersion(formData);
+  if (hasMoved(expectedVersion, existing.updatedAt)) failed(target, STALE_MESSAGE);
 
   const text = (field: string, max: number) =>
     String(formData.get(field) || "").trim().slice(0, max);
@@ -343,7 +382,11 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
   const thumbnailImage = readMediaPath(text("thumbnailImage", 400), target);
   const ogImage = readMediaPath(text("ogImage", 400), target);
 
-  await db
+  // One transaction: a venue that moved has to be repointed everywhere it is
+  // referenced, and a failure between the two writes would drop it from every
+  // city page and nearby strip while leaving the venue itself at its new URL.
+  const saved = await db.transaction(async (tx) => {
+    const rows = await tx
     .update(hotels)
     .set({
       city,
@@ -377,12 +420,20 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
       totalRooms: text("totalRooms", 20),
       updatedAt: new Date(),
     })
-    .where(eq(hotels.id, id));
+      .where(eq(hotels.id, id))
+      .returning({ id: hotels.id });
 
-  // A venue that moved is still referenced by city pages and by other venues'
-  // nearby strips, and those references are stored as "city/slug" text. Left
-  // alone they would silently drop the venue from every list it appears in.
-  if (moved) await repointVenueReferences(db, existing.city, existing.slug, city, slug);
+    if (!rows.length) return false;
+
+    // A venue that moved is still referenced by city pages and by other venues'
+    // nearby strips, and those references are stored as "city/slug" text. Left
+    // alone they would silently drop the venue from every list it appears in.
+    if (moved) await repointVenueReferences(tx, existing.city, existing.slug, city, slug);
+
+    return true;
+  });
+
+  if (!saved) failed(HOTELS_PATH, "That venue no longer exists.");
 
   // Release every image this venue no longer uses, once the replacements are
   // saved; releaseImage keeps one if another venue, post or slide still points
@@ -398,6 +449,12 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
   invalidateHotelCache();
   invalidateTemplateCache();
   invalidateCityListingCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "hotel.updated", "hotel", id, {
     venue: `${city}/${slug}`,
     status: { from: existing.status, to: status },
@@ -408,19 +465,22 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
     });
   }
 
-  redirect(`${target}?saved=1`);
+  redirect(withFlashKey(`${target}?saved=1`));
 }
 
 /**
  * Rewrites the stored "city/slug" references to a venue that changed URL.
  *
  * City listings hold one row per reference; a venue's nearby strip holds a JSON
- * array, so those are rewritten in memory and written back. Both happen in one
- * transaction with the rename, or a half-applied move would leave listings
- * pointing at a page that no longer exists.
+ * array, so those are rewritten in memory and written back. The caller supplies
+ * the transaction, so this and the rename itself commit together -- a
+ * half-applied move would leave listings pointing at a page that no longer
+ * exists.
  */
+type Transaction = Parameters<Parameters<Awaited<ReturnType<typeof requireDb>>["transaction"]>[0]>[0];
+
 async function repointVenueReferences(
-  db: Awaited<ReturnType<typeof requireDb>>,
+  tx: Transaction,
   fromCity: string,
   fromSlug: string,
   toCity: string,
@@ -429,27 +489,25 @@ async function repointVenueReferences(
   const was = `${fromCity}/${fromSlug}`;
   const now = `${toCity}/${toSlug}`;
 
-  await db.transaction(async (tx) => {
+  await tx
+    .update(cityListings)
+    .set({ venueCity: toCity, venueSlug: toSlug })
+    .where(and(eq(cityListings.venueCity, fromCity), eq(cityListings.venueSlug, fromSlug)));
+
+  const referrers = await tx
+    .select({ id: hotels.id, nearbySlugs: hotels.nearbySlugs })
+    .from(hotels)
+    .where(like(hotels.nearbySlugs, `%${was}%`));
+
+  for (const referrer of referrers) {
+    const refs = readNearbyList(referrer.nearbySlugs);
+    if (!refs.includes(was)) continue;
+    const updated = [...new Set(refs.map((ref) => (ref === was ? now : ref)))];
     await tx
-      .update(cityListings)
-      .set({ venueCity: toCity, venueSlug: toSlug })
-      .where(and(eq(cityListings.venueCity, fromCity), eq(cityListings.venueSlug, fromSlug)));
-
-    const referrers = await tx
-      .select({ id: hotels.id, nearbySlugs: hotels.nearbySlugs })
-      .from(hotels)
-      .where(like(hotels.nearbySlugs, `%${was}%`));
-
-    for (const referrer of referrers) {
-      const refs = readNearbyList(referrer.nearbySlugs);
-      if (!refs.includes(was)) continue;
-      const updated = [...new Set(refs.map((ref) => (ref === was ? now : ref)))];
-      await tx
-        .update(hotels)
-        .set({ nearbySlugs: JSON.stringify(updated) })
-        .where(eq(hotels.id, referrer.id));
-    }
-  });
+      .update(hotels)
+      .set({ nearbySlugs: JSON.stringify(updated) })
+      .where(eq(hotels.id, referrer.id));
+  }
 }
 
 function readNearbyList(value: string): string[] {

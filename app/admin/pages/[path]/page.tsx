@@ -6,10 +6,11 @@ import { eq } from "drizzle-orm";
 import { staticPages } from "@/worker/db/schema";
 import { normalizeStaticPath } from "@/worker/site/static-pages";
 import { AdminShell } from "../../_components/AdminShell";
-import { SubmitButton, UnsavedGuard } from "../../_components/FormControls";
+import { SubmitButton, UnsavedGuard, VersionField } from "../../_components/FormControls";
 import { Icon } from "../../_components/icons";
 import { MediaPicker } from "../../_components/MediaPicker";
 import { Card, CardHead, Field, LinkButton, StatusBadge, TextArea } from "../../_components/ui";
+import { versionOf } from "../../_lib/concurrency";
 import { requireDb, requireRole } from "../../_lib/auth";
 import { replacePageImageAction, resetStaticPageAction, saveStaticPageAction } from "../actions";
 
@@ -74,6 +75,7 @@ export default async function StaticPageEditor({
         <form action={saveStaticPageAction} className="vw-card-pad space-y-3">
           <UnsavedGuard />
           <input type="hidden" name="path" value={path} />
+          <VersionField value={versionOf(page)} />
           <Field label="Title" name="title" defaultValue={page.title} />
           <TextArea
             label="Description"

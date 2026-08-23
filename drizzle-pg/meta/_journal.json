@@ -22,6 +22,13 @@
       "when": 1787472000000,
       "tag": "0005_city_page_publishing",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1787558400000,
+      "tag": "0006_integrity_and_provenance",
+      "breakpoints": true
     }
   ]
 }

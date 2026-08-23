@@ -41,6 +41,8 @@ export function CommandPalette({ role }: { role: string }) {
   const [hits, setHits] = useState<Hit[]>([]);
   const [loading, setLoading] = useState(false);
   const [cursor, setCursor] = useState(0);
+  /** Set when the search endpoint answers 401, so an ended session reads as one. */
+  const [expired, setExpired] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   /** Bumped per keystroke; a response for an older token is discarded. */
   const token = useRef(0);
@@ -103,13 +105,30 @@ export function CommandPalette({ role }: { role: string }) {
     if (needle.length < MIN_QUERY) return;
 
     const mine = ++token.current;
+    const controller = new AbortController();
     const timer = window.setTimeout(async () => {
       try {
-        const response = await fetch(`/admin/search?q=${encodeURIComponent(needle)}`);
+        const response = await fetch(`/admin/search?q=${encodeURIComponent(needle)}`, {
+          signal: controller.signal,
+        });
+
+        // An expired session answers 401, and reading `hits` off that body gave
+        // undefined -- so the palette said "nothing found" when the real answer
+        // was "sign in again".
+        if (response.status === 401) {
+          if (mine === token.current) {
+            setHits([]);
+            setExpired(true);
+          }
+          return;
+        }
+
         const body = (await response.json()) as { hits?: Hit[] };
         if (mine !== token.current) return; // A newer keystroke already won.
+        setExpired(false);
         setHits(body.hits ?? []);
-      } catch {
+      } catch (error) {
+        if ((error as { name?: string })?.name === "AbortError") return;
         if (mine === token.current) setHits([]);
       } finally {
         if (mine === token.current) setLoading(false);
@@ -120,6 +139,9 @@ export function CommandPalette({ role }: { role: string }) {
     // cleanup only runs because the query moved on, or the palette closed.
     return () => {
       window.clearTimeout(timer);
+      // Superseded requests are cancelled rather than left to complete and be
+      // discarded; fast typing used to leave several of them in flight.
+      controller.abort();
       token.current += 1;
     };
   }, [query]);
@@ -208,7 +230,11 @@ export function CommandPalette({ role }: { role: string }) {
           <div className="vw-scroll max-h-[52vh] overflow-y-auto p-2">
             {results.length === 0 ? (
               <p className="px-3 py-8 text-center text-sm" style={{ color: "var(--ink-faint)" }}>
-                {query.trim().length < MIN_QUERY ? "Type at least two characters." : "Nothing matches that."}
+                {expired
+                  ? "Your session has ended. Reload the page and sign in again."
+                  : query.trim().length < MIN_QUERY
+                    ? "Type at least two characters."
+                    : "Nothing matches that."}
               </p>
             ) : (
               results.map((result, index) => {

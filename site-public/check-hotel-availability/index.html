@@ -2612,29 +2612,25 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                             <div class="col-md-6" data-aos="fade-up">
                                 <div class="form-group">
                                     <label class="form-label position-absolute">Name</label>
-                                    <input type="text" id="name" class="form-control" placeholder="Enter Your Name">
-                                    <small class="text-danger" id="name-error"></small>
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter Your Name" required>
                                 </div>
                             </div>
                             <div class="col-md-6" data-aos="fade-up">
                                 <div class="form-group">
                                     <label class="form-label position-absolute">Email</label>
-                                    <input type="email" id="email" class="form-control" placeholder="Enter Email">
-                                    <small class="text-danger" id="email-error"></small>
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" required>
                                 </div>
                             </div>
                             <div class="col-md-6" data-aos="fade-up">
                                 <div class="form-group">
                                     <label class="form-label position-absolute">Phone</label>
-                                    <input type="text" id="phone" class="form-control" placeholder="Enter Phone">
-                                    <small class="text-danger" id="phone-error"></small>
+                                    <input type="text" id="phone" name="number" class="form-control" placeholder="Enter Phone" required>
                                 </div>
                             </div>
                             <div class="col-md-6" data-aos="fade-up">
                                 <div class="form-group">
                                     <label class="form-label position-absolute">City</label>
-                                    <input type="text" id="user-city" class="form-control" placeholder="Enter City">
-                                    <small class="text-danger" id="city-error"></small>
+                                    <input type="text" id="user-city" name="city" class="form-control" placeholder="Enter City" required>
                                 </div>
                             </div>
                         </div>
@@ -2676,10 +2672,9 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                 Submit this request and our team will email you after checking availability with the selected hotel teams.
                             </p>
                         </div>
-                        <div id="availability-error-message" class="alert alert-danger mt-3 mb-0" style="display:none;" role="alert" aria-live="assertive"></div>
-                        <div id="availability-success-message" class="alert alert-success mt-3 mb-0" style="display:none;" role="status" aria-live="polite">
-                            Thank you! Your booking request has been submitted successfully. Our team will check availability and email you shortly.
-                        </div>
+                        <!-- The shared lead-form status box is created here, so this
+                             request uses the same message design as every other form. -->
+                        <div data-lead-status class="mt-3"></div>
                         <div class="d-flex gap-2 mt-3" data-aos="fade-up">
                             <button type="button" id="back-btn" class="btn btn-secondary w-50">BACK</button>
                             <button type="button" id="submit-availability-btn" class="btn btn-primary w-50">BOOK NOW</button>
@@ -2914,9 +2909,20 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 <script src="/vendor/select2/select2.min.js"></script>
 <script>
 (function () {
+  /**
+   * jQuery and flatpickr load synchronously above this script, so this used to
+   * fire mid-parse -- before the deferred js/lead-forms.js had run. The shared
+   * validation was therefore never attached to the contact fields. It is waited
+   * for too, but only briefly: if the file fails to load the page still works,
+   * with the older alert-based messages.
+   */
+  var waited = 0;
+
   function whenReady(callback) {
-    if (window.jQuery && window.flatpickr) callback();
-    else setTimeout(function () { whenReady(callback); }, 50);
+    var haveLibraries = window.jQuery && window.flatpickr;
+    var haveLeadForms = window.viraayaLeadForms || waited >= 3000;
+    if (haveLibraries && haveLeadForms) callback();
+    else setTimeout(function () { waited += 50; whenReady(callback); }, 50);
   }
 
   whenReady(function () {
@@ -2973,19 +2979,41 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
       scrollToElement('#top-alert', target || '#top-alert');
     }
 
+    /**
+     * The contact fields, validated by the shared lead-form rules.
+     *
+     * This request is not an ordinary lead <form> -- a plan, hotels, three date
+     * ranges and a rooms/pax grid all have to be collected first -- so it used
+     * to carry its own rules and its own error elements, which read differently
+     * from every other form on the site. js/lead-forms.js now owns both.
+     */
+    var contactFields = document.getElementById('booking-form-section');
+    var leadForms = window.viraayaLeadForms || null;
+    if (leadForms && contactFields) leadForms.attach(contactFields);
+
+    function clearContactErrors() {
+      if (leadForms && contactFields) leadForms.clear(contactFields);
+    }
+
+    function validateContactFields() {
+      if (!leadForms || !contactFields) return [];
+      return leadForms.validate(contactFields);
+    }
+
     function scrollToFirstFieldError() {
-      var firstError = $('.text-danger').filter(function () { return $.trim($(this).text()).length > 0; }).first();
-      if (firstError.length) {
-        scrollToElement(firstError.closest('.form-group'));
-        return true;
-      }
-      return false;
+      var firstInvalid = contactFields ? contactFields.querySelector('.lead-field-invalid') : null;
+      if (!firstInvalid) return false;
+      scrollToElement($(firstInvalid).closest('.form-group'), firstInvalid);
+      return true;
+    }
+
+    function showBookingStatus(message, type) {
+      if (leadForms && contactFields) leadForms.status(contactFields, message, type);
+      else showAlert(message, type === 'success' ? 'success' : 'danger');
     }
 
     function showBookingError(message) {
-      $('#availability-success-message').hide();
-      $('#availability-error-message').text(message).fadeIn();
-      scrollToElement('#availability-error-message');
+      showBookingStatus(message, 'error');
     }
 
     function addDays(date, days) { var copy = new Date(date); copy.setDate(copy.getDate() + days); return copy; }
@@ -3084,18 +3112,10 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
     $('#back-btn').on('click', function () { $('#booking-form-section').hide(); $('.form-widget').show(); });
     $('#submit-availability-btn').on('click', function () {
-      $('.text-danger').text('');
-      $('#availability-success-message').hide();
-      $('#availability-error-message').hide().text('');
+      clearContactErrors();
+      if (leadForms && contactFields) leadForms.clearStatus(contactFields);
       var name = $('#name').val().trim(), email = $('#email').val().trim(), phone = $('#phone').val().trim(), city = $('#user-city').val().trim();
-      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      var phonePattern = /^[6-9][0-9]{9}$/;
-      var valid = true;
-      if (!name) { $('#name-error').text('Name is required'); valid = false; }
-      if (!email) { $('#email-error').text('Email is required'); valid = false; } else if (!emailPattern.test(email)) { $('#email-error').text('Enter a valid email'); valid = false; }
-      if (!phone) { $('#phone-error').text('Phone is required'); valid = false; } else if (!phonePattern.test(phone)) { $('#phone-error').text('Enter a valid 10-digit phone'); valid = false; }
-      if (!city) { $('#city-error').text('City is required'); valid = false; }
-      if (!valid) { scrollToFirstFieldError(); return; }
+      if (validateContactFields().length) { scrollToFirstFieldError(); return; }
       var roomsPax = []; $('.rooms-input').each(function (i) { roomsPax.push({ rooms: parseInt($(this).val(), 10), pax: parseInt($('.pax-input').eq(i).val(), 10) }); });
       var hotelSelections = [];
       $('.hotel-select').each(function (index) {
@@ -3145,6 +3165,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         }
       };
       $('#submit-availability-btn').prop('disabled', true).text('Sending request...');
+      showBookingStatus('Sending your enquiry...', 'pending');
       var sendPayload = function (csrfToken) {
         payload.csrfToken = csrfToken;
         $.ajax({
@@ -3154,24 +3175,22 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         data: JSON.stringify(payload),
         success: function (res) {
           if (res && res.ok === false) {
-            showBookingError(res.message || 'Could not submit the request. Please try again.');
+            showBookingError((res.errors && res.errors[0]) || res.message || 'Could not submit the request. Please try again.');
             $('#submit-availability-btn').prop('disabled', false).text('BOOK NOW');
             return;
           }
-          $('#availability-error-message').hide().text('');
-          $('#availability-success-message').fadeIn();
-          scrollToElement('#availability-success-message');
+          showBookingStatus('Thank you! Your booking request has been submitted successfully. Our team will check availability and email you shortly.', 'success');
           $('#submit-availability-btn').text('Request sent').prop('disabled', true);
         },
         error: function (xhr) {
           var response = xhr.responseJSON || {};
-          showBookingError(response.message || 'Could not submit the request. Please try again.');
+          showBookingError((response.errors && response.errors[0]) || response.message || 'Could not submit the request. Please try again.');
           $('#submit-availability-btn').prop('disabled', false).text('BOOK NOW');
         }
       });
       };
-      var csrfLoader = window.viraayaLeadCsrf
-        ? window.viraayaLeadCsrf()
+      var csrfLoader = leadForms
+        ? leadForms.csrf()
         : fetch('/api/lead/csrf', { credentials: 'same-origin' }).then(function (response) { return response.json(); }).then(function (data) { return data.token || ''; });
       csrfLoader.then(sendPayload).catch(function () {
         showBookingError('Could not submit the request. Refresh the page and try again.');

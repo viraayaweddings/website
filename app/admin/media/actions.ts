@@ -1,19 +1,38 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { assertSameOrigin } from "../_lib/auth";
+import { withFlashKey } from "../_lib/flash";
 
 const MEDIA_PATH = "/admin/media";
 
 async function serverDependencies() {
-  const [{ emptyEnv }, { releaseImage, uploadImage }, { findImageReferences, replaceImageReferences }, { recordAudit, requireDb, requireRole }] =
-    await Promise.all([
-      import("@/worker/env"),
-      import("@/worker/admin/media-store"),
-      import("@/worker/admin/image-references"),
-      import("../_lib/auth"),
-    ]);
+  const [
+    { emptyEnv },
+    { releaseImage, uploadImage },
+    { buildImageUsage, findImageReferences, replaceImageReferences },
+    { mediaKeyFrom },
+    { recordAudit, requireDb, requireRole },
+  ] = await Promise.all([
+    import("@/worker/env"),
+    import("@/worker/admin/media-store"),
+    import("@/worker/admin/image-references"),
+    import("@/worker/admin/media-path"),
+    import("../_lib/auth"),
+  ]);
 
-  return { emptyEnv, releaseImage, uploadImage, findImageReferences, replaceImageReferences, recordAudit, requireDb, requireRole };
+  return {
+    emptyEnv,
+    releaseImage,
+    uploadImage,
+    buildImageUsage,
+    findImageReferences,
+    replaceImageReferences,
+    mediaKeyFrom,
+    recordAudit,
+    requireDb,
+    requireRole,
+  };
 }
 
 /**
@@ -21,6 +40,7 @@ async function serverDependencies() {
  * picture shared by two venues cannot be pulled out from under one of them.
  */
 export async function deleteMediaAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const { emptyEnv, releaseImage, findImageReferences, recordAudit, requireDb, requireRole } =
     await serverDependencies();
   const actor = await requireRole("admin");
@@ -41,25 +61,26 @@ export async function deleteMediaAction(formData: FormData): Promise<void> {
   const outcome = await releaseImage(emptyEnv(), key);
   await recordAudit(db, actor, "media.deleted", "media", key, { outcome });
 
-  redirect(`${MEDIA_PATH}?saved=1`);
+  redirect(withFlashKey(`${MEDIA_PATH}?saved=1`));
 }
 
 /** Removes selected uploaded images, refusing the batch if any are still used. */
 export async function bulkDeleteMediaAction(formData: FormData): Promise<void> {
-  const { emptyEnv, releaseImage, findImageReferences, recordAudit, requireDb, requireRole } =
+  await assertSameOrigin();
+  const { emptyEnv, releaseImage, buildImageUsage, mediaKeyFrom, recordAudit, requireDb, requireRole } =
     await serverDependencies();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
   const keys = [...new Set(formData.getAll("ids").map((value) => String(value || "").trim()).filter(Boolean))]
     .slice(0, 200);
-  if (!keys.length) redirect(`${MEDIA_PATH}?error=${encodeURIComponent("Select at least one image first.")}`);
+  if (!keys.length) redirect(withFlashKey(`${MEDIA_PATH}?error=${encodeURIComponent("Select at least one image first.")}`));
 
-  const blocked: string[] = [];
-  for (const key of keys) {
-    const references = await findImageReferences(db, key);
-    if (references.length) blocked.push(key);
-  }
+  // One pass over the content tables rather than one query per selected image.
+  // A 200-image selection used to mean 200 sequential round trips on a single
+  // connection, inside a function with a timeout.
+  const usage = await buildImageUsage(db);
+  const blocked = keys.filter((key) => (usage.get(mediaKeyFrom(key))?.length ?? 0) > 0);
 
   if (blocked.length) {
     redirect(
@@ -79,11 +100,12 @@ export async function bulkDeleteMediaAction(formData: FormData): Promise<void> {
     outcomes,
   });
 
-  redirect(`${MEDIA_PATH}?saved=${encodeURIComponent(`${keys.length} image${keys.length === 1 ? "" : "s"} deleted.`)}`);
+  redirect(withFlashKey(`${MEDIA_PATH}?saved=${encodeURIComponent(`${keys.length} image${keys.length === 1 ? "" : "s"} deleted.`)}`));
 }
 
 /** Uploads a new image and repoints every database-managed reference to it. */
 export async function replaceMediaAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const { emptyEnv, uploadImage, releaseImage, replaceImageReferences, recordAudit, requireDb, requireRole } =
     await serverDependencies();
   const actor = await requireRole("admin");
@@ -93,16 +115,18 @@ export async function replaceMediaAction(formData: FormData): Promise<void> {
   const file = formData.get("file");
   if (!oldKey) redirect(MEDIA_PATH);
   if (!(file instanceof File) || file.size === 0) {
-    redirect(`${MEDIA_PATH}?error=${encodeURIComponent("Choose an image to replace it with.")}`);
+    redirect(withFlashKey(`${MEDIA_PATH}?error=${encodeURIComponent("Choose an image to replace it with.")}`));
   }
 
   const result = await uploadImage(emptyEnv(), file, actor.email);
-  if ("error" in result) redirect(`${MEDIA_PATH}?error=${encodeURIComponent(result.error)}`);
+  if ("error" in result) redirect(withFlashKey(`${MEDIA_PATH}?error=${encodeURIComponent(result.error)}`));
 
   if (result.key === oldKey) {
-    redirect(`${MEDIA_PATH}?saved=${encodeURIComponent("That image is already the same file.")}`);
+    redirect(withFlashKey(`${MEDIA_PATH}?saved=${encodeURIComponent("That image is already the same file.")}`));
   }
 
+  // The repoint has to land before the old object is released, or a failure
+  // between them leaves live pages pointing at a key that has just been deleted.
   const referencesChanged = await replaceImageReferences(db, oldKey, result.key);
   const oldOutcome = await releaseImage(emptyEnv(), oldKey);
 

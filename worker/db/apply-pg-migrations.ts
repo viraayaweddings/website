@@ -9,6 +9,7 @@ import migration0002 from "../../drizzle-pg/0002_static_pages.sql?raw";
 import migration0003 from "../../drizzle-pg/0003_media_dimensions.sql?raw";
 import migration0004 from "../../drizzle-pg/0004_seed_site_labels.sql?raw";
 import migration0005 from "../../drizzle-pg/0005_city_page_publishing.sql?raw";
+import migration0006 from "../../drizzle-pg/0006_integrity_and_provenance.sql?raw";
 import type { Db } from "./client";
 import { splitStatements } from "./migrations";
 
@@ -19,9 +20,25 @@ const PG_MIGRATIONS: ReadonlyArray<{ name: string; sql: string }> = [
   { name: "0003_media_dimensions", sql: migration0003 },
   { name: "0004_seed_site_labels", sql: migration0004 },
   { name: "0005_city_page_publishing", sql: migration0005 },
+  { name: "0006_integrity_and_provenance", sql: migration0006 },
 ];
 
 const MIGRATION_LOCK_KEY = 842_001;
+
+/** The migrations this build expects the database to already have. */
+export const PG_MIGRATION_NAMES: ReadonlyArray<string> = PG_MIGRATIONS.map((migration) => migration.name);
+
+/**
+ * Which bundled migrations the database has not recorded yet.
+ *
+ * Read-only on purpose: this runs on the request path, and the request path
+ * must not issue DDL. A missing `__migrations` table means nothing has been
+ * applied, which is a pending list, not an error.
+ */
+export async function pendingMigrationNames(sqlClient: postgres.Sql): Promise<string[]> {
+  const applied = await appliedMigrationNames(sqlClient);
+  return PG_MIGRATIONS.filter((migration) => !applied.has(migration.name)).map((m) => m.name);
+}
 
 function errorText(error: unknown): string {
   if (!(error instanceof Error)) return String(error);

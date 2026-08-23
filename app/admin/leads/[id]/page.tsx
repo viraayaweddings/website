@@ -6,7 +6,7 @@ import { and, desc, eq } from "drizzle-orm";
 import { auditLog, leads, LEAD_STATUSES } from "@/worker/db/schema";
 import { AdminShell } from "../../_components/AdminShell";
 import { CharCounter } from "../../_components/CharCounter";
-import { CopyButton, SubmitButton, UnsavedGuard } from "../../_components/FormControls";
+import { CopyButton, SubmitButton, UnsavedGuard, VersionField } from "../../_components/FormControls";
 import { Icon } from "../../_components/icons";
 import {
   Alert,
@@ -21,6 +21,7 @@ import {
 } from "../../_components/ui";
 import { currentTime } from "../../_lib/clock";
 import { humanAuditAction } from "../../_lib/audit-labels";
+import { versionOf } from "../../_lib/concurrency";
 import { isAdmin, requireDb, requireUser } from "../../_lib/auth";
 import { deleteLeadAction, resendLeadEmailAction, updateLeadAction } from "../actions";
 
@@ -97,6 +98,7 @@ export default async function LeadDetailPage({
             <p>The enquiry itself is safely stored — only the alert failed.</p>
             <form action={resendLeadEmailAction} className="mt-2">
               <input type="hidden" name="id" value={lead.id} />
+              <VersionField value={versionOf(lead)} />
               <SubmitButton variant="secondary" size="sm" icon="refresh" pendingLabel="Sending…">
                 Send it again
               </SubmitButton>

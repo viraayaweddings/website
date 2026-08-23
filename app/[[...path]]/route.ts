@@ -1,5 +1,5 @@
 import handler from "vinext/server/app-router-entry";
-import { getSessionUser } from "@/worker/admin/session";
+import { getSessionUser, readCookie, SESSION_COOKIE } from "@/worker/admin/session";
 import { getDb } from "@/worker/db/client";
 import { isAppOwnedPath } from "@/worker/site/app-routes";
 import { publicRedirectTarget } from "@/worker/site/public-routes";
@@ -90,8 +90,17 @@ async function serve(request: Request): Promise<Response> {
   return new Response("Not found", { status: 404 });
 }
 
-/** Whether this request carries a live admin session cookie. */
+/**
+ * Whether this request carries a live admin session cookie.
+ *
+ * The cookie is checked for before the database is opened. Without that, any
+ * visitor appending `?preview=1` to any public URL bought themselves a session
+ * lookup, and with one connection per instance a flood of them queued ahead of
+ * real page renders.
+ */
 async function isSignedIn(request: Request): Promise<boolean> {
+  if (!readCookie(request, SESSION_COOKIE)) return false;
+
   try {
     const db = await getDb();
     if (!db) return false;

@@ -5,7 +5,10 @@ import { and, eq, inArray, sql } from "drizzle-orm";
 import { cityListings, cityPages, hotels } from "@/worker/db/schema";
 import { invalidateCityListingCache } from "@/worker/site/venue-listing";
 import { invalidateTemplateCache } from "@/worker/site/template";
-import { recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { hasMoved, readExpectedVersion, STALE_MESSAGE } from "../_lib/concurrency";
+import { publishContentChange } from "@/worker/site/content-version";
+import { withFlashKey } from "../_lib/flash";
 
 const CITIES_PATH = "/admin/cities";
 const BULK_LIMIT = 200;
@@ -14,15 +17,15 @@ const BULK_LIMIT = 200;
 const CITY_SLUG = /^[a-z0-9-]+$/;
 
 function failed(target: string, message: string): never {
-  redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(message)}`));
 }
 
 function done(target: string, message: string): never {
-  redirect(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`));
 }
 
 function removed(target: string, message: string): never {
-  redirect(`${target}${target.includes("?") ? "&" : "?"}deleted=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}deleted=${encodeURIComponent(message)}`));
 }
 
 /** The list view to return to, so filters and sort survive an action. */
@@ -69,6 +72,7 @@ function readVenues(formData: FormData, city: string): { venueCity: string; venu
 
 /** City pages are site-wide structure, so editing them is admin-only. */
 export async function saveCityAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -93,25 +97,30 @@ export async function saveCityAction(formData: FormData): Promise<void> {
 
   const venues = readVenues(formData, city);
 
-  await db
-    .update(cityPages)
-    .set({
-      seoTitle,
-      metaDescription: String(formData.get("metaDescription") || "").trim().slice(0, 500),
-      cityId,
-      heading: String(formData.get("heading") || "").trim().slice(0, 160),
-      headingEmphasis: String(formData.get("headingEmphasis") || "").trim().slice(0, 160),
-      published: formData.get("published") === "on" ? 1 : 0,
-      // Drives the "Showing 1 - 12 of N" line and the pager.
-      totalVenues: Number.isFinite(total) && total >= 0 ? total : venues.length,
-    })
-    .where(eq(cityPages.city, city));
+  // Refused before any write: the page and its venue list are saved together,
+  // and a second editor's list would otherwise replace the first's wholesale.
+  if (hasMoved(readExpectedVersion(formData), existing.updatedAt)) failed(target, STALE_MESSAGE);
 
-  // Replace the list wholesale: order matters and is easiest to express as the
-  // order the lines were typed in. The clear and the rewrite are one
-  // transaction, so a failure part-way cannot leave the city with no venues,
-  // and the rows go in as a single insert.
+  // One transaction for the page and its listing. The list is replaced
+  // wholesale because order matters and is easiest to express as the order the
+  // lines were typed in; splitting that from the page update meant a failure
+  // between them could leave a city with new copy and no venues.
   await db.transaction(async (tx) => {
+    await tx
+      .update(cityPages)
+      .set({
+        seoTitle,
+        metaDescription: String(formData.get("metaDescription") || "").trim().slice(0, 500),
+        cityId,
+        heading: String(formData.get("heading") || "").trim().slice(0, 160),
+        headingEmphasis: String(formData.get("headingEmphasis") || "").trim().slice(0, 160),
+        published: formData.get("published") === "on" ? 1 : 0,
+        // Drives the "Showing 1 - 12 of N" line and the pager.
+        totalVenues: Number.isFinite(total) && total >= 0 ? total : venues.length,
+        updatedAt: new Date(),
+      })
+      .where(eq(cityPages.city, city));
+
     await tx.delete(cityListings).where(eq(cityListings.city, city));
 
     if (venues.length > 0) {
@@ -123,6 +132,12 @@ export async function saveCityAction(formData: FormData): Promise<void> {
 
   invalidateCityListingCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "city.updated", "city_page", city, { venues: venues.length });
 
   done(target, "City page saved.");
@@ -135,6 +150,7 @@ export async function saveCityAction(formData: FormData): Promise<void> {
  * it needs a slug, a title and the numeric id the venue filter posts back.
  */
 export async function createCityAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -178,6 +194,12 @@ export async function createCityAction(formData: FormData): Promise<void> {
 
   invalidateCityListingCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "city.created", "city_page", city, { venues: venues.length });
 
   done(`${CITIES_PATH}/${city}`, `${city} added with ${venues.length} venue${venues.length === 1 ? "" : "s"}.`);
@@ -190,6 +212,7 @@ export async function createCityAction(formData: FormData): Promise<void> {
  * listed by other cities.
  */
 export async function deleteCityAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -207,12 +230,19 @@ export async function deleteCityAction(formData: FormData): Promise<void> {
 
   invalidateCityListingCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "city.deleted", "city_page", city, { seoTitle: existing.seoTitle });
 
   removed(target, `${city} deleted. Its venues keep their own pages.`);
 }
 
 export async function bulkDeleteCitiesAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -241,6 +271,12 @@ export async function bulkDeleteCitiesAction(formData: FormData): Promise<void> 
 
   invalidateCityListingCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "city.bulk_deleted", "city_page", cities.join(","), { count: cities.length });
 
   removed(target, `${cities.length} city page${cities.length === 1 ? "" : "s"} deleted.`);
@@ -248,6 +284,7 @@ export async function bulkDeleteCitiesAction(formData: FormData): Promise<void> 
 
 /** Shows or hides the selected city pages in one pass. */
 export async function bulkPublishCitiesAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -277,6 +314,12 @@ export async function bulkPublishCitiesAction(formData: FormData): Promise<void>
   if (!updated.length) failed(target, "Those city pages no longer exist. Refresh and try again.");
 
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "city.updated", "city_page", cities.join(","), {
     published,
     count: updated.length,
@@ -295,6 +338,7 @@ export async function bulkPublishCitiesAction(formData: FormData): Promise<void>
  * added, so it is worth being able to correct without counting by hand.
  */
 export async function syncCityTotalAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -313,8 +357,11 @@ export async function syncCityTotalAction(formData: FormData): Promise<void> {
 
   if (total === existing.totalVenues) done(target, `The total is already ${total}.`);
 
-  await db.update(cityPages).set({ totalVenues: total }).where(eq(cityPages.city, city));
+  await db.update(cityPages).set({ totalVenues: total, updatedAt: new Date() }).where(eq(cityPages.city, city));
   invalidateTemplateCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   await recordAudit(db, actor, "city.updated", "city_page", city, {
     totalVenues: { from: existing.totalVenues, to: total },
   });

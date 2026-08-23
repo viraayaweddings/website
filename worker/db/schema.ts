@@ -1,7 +1,7 @@
 /**
  * Admin panel database schema (PostgreSQL).
  */
-import { index, integer, pgTable, serial, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { bigint, index, integer, pgTable, serial, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
 /** Roles, most privileged first. `admin` may manage users and settings. */
 export const USER_ROLES = ["admin", "editor"] as const;
@@ -78,6 +78,7 @@ export const leads = pgTable(
     index("leads_status_idx").on(table.status),
     index("leads_form_id_idx").on(table.formId),
     index("leads_email_idx").on(table.email),
+    index("leads_updated_at_idx").on(table.updatedAt),
   ],
 );
 
@@ -98,6 +99,7 @@ export const auditLog = pgTable(
   (table) => [
     index("audit_log_created_at_idx").on(table.createdAt),
     index("audit_log_entity_idx").on(table.entity, table.entityId),
+    index("audit_log_action_idx").on(table.action),
   ],
 );
 
@@ -346,6 +348,10 @@ export const cityListings = pgTable(
   (table) => [
     uniqueIndex("city_listings_unique").on(table.city, table.venueCity, table.venueSlug),
     index("city_listings_city_idx").on(table.city, table.position),
+    // Slug references rather than a foreign key on purpose: a curated listing
+    // has to survive a venue moving city. The index is what makes finding
+    // orphans cheap.
+    index("city_listings_venue_idx").on(table.venueCity, table.venueSlug),
   ],
 );
 
@@ -372,6 +378,7 @@ export const blogListings = pgTable(
   (table) => [
     uniqueIndex("blog_listings_unique").on(table.taxonomy, table.taxonomySlug, table.postSlug),
     index("blog_listings_page_idx").on(table.taxonomy, table.taxonomySlug, table.position),
+    index("blog_listings_post_slug_idx").on(table.postSlug),
   ],
 );
 
@@ -427,6 +434,8 @@ export const cityPages = pgTable(
      */
     heading: text("heading").notNull().default(""),
     headingEmphasis: text("heading_emphasis").notNull().default(""),
+    /** Read back by the edit form so a concurrent save cannot be overwritten. */
+    updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
   },
   (table) => [index("city_pages_published_idx").on(table.published)],
 );
@@ -442,6 +451,9 @@ export const cityPages = pgTable(
  * fields, and which image sits in each slot -- rather than exposing the markup,
  * because several of these pages carry inline scripts the calculators need.
  */
+export const STATIC_PAGE_ORIGINS = ["import", "panel"] as const;
+export type StaticPageOrigin = (typeof STATIC_PAGE_ORIGINS)[number];
+
 export const staticPages = pgTable(
   "static_pages",
   {
@@ -451,6 +463,13 @@ export const staticPages = pgTable(
     metaDescription: text("meta_description").notNull().default(""),
     html: text("html").notNull().default(""),
     published: integer("published").notNull().default(1),
+    /**
+     * "import" -- cloned from a file that is still on disk, so resetting means
+     * serving that file again. "panel" -- created here and existing only as
+     * this row, so there is nothing to fall back to and reset would be a
+     * deletion. The pages screen refuses to reset those.
+     */
+    origin: text("origin").$type<StaticPageOrigin>().notNull().default("import"),
     updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
     updatedBy: text("updated_by").notNull().default(""),
   },
@@ -479,6 +498,20 @@ export const siteLabels = pgTable("site_labels", {
 });
 
 export type SiteLabel = typeof siteLabels.$inferSelect;
+
+/**
+ * One row, one counter, bumped by every content write.
+ *
+ * Instances other than the one that handled a save poll this to know their
+ * caches are stale; see worker/site/content-version.ts.
+ */
+export const contentVersion = pgTable("content_version", {
+  id: integer("id").primaryKey(),
+  version: bigint("version", { mode: "number" }).notNull().default(0),
+  updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
+});
+
+export type ContentVersion = typeof contentVersion.$inferSelect;
 
 /** Cross-isolate rate limiting (admin login, etc.). */
 export const rateLimits = pgTable("rate_limits", {
@@ -529,7 +562,10 @@ export const calculatorHotels = pgTable(
   {
     /** Original dataset id; the venue pages hardcode it. */
     id: integer("id").primaryKey(),
-    cityId: integer("city_id").notNull(),
+    /** Cascades: a city that goes takes its hotels, and their prices, with it. */
+    cityId: integer("city_id")
+      .notNull()
+      .references(() => calculatorCities.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
     /** Caps the rooms-per-night input on the venue calculator. */
     totalRooms: integer("total_rooms").notNull().default(0),
@@ -554,7 +590,9 @@ export const calculatorPrices = pgTable(
   "calculator_prices",
   {
     id: serial("id").primaryKey(),
-    hotelId: integer("hotel_id").notNull(),
+    hotelId: integer("hotel_id")
+      .notNull()
+      .references(() => calculatorHotels.id, { onDelete: "cascade" }),
     month: text("month").$type<CalculatorMonth>().notNull(),
     roomPrice: text("room_price").notNull().default("0.00"),
     lunchPrice: text("lunch_price").notNull().default("0.00"),

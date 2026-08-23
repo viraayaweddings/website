@@ -18,7 +18,8 @@ export async function isRateLimited(db: Db, key: string, max: number): Promise<b
  *
  * One statement, and the count is incremented by the database rather than in
  * JavaScript: read-then-write let simultaneous attempts read the same count and
- * write back the same number, so a burst cost far fewer than a burst of tries.
+ * write back the same number, so a burst of attempts cost far fewer than one
+ * each.
  */
 export async function recordRateLimitAttempt(
   db: Db,

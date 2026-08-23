@@ -1,8 +1,9 @@
 import { POST_STATUSES, type BlogFaq, type BlogPost } from "@/worker/db/schema";
-import { SubmitButton, UnsavedGuard } from "../_components/FormControls";
+import { SubmitButton, UnsavedGuard, VersionField } from "../_components/FormControls";
 import { MediaPicker } from "../_components/MediaPicker";
 import { RichText } from "../_components/RichText";
 import { Card, CardHead, Field, Select, TextArea } from "../_components/ui";
+import { versionOf } from "../_lib/concurrency";
 
 /** Blank rows so an editor can add entries without any client-side JavaScript. */
 const SPARE_FAQ_ROWS = 2;
@@ -47,6 +48,7 @@ export function PostForm({
     <form action={action} className="grid gap-4 lg:grid-cols-3">
       <UnsavedGuard />
       {post ? <input type="hidden" name="id" value={post.id} /> : null}
+      {post ? <VersionField value={versionOf(post)} /> : null}
 
       <div className="min-w-0 space-y-4 lg:col-span-2">
         <Card pad={false}>

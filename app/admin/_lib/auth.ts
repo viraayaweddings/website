@@ -9,6 +9,7 @@ import { getDb, type Db } from "@/worker/db/client";
 import { getDatabaseUrl } from "@/worker/env";
 import { getUserByToken, SESSION_COOKIE } from "@/worker/admin/session";
 import { auditLog, users, type User, type UserRole } from "@/worker/db/schema";
+import { primeFlashKey } from "./flash";
 
 export const LOGIN_PATH = "/admin/login";
 export const SETUP_PATH = "/admin/setup";
@@ -40,12 +41,66 @@ export async function isSecureRequest(): Promise<boolean> {
   return !(requestHeaders.get("host") || "").startsWith("localhost");
 }
 
+/**
+ * The caller's address, taken only from headers the platform sets.
+ *
+ * This used to read `cf-connecting-ip` first and then the raw
+ * `x-forwarded-for`. The site deploys to Vercel, not Cloudflare, so nothing
+ * strips `cf-connecting-ip` -- a client sets it to whatever it likes. Vercel
+ * *appends* to `x-forwarded-for`, so a client-supplied prefix varies that too.
+ * Either one let a caller pick a new rate-limit bucket per request.
+ *
+ * `x-vercel-forwarded-for` is written by the platform and cannot be spoofed.
+ * The fallback takes the LAST entry of `x-forwarded-for`, which is the hop the
+ * platform itself added; everything to its left is caller-supplied.
+ */
+export async function clientIp(requestHeaders: Headers): Promise<string | null> {
+  const trusted = requestHeaders.get("x-vercel-forwarded-for");
+  if (trusted) return trusted.split(",").pop()?.trim() || null;
+
+  const chain = requestHeaders.get("x-forwarded-for");
+  if (chain) return chain.split(",").pop()?.trim() || null;
+
+  return requestHeaders.get("x-real-ip");
+}
+
 export async function requestContext() {
   const requestHeaders = await headers();
   return {
-    ip: requestHeaders.get("cf-connecting-ip") || requestHeaders.get("x-forwarded-for"),
+    ip: await clientIp(requestHeaders),
     userAgent: requestHeaders.get("user-agent"),
   };
+}
+
+/**
+ * Refuses a state-changing request that did not start on this site.
+ *
+ * Vinext ships Next's Origin/Host check for server actions as a dev-server
+ * module only, so in production `SameSite=Lax` was the whole of the CSRF
+ * defence. This is the missing half, and it covers plain route handlers too.
+ */
+export async function assertSameOrigin(): Promise<void> {
+  const requestHeaders = await headers();
+  const origin = requestHeaders.get("origin");
+  if (!origin) return; // Same-origin form posts may omit it entirely.
+
+  const host = requestHeaders.get("x-forwarded-host") || requestHeaders.get("host");
+  if (!host) return;
+
+  let originHost: string;
+  try {
+    originHost = new URL(origin).host;
+  } catch {
+    throw new Error("Refused: this request did not come from the admin panel.");
+  }
+
+  if (originHost !== host) {
+    throw new Error("Refused: this request did not come from the admin panel.");
+  }
+
+  // Every action passes through here, which makes it the one place the flash
+  // key can be loaded without touching 250 redirect call sites.
+  await primeFlashKey(await isSecureRequest());
 }
 
 export async function getCurrentUser(): Promise<User | null> {
@@ -114,17 +169,28 @@ export async function recordAudit(
   entityId: string | number,
   detail: Record<string, unknown> = {},
 ): Promise<void> {
+  const entry = {
+    userId: user?.id ?? null,
+    userEmail: user?.email ?? "",
+    action,
+    entity,
+    entityId: String(entityId),
+    detail: JSON.stringify(detail),
+  };
+
+  // Written to the platform log before the table.
+  //
+  // The activity screen lets an admin delete entries, including the entry
+  // recording that deletion -- so the table on its own is not evidence against
+  // the people it audits. Vercel's log drain is outside the panel's reach, and
+  // this line is what makes the trail durable. One JSON object per entry so a
+  // drain can parse it.
+  console.log(`[audit] ${JSON.stringify({ at: new Date().toISOString(), ...entry })}`);
+
   // Never let an audit write break the action it is describing.
   await db
     .insert(auditLog)
-    .values({
-      userId: user?.id ?? null,
-      userEmail: user?.email ?? "",
-      action,
-      entity,
-      entityId: String(entityId),
-      detail: JSON.stringify(detail),
-    })
+    .values(entry)
     .catch((error) => {
       console.error("[admin] audit write failed", error instanceof Error ? error.message : error);
     });

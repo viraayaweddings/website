@@ -46,6 +46,9 @@ export const NAV: NavGroup[] = [
       { href: "/admin/calculator", label: "Cost calculator", icon: "grid", adminOnly: true, hint: "Cities, hotels, monthly prices and currencies" },
       { href: "/admin/labels", label: "Section headings", icon: "type", adminOnly: true, hint: "Fixed wording across the site" },
       { href: "/admin/users", label: "Users", icon: "users", adminOnly: true, hint: "Who can sign in, and as what" },
+      // Open to every role: this is the only place anyone can change their own
+      // password, which is why it is not adminOnly.
+      { href: "/admin/account", label: "Your account", icon: "users", hint: "Your name, password and sessions" },
     ],
   },
 ];

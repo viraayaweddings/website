@@ -5,15 +5,18 @@ import { emptyEnv } from "@/worker/env";
 import { eq, inArray } from "drizzle-orm";
 import { resendStoredLeadEmail } from "@/worker/lead-email";
 import { leads, LEAD_STATUSES, type LeadStatus } from "@/worker/db/schema";
-import { recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
+import { assertSameOrigin, recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
+import { hasMoved, readExpectedVersion, STALE_MESSAGE } from "../_lib/concurrency";
+import { withFlashKey } from "../_lib/flash";
 
 export async function updateLeadAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const user = await requireUser();
   const db = await requireDb();
 
   const id = Number.parseInt(String(formData.get("id") || ""), 10);
   if (!Number.isInteger(id) || id <= 0) {
-    redirect(`/admin/leads?error=${encodeURIComponent("That submission could not be identified.")}`);
+    redirect(withFlashKey(`/admin/leads?error=${encodeURIComponent("That submission could not be identified.")}`));
   }
 
   const requested = String(formData.get("status") || "");
@@ -22,17 +25,23 @@ export async function updateLeadAction(formData: FormData): Promise<void> {
     : null;
   // A status the form did not offer is a rejected save, not a silent no-op.
   if (requested && !status) {
-    redirect(`/admin/leads/${id}?error=${encodeURIComponent(`"${requested.slice(0, 40)}" is not a status this panel uses.`)}`);
+    redirect(withFlashKey(`/admin/leads/${id}?error=${encodeURIComponent(`"${requested.slice(0, 40)}" is not a status this panel uses.`)}`));
   }
   const rawNotes = String(formData.get("notes") || "");
   if (rawNotes.length > 5000) {
-    redirect(`/admin/leads/${id}?error=${encodeURIComponent("Notes must be 5000 characters or fewer.")}`);
+    redirect(withFlashKey(`/admin/leads/${id}?error=${encodeURIComponent("Notes must be 5000 characters or fewer.")}`));
   }
   const notes = rawNotes.slice(0, 5000);
 
   const existing = (await db.select().from(leads).where(eq(leads.id, id)).limit(1))[0];
   if (!existing) {
-    redirect(`/admin/leads?error=${encodeURIComponent("That submission no longer exists.")}`);
+    redirect(withFlashKey(`/admin/leads?error=${encodeURIComponent("That submission no longer exists.")}`));
+  }
+
+  // Two people triaging the same inbox would otherwise overwrite each other's
+  // notes without either of them being told.
+  if (hasMoved(readExpectedVersion(formData), existing.updatedAt)) {
+    redirect(withFlashKey(`/admin/leads/${id}?error=${encodeURIComponent(STALE_MESSAGE)}`));
   }
 
   await db
@@ -55,11 +64,12 @@ export async function updateLeadAction(formData: FormData): Promise<void> {
     await recordAudit(db, user, "lead.notes_updated", "lead", id, {});
   }
 
-  redirect(`/admin/leads/${id}?saved=1`);
+  redirect(withFlashKey(`/admin/leads/${id}?saved=1`));
 }
 
 /** Destructive, so admins only. */
 export async function deleteLeadAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const user = await requireRole("admin");
   const db = await requireDb();
   // Deleting from a filtered page should land back on that page, not on an
@@ -68,12 +78,12 @@ export async function deleteLeadAction(formData: FormData): Promise<void> {
 
   const id = Number.parseInt(String(formData.get("id") || ""), 10);
   if (!Number.isInteger(id) || id <= 0) {
-    redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("That submission could not be identified.")}`);
+    redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("That submission could not be identified.")}`));
   }
 
   const existing = (await db.select().from(leads).where(eq(leads.id, id)).limit(1))[0];
   if (!existing) {
-    redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("That submission no longer exists.")}`);
+    redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("That submission no longer exists.")}`));
   }
 
   await db.delete(leads).where(eq(leads.id, id));
@@ -83,7 +93,7 @@ export async function deleteLeadAction(formData: FormData): Promise<void> {
     email: existing.email,
   });
 
-  redirect(`${target}${target.includes("?") ? "&" : "?"}deleted=${encodeURIComponent("Submission deleted.")}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}deleted=${encodeURIComponent("Submission deleted.")}`));
 }
 
 /** Ids arrive as repeated `ids` checkboxes, one per selected row. */
@@ -108,18 +118,19 @@ function backTo(formData: FormData): string {
  * morning's replies can be cleared in one pass rather than one at a time.
  */
 export async function bulkStatusAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const user = await requireUser();
   const db = await requireDb();
   const target = backTo(formData);
 
   const ids = readIds(formData);
   const requested = String(formData.get("bulkStatus") || "");
-  if (!ids.length) redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("Select at least one submission first.")}`);
+  if (!ids.length) redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("Select at least one submission first.")}`));
   if (ids.length > BULK_LIMIT) {
-    redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(`Apply a status to ${BULK_LIMIT} submissions or fewer at a time.`)}`);
+    redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(`Apply a status to ${BULK_LIMIT} submissions or fewer at a time.`)}`));
   }
   if (!(LEAD_STATUSES as readonly string[]).includes(requested)) {
-    redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("Choose a status from the list before applying it.")}`);
+    redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("Choose a status from the list before applying it.")}`));
   }
 
   const status = requested as LeadStatus;
@@ -134,19 +145,20 @@ export async function bulkStatusAction(formData: FormData): Promise<void> {
   await recordAudit(db, user, "lead.bulk_status", "lead", ids.join(","), { to: status, count: ids.length });
 
   const message = `${ids.length} submission${ids.length === 1 ? "" : "s"} marked ${status}.`;
-  redirect(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`));
 }
 
 /** Destructive, so admins only — consistent with the single-row delete. */
 export async function bulkDeleteAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const user = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
 
   const ids = readIds(formData);
-  if (!ids.length) redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("Select at least one submission first.")}`);
+  if (!ids.length) redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent("Select at least one submission first.")}`));
   if (ids.length > BULK_LIMIT) {
-    redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(`Delete ${BULK_LIMIT} submissions or fewer at a time.`)}`);
+    redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(`Delete ${BULK_LIMIT} submissions or fewer at a time.`)}`));
   }
 
   const existing = await db.select({ id: leads.id }).from(leads).where(inArray(leads.id, ids));
@@ -160,7 +172,7 @@ export async function bulkDeleteAction(formData: FormData): Promise<void> {
   await recordAudit(db, user, "lead.bulk_deleted", "lead", ids.join(","), { count: ids.length });
 
   const message = `${ids.length} submission${ids.length === 1 ? "" : "s"} deleted.`;
-  redirect(`${target}${target.includes("?") ? "&" : "?"}deleted=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}deleted=${encodeURIComponent(message)}`));
 }
 
 /**
@@ -171,6 +183,7 @@ export async function bulkDeleteAction(formData: FormData): Promise<void> {
  * had no way to be told about it a second time.
  */
 export async function resendLeadEmailAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const user = await requireUser();
   const db = await requireDb();
 
@@ -193,11 +206,11 @@ export async function resendLeadEmailAction(formData: FormData): Promise<void> {
 
   if (!result.ok) {
     await recordAudit(db, user, "lead.email_resend_failed", "lead", id, { error: result.error ?? "" });
-    redirect(`/admin/leads/${id}?error=${encodeURIComponent(result.error || "The email could not be sent.")}`);
+    redirect(withFlashKey(`/admin/leads/${id}?error=${encodeURIComponent(result.error || "The email could not be sent.")}`));
   }
 
   await db.update(leads).set({ emailSent: 1, updatedAt: new Date() }).where(eq(leads.id, id));
   await recordAudit(db, user, "lead.email_resent", "lead", id, {});
 
-  redirect(`/admin/leads/${id}?saved=${encodeURIComponent("Notification email sent.")}`);
+  redirect(withFlashKey(`/admin/leads/${id}?saved=${encodeURIComponent("Notification email sent.")}`));
 }

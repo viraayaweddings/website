@@ -5,8 +5,9 @@ import { notFound } from "next/navigation";
 import { asc, eq } from "drizzle-orm";
 import { cityListings, cityPages, hotels } from "@/worker/db/schema";
 import { AdminShell } from "../../_components/AdminShell";
-import { CopyButton, SubmitButton, UnsavedGuard } from "../../_components/FormControls";
+import { CopyButton, SubmitButton, UnsavedGuard, VersionField } from "../../_components/FormControls";
 import { Alert, Badge, Card, CardHead, Field, LinkButton, StatusBadge, TextArea } from "../../_components/ui";
+import { versionOf } from "../../_lib/concurrency";
 import { requireDb, requireRole } from "../../_lib/auth";
 import { deleteCityAction, saveCityAction, syncCityTotalAction } from "../actions";
 
@@ -169,6 +170,7 @@ export default async function EditCityPage({
             </p>
             <form action={deleteCityAction}>
               <input type="hidden" name="id" value={city} />
+              <VersionField value={versionOf(page)} />
               <SubmitButton
                 variant="danger-quiet"
                 icon="trash"

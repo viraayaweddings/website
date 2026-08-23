@@ -5,12 +5,15 @@ import { and, eq } from "drizzle-orm";
 import { blogListings } from "@/worker/db/schema";
 import { invalidateBlogListingCache } from "@/worker/site/blog";
 import { invalidateTemplateCache } from "@/worker/site/template";
-import { recordAudit, requireDb, requireRole } from "../../_lib/auth";
+import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../../_lib/auth";
+import { publishContentChange } from "@/worker/site/content-version";
+import { withFlashKey } from "../../_lib/flash";
 
 const SECTIONS_PATH = "/admin/blogs/sections";
 
 /** Category and tag pages are site structure, so editing them is admin-only. */
 export async function saveSectionAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -48,9 +51,15 @@ export async function saveSectionAction(formData: FormData): Promise<void> {
 
   invalidateBlogListingCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "blog_section.updated", "blog_listing", `${taxonomy}/${slug}`, {
     posts: posts.length,
   });
 
-  redirect(`${SECTIONS_PATH}?saved=1`);
+  redirect(withFlashKey(`${SECTIONS_PATH}?saved=1`));
 }

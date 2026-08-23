@@ -1,11 +1,13 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { and, eq, inArray, ne } from "drizzle-orm";
+import { and, eq, inArray, ne, notInArray, sql } from "drizzle-orm";
 import { hashPassword, validatePasswordStrength } from "@/worker/admin/password";
 import { destroyUserSessions } from "@/worker/admin/session";
-import { users, USER_ROLES, type UserRole } from "@/worker/db/schema";
-import { recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { sessions, users, USER_ROLES, type UserRole } from "@/worker/db/schema";
+import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { isUniqueViolation } from "../_lib/db-errors";
+import { withFlashKey } from "../_lib/flash";
 
 const USERS_PATH = "/admin/users";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -13,11 +15,11 @@ const MAX_NAME_LENGTH = 120;
 const MAX_EMAIL_LENGTH = 254;
 
 function failed(message: string): never {
-  redirect(`${USERS_PATH}?error=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${USERS_PATH}?error=${encodeURIComponent(message)}`));
 }
 
 function done(message: string): never {
-  redirect(`${USERS_PATH}?saved=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${USERS_PATH}?saved=${encodeURIComponent(message)}`));
 }
 
 function readRole(formData: FormData): UserRole {
@@ -26,6 +28,7 @@ function readRole(formData: FormData): UserRole {
 }
 
 export async function createUserAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -42,24 +45,32 @@ export async function createUserAction(formData: FormData): Promise<void> {
   const weak = validatePasswordStrength(password);
   if (weak) failed(weak);
 
-  const existing = await db.select({ id: users.id }).from(users).where(eq(users.email, email)).limit(1);
-  if (existing.length) failed("An account with that email already exists.");
-
   const id = crypto.randomUUID();
-  await db.insert(users).values({
-    id,
-    email,
-    name,
-    passwordHash: await hashPassword(password),
-    role,
-    status: "active",
-  });
+
+  // The unique index is the check, not a SELECT before the INSERT. Two admins
+  // adding the same address at once both passed that check, and the loser threw
+  // an unhandled constraint error into the crash page instead of saying the
+  // address was taken.
+  try {
+    await db.insert(users).values({
+      id,
+      email,
+      name,
+      passwordHash: await hashPassword(password),
+      role,
+      status: "active",
+    });
+  } catch (error) {
+    if (isUniqueViolation(error)) failed("An account with that email already exists.");
+    throw error;
+  }
 
   await recordAudit(db, actor, "user.created", "user", id, { email, role });
   done(`${email} can now sign in.`);
 }
 
 export async function updateUserAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -69,6 +80,13 @@ export async function updateUserAction(formData: FormData): Promise<void> {
 
   const role = readRole(formData);
   const status = String(formData.get("status") || "active") === "disabled" ? "disabled" : "active";
+
+  // Name and email are editable now. A typo at account creation used to be
+  // permanent, because nothing in the panel could change either one.
+  const name = String(formData.get("name") || target.name).trim().slice(0, MAX_NAME_LENGTH) || target.name;
+  const rawEmail = String(formData.get("email") || target.email).trim().toLowerCase().slice(0, MAX_EMAIL_LENGTH);
+  const email = rawEmail || target.email;
+  if (!EMAIL_PATTERN.test(email)) failed("Enter a valid email address.");
 
   if (id === actor.id && (role !== target.role || status !== target.status)) {
     failed("You cannot change your own role or status. Ask another active admin to update your access.");
@@ -84,15 +102,26 @@ export async function updateUserAction(formData: FormData): Promise<void> {
     if (!otherAdmins.length) failed("This is the last active admin. Promote someone else first.");
   }
 
-  if (role === target.role && status === target.status) done(`${target.email} is already up to date.`);
+  const unchanged =
+    role === target.role && status === target.status && name === target.name && email === target.email;
+  if (unchanged) done(`${target.email} is already up to date.`);
 
-  await db.update(users).set({ role, status, updatedAt: new Date() }).where(eq(users.id, id));
+  try {
+    await db.update(users).set({ role, status, name, email, updatedAt: new Date() }).where(eq(users.id, id));
+  } catch (error) {
+    if (isUniqueViolation(error)) failed("Another account already uses that email address.");
+    throw error;
+  }
 
-  // A disabled or demoted account should not keep an open session.
-  if (status === "disabled" || role !== target.role) await destroyUserSessions(db, id);
+  // A disabled, demoted or renamed-address account should not keep an open
+  // session: the address is the sign-in identity.
+  if (status === "disabled" || role !== target.role || email !== target.email) {
+    await destroyUserSessions(db, id);
+  }
 
   await recordAudit(db, actor, "user.updated", "user", id, {
-    email: target.email,
+    email: { from: target.email, to: email },
+    name: { from: target.name, to: name },
     role: { from: target.role, to: role },
     status: { from: target.status, to: status },
   });
@@ -101,6 +130,7 @@ export async function updateUserAction(formData: FormData): Promise<void> {
 }
 
 export async function resetPasswordAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -130,6 +160,7 @@ export async function resetPasswordAction(formData: FormData): Promise<void> {
  * your own account, so nobody can lock themselves out.
  */
 export async function deleteUserAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -149,9 +180,12 @@ export async function deleteUserAction(formData: FormData): Promise<void> {
   }
 
   // Sessions cascade with the row, but drop them explicitly so the intent is
-  // obvious and any open session dies immediately.
-  await destroyUserSessions(db, id);
-  await db.delete(users).where(eq(users.id, id));
+  // obvious and any open session dies immediately. Both in one transaction, so
+  // the account cannot survive its sessions being cleared or the reverse.
+  await db.transaction(async (tx) => {
+    await tx.delete(sessions).where(eq(sessions.userId, id));
+    await tx.delete(users).where(eq(users.id, id));
+  });
 
   await recordAudit(db, actor, "user.deleted", "user", id, { email: target.email, role: target.role });
   done(`${target.email} deleted.`);
@@ -159,6 +193,7 @@ export async function deleteUserAction(formData: FormData): Promise<void> {
 
 /** Deletes selected accounts without allowing self-delete or last-admin lockout. */
 export async function bulkDeleteUsersAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const selected = formData.getAll("ids").map((value) => String(value || "").trim()).filter(Boolean);
@@ -175,20 +210,29 @@ export async function bulkDeleteUsersAction(formData: FormData): Promise<void> {
     targets.filter((user) => user.role === "admin" && user.status === "active").map((user) => user.id),
   );
   if (deletingActiveAdmins.size > 0) {
-    const remainingAdmin = await db
-      .select({ id: users.id })
+    // Counted in SQL. Loading the first 200 admins and checking whether any
+    // survived read wrong the moment there were more than 200 of them.
+    const [{ remaining }] = await db
+      .select({ remaining: sql<number>`count(*)` })
       .from(users)
-      .where(and(eq(users.role, "admin"), eq(users.status, "active")))
-      .limit(200);
-    if (!remainingAdmin.some((user) => !deletingActiveAdmins.has(user.id))) {
+      .where(
+        and(
+          eq(users.role, "admin"),
+          eq(users.status, "active"),
+          notInArray(users.id, [...deletingActiveAdmins]),
+        ),
+      );
+    if (Number(remaining) === 0) {
       failed("This would delete the last active admin. Promote someone else first.");
     }
   }
 
-  for (const target of targets) {
-    await destroyUserSessions(db, target.id);
-  }
-  await db.delete(users).where(inArray(users.id, ids));
+  // One transaction: sessions destroyed but accounts left behind would sign
+  // people out of accounts that still exist.
+  await db.transaction(async (tx) => {
+    await tx.delete(sessions).where(inArray(sessions.userId, ids));
+    await tx.delete(users).where(inArray(users.id, ids));
+  });
 
   await recordAudit(db, actor, "user.bulk_deleted", "user", ids.join(","), {
     count: ids.length,

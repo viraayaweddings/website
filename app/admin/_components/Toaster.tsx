@@ -31,7 +31,9 @@ interface Toast {
 }
 
 const VISIBLE_MS = 5200;
-const MESSAGE_KEYS = ["error", "saved", "deleted"] as const;
+const MESSAGE_KEYS = ["error", "saved", "deleted", "fk"] as const;
+/** Longer than any message this panel produces; a wall of text is not one. */
+const MAX_MESSAGE_LENGTH = 400;
 const EMPTY: readonly Toast[] = [];
 
 let queue: readonly Toast[] = EMPTY;
@@ -69,26 +71,70 @@ function readMessages(search: string): Omit<Toast, "id">[] {
   const params = new URLSearchParams(search);
   const found: Omit<Toast, "id">[] = [];
 
+  const clamp = (value: string) => value.slice(0, MAX_MESSAGE_LENGTH);
+
   const error = params.get("error");
-  if (error) found.push({ tone: "bad", message: error });
+  if (error) found.push({ tone: "bad", message: clamp(error) });
 
   const saved = params.get("saved");
-  if (saved !== null) found.push({ tone: "ok", message: saved && saved !== "1" ? saved : "Saved." });
+  if (saved !== null) found.push({ tone: "ok", message: saved && saved !== "1" ? clamp(saved) : "Saved." });
 
   const deleted = params.get("deleted");
-  if (deleted !== null) found.push({ tone: "ok", message: deleted && deleted !== "1" ? deleted : "Deleted." });
+  if (deleted !== null) found.push({ tone: "ok", message: deleted && deleted !== "1" ? clamp(deleted) : "Deleted." });
 
   return found;
 }
 
-/** Reads whatever the URL is carrying, then rewrites it without the message. */
+/** The flash key this browser holds, or "" when it holds none. */
+function cookieFlashKey(): string {
+  for (const part of document.cookie.split(";")) {
+    const separator = part.indexOf("=");
+    if (separator === -1) continue;
+    if (part.slice(0, separator).trim() !== "vw_flash_key") continue;
+    return decodeURIComponent(part.slice(separator + 1).trim());
+  }
+  return "";
+}
+
+/**
+ * Reads whatever the URL is carrying, then rewrites it without the message.
+ *
+ * A message is only shown when the URL also carries the flash key this browser
+ * holds. Server actions append it; a link someone was sent cannot, because
+ * setting a cookie on this origin is not something another site can do. Without
+ * that check the panel would display any sentence a crafted URL asked it to,
+ * inside its own chrome, which is a convincing place to be told to re-enter a
+ * password.
+ */
 function consumeUrlMessages(): void {
   const search = window.location.search;
   if (consumedSearch === search) return;
   consumedSearch = search;
 
-  const found = readMessages(search);
-  if (!found.length) return;
+  const params = new URLSearchParams(search);
+  const offered = params.get("fk") || "";
+  const held = cookieFlashKey();
+  const authentic = Boolean(held) && offered === held;
+
+  const found = authentic ? readMessages(search) : [];
+
+  // The parameters are stripped either way, so a rejected message does not sit
+  // in the address bar waiting to be re-read on the next navigation.
+  if (!found.length) {
+    const cleaned = new URL(window.location.href);
+    let changed = false;
+    for (const key of MESSAGE_KEYS) {
+      if (cleaned.searchParams.has(key)) {
+        cleaned.searchParams.delete(key);
+        changed = true;
+      }
+    }
+    if (changed) {
+      consumedSearch = cleaned.search;
+      window.history.replaceState(null, "", `${cleaned.pathname}${cleaned.search}${cleaned.hash}`);
+    }
+    return;
+  }
 
   const url = new URL(window.location.href);
   for (const key of MESSAGE_KEYS) url.searchParams.delete(key);

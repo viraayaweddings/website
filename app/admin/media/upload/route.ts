@@ -6,7 +6,7 @@
  * it needs a route of its own. GET returns the library so an image already on
  * the site can be reused rather than uploaded twice.
  */
-import { desc, like, or, sql } from "drizzle-orm";
+import { desc, ilike, or, sql } from "drizzle-orm";
 import { emptyEnv } from "@/worker/env";
 import { uploadImage } from "@/worker/admin/media-store";
 import { media } from "@/worker/db/schema";
@@ -43,14 +43,14 @@ export async function GET(request: Request): Promise<Response> {
   if (!user) return json({ error: "Sign in again to browse images." }, 401);
 
   const url = new URL(request.url);
-  // % and _ are wildcards to Postgres and drizzle's like() adds no ESCAPE
+  // % and _ are wildcards to Postgres and drizzle's ilike() adds no ESCAPE
   // clause, so they are neutralised rather than passed through.
   const query = (url.searchParams.get("q") || "").trim().slice(0, 120).replace(/[%_]/g, " ").trim();
   const page = Math.max(1, Number.parseInt(url.searchParams.get("page") || "1", 10) || 1);
 
   const db = await requireDb();
   const where = query
-    ? or(like(media.filename, `%${query}%`), like(media.key, `%${query}%`))
+    ? or(ilike(media.filename, `%${query}%`), ilike(media.key, `%${query}%`))
     : undefined;
 
   const listQuery = db

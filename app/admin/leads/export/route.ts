@@ -1,4 +1,5 @@
-import { getCurrentUser, requireDb } from "../../_lib/auth";
+import { getCurrentUser, recordAudit, requireDb } from "../../_lib/auth";
+import { filtersToQuery } from "@/worker/admin/lead-filters";
 import { countLeads, EXPORT_LIMIT, listAllMatchingLeads, parseFilters } from "../_query";
 
 export const dynamic = "force-dynamic";
@@ -35,6 +36,16 @@ export async function GET(request: Request): Promise<Response> {
   const [rows, total] = await Promise.all([listAllMatchingLeads(db, filters), countLeads(db, filters)]);
   const truncated = total > EXPORT_LIMIT;
 
+  // Every change to a submission was audited; walking out with all of them was
+  // the one action that left no trace, and it is the one that moves the most
+  // personal data.
+  await recordAudit(db, user, "lead.exported", "lead", "csv", {
+    filters: filtersToQuery(filters),
+    rows: rows.length,
+    matched: total,
+    truncated,
+  });
+
   // These are already fixed columns; the stored payload repeats them under its
   // display labels, which would otherwise produce duplicate headers in Excel.
   const COVERED_BY_FIXED_COLUMNS = new Set(["Name", "Email", "Phone Number", "Page URL"]);
@@ -64,14 +75,11 @@ export async function GET(request: Request): Promise<Response> {
     timeZone: "Asia/Kolkata",
   });
 
+  // The header stays on row 1. A warning unshifted above it became the header
+  // as far as Excel was concerned, which shifted every real column down a row
+  // and left them unlabelled -- on precisely the export someone is most likely
+  // to hand to a client.
   const lines = [header.map(csvCell).join(",")];
-  if (truncated) {
-    lines.unshift(
-      csvCell(
-        `WARNING: ${total} submissions match these filters but exports are limited to ${EXPORT_LIMIT} rows. Narrow the filters for a complete export.`,
-      ),
-    );
-  }
   for (const row of rows) {
     const fields = flatten(row.fields);
     lines.push(
@@ -94,6 +102,13 @@ export async function GET(request: Request): Promise<Response> {
   }
 
   if (truncated) {
+    lines.push(
+      [
+        csvCell(
+          `WARNING: ${total} submissions match these filters but exports are limited to ${EXPORT_LIMIT} rows. Narrow the filters for a complete export.`,
+        ),
+      ].join(","),
+    );
     console.warn("[admin] lead export hit the row cap; narrow the filters for a complete export");
   }
 

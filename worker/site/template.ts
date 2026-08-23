@@ -8,6 +8,7 @@
 import { eq } from "drizzle-orm";
 import { getDb, type DatabaseEnv } from "../db/client";
 import { cityPages, pageTemplates, type CityPage } from "../db/schema";
+import { onContentChanged } from "./content-version";
 
 const CACHE_TTL_MS = 300_000;
 
@@ -78,3 +79,9 @@ export async function findCityPage(env: DatabaseEnv, city: string): Promise<City
   const rows = await db.select().from(cityPages).where(eq(cityPages.city, city)).limit(1);
   return rows[0] ?? null;
 }
+
+// Dropped when any instance publishes a content change, not just this one.
+// See worker/site/content-version.ts.
+onContentChanged(() => {
+  invalidateTemplateCache();
+});

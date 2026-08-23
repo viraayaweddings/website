@@ -9,6 +9,7 @@ import { asc, eq } from "drizzle-orm";
 import { getDb, type DatabaseEnv } from "../db/client";
 import { heroSlides, type HeroSlide } from "../db/schema";
 import { escapeHtml } from "./escape";
+import { onContentChanged } from "./content-version";
 
 // Escaping moved to its own module so the small renderers can be loaded, and
 // tested, without the database client; half the site imports it from here, so
@@ -114,3 +115,9 @@ export async function loadHeroSlides(env: DatabaseEnv): Promise<HeroSlide[]> {
 export function invalidateHeroCache(): void {
   cache = null;
 }
+
+// Dropped when any instance publishes a content change, not just this one.
+// See worker/site/content-version.ts.
+onContentChanged(() => {
+  invalidateHeroCache();
+});

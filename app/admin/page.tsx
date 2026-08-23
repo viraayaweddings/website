@@ -2,7 +2,7 @@
 export const dynamic = "force-dynamic";
 
 import Link from "next/link";
-import { desc, eq, gte, sql } from "drizzle-orm";
+import { desc, gte, sql } from "drizzle-orm";
 import type { Db } from "@/worker/db/client";
 import { blogPosts, cityPages, heroSlides, hotels, leads, media } from "@/worker/db/schema";
 import { AdminShell } from "./_components/AdminShell";
@@ -41,12 +41,21 @@ async function loadDashboard(db: Db, now: number) {
   const windowStart = new Date(now - WINDOW_DAYS * 24 * 60 * 60 * 1000);
   const weekStart = new Date(now - 7 * 24 * 60 * 60 * 1000);
 
-  const [leadCounts, byStatus, recent, topForms, recentLeadDays, content] = await Promise.all([
-    Promise.all([
-      db.select({ total: sql<number>`count(*)` }).from(leads),
-      db.select({ lastWeek: sql<number>`count(*)` }).from(leads).where(gte(leads.createdAt, weekStart)),
-      db.select({ unsent: sql<number>`count(*)` }).from(leads).where(eq(leads.emailSent, 0)),
-    ]),
+  // Five round trips, not thirteen.
+  //
+  // The Promise.all looked parallel, but the pool is one connection per
+  // instance, so postgres.js queued them and the page waited for the sum. The
+  // seven content counts are now one query with FILTER clauses, the three lead
+  // counts another, and the fourteen-day chart is bucketed by Postgres instead
+  // of by pulling every row from the window into memory.
+  const [leadTotals, byStatus, recent, topForms, dayBuckets, contentRow] = await Promise.all([
+    db
+      .select({
+        total: sql<number>`count(*)`,
+        lastWeek: sql<number>`count(*) filter (where ${leads.createdAt} >= ${weekStart})`,
+        unsent: sql<number>`count(*) filter (where ${leads.emailSent} = 0)`,
+      })
+      .from(leads),
     db.select({ status: leads.status, total: sql<number>`count(*)` }).from(leads).groupBy(leads.status),
     db.select().from(leads).orderBy(desc(leads.createdAt)).limit(8),
     db
@@ -56,57 +65,63 @@ async function loadDashboard(db: Db, now: number) {
       .groupBy(leads.formName, leads.formId)
       .orderBy(desc(sql`count(*)`))
       .limit(5),
-    db.select({ createdAt: leads.createdAt }).from(leads).where(gte(leads.createdAt, windowStart)),
-    Promise.all([
-      db.select({ total: sql<number>`count(*)` }).from(hotels),
-      db.select({ total: sql<number>`count(*)` }).from(hotels).where(eq(hotels.status, "draft")),
-      db.select({ total: sql<number>`count(*)` }).from(blogPosts),
-      db.select({ total: sql<number>`count(*)` }).from(blogPosts).where(eq(blogPosts.status, "draft")),
-      db.select({ total: sql<number>`count(*)` }).from(cityPages),
-      db.select({ total: sql<number>`count(*)` }).from(heroSlides).where(eq(heroSlides.published, 1)),
-      db.select({ total: sql<number>`count(*)` }).from(media),
-    ]),
+    // The day boundary is IST, so the timestamp is shifted before it is
+    // truncated rather than threading an offset through every comparison.
+    db
+      .select({
+        day: sql<string>`to_char(date_trunc('day', ${leads.createdAt} at time zone 'Asia/Kolkata'), 'YYYY-MM-DD')`,
+        total: sql<number>`count(*)`,
+      })
+      .from(leads)
+      .where(gte(leads.createdAt, windowStart))
+      .groupBy(sql`1`),
+    db
+      .select({
+        venues: sql<number>`(select count(*) from ${hotels})`,
+        venueDrafts: sql<number>`(select count(*) from ${hotels} where ${hotels.status} = 'draft')`,
+        posts: sql<number>`(select count(*) from ${blogPosts})`,
+        postDrafts: sql<number>`(select count(*) from ${blogPosts} where ${blogPosts.status} = 'draft')`,
+        cities: sql<number>`(select count(*) from ${cityPages})`,
+        liveSlides: sql<number>`(select count(*) from ${heroSlides} where ${heroSlides.published} = 1)`,
+        images: sql<number>`(select count(*) from ${media})`,
+      })
+      .from(sql`(select 1) as one`),
   ]);
 
-  // Bucketed in memory rather than in SQL: the day boundary is IST, and SQLite
-  // date functions would need the offset threaded through every comparison.
+  // Every day in the window is present even when it has no submissions, so the
+  // chart keeps a fixed width; the query only returns the days that do.
   const counts = new Map<string, number>();
   for (let index = WINDOW_DAYS - 1; index >= 0; index -= 1) {
     counts.set(istDay(now - index * 24 * 60 * 60 * 1000), 0);
   }
-  for (const row of recentLeadDays) {
-    const createdAt = row.createdAt instanceof Date ? row.createdAt : new Date(String(row.createdAt));
-    const day = istDay(createdAt.getTime());
-    if (counts.has(day)) counts.set(day, (counts.get(day) ?? 0) + 1);
+  for (const row of dayBuckets) {
+    if (counts.has(row.day)) counts.set(row.day, Number(row.total));
   }
 
-  const [venues, venueDrafts, posts, postDrafts, cities, liveSlides, images] = content;
 
-  // One level of destructuring, not two: each entry is the array of rows the
-  // query returned. Unwrapping to the row here and then indexing it with [0]
-  // below reads undefined, which is why these three tiles always showed zero.
-  // `count(*)` also arrives as a string, so each is coerced like the content
-  // figures below.
-  const [totalRows, lastWeekRows, unsentRows] = leadCounts;
+
+  // count(*) arrives as a string from the driver, so every figure is coerced.
+  const totals = leadTotals[0];
+  const content = contentRow[0];
 
   return {
     totals: {
-      total: Number(totalRows[0]?.total ?? 0),
-      lastWeek: Number(lastWeekRows[0]?.lastWeek ?? 0),
-      unsent: Number(unsentRows[0]?.unsent ?? 0),
+      total: Number(totals?.total ?? 0),
+      lastWeek: Number(totals?.lastWeek ?? 0),
+      unsent: Number(totals?.unsent ?? 0),
     },
     byStatus,
     recent,
     topForms,
     daily: [...counts.entries()].map(([day, value]) => ({ label: dayLabel(day), value })),
     content: {
-      venues: Number(venues[0]?.total ?? 0),
-      venueDrafts: Number(venueDrafts[0]?.total ?? 0),
-      posts: Number(posts[0]?.total ?? 0),
-      postDrafts: Number(postDrafts[0]?.total ?? 0),
-      cities: Number(cities[0]?.total ?? 0),
-      liveSlides: Number(liveSlides[0]?.total ?? 0),
-      images: Number(images[0]?.total ?? 0),
+      venues: Number(content?.venues ?? 0),
+      venueDrafts: Number(content?.venueDrafts ?? 0),
+      posts: Number(content?.posts ?? 0),
+      postDrafts: Number(content?.postDrafts ?? 0),
+      cities: Number(content?.cities ?? 0),
+      liveSlides: Number(content?.liveSlides ?? 0),
+      images: Number(content?.images ?? 0),
     },
   };
 }

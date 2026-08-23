@@ -9,6 +9,13 @@ export const APP_OWNED_PREFIXES = [
   "/get_in_touch",
   "/hotel-search",
   "/media",
+  // The calculator endpoints the cloned pages call directly. Without these the
+  // catch-all treats them as public paths, looks for a static file, and 404s.
+  "/appointment/slots",
+  "/get-cities",
+  "/get-hotels-by-city",
+  "/get-hotel-price",
+  "/get-hotel-prices",
   // Served from the database by app/data/calculator/[file]/route.ts.
   "/data/calculator",
 ] as const;

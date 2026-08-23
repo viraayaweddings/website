@@ -7,6 +7,7 @@
 import { inArray } from "drizzle-orm";
 import { getDb, type DatabaseEnv, type Db } from "../db/client";
 import { settings } from "../db/schema";
+import { onContentChanged, publishContentChange } from "./content-version";
 
 export interface SiteSettings {
   /** Display form, as printed on the contact page. */
@@ -137,6 +138,7 @@ export async function writeSettings(
   }
 
   invalidateSettingsCache();
+  await publishContentChange();
 }
 
 /** The wa.me href the floating button should point at. */
@@ -144,3 +146,9 @@ export function whatsappHref(values: SiteSettings): string {
   const digits = values.whatsappNumber.replace(/\D/g, "");
   return digits ? `https://wa.me/${digits}` : DEFAULT_SITE_SETTINGS.whatsappNumber;
 }
+
+// Dropped when any instance publishes a content change, not just this one.
+// See worker/site/content-version.ts.
+onContentChanged(() => {
+  invalidateSettingsCache();
+});

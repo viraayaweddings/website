@@ -22,7 +22,8 @@ import {
 import { currentTime } from "../_lib/clock";
 import { requireDb, requireRole } from "../_lib/auth";
 import { auditActionTone, humanAuditAction } from "../_lib/audit-labels";
-import { bulkDeleteActivityAction, PRUNE_DAYS, pruneActivityAction } from "./actions";
+import { bulkDeleteActivityAction, pruneActivityAction } from "./actions";
+import { PRUNE_DAYS } from "./constants";
 
 const PAGE_SIZE = 60;
 const ACTIVITY_BULK_FORM = "activity-bulk-form";

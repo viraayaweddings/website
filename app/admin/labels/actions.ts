@@ -3,17 +3,20 @@
 import { redirect } from "next/navigation";
 import { LABEL_DEFINITIONS, writeLabels } from "@/worker/site/labels";
 import { invalidateTemplateCache } from "@/worker/site/template";
-import { recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { publishContentChange } from "@/worker/site/content-version";
+import { withFlashKey } from "../_lib/flash";
 
 const LABELS_PATH = "/admin/labels";
 const MAX_LABEL_LENGTH = 200;
 
 function failed(message: string): never {
-  redirect(`${LABELS_PATH}?error=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${LABELS_PATH}?error=${encodeURIComponent(message)}`));
 }
 
 /** Wording is site-wide, so editing it is an admin-only action. */
 export async function saveLabelsAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -32,6 +35,9 @@ export async function saveLabelsAction(formData: FormData): Promise<void> {
   await writeLabels(db, actor.email, patch);
   await recordAudit(db, actor, "labels.updated", "labels", "site", { count: patch.length });
   invalidateTemplateCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
 
-  redirect(`${LABELS_PATH}?saved=1`);
+  redirect(withFlashKey(`${LABELS_PATH}?saved=1`));
 }

@@ -1,4 +1,13 @@
 import type { DatabaseEnv } from "./db/client";
+import { readLeadCsrfCookie } from "./lead-csrf";
+import {
+  findByKey,
+  findContactEmail,
+  findContactName,
+  findContactPhone,
+  normalizeKey,
+  normalizePhone,
+} from "./lead-fields";
 import { getDb } from "./db/client";
 import { markLeadEmailSent, storeLead } from "./admin/lead-store";
 import { clearRateLimit, isRateLimited, recordRateLimitAttempt } from "./admin/rate-limit";
@@ -53,50 +62,62 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const otpPattern = /\b(?:otp|one[-\s]?time|verification\s*code|verify\s*code)\b/i;
 const rateLimitWindowMs = 10 * 60 * 1000;
 const rateLimitMax = 8;
-const CSRF_COOKIE = "lead_csrf";
 
 function rateLimitKey(ip: string): string {
   return `lead:${ip}`;
 }
 
+/**
+ * Throttling is best-effort, exactly like storage.
+ *
+ * getDb() rejects on an unreachable database or a schema behind the code, and
+ * these three ran on the request path with nothing to catch it: one bad
+ * connection turned every enquiry into a 500, which the form showed as
+ * "Could not send your enquiry right now." A visitor must never lose their
+ * enquiry because the rate-limit counter could not be read.
+ */
+async function dbOrNull(env: LeadEmailEnv) {
+  try {
+    return await getDb(env);
+  } catch (error) {
+    console.error("[lead-email] database unavailable", error instanceof Error ? error.message : error);
+    return null;
+  }
+}
+
 async function leadRateLimited(env: LeadEmailEnv, ip: string): Promise<boolean> {
-  const db = await getDb(env);
+  const db = await dbOrNull(env);
   if (!db) return false;
-  return isRateLimited(db, rateLimitKey(ip), rateLimitMax);
+  try {
+    return await isRateLimited(db, rateLimitKey(ip), rateLimitMax);
+  } catch (error) {
+    console.error("[lead-email] rate-limit read failed", error instanceof Error ? error.message : error);
+    return false;
+  }
 }
 
 async function recordLeadAttempt(env: LeadEmailEnv, ip: string): Promise<void> {
-  const db = await getDb(env);
+  const db = await dbOrNull(env);
   if (!db) return;
-  await recordRateLimitAttempt(db, rateLimitKey(ip), rateLimitMax, rateLimitWindowMs);
+  try {
+    await recordRateLimitAttempt(db, rateLimitKey(ip), rateLimitMax, rateLimitWindowMs);
+  } catch (error) {
+    console.error("[lead-email] rate-limit write failed", error instanceof Error ? error.message : error);
+  }
 }
 
 async function clearLeadAttempts(env: LeadEmailEnv, ip: string): Promise<void> {
-  const db = await getDb(env);
+  const db = await dbOrNull(env);
   if (!db) return;
-  await clearRateLimit(db, rateLimitKey(ip));
-}
-
-export function issueLeadCsrfToken(secure: boolean): { token: string; cookie: string } {
-  const token = crypto.randomUUID();
-  const flags = secure ? "; Secure" : "";
-  return {
-    token,
-    cookie: `${CSRF_COOKIE}=${token}; Path=/; SameSite=Strict; Max-Age=3600${flags}`,
-  };
-}
-
-function readCsrfCookie(request: Request): string {
-  const raw = request.headers.get("cookie") || "";
-  for (const part of raw.split(";")) {
-    const [name, ...rest] = part.trim().split("=");
-    if (name === CSRF_COOKIE) return decodeURIComponent(rest.join("="));
+  try {
+    await clearRateLimit(db, rateLimitKey(ip));
+  } catch (error) {
+    console.error("[lead-email] rate-limit clear failed", error instanceof Error ? error.message : error);
   }
-  return "";
 }
 
 function csrfValid(request: Request, payload: LeadPayload): boolean {
-  const expected = readCsrfCookie(request);
+  const expected = readLeadCsrfCookie(request);
   const provided = text(payload && typeof payload === "object" ? (payload as Record<string, unknown>).csrfToken : "", 80);
   return Boolean(expected && provided && expected === provided);
 }
@@ -147,24 +168,6 @@ function cleanRecord(value: unknown, maxValueLength = 1000) {
   return output;
 }
 
-function normalizeKey(value: string) {
-  return value.toLowerCase().replace(/[^a-z0-9]+/g, "");
-}
-
-function findByKey(fields: Record<string, string>, needles: string[]) {
-  for (const [key, value] of Object.entries(fields)) {
-    const normalized = normalizeKey(key);
-    if (needles.some((needle) => normalized.includes(needle))) return value;
-  }
-  return "";
-}
-
-function normalizePhone(value: string) {
-  let digits = value.replace(/\D/g, "");
-  if (digits.startsWith("91") && digits.length === 12) digits = digits.slice(2);
-  return /^[6-9]\d{9}$/.test(digits) ? `+91${digits}` : "";
-}
-
 function parseRequiredFields(value: unknown) {
   if (!Array.isArray(value)) return new Set<string>();
   return new Set(value.map((field) => normalizeKey(text(field, 100))).filter(Boolean));
@@ -193,11 +196,11 @@ function cleanFormLabel(formName: string, formId: string) {
 
 function displayLeadFields(fields: Record<string, string>, pageUrl: string) {
   const output: Record<string, string> = {};
-  const name = findByKey(fields, ["name"]);
-  const phone = findByKey(fields, ["phone", "mobile", "number", "tel"]);
-  const email = findByKey(fields, ["email"]);
+  const name = findContactName(fields);
+  const phone = findContactPhone(fields);
+  const email = findContactEmail(fields);
   const location = findByKey(fields, ["eventlocation", "location", "city"]);
-  const hotel = findByKey(fields, ["hotel"]);
+  const hotel = findByKey(fields, ["hotelname", "hotel"]);
   const message = findByKey(fields, ["message", "subject", "comment", "enquiry"]);
   const date = findByKey(fields, ["date"]);
   const time = findByKey(fields, ["time"]);
@@ -217,6 +220,7 @@ function displayLeadFields(fields: Record<string, string>, pageUrl: string) {
     "eventlocation",
     "hotel",
     "hotelid",
+    "hotelname",
     "message",
     "subject",
     "comment",
@@ -256,9 +260,9 @@ function validateLead(payload: LeadPayload): { lead?: CleanLead; errors?: string
   const formId = text(payload.formId, 120);
   const formName = cleanFormLabel(text(payload.formName, 120), formId);
   const pageUrl = text(payload.pageUrl, 500);
-  const name = findByKey(fields, ["name"]);
-  const phone = findByKey(fields, ["phone", "mobile", "number", "tel"]);
-  const email = findByKey(fields, ["email"]);
+  const name = findContactName(fields);
+  const phone = findContactPhone(fields);
+  const email = findContactEmail(fields);
 
   const errors: string[] = [];
   if (!Object.keys(fields).length) errors.push("No form details were received.");
@@ -702,3 +706,5 @@ function successPayload(mode: LeadResponseMode) {
     message: "Thanks. We will get back to you shortly.",
   };
 }
+
+export { issueLeadCsrfToken } from "./lead-csrf";

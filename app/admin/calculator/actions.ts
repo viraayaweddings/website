@@ -12,17 +12,19 @@ import {
 } from "@/worker/db/schema";
 import { invalidateCalculatorCache } from "@/worker/site/calculator-store";
 import { seedCalculatorData } from "@/worker/db/seed-calculator";
-import { recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { publishContentChange } from "@/worker/site/content-version";
+import { withFlashKey } from "../_lib/flash";
 
 const CALCULATOR_PATH = "/admin/calculator";
 const HOTELS_PATH = "/admin/calculator/hotels";
 
 function failed(target: string, message: string): never {
-  redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(message)}`));
 }
 
 function done(target: string, message: string): never {
-  redirect(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`));
 }
 
 /** The hotel list view to return to, so filters and page survive an action. */
@@ -73,6 +75,7 @@ function money(formData: FormData, name: string, month: string, field: string, t
 /* -------------------------------------------------------------- cities --- */
 
 export async function saveCalculatorCityAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -119,10 +122,17 @@ export async function saveCalculatorCityAction(formData: FormData): Promise<void
   }
 
   invalidateCalculatorCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   done(CALCULATOR_PATH, "City saved.");
 }
 
 export async function deleteCalculatorCityAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -144,10 +154,17 @@ export async function deleteCalculatorCityAction(formData: FormData): Promise<vo
   await recordAudit(db, actor, "calculator.city_deleted", "calculator_city", cityId, {});
 
   invalidateCalculatorCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   done(CALCULATOR_PATH, "City deleted.");
 }
 
 export async function bulkDeleteCalculatorCitiesAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const ids = formData
@@ -171,12 +188,19 @@ export async function bulkDeleteCalculatorCitiesAction(formData: FormData): Prom
   });
 
   invalidateCalculatorCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   done(CALCULATOR_PATH, `${cityIds.length} cit${cityIds.length === 1 ? "y" : "ies"} deleted.`);
 }
 
 /* -------------------------------------------------------------- hotels --- */
 
 export async function saveCalculatorHotelAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -213,6 +237,9 @@ export async function saveCalculatorHotelAction(formData: FormData): Promise<voi
     if (!updated.length) failed(HOTELS_PATH, "That hotel no longer exists.");
     await recordAudit(db, actor, "calculator.hotel_updated", "calculator_hotel", existing, { name, cityId });
     invalidateCalculatorCache();
+    // Tells the other instances their caches are stale; the local calls above
+    // only reach this one.
+    await publishContentChange();
     done(`${HOTELS_PATH}/${existing}`, "Hotel saved.");
   }
 
@@ -229,10 +256,14 @@ export async function saveCalculatorHotelAction(formData: FormData): Promise<voi
 
   await recordAudit(db, actor, "calculator.hotel_created", "calculator_hotel", nextId, { name, cityId });
   invalidateCalculatorCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   done(`${HOTELS_PATH}/${nextId}`, "Hotel added. Set its prices below.");
 }
 
 export async function deleteCalculatorHotelAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -252,10 +283,14 @@ export async function deleteCalculatorHotelAction(formData: FormData): Promise<v
 
   await recordAudit(db, actor, "calculator.hotel_deleted", "calculator_hotel", hotelId, { name: hotel.name });
   invalidateCalculatorCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   done(target, `${hotel.name} and its prices deleted.`);
 }
 
 export async function bulkDeleteCalculatorHotelsAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backToHotels(formData);
@@ -277,11 +312,15 @@ export async function bulkDeleteCalculatorHotelsAction(formData: FormData): Prom
     count: hotelIds.length,
   });
   invalidateCalculatorCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   done(target, `${hotelIds.length} hotel${hotelIds.length === 1 ? "" : "s"} and their prices deleted.`);
 }
 
 /** Saves all twelve months for one hotel in a single statement. */
 export async function saveCalculatorPricesAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -324,12 +363,16 @@ export async function saveCalculatorPricesAction(formData: FormData): Promise<vo
 
   await recordAudit(db, actor, "calculator.prices_updated", "calculator_hotel", hotelId, { months: rows.length });
   invalidateCalculatorCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   done(target, "Prices saved.");
 }
 
 /* ---------------------------------------------------------- currencies --- */
 
 export async function saveCurrencyAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -370,10 +413,14 @@ export async function saveCurrencyAction(formData: FormData): Promise<void> {
 
   await recordAudit(db, actor, "calculator.currency_saved", "calculator_currency", code, { name });
   invalidateCalculatorCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   done(CALCULATOR_PATH, "Currency saved.");
 }
 
 export async function deleteCurrencyAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -392,10 +439,14 @@ export async function deleteCurrencyAction(formData: FormData): Promise<void> {
   await ensureOneDefaultCurrency(db);
   await recordAudit(db, actor, "calculator.currency_deleted", "calculator_currency", code, {});
   invalidateCalculatorCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   done(CALCULATOR_PATH, "Currency deleted.");
 }
 
 export async function bulkDeleteCurrenciesAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const codes = [...new Set(formData.getAll("ids").map((value) => String(value || "").trim().toUpperCase()).filter(Boolean))]
@@ -413,6 +464,9 @@ export async function bulkDeleteCurrenciesAction(formData: FormData): Promise<vo
     count: codes.length,
   });
   invalidateCalculatorCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   done(CALCULATOR_PATH, `${codes.length} currenc${codes.length === 1 ? "y" : "ies"} deleted.`);
 }
 
@@ -447,6 +501,7 @@ async function ensureOneDefaultCurrency(db: Awaited<ReturnType<typeof requireDb>
 
 /** One-time import of the bundled dataset into empty tables. */
 export async function importCalculatorDataAction(): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -455,6 +510,9 @@ export async function importCalculatorDataAction(): Promise<void> {
 
   await recordAudit(db, actor, "calculator.imported", "calculator", "bundle", { ...result });
   invalidateCalculatorCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   done(
     CALCULATOR_PATH,
     `Imported ${result.cities} cities, ${result.hotels} hotels and ${result.prices} price rows.`,

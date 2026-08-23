@@ -2,13 +2,14 @@
 export const dynamic = "force-dynamic";
 
 import { notFound } from "next/navigation";
+import { versionOf } from "../../_lib/concurrency";
 import { asc, eq } from "drizzle-orm";
 import { hotels, POST_STATUSES } from "@/worker/db/schema";
 import { parseFaqs } from "@/worker/site/blog";
 import { parseHighlights } from "@/worker/site/hotel";
 import { parseNearby } from "@/worker/site/venue-listing";
 import { AdminShell } from "../../_components/AdminShell";
-import { SubmitButton, UnsavedGuard } from "../../_components/FormControls";
+import { SubmitButton, UnsavedGuard, VersionField } from "../../_components/FormControls";
 import { MediaPicker } from "../../_components/MediaPicker";
 import { RichText } from "../../_components/RichText";
 import {
@@ -92,6 +93,7 @@ export default async function EditHotelPage({
       <form action={updateHotelAction} className="grid gap-4 lg:grid-cols-3">
         <UnsavedGuard />
         <input type="hidden" name="id" value={hotel.id} />
+        <VersionField value={versionOf(hotel)} />
 
         <div className="min-w-0 space-y-4 lg:col-span-2">
           <Card pad={false}>

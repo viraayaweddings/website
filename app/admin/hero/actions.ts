@@ -8,16 +8,18 @@ import { mediaKeyFrom, mediaPathFromKey, readMediaPathValue } from "@/worker/adm
 import { heroSlides } from "@/worker/db/schema";
 import { invalidateHeroCache, safeHref } from "@/worker/site/hero";
 import { invalidateTemplateCache } from "@/worker/site/template";
-import { recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
+import { assertSameOrigin, recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
+import { publishContentChange } from "@/worker/site/content-version";
+import { withFlashKey } from "../_lib/flash";
 
 const HERO_PATH = "/admin/hero";
 
 function failed(message: string): never {
-  redirect(`${HERO_PATH}?error=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${HERO_PATH}?error=${encodeURIComponent(message)}`));
 }
 
 function done(message: string): never {
-  redirect(`${HERO_PATH}?saved=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${HERO_PATH}?saved=${encodeURIComponent(message)}`));
 }
 
 function readSlideFields(formData: FormData) {
@@ -67,6 +69,7 @@ async function releaseStoredImage(value: string): Promise<void> {
 }
 
 export async function createSlideAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireUser();
   const db = await requireDb();
 
@@ -87,6 +90,12 @@ export async function createSlideAction(formData: FormData): Promise<void> {
 
   invalidateHeroCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "hero.slide_created", "hero_slide", inserted[0]?.id ?? 0, {
     title: fields.title,
   });
@@ -95,6 +104,7 @@ export async function createSlideAction(formData: FormData): Promise<void> {
 }
 
 export async function updateSlideAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireUser();
   const db = await requireDb();
 
@@ -121,6 +131,12 @@ export async function updateSlideAction(formData: FormData): Promise<void> {
 
   invalidateHeroCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "hero.slide_updated", "hero_slide", id, { title: fields.title });
 
   done("Slide updated.");
@@ -128,6 +144,7 @@ export async function updateSlideAction(formData: FormData): Promise<void> {
 
 /** Destructive, so admins only — consistent with every other delete. */
 export async function deleteSlideAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -142,6 +159,12 @@ export async function deleteSlideAction(formData: FormData): Promise<void> {
 
   invalidateHeroCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "hero.slide_deleted", "hero_slide", id, { title: existing.title });
 
   done("Slide deleted.");
@@ -149,6 +172,7 @@ export async function deleteSlideAction(formData: FormData): Promise<void> {
 
 /** Deletes every selected hero slide and releases their images if unused. */
 export async function bulkDeleteSlidesAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const ids = formData
@@ -170,6 +194,12 @@ export async function bulkDeleteSlidesAction(formData: FormData): Promise<void> 
 
   invalidateHeroCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "hero.bulk_deleted", "hero_slide", uniqueIds.join(","), {
     count: uniqueIds.length,
   });
@@ -179,6 +209,7 @@ export async function bulkDeleteSlidesAction(formData: FormData): Promise<void> 
 
 /** Swaps a slide with its neighbour so the order can be nudged one step at a time. */
 export async function moveSlideAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireUser();
   const db = await requireDb();
 
@@ -220,6 +251,12 @@ export async function moveSlideAction(formData: FormData): Promise<void> {
 
   invalidateHeroCache();
   invalidateTemplateCache();
+
+  // Tells the other instances their caches are stale; the local calls above
+
+  // only reach this one.
+
+  await publishContentChange();
   await recordAudit(db, actor, "hero.reordered", "hero_slide", id, { direction });
 
   done("Order updated.");

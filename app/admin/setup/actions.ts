@@ -4,8 +4,14 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { hashPassword, validatePasswordStrength } from "@/worker/admin/password";
 import { createSession, sessionCookieOptions, SESSION_COOKIE } from "@/worker/admin/session";
+import { sql } from "drizzle-orm";
 import { users } from "@/worker/db/schema";
+import { withFlashKey } from "../_lib/flash";
+
+/** Serialises concurrent first-run setups. Distinct from the migration lock. */
+const SETUP_LOCK_KEY = 842_002;
 import {
+  assertSameOrigin,
   hasAnyUser,
   isSecureRequest,
   LOGIN_PATH,
@@ -16,7 +22,7 @@ import {
 } from "../_lib/auth";
 
 function failed(code: string): never {
-  redirect(`${SETUP_PATH}?error=${code}`);
+  redirect(withFlashKey(`${SETUP_PATH}?error=${code}`));
 }
 
 /**
@@ -24,8 +30,12 @@ function failed(code: string): never {
  * exists, so this cannot be used to add accounts later.
  */
 export async function createFirstAdminAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const db = await requireDb();
   if (await hasAnyUser(db)) redirect(LOGIN_PATH);
+
+  // Everything below is read and validated before the lock is taken, so the
+  // lock is held for one SELECT and one INSERT.
 
   const name = String(formData.get("name") || "").trim();
   const email = String(formData.get("email") || "").trim().toLowerCase();
@@ -50,12 +60,26 @@ export async function createFirstAdminAction(formData: FormData): Promise<void> 
     lastLoginAt: now,
   };
 
-  try {
-    await db.insert(users).values(user);
-  } catch {
-    // Almost certainly a concurrent setup that won the race.
-    redirect(LOGIN_PATH);
-  }
+  /**
+   * Check-and-insert under an advisory lock.
+   *
+   * `hasAnyUser` followed by an insert is not enough on its own: two setups
+   * submitted at the same moment with *different* addresses both passed the
+   * check and both succeeded, so a page that promises to work once created two
+   * admin accounts. The unique index only ever covered the same-address case.
+   */
+  const claimed = await db.transaction(async (tx) => {
+    await tx.execute(sql`SELECT pg_advisory_xact_lock(${SETUP_LOCK_KEY})`);
+
+    const existing = await tx.select({ id: users.id }).from(users).limit(1);
+    if (existing.length) return false;
+
+    await tx.insert(users).values(user);
+    return true;
+  });
+
+  // Someone else finished setup first. Their account is the one that exists.
+  if (!claimed) redirect(LOGIN_PATH);
 
   await recordAudit(db, user, "user.created", "user", user.id, { role: "admin", firstAdmin: true });
 

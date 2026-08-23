@@ -5,6 +5,21 @@ import { blogPosts, heroSlides, hotels } from "@/worker/db/schema";
 import { getCurrentUser, isAdmin } from "../_lib/auth";
 
 export const dynamic = "force-dynamic";
+
+/**
+ * The session cookie alone would let another origin post here. Every
+ * state-changing endpoint in the panel refuses a request that did not start on
+ * this site; this one used to be the exception.
+ */
+function isSameOrigin(request: Request): boolean {
+  const origin = request.headers.get("origin");
+  if (!origin) return true; // Same-origin form posts may omit it entirely.
+  try {
+    return new URL(origin).origin === new URL(request.url).origin;
+  } catch {
+    return false;
+  }
+}
 export const runtime = "nodejs";
 export const maxDuration = 300;
 
@@ -34,7 +49,9 @@ export async function GET(): Promise<Response> {
   return Response.json({ ok: true, ...(await counts(db)) });
 }
 
-export async function POST(): Promise<Response> {
+export async function POST(request: Request): Promise<Response> {
+  if (!isSameOrigin(request)) return Response.json({ error: "Refused." }, { status: 403 });
+
   const user = await getCurrentUser();
   if (!user || !isAdmin(user)) {
     return Response.json({ error: "Admin sign-in required." }, { status: 403 });

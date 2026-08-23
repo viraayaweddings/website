@@ -39,7 +39,8 @@ export interface ImageReference {
  *
  * Built on top of buildImageUsage rather than querying per column: the
  * highlights field is JSON, and matching a 64-character key inside it with
- * LIKE is rejected by SQLite as too complex a pattern. Reading the three
+ * LIKE across every JSON column at once is too broad a pattern to be worth
+ * pushing into Postgres. Reading the three
  * content tables and matching in memory has no such limit, and keeps one
  * implementation of what counts as a reference.
  */

@@ -76,6 +76,28 @@ const ALIGNMENT_CLASSES = IMAGE_ALIGNMENTS.flatMap((entry) => entry.classes);
 
 const WIDTHS = ["", "25%", "50%", "75%", "100%"] as const;
 
+/**
+ * The client-side half of the URL rule in worker/admin/rich-text.ts.
+ *
+ * Kept deliberately simple and deliberately strict: this exists to tell the
+ * editor now rather than to be the security boundary, which is on the server
+ * where a save cannot route around it.
+ */
+function isSafeHref(value: string): boolean {
+  // Stripping them is the point: a NUL or a zero-width space inside a scheme is
+  // how a "javascript:" href slips past a check that reads the scheme literally.
+  // eslint-disable-next-line no-control-regex
+  const flat = value.trim().replace(/[\u0000-\u0020\u007f\u200b-\u200d\ufeff]/g, "").toLowerCase();
+  if (!flat) return false;
+  if (flat.startsWith("//")) return false;
+  if (flat.startsWith("/") || flat.startsWith("#") || flat.startsWith("?")) return true;
+  if (/&[a-z0-9]+;/i.test(flat)) return false;
+
+  const scheme = /^([a-z][a-z0-9+.-]*):/.exec(flat);
+  if (!scheme) return true;
+  return ["http", "https", "mailto", "tel"].includes(scheme[1]);
+}
+
 function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -102,7 +124,20 @@ function formatSize(bytes: number): string {
 function cleanPastedHtml(html: string): string {
   const doc = new DOMParser().parseFromString(html, "text/html");
 
-  doc.querySelectorAll("style, meta, link, script, o\\:p").forEach((node) => node.remove());
+  // The same set worker/admin/rich-text.ts drops, so the editor is not shown
+  // markup that will disappear the moment it is saved.
+  doc
+    .querySelectorAll(
+      "style, meta, link, script, base, iframe, object, embed, form, input, button, " +
+        "select, textarea, svg, math, template, noscript, o\\:p",
+    )
+    .forEach((node) => node.remove());
+
+  doc.body.querySelectorAll("*").forEach((node) => {
+    for (const attribute of [...node.attributes]) {
+      if (attribute.name.toLowerCase().startsWith("on")) node.removeAttribute(attribute.name);
+    }
+  });
 
   doc.body.querySelectorAll<HTMLElement>("*").forEach((node) => {
     node.removeAttribute("style");
@@ -384,6 +419,14 @@ export function RichText({ label, name, defaultValue = "", hint, minHeight = 320
   const applyLink = useCallback(() => {
     const href = linkHref.trim();
     if (!href) return;
+
+    // The server sanitiser is the authority and will strip a scheme it does not
+    // allow, but silently dropping the href after the editor has clicked Apply
+    // is a confusing way to find out. Same rule, said earlier.
+    if (!isSafeHref(href)) {
+      setNotice("Links can point at https://, mailto:, tel:, or a path on this site.");
+      return;
+    }
 
     const existing = closestFromCaret(/^A$/) as HTMLAnchorElement | null;
     if (existing) {

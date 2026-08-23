@@ -9,6 +9,7 @@ import { getDb, type DatabaseEnv, type Db } from "../db/client";
 import { siteLabels } from "../db/schema";
 import { escapeHtml } from "./hero";
 import { eq } from "drizzle-orm";
+import { onContentChanged, publishContentChange } from "./content-version";
 
 export interface LabelDefinition {
   key: string;
@@ -123,7 +124,10 @@ export async function ensureDefaultLabels(db: Db, updatedBy = "seed"): Promise<n
   }
 
   const changed = missing.length + blank.length;
-  if (changed > 0) invalidateLabelCache();
+  if (changed > 0) {
+    invalidateLabelCache();
+    await publishContentChange();
+  }
   return changed;
 }
 
@@ -182,6 +186,7 @@ export async function writeLabels(
   }
 
   invalidateLabelCache();
+  await publishContentChange();
 }
 
 /**
@@ -211,3 +216,9 @@ export function renderLabel(
     hasHtml: true,
   };
 }
+
+// Dropped when any instance publishes a content change, not just this one.
+// See worker/site/content-version.ts.
+onContentChanged(() => {
+  invalidateLabelCache();
+});

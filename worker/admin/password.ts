@@ -2,7 +2,8 @@
  * Password hashing for admin accounts.
  *
  * bcrypt/argon2 need native bindings that Workers cannot load, so this uses
- * PBKDF2-SHA256 via WebCrypto, which is available in workerd.
+ * PBKDF2-SHA256 via WebCrypto, which is available in every runtime this ships
+ * to (Vercel's Node functions today; workerd when this ran on Cloudflare).
  *
  * Stored format: `pbkdf2$<iterations>$<salt-base64>$<hash-base64>`
  */
@@ -10,11 +11,31 @@
 // the old 100k, which is a fine trade on a login. Only new hashes use this:
 // verifyPassword reads the count out of the stored string, so existing
 // passwords keep working until their owner next changes one.
-const ITERATIONS = 600_000;
+export const ITERATIONS = 600_000;
 const KEY_LENGTH_BITS = 256;
 const SALT_BYTES = 16;
 
 export const MIN_PASSWORD_LENGTH = 10;
+
+/**
+ * A hash of a password nobody has, at the current cost.
+ *
+ * The login path verifies against this when the email is unknown so that the
+ * response time does not say whether an account exists. It has to be built from
+ * `ITERATIONS`, not written out: a hardcoded `pbkdf2$100000$...` was left behind
+ * when the cost went up, so an unknown account answered roughly six times
+ * faster than a real one and the timing gave the staff list away.
+ */
+let decoyPromise: Promise<string> | null = null;
+
+export function decoyHash(): Promise<string> {
+  if (!decoyPromise) {
+    decoyPromise = hashPassword(
+      `decoy:${toBase64(crypto.getRandomValues(new Uint8Array(SALT_BYTES)))}`,
+    );
+  }
+  return decoyPromise;
+}
 
 function toBase64(bytes: Uint8Array): string {
   let binary = "";

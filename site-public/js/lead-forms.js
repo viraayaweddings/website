@@ -8,6 +8,8 @@
     "",
   ]);
   var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  /** "Wedding Hotel Listing - Viraaya Weddings" -> "Wedding Hotel Listing". */
+  var SITE_SUFFIX = /\s+[-|–—]\s+/;
   var phonePattern = /^(?:\+?91[\s-]?)?[6-9]\d{9}$/;
 
   function normalizeAction(form) {
@@ -27,35 +29,100 @@
     return leadActions.has(normalizeAction(form));
   }
 
+  /**
+   * The name a message calls a field.
+   *
+   * Almost none of the cloned markup pairs a <label> with its control through
+   * `for`, so this also accepts the label sitting alongside it in the same
+   * .form-group. Falling straight through to the placeholder produced
+   * "Please enter Enter Your Name." on the pages whose placeholder is a
+   * sentence, so an imperative opener is trimmed off it.
+   */
   function labelFor(control) {
-    var label = control.id ? document.querySelector('label[for="' + CSS.escape(control.id) + '"]') : null;
+    var linked = control.id ? document.querySelector('label[for="' + CSS.escape(control.id) + '"]') : null;
+    var group = control.closest(".form-group");
+    var nearby = !linked && group ? group.querySelector("label") : null;
+    // A <select> usually names itself in its placeholder option
+    // ("SELECT ENQUIRY TYPE"), which is the only wording it carries.
+    var firstOption = control.tagName === "SELECT" && control.options.length ? control.options[0].text : "";
+
     return (
-      (label && label.textContent) ||
-      control.getAttribute("aria-label") ||
-      control.getAttribute("placeholder") ||
-      control.name ||
+      trimLead((linked && linked.textContent) || "") ||
+      trimLead((nearby && nearby.textContent) || "") ||
+      trimLead(control.getAttribute("aria-label") || "") ||
+      trimLead(control.getAttribute("placeholder") || "") ||
+      trimLead(firstOption) ||
+      titleCase(control.name) ||
       "this field"
-    ).replace(/\*/g, "").trim();
+    );
+  }
+
+  /**
+   * Strips an imperative opener, so a placeholder can be read as a field name.
+   *
+   * The cloned markup writes these every way at once -- "Enter Your Name",
+   * "name", "SELECT ENQUIRY TYPE" -- and a message quoting them verbatim reads
+   * differently on every page, so the case is normalised too.
+   */
+  function trimLead(value) {
+    var text = String(value)
+      .replace(/\*/g, "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .replace(/^(please\s+)?(enter|select|choose|type|pick|add)\s+(your\s+|a\s+|an\s+|the\s+)?/i, "")
+      .replace(/^your\s+/i, "")
+      .replace(/[:\s]+$/, "")
+      .trim();
+
+    // "SELECT ENQUIRY TYPE" would otherwise shout in the middle of a sentence.
+    if (text.length > 3 && text === text.toUpperCase()) text = titleCase(text.toLowerCase());
+    return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
+  }
+
+  function titleCase(value) {
+    return String(value || "")
+      .replace(/\[\]$/, "")
+      .replace(/[-_]+/g, " ")
+      .replace(/([a-z])([A-Z])/g, "$1 $2")
+      .trim()
+      .replace(/\w/g, function (letter) { return letter.toUpperCase(); });
+  }
+
+  /** Selects are chosen, boxes are ticked, everything else is typed into. */
+  function requiredMessage(control, label) {
+    // "Mobile No." would otherwise end the sentence with two full stops.
+    var subject = label.replace(/\.+$/, "");
+    if (control.tagName === "SELECT") return "Please select " + subject + ".";
+    if (control.type === "checkbox" || control.type === "radio") return "Please choose " + subject + ".";
+    return "Please enter " + subject + ".";
   }
 
   function fieldKey(control) {
     return (control.name || control.id || labelFor(control)).replace(/\[\]$/, "");
   }
 
-  function addStatus(form) {
-    var existing = form.querySelector(".lead-form-status");
+  /**
+   * The status box, created inside the form (or any container) on first use.
+   *
+   * `[data-lead-status]` lets a container that is not a <form> say where the
+   * box belongs, so a bespoke page can share this design without moving its
+   * markup around.
+   */
+  function addStatus(container) {
+    var host = container.querySelector("[data-lead-status]") || container;
+    var existing = host.querySelector(".lead-form-status") || container.querySelector(".lead-form-status");
     if (existing) return existing;
 
     var status = document.createElement("div");
     status.className = "lead-form-status";
     status.setAttribute("role", "status");
     status.setAttribute("aria-live", "polite");
-    form.appendChild(status);
+    host.appendChild(status);
     return status;
   }
 
-  function setStatus(form, message, type) {
-    var status = addStatus(form);
+  function setStatus(container, message, type) {
+    var status = addStatus(container);
     status.className = "lead-form-status lead-form-status--" + type;
     status.textContent = message || "";
     status.setAttribute("tabindex", "-1");
@@ -65,8 +132,8 @@
     }, 50);
   }
 
-  function clearStatus(form) {
-    var status = form.querySelector(".lead-form-status");
+  function clearStatus(container) {
+    var status = container.querySelector(".lead-form-status");
     if (status) status.remove();
   }
 
@@ -75,6 +142,47 @@
     control.setAttribute("aria-invalid", "true");
     control.dataset.leadError = message;
     setFieldError(control, message);
+  }
+
+  /**
+   * Every field in a container. `form.elements` covers controls that sit
+   * outside the element in the DOM but are owned by the form; a plain
+   * container has no such notion, so it is queried directly.
+   */
+  function controlsIn(root) {
+    var all = root.elements ? Array.prototype.slice.call(root.elements) : Array.prototype.slice.call(root.querySelectorAll("input, select, textarea"));
+    return all.filter(function (control) {
+      if (control.dataset && control.dataset.leadHoneypot === "true") return false;
+      return control.name && !control.disabled && control.type !== "hidden" && control.type !== "submit" && control.type !== "button";
+    });
+  }
+
+  var HONEYPOT_NAME = "company_website";
+
+  /**
+   * A field only a bot fills in.
+   *
+   * The API has always refused a submission that carries one, but no page had
+   * the field, so the check never fired. Adding it here rather than to the
+   * markup means it covers every form on the site, including the ones stored in
+   * the database.
+   */
+  function addHoneypot(form) {
+    if (form.tagName !== "FORM" || form.querySelector("[data-lead-honeypot]")) return;
+
+    var wrapper = document.createElement("div");
+    wrapper.setAttribute("aria-hidden", "true");
+    wrapper.style.cssText = "position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden";
+
+    var input = document.createElement("input");
+    input.type = "text";
+    input.name = HONEYPOT_NAME;
+    input.tabIndex = -1;
+    input.autocomplete = "off";
+    input.dataset.leadHoneypot = "true";
+
+    wrapper.appendChild(input);
+    form.appendChild(wrapper);
   }
 
   function clearInvalid(form) {
@@ -139,7 +247,7 @@
 
     if (control.required && (!value || /^select\b/i.test(value))) {
       if (!showRequired) return "";
-      return "Please enter " + label + ".";
+      return requiredMessage(control, label);
     }
 
     if (value && (control.type === "email" || key.indexOf("email") !== -1) && !emailPattern.test(value)) {
@@ -160,11 +268,8 @@
   function validate(form) {
     clearInvalid(form);
     var errors = [];
-    var controls = Array.from(form.elements).filter(function (control) {
-      return control.name && !control.disabled && control.type !== "hidden" && control.type !== "submit" && control.type !== "button";
-    });
 
-    controls.forEach(function (control) {
+    controlsIn(form).forEach(function (control) {
       var message = validateControl(form, control, true);
       if (!message) return;
       errors.push(message);
@@ -176,8 +281,13 @@
 
   function attachLiveValidation(form) {
     if (!form) return;
-    form.noValidate = true;
-    form.setAttribute("novalidate", "novalidate");
+    // Only a <form> has native validation to switch off. A bespoke container
+    // shares everything below it.
+    if (form.tagName === "FORM") {
+      form.noValidate = true;
+      form.setAttribute("novalidate", "novalidate");
+    }
+    addHoneypot(form);
     if (form.dataset.leadLiveValidation === "true") return;
     form.dataset.leadLiveValidation = "true";
 
@@ -215,7 +325,7 @@
       control.addEventListener("invalid", onInvalid);
     };
 
-    Array.from(form.elements).forEach(bindControl);
+    controlsIn(form).forEach(bindControl);
   }
 
   function attachLiveValidationToLeadForms(root) {
@@ -224,32 +334,80 @@
     });
   }
 
+  /**
+   * What the enquiry is called in the panel and in the notification subject.
+   *
+   * The CTA block on the listing and city pages carries neither a
+   * `data-form-name` nor an id, so 64 pages' worth of enquiries all arrived as
+   * "Website Query" and could only be told apart by their stored page URL. The
+   * page title is the next most specific thing the form knows about itself.
+   */
   function formTitle(form) {
     if (form.dataset.formName) return form.dataset.formName;
-    if (form.id) {
-      return form.id
-        .replace(/([a-z])([A-Z])/g, "$1 $2")
-        .replace(/[-_]+/g, " ")
-        .replace(/\b\w/g, function (letter) { return letter.toUpperCase(); });
-    }
-    return "Website Query";
+    if (form.id) return titleCase(form.id);
+
+    var pageName = (document.title || "").split(SITE_SUFFIX)[0].trim();
+    return pageName || "Website Query";
   }
 
   var csrfToken = "";
 
-  async function ensureCsrfToken() {
-    if (csrfToken) return csrfToken;
+  async function fetchCsrfToken() {
     var response = await fetch("/api/lead/csrf", {
       method: "GET",
       credentials: "same-origin",
       headers: { Accept: "application/json" },
+      cache: "no-store",
     });
     var data = await response.json().catch(function () { return {}; });
-    csrfToken = data.token || "";
+    return data.token || "";
+  }
+
+  async function ensureCsrfToken() {
+    if (csrfToken) return csrfToken;
+    csrfToken = await fetchCsrfToken();
+    return csrfToken;
+  }
+
+  /**
+   * The token lasts an hour; a page left open for longer keeps the one it
+   * fetched on load. That submission came back 403 and told the visitor their
+   * session had expired, which is not something they should have to act on.
+   */
+  async function refreshCsrfToken() {
+    csrfToken = "";
+    csrfToken = await fetchCsrfToken();
     return csrfToken;
   }
 
   window.viraayaLeadCsrf = ensureCsrfToken;
+
+  /**
+   * The same validation and the same error markup, for a page that has to build
+   * its own payload.
+   *
+   * /check-hotel-availability collects a plan, hotels, dates and a rooms/pax
+   * grid before it can post, so it cannot be an ordinary lead <form>. It used
+   * to carry its own rules and its own error elements, which drifted from
+   * every other form on the site. It now drives these.
+   */
+  window.viraayaLeadForms = {
+    csrf: ensureCsrfToken,
+    /** Live validation on any container of named fields. */
+    attach: attachLiveValidation,
+    /** Validates everything in the container; returns the messages. */
+    validate: validate,
+    /** Clears the invalid state and the field messages. */
+    clear: clearInvalid,
+    /** type: "pending" | "success" | "error". */
+    status: setStatus,
+    clearStatus: clearStatus,
+    fieldError: markInvalid,
+    /** The first field left invalid, for focus and scrolling. */
+    firstInvalid: function (container) {
+      return container.querySelector(".lead-field-invalid");
+    },
+  };
 
   function payload(form) {
     var fields = {};
@@ -257,9 +415,15 @@
     var formData = new FormData(form);
     var pageUrl = window.location.href;
 
+    var honeypotValue = "";
+
     formData.forEach(function (value, rawKey) {
       var key = rawKey.replace(/\[\]$/, "");
       if (key === "_token") return;
+      if (key === HONEYPOT_NAME) {
+        honeypotValue = String(value || "").trim();
+        return;
+      }
       var valueText = value instanceof File ? value.name : String(value).trim();
       if (!valueText) return;
       if (fields[key]) {
@@ -282,7 +446,7 @@
       pageUrl: pageUrl,
       fields: fields,
       requiredFields: requiredFields,
-      honeypot: fields.website || fields.company_website || "",
+      honeypot: honeypotValue || fields.website || "",
       metadata: {
         "Page Title": document.title,
         "Page URL": pageUrl,
@@ -350,6 +514,9 @@
       form.insertAdjacentElement("afterend", existing);
     }
 
+    // The "Sending your enquiry..." box would otherwise sit inside the hidden
+    // form and reappear if the panel is ever dismissed.
+    clearStatus(form);
     form.reset();
     form.hidden = true;
     form.setAttribute("aria-hidden", "true");
@@ -374,16 +541,30 @@
 
     try {
       var body = payload(form);
-      body.csrfToken = await ensureCsrfToken();
-      var response = await fetch("/api/lead", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
-      var data = await response.json().catch(function () { return {}; });
+
+      var post = async function (token) {
+        body.csrfToken = token;
+        var sent = await fetch("/api/lead", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+          body: JSON.stringify(body),
+        });
+        return { response: sent, data: await sent.json().catch(function () { return {}; }) };
+      };
+
+      var result = await post(await ensureCsrfToken());
+
+      // One retry with a fresh token, for the tab that sat open past the hour.
+      if (result.response.status === 403) {
+        result = await post(await refreshCsrfToken());
+      }
+
+      var response = result.response;
+      var data = result.data;
 
       if (!response.ok || data.ok === false) {
         var message = (data.errors && data.errors[0]) || data.message || "Could not send your enquiry right now.";

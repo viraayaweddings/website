@@ -13,6 +13,13 @@
  * Usage:
  *   node --env-file=.env.local scripts/seed-static-pages.mjs --dry-run
  *   node --env-file=.env.local scripts/seed-static-pages.mjs --apply
+ *   node --env-file=.env.local scripts/seed-static-pages.mjs --apply  *     --refresh /check-hotel-availability
+ *
+ * `--refresh <path>` (repeatable) overwrites a stored page from its file. The
+ * insert below deliberately never overwrites, so a fix made to a cloned file --
+ * a script the page needs, a broken handler -- could not otherwise reach a page
+ * already stored. Only pass paths whose stored copy nobody has edited in the
+ * panel: this discards whatever is there.
  *
  * `--if-configured` exits 0 rather than failing when there is no database,
  * which is what lets it sit in the build command.
@@ -30,6 +37,14 @@ const publicDir = join(root, "site-public");
 
 const apply = process.argv.includes("--apply");
 const ifConfigured = process.argv.includes("--if-configured");
+
+/** Paths to overwrite from disk, as `--refresh <path>` pairs. */
+const refreshPaths = new Set(
+  process.argv.reduce((paths, arg, index) => {
+    if (arg === "--refresh" && process.argv[index + 1]) paths.push(process.argv[index + 1]);
+    return paths;
+  }, []),
+);
 
 const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL;
 if (!databaseUrl) {
@@ -120,6 +135,11 @@ try {
   const missing = candidates.filter((c) => !existing.has(c.path));
   console.log(`[pages] already stored: ${existing.size}, to insert: ${missing.length}`);
 
+  const refreshing = candidates.filter((c) => refreshPaths.has(c.path) && existing.has(c.path));
+  for (const path of refreshPaths) {
+    if (!candidates.some((c) => c.path === path)) console.warn(`[pages] --refresh ${path}: no file for it`);
+  }
+
   const generated =
     "/**\n" +
     " * Paths served from `static_pages`. Regenerate with `npm run pages:seed`.\n" +
@@ -135,17 +155,30 @@ try {
 
   if (!apply) {
     missing.slice(0, 10).forEach((c) => console.log(`   would insert ${c.path}`));
+    refreshing.forEach((c) => console.log(`   would overwrite ${c.path}`));
     console.log("[pages] dry run: nothing written to the database");
-  } else if (missing.length) {
-    // Rows are ~270KB each; a single statement with all of them exceeds what
-    // the driver will bind comfortably.
-    for (let i = 0; i < missing.length; i += 5) {
-      await sql`insert into static_pages ${sql(missing.slice(i, i + 5))} on conflict (path) do nothing`;
-    }
-    const after = await sql`select count(*)::int n, sum(length(html))::bigint b from static_pages`;
-    console.log(`[pages] stored: ${after[0].n} pages, ${(Number(after[0].b) / 1048576).toFixed(1)} MB`);
   } else {
-    console.log("[pages] nothing to insert");
+    for (const page of refreshing) {
+      await sql`
+        update static_pages
+        set html = ${page.html}, title = ${page.title}, meta_description = ${page.meta_description},
+            updated_at = now()
+        where path = ${page.path}
+      `;
+      console.log(`[pages] refreshed ${page.path}`);
+    }
+
+    if (missing.length) {
+      // Rows are ~270KB each; a single statement with all of them exceeds what
+      // the driver will bind comfortably.
+      for (let i = 0; i < missing.length; i += 5) {
+        await sql`insert into static_pages ${sql(missing.slice(i, i + 5))} on conflict (path) do nothing`;
+      }
+      const after = await sql`select count(*)::int n, sum(length(html))::bigint b from static_pages`;
+      console.log(`[pages] stored: ${after[0].n} pages, ${(Number(after[0].b) / 1048576).toFixed(1)} MB`);
+    } else {
+      console.log("[pages] nothing to insert");
+    }
   }
 } finally {
   await sql.end({ timeout: 5 });

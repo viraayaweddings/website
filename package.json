@@ -17,13 +17,14 @@
     "docs:sync": "node scripts/docs-sync.mjs",
     "sitemap:generate": "node scripts/generate-sitemap.mjs",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "node scripts/db-migrate.mjs",
+    "db:migrate": "node --experimental-strip-types scripts/db-migrate.mjs",
     "db:seed": "node --experimental-strip-types scripts/db-seed.ts",
     "media:upload-static": "node scripts/upload-static-images-to-r2.mjs",
     "media:migrate": "node --env-file=.env.local --env-file=.env.vercel.local scripts/migrate-images-to-r2.mjs",
     "media:audit": "node --env-file=.env.local scripts/audit-media-library.mjs",
     "db:audit": "node --env-file=.env.local scripts/audit-content-seed.mjs",
-    "pages:seed": "node --experimental-strip-types --env-file=.env.local scripts/seed-static-pages.mjs --apply"
+    "pages:seed": "node --experimental-strip-types --env-file=.env.local scripts/seed-static-pages.mjs --apply",
+    "leads:purge": "node --experimental-strip-types scripts/purge-old-leads.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.888.0",

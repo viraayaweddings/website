@@ -249,3 +249,14 @@ export function AutoSubmitControls({
 
   return <span ref={anchor} hidden />;
 }
+
+/**
+ * Carries the row version the form was rendered from.
+ *
+ * Read back by the save action, which refuses the write if the row has moved
+ * since -- see app/admin/_lib/concurrency.ts.
+ */
+export function VersionField({ value }: { value: string }) {
+  if (!value) return null;
+  return <input type="hidden" name="expectedUpdatedAt" value={value} />;
+}

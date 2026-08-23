@@ -11,6 +11,7 @@ import { getDb, type DatabaseEnv } from "../db/client";
 import { blogListings, blogPosts, type BlogFaq, type BlogPost } from "../db/schema";
 import { escapeHtml } from "./hero";
 import { renderLabel, type ResolvedLabels } from "./labels";
+import { onContentChanged } from "./content-version";
 
 export const BLOG_PREFIX = "/blogs/";
 export const BLOG_LISTING_PATHS = new Set(["/blogs", "/blogs/", "/blogs/index.html"]);
@@ -349,3 +350,10 @@ export async function loadPost(env: DatabaseEnv, slug: string): Promise<BlogPost
   const posts = await loadPublishedPosts(env);
   return posts.find((post) => post.slug === slug) ?? null;
 }
+
+// Dropped when any instance publishes a content change, not just this one.
+// See worker/site/content-version.ts.
+onContentChanged(() => {
+  invalidateBlogCache();
+  invalidateBlogListingCache();
+});

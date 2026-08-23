@@ -6,7 +6,7 @@
  * cities and submissions. Results are capped per group so no single content
  * type can crowd out the others.
  */
-import { asc, desc, like, or, type SQL } from "drizzle-orm";
+import { asc, desc, ilike, or, type SQL } from "drizzle-orm";
 import { blogPosts, cityPages, hotels, leads } from "@/worker/db/schema";
 import { getCurrentUser, requireDb } from "../_lib/auth";
 
@@ -29,7 +29,10 @@ function json(body: unknown, status = 200): Response {
   });
 }
 
-/** `%` and `_` are wildcards to SQLite and drizzle adds no ESCAPE clause. */
+/**
+ * `%` and `_` are wildcards to Postgres and drizzle adds no ESCAPE clause, so they
+ * are neutralised rather than passed through.
+ */
 function needle(query: string): string {
   return `%${query.replace(/[%_]/g, " ").trim()}%`;
 }
@@ -55,27 +58,27 @@ export async function GET(request: Request): Promise<Response> {
     db
       .select({ id: hotels.id, name: hotels.name, city: hotels.city, slug: hotels.slug, status: hotels.status })
       .from(hotels)
-      .where(firstClause(like(hotels.name, pattern), like(hotels.slug, pattern), like(hotels.city, pattern)))
+      .where(firstClause(ilike(hotels.name, pattern), ilike(hotels.slug, pattern), ilike(hotels.city, pattern)))
       .orderBy(asc(hotels.name))
       .limit(PER_GROUP),
     db
       .select({ id: blogPosts.id, heading: blogPosts.heading, slug: blogPosts.slug, status: blogPosts.status })
       .from(blogPosts)
-      .where(firstClause(like(blogPosts.heading, pattern), like(blogPosts.slug, pattern)))
+      .where(firstClause(ilike(blogPosts.heading, pattern), ilike(blogPosts.slug, pattern)))
       .orderBy(asc(blogPosts.position))
       .limit(PER_GROUP),
     isAdmin
       ? db
           .select({ city: cityPages.city, seoTitle: cityPages.seoTitle })
           .from(cityPages)
-          .where(firstClause(like(cityPages.city, pattern), like(cityPages.seoTitle, pattern)))
+          .where(firstClause(ilike(cityPages.city, pattern), ilike(cityPages.seoTitle, pattern)))
           .orderBy(asc(cityPages.city))
           .limit(PER_GROUP)
       : Promise.resolve([]),
     db
       .select({ id: leads.id, name: leads.name, email: leads.email, status: leads.status, form: leads.formName })
       .from(leads)
-      .where(firstClause(like(leads.name, pattern), like(leads.email, pattern), like(leads.phone, pattern)))
+      .where(firstClause(ilike(leads.name, pattern), ilike(leads.email, pattern), ilike(leads.phone, pattern)))
       .orderBy(desc(leads.createdAt))
       .limit(PER_GROUP),
   ]);

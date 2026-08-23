@@ -1,5 +1,5 @@
 /** Shared filtering for the leads list and its CSV export. */
-import { and, asc, desc, eq, gte, like, lte, or, sql, type SQL } from "drizzle-orm";
+import { and, asc, desc, eq, gte, ilike, lte, or, sql, type SQL } from "drizzle-orm";
 import type { Db } from "@/worker/db/client";
 import {
   EXPORT_LIMIT,
@@ -39,14 +39,16 @@ function buildWhere(filters: LeadFilters): SQL | undefined {
   const clauses: SQL[] = [];
 
   if (filters.q) {
-    // drizzle's like() binds the pattern as a parameter but adds no ESCAPE
-    // clause, so a literal % or _ in the query would act as a wildcard.
+    // ilike(), not ilike(): Postgres LIKE is case-sensitive, so searching
+    // "delhi" used to miss every row spelled "Delhi". drizzle binds the pattern
+    // as a parameter but adds no ESCAPE clause, so a literal % or _ in the
+    // query would still act as a wildcard and is neutralised here.
     const needle = `%${filters.q.replace(/[%_]/g, " ").trim()}%`;
     const match = or(
-      like(leads.name, needle),
-      like(leads.email, needle),
-      like(leads.phone, needle),
-      like(leads.fields, needle),
+      ilike(leads.name, needle),
+      ilike(leads.email, needle),
+      ilike(leads.phone, needle),
+      ilike(leads.fields, needle),
     );
     if (match) clauses.push(match);
   }

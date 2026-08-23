@@ -7,7 +7,11 @@ import { uploadImage } from "@/worker/admin/media-store";
 import { mediaPathFromKey } from "@/worker/admin/media-path";
 import { staticPages } from "@/worker/db/schema";
 import { invalidateStaticPageCache, normalizeStaticPath } from "@/worker/site/static-pages";
-import { recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { STORED_PAGE_PATHS } from "@/worker/site/static-page-paths.generated";
+import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { hasMoved, readExpectedVersion, STALE_MESSAGE } from "../_lib/concurrency";
+import { publishContentChange } from "@/worker/site/content-version";
+import { withFlashKey } from "../_lib/flash";
 
 const LIST_PATH = "/admin/pages";
 const BULK_LIMIT = 200;
@@ -40,15 +44,15 @@ function editorPath(path: string): string {
 }
 
 function failed(target: string, message: string): never {
-  redirect(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}error=${encodeURIComponent(message)}`));
 }
 
 function done(target: string, message: string): never {
-  redirect(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}saved=${encodeURIComponent(message)}`));
 }
 
 function removed(target: string, message: string): never {
-  redirect(`${target}${target.includes("?") ? "&" : "?"}deleted=${encodeURIComponent(message)}`);
+  redirect(withFlashKey(`${target}${target.includes("?") ? "&" : "?"}deleted=${encodeURIComponent(message)}`));
 }
 
 function text(formData: FormData, name: string, max = 400): string {
@@ -56,6 +60,19 @@ function text(formData: FormData, name: string, max = 400): string {
 }
 
 /** Only a key this site issued; never a URL pointing somewhere else. */
+/**
+ * Whether resetting this page would put back a file that exists.
+ *
+ * The `origin` column records how a row was created, but only for rows created
+ * after it was added -- a page made in the panel before then still says
+ * "import". The generated path list is the on-disk truth and covers both.
+ */
+const ON_DISK = new Set(STORED_PAGE_PATHS);
+
+function hasOriginalMarkup(page: { path: string; origin: string }): boolean {
+  return page.origin !== "panel" && ON_DISK.has(page.path);
+}
+
 function isMediaPath(value: string): boolean {
   return /^\/media\/[A-Za-z0-9/_.-]+$/.test(value) && !value.includes("..");
 }
@@ -66,12 +83,14 @@ async function loadPage(db: Awaited<ReturnType<typeof requireDb>>, path: string)
 }
 
 export async function saveStaticPageAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
   const path = normalizeStaticPath(text(formData, "path", 200));
   const page = await loadPage(db, path);
   if (!page) failed(LIST_PATH, "That page is no longer stored.");
+  if (hasMoved(readExpectedVersion(formData), page.updatedAt)) failed(editorPath(path), STALE_MESSAGE);
 
   const title = text(formData, "title", 300);
   const metaDescription = text(formData, "metaDescription", 400);
@@ -84,6 +103,9 @@ export async function saveStaticPageAction(formData: FormData): Promise<void> {
 
   await recordAudit(db, actor, "page.updated", "static_page", path, { title, published });
   invalidateStaticPageCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   done(editorPath(path), "Page saved.");
 }
 
@@ -95,6 +117,7 @@ export async function saveStaticPageAction(formData: FormData): Promise<void> {
  * changing only one of them looks like a bug.
  */
 export async function replacePageImageAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -118,8 +141,12 @@ export async function replacePageImageAction(formData: FormData): Promise<void> 
   if (!isMediaPath(replacement)) failed(editorPath(path), "Use a /media/... path from the library.");
   if (replacement === current) failed(editorPath(path), "That is already the image on this page.");
 
-  const html = page.html.split(current).join(replacement);
-  const swapped = (page.html.length - html.length) / (current.length - replacement.length || 1);
+  // Counted from the split, not inferred from a length delta. Media keys are
+  // content hashes, so the old and new key are almost always the same length --
+  // the delta was zero and the count always came out zero with it.
+  const parts = page.html.split(current);
+  const swapped = parts.length - 1;
+  const html = parts.join(replacement);
 
   await db
     .update(staticPages)
@@ -131,6 +158,9 @@ export async function replacePageImageAction(formData: FormData): Promise<void> 
     to: replacement,
   });
   invalidateStaticPageCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   done(
     editorPath(path),
     swapped > 1 ? `Image replaced in ${swapped} places.` : "Image replaced.",
@@ -144,6 +174,7 @@ export async function replacePageImageAction(formData: FormData): Promise<void> 
  * missing, so dropping the row is the whole of the undo.
  */
 export async function resetStaticPageAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -152,9 +183,23 @@ export async function resetStaticPageAction(formData: FormData): Promise<void> {
   const page = await loadPage(db, path);
   if (!page) failed(target, "That page is no longer stored.");
 
+  // Reset works by dropping the row, because the file the page was cloned from
+  // is still on disk and is served whenever the stored copy is missing. A page
+  // created here has no file behind it, so the same click would delete it
+  // outright -- and the old wording promised the opposite.
+  if (!hasOriginalMarkup(page)) {
+    failed(
+      target,
+      `${path} has no original markup to go back to — it was created in the panel rather than cloned from a file. Hide it instead, or delete it deliberately.`,
+    );
+  }
+
   await db.delete(staticPages).where(eq(staticPages.path, path));
   await recordAudit(db, actor, "page.reset", "static_page", path, {});
   invalidateStaticPageCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   removed(target, `${path} is back to its original markup. The next import will store it again.`);
 }
 
@@ -168,6 +213,7 @@ export async function resetStaticPageAction(formData: FormData): Promise<void> {
  * the request falls through to the handler, which serves the stored row.
  */
 export async function createStaticPageAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -196,16 +242,23 @@ export async function createStaticPageAction(formData: FormData): Promise<void> 
     // Hidden to begin with: the copy still carries the source page's wording,
     // and publishing that at a new URL would put a duplicate live.
     published: 0,
+    // Nothing is on disk at this path, so "reset" cannot mean "serve the
+    // original file" for this row. Recorded so the reset actions can refuse.
+    origin: "panel",
     updatedBy: actor.email,
   });
 
   await recordAudit(db, actor, "page.created", "static_page", path, { copiedFrom: source, title });
   invalidateStaticPageCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   done(editorPath(path), `${path} created from ${source}. It stays hidden until you show it.`);
 }
 
 /** Shows or hides the selected pages in one pass. */
 export async function bulkPublishPagesAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -231,11 +284,15 @@ export async function bulkPublishPagesAction(formData: FormData): Promise<void> 
     count: updated.length,
   });
   invalidateStaticPageCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   done(target, `${updated.length} page${updated.length === 1 ? "" : "s"} ${published ? "shown" : "hidden"}.`);
 }
 
 /** Puts every selected page back to the markup it shipped with. */
 export async function bulkResetPagesAction(formData: FormData): Promise<void> {
+  await assertSameOrigin();
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -243,6 +300,23 @@ export async function bulkResetPagesAction(formData: FormData): Promise<void> {
   const paths = readIds(formData);
   if (!paths.length) failed(target, "Select at least one page first.");
   if (paths.length > BULK_LIMIT) failed(target, `Reset ${BULK_LIMIT} pages or fewer at a time.`);
+
+  // Same rule as the single reset, checked before anything is removed: a batch
+  // that quietly deleted the panel-created pages inside it would be the worst
+  // version of this bug.
+  const selected = await db
+    .select({ path: staticPages.path, origin: staticPages.origin })
+    .from(staticPages)
+    .where(inArray(staticPages.path, paths));
+  const created = selected.filter((page) => !hasOriginalMarkup(page));
+
+  if (created.length) {
+    failed(
+      target,
+      `${created.length} selected page${created.length === 1 ? " was" : "s were"} created in the panel and ` +
+        `${created.length === 1 ? "has" : "have"} no original markup to go back to (${created[0].path}). Deselect ${created.length === 1 ? "it" : "them"} and try again.`,
+    );
+  }
 
   const removedRows = await db
     .delete(staticPages)
@@ -255,6 +329,9 @@ export async function bulkResetPagesAction(formData: FormData): Promise<void> {
     count: removedRows.length,
   });
   invalidateStaticPageCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
   removed(
     target,
     `${removedRows.length} page${removedRows.length === 1 ? "" : "s"} back to their original markup.`,

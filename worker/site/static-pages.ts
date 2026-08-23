@@ -13,6 +13,7 @@
 import { asc, eq } from "drizzle-orm";
 import { getDb, type DatabaseEnv } from "../db/client";
 import { staticPages, type StaticPage } from "../db/schema";
+import { onContentChanged } from "./content-version";
 
 const CACHE_TTL_MS = 30_000;
 
@@ -119,3 +120,9 @@ export async function listStaticPages(env: DatabaseEnv = {}) {
     .from(staticPages)
     .orderBy(asc(staticPages.path));
 }
+
+// Dropped when any instance publishes a content change, not just this one.
+// See worker/site/content-version.ts.
+onContentChanged(() => {
+  invalidateStaticPageCache();
+});

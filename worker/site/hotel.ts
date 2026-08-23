@@ -9,6 +9,7 @@ import { and, asc, eq } from "drizzle-orm";
 import { getDb, type DatabaseEnv } from "../db/client";
 import { hotels, type BlogFaq, type Hotel, type HotelHighlight } from "../db/schema";
 import { escapeHtml } from "./hero";
+import { onContentChanged } from "./content-version";
 
 export const HOTEL_PREFIX = "/destination-wedding/";
 
@@ -189,3 +190,9 @@ export async function findHotelByPath(env: DatabaseEnv, path: HotelPath): Promis
     .limit(1);
   return rows[0] ?? null;
 }
+
+// Dropped when any instance publishes a content change, not just this one.
+// See worker/site/content-version.ts.
+onContentChanged(() => {
+  invalidateHotelCache();
+});

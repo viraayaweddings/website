@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { SubmitButton } from "./FormControls";
 import { Icon } from "./icons";
@@ -42,8 +43,22 @@ export function ConfirmDeleteBanner({
   /** List view to come back to, so filters and page survive the delete. */
   returnTo?: string;
 }) {
+  const banner = useRef<HTMLDivElement>(null);
+
+  /**
+   * The banner appears after a full server navigation, so focus is back at the
+   * top of the document: a screen reader announced the page rather than the
+   * confirmation, and a keyboard user had to tab down to find it. Moving focus
+   * here is what makes `role="alertdialog"` mean anything.
+   */
+  useEffect(() => {
+    banner.current?.focus();
+  }, []);
+
   return (
     <div
+      ref={banner}
+      tabIndex={-1}
       className="mb-4 flex flex-wrap items-start gap-3 rounded-[16px] border p-4"
       style={{ borderColor: "var(--bad-line)", background: "var(--bad-wash)" }}
       role="alertdialog"
