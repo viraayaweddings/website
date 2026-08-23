@@ -63,9 +63,14 @@ export function findByKey(
   fields: Record<string, string>,
   needles: string[],
   contactOnly = false,
+  excludeFirstToken: string[] = [],
 ): string {
+  const excluded = new Set(excludeFirstToken);
   const entries = Object.entries(fields).filter(
-    ([key, value]) => value && (!contactOnly || isContactCandidate(key)),
+    ([key, value]) =>
+      value &&
+      (!contactOnly || isContactCandidate(key)) &&
+      !excluded.has(keyTokens(key)[0] ?? ""),
   );
 
   const tests: Array<(key: string, needle: string) => boolean> = [
@@ -95,6 +100,24 @@ export function findContactPhone(fields: Record<string, string>): string {
 
 export function findContactEmail(fields: Record<string, string>): string {
   return findByKey(fields, ["email"], true);
+}
+
+/**
+ * The date the visitor is actually asking about.
+ *
+ * /check-hotel-availability posts `preferred_dates` next to `alternate_dates_1`
+ * and `alternate_dates_2`. None of them is the whole word "date", so all three
+ * were equally good substring matches and the first one in the payload was
+ * shown as "Preferred Date" -- an alternate range presented as the date they
+ * want. The specific names are tried first and the alternates are refused.
+ */
+export function findPreferredDate(fields: Record<string, string>): string {
+  return findByKey(
+    fields,
+    ["preferreddate", "preferreddates", "eventdate", "weddingdate", "date", "dates"],
+    false,
+    ["alternate", "alt"],
+  );
 }
 
 /** "+91XXXXXXXXXX", or "" when it is not a mobile number we can dial. */

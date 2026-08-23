@@ -5,6 +5,7 @@ import {
   findContactEmail,
   findContactName,
   findContactPhone,
+  findPreferredDate,
   humanFieldLabel,
   normalizePhone,
 } from "../worker/lead-fields.ts";
@@ -95,4 +96,34 @@ test("an empty or junk key does not become a stray label", () => {
   assert.equal(humanFieldLabel(""), "");
   assert.equal(humanFieldLabel("   "), "");
   assert.equal(humanFieldLabel("___"), "___");
+});
+
+/**
+ * /check-hotel-availability posts a preferred range and two alternates. None of
+ * the three keys is the whole word "date", so all three matched a substring
+ * search equally and whichever came first was shown as "Preferred Date".
+ */
+const availability = {
+  alternate_dates_1: "2027-03-02 to 2027-03-03",
+  alternate_dates_2: "2027-03-12 to 2027-03-13",
+  preferred_dates: "2027-02-14 to 2027-02-15",
+};
+
+test("the preferred range wins over the alternates, whatever the order", () => {
+  assert.equal(findPreferredDate(availability), "2027-02-14 to 2027-02-15");
+  assert.equal(
+    findPreferredDate({ preferred_dates: availability.preferred_dates, alternate_dates_1: availability.alternate_dates_1 }),
+    "2027-02-14 to 2027-02-15",
+  );
+});
+
+test("an alternate range is never reported as the preferred date", () => {
+  assert.equal(findPreferredDate({ alternate_dates_1: "2027-03-02 to 2027-03-03" }), "");
+  assert.equal(findPreferredDate({ alt_date: "2027-03-02" }), "");
+});
+
+test("the ordinary single date fields still resolve", () => {
+  assert.equal(findPreferredDate({ preferred_date: "2027-01-15" }), "2027-01-15");
+  assert.equal(findPreferredDate({ appointment_date: "2027-01-20" }), "2027-01-20");
+  assert.equal(findPreferredDate({ wedding_date: "2027-04-01" }), "2027-04-01");
 });

@@ -5,6 +5,7 @@ import {
   findContactEmail,
   findContactName,
   findContactPhone,
+  findPreferredDate,
   humanFieldLabel,
   normalizeKey,
   normalizePhone,
@@ -203,7 +204,7 @@ function displayLeadFields(fields: Record<string, string>, pageUrl: string) {
   const location = findByKey(fields, ["eventlocation", "location", "city"]);
   const hotel = findByKey(fields, ["hotelname", "hotel"]);
   const message = findByKey(fields, ["message", "subject", "comment", "enquiry"]);
-  const date = findByKey(fields, ["date"]);
+  const date = findPreferredDate(fields);
   const time = findByKey(fields, ["time"]);
   const consumed = new Set([
     "token",
