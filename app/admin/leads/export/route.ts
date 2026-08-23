@@ -1,30 +1,9 @@
 import { getCurrentUser, recordAudit, requireDb } from "../../_lib/auth";
+import { buildLeadCsv } from "@/worker/admin/lead-csv";
 import { filtersToQuery } from "@/worker/admin/lead-filters";
 import { countLeads, EXPORT_LIMIT, listAllMatchingLeads, parseFilters } from "../_query";
 
 export const dynamic = "force-dynamic";
-
-/**
- * Excel interprets a leading =, +, - or @ as a formula, so those values are
- * prefixed with a quote. Lead data is attacker-supplied.
- */
-function csvCell(value: unknown): string {
-  const text = value === null || value === undefined ? "" : String(value);
-  const guarded = /^[=+\-@\t\r]/.test(text) ? `'${text}` : text;
-  return `"${guarded.replace(/"/g, '""')}"`;
-}
-
-function flatten(json: string): Record<string, string> {
-  try {
-    const parsed = JSON.parse(json);
-    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
-    return Object.fromEntries(
-      Object.entries(parsed as Record<string, unknown>).map(([key, value]) => [key, String(value)]),
-    );
-  } catch {
-    return {};
-  }
-}
 
 export async function GET(request: Request): Promise<Response> {
   const user = await getCurrentUser();
@@ -46,69 +25,8 @@ export async function GET(request: Request): Promise<Response> {
     truncated,
   });
 
-  // These are already fixed columns; the stored payload repeats them under its
-  // display labels, which would otherwise produce duplicate headers in Excel.
-  const COVERED_BY_FIXED_COLUMNS = new Set(["Name", "Email", "Phone Number", "Page URL"]);
-
-  // Union of every remaining field key, so no submitted answer is dropped.
-  const fieldKeys = [...new Set(rows.flatMap((row) => Object.keys(flatten(row.fields))))]
-    .filter((key) => !COVERED_BY_FIXED_COLUMNS.has(key))
-    .sort();
-
-  const header = [
-    "ID",
-    "Received (IST)",
-    "Form",
-    "Name",
-    "Email",
-    "Phone",
-    "Status",
-    "Notes",
-    "Page URL",
-    "Email sent",
-    ...fieldKeys,
-  ];
-
-  const formatter = new Intl.DateTimeFormat("en-CA", {
-    dateStyle: "short",
-    timeStyle: "medium",
-    timeZone: "Asia/Kolkata",
-  });
-
-  // The header stays on row 1. A warning unshifted above it became the header
-  // as far as Excel was concerned, which shifted every real column down a row
-  // and left them unlabelled -- on precisely the export someone is most likely
-  // to hand to a client.
-  const lines = [header.map(csvCell).join(",")];
-  for (const row of rows) {
-    const fields = flatten(row.fields);
-    lines.push(
-      [
-        row.id,
-        formatter.format(row.createdAt),
-        row.formName || row.formId,
-        row.name,
-        row.email,
-        row.phone,
-        row.status,
-        row.notes,
-        row.pageUrl,
-        row.emailSent ? "yes" : "no",
-        ...fieldKeys.map((key) => fields[key] ?? ""),
-      ]
-        .map(csvCell)
-        .join(","),
-    );
-  }
-
+  const csv = buildLeadCsv(rows, { truncated, total, limit: EXPORT_LIMIT });
   if (truncated) {
-    lines.push(
-      [
-        csvCell(
-          `WARNING: ${total} submissions match these filters but exports are limited to ${EXPORT_LIMIT} rows. Narrow the filters for a complete export.`,
-        ),
-      ].join(","),
-    );
     console.warn("[admin] lead export hit the row cap; narrow the filters for a complete export");
   }
 
@@ -124,6 +42,5 @@ export async function GET(request: Request): Promise<Response> {
     headers["x-export-row-limit"] = String(EXPORT_LIMIT);
   }
 
-  // BOM so Excel opens UTF-8 names correctly.
-  return new Response(`\uFEFF${lines.join("\r\n")}\r\n`, { headers });
+  return new Response(csv, { headers });
 }

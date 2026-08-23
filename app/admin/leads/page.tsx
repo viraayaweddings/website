@@ -148,7 +148,7 @@ export default async function LeadsPage({
           <div className="flex items-center gap-2">
             <button type="submit" className="vw-btn vw-btn-secondary vw-btn-sm">
               <Icon name="filter" size={13} />
-              Apply
+              Apply filters
             </button>
             <span className="text-xs" style={{ color: "var(--ink-faint)" }}>
               Search applies as you type.
@@ -183,8 +183,10 @@ export default async function LeadsPage({
                 ))}
               </select>
             </label>
+            {/* Named for what it applies: the filter card above has its own
+                Apply, and two identical labels on one screen is a coin toss. */}
             <SubmitButton variant="secondary" size="sm" icon="check" pendingLabel="Applying…" formAction={bulkStatusAction}>
-              Apply
+              Apply status
             </SubmitButton>
             {isAdmin(user) ? (
               <SubmitButton
