@@ -7,8 +7,7 @@
  */
 export default function AdminLoading() {
   return (
-    <div className="vw-admin-loading px-6 py-10" role="status" aria-live="polite">
-      <span className="sr-only">Loading…</span>
+    <div className="vw-admin-loading px-6 py-10" role="status" aria-label="Loading admin page" aria-live="polite">
       <div className="mx-auto w-full max-w-5xl space-y-4">
         <div className="vw-skeleton h-8 w-64" />
         <div className="vw-skeleton h-4 w-96" />
