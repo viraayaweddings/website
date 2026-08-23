@@ -8,6 +8,11 @@
   "scripts": {
     "dev": "vinext dev",
     "build": "vinext build && node scripts/verify-vercel-output.mjs",
+    "vercel-build": "NITRO_PRESET=vercel npm run build && npm run db:deploy",
+    "db:deploy": "npm run db:migrate -- --if-configured && npm run pages:deploy && npm run templates:deploy && npm run stored:deploy",
+    "pages:deploy": "node --experimental-strip-types scripts/seed-static-pages.mjs --apply --if-configured",
+    "templates:deploy": "node --experimental-strip-types scripts/seed-page-templates.mjs --apply --if-configured",
+    "stored:deploy": "node --experimental-strip-types scripts/migrate-stored-pages.mjs --apply --if-configured",
     "start": "vinext start",
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "test:ci": "npm run test && npm run build",
