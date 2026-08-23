@@ -53,7 +53,16 @@ async function loadDashboard(db: Db, now: number) {
     db
       .select({
         total: sql<number>`count(*)`,
-        lastWeek: sql<number>`count(*) filter (where ${leads.createdAt} >= ${weekStart})`,
+        // `gte()` rather than `${leads.createdAt} >= ${weekStart}`.
+        //
+        // A value interpolated into a raw sql fragment is bound with no type
+        // information, so the Date reached postgres.js as a Date object and it
+        // threw ERR_INVALID_ARG_TYPE -- "the string argument must be of type
+        // string or an instance of Buffer". Going through the operator applies
+        // the column's own mapToDriverValue, which binds the ISO string the
+        // driver expects. The .where(gte(...)) calls below were always doing
+        // this; only the FILTER clauses bypassed it.
+        lastWeek: sql<number>`count(*) filter (where ${gte(leads.createdAt, weekStart)})`,
         unsent: sql<number>`count(*) filter (where ${leads.emailSent} = 0)`,
       })
       .from(leads),
