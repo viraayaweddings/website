@@ -242,7 +242,7 @@ input[type=button].btn--block {width: 100%;}
 /* START HEADER */
 .js-header {position: fixed; width: 100%; top: 0;background-color: #ffffff;z-index: 9999999;border-bottom: solid 1px #e6e6e6;}
 .js-header nav.navbar {padding: 0;}
-.js-header .navbar-brand {max-width: 158px;margin-right: 50px;}
+.js-header .navbar-brand {max-width: 158px;margin-right: 24px;}
 .js-header .navbar-brand img {width: auto;max-height: 92px;}
 .js-header .navbar .main-menu .nav-item .nav-link {color: #3A2D25;padding: 36px 15px;font-family: "Public Sans", sans-serif;font-weight: 600;font-size: 12px;text-transform: uppercase;}
 .js-header .navbar .main-menu .nav-item.dropdown:hover .dropdown-menu {display: block;}
