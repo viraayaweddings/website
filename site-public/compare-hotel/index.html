@@ -2270,6 +2270,10 @@ checkinPicker = flatpickr('#checkin', {
     maxDate: oneYearFromToday,
     disableMobile: true,
     onChange: function (selectedDates) {
+        // Clearing Check-In fires this with nothing selected; without this the
+        // handler builds an Invalid Date and feeds it to the check-out picker.
+        if (!selectedDates.length) return;
+
         const minCheckout = new Date(selectedDates[0]);
         minCheckout.setDate(minCheckout.getDate() + 1);
 
@@ -2302,7 +2306,7 @@ checkinPicker = flatpickr('#checkin', {
 
             if (!checkinVal) {
                 alert('Please select Check-In date first!');
-                checkoutPicker.clear();
+                checkoutPicker.clear(false);
                 return;
             }
 
@@ -2315,7 +2319,7 @@ checkinPicker = flatpickr('#checkin', {
 
             if (days < 1) {
                 alert('Check-Out must be after Check-In!');
-                checkoutPicker.clear();
+                checkoutPicker.clear(false);
                 totalDays = 1;
                 generateDays(1);
                 return;
@@ -2323,7 +2327,7 @@ checkinPicker = flatpickr('#checkin', {
 
             if (days > 3) {
                 alert('Maximum 3 nights allowed!');
-                checkoutPicker.clear();
+                checkoutPicker.clear(false);
                 totalDays = 1;
                 generateDays(1);
                 return;
@@ -2339,6 +2343,17 @@ checkinPicker = flatpickr('#checkin', {
 
 $(document).ready(function () {
 
+    // Cities that have at least one selectable hotel. Null until loaded, and
+    // left null if the request fails, in which case no filtering happens.
+    let comparableCities = null;
+    $.getJSON('/data/calculator/hotels-by-city.json')
+        .done(function (map) {
+            comparableCities = new Set(Object.keys(map || {}).filter(function (id) {
+                return (map[id] || []).length > 0;
+            }));
+        })
+        .fail(function () { comparableCities = null; });
+
     $('.city-select').each(function () {
         $(this).select2({
             placeholder: 'Search City',
@@ -2352,13 +2367,18 @@ $(document).ready(function () {
                     return { search: params.term };
                 },
                 processResults: function (data) {
+                    const usable = comparableCities
+                        ? data.filter(function (city) { return comparableCities.has(String(city.id)); })
+                        : data;
                     return {
-                        results: data.map(function (city) {
+                        results: usable.map(function (city) {
                             return { id: city.id, text: city.name };
                         })
                     };
                 },
-                cache: true
+                // Not cached: a search run before the map arrives would
+                // otherwise be remembered unfiltered.
+                cache: false
             }
         });
     });
@@ -2393,9 +2413,15 @@ $(document).ready(function () {
             type: 'GET',
             data: { city: cityId },
             success: function (data) {
-                hotelSel.empty().append('<option value="">Select Hotel</option>');
+                hotelSel.empty();
+                if (!data.length) {
+                    hotelSel.append('<option value="">No hotels listed for this city</option>');
+                    hotelSel.trigger('change.select2');
+                    return;
+                }
+                hotelSel.append('<option value="">Select Hotel</option>');
                 data.forEach(function (hotel) {
-                    hotelSel.append(new Option(hotel.hotel_name, hotel.id, false, false));
+                    hotelSel.append(new Option(hotel.hotel_name || hotel.name, hotel.id, false, false));
                 });
                 hotelSel.trigger('change.select2');
             },
@@ -2532,7 +2558,7 @@ function renderTable(hotelsData, selectedHotels) {
 
             const roomAmt   = parseFloat(price.room_price   || 0) * rooms;
             const lunchAmt  = parseFloat(price.lunch_price  || 0) * lunch;
-            const hiteaAmt  = parseFloat(price.hi_tea_price || 0) * hitea;
+            const hiteaAmt  = parseFloat(price.hitea_price || price.hi_tea_price || 0) * hitea;
             const dinnerAmt = parseFloat(price.dinner_price || 0) * dinner;
             const dayTotal  = roomAmt + lunchAmt + hiteaAmt + dinnerAmt;
 
