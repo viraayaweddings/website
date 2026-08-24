@@ -295,10 +295,10 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 /* The footer holds exactly one image -- the logo -- so this selector is
    unambiguous. Its markup carries width="140" from the original static site,
    which left it at 140x67 inside a 425px column. Set here rather than by
-   editing that attribute in 49 database rows and 292 files, and `height: auto`
-   keeps the ratio now that the artwork is cropped to 2.283:1. */
-.main-footer .widget img {width: 200px;height: auto;}
-.main-footer .widget > img {width: 140px;max-width: 100%;height: auto;}
+   editing that attribute in 49 database rows and 292 files. Note the child
+   combinator: a `.main-footer .widget img` rule has the same specificity and
+   would lose to this one on order. */
+.main-footer .widget > img {width: 200px;max-width: 100%;height: auto;}
 .main-footer .widget p {max-width: 400px; font-weight: 300;font-size: 13px;}
 .main-footer .widget .contact-us label {font-size: 22px;}
 .main-footer .widget .contact-us .social-icon li a {width: 40px;display: inline-block;text-align: center;font-size: 26px;color: #ffffff;padding-left: 0px;}
@@ -1690,7 +1690,7 @@ body .offcanvas.offcanvas-start {height: 100dvh;}
     .js-header .navbar.open .main-menu {top: 92px;height: calc(100dvh - 92px);}
     .js-header .navbar-brand {max-width: 72px;}
     .js-header .navbar-brand img {max-height: 60px;}
-    .main-footer .widget > img {width: 110px;}
+    .main-footer .widget > img {width: 150px;}
     .main-footer .widget h5 {font-size: 18px;line-height: 1.45;margin-bottom: 28px !important;}
     .main-footer .footer-link ul {flex-direction: column;align-items: center;gap: 8px !important;}
     .main-footer .footer-link .gap-4 {gap: 8px !important;}
