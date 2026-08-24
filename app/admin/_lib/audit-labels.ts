@@ -1,4 +1,17 @@
-/** Plain-language labels for audit_log.action values. */
+/**
+ * Plain-language labels for `audit_log.action` values.
+ *
+ * Every action `recordAudit` can write needs an entry. `humanAuditAction` does
+ * fall back to the verb after the dot, but that drops the object: eight actions
+ * were reaching the activity log through it, so `activity.deleted` printed as
+ * "Deleted" and `content.imported` as "Imported" -- in a column where the row
+ * beside them says "Article created", a bare verb reads as though something
+ * unnamed had gone. The fallback is for an action added and not yet labelled,
+ * not the normal path.
+ *
+ * `tests/audit-labels.test.mjs` fails when a `recordAudit` call names an action
+ * that is not in this map.
+ */
 
 const LABELS: Record<string, string> = {
   "user.login": "Signed in",
@@ -62,8 +75,16 @@ const LABELS: Record<string, string> = {
   "calculator.currency_bulk_deleted": "Currencies bulk deleted",
   "activity.pruned": "Activity log pruned",
   "activity.bulk_deleted": "Activity entries deleted",
+  "activity.deleted": "Activity entry deleted",
   "labels.updated": "Section headings updated",
   "settings.updated": "Contact details updated",
+  "content.imported": "Site content imported",
+  "page.created": "Page created",
+  "lead.exported": "Submissions exported",
+  "user.password_changed": "Own password changed",
+  "user.password_change_failed": "Own password change refused",
+  "user.profile_updated": "Own name changed",
+  "user.sessions_cleared": "Signed out everywhere",
 };
 
 export function humanAuditAction(action: string): string {
