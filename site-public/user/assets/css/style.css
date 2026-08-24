@@ -292,6 +292,12 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 
 /* START FOOTER */
 .main-footer {background-color: #3A2D25;position: relative;z-index: 9;}
+/* The footer holds exactly one image -- the logo -- so this selector is
+   unambiguous. Its markup carries width="140" from the original static site,
+   which left it at 140x67 inside a 425px column. Set here rather than by
+   editing that attribute in 49 database rows and 292 files, and `height: auto`
+   keeps the ratio now that the artwork is cropped to 2.283:1. */
+.main-footer .widget img {width: 200px;height: auto;}
 .main-footer .widget > img {width: 140px;max-width: 100%;height: auto;}
 .main-footer .widget p {max-width: 400px; font-weight: 300;font-size: 13px;}
 .main-footer .widget .contact-us label {font-size: 22px;}
