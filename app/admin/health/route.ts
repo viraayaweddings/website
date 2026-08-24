@@ -72,13 +72,28 @@ export async function GET(): Promise<Response> {
     const pendingMigrations = PG_MIGRATION_NAMES.filter((name) => !appliedNames.has(name));
 
     const ok = missingTables.length === 0 && pendingMigrations.length === 0;
+
+    // The exact table and migration names are diagnostic detail, same as the
+    // driver error below -- an anonymous caller gets whether the deployment is
+    // healthy, not the shape of what is wrong with it.
+    const user = ok ? null : await getCurrentUser().catch(() => null);
+    const detail =
+      ok || (user && isAdmin(user))
+        ? { schemaReady: present.has("users"), missingTables, pendingMigrations }
+        : {};
+
     return Response.json(
       {
         ok,
-        schemaReady: present.has("users"),
-        missingTables,
-        pendingMigrations,
-        ...(ok ? {} : { error: "The database schema is behind this deployment. Redeploy to apply migrations." }),
+        ...detail,
+        ...(ok
+          ? {}
+          : {
+              error:
+                user && isAdmin(user)
+                  ? "The database schema is behind this deployment. Redeploy to apply migrations."
+                  : "Database schema is not ready. Sign in as an admin here for the details.",
+            }),
       },
       { status: ok ? 200 : 500 },
     );

@@ -95,8 +95,15 @@ export function applyCalculatorHandlers(rewriter: HTMLRewriter, config: Calculat
 
   // Always, including when the load failed: the block carries the safety net
   // the page scripts need to render a summary at all.
+  //
+  // Guarded to fire once: a handful of shells carry a second, invalid `<head>`
+  // tag lower in the body (see the comment on appendJsonLd in json-ld.ts for
+  // why), and HTMLRewriter matches it just like the real one.
+  let appended = false;
   rewriter.on("head", {
     element(element) {
+      if (appended) return;
+      appended = true;
       element.append(configScript(config), { html: true });
     },
   });

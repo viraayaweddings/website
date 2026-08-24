@@ -128,11 +128,18 @@ try {
 
     const html = await readFile(file, "utf8");
     const title = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
-    const desc = html.match(/<meta\s+name=["']description["']\s+content=["']([\s\S]*?)["']/i);
+    // The closing delimiter has to be a backreference to whichever quote
+    // character opened `content=`, not just "a quote": every description here
+    // is `content="..."`, and a bare `["']` class stops at the FIRST quote of
+    // either kind -- which is the apostrophe in "Weddings'" or "venue's" long
+    // before the real end of the sentence. That silently truncated every
+    // description containing one, seeded into `static_pages` as a description
+    // a fraction of its real length.
+    const desc = html.match(/<meta\s+name=["']description["']\s+content=(["'])([\s\S]*?)\1/i);
     candidates.push({
       path,
       title: title ? decode(title[1]) : "",
-      meta_description: desc ? decode(desc[1]) : "",
+      meta_description: desc ? decode(desc[2]) : "",
       html,
       published: 1,
     });

@@ -20,6 +20,7 @@ import { applyHotelHandlers } from "./hotel-inject";
 import {
   appendJsonLd,
   articleJsonLd,
+  breadcrumbJsonLd,
   faqJsonLd,
   hotelJsonLd,
   organizationJsonLd,
@@ -166,9 +167,20 @@ export function injectManagedContent(
           const label = pendingLabel;
           pendingLabel = "";
 
-          if (label === "phone") element.setInnerContent(escapeHtml(values.phone));
-          else if (label === "email") element.setInnerContent(escapeHtml(values.email));
-          else if (label === "address") {
+          // Rendered as a real tel:/mailto: link, not plain text: a phone
+          // number a visitor cannot tap is a number they have to copy by hand.
+          if (label === "phone") {
+            const dialable = values.phone.replace(/[^\d+]/g, "");
+            element.setInnerContent(
+              `<a href="tel:${escapeHtml(dialable)}">${escapeHtml(values.phone)}</a>`,
+              { html: true },
+            );
+          } else if (label === "email") {
+            element.setInnerContent(
+              `<a href="mailto:${escapeHtml(values.email)}">${escapeHtml(values.email)}</a>`,
+              { html: true },
+            );
+          } else if (label === "address") {
             element.setInnerContent(values.addressLines.map(escapeHtml).join("<br>"), { html: true });
           }
         },
@@ -325,9 +337,15 @@ export function injectManagedContent(
     },
   });
 
+  // The catalogue is three levels deep (/destination-wedding/<city>/<hotel>)
+  // and had no breadcrumb markup anywhere; every piece of it is already in the
+  // path, so this costs nothing extra to derive per page.
+  const breadcrumbLeaf = input.blogPost?.heading || input.hotel?.name || undefined;
+
   const structuredData = [
     organizationJsonLd(values, siteOrigin),
     isHomepage(pathname) ? websiteJsonLd(siteOrigin) : null,
+    !isHomepage(pathname) ? breadcrumbJsonLd(pathname, siteOrigin, breadcrumbLeaf) : null,
     input.blogPost ? articleJsonLd(input.blogPost, siteOrigin) : null,
     input.blogPost ? faqJsonLd(input.blogPost.faqs) : null,
     input.hotel ? hotelJsonLd(input.hotel, siteOrigin) : null,

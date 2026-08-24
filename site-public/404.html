@@ -9,16 +9,57 @@
   <link href="/user/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="/user/assets/css/style.css" rel="stylesheet">
   <script src="/js/cookie-consent.js" defer></script>
+  <style>
+    /* A visitor who lands here had one way out before: a single button. The
+       links below are the same primary destinations as the site header, written
+       inline so this page stays independent of the shell and of JavaScript. */
+    .vw-404-nav{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;list-style:none;padding:0;margin:0}
+    .vw-404-nav a{display:inline-block;min-height:44px;min-width:44px;padding:.6rem 1rem;line-height:1.6;text-decoration:none}
+    .vw-404-search{display:flex;gap:.5rem;max-width:26rem;margin:0 auto}
+    .vw-404-search input{min-height:44px}
+    .vw-404-search button{min-height:44px;white-space:nowrap}
+  </style>
 </head>
 <body class="bg-light">
-  <main class="container py-5 text-center" style="min-height: 70vh;">
-    <p class="text-uppercase text-muted mb-2">404</p>
-    <h1 class="h2 mb-3">This page could not be found</h1>
-    <p class="text-muted mb-4">
-      The link may be out of date, or the page may have moved. Try the homepage or use the menu to find
-      destination wedding venues and planning guides.
-    </p>
-    <a class="btn btn-primary" href="/">Back to homepage</a>
+  <main id="main-content" class="container py-5" style="min-height: 70vh;">
+    <div class="text-center">
+      <p class="text-uppercase text-muted mb-2">404</p>
+      <h1 class="h2 mb-3">This page could not be found</h1>
+      <p class="text-muted mb-4">
+        The link may be out of date, or the page may have moved. Search for a venue below, or pick up
+        from one of the main sections.
+      </p>
+
+      <form class="vw-404-search mb-4" action="/hotel-listing" method="get" role="search">
+        <label class="visually-hidden" for="vw-404-q">Search wedding venues</label>
+        <input class="form-control" id="vw-404-q" type="search" name="city_search"
+               placeholder="Search a city or venue" autocomplete="off">
+        <button class="btn btn-primary" type="submit">Search venues</button>
+      </form>
+
+      <nav aria-label="Main sections">
+        <ul class="vw-404-nav mb-4">
+          <li><a href="/">Home</a></li>
+          <li><a href="/wedding-packages">Wedding packages</a></li>
+          <li><a href="/hotel-listing">Hotels</a></li>
+          <li><a href="/real-weddings">Real weddings</a></li>
+          <li><a href="/blogs">Blogs</a></li>
+          <li><a href="/about-us">About us</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <p class="mb-0">
+        <a class="btn btn-primary" href="/">Back to homepage</a>
+        <a class="btn btn-outline-secondary" href="/wedding-consultation/">Book a consultation</a>
+      </p>
+      <p class="text-muted mt-4 mb-0">
+        Prefer to talk? Call
+        <a href="tel:+918130222141">+91 81302 22141</a>
+        or email
+        <a href="mailto:support@viraayaweddings.com">support@viraayaweddings.com</a>.
+      </p>
+    </div>
   </main>
 </body>
 </html>

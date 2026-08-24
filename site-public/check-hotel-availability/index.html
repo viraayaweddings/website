@@ -2002,7 +2002,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                 </div>
 
                 
-                <div id="booking-form-section" style="display:none;">
+                <form id="booking-form-section" novalidate onsubmit="return false;" style="display:none;">
                     <div class="text-center mt-4" data-aos="fade-up">
                         <h4 class="all-heading font-family01 fs-30 fw-100 text-maroon-900 mb-3">
                             Submit <span class="fw-600 text-primary">Availability Request</span>
@@ -2081,7 +2081,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                             <button type="button" id="submit-availability-btn" class="btn btn-primary w-50">BOOK NOW</button>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

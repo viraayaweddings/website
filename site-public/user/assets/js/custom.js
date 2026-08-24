@@ -114,8 +114,8 @@ $(".menu-btn").click(function () {
     slidesToScroll: 1,
     dots: true,
     arrows: false,
-    prevArrow:"<button type='button' class='prev custom-arrow'><i class='fa-light fa-angle-left'></i></button>",
-    nextArrow: "<button type='button' class='next custom-arrow'><i class='fa-light fa-angle-right'></i></button>",
+    prevArrow:"<button type='button' class='prev custom-arrow' aria-label='Previous slide'><i class='fa-light fa-angle-left'></i></button>",
+    nextArrow: "<button type='button' class='next custom-arrow' aria-label='Next slide'><i class='fa-light fa-angle-right'></i></button>",
     centerPadding: '50px',  // Space on the sides to show part of the next slide
     autoplay: true,
     autoplaySpeed: 2000,
@@ -252,8 +252,8 @@ initSlick($slider, {
   centerMode: slideCount > 3 ? true : false,
   centerPadding: '0px',
 
-  prevArrow:"<button type='button' class='prev custom-arrow'><i class='fa-light fa-angle-left'></i></button>",
-  nextArrow:"<button type='button' class='next custom-arrow'><i class='fa-light fa-angle-right'></i></button>",
+  prevArrow:"<button type='button' class='prev custom-arrow' aria-label='Previous slide'><i class='fa-light fa-angle-left'></i></button>",
+  nextArrow:"<button type='button' class='next custom-arrow' aria-label='Next slide'><i class='fa-light fa-angle-right'></i></button>",
 
   responsive: [
     {
@@ -326,8 +326,8 @@ initSlick($slider, {
     autoplay: true,
     centerPadding: '0px',
     autoplaySpeed: 2000,
-    prevArrow:"<button type='button' class='prev custom-arrow'><i class='fa-light fa-angle-left'></i></button>",
-    nextArrow: "<button type='button' class='next custom-arrow'><i class='fa-light fa-angle-right'></i></button>",
+    prevArrow:"<button type='button' class='prev custom-arrow' aria-label='Previous slide'><i class='fa-light fa-angle-left'></i></button>",
+    nextArrow: "<button type='button' class='next custom-arrow' aria-label='Next slide'><i class='fa-light fa-angle-right'></i></button>",
     responsive: [
     {
       breakpoint: 1200, // mobile
@@ -353,8 +353,8 @@ initSlick($slider, {
     slidesToScroll: 1,
     dots: true,
     arrows: true,
-    prevArrow:"<button type='button' class='prev custom-arrow'><i class='fa-light fa-angle-left'></i></button>",
-    nextArrow: "<button type='button' class='next custom-arrow'><i class='fa-light fa-angle-right'></i></button>",
+    prevArrow:"<button type='button' class='prev custom-arrow' aria-label='Previous slide'><i class='fa-light fa-angle-left'></i></button>",
+    nextArrow: "<button type='button' class='next custom-arrow' aria-label='Next slide'><i class='fa-light fa-angle-right'></i></button>",
     responsive: [
     {
       breakpoint: 992, // mobile
@@ -394,8 +394,8 @@ initSlick($slider, {
     centerMode: false,
     variableWidth: false,
     autoplaySpeed: 2000,
-    prevArrow:"<button type='button' class='prev custom-arrow'><i class='fa-light fa-angle-left'></i></button>",
-    nextArrow:"<button type='button' class='next custom-arrow'><i class='fa-light fa-angle-right'></i></button>",
+    prevArrow:"<button type='button' class='prev custom-arrow' aria-label='Previous slide'><i class='fa-light fa-angle-left'></i></button>",
+    nextArrow:"<button type='button' class='next custom-arrow' aria-label='Next slide'><i class='fa-light fa-angle-right'></i></button>",
     responsive: [
       {
         breakpoint: 1200,
@@ -427,8 +427,8 @@ function initProductSlider($el) {
     centerMode: false,
     variableWidth: false,
     autoplaySpeed: 2000,
-    prevArrow:"<button type='button' class='prev custom-arrow'><i class='fa-light fa-angle-left'></i></button>",
-    nextArrow:"<button type='button' class='next custom-arrow'><i class='fa-light fa-angle-right'></i></button>",
+    prevArrow:"<button type='button' class='prev custom-arrow' aria-label='Previous slide'><i class='fa-light fa-angle-left'></i></button>",
+    nextArrow:"<button type='button' class='next custom-arrow' aria-label='Next slide'><i class='fa-light fa-angle-right'></i></button>",
     responsive: [
       {
         breakpoint: 1200,
@@ -488,8 +488,8 @@ $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
     autoplay: true,
     centerPadding: '0px',
     autoplaySpeed: 2000,
-    prevArrow:"<button type='button' class='prev custom-arrow'><i class='fa-light fa-angle-left'></i></button>",
-    nextArrow: "<button type='button' class='next custom-arrow'><i class='fa-light fa-angle-right'></i></button>",
+    prevArrow:"<button type='button' class='prev custom-arrow' aria-label='Previous slide'><i class='fa-light fa-angle-left'></i></button>",
+    nextArrow: "<button type='button' class='next custom-arrow' aria-label='Next slide'><i class='fa-light fa-angle-right'></i></button>",
     responsive: [
     {
       breakpoint: 1200, // mobile
@@ -524,8 +524,8 @@ $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
     autoplay: true,
     centerPadding: '0px',
     autoplaySpeed: 2000,
-    prevArrow:"<button type='button' class='prev custom-arrow'><i class='fa-light fa-angle-left'></i></button>",
-    nextArrow: "<button type='button' class='next custom-arrow'><i class='fa-light fa-angle-right'></i></button>",
+    prevArrow:"<button type='button' class='prev custom-arrow' aria-label='Previous slide'><i class='fa-light fa-angle-left'></i></button>",
+    nextArrow: "<button type='button' class='next custom-arrow' aria-label='Next slide'><i class='fa-light fa-angle-right'></i></button>",
      
   });
   

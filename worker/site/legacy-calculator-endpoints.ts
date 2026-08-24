@@ -116,15 +116,27 @@ function monthName(value: string): string | null {
 /**
  * GET /get-hotel-price/<hotelId>/<Month>
  *
- * The hotel detail calculator sends the check-in month's English long name. A
- * hotel with no price for that month answers with zeroes, which is what its
- * error branch already falls back to -- a 404 would only make the same total.
+ * The hotel detail calculator sends the check-in month's English long name.
+ * A *known* hotel with no rate configured for that month answers with
+ * zeroes -- that is a legitimate "not priced yet" state and the page has
+ * always treated it that way.
+ *
+ * A hotel *id that does not exist* is a different problem: a retired venue,
+ * a drifted id, a typo. Answering that with the same zeroes as "no rate this
+ * month" used to have the calculator confidently total a ₹0 wedding instead
+ * of surfacing the error, which is worse than showing nothing.
  */
 export async function getHotelPrice(hotelId: string, month: string): Promise<Response> {
+  const id = String(hotelId).trim();
+  const { prices, hotels } = await dataset();
+
+  if (!hotels.some((hotel) => String(hotel.id) === id)) {
+    return json({ error: "Unknown hotel." }, 404);
+  }
+
   const resolved = monthName(month);
   if (!resolved) return json(EMPTY_PRICE);
-  const { prices } = await dataset();
-  return json(prices[String(hotelId).trim()]?.[resolved] ?? EMPTY_PRICE);
+  return json(prices[id]?.[resolved] ?? EMPTY_PRICE);
 }
 
 /** Parses `checkin` as flatpickr writes it on /compare-hotel: DD-MM-YYYY. */

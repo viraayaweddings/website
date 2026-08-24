@@ -1,9 +1,14 @@
 User-agent: *
 Allow: /
 
+# `/admin/` alone leaves the bare `/admin` path crawlable, which answers 200.
+Disallow: /admin
 Disallow: /admin/
+Disallow: /appointment/confirmation/
+Disallow: /appointment/request-failed/
 Disallow: /appointment/payment-success/
 Disallow: /appointment/payment-failed/
 Disallow: /appointment-booking/
 
-Sitemap: /sitemap.xml
+# Must be absolute. A relative value here is ignored by every major crawler.
+Sitemap: https://viraayaweddings.com/sitemap.xml
