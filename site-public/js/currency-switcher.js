@@ -342,10 +342,18 @@ const ViraayaCalculatorData = (() => {
         return 'January';
     }
 
-    function jsonResponse(data) {
+    function jsonResponse(data, status) {
         return new Response(JSON.stringify(data), {
+            status: status || 200,
             headers: { 'content-type': 'application/json; charset=utf-8' },
         });
+    }
+
+    /** `getHotelPrice`'s null (unknown hotel) as the same shape /get-hotel-price/ itself 404s with. */
+    function hotelPriceResponse(price) {
+        return price === null
+            ? jsonResponse({ error: 'Unknown hotel.' }, 404)
+            : jsonResponse(price);
     }
 
     async function getCurrencies() {
@@ -365,9 +373,26 @@ const ViraayaCalculatorData = (() => {
         return hotelsByCity[String(cityId)] || [];
     }
 
+    /**
+     * True when `hotelId` is a real, current hotel -- distinct from
+     * `hasRates`, which asks whether it has ever been priced. A hotel that
+     * exists but has no rate for one particular month is a legitimate
+     * "not priced yet" state; a hotel id that matches nothing is a retired
+     * venue, a drifted id, or a typo, and answering both the same way is how
+     * this used to quote a confident ₹0 for a hotel that no longer exists.
+     */
+    function hotelExists(hotelsByCity, hotelId) {
+        const id = String(hotelId);
+        return Object.values(hotelsByCity || {}).some(function (hotels) {
+            return hotels.some(function (hotel) { return String(hotel.id) === id; });
+        });
+    }
+
+    /** Resolves to the price, or null when `hotelId` does not name a real hotel. */
     async function getHotelPrice(hotelId, month) {
-        const prices = (await loadCalculatorData()).prices || {};
-        return normalizePrice((prices[String(hotelId)] || {})[month]);
+        const data = await loadCalculatorData();
+        if (!hotelExists(data.hotelsByCity, hotelId)) return null;
+        return normalizePrice((data.prices || {})[String(hotelId)]?.[month]);
     }
 
     async function getHotelPrices(hotelIds, checkin) {
@@ -436,7 +461,7 @@ const ViraayaCalculatorData = (() => {
                 }
                 if (url.pathname.startsWith('/get-hotel-price/')) {
                     const [, hotelId = '', month = ''] = url.pathname.split('/').filter(Boolean).map(decodeURIComponent);
-                    return getHotelPrice(hotelId, month).then(jsonResponse);
+                    return getHotelPrice(hotelId, month).then(hotelPriceResponse);
                 }
             }
             return originalFetch(input, init);
@@ -489,7 +514,14 @@ const ViraayaCalculatorData = (() => {
                 localPromise = getHotelsByCity(cityId);
             } else if (url.pathname.startsWith('/get-hotel-price/')) {
                 const [, hotelId = '', month = ''] = url.pathname.split('/').filter(Boolean).map(decodeURIComponent);
-                localPromise = getHotelPrice(hotelId, month);
+                // jQuery has no status code to carry the "unknown hotel" signal on,
+                // the way the fetch path answers with a 404 -- so it is carried as
+                // a rejection instead, which reaches the caller's error: callback
+                // the same way a real HTTP error would.
+                localPromise = getHotelPrice(hotelId, month).then(price => {
+                    if (price === null) throw new Error('Unknown hotel.');
+                    return price;
+                });
             } else if (url.pathname === '/get-hotel-prices') {
                 const data = options.data || {};
                 localPromise = getHotelPrices(data.hotel_ids || data.hotelIds || data['hotel_ids[]'] || [], data.checkin);
