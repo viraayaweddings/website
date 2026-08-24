@@ -242,7 +242,7 @@ input[type=button].btn--block {width: 100%;}
 /* START HEADER */
 .js-header {position: fixed; width: 100%; top: 0;background-color: #ffffff;z-index: 9999999;border-bottom: solid 1px #e6e6e6;}
 .js-header nav.navbar {padding: 0;}
-.js-header .navbar-brand {max-width: 135px;margin-right: 50px;}
+.js-header .navbar-brand {max-width: 158px;margin-right: 50px;}
 .js-header .navbar-brand img {width: auto;max-height: 92px;}
 .js-header .navbar .main-menu .nav-item .nav-link {color: #3A2D25;padding: 36px 15px;font-family: "Public Sans", sans-serif;font-weight: 600;font-size: 12px;text-transform: uppercase;}
 .js-header .navbar .main-menu .nav-item.dropdown:hover .dropdown-menu {display: block;}
@@ -1352,7 +1352,7 @@ body .offcanvas.offcanvas-start {width: 100% !important;min-width: auto;border-r
     .js-header nav.navbar > .d-flex {gap: 34px;}
 }
 @media only screen and (max-width: 1200px) {
-    .js-header .navbar-brand {max-width: 120px;}
+    .js-header .navbar-brand {max-width: 140px;}
     .js-header .navbar .main-menu .nav-item .nav-link {padding: 36px 12px;}
     .day-section .form-control {padding: 0px 6px !important; font-size: 11px !important;}
 }
@@ -1367,7 +1367,7 @@ body .offcanvas.offcanvas-start {width: 100% !important;min-width: auto;border-r
 }
 @media only screen and (max-width: 992px) {
 .js-header nav.navbar {display: flex;flex-wrap: initial;justify-content: space-between;padding: 18px 0px;}
-.js-header .navbar-brand {max-width: 78px;}
+.js-header .navbar-brand {max-width: 88px;}
 .js-header .navbar-brand img {max-height: 64px;}
 .js-header .navbar .main-menu {max-width: 100%;width: 100%;position: fixed;background-color: #ffffff;border-top: solid 1px #e9e9e9;right: 0;transform: translateY(-100%);transition: all 0.5s ease;z-index: -1;top: 0px;padding-top: 10px;}
 .js-header .navbar.open .main-menu {transform: translateY(0);overflow: auto; top: 100px;height: calc(100vh - 100px);}
@@ -1451,7 +1451,7 @@ html, body {margin-top: 36px;}
 }
 
 @media only screen and (max-width: 767.98px) {
-.js-header .navbar-brand {max-width: 78px;}
+.js-header .navbar-brand {max-width: 88px;}
 .banner-wrapper .item .widget h1 {font-size: 38px;}
 .luxury-venues-wrapper .content-widget .content h2 {font-size: 30px;}
 .luxury-venues-wrapper .widget .search-box {width: 100% !important;}
