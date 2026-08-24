@@ -29,16 +29,24 @@
     /**
      * Checkbox value to the tag stored on a venue.
      *
-     * Injected as window.__VIRAAYA_LISTING__ by
-     * worker/site/venue-listing-inject.ts, from `venue_types` -- the same rows
-     * that render the checkboxes themselves and populate the tag list on the
-     * venue form. This file used to carry its own copy of the six, so adding a
-     * type meant editing the table, this map and 54 pages of markup.
+     * Read from a `type="application/json"` block worker/site/venue-listing-inject.ts
+     * writes into the page, built from `venue_types` -- the same rows that
+     * render the checkboxes themselves and populate the tag list on the venue
+     * form. This file used to carry its own copy of the six, so adding a type
+     * meant editing the table, this map and 54 pages of markup. It is data
+     * rather than an executing `window.__VIRAAYA_LISTING__=...` assignment
+     * because CSP's `script-src` has no way to allow-list content that
+     * changes with the venue-type list; data blocks aren't covered by it at all.
      *
      * Empty when the injection has not run. The checkboxes are injected from
      * the same place, so there is then nothing checked to look up.
      */
-    const weddingTypes = (window.__VIRAAYA_LISTING__ && window.__VIRAAYA_LISTING__.weddingTypes) || {};
+    const listingConfigEl = document.getElementById('viraaya-listing-config');
+    let listingConfig = null;
+    if (listingConfigEl) {
+        try { listingConfig = JSON.parse(listingConfigEl.textContent); } catch (e) { listingConfig = null; }
+    }
+    const weddingTypes = (listingConfig && listingConfig.weddingTypes) || {};
 
     function selectedValues(name) {
         return qsa(`input[name="${name}"]:checked`).map((input) => input.value);

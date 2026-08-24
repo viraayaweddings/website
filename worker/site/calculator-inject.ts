@@ -36,6 +36,16 @@ function cityOptionsHtml(config: CalculatorConfig): string {
  *
  * Serialised with JSON.stringify and with `<` escaped: a city named with a
  * stray "</script>" would otherwise close the block and put markup on the page.
+ *
+ * The data lives in a `type="application/json"` block rather than an
+ * executing `window.__VIRAAYA_CALC__=...` assignment. CSP's `script-src`
+ * governs code, not data -- a `text/javascript` block carrying this same JSON
+ * would need every admin-edited combination of cities/taxes/currencies
+ * individually allow-listed by hash, which defeats hash-based CSP entirely.
+ * Marking it as data instead of code means it needs no hash at all;
+ * currency-switcher.js reads it with `JSON.parse(el.textContent)`.
+ * `TAX_SAFETY_NET` stays a real, executing script -- its content never
+ * changes, so it hashes once and stays valid.
  */
 function configScript(config: CalculatorConfig): string {
   const payload = {
@@ -45,7 +55,10 @@ function configScript(config: CalculatorConfig): string {
     loaded: config.loaded,
   };
   const json = JSON.stringify(payload).replace(/</g, "\\u003c");
-  return `<script id="viraaya-calculator-config">window.__VIRAAYA_CALC__=${json};${TAX_SAFETY_NET}</script>`;
+  return (
+    `<script type="application/json" id="viraaya-calculator-config">${json}</script>` +
+    `<script id="viraaya-calculator-tax-safety-net">${TAX_SAFETY_NET}</script>`
+  );
 }
 
 /**

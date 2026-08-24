@@ -32,8 +32,13 @@ function configScript(types: VenueTypeOption[]): string {
   const weddingTypes: Record<string, string> = {};
   for (const type of types) weddingTypes[String(type.id)] = type.slug;
 
+  // `type="application/json"` rather than an executing assignment: this
+  // changes with the venue-type list an admin edits, and CSP's `script-src`
+  // has no way to allow-list content that varies -- a data block needs no
+  // hash at all, since script-src doesn't govern it. hotel-listing.js reads
+  // it with `JSON.parse(el.textContent)`.
   const json = JSON.stringify({ weddingTypes }).replace(/</g, "\\u003c");
-  return `<script id="viraaya-listing-config">window.__VIRAAYA_LISTING__=${json};</script>`;
+  return `<script type="application/json" id="viraaya-listing-config">${json}</script>`;
 }
 
 /**

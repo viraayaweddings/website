@@ -150,9 +150,29 @@ function formatIndianPrice(amount, symbol) {
  * the one thing this must not do: it is the behaviour we are removing, and a
  * wrong total presented confidently is worse than an honest partial one.
  * ------------------------------------------------------------------------ */
+/**
+ * Reads the calculator config `worker/site/calculator-inject.ts` writes into
+ * the page. It's a `type="application/json"` data block, not an executing
+ * `window.__VIRAAYA_CALC__=...` assignment -- CSP's `script-src` has no way
+ * to allow-list content that changes with every admin edit to cities, taxes
+ * or currencies, so it isn't code at all. Cached after the first read since
+ * the element's content never changes within a page load.
+ */
+let viraayaCalcConfigCache;
+function readViraayaCalcConfig() {
+    if (viraayaCalcConfigCache !== undefined) return viraayaCalcConfigCache;
+    const el = document.getElementById('viraaya-calculator-config');
+    try {
+        viraayaCalcConfigCache = el ? JSON.parse(el.textContent) : null;
+    } catch (e) {
+        viraayaCalcConfigCache = null;
+    }
+    return viraayaCalcConfigCache;
+}
+
 const ViraayaTax = (() => {
     function rows() {
-        const config = window.__VIRAAYA_CALC__;
+        const config = readViraayaCalcConfig();
         if (!config || !Array.isArray(config.taxes)) return null;
         return config.taxes
             .map(function (tax) {

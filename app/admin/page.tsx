@@ -23,6 +23,25 @@ import { currentTime } from "./_lib/clock";
 import { isAdmin, requireDb, requireUser } from "./_lib/auth";
 import { adminDatabaseMessage, logDatabaseError } from "./_lib/db-errors";
 
+/**
+ * Runs the auth check before the page body does.
+ *
+ * `/admin` is the only page in the panel that sits directly beside
+ * `loading.tsx` -- every other admin route inherits it from here. That
+ * sibling relationship makes the framework commit to the loading skeleton
+ * and a 200 status before `requireUser()`'s redirect() inside the page body
+ * below gets a chance to run, so an unauthenticated visitor got a blank,
+ * unstyled shell instead of ever reaching the login page. generateMetadata
+ * runs before the page enters that boundary, so the same redirect from here
+ * lands as a real one. (`requireUser` runs twice on a signed-in load as a
+ * result -- once here, once in the page body below -- both cheap, and the
+ * alternative is the visitor never reaching the sign-in page at all.)
+ */
+export async function generateMetadata() {
+  await requireUser("/admin");
+  return {};
+}
+
 const WINDOW_DAYS = 14;
 const IST_OFFSET_MS = 5.5 * 60 * 60 * 1000;
 
