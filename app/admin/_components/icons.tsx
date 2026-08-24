@@ -88,27 +88,49 @@ export function Icon({
 }
 
 /**
- * The brand mark: drawn rather than fetched, so it needs no image request and
- * inherits the accent in both themes.
+ * The brand mark: the arch from the Viraaya lockup.
+ *
+ * This used to draw a gradient tile with the letter V in it, which needed no
+ * image request -- a fair trade while the panel had no real mark to show. It
+ * has one now, and a panel branded differently from the site it edits is its
+ * own small confusion, so this is the arch itself.
+ *
+ * The 180px asset rather than the 512px one behind the favicon: the largest
+ * this renders is 48, and 24KB against 133KB matters more than resolution
+ * nobody sees. Content-addressed under /media, so it is cached immutably and
+ * `img-src 'self'` in the admin CSP already covers it.
+ *
+ * On a light tile rather than the accent gradient, because the arch is gold
+ * line-art -- gold on the gold accent had nothing to separate the two. The tile
+ * keeps the mark legible on the dark side rail as well as the light login page,
+ * and keeps the block of brand presence the gradient gave it.
  */
+const MARK_SRC = "/media/30b5ec718ce0ba4ab576817437ab788a89ff7a53f722b2882c6ff3ee82d19a66.png";
+
 export function Monogram({ size = 32, prominent }: { size?: number; prominent?: boolean }) {
   return (
     <span
-      className="grid flex-none place-items-center font-semibold"
+      className="grid flex-none place-items-center overflow-hidden"
       style={{
         width: size,
         height: size,
         borderRadius: prominent ? size * 0.32 : 8,
-        background: "linear-gradient(145deg, var(--accent) 0%, var(--accent-strong) 100%)",
-        color: "var(--accent-ink)",
-        fontFamily: "var(--font-display)",
-        fontSize: size * 0.5,
-        letterSpacing: "-0.02em",
+        background: "var(--surface)",
+        border: "1px solid var(--line)",
         boxShadow: prominent ? "var(--shadow-2)" : undefined,
       }}
       aria-hidden="true"
     >
-      V
+      {/* Plain img: this comes from R2, not the asset pipeline. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={MARK_SRC}
+        alt=""
+        width={Math.round(size * 0.78)}
+        height={Math.round(size * 0.78)}
+        style={{ display: "block", objectFit: "contain" }}
+        decoding="async"
+      />
     </span>
   );
 }

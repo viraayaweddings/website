@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-const FAVICON = "/media/legacy/af6f76baa9648820.png";
+const FAVICON = "/media/5855c8a4285f95d0b8a6208bd00c987d0d21885a242c42fd9b3da3ad1881fa9d.png";
 
 export const metadata: Metadata = {
   title: "Luxury Destination Wedding Venue in India by Viraaya Weddings",

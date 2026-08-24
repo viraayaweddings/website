@@ -36,7 +36,7 @@ function absolute(origin: string, path: string): string {
  * if the logo file itself does -- and the file is not something the panel
  * edits.
  */
-const LOGO_PATH = "/media/legacy/9ec389ce6da07c48.png";
+const LOGO_PATH = "/media/42da0fe0873624df76066e15bf7632b7656368f5cecefe5f18a74fddd75794e4.png";
 
 /**
  * Splits the stored address lines into the fields a PostalAddress actually has.
