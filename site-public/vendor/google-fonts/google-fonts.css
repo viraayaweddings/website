@@ -10,77 +10,77 @@
   font-style: italic;
   font-weight: 200;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-1.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-0.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: italic;
   font-weight: 300;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-2.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-0.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-3.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-0.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: italic;
   font-weight: 500;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-4.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-0.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: italic;
   font-weight: 600;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-5.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-0.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: italic;
   font-weight: 700;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-6.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-0.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: italic;
   font-weight: 800;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-7.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-0.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: italic;
   font-weight: 900;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-8.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-0.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 100;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-9.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-12.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 200;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-10.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-12.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-11.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-12.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
@@ -94,35 +94,35 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-13.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-12.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-14.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-12.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-15.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-12.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-16.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-12.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 900;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-17.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-12.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
@@ -136,56 +136,56 @@
   font-style: italic;
   font-weight: 200;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-19.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-18.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
   font-style: italic;
   font-weight: 300;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-20.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-18.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-21.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-18.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
   font-style: italic;
   font-weight: 500;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-22.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-18.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
   font-style: italic;
   font-weight: 600;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-23.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-18.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
   font-style: italic;
   font-weight: 700;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-24.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-18.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
   font-style: italic;
   font-weight: 800;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-25.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-18.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
   font-style: italic;
   font-weight: 900;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-26.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-18.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
@@ -199,84 +199,84 @@
   font-style: normal;
   font-weight: 200;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-28.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-27.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-29.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-27.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-30.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-27.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-31.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-27.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-32.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-27.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-33.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-27.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-34.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-27.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Public Sans';
   font-style: normal;
   font-weight: 900;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-35.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-27.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Readex Pro';
   font-style: normal;
   font-weight: 200;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-36.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-40.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Readex Pro';
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-37.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-40.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Readex Pro';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-38.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-40.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Readex Pro';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-39.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-40.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Readex Pro';
@@ -290,7 +290,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(/vendor/google-fonts/font-41.woff2) format('woff2');
+  src: url(/vendor/google-fonts/font-40.woff2) format('woff2');
 }
 
 
