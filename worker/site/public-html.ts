@@ -92,18 +92,22 @@ const GO_TOP_BUTTON = /<button\s+id="goTop"(?![^>]*\btype=)/i;
 const LOGO_LINK = /(<div class="navbar-brand p-0">\s*<a )(href="\/")(>)/i;
 
 /**
- * The mega-menu's per-city labels and its "Hotels" column header.
+ * The mega-menu's per-city labels, its "Hotels" column header, and the
+ * "Luxury Experience" caption on its promotional image panel.
  *
- * Both are `<h6>` in the source, and the panel is present (if hidden) in every
- * page's DOM, so its 18 labels front-load the document outline before any
- * real content heading appears. Neither is a heading in the document-structure
- * sense -- they are labels inside a nav widget -- so they are demoted to
- * `<div>` with the same classes; nothing about how they render changes.
+ * All three are headings in the source (two <h6>, one <h5>), and the panel is
+ * present (if hidden) in every page's DOM, so its 19 labels front-load the
+ * document outline before any real content heading appears. None is a
+ * heading in the document-structure sense -- they are labels inside a nav
+ * widget -- so they are demoted to `<div>`/`<span>` with the same classes;
+ * nothing about how they render changes.
  */
 const MEGAMENU_HOTELS_LABEL =
   /<h6([^>]*\bclass="text-prime-dark mb-3"[^>]*)>([\s\S]*?)<\/h6>/gi;
 const MEGAMENU_CITY_LABEL =
   /<h6([^>]*\bclass="fw-regular text-prime small text-uppercase pt-1 mb-0"[^>]*)>([\s\S]*?)<\/h6>/gi;
+const MEGAMENU_PROMO_LABEL =
+  /<h5([^>]*\bclass="text-white fw-regular mb-1"[^>]*)>([\s\S]*?)<\/h5>/gi;
 
 /** Any `<img>` whose `src` names a `/media/<key>` file, tag-boundary aware. */
 const MEDIA_IMG_TAG = /<img\b[^>]*\bsrc="\/media\/([^"?#]+)[^"]*"[^>]*>/gi;
@@ -296,6 +300,7 @@ function injectEnhancements(html: string, pathname: string): string {
   next = next.replace(LOGO_LINK, '$1$2 aria-label="Viraaya Weddings — home"$3');
   next = next.replace(MEGAMENU_HOTELS_LABEL, "<div$1>$2</div>");
   next = next.replace(MEGAMENU_CITY_LABEL, "<div$1>$2</div>");
+  next = next.replace(MEGAMENU_PROMO_LABEL, "<span$1>$2</span>");
   next = addFieldAccessibility(next);
   next = next.replace(DEPRECATED_FORM_ACTION, 'action="/api/lead"');
 
