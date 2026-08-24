@@ -362,42 +362,13 @@ export function DetailList({ rows }: { rows: { label: string; value: React.React
   );
 }
 
-/** Consistent, timezone-explicit formatting for IST-based operations. */
-export function formatDateTime(value: Date | number | null): string {
-  if (value === null) return "—";
-  const date = value instanceof Date ? value : new Date(value);
-  if (Number.isNaN(date.getTime())) return "—";
-
-  return new Intl.DateTimeFormat("en-IN", {
-    dateStyle: "medium",
-    timeStyle: "short",
-    timeZone: "Asia/Kolkata",
-  }).format(date);
-}
-
 /**
- * "3 hours ago" for anything recent, falling back to a date. Computed against a
- * caller-supplied `now` so a server component stays pure.
+ * Date and time formatting lives in `../_lib/dates`, re-exported here so every
+ * page keeps importing it from one place. It is a separate module because this
+ * file contains JSX, which `node --experimental-strip-types` cannot strip, so a
+ * test cannot import it -- see `tests/admin-dates.test.mjs`.
  */
-export function formatRelative(value: Date | number | null, now: number): string {
-  if (value === null) return "—";
-  const date = value instanceof Date ? value : new Date(value);
-  const ms = date.getTime();
-  if (Number.isNaN(ms)) return "—";
-
-  const seconds = Math.round((now - ms) / 1000);
-  if (seconds < 45) return "just now";
-  if (seconds < 5400) {
-    const minutes = Math.round(seconds / 60);
-    return minutes < 60 ? `${minutes} min ago` : "an hour ago";
-  }
-  const hours = Math.round(seconds / 3600);
-  if (hours < 24) return `${hours} hours ago`;
-  const days = Math.round(hours / 24);
-  if (days < 8) return days === 1 ? "yesterday" : `${days} days ago`;
-
-  return new Intl.DateTimeFormat("en-IN", { dateStyle: "medium", timeZone: "Asia/Kolkata" }).format(date);
-}
+export { formatDate, formatDateTime, formatRelative, formatStoredTimestamp } from "../_lib/dates";
 
 export function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;

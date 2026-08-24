@@ -18,6 +18,7 @@ import {
   StatusBadge,
   formatDateTime,
   formatRelative,
+  formatStoredTimestamp,
 } from "../../_components/ui";
 import { currentTime } from "../../_lib/clock";
 import { humanAuditAction } from "../../_lib/audit-labels";
@@ -40,6 +41,7 @@ function parseRecord(value: string): Record<string, string> {
     return {};
   }
 }
+
 
 export default async function LeadDetailPage({
   params,
@@ -159,7 +161,7 @@ export default async function LeadDetailPage({
                 <DetailList
                   rows={Object.entries(metadata).map(([key, value]) => ({
                     label: humanFieldLabel(key),
-                    value: value || "—",
+                    value: formatStoredTimestamp(value) || "—",
                   }))}
                 />
               )}

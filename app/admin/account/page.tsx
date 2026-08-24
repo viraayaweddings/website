@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 import { MIN_PASSWORD_LENGTH } from "@/worker/admin/password";
 import { AdminShell } from "../_components/AdminShell";
 import { SubmitButton } from "../_components/FormControls";
-import { Card, CardHead, DetailList, Field } from "../_components/ui";
+import { Card, CardHead, DetailList, Field, formatDateTime } from "../_components/ui";
 import { requireUser } from "../_lib/auth";
 import {
   changeOwnPasswordAction,
@@ -27,12 +27,6 @@ export default async function AccountPage({
   const user = await requireUser("/admin/account");
   await searchParams; // The shell's toast reads these straight from the URL.
 
-  const formatter = new Intl.DateTimeFormat("en-IN", {
-    dateStyle: "medium",
-    timeStyle: "short",
-    timeZone: "Asia/Kolkata",
-  });
-
   return (
     <AdminShell user={user} title="Your account" subtitle="Your name, your password, and where you are signed in.">
       <div className="grid gap-4 lg:grid-cols-2">
@@ -45,7 +39,7 @@ export default async function AccountPage({
                 { label: "Role", value: user.role === "admin" ? "Admin" : "Editor" },
                 {
                   label: "Last signed in",
-                  value: user.lastLoginAt ? formatter.format(user.lastLoginAt) : "—",
+                  value: formatDateTime(user.lastLoginAt),
                 },
               ]}
             />

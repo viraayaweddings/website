@@ -15,6 +15,7 @@ import {
   StatusBadge,
   Alert,
   formatCount,
+  formatDateTime,
   formatRelative,
 } from "../_components/ui";
 import { currentTime } from "../_lib/clock";
@@ -224,7 +225,7 @@ export default async function LeadsPage({
                       <RowCheckbox id={lead.id} label={lead.name || `submission ${lead.id}`} />
                     </td>
                     <td className="whitespace-nowrap" style={{ color: "var(--ink-soft)" }}>
-                      <span title={lead.createdAt.toISOString()}>{formatRelative(lead.createdAt, now)}</span>
+                      <span title={formatDateTime(lead.createdAt)}>{formatRelative(lead.createdAt, now)}</span>
                     </td>
                     <td>
                       <Link href={`/admin/leads/${lead.id}`} className="font-medium hover:underline" style={{ color: "var(--ink)" }}>
