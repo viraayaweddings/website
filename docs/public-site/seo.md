@@ -20,7 +20,7 @@ Found on essentially all 367 pages:
 | Google Analytics | ✓ | `G-8KV1YV2GD8` via gtag |
 | `<meta name="robots">` | ✗ | Not in static HTML |
 | `hreflang` | ✗ | Not present (single locale: en) |
-| Schema.org JSON-LD | ✗ | **Zero** `application/ld+json` blocks found |
+| Schema.org JSON-LD | ✓ | Injected at request time by `worker/site/json-ld.ts`, **not present in the static HTML** — which is why a `grep` over `site-public` finds none. A live venue page carries 4 blocks |
 
 ---
 
@@ -57,13 +57,33 @@ When content is managed via admin, injection handlers override static meta:
 
 ## Technical SEO Gaps
 
-| Item | Status | Impact |
+All four items this table used to list as **Missing** have since been built. They
+are recorded here as resolved rather than deleted, because the SEO audit they came
+from is still referenced elsewhere.
+
+| Item | Status | Where |
 | --- | --- | --- |
-| `robots.txt` | **Missing** | Crawlers use default behavior |
-| `sitemap.xml` | **Missing** | No automated URL discovery for crawlers |
-| Custom 404 page | **Missing** | Platform default 404 |
-| Structured data | **Missing** | No rich snippets (Hotel, Article, FAQ schema) |
-| Trailing slash consistency | Mixed | Worker 308 redirect on `/wedding-consultation` only |
+| `robots.txt` | ✓ Present | `site-public/robots.txt`. Disallows `/admin` **and** `/admin/` — the bare path answers 200, so the trailing-slash form alone would leave it crawlable |
+| `sitemap.xml` | ✓ Present | Generated from the database by `app/sitemap.xml/route.ts` (`worker/site/sitemap.ts`); `site-public/sitemap.xml` is the static fallback. `npm run sitemap:generate` writes the latter |
+| Custom 404 page | ✓ Present | `site-public/404.html`, served by the catch-all when nothing else matches |
+| Structured data | ✓ Present | `worker/site/json-ld.ts`, appended by `worker/site/inject.ts` |
+| Trailing slash consistency | Mixed | 308 redirects normalise to the no-slash form; `PUBLIC_REDIRECTS` in `worker/site/public-routes.ts` holds the explicit ones |
+
+### Which JSON-LD each page gets
+
+Built in `worker/site/inject.ts` and appended as one `<script type="application/ld+json">` per entry:
+
+| Block | Emitted on |
+| --- | --- |
+| `organizationJsonLd` | Every page |
+| `websiteJsonLd` | The homepage only |
+| `breadcrumbJsonLd` | Every page except the homepage |
+| `articleJsonLd` | Blog articles |
+| `hotelJsonLd` | Venue pages |
+| `faqJsonLd` | Blog articles and venue pages that have FAQs |
+
+So a venue page with FAQs carries four blocks: organisation, breadcrumb, hotel and
+FAQ — which matches what production serves.
 
 ---
 

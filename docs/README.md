@@ -4,7 +4,7 @@
 
 | | |
 | --- | --- |
-| **Documentation version** | 1.1.0 |
+| **Documentation version** | See [META.md](./META.md) |
 | **Project** | `viraaya-weddings-site` v0.1.0 |
 | **Last audited** | See [META.md](./META.md) |
 | **Sync status** | Run `npm run docs:validate` |
@@ -61,7 +61,7 @@ npm run docs:inventory # Scan codebase only
 | Document | Contents |
 | --- | --- |
 | [Website Overview](./public-site/README.md) | Architecture, key facts, index |
-| [Website Routes](./public-site/routes.md) | All 367+ URL patterns |
+| [Website Routes](./public-site/routes.md) | All 292 URL patterns |
 | [Page Types](./public-site/page-types.md) | Page taxonomy and UI anatomy |
 | [Public Forms](./public-site/forms.md) | Every lead/enquiry form |
 | [JavaScript](./public-site/javascript.md) | Client-side behavior |
@@ -79,10 +79,10 @@ npm run docs:inventory # Scan codebase only
 | Section | Status |
 | --- | --- |
 | [Backend](./backend/README.md) | Server modules documented |
-| [Testing](./testing/README.md) | Placeholder |
+| [Testing](./testing/README.md) | 19 files, 183 tests, plus CI and the known gaps |
 | [Deployment](./deployment/vercel-postgres-r2.md) | Vercel, Neon and R2 setup |
 | [Security](./security/README.md) | Public + admin security |
-| [Technical Debt](./technical-debt/README.md) | See audit findings |
+| Technical Debt | No separate document — see [AUDIT-FINDINGS.md](./AUDIT-FINDINGS.md) and [WEBSITE-AUDIT-FINDINGS.md](./WEBSITE-AUDIT-FINDINGS.md) |
 
 ### Separate (not master docs)
 
@@ -97,12 +97,15 @@ npm run docs:inventory # Scan codebase only
 
 **Viraaya Weddings** is a hybrid static-site + CMS deployment:
 
-- **Public site**: cloned HTML in `site-public/`, served by the Vercel CDN.
-  The pages the CMS owns are rendered by a serverless function instead, from a
-  stored shell filled with database content.
+- **Public site**: cloned HTML in `site-public/` (292 pages), served by the
+  Vercel CDN. The pages the CMS owns — including the homepage — are rendered by
+  a serverless function instead, from a stored shell filled with database
+  content.
 - **Admin panel**: App Router UI at `/admin/*` (Vinext on Vite).
 - **Database**: Neon Postgres via Drizzle ORM — schema at `worker/db/schema.ts`.
-- **Storage**: Cloudflare R2 for admin-uploaded images, over the S3 API.
+- **Storage**: Cloudflare R2 over the S3 API, for admin uploads and for the
+  migrated legacy images. Keys are content hashes; `site-public` is the
+  fallback when a key is missing.
 - **Email**: Resend for lead notifications.
 - **Deployment**: Vercel, built through Nitro's `vercel` preset. The function is
   pinned to `sin1` to sit beside the database.

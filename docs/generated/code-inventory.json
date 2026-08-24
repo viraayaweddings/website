@@ -1,27 +1,29 @@
 {
-  "generatedAt": "2026-08-22T12:27:28.204Z",
-  "gitCommit": "1190afd940003f5808d2e4d759b33dd8e6c2fa9c",
-  "gitCommitShort": "1190afd9",
+  "generatedAt": "2026-08-24T16:30:27.829Z",
+  "gitCommit": "b5e399d96f3c436320d16f3de1cee99c8cc498ad",
+  "gitCommitShort": "b5e399d9",
   "projectVersion": "0.1.0",
   "counts": {
-    "routes": 48,
-    "serverActions": 39,
-    "dbTables": 20,
-    "workerEndpoints": 25,
+    "routes": 55,
+    "serverActions": 67,
+    "dbTables": 23,
+    "workerEndpoints": 30,
     "adminComponents": 18,
-    "adminFiles": 72,
-    "staticSiteRoutes": 370,
+    "adminFiles": 85,
+    "staticSiteRoutes": 292,
     "publicJsFiles": 7,
     "pageTypePatterns": 9,
     "publicForms": 7,
-    "workerSiteFiles": 24
+    "workerSiteFiles": 33,
+    "workerFiles": 65,
+    "dbColumns": 198,
+    "auditActions": 71,
+    "workerExports": 279,
+    "npmScripts": 32,
+    "envVars": 19,
+    "enums": 5
   },
   "routes": [
-    {
-      "file": "app/_lib/deprecated-lead-route.ts",
-      "route": "/_lib/deprecated-lead-route.ts",
-      "kind": "api"
-    },
     {
       "file": "app/[[...path]]/route.ts",
       "route": "/:[...path]",
@@ -30,6 +32,11 @@
     {
       "file": "app/admin/page.tsx",
       "route": "/admin",
+      "kind": "page"
+    },
+    {
+      "file": "app/admin/account/page.tsx",
+      "route": "/admin/account",
       "kind": "page"
     },
     {
@@ -218,6 +225,16 @@
       "kind": "api"
     },
     {
+      "file": "app/api/lead/csrf/route.ts",
+      "route": "/api/lead/csrf",
+      "kind": "api"
+    },
+    {
+      "file": "app/appointment/slots/route.ts",
+      "route": "/appointment/slots",
+      "kind": "api"
+    },
+    {
       "file": "app/blog-form-submit/route.ts",
       "route": "/blog-form-submit",
       "kind": "api"
@@ -233,18 +250,43 @@
       "kind": "api"
     },
     {
+      "file": "app/data/hotel-listing-data.json/route.ts",
+      "route": "/data/hotel-listing-data.json",
+      "kind": "api"
+    },
+    {
       "file": "app/get_in_touch/store/route.ts",
       "route": "/get_in_touch/store",
       "kind": "api"
     },
     {
-      "file": "app/hotel-search/route.ts",
-      "route": "/hotel-search",
+      "file": "app/get-cities/route.ts",
+      "route": "/get-cities",
       "kind": "api"
     },
     {
-      "file": "app/lead-route.ts",
-      "route": "/lead-route.ts",
+      "file": "app/get-hotel-price/[hotel]/[month]/route.ts",
+      "route": "/get-hotel-price/:hotel/:month",
+      "kind": "api"
+    },
+    {
+      "file": "app/get-hotel-prices/route.ts",
+      "route": "/get-hotel-prices",
+      "kind": "api"
+    },
+    {
+      "file": "app/get-hotels-by-city/route.ts",
+      "route": "/get-hotels-by-city",
+      "kind": "api"
+    },
+    {
+      "file": "app/get-hotels-by-city/[city]/route.ts",
+      "route": "/get-hotels-by-city/:city",
+      "kind": "api"
+    },
+    {
+      "file": "app/hotel-search/route.ts",
+      "route": "/hotel-search",
       "kind": "api"
     },
     {
@@ -264,8 +306,72 @@
       "name": "bulkDeleteAction"
     },
     {
+      "file": "app/admin/activity/actions.ts",
+      "name": "bulkDeleteActivityAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
+      "name": "bulkDeleteCalculatorCitiesAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
+      "name": "bulkDeleteCalculatorHotelsAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
+      "name": "bulkDeleteCalculatorTaxesAction"
+    },
+    {
+      "file": "app/admin/cities/actions.ts",
+      "name": "bulkDeleteCitiesAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
+      "name": "bulkDeleteCurrenciesAction"
+    },
+    {
+      "file": "app/admin/hotels/actions.ts",
+      "name": "bulkDeleteHotelsAction"
+    },
+    {
+      "file": "app/admin/media/actions.ts",
+      "name": "bulkDeleteMediaAction"
+    },
+    {
+      "file": "app/admin/blogs/actions.ts",
+      "name": "bulkDeletePostsAction"
+    },
+    {
+      "file": "app/admin/hero/actions.ts",
+      "name": "bulkDeleteSlidesAction"
+    },
+    {
+      "file": "app/admin/users/actions.ts",
+      "name": "bulkDeleteUsersAction"
+    },
+    {
+      "file": "app/admin/cities/actions.ts",
+      "name": "bulkPublishCitiesAction"
+    },
+    {
+      "file": "app/admin/pages/actions.ts",
+      "name": "bulkPublishPagesAction"
+    },
+    {
+      "file": "app/admin/pages/actions.ts",
+      "name": "bulkResetPagesAction"
+    },
+    {
       "file": "app/admin/leads/actions.ts",
       "name": "bulkStatusAction"
+    },
+    {
+      "file": "app/admin/account/actions.ts",
+      "name": "changeOwnPasswordAction"
+    },
+    {
+      "file": "app/admin/cities/actions.ts",
+      "name": "createCityAction"
     },
     {
       "file": "app/admin/setup/actions.ts",
@@ -284,8 +390,16 @@
       "name": "createSlideAction"
     },
     {
+      "file": "app/admin/pages/actions.ts",
+      "name": "createStaticPageAction"
+    },
+    {
       "file": "app/admin/users/actions.ts",
       "name": "createUserAction"
+    },
+    {
+      "file": "app/admin/activity/actions.ts",
+      "name": "deleteActivityEntryAction"
     },
     {
       "file": "app/admin/calculator/actions.ts",
@@ -294,6 +408,14 @@
     {
       "file": "app/admin/calculator/actions.ts",
       "name": "deleteCalculatorHotelAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
+      "name": "deleteCalculatorTaxAction"
+    },
+    {
+      "file": "app/admin/cities/actions.ts",
+      "name": "deleteCityAction"
     },
     {
       "file": "app/admin/calculator/actions.ts",
@@ -324,6 +446,10 @@
       "name": "deleteUserAction"
     },
     {
+      "file": "app/admin/hotels/actions.ts",
+      "name": "deleteVenueTypeAction"
+    },
+    {
       "file": "app/admin/calculator/actions.ts",
       "name": "importCalculatorDataAction"
     },
@@ -342,6 +468,14 @@
     {
       "file": "app/admin/hero/actions.ts",
       "name": "moveSlideAction"
+    },
+    {
+      "file": "app/admin/activity/actions.ts",
+      "name": "pruneActivityAction"
+    },
+    {
+      "file": "app/admin/media/actions.ts",
+      "name": "replaceMediaAction"
     },
     {
       "file": "app/admin/pages/actions.ts",
@@ -372,6 +506,10 @@
       "name": "saveCalculatorPricesAction"
     },
     {
+      "file": "app/admin/calculator/actions.ts",
+      "name": "saveCalculatorTaxAction"
+    },
+    {
       "file": "app/admin/cities/actions.ts",
       "name": "saveCityAction"
     },
@@ -397,11 +535,27 @@
     },
     {
       "file": "app/admin/hotels/actions.ts",
+      "name": "saveVenueTypeAction"
+    },
+    {
+      "file": "app/admin/account/actions.ts",
+      "name": "signOutEverywhereAction"
+    },
+    {
+      "file": "app/admin/cities/actions.ts",
+      "name": "syncCityTotalAction"
+    },
+    {
+      "file": "app/admin/hotels/actions.ts",
       "name": "updateHotelAction"
     },
     {
       "file": "app/admin/leads/actions.ts",
       "name": "updateLeadAction"
+    },
+    {
+      "file": "app/admin/account/actions.ts",
+      "name": "updateOwnProfileAction"
     },
     {
       "file": "app/admin/blogs/actions.ts",
@@ -446,12 +600,20 @@
       "tableName": "calculator_prices"
     },
     {
+      "exportName": "calculatorTaxes",
+      "tableName": "calculator_taxes"
+    },
+    {
       "exportName": "cityListings",
       "tableName": "city_listings"
     },
     {
       "exportName": "cityPages",
       "tableName": "city_pages"
+    },
+    {
+      "exportName": "contentVersion",
+      "tableName": "content_version"
     },
     {
       "exportName": "heroSlides",
@@ -496,6 +658,10 @@
     {
       "exportName": "users",
       "tableName": "users"
+    },
+    {
+      "exportName": "venueTypes",
+      "tableName": "venue_types"
     }
   ],
   "workerEndpoints": [
@@ -509,6 +675,7 @@
     "/appointment/payment-failed/",
     "/appointment/payment-success",
     "/appointment/payment-success/",
+    "/appointment/slots",
     "/assets",
     "/blog-form-submit",
     "/blogs",
@@ -520,6 +687,10 @@
     "/contact/save",
     "/data/calculator",
     "/destination-wedding/",
+    "/get-cities",
+    "/get-hotel-price",
+    "/get-hotel-prices",
+    "/get-hotels-by-city",
     "/get_in_touch",
     "/hotel-search",
     "/index.html",
@@ -535,7 +706,7 @@
     "app/admin/_components/ConfirmDelete.tsx",
     "app/admin/_components/DeleteConfirmTrigger.tsx",
     "app/admin/_components/FormControls.tsx",
-    "app/admin/_components/ImageInput.tsx",
+    "app/admin/_components/MediaPicker.tsx",
     "app/admin/_components/RichText.tsx",
     "app/admin/_components/SideNav.tsx",
     "app/admin/_components/ThemeToggle.tsx",
@@ -555,7 +726,7 @@
     "app/admin/_components/ConfirmDelete.tsx",
     "app/admin/_components/DeleteConfirmTrigger.tsx",
     "app/admin/_components/FormControls.tsx",
-    "app/admin/_components/ImageInput.tsx",
+    "app/admin/_components/MediaPicker.tsx",
     "app/admin/_components/RichText.tsx",
     "app/admin/_components/SideNav.tsx",
     "app/admin/_components/ThemeToggle.tsx",
@@ -567,6 +738,15 @@
     "app/admin/_lib/audit-labels.ts",
     "app/admin/_lib/auth.ts",
     "app/admin/_lib/clock.ts",
+    "app/admin/_lib/concurrency.ts",
+    "app/admin/_lib/dates.ts",
+    "app/admin/_lib/db-errors.ts",
+    "app/admin/_lib/flash.ts",
+    "app/admin/_lib/theme.ts",
+    "app/admin/account/actions.ts",
+    "app/admin/account/page.tsx",
+    "app/admin/activity/actions.ts",
+    "app/admin/activity/constants.ts",
     "app/admin/activity/page.tsx",
     "app/admin/blogs/[id]/page.tsx",
     "app/admin/blogs/_form.tsx",
@@ -596,15 +776,19 @@
     "app/admin/layout.tsx",
     "app/admin/leads/[id]/page.tsx",
     "app/admin/leads/_query.ts",
+    "app/admin/leads/_status.ts",
     "app/admin/leads/actions.ts",
     "app/admin/leads/export/route.ts",
     "app/admin/leads/page.tsx",
+    "app/admin/loading.tsx",
     "app/admin/login/actions.ts",
     "app/admin/login/page.tsx",
     "app/admin/logout/route.ts",
+    "app/admin/media/MediaLibrary.tsx",
     "app/admin/media/actions.ts",
     "app/admin/media/page.tsx",
     "app/admin/media/upload/route.ts",
+    "app/admin/not-found.tsx",
     "app/admin/page.tsx",
     "app/admin/pages/[path]/page.tsx",
     "app/admin/pages/actions.ts",
@@ -643,10 +827,6 @@
     {
       "file": "site-public/appointment/request-failed/index.html",
       "route": "/appointment/request-failed/"
-    },
-    {
-      "file": "site-public/blog-form-submit/index.html",
-      "route": "/blog-form-submit/"
     },
     {
       "file": "site-public/blogs/index.html",
@@ -727,10 +907,6 @@
     {
       "file": "site-public/contact/index.html",
       "route": "/contact/"
-    },
-    {
-      "file": "site-public/contact/save/index.html",
-      "route": "/contact/save/"
     },
     {
       "file": "site-public/cookie-preference-policy/index.html",
@@ -849,26 +1025,6 @@
       "route": "/destination-wedding/ajmer/pratap-mahal-ajmer-an-ihcl-seleqtions-hotel/"
     },
     {
-      "file": "site-public/destination-wedding/amritsar/index.html",
-      "route": "/destination-wedding/amritsar/"
-    },
-    {
-      "file": "site-public/destination-wedding/amritsar/holiday-inn-amritsar-ranjit-avenue-by-ihg/index.html",
-      "route": "/destination-wedding/amritsar/holiday-inn-amritsar-ranjit-avenue-by-ihg/"
-    },
-    {
-      "file": "site-public/destination-wedding/amritsar/hyatt-regency-amritsar-hotel-and-spa/index.html",
-      "route": "/destination-wedding/amritsar/hyatt-regency-amritsar-hotel-and-spa/"
-    },
-    {
-      "file": "site-public/destination-wedding/amritsar/taj-swarna-amritsar/index.html",
-      "route": "/destination-wedding/amritsar/taj-swarna-amritsar/"
-    },
-    {
-      "file": "site-public/destination-wedding/amritsar/welcomhotel-by-itc-hotels-amritsar/index.html",
-      "route": "/destination-wedding/amritsar/welcomhotel-by-itc-hotels-amritsar/"
-    },
-    {
       "file": "site-public/destination-wedding/andaman/index.html",
       "route": "/destination-wedding/andaman/"
     },
@@ -887,54 +1043,6 @@
     {
       "file": "site-public/destination-wedding/bengal/itc-royal-bengal/index.html",
       "route": "/destination-wedding/bengal/itc-royal-bengal/"
-    },
-    {
-      "file": "site-public/destination-wedding/bengaluru/index.html",
-      "route": "/destination-wedding/bengaluru/"
-    },
-    {
-      "file": "site-public/destination-wedding/bengaluru/hilton-bangalore-embassy-golflinks/index.html",
-      "route": "/destination-wedding/bengaluru/hilton-bangalore-embassy-golflinks/"
-    },
-    {
-      "file": "site-public/destination-wedding/bengaluru/hilton-garden-inn-bengaluru-embassy-manyata-business-park/index.html",
-      "route": "/destination-wedding/bengaluru/hilton-garden-inn-bengaluru-embassy-manyata-business-park/"
-    },
-    {
-      "file": "site-public/destination-wedding/bengaluru/itc-gardenia-bengaluru/index.html",
-      "route": "/destination-wedding/bengaluru/itc-gardenia-bengaluru/"
-    },
-    {
-      "file": "site-public/destination-wedding/bengaluru/itc-windsor-a-luxury-collection-hotel-bengaluru/index.html",
-      "route": "/destination-wedding/bengaluru/itc-windsor-a-luxury-collection-hotel-bengaluru/"
-    },
-    {
-      "file": "site-public/destination-wedding/bengaluru/jw-marriott-bengaluru-prestige-golfshire-resort-and-spa/index.html",
-      "route": "/destination-wedding/bengaluru/jw-marriott-bengaluru-prestige-golfshire-resort-and-spa/"
-    },
-    {
-      "file": "site-public/destination-wedding/bengaluru/radisson-blu-hotel-bengaluru/index.html",
-      "route": "/destination-wedding/bengaluru/radisson-blu-hotel-bengaluru/"
-    },
-    {
-      "file": "site-public/destination-wedding/bengaluru/shangri-la-bengaluru/index.html",
-      "route": "/destination-wedding/bengaluru/shangri-la-bengaluru/"
-    },
-    {
-      "file": "site-public/destination-wedding/bengaluru/taj-west-end-bengaluru/index.html",
-      "route": "/destination-wedding/bengaluru/taj-west-end-bengaluru/"
-    },
-    {
-      "file": "site-public/destination-wedding/bengaluru/the-leela-bhartiya-city-bengaluru/index.html",
-      "route": "/destination-wedding/bengaluru/the-leela-bhartiya-city-bengaluru/"
-    },
-    {
-      "file": "site-public/destination-wedding/bengaluru/the-leela-palace-bengaluru/index.html",
-      "route": "/destination-wedding/bengaluru/the-leela-palace-bengaluru/"
-    },
-    {
-      "file": "site-public/destination-wedding/bengaluru/the-ritz-carlton-bangalore/index.html",
-      "route": "/destination-wedding/bengaluru/the-ritz-carlton-bangalore/"
     },
     {
       "file": "site-public/destination-wedding/bhopal/index.html",
@@ -979,42 +1087,6 @@
     {
       "file": "site-public/destination-wedding/chandigarh/the-oberoi-sukhvilas/index.html",
       "route": "/destination-wedding/chandigarh/the-oberoi-sukhvilas/"
-    },
-    {
-      "file": "site-public/destination-wedding/chennai/index.html",
-      "route": "/destination-wedding/chennai/"
-    },
-    {
-      "file": "site-public/destination-wedding/chennai/hilton-chennai/index.html",
-      "route": "/destination-wedding/chennai/hilton-chennai/"
-    },
-    {
-      "file": "site-public/destination-wedding/chennai/hyatt-regency-chennai/index.html",
-      "route": "/destination-wedding/chennai/hyatt-regency-chennai/"
-    },
-    {
-      "file": "site-public/destination-wedding/chennai/itc-grand-chola-chennai/index.html",
-      "route": "/destination-wedding/chennai/itc-grand-chola-chennai/"
-    },
-    {
-      "file": "site-public/destination-wedding/chennai/le-royal-meridien-chennai/index.html",
-      "route": "/destination-wedding/chennai/le-royal-meridien-chennai/"
-    },
-    {
-      "file": "site-public/destination-wedding/chennai/novotel-chennai-omr/index.html",
-      "route": "/destination-wedding/chennai/novotel-chennai-omr/"
-    },
-    {
-      "file": "site-public/destination-wedding/chennai/taj-club-house-chennai/index.html",
-      "route": "/destination-wedding/chennai/taj-club-house-chennai/"
-    },
-    {
-      "file": "site-public/destination-wedding/chennai/taj-connemara-chennai/index.html",
-      "route": "/destination-wedding/chennai/taj-connemara-chennai/"
-    },
-    {
-      "file": "site-public/destination-wedding/chennai/the-leela-palace-chennai/index.html",
-      "route": "/destination-wedding/chennai/the-leela-palace-chennai/"
     },
     {
       "file": "site-public/destination-wedding/daman/index.html",
@@ -1251,66 +1323,6 @@
     {
       "file": "site-public/destination-wedding/haridwar/index.html",
       "route": "/destination-wedding/haridwar/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/index.html",
-      "route": "/destination-wedding/hyderabad/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/hyatt-hyderabad-gachibowli/index.html",
-      "route": "/destination-wedding/hyderabad/hyatt-hyderabad-gachibowli/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/hyderabad-marriott-hotel-and-convention-centre/index.html",
-      "route": "/destination-wedding/hyderabad/hyderabad-marriott-hotel-and-convention-centre/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/itc-kakatiya-a-luxury-collection-hotel-hyderabad/index.html",
-      "route": "/destination-wedding/hyderabad/itc-kakatiya-a-luxury-collection-hotel-hyderabad/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/itc-kohenur-a-luxury-collection-hotel-hyderabad/index.html",
-      "route": "/destination-wedding/hyderabad/itc-kohenur-a-luxury-collection-hotel-hyderabad/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/le-meridien-hyderabad/index.html",
-      "route": "/destination-wedding/hyderabad/le-meridien-hyderabad/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/novotel-hyderabad-convention-centre/index.html",
-      "route": "/destination-wedding/hyderabad/novotel-hyderabad-convention-centre/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/radisson-blu-plaza-hotel-hyderabad-banjara-hills/index.html",
-      "route": "/destination-wedding/hyderabad/radisson-blu-plaza-hotel-hyderabad-banjara-hills/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/sheraton-hyderabad-hotel/index.html",
-      "route": "/destination-wedding/hyderabad/sheraton-hyderabad-hotel/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/taj-deccan-hyderabad/index.html",
-      "route": "/destination-wedding/hyderabad/taj-deccan-hyderabad/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/taj-falaknuma-palace-hyderabad/index.html",
-      "route": "/destination-wedding/hyderabad/taj-falaknuma-palace-hyderabad/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/taj-krishna-hyderabad/index.html",
-      "route": "/destination-wedding/hyderabad/taj-krishna-hyderabad/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/the-leela-hyderabad/index.html",
-      "route": "/destination-wedding/hyderabad/the-leela-hyderabad/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/the-park-hyderabad/index.html",
-      "route": "/destination-wedding/hyderabad/the-park-hyderabad/"
-    },
-    {
-      "file": "site-public/destination-wedding/hyderabad/trident-hyderabad/index.html",
-      "route": "/destination-wedding/hyderabad/trident-hyderabad/"
     },
     {
       "file": "site-public/destination-wedding/indore/index.html",
@@ -1621,26 +1633,6 @@
       "route": "/destination-wedding/khopoli/"
     },
     {
-      "file": "site-public/destination-wedding/kochi/index.html",
-      "route": "/destination-wedding/kochi/"
-    },
-    {
-      "file": "site-public/destination-wedding/kochi/courtyard-by-marriott-kochi-airport/index.html",
-      "route": "/destination-wedding/kochi/courtyard-by-marriott-kochi-airport/"
-    },
-    {
-      "file": "site-public/destination-wedding/kochi/grand-hyatt-kochi-bolgatty/index.html",
-      "route": "/destination-wedding/kochi/grand-hyatt-kochi-bolgatty/"
-    },
-    {
-      "file": "site-public/destination-wedding/kochi/le-meridien-kochi/index.html",
-      "route": "/destination-wedding/kochi/le-meridien-kochi/"
-    },
-    {
-      "file": "site-public/destination-wedding/kochi/radisson-blu-kochi/index.html",
-      "route": "/destination-wedding/kochi/radisson-blu-kochi/"
-    },
-    {
       "file": "site-public/destination-wedding/kolkata/index.html",
       "route": "/destination-wedding/kolkata/"
     },
@@ -1697,86 +1689,6 @@
       "route": "/destination-wedding/lucknow/taj-mahal-lucknow/"
     },
     {
-      "file": "site-public/destination-wedding/mumbai/index.html",
-      "route": "/destination-wedding/mumbai/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/courtyard-by-marriott-mumbai-international-airport/index.html",
-      "route": "/destination-wedding/mumbai/courtyard-by-marriott-mumbai-international-airport/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/fairmont-mumbai/index.html",
-      "route": "/destination-wedding/mumbai/fairmont-mumbai/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/four-seasons-hotel-mumbai/index.html",
-      "route": "/destination-wedding/mumbai/four-seasons-hotel-mumbai/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/grand-hyatt-mumbai-hotel-and-residences/index.html",
-      "route": "/destination-wedding/mumbai/grand-hyatt-mumbai-hotel-and-residences/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/intercontinental-marine-drive-mumbai-by-ihg/index.html",
-      "route": "/destination-wedding/mumbai/intercontinental-marine-drive-mumbai-by-ihg/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/itc-maratha-mumbai/index.html",
-      "route": "/destination-wedding/mumbai/itc-maratha-mumbai/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/jw-marriott-mumbai-juhu/index.html",
-      "route": "/destination-wedding/mumbai/jw-marriott-mumbai-juhu/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/jw-marriott-mumbai-sahar/index.html",
-      "route": "/destination-wedding/mumbai/jw-marriott-mumbai-sahar/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/novotel-mumbai-juhu-beach/index.html",
-      "route": "/destination-wedding/mumbai/novotel-mumbai-juhu-beach/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/radisson-blu-mumbai-international-airport/index.html",
-      "route": "/destination-wedding/mumbai/radisson-blu-mumbai-international-airport/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/sofitel-mumbai-bkc/index.html",
-      "route": "/destination-wedding/mumbai/sofitel-mumbai-bkc/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/taj-lands-end-mumbai/index.html",
-      "route": "/destination-wedding/mumbai/taj-lands-end-mumbai/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/taj-santacruz-mumbai/index.html",
-      "route": "/destination-wedding/mumbai/taj-santacruz-mumbai/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/the-leela-mumbai/index.html",
-      "route": "/destination-wedding/mumbai/the-leela-mumbai/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/the-oberoi-mumbai/index.html",
-      "route": "/destination-wedding/mumbai/the-oberoi-mumbai/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/the-st-regis-mumbai/index.html",
-      "route": "/destination-wedding/mumbai/the-st-regis-mumbai/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/the-taj-mahal-palace-mumbai/index.html",
-      "route": "/destination-wedding/mumbai/the-taj-mahal-palace-mumbai/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/the-westin-mumbai-powai-lake/index.html",
-      "route": "/destination-wedding/mumbai/the-westin-mumbai-powai-lake/"
-    },
-    {
-      "file": "site-public/destination-wedding/mumbai/trident-nariman-point-mumbai/index.html",
-      "route": "/destination-wedding/mumbai/trident-nariman-point-mumbai/"
-    },
-    {
       "file": "site-public/destination-wedding/mussoorie/index.html",
       "route": "/destination-wedding/mussoorie/"
     },
@@ -1803,34 +1715,6 @@
     {
       "file": "site-public/destination-wedding/noida/crown-plaza-greater-noida-by-ihg/index.html",
       "route": "/destination-wedding/noida/crown-plaza-greater-noida-by-ihg/"
-    },
-    {
-      "file": "site-public/destination-wedding/pune/index.html",
-      "route": "/destination-wedding/pune/"
-    },
-    {
-      "file": "site-public/destination-wedding/pune/conrad-pune/index.html",
-      "route": "/destination-wedding/pune/conrad-pune/"
-    },
-    {
-      "file": "site-public/destination-wedding/pune/jw-marriott-hotel-pune/index.html",
-      "route": "/destination-wedding/pune/jw-marriott-hotel-pune/"
-    },
-    {
-      "file": "site-public/destination-wedding/pune/radisson-blu-hotel-pune-kharadi/index.html",
-      "route": "/destination-wedding/pune/radisson-blu-hotel-pune-kharadi/"
-    },
-    {
-      "file": "site-public/destination-wedding/pune/sheraton-grand-pune-bund-garden-hotel/index.html",
-      "route": "/destination-wedding/pune/sheraton-grand-pune-bund-garden-hotel/"
-    },
-    {
-      "file": "site-public/destination-wedding/pune/the-ritz-carlton-pune/index.html",
-      "route": "/destination-wedding/pune/the-ritz-carlton-pune/"
-    },
-    {
-      "file": "site-public/destination-wedding/pune/the-westin-pune-koregaon-park/index.html",
-      "route": "/destination-wedding/pune/the-westin-pune-koregaon-park/"
     },
     {
       "file": "site-public/destination-wedding/pushkar/index.html",
@@ -1911,14 +1795,6 @@
     {
       "file": "site-public/destination-wedding/surat/hilton-garden-inn-surat-city-centre/index.html",
       "route": "/destination-wedding/surat/hilton-garden-inn-surat-city-centre/"
-    },
-    {
-      "file": "site-public/destination-wedding/trivandrum/index.html",
-      "route": "/destination-wedding/trivandrum/"
-    },
-    {
-      "file": "site-public/destination-wedding/trivandrum/hilton-garden-inn-trivandrum/index.html",
-      "route": "/destination-wedding/trivandrum/hilton-garden-inn-trivandrum/"
     },
     {
       "file": "site-public/destination-wedding/udaipur/index.html",
@@ -2027,10 +1903,6 @@
     {
       "file": "site-public/faqs/index.html",
       "route": "/faqs/"
-    },
-    {
-      "file": "site-public/get_in_touch/store/index.html",
-      "route": "/get_in_touch/store/"
     },
     {
       "file": "site-public/hotel-cost-calculator/index.html",
@@ -2205,14 +2077,19 @@
     "worker/site/app-routes.ts",
     "worker/site/blog-inject.ts",
     "worker/site/blog.ts",
-    "worker/site/calculator-prices.ts",
+    "worker/site/calculator-inject.ts",
     "worker/site/calculator-store.ts",
+    "worker/site/city-heading.ts",
+    "worker/site/content-version.ts",
+    "worker/site/escape.ts",
     "worker/site/hero.ts",
     "worker/site/hotel-inject.ts",
     "worker/site/hotel.ts",
+    "worker/site/image-dimensions.ts",
     "worker/site/inject.ts",
     "worker/site/json-ld.ts",
     "worker/site/labels.ts",
+    "worker/site/legacy-calculator-endpoints.ts",
     "worker/site/media.ts",
     "worker/site/public-html.ts",
     "worker/site/public-routes.ts",
@@ -2225,6 +2102,2366 @@
     "worker/site/static-pages.ts",
     "worker/site/static-routes.generated.ts",
     "worker/site/template.ts",
-    "worker/site/venue-listing.ts"
+    "worker/site/venue-listing-data.ts",
+    "worker/site/venue-listing-inject.ts",
+    "worker/site/venue-listing-payload.ts",
+    "worker/site/venue-listing.ts",
+    "worker/site/venue-types.ts"
+  ],
+  "workerFiles": [
+    "worker/admin/form-rows.ts",
+    "worker/admin/image-references.ts",
+    "worker/admin/image-type.ts",
+    "worker/admin/lead-csv.ts",
+    "worker/admin/lead-filters.ts",
+    "worker/admin/lead-store.ts",
+    "worker/admin/media-config.ts",
+    "worker/admin/media-path.ts",
+    "worker/admin/media-store.ts",
+    "worker/admin/password.ts",
+    "worker/admin/rate-limit.ts",
+    "worker/admin/record-id.ts",
+    "worker/admin/rich-text.ts",
+    "worker/admin/session.ts",
+    "worker/calculator-data.ts",
+    "worker/db/apply-pg-migrations.ts",
+    "worker/db/client.ts",
+    "worker/db/errors.ts",
+    "worker/db/migrations.ts",
+    "worker/db/page-templates.generated.ts",
+    "worker/db/schema.ts",
+    "worker/db/seed-calculator.ts",
+    "worker/db/seed-content.ts",
+    "worker/db/seed-templates.ts",
+    "worker/env.ts",
+    "worker/html-rewriter.ts",
+    "worker/lead-csrf.ts",
+    "worker/lead-email.ts",
+    "worker/lead-fields.ts",
+    "worker/legacy-lead.ts",
+    "worker/public-endpoints.ts",
+    "worker/site/app-routes.ts",
+    "worker/site/blog-inject.ts",
+    "worker/site/blog.ts",
+    "worker/site/calculator-inject.ts",
+    "worker/site/calculator-store.ts",
+    "worker/site/city-heading.ts",
+    "worker/site/content-version.ts",
+    "worker/site/escape.ts",
+    "worker/site/hero.ts",
+    "worker/site/hotel-inject.ts",
+    "worker/site/hotel.ts",
+    "worker/site/image-dimensions.ts",
+    "worker/site/inject.ts",
+    "worker/site/json-ld.ts",
+    "worker/site/labels.ts",
+    "worker/site/legacy-calculator-endpoints.ts",
+    "worker/site/media.ts",
+    "worker/site/public-html.ts",
+    "worker/site/public-routes.ts",
+    "worker/site/render-page.ts",
+    "worker/site/resolve-page.ts",
+    "worker/site/serve-static.ts",
+    "worker/site/settings.ts",
+    "worker/site/sitemap.ts",
+    "worker/site/static-page-paths.generated.ts",
+    "worker/site/static-pages.ts",
+    "worker/site/static-routes.generated.ts",
+    "worker/site/template.ts",
+    "worker/site/venue-listing-data.ts",
+    "worker/site/venue-listing-inject.ts",
+    "worker/site/venue-listing-payload.ts",
+    "worker/site/venue-listing.ts",
+    "worker/site/venue-types.ts",
+    "worker/storage/r2.ts"
+  ],
+  "dbColumns": [
+    {
+      "table": "audit_log",
+      "column": "action",
+      "property": "action"
+    },
+    {
+      "table": "audit_log",
+      "column": "created_at",
+      "property": "createdAt"
+    },
+    {
+      "table": "audit_log",
+      "column": "detail",
+      "property": "detail"
+    },
+    {
+      "table": "audit_log",
+      "column": "entity",
+      "property": "entity"
+    },
+    {
+      "table": "audit_log",
+      "column": "entity_id",
+      "property": "entityId"
+    },
+    {
+      "table": "audit_log",
+      "column": "id",
+      "property": "id"
+    },
+    {
+      "table": "audit_log",
+      "column": "user_email",
+      "property": "userEmail"
+    },
+    {
+      "table": "audit_log",
+      "column": "user_id",
+      "property": "userId"
+    },
+    {
+      "table": "blog_listings",
+      "column": "id",
+      "property": "id"
+    },
+    {
+      "table": "blog_listings",
+      "column": "position",
+      "property": "position"
+    },
+    {
+      "table": "blog_listings",
+      "column": "post_slug",
+      "property": "postSlug"
+    },
+    {
+      "table": "blog_listings",
+      "column": "taxonomy",
+      "property": "taxonomy"
+    },
+    {
+      "table": "blog_listings",
+      "column": "taxonomy_slug",
+      "property": "taxonomySlug"
+    },
+    {
+      "table": "blog_posts",
+      "column": "author",
+      "property": "author"
+    },
+    {
+      "table": "blog_posts",
+      "column": "banner_image",
+      "property": "bannerImage"
+    },
+    {
+      "table": "blog_posts",
+      "column": "body_html",
+      "property": "bodyHtml"
+    },
+    {
+      "table": "blog_posts",
+      "column": "card_excerpt",
+      "property": "cardExcerpt"
+    },
+    {
+      "table": "blog_posts",
+      "column": "card_image",
+      "property": "cardImage"
+    },
+    {
+      "table": "blog_posts",
+      "column": "card_title",
+      "property": "cardTitle"
+    },
+    {
+      "table": "blog_posts",
+      "column": "category",
+      "property": "category"
+    },
+    {
+      "table": "blog_posts",
+      "column": "created_at",
+      "property": "createdAt"
+    },
+    {
+      "table": "blog_posts",
+      "column": "faqs",
+      "property": "faqs"
+    },
+    {
+      "table": "blog_posts",
+      "column": "heading",
+      "property": "heading"
+    },
+    {
+      "table": "blog_posts",
+      "column": "id",
+      "property": "id"
+    },
+    {
+      "table": "blog_posts",
+      "column": "meta_description",
+      "property": "metaDescription"
+    },
+    {
+      "table": "blog_posts",
+      "column": "og_image",
+      "property": "ogImage"
+    },
+    {
+      "table": "blog_posts",
+      "column": "position",
+      "property": "position"
+    },
+    {
+      "table": "blog_posts",
+      "column": "published_label",
+      "property": "publishedLabel"
+    },
+    {
+      "table": "blog_posts",
+      "column": "seo_title",
+      "property": "seoTitle"
+    },
+    {
+      "table": "blog_posts",
+      "column": "shell_key",
+      "property": "shellKey"
+    },
+    {
+      "table": "blog_posts",
+      "column": "slug",
+      "property": "slug"
+    },
+    {
+      "table": "blog_posts",
+      "column": "status",
+      "property": "status"
+    },
+    {
+      "table": "blog_posts",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "calculator_cities",
+      "column": "id",
+      "property": "id"
+    },
+    {
+      "table": "calculator_cities",
+      "column": "name",
+      "property": "name"
+    },
+    {
+      "table": "calculator_cities",
+      "column": "position",
+      "property": "position"
+    },
+    {
+      "table": "calculator_cities",
+      "column": "published",
+      "property": "published"
+    },
+    {
+      "table": "calculator_cities",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "calculator_currencies",
+      "column": "code",
+      "property": "code"
+    },
+    {
+      "table": "calculator_currencies",
+      "column": "is_default",
+      "property": "isDefault"
+    },
+    {
+      "table": "calculator_currencies",
+      "column": "name",
+      "property": "name"
+    },
+    {
+      "table": "calculator_currencies",
+      "column": "position",
+      "property": "position"
+    },
+    {
+      "table": "calculator_currencies",
+      "column": "rate_to_usd",
+      "property": "rateToUsd"
+    },
+    {
+      "table": "calculator_currencies",
+      "column": "symbol",
+      "property": "symbol"
+    },
+    {
+      "table": "calculator_currencies",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "calculator_hotels",
+      "column": "city_id",
+      "property": "cityId"
+    },
+    {
+      "table": "calculator_hotels",
+      "column": "id",
+      "property": "id"
+    },
+    {
+      "table": "calculator_hotels",
+      "column": "name",
+      "property": "name"
+    },
+    {
+      "table": "calculator_hotels",
+      "column": "position",
+      "property": "position"
+    },
+    {
+      "table": "calculator_hotels",
+      "column": "published",
+      "property": "published"
+    },
+    {
+      "table": "calculator_hotels",
+      "column": "total_rooms",
+      "property": "totalRooms"
+    },
+    {
+      "table": "calculator_hotels",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "calculator_prices",
+      "column": "dinner_price",
+      "property": "dinnerPrice"
+    },
+    {
+      "table": "calculator_prices",
+      "column": "hitea_price",
+      "property": "hiteaPrice"
+    },
+    {
+      "table": "calculator_prices",
+      "column": "hotel_id",
+      "property": "hotelId"
+    },
+    {
+      "table": "calculator_prices",
+      "column": "id",
+      "property": "id"
+    },
+    {
+      "table": "calculator_prices",
+      "column": "lunch_price",
+      "property": "lunchPrice"
+    },
+    {
+      "table": "calculator_prices",
+      "column": "month",
+      "property": "month"
+    },
+    {
+      "table": "calculator_prices",
+      "column": "room_price",
+      "property": "roomPrice"
+    },
+    {
+      "table": "calculator_prices",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "calculator_taxes",
+      "column": "code",
+      "property": "code"
+    },
+    {
+      "table": "calculator_taxes",
+      "column": "label",
+      "property": "label"
+    },
+    {
+      "table": "calculator_taxes",
+      "column": "percent",
+      "property": "percent"
+    },
+    {
+      "table": "calculator_taxes",
+      "column": "position",
+      "property": "position"
+    },
+    {
+      "table": "calculator_taxes",
+      "column": "published",
+      "property": "published"
+    },
+    {
+      "table": "calculator_taxes",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "city_listings",
+      "column": "city",
+      "property": "city"
+    },
+    {
+      "table": "city_listings",
+      "column": "id",
+      "property": "id"
+    },
+    {
+      "table": "city_listings",
+      "column": "position",
+      "property": "position"
+    },
+    {
+      "table": "city_listings",
+      "column": "venue_city",
+      "property": "venueCity"
+    },
+    {
+      "table": "city_listings",
+      "column": "venue_slug",
+      "property": "venueSlug"
+    },
+    {
+      "table": "city_pages",
+      "column": "city",
+      "property": "city"
+    },
+    {
+      "table": "city_pages",
+      "column": "city_id",
+      "property": "cityId"
+    },
+    {
+      "table": "city_pages",
+      "column": "heading",
+      "property": "heading"
+    },
+    {
+      "table": "city_pages",
+      "column": "heading_emphasis",
+      "property": "headingEmphasis"
+    },
+    {
+      "table": "city_pages",
+      "column": "meta_description",
+      "property": "metaDescription"
+    },
+    {
+      "table": "city_pages",
+      "column": "published",
+      "property": "published"
+    },
+    {
+      "table": "city_pages",
+      "column": "seo_title",
+      "property": "seoTitle"
+    },
+    {
+      "table": "city_pages",
+      "column": "shell_key",
+      "property": "shellKey"
+    },
+    {
+      "table": "city_pages",
+      "column": "total_venues",
+      "property": "totalVenues"
+    },
+    {
+      "table": "city_pages",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "content_version",
+      "column": "id",
+      "property": "id"
+    },
+    {
+      "table": "content_version",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "content_version",
+      "column": "version",
+      "property": "version"
+    },
+    {
+      "table": "hero_slides",
+      "column": "badge_subtitle",
+      "property": "badgeSubtitle"
+    },
+    {
+      "table": "hero_slides",
+      "column": "badge_title",
+      "property": "badgeTitle"
+    },
+    {
+      "table": "hero_slides",
+      "column": "created_at",
+      "property": "createdAt"
+    },
+    {
+      "table": "hero_slides",
+      "column": "cta_href",
+      "property": "ctaHref"
+    },
+    {
+      "table": "hero_slides",
+      "column": "cta_label",
+      "property": "ctaLabel"
+    },
+    {
+      "table": "hero_slides",
+      "column": "description",
+      "property": "description"
+    },
+    {
+      "table": "hero_slides",
+      "column": "id",
+      "property": "id"
+    },
+    {
+      "table": "hero_slides",
+      "column": "image_key",
+      "property": "imageKey"
+    },
+    {
+      "table": "hero_slides",
+      "column": "position",
+      "property": "position"
+    },
+    {
+      "table": "hero_slides",
+      "column": "published",
+      "property": "published"
+    },
+    {
+      "table": "hero_slides",
+      "column": "title",
+      "property": "title"
+    },
+    {
+      "table": "hero_slides",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "hotels",
+      "column": "address",
+      "property": "address"
+    },
+    {
+      "table": "hotels",
+      "column": "airport_time",
+      "property": "airportTime"
+    },
+    {
+      "table": "hotels",
+      "column": "banner_image",
+      "property": "bannerImage"
+    },
+    {
+      "table": "hotels",
+      "column": "card_pax",
+      "property": "cardPax"
+    },
+    {
+      "table": "hotels",
+      "column": "city",
+      "property": "city"
+    },
+    {
+      "table": "hotels",
+      "column": "city_label",
+      "property": "cityLabel"
+    },
+    {
+      "table": "hotels",
+      "column": "created_at",
+      "property": "createdAt"
+    },
+    {
+      "table": "hotels",
+      "column": "description",
+      "property": "description"
+    },
+    {
+      "table": "hotels",
+      "column": "external_hotel_id",
+      "property": "externalHotelId"
+    },
+    {
+      "table": "hotels",
+      "column": "faqs",
+      "property": "faqs"
+    },
+    {
+      "table": "hotels",
+      "column": "guest_capacity",
+      "property": "guestCapacity"
+    },
+    {
+      "table": "hotels",
+      "column": "highlights",
+      "property": "highlights"
+    },
+    {
+      "table": "hotels",
+      "column": "id",
+      "property": "id"
+    },
+    {
+      "table": "hotels",
+      "column": "indoor_venues",
+      "property": "indoorVenues"
+    },
+    {
+      "table": "hotels",
+      "column": "listing_position",
+      "property": "listingPosition"
+    },
+    {
+      "table": "hotels",
+      "column": "meta_description",
+      "property": "metaDescription"
+    },
+    {
+      "table": "hotels",
+      "column": "meta_keywords",
+      "property": "metaKeywords"
+    },
+    {
+      "table": "hotels",
+      "column": "name",
+      "property": "name"
+    },
+    {
+      "table": "hotels",
+      "column": "nearby_slugs",
+      "property": "nearbySlugs"
+    },
+    {
+      "table": "hotels",
+      "column": "og_image",
+      "property": "ogImage"
+    },
+    {
+      "table": "hotels",
+      "column": "outdoor_venues",
+      "property": "outdoorVenues"
+    },
+    {
+      "table": "hotels",
+      "column": "reception_capacity",
+      "property": "receptionCapacity"
+    },
+    {
+      "table": "hotels",
+      "column": "room_inventory",
+      "property": "roomInventory"
+    },
+    {
+      "table": "hotels",
+      "column": "seo_title",
+      "property": "seoTitle"
+    },
+    {
+      "table": "hotels",
+      "column": "shell_key",
+      "property": "shellKey"
+    },
+    {
+      "table": "hotels",
+      "column": "slug",
+      "property": "slug"
+    },
+    {
+      "table": "hotels",
+      "column": "station_time",
+      "property": "stationTime"
+    },
+    {
+      "table": "hotels",
+      "column": "status",
+      "property": "status"
+    },
+    {
+      "table": "hotels",
+      "column": "thumbnail_image",
+      "property": "thumbnailImage"
+    },
+    {
+      "table": "hotels",
+      "column": "total_rooms",
+      "property": "totalRooms"
+    },
+    {
+      "table": "hotels",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "hotels",
+      "column": "venue_category",
+      "property": "venueCategory"
+    },
+    {
+      "table": "hotels",
+      "column": "video_id",
+      "property": "videoId"
+    },
+    {
+      "table": "hotels",
+      "column": "wedding_types",
+      "property": "weddingTypes"
+    },
+    {
+      "table": "leads",
+      "column": "created_at",
+      "property": "createdAt"
+    },
+    {
+      "table": "leads",
+      "column": "email",
+      "property": "email"
+    },
+    {
+      "table": "leads",
+      "column": "email_sent",
+      "property": "emailSent"
+    },
+    {
+      "table": "leads",
+      "column": "fields",
+      "property": "fields"
+    },
+    {
+      "table": "leads",
+      "column": "form_id",
+      "property": "formId"
+    },
+    {
+      "table": "leads",
+      "column": "form_name",
+      "property": "formName"
+    },
+    {
+      "table": "leads",
+      "column": "id",
+      "property": "id"
+    },
+    {
+      "table": "leads",
+      "column": "metadata",
+      "property": "metadata"
+    },
+    {
+      "table": "leads",
+      "column": "name",
+      "property": "name"
+    },
+    {
+      "table": "leads",
+      "column": "notes",
+      "property": "notes"
+    },
+    {
+      "table": "leads",
+      "column": "page_url",
+      "property": "pageUrl"
+    },
+    {
+      "table": "leads",
+      "column": "phone",
+      "property": "phone"
+    },
+    {
+      "table": "leads",
+      "column": "status",
+      "property": "status"
+    },
+    {
+      "table": "leads",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "media",
+      "column": "content_type",
+      "property": "contentType"
+    },
+    {
+      "table": "media",
+      "column": "created_at",
+      "property": "createdAt"
+    },
+    {
+      "table": "media",
+      "column": "filename",
+      "property": "filename"
+    },
+    {
+      "table": "media",
+      "column": "height",
+      "property": "height"
+    },
+    {
+      "table": "media",
+      "column": "key",
+      "property": "key"
+    },
+    {
+      "table": "media",
+      "column": "size",
+      "property": "size"
+    },
+    {
+      "table": "media",
+      "column": "uploaded_by",
+      "property": "uploadedBy"
+    },
+    {
+      "table": "media",
+      "column": "width",
+      "property": "width"
+    },
+    {
+      "table": "page_templates",
+      "column": "html",
+      "property": "html"
+    },
+    {
+      "table": "page_templates",
+      "column": "key",
+      "property": "key"
+    },
+    {
+      "table": "page_templates",
+      "column": "kind",
+      "property": "kind"
+    },
+    {
+      "table": "page_templates",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "rate_limits",
+      "column": "count",
+      "property": "count"
+    },
+    {
+      "table": "rate_limits",
+      "column": "key",
+      "property": "key"
+    },
+    {
+      "table": "rate_limits",
+      "column": "reset_at",
+      "property": "resetAt"
+    },
+    {
+      "table": "sessions",
+      "column": "created_at",
+      "property": "createdAt"
+    },
+    {
+      "table": "sessions",
+      "column": "expires_at",
+      "property": "expiresAt"
+    },
+    {
+      "table": "sessions",
+      "column": "id",
+      "property": "id"
+    },
+    {
+      "table": "sessions",
+      "column": "ip",
+      "property": "ip"
+    },
+    {
+      "table": "sessions",
+      "column": "token_hash",
+      "property": "tokenHash"
+    },
+    {
+      "table": "sessions",
+      "column": "user_agent",
+      "property": "userAgent"
+    },
+    {
+      "table": "sessions",
+      "column": "user_id",
+      "property": "userId"
+    },
+    {
+      "table": "settings",
+      "column": "key",
+      "property": "key"
+    },
+    {
+      "table": "settings",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "settings",
+      "column": "updated_by",
+      "property": "updatedBy"
+    },
+    {
+      "table": "settings",
+      "column": "value",
+      "property": "value"
+    },
+    {
+      "table": "site_labels",
+      "column": "emphasis",
+      "property": "emphasis"
+    },
+    {
+      "table": "site_labels",
+      "column": "key",
+      "property": "key"
+    },
+    {
+      "table": "site_labels",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "site_labels",
+      "column": "updated_by",
+      "property": "updatedBy"
+    },
+    {
+      "table": "site_labels",
+      "column": "value",
+      "property": "value"
+    },
+    {
+      "table": "static_pages",
+      "column": "html",
+      "property": "html"
+    },
+    {
+      "table": "static_pages",
+      "column": "meta_description",
+      "property": "metaDescription"
+    },
+    {
+      "table": "static_pages",
+      "column": "origin",
+      "property": "origin"
+    },
+    {
+      "table": "static_pages",
+      "column": "path",
+      "property": "path"
+    },
+    {
+      "table": "static_pages",
+      "column": "published",
+      "property": "published"
+    },
+    {
+      "table": "static_pages",
+      "column": "title",
+      "property": "title"
+    },
+    {
+      "table": "static_pages",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "static_pages",
+      "column": "updated_by",
+      "property": "updatedBy"
+    },
+    {
+      "table": "users",
+      "column": "created_at",
+      "property": "createdAt"
+    },
+    {
+      "table": "users",
+      "column": "email",
+      "property": "email"
+    },
+    {
+      "table": "users",
+      "column": "id",
+      "property": "id"
+    },
+    {
+      "table": "users",
+      "column": "last_login_at",
+      "property": "lastLoginAt"
+    },
+    {
+      "table": "users",
+      "column": "name",
+      "property": "name"
+    },
+    {
+      "table": "users",
+      "column": "password_hash",
+      "property": "passwordHash"
+    },
+    {
+      "table": "users",
+      "column": "role",
+      "property": "role"
+    },
+    {
+      "table": "users",
+      "column": "status",
+      "property": "status"
+    },
+    {
+      "table": "users",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "venue_types",
+      "column": "id",
+      "property": "id"
+    },
+    {
+      "table": "venue_types",
+      "column": "label",
+      "property": "label"
+    },
+    {
+      "table": "venue_types",
+      "column": "position",
+      "property": "position"
+    },
+    {
+      "table": "venue_types",
+      "column": "published",
+      "property": "published"
+    },
+    {
+      "table": "venue_types",
+      "column": "slug",
+      "property": "slug"
+    },
+    {
+      "table": "venue_types",
+      "column": "updated_at",
+      "property": "updatedAt"
+    }
+  ],
+  "auditActions": [
+    "activity.bulk_deleted",
+    "activity.deleted",
+    "activity.pruned",
+    "blog.bulk_deleted",
+    "blog.created",
+    "blog.deleted",
+    "blog.reordered",
+    "blog.updated",
+    "blog_section.updated",
+    "calculator.city_bulk_deleted",
+    "calculator.city_created",
+    "calculator.city_deleted",
+    "calculator.city_updated",
+    "calculator.currency_bulk_deleted",
+    "calculator.currency_deleted",
+    "calculator.currency_saved",
+    "calculator.hotel_bulk_deleted",
+    "calculator.hotel_created",
+    "calculator.hotel_deleted",
+    "calculator.hotel_updated",
+    "calculator.imported",
+    "calculator.prices_updated",
+    "calculator.tax_bulk_deleted",
+    "calculator.tax_deleted",
+    "calculator.tax_saved",
+    "city.bulk_deleted",
+    "city.created",
+    "city.deleted",
+    "city.updated",
+    "content.imported",
+    "hero.bulk_deleted",
+    "hero.reordered",
+    "hero.slide_created",
+    "hero.slide_deleted",
+    "hero.slide_updated",
+    "hotel.bulk_deleted",
+    "hotel.created",
+    "hotel.deleted",
+    "hotel.moved",
+    "hotel.updated",
+    "labels.updated",
+    "lead.bulk_deleted",
+    "lead.bulk_status",
+    "lead.deleted",
+    "lead.email_resend_failed",
+    "lead.email_resent",
+    "lead.exported",
+    "lead.notes_updated",
+    "lead.status_changed",
+    "media.bulk_deleted",
+    "media.deleted",
+    "media.replaced",
+    "page.bulk_published",
+    "page.bulk_reset",
+    "page.created",
+    "page.image_replaced",
+    "page.reset",
+    "page.updated",
+    "settings.updated",
+    "user.bulk_deleted",
+    "user.created",
+    "user.deleted",
+    "user.login",
+    "user.password_change_failed",
+    "user.password_changed",
+    "user.password_reset",
+    "user.profile_updated",
+    "user.sessions_cleared",
+    "user.updated",
+    "venue_type.deleted",
+    "venue_type.saved"
+  ],
+  "workerExports": [
+    {
+      "file": "worker/admin/image-type.ts",
+      "name": "ACCEPTED_IMAGE_TYPES"
+    },
+    {
+      "file": "worker/admin/media-store.ts",
+      "name": "ACCEPTED_TYPES"
+    },
+    {
+      "file": "worker/admin/media-config.ts",
+      "name": "ACCEPTED_UPLOAD_MIME_LIST"
+    },
+    {
+      "file": "worker/admin/media-config.ts",
+      "name": "ACCEPTED_UPLOAD_MIME_TYPES"
+    },
+    {
+      "file": "worker/db/errors.ts",
+      "name": "adminDatabaseMessage"
+    },
+    {
+      "file": "worker/site/app-routes.ts",
+      "name": "APP_OWNED_PREFIXES"
+    },
+    {
+      "file": "worker/site/json-ld.ts",
+      "name": "appendJsonLd"
+    },
+    {
+      "file": "worker/site/calculator-inject.ts",
+      "name": "applyCalculatorHandlers"
+    },
+    {
+      "file": "worker/site/hotel-inject.ts",
+      "name": "applyHotelHandlers"
+    },
+    {
+      "file": "worker/site/blog-inject.ts",
+      "name": "applyListingHandlers"
+    },
+    {
+      "file": "worker/site/render-page.ts",
+      "name": "applyManagedContent"
+    },
+    {
+      "file": "worker/db/apply-pg-migrations.ts",
+      "name": "applyPgMigrations"
+    },
+    {
+      "file": "worker/site/blog-inject.ts",
+      "name": "applyPostHandlers"
+    },
+    {
+      "file": "worker/site/venue-listing-inject.ts",
+      "name": "applyVenueListingHandlers"
+    },
+    {
+      "file": "worker/site/json-ld.ts",
+      "name": "articleJsonLd"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "auditLog"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "BLOG_LISTING_PATHS"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "BLOG_PREFIX"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "BLOG_SHELL_PATH"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "blogListings"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "blogPosts"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "blogSlugFromPath"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "blogTaxonomyFromPath"
+    },
+    {
+      "file": "worker/site/json-ld.ts",
+      "name": "breadcrumbJsonLd"
+    },
+    {
+      "file": "worker/admin/image-references.ts",
+      "name": "buildImageUsage"
+    },
+    {
+      "file": "worker/admin/lead-csv.ts",
+      "name": "buildLeadCsv"
+    },
+    {
+      "file": "worker/site/sitemap.ts",
+      "name": "buildSitemapXml"
+    },
+    {
+      "file": "worker/site/venue-listing-payload.ts",
+      "name": "buildVenueListingData"
+    },
+    {
+      "file": "worker/site/serve-static.ts",
+      "name": "cacheControlFor"
+    },
+    {
+      "file": "worker/site/calculator-store.ts",
+      "name": "CALCULATOR_CACHE_CONTROL"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "CALCULATOR_MONTHS"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "calculatorCities"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "calculatorCurrencies"
+    },
+    {
+      "file": "worker/calculator-data.ts",
+      "name": "calculatorData"
+    },
+    {
+      "file": "worker/site/calculator-store.ts",
+      "name": "calculatorHasData"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "calculatorHotels"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "calculatorPrices"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "calculatorTaxes"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "CARD_NAME_LIMIT"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "CITY_PAGE_SIZE"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "cityFromListingPath"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "cityListings"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "cityPages"
+    },
+    {
+      "file": "worker/admin/rate-limit.ts",
+      "name": "clearRateLimit"
+    },
+    {
+      "file": "worker/site/legacy-calculator-endpoints.ts",
+      "name": "CONSULTATION_SLOT_TIMES"
+    },
+    {
+      "file": "worker/site/public-routes.ts",
+      "name": "CONSULTATION_SLOTS"
+    },
+    {
+      "file": "worker/site/legacy-calculator-endpoints.ts",
+      "name": "consultationSlots"
+    },
+    {
+      "file": "worker/admin/image-type.ts",
+      "name": "contentKey"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "contentVersion"
+    },
+    {
+      "file": "worker/admin/session.ts",
+      "name": "createSession"
+    },
+    {
+      "file": "worker/admin/lead-csv.ts",
+      "name": "csvCell"
+    },
+    {
+      "file": "worker/db/errors.ts",
+      "name": "databaseErrorDetail"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "decodeEntities"
+    },
+    {
+      "file": "worker/admin/password.ts",
+      "name": "decoyHash"
+    },
+    {
+      "file": "worker/site/settings.ts",
+      "name": "DEFAULT_SITE_SETTINGS"
+    },
+    {
+      "file": "worker/admin/session.ts",
+      "name": "destroySessionByToken"
+    },
+    {
+      "file": "worker/admin/session.ts",
+      "name": "destroyUserSessions"
+    },
+    {
+      "file": "worker/env.ts",
+      "name": "emptyEnv"
+    },
+    {
+      "file": "worker/site/public-html.ts",
+      "name": "enhancePublicHtml"
+    },
+    {
+      "file": "worker/site/labels.ts",
+      "name": "ensureDefaultLabels"
+    },
+    {
+      "file": "worker/db/client.ts",
+      "name": "ensurePageTemplates"
+    },
+    {
+      "file": "worker/site/escape.ts",
+      "name": "escapeHtml"
+    },
+    {
+      "file": "worker/admin/lead-filters.ts",
+      "name": "EXPORT_LIMIT"
+    },
+    {
+      "file": "worker/site/json-ld.ts",
+      "name": "faqJsonLd"
+    },
+    {
+      "file": "worker/admin/lead-csv.ts",
+      "name": "fieldColumns"
+    },
+    {
+      "file": "worker/admin/lead-filters.ts",
+      "name": "filtersToQuery"
+    },
+    {
+      "file": "worker/lead-fields.ts",
+      "name": "findByKey"
+    },
+    {
+      "file": "worker/site/template.ts",
+      "name": "findCityPage"
+    },
+    {
+      "file": "worker/lead-fields.ts",
+      "name": "findContactEmail"
+    },
+    {
+      "file": "worker/lead-fields.ts",
+      "name": "findContactName"
+    },
+    {
+      "file": "worker/lead-fields.ts",
+      "name": "findContactPhone"
+    },
+    {
+      "file": "worker/site/calculator-store.ts",
+      "name": "findHotel"
+    },
+    {
+      "file": "worker/site/hotel.ts",
+      "name": "findHotel"
+    },
+    {
+      "file": "worker/site/hotel.ts",
+      "name": "findHotelByPath"
+    },
+    {
+      "file": "worker/admin/image-references.ts",
+      "name": "findImageReferences"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "findPostBySlug"
+    },
+    {
+      "file": "worker/lead-fields.ts",
+      "name": "findPreferredDate"
+    },
+    {
+      "file": "worker/site/static-pages.ts",
+      "name": "findStaticPage"
+    },
+    {
+      "file": "worker/admin/lead-csv.ts",
+      "name": "FIXED_COLUMNS"
+    },
+    {
+      "file": "worker/site/legacy-calculator-endpoints.ts",
+      "name": "getCities"
+    },
+    {
+      "file": "worker/env.ts",
+      "name": "getDatabaseUrl"
+    },
+    {
+      "file": "worker/db/client.ts",
+      "name": "getDb"
+    },
+    {
+      "file": "worker/site/legacy-calculator-endpoints.ts",
+      "name": "getHotelPrice"
+    },
+    {
+      "file": "worker/site/legacy-calculator-endpoints.ts",
+      "name": "getHotelPrices"
+    },
+    {
+      "file": "worker/site/legacy-calculator-endpoints.ts",
+      "name": "getHotelsByCity"
+    },
+    {
+      "file": "worker/env.ts",
+      "name": "getR2Config"
+    },
+    {
+      "file": "worker/admin/session.ts",
+      "name": "getSessionUser"
+    },
+    {
+      "file": "worker/admin/session.ts",
+      "name": "getUserByToken"
+    },
+    {
+      "file": "worker/site/labels.ts",
+      "name": "GLANCE_LABEL_KEYS"
+    },
+    {
+      "file": "worker/lead-email.ts",
+      "name": "handleLeadRequest"
+    },
+    {
+      "file": "worker/admin/password.ts",
+      "name": "hashPassword"
+    },
+    {
+      "file": "worker/site/hero.ts",
+      "name": "heroImageUrl"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "heroSlides"
+    },
+    {
+      "file": "worker/admin/form-rows.ts",
+      "name": "highestId"
+    },
+    {
+      "file": "worker/site/hotel.ts",
+      "name": "HOTEL_PREFIX"
+    },
+    {
+      "file": "worker/site/hotel.ts",
+      "name": "HOTEL_SHELL_PATH"
+    },
+    {
+      "file": "worker/site/json-ld.ts",
+      "name": "hotelJsonLd"
+    },
+    {
+      "file": "worker/site/hotel.ts",
+      "name": "hotelPathFrom"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "hotels"
+    },
+    {
+      "file": "worker/lead-fields.ts",
+      "name": "humanFieldLabel"
+    },
+    {
+      "file": "worker/admin/image-type.ts",
+      "name": "imageDimensions"
+    },
+    {
+      "file": "worker/site/inject.ts",
+      "name": "injectManagedContent"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "invalidateBlogCache"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "invalidateBlogListingCache"
+    },
+    {
+      "file": "worker/site/calculator-store.ts",
+      "name": "invalidateCalculatorCache"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "invalidateCityListingCache"
+    },
+    {
+      "file": "worker/site/hero.ts",
+      "name": "invalidateHeroCache"
+    },
+    {
+      "file": "worker/site/hotel.ts",
+      "name": "invalidateHotelCache"
+    },
+    {
+      "file": "worker/site/labels.ts",
+      "name": "invalidateLabelCache"
+    },
+    {
+      "file": "worker/site/settings.ts",
+      "name": "invalidateSettingsCache"
+    },
+    {
+      "file": "worker/site/static-pages.ts",
+      "name": "invalidateStaticPageCache"
+    },
+    {
+      "file": "worker/site/template.ts",
+      "name": "invalidateTemplateCache"
+    },
+    {
+      "file": "worker/site/venue-types.ts",
+      "name": "invalidateVenueTypeCache"
+    },
+    {
+      "file": "worker/admin/rich-text.ts",
+      "name": "isAllowedUrl"
+    },
+    {
+      "file": "worker/site/app-routes.ts",
+      "name": "isAppOwnedPath"
+    },
+    {
+      "file": "worker/site/serve-static.ts",
+      "name": "isBlockedPublicPath"
+    },
+    {
+      "file": "worker/db/errors.ts",
+      "name": "isDatabaseError"
+    },
+    {
+      "file": "worker/site/render-page.ts",
+      "name": "isDatabaseOwnedPath"
+    },
+    {
+      "file": "worker/site/inject.ts",
+      "name": "isHtmlResponse"
+    },
+    {
+      "file": "worker/admin/image-references.ts",
+      "name": "isImageUnused"
+    },
+    {
+      "file": "worker/site/media.ts",
+      "name": "isMediaPath"
+    },
+    {
+      "file": "worker/site/app-routes.ts",
+      "name": "isNextInternalRequest"
+    },
+    {
+      "file": "worker/storage/r2.ts",
+      "name": "isR2Configured"
+    },
+    {
+      "file": "worker/admin/rate-limit.ts",
+      "name": "isRateLimited"
+    },
+    {
+      "file": "worker/lead-csrf.ts",
+      "name": "issueLeadCsrfToken"
+    },
+    {
+      "file": "worker/admin/lead-filters.ts",
+      "name": "istDayEnd"
+    },
+    {
+      "file": "worker/admin/lead-filters.ts",
+      "name": "istDayStart"
+    },
+    {
+      "file": "worker/db/errors.ts",
+      "name": "isUniqueViolation"
+    },
+    {
+      "file": "worker/admin/password.ts",
+      "name": "ITERATIONS"
+    },
+    {
+      "file": "worker/site/json-ld.ts",
+      "name": "jsonLdScripts"
+    },
+    {
+      "file": "worker/site/labels.ts",
+      "name": "LABEL_DEFINITIONS"
+    },
+    {
+      "file": "worker/lead-csrf.ts",
+      "name": "LEAD_CSRF_COOKIE"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "LEAD_STATUSES"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "leads"
+    },
+    {
+      "file": "worker/legacy-lead.ts",
+      "name": "LEGACY_LEAD_PATHS"
+    },
+    {
+      "file": "worker/legacy-lead.ts",
+      "name": "legacyLeadGetResponse"
+    },
+    {
+      "file": "worker/site/static-pages.ts",
+      "name": "listStaticPages"
+    },
+    {
+      "file": "worker/site/venue-types.ts",
+      "name": "loadAllVenueTypes"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "loadBlogListings"
+    },
+    {
+      "file": "worker/site/calculator-store.ts",
+      "name": "loadCalculatorConfig"
+    },
+    {
+      "file": "worker/site/calculator-store.ts",
+      "name": "loadCalculatorDataset"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "loadCityListings"
+    },
+    {
+      "file": "worker/site/template.ts",
+      "name": "loadCityPage"
+    },
+    {
+      "file": "worker/site/hero.ts",
+      "name": "loadHeroSlides"
+    },
+    {
+      "file": "worker/site/hotel.ts",
+      "name": "loadHotel"
+    },
+    {
+      "file": "worker/site/calculator-store.ts",
+      "name": "loadHotelPrice"
+    },
+    {
+      "file": "worker/site/calculator-store.ts",
+      "name": "loadHotelRoomCap"
+    },
+    {
+      "file": "worker/site/hotel.ts",
+      "name": "loadHotels"
+    },
+    {
+      "file": "worker/site/calculator-store.ts",
+      "name": "loadHotelsForCity"
+    },
+    {
+      "file": "worker/site/labels.ts",
+      "name": "loadLabels"
+    },
+    {
+      "file": "worker/site/image-dimensions.ts",
+      "name": "loadMediaDimensions"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "loadPost"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "loadPublishedPosts"
+    },
+    {
+      "file": "worker/site/settings.ts",
+      "name": "loadSiteSettings"
+    },
+    {
+      "file": "worker/site/static-pages.ts",
+      "name": "loadStaticPage"
+    },
+    {
+      "file": "worker/site/static-pages.ts",
+      "name": "loadStaticPagePaths"
+    },
+    {
+      "file": "worker/site/template.ts",
+      "name": "loadTemplate"
+    },
+    {
+      "file": "worker/site/venue-listing-data.ts",
+      "name": "loadVenueListingData"
+    },
+    {
+      "file": "worker/site/venue-types.ts",
+      "name": "loadVenueTypes"
+    },
+    {
+      "file": "worker/db/errors.ts",
+      "name": "logDatabaseError"
+    },
+    {
+      "file": "worker/admin/lead-store.ts",
+      "name": "markLeadEmailSent"
+    },
+    {
+      "file": "worker/admin/form-rows.ts",
+      "name": "MAX_FORM_ROWS"
+    },
+    {
+      "file": "worker/admin/record-id.ts",
+      "name": "MAX_RECORD_ID"
+    },
+    {
+      "file": "worker/admin/rich-text.ts",
+      "name": "MAX_RICH_TEXT_BYTES"
+    },
+    {
+      "file": "worker/admin/media-config.ts",
+      "name": "MAX_UPLOAD_BYTES"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "media"
+    },
+    {
+      "file": "worker/site/hero.ts",
+      "name": "MEDIA_PREFIX"
+    },
+    {
+      "file": "worker/admin/media-path.ts",
+      "name": "mediaKeyFrom"
+    },
+    {
+      "file": "worker/admin/media-path.ts",
+      "name": "mediaPathFromKey"
+    },
+    {
+      "file": "worker/admin/media-path.ts",
+      "name": "mediaSrc"
+    },
+    {
+      "file": "worker/admin/image-references.ts",
+      "name": "migrationInventoryReferencesForMedia"
+    },
+    {
+      "file": "worker/db/migrations.ts",
+      "name": "MIGRATIONS"
+    },
+    {
+      "file": "worker/admin/password.ts",
+      "name": "MIN_PASSWORD_LENGTH"
+    },
+    {
+      "file": "worker/site/inject.ts",
+      "name": "needsInjection"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "NO_POSTS_MARKUP"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "NO_VENUES_MARKUP"
+    },
+    {
+      "file": "worker/lead-fields.ts",
+      "name": "normalizeKey"
+    },
+    {
+      "file": "worker/lead-fields.ts",
+      "name": "normalizePhone"
+    },
+    {
+      "file": "worker/site/static-pages.ts",
+      "name": "normalizeStaticPath"
+    },
+    {
+      "file": "worker/site/content-version.ts",
+      "name": "onContentChanged"
+    },
+    {
+      "file": "worker/site/json-ld.ts",
+      "name": "organizationJsonLd"
+    },
+    {
+      "file": "worker/admin/lead-filters.ts",
+      "name": "PAGE_SIZE"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "pageTemplates"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "parseFaqs"
+    },
+    {
+      "file": "worker/admin/lead-filters.ts",
+      "name": "parseFilters"
+    },
+    {
+      "file": "worker/site/hotel.ts",
+      "name": "parseHighlights"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "parseNearby"
+    },
+    {
+      "file": "worker/admin/record-id.ts",
+      "name": "parseRecordId"
+    },
+    {
+      "file": "worker/site/venue-listing-payload.ts",
+      "name": "parseWeddingTypes"
+    },
+    {
+      "file": "worker/db/apply-pg-migrations.ts",
+      "name": "pendingMigrationNames"
+    },
+    {
+      "file": "worker/db/apply-pg-migrations.ts",
+      "name": "PG_MIGRATION_NAMES"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "POST_STATUSES"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "postsForTaxonomy"
+    },
+    {
+      "file": "worker/site/public-routes.ts",
+      "name": "PUBLIC_REDIRECTS"
+    },
+    {
+      "file": "worker/site/public-routes.ts",
+      "name": "publicRedirectTarget"
+    },
+    {
+      "file": "worker/site/content-version.ts",
+      "name": "publishContentChange"
+    },
+    {
+      "file": "worker/storage/r2.ts",
+      "name": "r2Delete"
+    },
+    {
+      "file": "worker/storage/r2.ts",
+      "name": "r2Get"
+    },
+    {
+      "file": "worker/storage/r2.ts",
+      "name": "r2Head"
+    },
+    {
+      "file": "worker/storage/r2.ts",
+      "name": "r2Put"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "rateLimits"
+    },
+    {
+      "file": "worker/admin/session.ts",
+      "name": "readCookie"
+    },
+    {
+      "file": "worker/site/labels.ts",
+      "name": "readLabels"
+    },
+    {
+      "file": "worker/lead-csrf.ts",
+      "name": "readLeadCsrfCookie"
+    },
+    {
+      "file": "worker/admin/media-path.ts",
+      "name": "readMediaPathValue"
+    },
+    {
+      "file": "worker/admin/rich-text.ts",
+      "name": "readRichText"
+    },
+    {
+      "file": "worker/admin/form-rows.ts",
+      "name": "readRowIndices"
+    },
+    {
+      "file": "worker/site/settings.ts",
+      "name": "readSettings"
+    },
+    {
+      "file": "worker/site/serve-static.ts",
+      "name": "readStaticFile"
+    },
+    {
+      "file": "worker/admin/rate-limit.ts",
+      "name": "recordRateLimitAttempt"
+    },
+    {
+      "file": "worker/admin/media-store.ts",
+      "name": "releaseImage"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "renderBannerMeta"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "renderCityCard"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "renderCityCards"
+    },
+    {
+      "file": "worker/site/city-heading.ts",
+      "name": "renderCityHeading"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "renderFaqItems"
+    },
+    {
+      "file": "worker/site/render-page.ts",
+      "name": "renderFromDatabase"
+    },
+    {
+      "file": "worker/site/hotel.ts",
+      "name": "renderGallery"
+    },
+    {
+      "file": "worker/site/hotel.ts",
+      "name": "renderGalleryThumbnails"
+    },
+    {
+      "file": "worker/site/hero.ts",
+      "name": "renderHeroSlide"
+    },
+    {
+      "file": "worker/site/hero.ts",
+      "name": "renderHeroSlides"
+    },
+    {
+      "file": "worker/site/hotel.ts",
+      "name": "renderHighlights"
+    },
+    {
+      "file": "worker/site/hotel.ts",
+      "name": "renderHotelFaqItems"
+    },
+    {
+      "file": "worker/site/labels.ts",
+      "name": "renderLabel"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "renderListingCards"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "renderNearbyCard"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "renderNearbyCards"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "renderPagination"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "renderResultsSummary"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "renderTaxonomyGrid"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "renderTocItems"
+    },
+    {
+      "file": "worker/admin/image-references.ts",
+      "name": "replaceImageReferences"
+    },
+    {
+      "file": "worker/env.ts",
+      "name": "requireDatabaseUrl"
+    },
+    {
+      "file": "worker/lead-email.ts",
+      "name": "resendStoredLeadEmail"
+    },
+    {
+      "file": "worker/site/resolve-page.ts",
+      "name": "resolvePage"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "resolveVenues"
+    },
+    {
+      "file": "worker/site/hero.ts",
+      "name": "safeHref"
+    },
+    {
+      "file": "worker/admin/rich-text.ts",
+      "name": "sanitiseRichText"
+    },
+    {
+      "file": "worker/admin/rich-text.ts",
+      "name": "sanitiseRichTextDetailed"
+    },
+    {
+      "file": "worker/db/client.ts",
+      "name": "SchemaOutOfDateError"
+    },
+    {
+      "file": "worker/public-endpoints.ts",
+      "name": "searchHotels"
+    },
+    {
+      "file": "worker/db/seed-calculator.ts",
+      "name": "seedCalculatorData"
+    },
+    {
+      "file": "worker/db/seed-templates.ts",
+      "name": "seedPageTemplates"
+    },
+    {
+      "file": "worker/db/seed-content.ts",
+      "name": "seedSiteContent"
+    },
+    {
+      "file": "worker/site/media.ts",
+      "name": "serveMedia"
+    },
+    {
+      "file": "worker/admin/session.ts",
+      "name": "SESSION_COOKIE"
+    },
+    {
+      "file": "worker/admin/session.ts",
+      "name": "SESSION_MAX_AGE_MS"
+    },
+    {
+      "file": "worker/admin/session.ts",
+      "name": "SESSION_TTL_MS"
+    },
+    {
+      "file": "worker/admin/session.ts",
+      "name": "sessionCookieOptions"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "sessions"
+    },
+    {
+      "file": "worker/site/settings.ts",
+      "name": "SETTING_KEYS"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "settings"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "shortenName"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "shortLocation"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "siteLabels"
+    },
+    {
+      "file": "worker/admin/image-type.ts",
+      "name": "sniffImageType"
+    },
+    {
+      "file": "worker/admin/lead-filters.ts",
+      "name": "SORT_KEYS"
+    },
+    {
+      "file": "worker/db/migrations.ts",
+      "name": "splitStatements"
+    },
+    {
+      "file": "worker/db/seed-content.ts",
+      "name": "sqliteToPostgres"
+    },
+    {
+      "file": "worker/db/migrations.ts",
+      "name": "STATEMENT_BREAKPOINT"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "STATIC_PAGE_ORIGINS"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "staticPages"
+    },
+    {
+      "file": "worker/admin/lead-store.ts",
+      "name": "storeLead"
+    },
+    {
+      "file": "worker/site/content-version.ts",
+      "name": "syncContentVersion"
+    },
+    {
+      "file": "worker/site/template.ts",
+      "name": "templateResponse"
+    },
+    {
+      "file": "worker/site/blog.ts",
+      "name": "tocEntries"
+    },
+    {
+      "file": "worker/admin/form-rows.ts",
+      "name": "TooManyRowsError"
+    },
+    {
+      "file": "worker/admin/media-store.ts",
+      "name": "uploadImage"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "USER_ROLES"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "users"
+    },
+    {
+      "file": "worker/admin/password.ts",
+      "name": "validatePasswordStrength"
+    },
+    {
+      "file": "worker/site/venue-listing.ts",
+      "name": "venuesForCity"
+    },
+    {
+      "file": "worker/db/schema.ts",
+      "name": "venueTypes"
+    },
+    {
+      "file": "worker/admin/password.ts",
+      "name": "verifyPassword"
+    },
+    {
+      "file": "worker/site/json-ld.ts",
+      "name": "websiteJsonLd"
+    },
+    {
+      "file": "worker/site/settings.ts",
+      "name": "whatsappHref"
+    },
+    {
+      "file": "worker/legacy-lead.ts",
+      "name": "withDeprecatedLeadHeaders"
+    },
+    {
+      "file": "worker/site/labels.ts",
+      "name": "writeLabels"
+    },
+    {
+      "file": "worker/site/settings.ts",
+      "name": "writeSettings"
+    }
+  ],
+  "npmScripts": [
+    "build",
+    "cities:audit",
+    "cities:deploy",
+    "cities:retire",
+    "data:audit",
+    "data:detach",
+    "data:migrate",
+    "db:audit",
+    "db:deploy",
+    "db:generate",
+    "db:migrate",
+    "db:seed",
+    "dev",
+    "docs:inventory",
+    "docs:sync",
+    "docs:validate",
+    "leads:purge",
+    "lint",
+    "media:audit",
+    "media:cleanup",
+    "media:migrate",
+    "media:upload-static",
+    "pages:deploy",
+    "pages:seed",
+    "sitemap:generate",
+    "start",
+    "stored:deploy",
+    "templates:deploy",
+    "templates:seed",
+    "test",
+    "test:ci",
+    "vercel-build"
+  ],
+  "envVars": [
+    "DATABASE_SSL_NO_VERIFY",
+    "DATABASE_URL",
+    "DATABASE_URL_UNPOOLED",
+    "MEDIA_PUBLIC_BASE_URL",
+    "NODE_ENV",
+    "POSTGRES_PRISMA_URL",
+    "POSTGRES_URL",
+    "POSTGRES_URL_NON_POOLED",
+    "POSTGRES_URL_NON_POOLING",
+    "POSTGRES_URL_NO_SSL",
+    "R2_ACCESS_KEY_ID",
+    "R2_ACCOUNT_ID",
+    "R2_BUCKET",
+    "R2_BUCKET_NAME",
+    "R2_PUBLIC_BASE_URL",
+    "R2_SECRET_ACCESS_KEY",
+    "SITE_ORIGIN",
+    "VERCEL",
+    "VERCEL_AUTOMATION_BYPASS_SECRET"
+  ],
+  "enums": [
+    {
+      "name": "CALCULATOR_MONTHS",
+      "values": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ]
+    },
+    {
+      "name": "LEAD_STATUSES",
+      "values": [
+        "new",
+        "contacted",
+        "qualified",
+        "won",
+        "lost",
+        "spam"
+      ]
+    },
+    {
+      "name": "POST_STATUSES",
+      "values": [
+        "published",
+        "draft"
+      ]
+    },
+    {
+      "name": "STATIC_PAGE_ORIGINS",
+      "values": [
+        "import",
+        "panel"
+      ]
+    },
+    {
+      "name": "USER_ROLES",
+      "values": [
+        "admin",
+        "editor"
+      ]
+    }
   ]
 }

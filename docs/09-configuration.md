@@ -19,10 +19,20 @@ to the project on its own **Shared** tab.
 | `DATABASE_URL` | One of these | `worker/env.ts` | Postgres connection string |
 | `POSTGRES_URL` | One of these | `worker/env.ts` | Set by the Neon integration |
 | `POSTGRES_PRISMA_URL` | Fallback | `worker/env.ts` | Pooled, also from Neon |
+| `DATABASE_URL_UNPOOLED` | Fallback | `worker/env.ts` | Direct connection |
 | `POSTGRES_URL_NON_POOLING` | Fallback | `worker/env.ts` | Direct connection |
+| `POSTGRES_URL_NON_POOLED` | Fallback | `worker/env.ts` | Another Neon spelling of the same thing |
+| `POSTGRES_URL_NO_SSL` | Last resort | `worker/env.ts` | Used only if nothing above is set |
+| `DATABASE_SSL_NO_VERIFY` | No | `worker/db/client.ts` | `"true"` downgrades TLS to `require`, skipping certificate verification |
 
-`getDatabaseUrl()` takes the first of these that looks like a Postgres URL, so
-the Neon integration works without renaming anything. Pooled URLs are preferred.
+`getDatabaseUrl()` takes the first of these that looks like a Postgres URL —
+tried in exactly the order listed — so the Neon integration works without
+renaming anything. Pooled URLs come first deliberately.
+
+`DATABASE_SSL_NO_VERIFY` exists for corporate networks that intercept TLS, where
+the certificate the client sees is not Neon's. It must be set deliberately;
+otherwise the client verifies with `rejectUnauthorized: true`. **Do not set it in
+production** — it disables the check that the database is the real one.
 
 ### Object storage (Cloudflare R2)
 
@@ -32,7 +42,9 @@ the Neon integration works without renaming anything. Pooled URLs are preferred.
 | `R2_ACCESS_KEY_ID` | For uploads | `worker/env.ts` | 32-char hex from the R2 API token |
 | `R2_SECRET_ACCESS_KEY` | For uploads | `worker/env.ts` | **64-char hex**, not the token value |
 | `R2_BUCKET_NAME` | For uploads | `worker/env.ts` | Bucket, e.g. `viraaya-media` |
+| `R2_BUCKET` | Alias | `worker/env.ts` | Accepted when `R2_BUCKET_NAME` is unset |
 | `R2_PUBLIC_BASE_URL` | No | `worker/env.ts` | Custom domain in front of the bucket |
+| `MEDIA_PUBLIC_BASE_URL` | No | `worker/env.ts` | Alias for the above, used when it is unset |
 
 All four of the first group must be present or `getR2Config()` returns null and
 uploads are refused. The token creation screen shows three fields; the S3 API
@@ -51,6 +63,16 @@ the real error.
 | `RESEND_REPLY_TO` | No | — | Reply-to address |
 | `RESEND_TO_EMAIL` / `LEAD_EMAIL_TO` | Prod: yes | — | Where lead notifications go |
 | `LEAD_EMAIL_SUBJECT` | No | `Website Query` | Subject prefix |
+| `RESEND_ALLOW_INSECURE_LOCAL_TLS` | No | unset | `"true"` sends the Resend call over Node's https with certificate verification off. **Local only** — for TLS-intercepting networks; ignored on a Workers runtime |
+
+### Platform and tooling
+
+| Variable | Set by | Used by | Purpose |
+| --- | --- | --- | --- |
+| `VERCEL` | Vercel | `worker/site/media.ts`, `app/[[...path]]/route.ts` | Present on Vercel; selects the fetch-through-origin path for the static fallback instead of a local file read |
+| `VERCEL_AUTOMATION_BYPASS_SECRET` | Vercel | `worker/site/media.ts`, `app/[[...path]]/route.ts` | Sent as `x-vercel-protection-bypass` when the function fetches a static file back through its own origin. **Without it, that fallback fails on a password-protected preview deployment** — the fetch gets the login page instead of the file, so legacy images and shell fallbacks 404 on previews while working in production |
+| `NODE_ENV` | Toolchain | Various | Standard |
+| `SITE_ORIGIN` | No | `scripts/generate-sitemap.mjs` | Origin for generated sitemap URLs. Defaults to `https://viraayaweddings.com` |
 | `RESEND_ALLOW_INSECURE_LOCAL_TLS` | No | false | Local corporate-proxy testing only |
 
 **Template:** `.env.example`
@@ -123,12 +145,71 @@ so **every** route returns 500.
 | `lint` | ESLint on app/worker/config |
 | `db:migrate` | Apply Postgres migrations |
 | `db:seed` | Seed content |
+| `test:ci` | `test` then `build` |
+| `lint` | ESLint on app/worker/config |
 | `docs:inventory` / `docs:validate` / `docs:sync` | Documentation tooling |
 
 The build ends with a check that the Vercel output is deployable: `config.json`
 present, a filesystem handler, a route to the function, and `static/index.html`.
 A Nitro misconfiguration can otherwise produce a build that reports success and
 deploys with no routes at all.
+
+#### The production deploy chain
+
+`vercel.json` sets `buildCommand` to `npm run vercel-build`, so **this is what
+runs on every deployment** — not `npm run build`:
+
+```
+vercel-build
+  = NITRO_PRESET=vercel npm run build      # vinext build + verify-vercel-output
+  + npm run db:deploy
+      = db:migrate --if-configured         # apply drizzle-pg migrations
+      + pages:deploy                       # seed-static-pages.mjs   --apply --if-configured
+      + templates:deploy                   # seed-page-templates.mjs --apply --if-configured
+      + stored:deploy                      # migrate-stored-pages.mjs --apply --if-configured
+      + cities:deploy                      # retire-cities-db.mjs    --apply --if-configured
+      + media:cleanup                      # cleanup-watermarked-media.mjs --apply --if-configured
+```
+
+| Script | What it does on deploy |
+| --- | --- |
+| `vercel-build` | The whole chain above. `tests/vercel-config.test.mjs` asserts it stays under Vercel's 256-character `buildCommand` limit and that every script it names exists |
+| `db:deploy` | The six database steps, in order |
+| `pages:deploy` | Seeds `static_pages` rows for pages that have none |
+| `templates:deploy` | Seeds `page_templates` shells |
+| `stored:deploy` | Migrates pages into the stored-page model |
+| `cities:deploy` | Removes the retired cities' rows if any survive |
+| `media:cleanup` | Drops watermarked media rows and objects |
+
+**Every step takes `--if-configured`,** which exits 0 rather than failing when
+there is no `DATABASE_URL`. That is what lets a preview build succeed without a
+database — and it is also why a *misconfigured* database produces a green build
+with an unseeded site rather than a failure.
+
+`pages:deploy` and `templates:deploy` only **insert**. Pushing a changed shell to
+a row that already exists needs an explicit `--refresh <path>` (repeatable), or
+`--refresh-calculators` for the calculator-bearing pages; without one the deploy
+reports success and the old shell keeps serving. The deploy chain passes neither,
+so a shell edited on disk does not reach an existing row by deploying.
+
+#### Operational scripts (not run by the deploy)
+
+| Script | Purpose |
+| --- | --- |
+| `db:generate` | `drizzle-kit generate` — regenerate `drizzle-pg/` after editing `worker/db/schema.ts` |
+| `pages:seed` / `templates:seed` | The same seeders against `.env.local`, for local use |
+| `data:detach` / `data:audit` / `data:migrate` | The stored-page data-source tooling |
+| `media:upload-static` | Push `site-public` images into R2 |
+| `media:migrate` | The original image → R2 migration; writes `scripts/image-migration-map.json` |
+| `media:audit` | Report on the media library against R2 and the database |
+| `cities:retire` / `cities:audit` | The retired-cities transform over files and rows |
+| `leads:purge` | Delete leads past a retention window |
+| `sitemap:generate` | Write `site-public/sitemap.xml` |
+
+`scripts/image-migration-map.json` is **not** a build artefact — it is imported
+at runtime by `worker/site/media.ts` to map a legacy `/media/<key>` back to its
+original `site-public` path when R2 does not have the object. Deleting it breaks
+that fallback.
 
 ### `tsconfig.json`
 

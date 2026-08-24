@@ -115,7 +115,7 @@ flowchart TB
 ```
 nav.ts
   ├── SideNav.tsx
-  ├── ShellChrome.tsx (breadcrumb)
+  ├── AdminHeaderBar.tsx (header)
   └── CommandPalette.tsx
 
 auth.ts
@@ -127,7 +127,7 @@ RichText.tsx
   ├── blogs/_form.tsx
   └── hotels/[id]/page.tsx
 
-ImageInput.tsx
+MediaPicker.tsx
   ├── blogs/_form.tsx
   ├── hotels/[id]/page.tsx
   └── hero/page.tsx

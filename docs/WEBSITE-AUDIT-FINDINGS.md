@@ -5,7 +5,7 @@
 > **Status:** Website issues below were addressed on 2026-08-21 (see git history). Formal cross-browser / Core Web Vitals / WCAG certification still requires manual QA.
 
 **Audit date:** 2026-08-21  
-**Scope:** 367 static HTML pages, worker public routing, forms, calculator, SEO, security
+**Scope:** 367 static HTML pages (the count at that date; 292 today, after eight cities were withdrawn), worker public routing, forms, calculator, SEO, security
 
 > **Historical record — written against the Cloudflare deployment.** References
 > below to Workers, D1, the `ASSETS` binding or `worker/index.ts` describe the

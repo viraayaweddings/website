@@ -1,152 +1,126 @@
 # Documentation Coverage Report
 
-Generated after complete website audit expansion (v1.1.0).  
-**Validation:** Run `npm run docs:validate` — see `docs/generated/validation-report.json`
+**Do not hand-maintain counts in this file.** Every number below is generated.
+Read them from:
+
+- `docs/META.md` — inventory counts at the last sync
+- `docs/generated/code-inventory.json` — the entities themselves
+- `docs/generated/validation-report.json` — issues and warnings from the last run
+
+```bash
+npm run docs:validate   # rescans, then PASS/FAIL
+npm run docs:sync       # rescan + rewrite manifest/META + validate
+```
+
+This document previously carried a hand-copied table asserting `Missing: 0` for
+every category, with numbers for 31 routes, 27 server actions, 14 tables and 367
+pages. The real figures at that moment were 55, 67, 23 and 292. Restating
+generated counts in prose is what produced that, so it is not done here any more.
 
 ---
 
-## Summary
+## What a PASS does and does not mean
 
-| Metric | Value |
+`npm run docs:validate` fails unless **every one** of the following that the scan
+finds is mentioned in `docs/**/*.md`:
+
+| Kind | Count | Checked as |
+| --- | ---: | --- |
+| App routes | 55 | Individually |
+| Server actions | 67 | Individually |
+| Database tables | 23 | Individually |
+| Database **columns** | 198 | Individually, against `05-database.md` |
+| Worker modules | 65 | Individually — every `.ts` under `worker/` |
+| Audit actions | 71 | Individually |
+| npm scripts | 32 | Individually |
+| Environment variables | 19 | Individually |
+| Enums | 5 names, 24 values | By name, and by value except the calendar months |
+| Page type patterns | 9 | Individually |
+| Public forms | 7 placements / 6 ids | Individually |
+| Public JS files | 7 | Individually |
+| Static site pages | 292 | By pattern, plus a fixed sample of key routes |
+
+Exported symbols are reported as a coverage figure rather than enforced: 65 of
+279 are named, and most of the rest are internal row and option types.
+
+As of 2026-08-24 validation also:
+
+- rescans the codebase first, instead of trusting the committed inventory
+  snapshot;
+- ignores `docs/manifest.json` when deciding whether something is documented;
+- matches on word boundaries, so a table called `media` is not satisfied by the
+  word "media" in a sentence.
+
+It still does **not** verify that what the documentation says is *true*. Nothing
+mechanical can. The gap is real and worth stating plainly: for two days the suite
+reported PASS while nine routes, twenty-eight actions and three tables were
+undocumented, and while `03-routes.md` described the homepage as a static file
+served from a component that does not exist.
+
+Behavioural accuracy comes from reading the code, and the fix for a wrong
+statement is a commit, not a rerun.
+
+---
+
+## Coverage by kind
+
+| Kind | How it is covered |
 | --- | --- |
-| **Documentation Sync Status** | Run `npm run docs:sync` to verify |
-| **Documentation version** | 1.1.0 |
-| **Scope** | Admin panel + public website + worker/API/DB |
+| App routes | Individually, in `03-routes.md` and `02-admin/routes.md` |
+| Server actions | Individually, in `02-admin/actions.md`; the thirteen bulk actions as one documented pattern |
+| Database tables | Individually, in `05-database.md`, with columns |
+| Worker modules | Individually, in `11-file-index.md`; behaviour in `public-site/rendering.md` and `backend/README.md` |
+| Admin components | Individually, in `10-components.md` |
+| Static site pages | **By pattern, not by file.** Nine page-type patterns in `public-site/page-types.md`; the 292 paths are listed in `code-inventory.json` |
+| Public forms | Individually, in `public-site/forms.md`. 7 placements across 6 ids — `contactForm` appears on `/contact/` and `/blogs/{slug}/` |
+
+Documenting 292 cloned pages one at a time has no reader, so validation checks a
+sample of key routes plus the page-type patterns instead. That is a deliberate
+limit, not an omission.
 
 ---
 
-## Coverage by Category
+## Not covered, and why
 
-| Category | Discovered | Documented | Missing | Notes |
-| --- | ---: | ---: | ---: | --- |
-| App routes (Vinext) | 31 | 31 | 0 | `03-routes.md` + admin detail |
-| Static site pages | 367 | 367* | 0 | *By pattern taxonomy, not individual files |
-| Page type patterns | 9 | 9 | 0 | `public-site/routes.md`, `page-types.md` |
-| Public forms | 7 | 7 | 0 | `public-site/forms.md` |
-| Public JS files | 5 | 5 | 0 | `public-site/javascript.md` |
-| Worker site modules | 12 | 12 | 0 | `public-site/rendering.md`, `backend/README.md` |
-| Server actions | 27 | 27 | 0 | `02-admin/actions.md` |
-| DB tables | 14 | 14 | 0 | `05-database.md` |
-| Worker endpoints | 26 | 26 | 0 | `03-routes.md`, `04-api.md` |
-| Admin components | 16 | 16 | 0 | `10-components.md` |
-| Admin files | 57 | 57 | 0 | `11-file-index.md` |
-| Website ↔ Admin deps | 8 modules | 8 | 0 | `public-site/website-admin-map.md` |
+| Area | Status |
+| --- | --- |
+| Individual static HTML files | By pattern, by design |
+| HTMLRewriter CSS selectors | Module level; selectors live in the injector source |
+| Responsive behaviour | Described, not per-page browser-tested |
+| Accessibility | Lead forms documented; no formal WCAG audit |
+| Core Web Vitals | No Lighthouse or field data collected |
+| Email deliverability | Resend is documented; live sending is not tested |
 
 ---
 
-## Fully Documented Areas
-
-### Admin Panel (prior audit — unchanged)
-- All 57 admin source files, 27 server actions, forms, workflows, auth, components
-
-### Public Website (this audit)
-- Route taxonomy (367 pages across 9 patterns)
-- All page types with UI anatomy
-- All 7 public form types + validation pipeline
-- All 5 public JS files + theme scripts
-- HTMLRewriter injection per page type
-- Search, calculator, compare tools
-- Booking/consultation flows (lead-only)
-- SEO metadata patterns and gaps
-- Content management sources (CMS vs static)
-- Website ↔ Admin dependency map
-- Visitor workflows
-
-### Shared Infrastructure
-- Worker routing, caching, security headers
-- Database schema (website + admin usage)
-- API inventory (public + admin)
-- Integrations (Neon, R2, Resend)
-- Security (public + admin)
-- Architecture, dependency maps, change impact
-
----
-
-## Partially Documented / Pattern-Level Only
-
-| Area | Coverage | Gap |
-| --- | --- | --- |
-| Individual static HTML files | Pattern taxonomy | 367 files documented by type, not individually |
-| HTMLRewriter CSS selectors | Module-level | Selector-level mapping not exhaustively listed |
-| Responsive behavior | Described | Not browser-tested per page |
-| Accessibility | Lead forms documented | Full WCAG audit not performed |
-| Performance metrics | Architecture notes | No Lighthouse/CWV measurements |
-| Real weddings / packages content | Page types listed | Content not individually inventoried |
-
----
-
-## Confirmed Absent (Documented as N/A)
+## Confirmed absent
 
 | Feature | Status |
 | --- | --- |
-| Public user authentication | Not implemented — documented in `06-auth.md` |
+| Public user authentication | Not implemented — see `06-auth.md` |
 | User dashboard / onboarding | Not implemented |
-| Payment processing | Not implemented — documented in `booking-consultation.md` |
-| Real-time chat/WebSockets | Not implemented |
-| robots.txt / sitemap | Not present — flagged in SEO audit |
-| Schema.org structured data | Not present — flagged in SEO audit |
+| Payment processing | Not implemented — see `public-site/booking-consultation.md` |
+| Real-time chat / WebSockets | Not implemented |
 
----
+Three entries were removed from this list on 2026-08-24 because they had since
+been built, and the list was still calling them missing:
 
-## Unable to Verify
-
-| Item | Reason |
+| Was listed absent | Actually |
 | --- | --- |
-| Live production behavior | No production access |
-| Cross-browser testing | Not performed |
-| Mobile responsive per page | Not systematically tested |
-| Core Web Vitals | No performance tooling run |
-| Accessibility WCAG compliance | Not formally tested |
-| Email deliverability | Resend not tested live |
+| `robots.txt` | `site-public/robots.txt` exists and serves 200 |
+| Sitemap | `app/sitemap.xml/route.ts` generates it from the database; `site-public/sitemap.xml` also exists |
+| Schema.org structured data | `worker/site/json-ld.ts` emits organisation, website, breadcrumb, article, hotel and FAQ JSON-LD, appended per page type |
 
 ---
 
-## Audit Reports (Separate)
+## Audit reports (separate)
 
-| Report | Issues |
+| Report | Scope |
 | --- | --- |
-| [AUDIT-FINDINGS.md](./AUDIT-FINDINGS.md) | Admin panel issues (prior audit) |
-| [WEBSITE-AUDIT-FINDINGS.md](./WEBSITE-AUDIT-FINDINGS.md) | Website issues (this audit) |
+| [AUDIT-FINDINGS.md](./AUDIT-FINDINGS.md) | Admin panel issues — historical, written against the Cloudflare deployment |
+| [WEBSITE-AUDIT-FINDINGS.md](./WEBSITE-AUDIT-FINDINGS.md) | Website issues — same caveat |
+| [AUDIT-CALCULATORS.md](./AUDIT-CALCULATORS.md) | Calculator data sources |
+| [AUDIT-PAGE-DATA-SOURCES.md](./AUDIT-PAGE-DATA-SOURCES.md) | Which pages read from where |
 
----
-
-## Synchronization Mechanism
-
-Extended in v1.1.0 to cover:
-
-- Static site routes (367 pages)
-- Page type patterns
-- Public form IDs
-- Public JS files
-- Worker site modules
-- Key static route spot-checks
-
-**Commands:**
-```bash
-npm run docs:sync      # Full pipeline
-npm run docs:validate  # PASS/FAIL
-```
-
-**Honest assessment:** PASS confirms inventoried entities appear in documentation text. Does not verify behavioral accuracy or individual HTML file content. **Coverage percentage for individual static pages: pattern-level 100%, file-level N/A by design.**
-
----
-
-## Documentation Files (Website Expansion)
-
-| Path | Purpose |
-| --- | --- |
-| `docs/public-site/README.md` | Website index |
-| `docs/public-site/architecture.md` | Public app layer |
-| `docs/public-site/routes.md` | Route taxonomy |
-| `docs/public-site/page-types.md` | Page anatomy |
-| `docs/public-site/forms.md` | All public forms |
-| `docs/public-site/javascript.md` | Client JS |
-| `docs/public-site/rendering.md` | HTMLRewriter |
-| `docs/public-site/search-calculator.md` | Discovery tools |
-| `docs/public-site/booking-consultation.md` | Appointment flows |
-| `docs/public-site/seo.md` | SEO audit |
-| `docs/public-site/content-management.md` | Content sources |
-| `docs/public-site/website-admin-map.md` | Admin ↔ site deps |
-| `docs/public-site/workflows.md` | Visitor flows |
-| `docs/WEBSITE-AUDIT-FINDINGS.md` | Website issues |
-| Updated: `backend/README.md`, `security/README.md`, sync scripts |
+Those describe problems and their fixes. For how the system works now, start at
+[Architecture](./01-architecture.md).

@@ -2,7 +2,8 @@
 
 Taxonomy of all customer-facing page types.
 
-**Total pages:** 367 static HTML files + dynamic DB-only pages
+**Total pages:** 292 static `index.html` files + the paths the database owns.
+Was 370 before eight cities were withdrawn; see `scripts/lib/retired-cities.mjs`.
 
 ---
 

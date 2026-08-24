@@ -16,19 +16,29 @@ Admin panel shared components in `app/admin/_components/`.
 | `actions` | ReactNode? | Header action buttons |
 | `children` | ReactNode | Page content |
 
-Server component wrapper. Passes safe user to client `ShellChrome`.
+Server component. It narrows the full `User` row to `{ name, email, role }`
+before anything client-side sees it — the row also carries `password_hash`, and
+passing the whole object across the boundary would serialise it into the page.
+Then it lays out `SideNav`, `AdminHeaderBar` and `<main>` itself.
 
-### `ShellChrome` (`ShellChrome.tsx`)
+### `AdminHeaderBar` (`AdminHeaderBar.tsx`)
 
-Client layout: header, breadcrumb, side nav, command palette, theme toggle, toaster.
+Replaced `ShellChrome`, which no longer exists. It is the client header only —
+nav toggle, command palette, theme toggle — not the whole layout, and it does not
+take the page's children.
 
 | Prop | Type |
 | --- | --- |
 | `user` | `{ name, email, role }` |
 | `title` | string |
-| `subtitle` | string? |
-| `actions` | ReactNode? |
-| `children` | ReactNode |
+
+Also exports `ADMIN_NAV_OPEN_EVENT`, the event name `SideNav` listens on so the
+mobile nav can be opened from the header without the two sharing state.
+
+> The previous entry gave `ShellChrome` five props including `children`,
+> describing it as the client layout that wrapped the page. `AdminShell` does the
+> layout, and it is a server component; the header takes two props.
+> `subtitle` and `actions` are `AdminShell`'s, not the header's.
 
 ### `SideNav` (`SideNav.tsx`)
 
@@ -54,7 +64,7 @@ Uses `navGroupsFor(role)` from `nav.ts`. Includes logout POST form.
 | `navGroupsFor(role)` | Grouped filtered nav |
 | `navLabel(pathname)` | Breadcrumb label (longest match) |
 
-**Used by:** SideNav, CommandPalette, ShellChrome breadcrumb.
+**Used by:** SideNav, CommandPalette, AdminHeaderBar.
 
 ---
 
@@ -84,7 +94,35 @@ Uses `navGroupsFor(role)` from `nav.ts`. Includes logout POST form.
 | `StatusBadge` | Colored status pill |
 | `Badge` | Generic label badge |
 | `DetailList` | Key-value display list |
-| Formatters | `formatDate`, `formatRelative`, etc. |
+| Formatters | `formatBytes`, `formatCount`, and the date helpers re-exported from `_lib/dates` |
+
+### Dates and times
+
+`ui.tsx` re-exports these from `app/admin/_lib/dates.ts`, so a page imports them
+from the same place as everything else. They live in `_lib` because `ui.tsx`
+contains JSX, which `node --experimental-strip-types` cannot strip — a test
+cannot import it. `tests/admin-dates.test.mjs` covers the format.
+
+| Function | Output | Use |
+| --- | --- | --- |
+| `formatDateTime(value)` | `24-08-2026, 21:35` | Any exact timestamp |
+| `formatDate(value)` | `24-08-2026` | The date alone |
+| `formatRelative(value, now)` | `3 hours ago`, falling back to `24-08-2026` past a week | List columns, where recency matters more than the exact time |
+| `formatStoredTimestamp(value)` | Converts a stored ISO instant; returns anything else unchanged | Free-form data such as `lead.metadata` |
+
+One format everywhere: **`DD-MM-YYYY`, 24-hour `HH:MM`, `Asia/Kolkata`.**
+
+- The clock is 24-hour because a 12-hour one without a meridiem cannot
+  distinguish 09:35 from 21:35 while scanning a column of submissions.
+- Day and month are zero-padded so columns align.
+- `null` and any invalid date render as an em dash, never `Invalid Date`.
+- `formatRelative` takes `now` from the caller (`_lib/clock.ts`) so a server
+  component stays pure.
+
+**Not converted, deliberately:** `<input type="date">` values, which the HTML
+spec fixes at `YYYY-MM-DD`; the leads CSV export, where an ISO-style date keeps
+sorting correctly in a spreadsheet; the dashboard chart axis labels, which would
+overlap; and `sitemap.xml` and JSON-LD, where ISO-8601 is required.
 
 ---
 
@@ -105,21 +143,30 @@ WYSIWYG toolbar + HTML source toggle. Syncs to hidden input. Uploads via `/admin
 
 **Used by:** Blog PostForm, hotel edit form.
 
-### `ImageInput` (`ImageInput.tsx`)
+### `MediaPicker` (`MediaPicker.tsx`)
+
+Replaced `ImageInput`, which no longer exists.
 
 | Prop | Type | Purpose |
 | --- | --- | --- |
 | `label` | string | Field label |
-| `pathName` | string? | Hidden path field name |
-| `fileName` | string | File input name |
-| `current` | string? | Current image URL |
-| `hint` | string? | Help text |
+| `name` | string | Hidden field the chosen `/media/<key>` path is written to |
+| `defaultValue` | string? | Current value, default `""` |
 | `required` | boolean? | Required on create |
-| `shape` | string? | Preview aspect ratio |
+| `hint` | string? | Help text |
+| `shape` | `"wide" \| "card"`? | `wide` for banners, `card` for thumbnails and social images. Default `wide` |
 
-Preview + path text + file upload.
+Browses the media library **and** uploads into it. `ImageInput` was a file input
+beside a path box, so the only way to reuse a picture already on the site was to
+know its key. The library is the source of truth for every image, so the field
+browses it; either way the value written is the same `/media/<key>` path the
+renderers expect.
 
-**Used by:** Blog PostForm, hotel edit form, hero slides.
+Upload limits come from `worker/admin/media-config.ts`
+(`MAX_UPLOAD_BYTES`, `ACCEPTED_UPLOAD_MIME_LIST`) rather than being restated
+here, so the field and the server cannot disagree about what is allowed.
+
+**Used by:** Blog PostForm, hotel edit form, hero slides, stored page editing.
 
 ### `Uploader` (`Uploader.tsx`)
 
@@ -198,7 +245,7 @@ Icon names match `nav.ts` icon references.
 | AdminShell | All admin pages |
 | PostForm (`blogs/_form.tsx`) | Blog create/edit |
 | RichText | PostForm, hotel edit |
-| ImageInput | PostForm, hotel edit, hero |
+| MediaPicker | PostForm, hotel edit, hero, stored pages |
 | ConfirmDeleteBanner | Blogs, hotels, hero lists |
 | BulkBar | Leads list |
 | LiveSearch | Hotels list |

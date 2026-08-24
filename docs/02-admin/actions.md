@@ -13,7 +13,7 @@ Every exported server action in `app/admin/**/actions.ts`.
 | **File** | `app/admin/login/actions.ts` |
 | **Auth** | None |
 | **Params** | `email`, `password`, `next` |
-| **Validation** | Required fields; rate limit 8/15min per IP+email; email format; active status |
+| **Validation** | Required fields; email format; active status. Two rate limits, either of which throttles: 8/15min on `login:<ip>:<email>`, and 25/60min on `login-account:<email>` so the ceiling holds when an attacker changes address |
 | **DB** | UPDATE `users.last_login_at`; INSERT `sessions` |
 | **Audit** | `user.login` |
 | **Redirect** | `safeReturnPath(next)` or `/admin` |
@@ -28,6 +28,81 @@ Every exported server action in `app/admin/**/actions.ts`.
 | **Validation** | Name+email required; email regex; passwords match; `validatePasswordStrength` (≥10 chars, letter+number) |
 | **DB** | INSERT `users` (role=admin); INSERT `sessions` |
 | **Audit** | `user.created` (firstAdmin) |
+
+---
+
+## Account Actions (`app/admin/account/actions.ts`)
+
+The only actions any signed-in role may call on itself. Everything else in this
+document is `requireRole("admin")` unless stated.
+
+| Action | Auth | Input | Writes | Audit |
+| --- | --- | --- | --- | --- |
+| `changeOwnPasswordAction` | any signed-in | `current`, `password`, `confirm` | `users.password_hash`; revokes the user's other sessions | `user.password_changed`, or `user.password_change_failed` on a wrong current password |
+| `updateOwnProfileAction` | any signed-in | `name` (≤120 chars) | `users.name` | `user.profile_updated` |
+| `signOutEverywhereAction` | any signed-in | none | Deletes every `sessions` row for the user | `user.sessions_cleared` |
+
+Re-entering the current password is what makes `changeOwnPasswordAction` safe to
+expose to every role: a borrowed unlocked laptop cannot be used to lock the
+owner out. Wrong current passwords are themselves rate limited — 6 in 15 minutes
+— and each one is audited, so a guessing attempt against an open session leaves
+a trail.
+
+Before this existed the only way a password changed was an admin resetting it,
+so an editor who thought theirs was compromised had to find an admin, say a new
+password out loud, and trust them with it.
+
+---
+
+## Activity Actions (`app/admin/activity/actions.ts`)
+
+| Action | Auth | Input | Writes | Audit |
+| --- | --- | --- | --- | --- |
+| `deleteActivityEntryAction` | admin | `id` | Deletes one `audit_log` row | `activity.deleted` |
+| `bulkDeleteActivityAction` | admin | `ids` (≤200) | Deletes the selected `audit_log` rows | `activity.bulk_deleted` |
+| `pruneActivityAction` | admin | `days` | Deletes `audit_log` rows older than the window | `activity.pruned` |
+
+**Deleting from the log is itself logged**, so the trail cannot be quietly
+erased: a gap always has an entry beside it saying who made it. `pruneActivityAction`
+is the routine way to keep the log a workable size; deleting rows one at a time
+is for the odd mistake, not for housekeeping.
+
+---
+
+## Bulk Actions
+
+Thirteen actions share one shape, so they are documented as a pattern rather than
+one at a time. Every one of them:
+
+- is `admin` only, and calls `assertSameOrigin()` first;
+- reads its selection from repeated `ids` form fields, de-duplicated and
+  validated per-row (a malformed id is dropped, not rejected);
+- refuses an empty selection, and refuses more than **200** in one call;
+- re-checks that every selected row still exists and fails with "Refresh and try
+  again" if not, so a stale list cannot delete the wrong thing;
+- writes in a single transaction, then calls `publishContentChange()` — the
+  local `invalidate*Cache()` calls only reach the instance that handled the
+  request (see [`content_version`](../05-database.md#content_version));
+- records one audit entry for the whole batch, with a `count`.
+
+| Action | Module | Deletes / updates | Audit |
+| --- | --- | --- | --- |
+| `bulkDeletePostsAction` | blogs | `blog_posts` | `blog.bulk_deleted` |
+| `bulkDeleteSlidesAction` | hero | `hero_slides` | `hero.bulk_deleted` |
+| `bulkDeleteHotelsAction` | hotels | `hotels` | `hotel.bulk_deleted` |
+| `bulkDeleteUsersAction` | users | `users` + their `sessions`; refuses to remove the last admin (counted in SQL, not by loading rows) | `user.bulk_deleted` |
+| `bulkDeleteMediaAction` | media | Each key through `releaseImage`, which **keeps** any image still referenced and deletes only the unused ones | `media.bulk_deleted` |
+| `bulkDeleteCitiesAction` | cities | `city_pages` + `city_listings` | `city.bulk_deleted` |
+| `bulkPublishCitiesAction` | cities | `city_pages.published` | `city.updated` |
+| `bulkPublishPagesAction` | pages | `static_pages.published` | `page.bulk_published` |
+| `bulkResetPagesAction` | pages | Clears stored HTML so pages fall back to their cloned file | `page.bulk_reset` |
+| `bulkDeleteCalculatorCitiesAction` | calculator | `calculator_cities` | `calculator.city_bulk_deleted` |
+| `bulkDeleteCalculatorHotelsAction` | calculator | `calculator_hotels` (+ prices, by cascade) | `calculator.hotel_bulk_deleted` |
+| `bulkDeleteCalculatorTaxesAction` | calculator | `calculator_taxes` | `calculator.tax_bulk_deleted` |
+| `bulkDeleteCurrenciesAction` | calculator | `calculator_currencies` | `calculator.currency_bulk_deleted` |
+
+`app/admin/_components/BulkBar.tsx` provides the selection UI (`BulkSelection`,
+`RowCheckbox`) for all of them.
 
 ---
 
@@ -101,6 +176,23 @@ sequence from zero whenever anyone reorders, so they stay dense in practice.
 **DB:** DELETE `hotels`; DELETE `city_listings`; release images  
 **Audit:** `hotel.deleted`
 
+### Wedding type vocabulary
+
+The filter on the venue listing offers whatever `venue_types` holds. These two
+actions edit that vocabulary; tagging a venue is part of `updateHotelAction`.
+
+| Action | Auth | Input | Writes | Audit |
+| --- | --- | --- | --- | --- |
+| `saveVenueTypeAction` | admin | `slug` (lowercased, `[a-z0-9-]` only), `label` (≤60 chars), `position`, `published` | INSERT or UPDATE `venue_types` | `venue_type.saved` |
+| `deleteVenueTypeAction` | admin | `id` | DELETE `venue_types` | `venue_type.deleted` |
+
+`deleteVenueTypeAction` **refuses** while any venue still carries the slug in its
+`wedding_types`, rather than deleting and leaving those venues tagged with a type
+that no longer exists. To retire a type without untagging anything, unpublish it
+instead — the filter option disappears and the tags survive.
+
+`bulkDeleteHotelsAction` follows the [shared bulk pattern](#bulk-actions).
+
 ---
 
 ## City Actions (`app/admin/cities/actions.ts`)
@@ -112,6 +204,52 @@ sequence from zero whenever anyone reorders, so they stay dense in practice.
 **Validation:** city slug valid; seoTitle required; venues parsed; totalVenues ≥ 0  
 **DB:** UPDATE `city_pages`; DELETE + INSERT `city_listings`; cache invalidation  
 **Audit:** `city.updated`
+
+### `createCityAction`
+
+**Auth:** `requireRole("admin")`  
+**Params:** `city` slug, plus the same SEO fields as `saveCityAction`  
+**DB:** INSERT `city_pages`  
+**Audit:** `city.created`
+
+### `deleteCityAction`
+
+**Auth:** `requireRole("admin")`  
+**DB:** DELETE `city_listings` then `city_pages`, in one transaction  
+**Audit:** `city.deleted`
+
+### `syncCityTotalAction`
+
+**Auth:** `requireRole("admin")`  
+**Params:** `city`  
+**DB:** Recounts the city's venues and writes `city_pages.total_venues`  
+**Audit:** `city.updated`
+
+The total is stored rather than counted per request because the city index prints
+it in its heading and its pagination, and counting on every render would cost a
+query on the site's most-visited pages. Storing it means it can drift, which is
+what this action is for.
+
+Bulk equivalents — `bulkDeleteCitiesAction`, `bulkPublishCitiesAction` — follow
+the [shared bulk pattern](#bulk-actions).
+
+---
+
+## Static Page Actions (`app/admin/pages/actions.ts`)
+
+The `static_pages` table holds whole pages that have no content model of their
+own. See [Stored pages](#stored-pages) below and
+[`static_pages`](../05-database.md#static_pages).
+
+| Action | Auth | Input | Writes | Audit |
+| --- | --- | --- | --- | --- |
+| `saveStaticPageAction` | admin | `path`, `title`, `metaDescription`, `html`, `published` | `static_pages` | `page.updated` |
+| `createStaticPageAction` | admin | `path` + the fields above | INSERT `static_pages` | `page.created` |
+| `resetStaticPageAction` | admin | `path` | Clears the stored HTML so the page falls back to its cloned file | `page.reset` |
+| `replacePageImageAction` | admin | `path`, `from`, `to` | Repoints one image reference inside the stored HTML | `page.image_replaced` |
+
+Bulk equivalents — `bulkPublishPagesAction`, `bulkResetPagesAction` — follow the
+[shared bulk pattern](#bulk-actions).
 
 ---
 
@@ -170,6 +308,25 @@ sequence from zero whenever anyone reorders, so they stay dense in practice.
 **Validation:** Refuses if `findImageReferences` non-empty  
 **DB/R2:** `releaseImage`  
 **Audit:** `media.deleted`
+
+A referenced image cannot be deleted at all — the action refuses rather than
+breaking the page that uses it. `findImageReferences` is what makes that check
+possible; it scans every column that can hold an image key, including the HTML
+of stored pages.
+
+### `replaceMediaAction`
+
+**Auth:** `requireRole("admin")`  
+**Params:** `key`, a new file upload  
+**Validation:** The upload is sniffed by magic bytes, not trusted by extension, and content-addressed the same way an ordinary upload is  
+**DB/R2:** Uploads the new object, repoints every reference from the old key to the new one, then releases the old key  
+**Audit:** `media.replaced`
+
+This exists because the alternative — delete, re-upload, then fix each reference
+by hand — cannot be done at all for an image used on several pages, and the
+delete is refused while any reference remains.
+
+`bulkDeleteMediaAction` follows the [shared bulk pattern](#bulk-actions).
 
 ---
 
@@ -235,6 +392,8 @@ the row *is* the undo, and the page stays up throughout.
 | `saveCalculatorHotelAction` | admin | id?, name, cityId, totalRooms, published | `calculator_hotels`, and twelve blank prices for a new one | `calculator.hotel_created` / `_updated` |
 | `deleteCalculatorHotelAction` | admin | id | `calculator_hotels` + `calculator_prices`, in one transaction | `calculator.hotel_deleted` |
 | `saveCalculatorPricesAction` | admin | hotelId, four prices per month | `calculator_prices`, twelve rows in one upsert | `calculator.prices_updated` |
+| `saveCalculatorTaxAction` | admin | code, label, percent, position, published | `calculator_taxes` | `calculator.tax_saved` |
+| `deleteCalculatorTaxAction` | admin | code | `calculator_taxes` | `calculator.tax_deleted` |
 | `saveCurrencyAction` | admin | code, name, symbol, rateToUsd, isDefault | `calculator_currencies` | `calculator.currency_saved` |
 | `deleteCurrencyAction` | admin | code | `calculator_currencies` | `calculator.currency_deleted` |
 | `importCalculatorDataAction` | admin | none | Seeds all four tables from the bundle | `calculator.imported` |
@@ -246,8 +405,218 @@ Deleting a city that still has hotels is refused rather than cascaded. Deleting
 a currency is refused when it is the last one, and promotes another to default
 so the picker never opens empty.
 
+Tax lines are rows because CGST 9% and SGST 9% were hardcoded in four copies of
+the calculator script, and the same 18% appeared as a bare `* 1.18` in a fifth.
+Every calculator renders one summary row per published tax, in `position` order,
+so a site needing a third line adds it with no deploy.
+
+The four bulk deletes here — `bulkDeleteCalculatorCitiesAction`,
+`bulkDeleteCalculatorHotelsAction`, `bulkDeleteCalculatorTaxesAction`,
+`bulkDeleteCurrenciesAction` — follow the [shared bulk pattern](#bulk-actions).
+
+---
+
+## Audit Vocabulary
+
+Every action writes one `audit_log` row, and `/admin/activity` is the only record
+of who changed what. `app/admin/_lib/audit-labels.ts` turns the stored string
+into the words an admin reads, and colours the row by tone.
+
+**71 actions, all labelled.** `humanAuditAction` does fall back to the verb after
+the dot, but that drops the object -- eight actions were reaching the log that
+way, so `activity.deleted` printed as "Deleted" and `content.imported` as
+"Imported", which beside a row saying "Article created" reads as though something
+unnamed had gone. `tests/audit-labels.test.mjs` now fails if a `recordAudit` call
+names an action the map does not cover, or if the map carries one nothing
+records.
+
+Tone comes from `auditActionTone`, by substring: `deleted` or `resend_failed`
+→ **bad**, `created` or `resent` → **ok**, anything under `user.` → **accent**,
+otherwise neutral.
+
+**`activity`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `activity.bulk_deleted` | Activity entries deleted | bad |
+| `activity.deleted` | Activity entry deleted | bad |
+| `activity.pruned` | Activity log pruned | neutral |
+
+**`blog`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `blog.bulk_deleted` | Articles bulk deleted | bad |
+| `blog.created` | Article created | ok |
+| `blog.deleted` | Article deleted | bad |
+| `blog.reordered` | Article reordered | neutral |
+| `blog.updated` | Article updated | neutral |
+
+**`blog_section`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `blog_section.updated` | Section listing updated | neutral |
+
+**`calculator`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `calculator.city_bulk_deleted` | Calculator cities bulk deleted | bad |
+| `calculator.city_created` | Calculator city created | ok |
+| `calculator.city_deleted` | Calculator city deleted | bad |
+| `calculator.city_updated` | Calculator city updated | neutral |
+| `calculator.currency_bulk_deleted` | Currencies bulk deleted | bad |
+| `calculator.currency_deleted` | Currency deleted | bad |
+| `calculator.currency_saved` | Currency saved | neutral |
+| `calculator.hotel_bulk_deleted` | Calculator hotels bulk deleted | bad |
+| `calculator.hotel_created` | Calculator hotel created | ok |
+| `calculator.hotel_deleted` | Calculator hotel deleted | bad |
+| `calculator.hotel_updated` | Calculator hotel updated | neutral |
+| `calculator.imported` | Calculator data imported | neutral |
+| `calculator.prices_updated` | Prices updated | neutral |
+| `calculator.tax_bulk_deleted` | Tax rates bulk deleted | bad |
+| `calculator.tax_deleted` | Tax rate deleted | bad |
+| `calculator.tax_saved` | Tax rate saved | neutral |
+
+**`city`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `city.bulk_deleted` | City pages bulk deleted | bad |
+| `city.created` | City page created | ok |
+| `city.deleted` | City page deleted | bad |
+| `city.updated` | City page updated | neutral |
+
+**`content`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `content.imported` | Site content imported | neutral |
+
+**`hero`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `hero.bulk_deleted` | Slides bulk deleted | bad |
+| `hero.reordered` | Slide reordered | neutral |
+| `hero.slide_created` | Slide created | ok |
+| `hero.slide_deleted` | Slide deleted | bad |
+| `hero.slide_updated` | Slide updated | neutral |
+
+**`hotel`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `hotel.bulk_deleted` | Venues bulk deleted | bad |
+| `hotel.created` | Venue created | ok |
+| `hotel.deleted` | Venue deleted | bad |
+| `hotel.moved` | Venue URL changed | neutral |
+| `hotel.updated` | Venue updated | neutral |
+
+**`labels`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `labels.updated` | Section headings updated | neutral |
+
+**`lead`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `lead.bulk_deleted` | Bulk delete | bad |
+| `lead.bulk_status` | Bulk status change | neutral |
+| `lead.deleted` | Submission deleted | bad |
+| `lead.email_resend_failed` | Notification resend failed | bad |
+| `lead.email_resent` | Notification resent | ok |
+| `lead.exported` | Submissions exported | neutral |
+| `lead.notes_updated` | Notes updated | neutral |
+| `lead.status_changed` | Status changed | neutral |
+
+**`media`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `media.bulk_deleted` | Images bulk deleted | bad |
+| `media.deleted` | Image deleted | bad |
+| `media.replaced` | Image replaced | neutral |
+
+**`page`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `page.bulk_published` | Pages shown or hidden | neutral |
+| `page.bulk_reset` | Pages reset | neutral |
+| `page.created` | Page created | ok |
+| `page.image_replaced` | Page picture replaced | neutral |
+| `page.reset` | Page reset | neutral |
+| `page.updated` | Page updated | neutral |
+
+**`settings`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `settings.updated` | Contact details updated | neutral |
+
+**`user`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `user.bulk_deleted` | Users bulk deleted | bad |
+| `user.created` | User created | ok |
+| `user.deleted` | User deleted | bad |
+| `user.login` | Signed in | accent |
+| `user.password_change_failed` | Own password change refused | accent |
+| `user.password_changed` | Own password changed | accent |
+| `user.password_reset` | Password reset | accent |
+| `user.profile_updated` | Own name changed | accent |
+| `user.sessions_cleared` | Signed out everywhere | accent |
+| `user.updated` | User updated | accent |
+
+**`venue_type`**
+
+| Action | Shown as | Tone |
+| --- | --- | --- |
+| `venue_type.deleted` | Wedding type deleted | bad |
+| `venue_type.saved` | Wedding type saved | neutral |
+
+### Reading a row
+
+`user_email` is denormalised onto the row, so the log still names who acted after
+the account is deleted -- the FK is `SET NULL`, not `CASCADE`, precisely so the
+history survives. A bulk action writes **one** row listing every id it touched,
+comma-separated, which is why the lead detail page matches history with
+`string_to_array(entity_id, ',') @> ARRAY[id]` rather than an equality test: an
+exact match found only the single-row edits, so a status set from the list view's
+bulk bar left no trace on the enquiry's own timeline.
+
 ---
 
 ## Action Count Summary
 
-Total server actions: **28** (verified by inventory scan).
+Total server actions: **67**, every one of which must appear in this document —
+`npm run docs:validate` fails on any that does not.
+
+| Module | Actions |
+| --- | --- |
+| `account` | 3 |
+| `activity` | 3 |
+| `blogs` (+ `blogs/sections`) | 6 |
+| `calculator` | 14 |
+| `cities` | 6 |
+| `hero` | 5 |
+| `hotels` | 6 |
+| `labels` | 1 |
+| `leads` | 5 |
+| `login` | 1 |
+| `media` | 3 |
+| `pages` | 6 |
+| `settings` (+ `settings/seed-actions`) | 2 |
+| `setup` | 1 |
+| `users` | 5 |
+
+The count was recorded as 28 here while the code had 67. It was not caught
+because validation accepted an entity's presence in `docs/manifest.json` as proof
+it was documented, and `docs:sync` wrote that file from the code scan — so every
+new action marked itself documented. Both scripts now read only the prose. See
+[Documentation Sync System](../16-sync-system.md).

@@ -39,7 +39,7 @@ The public site is a **cloned static HTML website** augmented at request time by
 | Document | Contents |
 | --- | --- |
 | [Architecture](./architecture.md) | Request flow, caching, preview mode |
-| [Route Map](./routes.md) | All 367+ public URL patterns |
+| [Route Map](./routes.md) | All 292 public URL patterns |
 | [Page Types](./page-types.md) | Page taxonomy and shared chrome |
 | [Forms](./forms.md) | Every lead/enquiry form |
 | [JavaScript](./javascript.md) | Client-side behavior |

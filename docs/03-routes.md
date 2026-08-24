@@ -8,7 +8,9 @@ Every route: App Router pages, API routes, and the public catch-all.
 
 **Complete documentation:** [Public Website Route Map](./public-site/routes.md)
 
-367 static HTML pages in `site-public/` plus worker-managed dynamic routes. See public-site docs for full taxonomy.
+**292** `index.html` files in `site-public/`, plus the paths the database owns.
+The figure was 370 before eight cities and their venues were withdrawn (see
+`scripts/lib/retired-cities.mjs`) and three retired form targets were deleted.
 
 ### Public site has NO user authentication
 
@@ -16,87 +18,85 @@ No `/login`, `/register`, `/account`, or protected user routes exist. See [Publi
 
 ---
 
-## App Router Pages
+## There is no `app/page.tsx`
 
-| Route | File | Auth | Purpose |
-| --- | --- | --- | --- |
-| `/` | `app/page.tsx` | None | Returns null — homepage is static HTML |
+The App Router owns `/admin`, `/api` and the named endpoints below. **Every other
+public URL, including `/`, is handled by the catch-all**
+`app/[[...path]]/route.ts` — there is no root page component, and never was one.
+
+`/` is not static either. `isDatabaseOwnedPath` in
+`worker/site/render-page.ts` returns true for `/` and `/index.html`, so the
+homepage is rendered from its stored shell with the hero carousel injected from
+`hero_slides`. It is the flagship database-rendered page, not a file served off
+the CDN.
+
+> This document previously carried the row
+> `| / | app/page.tsx | None | Returns null — homepage is static HTML |`.
+> All three claims were wrong: the file does not exist, nothing returns null, and
+> the homepage is database-rendered. Anyone editing the homepage on that basis
+> would have looked in the wrong place entirely.
 
 ---
 
 ## App Router API Routes
 
-| Route | Methods | File | Auth | Purpose |
-| --- | --- | --- | --- | --- |
-| `/api/lead` | POST, OPTIONS | `app/api/lead/route.ts` | Same-origin | Lead capture |
-| `/contact/save` | POST, OPTIONS | `app/contact/save/route.ts` | Same-origin | Contact form |
-| `/get_in_touch/store` | POST, OPTIONS | `app/get_in_touch/store/route.ts` | Same-origin | Get-in-touch form |
-| `/blog-form-submit` | POST, OPTIONS | `app/blog-form-submit/route.ts` | Same-origin | Blog enquiry form |
-| `/hotel-search` | GET | `app/hotel-search/route.ts` | None | Hotel autocomplete |
+Twenty-two non-admin routes. `/:[...path]` is the catch-all itself.
 
-All lead routes delegate to `app/lead-route.ts` → `worker/lead-email.ts`.
+### Lead capture
+
+| Route | Methods | File | Auth |
+| --- | --- | --- | --- |
+| `/api/lead` | POST, OPTIONS | `app/api/lead/route.ts` | Same-origin + CSRF |
+| `/api/lead/csrf` | GET | `app/api/lead/csrf/route.ts` | None (issues the token) |
+| `/contact/save` | POST, OPTIONS | `app/contact/save/route.ts` | Same-origin |
+| `/get_in_touch/store` | POST, OPTIONS | `app/get_in_touch/store/route.ts` | Same-origin |
+| `/blog-form-submit` | POST, OPTIONS | `app/blog-form-submit/route.ts` | Same-origin |
+
+All of them delegate to `app/lead-route.ts` → `worker/lead-email.ts`.
+`app/lead-route.ts` and `app/_lib/deprecated-lead-route.ts` are **helper
+modules, not routes** — the App Router only routes a file named exactly
+`route.ts`.
+
+### Calculator and venue data
+
+These paths are the Laravel original's, kept because the page scripts call them
+by name. Each is now served from Postgres rather than a bundled JSON file.
+
+| Route | Methods | File | Serves |
+| --- | --- | --- | --- |
+| `/get-cities` | GET | `app/get-cities/route.ts` | Published `calculator_cities` |
+| `/get-hotels-by-city` | GET | `app/get-hotels-by-city/route.ts` | Hotels for a city passed as `?city=`, which is the form `/compare-hotel` uses |
+| `/get-hotels-by-city/:city` | GET | `app/get-hotels-by-city/[city]/route.ts` | The same, city in the path |
+| `/get-hotel-price/:hotel/:month` | GET | `app/get-hotel-price/[hotel]/[month]/route.ts` | One `calculator_prices` row |
+| `/get-hotel-prices` | GET | `app/get-hotel-prices/route.ts` | All twelve months for a venue |
+| `/api/calculator/data` | GET | `app/api/calculator/data/route.ts` | The whole calculator dataset |
+| `/api/currencies` | GET | `app/api/currencies/route.ts` | Published `calculator_currencies` |
+| `/api/currencies/select` | **POST** | `app/api/currencies/select/route.ts` | Records the visitor's choice in a `selected_currency` cookie (1 year, `SameSite=Lax`) and echoes it back — it stores a preference rather than serving data |
+| `/data/calculator/:file` | GET | `app/data/calculator/[file]/route.ts` | The legacy `*.json` filenames, generated from the tables |
+| `/data/hotel-listing-data.json` | GET | `app/data/hotel-listing-data.json/route.ts` | The venue listing payload |
+| `/hotel-search` | GET | `app/hotel-search/route.ts` | Venue autocomplete |
+| `/appointment/slots` | GET | `app/appointment/slots/route.ts` | Consultation slot times (`force-static` — the list is a constant) |
+
+`/data/calculator/:file` and `/data/hotel-listing-data.json` look like static
+files and are not. There is no `site-public/data/` directory — the paths are
+routes that build the same JSON shape from the database, so the page scripts that
+fetch them did not have to change.
+
+### Infrastructure
+
+| Route | Methods | File | Purpose |
+| --- | --- | --- | --- |
+| `/media/:...path` | GET, HEAD | `app/media/[...path]/route.ts` | R2 objects, with the legacy `site-public` fallback |
+| `/sitemap.xml` | GET | `app/sitemap.xml/route.ts` | Generated from the database |
+| `/api/health/db` | GET | `app/api/health/db/route.ts` | Database reachability |
+| `/api/health/html` | GET | `app/api/health/html/route.ts` | Reports whether `HTMLRewriter` is available |
+| `/:[...path]` | GET, HEAD | `app/[[...path]]/route.ts` | The catch-all: public pages, redirects, static fallback, 404 |
 
 ---
 
 ## Admin Routes
 
 See [Admin Routes](./02-admin/routes.md) for complete `/admin/*` inventory.
-
----
-
-## Server Routes (`app/[[...path]]/route.ts`)
-
-### Lead & Form Endpoints
-
-| Route | Method | Auth | Handler |
-| --- | --- | --- | --- |
-| `/api/lead` | POST | Same-origin | `handleLeadRequest` |
-| `/contact/save` | POST | Same-origin | `handleLeadRequest` |
-| `/get_in_touch/store` | POST | Same-origin | `handleLeadRequest` |
-| `/blog-form-submit` | POST | Same-origin | `handleLeadRequest` |
-
-### Calculator / Search (static data)
-
-| Route | Method | Auth | Data source |
-| --- | --- | --- | --- |
-| `/data/calculator/cities.json` | GET | None | `calculator-data.ts` (India only) |
-| `/data/calculator/currencies.json` | GET | None | Static INR |
-| `/data/calculator/hotels-by-city.json` | GET | None | Static |
-| `/data/calculator/hotels.json` | GET | None | Static |
-| `/data/calculator/prices.json` | GET | None | Static |
-| `/api/currencies` | GET | None | Static INR |
-| `/api/currencies/select` | GET | None | Stub `{ok:true}` |
-| `/hotel-search` | GET | None | Static search index |
-| `/get-cities` | GET | Same-origin | City autocomplete |
-| `/get-hotels-by-city` | GET | Same-origin | Compare hotels |
-| `/get-hotels-by-city/:cityId` | GET | Same-origin | Hotels for city |
-| `/get-hotel-price/:id/:month` | GET | Same-origin | Monthly prices |
-| `/get-hotel-prices` | POST | Same-origin | Batch price lookup |
-| `/api/calculator/availability-data` | GET | Same-origin | Cities + hotels |
-| `/appointment/slots` | GET | None | Hardcoded slots |
-
-**Blocked (404):** `/data/calculator/calculator-data.json`, `/data/calculator/availability-data.json`
-
-### Media & Images
-
-| Route | Method | Purpose |
-| --- | --- | --- |
-| `/media/*` | GET/HEAD | Serve R2 objects |
-| `/_vinext/image` | GET | Image optimization |
-
-### Admin & App Router
-
-| Route | Method | Purpose |
-| --- | --- | --- |
-| `/admin/*` | GET/POST | Vinext app router (no-cache) |
-
-### Public HTML
-
-| Route | Method | Purpose |
-| --- | --- | --- |
-| `/*` | GET/HEAD | Static assets or managed page injection |
-| `/wedding-consultation` | GET | 308 → trailing slash |
-| `/storage` | GET | Empty HTML stub |
 
 ---
 
@@ -132,7 +132,7 @@ first was dead once routing moved to the App Router, and the second shadowed
 
 ## Public Site Static Routes
 
-The public website consists of ~1000+ HTML pages in `site-public/`. Key sections:
+The public website is 292 `index.html` files in `site-public/`. Key sections:
 
 | Path pattern | Purpose |
 | --- | --- |
@@ -151,7 +151,9 @@ The public website consists of ~1000+ HTML pages in `site-public/`. Key sections
 | `/compare-hotel/` | Hotel comparison |
 | `/appointment-booking/` | Booking flow |
 
-**Status:** Structure documented; individual pages not individually inventoried (static clone).
+**Status:** Structure documented; individual pages are not inventoried one by one.
+`docs/generated/code-inventory.json` carries the full list under `staticSiteRoutes`,
+regenerated by `npm run docs:inventory`.
 
 ---
 

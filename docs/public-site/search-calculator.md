@@ -34,28 +34,34 @@ Discovery and pricing tools on the public site.
 | Source | Location | Updates require |
 | --- | --- | --- |
 | Postgres | `calculator_*` tables | Admin panel, live within a minute |
-| Static JSON | `site-public/data/calculator/*.json` | File edit + deploy |
 | Bundled table | `worker/calculator-data.ts` | Seed and fallback only |
 
-### Static JSON files
+### The `.json` paths are routes, not files
 
-| File | Contents |
-| --- | --- |
-| `cities.json` | Indian cities |
-| `hotels.json` | All hotels flat list |
-| `hotels-by-city.json` | Hotels grouped by city |
-| `prices.json` | Monthly price matrix |
-| `currencies.json` | INR only |
+`site-public/data/calculator/` **no longer exists.** Those files were deleted:
+a `vite.config.ts` rewrite already put the handler in front of them, so they were
+dead weight — and a second copy of the price table on disk is precisely the thing
+an admin edit cannot reach, so a misconfigured rewrite could have shipped stale
+prices.
 
-### Worker-served calculator endpoints
+`app/data/calculator/[file]/route.ts` answers all six names from
+`loadCalculatorDataset()`. The names were kept because the homepage and
+`/hotel-cost-calculator` each carry their own inline loader that fetches these
+paths directly rather than going through `currency-switcher.js` — so serving the
+old paths from the database means every page gets edited prices whichever route
+it takes, with no page edits.
 
-| Endpoint | Auth | Data |
+| Endpoint | Auth | Served from |
 | --- | --- | --- |
-| `/data/calculator/cities.json` | None | India-filtered |
-| `/data/calculator/hotels.json` | None | India-filtered |
-| `/data/calculator/hotels-by-city.json` | None | India-filtered |
-| `/data/calculator/prices.json` | None | Full matrix |
-| `/data/calculator/currencies.json` | None | INR only |
+| `/data/calculator/cities.json` | None | `calculator_cities` |
+| `/data/calculator/hotels.json` | None | `calculator_hotels` |
+| `/data/calculator/hotels-by-city.json` | None | The same, grouped by city |
+| `/data/calculator/prices.json` | None | `calculator_prices` |
+| `/data/calculator/currencies.json` | None | `calculator_currencies` |
+| `/data/calculator/taxes.json` | None | `calculator_taxes` |
+
+Any other filename is a 404 — the list is a closed allowlist, so the path
+segment cannot be used to reach anything else.
 | `/get-cities` | Same-origin | Autocomplete |
 | `/get-hotels-by-city` | Same-origin | Hotels for city |
 | `/get-hotels-by-city/:cityId` | Same-origin | By ID |
@@ -110,8 +116,8 @@ Discovery and pricing tools on the public site.
 
 | File | Purpose |
 | --- | --- |
-| `site-public/data/hotel-listing-data.json` | Full venue metadata for client filter + search fallback |
-| `site-public/data/calculator/*.json` | Offline calculator fallback |
+| `/data/hotel-listing-data.json` | Full venue metadata for the client filter and the search fallback. **A route, not a file** — `app/data/hotel-listing-data.json/route.ts` builds it from the database; there is no `site-public/data/` directory |
+| `/data/calculator/*.json` | The six calculator payloads, served from the database by `app/data/calculator/[file]/route.ts`. The files that used to sit under `site-public/data/calculator/` were deleted |
 
 ---
 

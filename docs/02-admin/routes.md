@@ -28,8 +28,20 @@ Complete route inventory for `/admin/*`.
 | `/admin/settings` | `app/admin/settings/page.tsx` | Settings | `requireRole("admin")` | Contact details |
 | `/admin/labels` | `app/admin/labels/page.tsx` | Labels | `requireRole("admin")` | Section headings |
 | `/admin/users` | `app/admin/users/page.tsx` | Users | `requireRole("admin")` | User management |
+| `/admin/account` | `app/admin/account/page.tsx` | Account | `requireUser` | The signed-in user's own name, password and sessions |
+| `/admin/pages` | `app/admin/pages/page.tsx` | Stored pages | `requireRole("admin")` | The pages held whole in `static_pages` |
+| `/admin/pages/:path` | `app/admin/pages/[path]/page.tsx` | Stored pages | `requireRole("admin")` | One stored page: its listing entry and its pictures |
+| `/admin/calculator` | `app/admin/calculator/page.tsx` | Calculator | `requireRole("admin")` | Cities, currencies and tax lines |
+| `/admin/calculator/hotels` | `app/admin/calculator/hotels/page.tsx` | Calculator | `requireRole("admin")` | Calculator venues, filterable by city and name |
+| `/admin/calculator/hotels/:id` | `app/admin/calculator/hotels/[id]/page.tsx` | Calculator | `requireRole("admin")` | One venue and its twelve monthly prices |
 
 \*Public only when appropriate: login when users exist; setup when zero users.
+
+`/admin/account` is the one page every role may open — it acts only on the
+signed-in user. Everything under Calculator and Stored pages is admin-only.
+`requireRole` takes the return path and a subject as its second and third
+arguments, so a denied editor is sent somewhere useful with a message naming what
+they could not reach, rather than to a bare 403.
 
 ---
 
@@ -41,6 +53,16 @@ Complete route inventory for `/admin/*`.
 | `/admin/search` | GET | `app/admin/search/route.ts` | Session (401) | JSON `{ hits }` |
 | `/admin/leads/export` | GET | `app/admin/leads/export/route.ts` | Session (401) | CSV download |
 | `/admin/media/upload` | GET, POST | `app/admin/media/upload/route.ts` | Session (401) | JSON library / upload result |
+| `/admin/health` | GET | `app/admin/health/route.ts` | Public status, admin detail | `{ ok, schemaReady, missingTables, pendingMigrations }` |
+| `/admin/health/r2` | GET | `app/admin/health/r2/route.ts` | Admin | Round-trips an object through R2 and reports the real S3 error |
+| `/admin/seed` | GET, POST | `app/admin/seed/route.ts` | Admin | Imports the bundled content seed into an empty database |
+
+The two health endpoints answer **anyone** with a status, but withhold the
+detail unless the caller is an admin: an anonymous request gets
+`"Database unreachable. Sign in as an admin here for the details."` while an
+admin gets the driver's own message. Reporting the message to everyone would
+publish the failing statement, and reporting nothing to anyone leaves an
+uptime check with nothing to read.
 
 ---
 

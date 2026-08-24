@@ -53,7 +53,7 @@ flowchart TB
 | Database | Neon Postgres + Drizzle ORM 0.45 (`postgres.js`) | `worker/db/` |
 | Object storage | Cloudflare R2 over the S3 API | `worker/storage/r2.ts` |
 | HTML rewriting | `html-rewriter-wasm` (lol-html), same engine Cloudflare runs | `worker/html-rewriter.ts` |
-| Static site | `site-public/` copied into the deploy output | ~2,300 files |
+| Static site | `site-public/` copied into the deploy output | 433 files, 292 of them pages |
 | Email | Resend HTTP API | `worker/lead-email.ts` |
 
 The function is pinned to `sin1` because Neon is in `ap-southeast-1`. Both are
@@ -154,6 +154,7 @@ POST /api/lead (same-origin)
 | Model | Description | Example |
 | --- | --- | --- |
 | **Static** | Served from the CDN, untouched | `/about-us`, `/faqs` |
+| **Database-rendered** | Includes `/` — the homepage is *not* static | Homepage, venues, articles, city indexes |
 | **Database-rendered** | Shell from `page_templates`, filled by injection | Homepage, venue pages, articles |
 | **Injected fallback** | Original markup with managed content patched in | A managed path whose shell is missing |
 | **Preview** | `?preview=1` with an admin session | Draft content, noindex |
@@ -174,19 +175,39 @@ directory and every public URL 404s.
 
 ## Security Headers
 
-`build/sites-vite-plugin.ts` writes a `_headers` file with the CSP, HSTS,
-COOP/CORP, Referrer-Policy and frame options. Same-origin checks guard the
-admin upload route, logout, and the lead endpoints.
+**`vercel.json` is what actually sets them.** Its `headers` array carries the
+CSP, HSTS, COOP/CORP, Referrer-Policy, Permissions-Policy and frame options for
+`/(.*)`, plus a stricter block for `/admin/:path*` — `X-Frame-Options: DENY`,
+`no-store`, and a CSP with no `frame-src` and `frame-ancestors 'none'`.
+
+`build/sites-vite-plugin.ts` also writes a `_headers` file into `dist/client`,
+and **that file has no effect on this deployment.** `_headers` is a Cloudflare
+Pages convention; Nitro's `vercel` preset builds `.vercel/output` and never
+copies it, which is verifiable — `find .vercel/output -name _headers` returns
+nothing after a build. It is a leftover from the Cloudflare deployment. Editing
+it to change a header on production will silently do nothing; edit `vercel.json`.
+
+Same-origin checks guard the admin upload route, logout, and the lead
+endpoints.
 
 ## Caching
 
-| Content | Cache |
-| --- | --- |
-| Hashed assets (`/assets/*`) | `max-age=31536000, immutable` |
-| Static pages and media from the CDN | `max-age=0, must-revalidate` |
-| Database-rendered pages | `max-age=30` |
-| `/media/*` R2 objects | `max-age=31536000, immutable` (keys are content hashes) |
-| Admin panel | `no-store`, `noindex` |
+| Content | Cache | Set by |
+| --- | --- | --- |
+| Hashed build assets (`/assets/*`) | `max-age=31536000, immutable` | `_headers` — see the caveat above; Vercel's own defaults apply in practice |
+| Static files served by the CDN | Vercel's defaults for the Build Output | Vercel |
+| Static files served by the **function** as a fallback | `max-age=0, must-revalidate` for HTML, `max-age=31536000, immutable` for everything else | `cacheControlFor` in `worker/site/serve-static.ts` |
+| Database-rendered pages | `max-age=30` (`MANAGED_CACHE_CONTROL`) | `worker/site/render-page.ts` |
+| `?preview=1` renders | `no-store` + `x-robots-tag: noindex, nofollow` | `worker/site/render-page.ts` |
+| `/media/*` R2 objects | `max-age=31536000, immutable` | `worker/site/media.ts` |
+| Admin panel | `no-store`, `noindex` | `vercel.json` + `app/admin/layout.tsx` |
+
+`cacheControlFor` applies **only** on the catch-all's static-file fallback path,
+not to the CDN's own responses — most static files never reach the function at
+all. Note that it returns `immutable` for any non-HTML file, and the files under
+`site-public` are not content-hashed, so a replaced image can be served stale
+from a client cache for a long time. Replacing an image through the admin panel
+avoids this: those go to `/media/<hash>`, where the key changes with the bytes.
 
 Because media keys are the SHA-256 of the file, a key can never point at
 different bytes, so an immutable cache is safe — but a deleted object can still

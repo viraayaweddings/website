@@ -1,23 +1,33 @@
 {
-  "validatedAt": "2026-08-23T14:49:55.326Z",
-  "gitCommit": "1190afd940003f5808d2e4d759b33dd8e6c2fa9c",
-  "gitCommitShort": "1190afd9",
+  "validatedAt": "2026-08-24T16:30:28.329Z",
+  "gitCommit": "b5e399d96f3c436320d16f3de1cee99c8cc498ad",
+  "gitCommitShort": "b5e399d9",
   "status": "PASS",
   "inventoryCounts": {
-    "routes": 48,
-    "serverActions": 39,
-    "dbTables": 20,
-    "workerEndpoints": 25,
+    "routes": 55,
+    "serverActions": 67,
+    "dbTables": 23,
+    "workerEndpoints": 30,
     "adminComponents": 18,
-    "adminFiles": 72,
-    "staticSiteRoutes": 370,
+    "adminFiles": 85,
+    "staticSiteRoutes": 292,
     "publicJsFiles": 7,
     "pageTypePatterns": 9,
     "publicForms": 7,
-    "workerSiteFiles": 24
+    "workerSiteFiles": 33,
+    "workerFiles": 65,
+    "dbColumns": 198,
+    "auditActions": 71,
+    "workerExports": 279,
+    "npmScripts": 32,
+    "envVars": 19,
+    "enums": 5
   },
   "issueCount": 0,
   "warningCount": 0,
+  "coverage": {
+    "workerExports": "65/279 exported symbols named in the docs"
+  },
   "issues": [],
   "warnings": []
 }

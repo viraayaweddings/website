@@ -110,7 +110,7 @@ Individual venues/posts can override via `shell_key` column.
 
 | Data | Location | Update process |
 | --- | --- | --- |
-| Hotel listing metadata | `site-public/data/hotel-listing-data.json` | Manual JSON edit |
+| Hotel listing metadata | `/data/hotel-listing-data.json` — a **route**, `app/data/hotel-listing-data.json/route.ts`, built from `hotels` and the calculator tables | Admin panel (`/admin/hotels`, `/admin/calculator`) |
 | Calculator cities/hotels/prices | `worker/calculator-data.ts` + static JSON | Code edit + deploy |
 | YouTube embed IDs (static venues) | Static HTML | HTML edit |
 | Google Analytics ID | Inline in all pages | HTML edit |

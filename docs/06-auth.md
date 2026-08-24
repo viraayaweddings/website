@@ -105,9 +105,27 @@ Defined in `USER_ROLES` at `worker/db/schema.ts`.
 | Section headings | ✓ | ✗ |
 | User management | ✓ | ✗ |
 | Activity log | ✓ | ✗ |
+| Delete / prune activity log | ✓ | ✗ |
+| Stored pages (`/admin/pages`) | ✓ | ✗ |
+| Calculator data (`/admin/calculator`) | ✓ | ✗ |
+| Wedding type vocabulary | ✓ | ✗ |
+| Replace an image (`replaceMediaAction`) | ✓ | ✗ |
+| Bulk actions (all thirteen) | ✓ | ✗ |
+| Content seed import | ✓ | ✗ |
+| **Own account** (`/admin/account`) | ✓ | ✓ |
 | Command palette search | ✓ | ✓* |
 
 \*Editors cannot search city pages.
+
+`/admin/account` is the one screen an editor may act on without an admin: it
+changes only the signed-in user's own name, password and sessions, and the
+password change requires re-entering the current one. Before it existed, an
+editor who thought their password was compromised had to ask an admin to reset
+it, which meant saying a new password out loud.
+
+Every capability marked ✗ is enforced by `requireRole("admin")` inside the action
+or page, not by hiding the link — the nav omits them too, but the guard is what
+matters.
 
 ---
 

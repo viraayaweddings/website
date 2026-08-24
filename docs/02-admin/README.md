@@ -139,7 +139,7 @@ Editors hitting admin-only URLs are redirected to `/admin?denied=1`.
 | `app/admin/_lib/auth.ts` | Session gates, audit logging, safe redirects |
 | `app/admin/_lib/clock.ts` | `currentTime()` for server components |
 | `app/admin/_components/AdminShell.tsx` | Server wrapper stripping password hash |
-| `app/admin/_components/ShellChrome.tsx` | Client layout: header, nav, palette, theme |
+| `app/admin/_components/AdminHeaderBar.tsx` | Client header: nav toggle, palette, theme |
 | `app/admin/_components/nav.ts` | Single nav source for rail, breadcrumb, palette |
 | `app/admin/admin.css` | Scoped design tokens for `.vw-admin` |
 
