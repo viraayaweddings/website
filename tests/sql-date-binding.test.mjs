@@ -1,9 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { sql, gte, lt } from "drizzle-orm";
 import { PgDialect } from "drizzle-orm/pg-core";
-import { leads } from "../worker/db/schema.ts";
+import { leads, rateLimits } from "../worker/db/schema.ts";
 
 /**
  * A Date must never be bound as a Date.
@@ -82,5 +84,92 @@ test("no admin query compares a date inside a raw sql fragment", () => {
     offenders,
     [],
     "compare through gte()/lte() so the column's encoder runs, rather than interpolating the value",
+  );
+});
+
+/**
+ * The same trap, in an assignment rather than a comparison.
+ *
+ * The rule above only looks for `${a} >= ${b}`, and only in app/admin/page.tsx.
+ * It therefore missed this, in worker/admin/rate-limit.ts:
+ *
+ *   resetAt: sql`case when ${rateLimits.resetAt} <= now() then ${resetAt} ...`
+ *
+ * A Date assigned inside a CASE branch, not compared. Through `.values()` the
+ * column's encoder runs and a string is bound; through a raw fragment there is
+ * no column in sight, so the Date went to postgres.js as an object and it threw
+ * ERR_INVALID_ARG_TYPE. That statement is on the *failed*-login path, so a
+ * mistyped address answered with the admin error boundary rather than "those
+ * details are not right" -- while a correct password signed in normally, which
+ * is why it survived so long.
+ *
+ * Logging does not help: JSON.stringify renders the Date and the string
+ * identically. Only `instanceof Date` tells them apart, so that is the check.
+ */
+test("the rate-limit upsert binds no Date", () => {
+  const resetAt = new Date("2026-08-24T11:17:03.877Z");
+
+  // The exact fragments worker/admin/rate-limit.ts builds.
+  const count = sql`case when ${rateLimits.resetAt} <= now() then 1 else ${rateLimits.count} + 1 end`;
+  const reset = sql`case when ${rateLimits.resetAt} <= now() then ${resetAt.toISOString()}::timestamptz else ${rateLimits.resetAt} end`;
+
+  for (const [label, fragment] of [["count", count], ["resetAt", reset]]) {
+    const { params } = dialect.sqlToQuery(fragment);
+    const dates = params.filter((value) => value instanceof Date);
+    assert.deepEqual(
+      dates,
+      [],
+      `the ${label} fragment binds a Date object; postgres.js cannot serialise one. ` +
+        "Call .toISOString() and cast, or go through the column.",
+    );
+  }
+});
+
+test("no raw sql fragment anywhere binds a bare Date variable", () => {
+  // Widened from one file to the whole of app/ and worker/: the rule was only
+  // ever applied to the dashboard, which is why rate-limit.ts slipped past.
+  const roots = [
+    fileURLToPath(new URL("../app/", import.meta.url)),
+    fileURLToPath(new URL("../worker/", import.meta.url)),
+  ];
+
+  const files = [];
+  const walk = (dir) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (/\.(ts|tsx)$/.test(entry.name) && !entry.name.endsWith(".generated.ts")) files.push(full);
+    }
+  };
+  for (const root of roots) walk(root);
+
+  const offenders = [];
+  for (const file of files) {
+    const source = readFileSync(file, "utf8")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/^\s*\/\/.*$/gm, "");
+
+    // Names that hold a Date in this file, by how they were assigned.
+    const dateNames = new Set(
+      [...source.matchAll(/(?:const|let)\s+(\w+)\s*=\s*(?:new Date\b|[\w.]*\.(?:createdAt|updatedAt|resetAt|expiresAt)\b)/g)].map(
+        (m) => m[1],
+      ),
+    );
+    if (!dateNames.size) continue;
+
+    // Every sql`...` template in the file, and the plain ${name} inside it.
+    for (const template of source.matchAll(/\bsql`([^`]*)`/g)) {
+      for (const hole of template[1].matchAll(/\$\{(\w+)\}/g)) {
+        if (!dateNames.has(hole[1])) continue;
+        offenders.push(`${file.slice(file.lastIndexOf("viraayaweddings.com") + 20)}: \${${hole[1]}}`);
+      }
+    }
+  }
+
+  assert.deepEqual(
+    offenders,
+    [],
+    "a Date is interpolated into a raw sql template. Bind `.toISOString()` with an explicit " +
+      "::timestamptz cast, or compare through gte()/lte() so the column's encoder runs.",
   );
 });
