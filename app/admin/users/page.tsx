@@ -26,6 +26,7 @@ import {
 } from "../_components/ui";
 import { currentTime } from "../_lib/clock";
 import { requireDb, requireRole } from "../_lib/auth";
+import { isProtectedAccount } from "@/worker/admin/protected-account";
 import { bulkDeleteUsersAction, createUserAction, deleteUserAction, resetPasswordAction, updateUserAction } from "./actions";
 
 const USERS_BULK_FORM = "users-bulk-form";
@@ -177,6 +178,7 @@ export default async function UsersPage({
                 <StatusBadge status={account.role} />
                 <StatusBadge status={account.status} />
                 {account.id === currentUser.id ? <Badge tone="info">you</Badge> : null}
+                {isProtectedAccount(account) ? <Badge tone="warn">protected</Badge> : null}
               </CardHead>
 
               <div className="vw-card-pad">
@@ -198,8 +200,34 @@ export default async function UsersPage({
                           <p className="font-medium">{account.status}</p>
                         </div>
                       </div>
-                      <Alert tone="quiet" title="Signed-in account">
-                        Another active admin must change your role or status.
+                      {isProtectedAccount(account) ? (
+                        <Alert tone="quiet" title="Protected owner account">
+                          No one else can rename, demote, disable, delete or reset the password
+                          of this account. Its role and status are fixed: you cannot change your
+                          own, and nobody else may change yours.
+                        </Alert>
+                      ) : (
+                        <Alert tone="quiet" title="Signed-in account">
+                          Another active admin must change your role or status.
+                        </Alert>
+                      )}
+                    </div>
+                  ) : isProtectedAccount(account) ? (
+                    <div className="space-y-2.5">
+                      <p className="vw-label">Access</p>
+                      <div className="grid gap-2.5 sm:grid-cols-2">
+                        <div className="rounded-[8px] border px-3 py-2" style={{ borderColor: "var(--line)", background: "var(--surface-2)" }}>
+                          <p className="text-xs" style={{ color: "var(--ink-faint)" }}>Role</p>
+                          <p className="font-medium">{account.role}</p>
+                        </div>
+                        <div className="rounded-[8px] border px-3 py-2" style={{ borderColor: "var(--line)", background: "var(--surface-2)" }}>
+                          <p className="text-xs" style={{ color: "var(--ink-faint)" }}>Status</p>
+                          <p className="font-medium">{account.status}</p>
+                        </div>
+                      </div>
+                      <Alert tone="quiet" title="Protected owner account">
+                        Only its own holder can change this account. It cannot be renamed,
+                        demoted, disabled, deleted, or have its password reset from here.
                       </Alert>
                     </div>
                   ) : (
@@ -229,6 +257,7 @@ export default async function UsersPage({
                     </form>
                   )}
 
+                  {isProtectedAccount(account) && account.id !== currentUser.id ? null : (
                   <form action={resetPasswordAction} className="space-y-2.5">
             <CsrfField />
                     <input type="hidden" name="id" value={account.id} />
@@ -244,10 +273,11 @@ export default async function UsersPage({
                       Reset password
                     </SubmitButton>
                   </form>
+                  )}
                 </div>
               </div>
 
-              {account.id === currentUser.id ? null : (
+              {account.id === currentUser.id || isProtectedAccount(account) ? null : (
                 <div className="flex justify-end border-t px-5 py-2" style={{ borderColor: "var(--line)" }}>
                   <DeleteConfirmTrigger csrfToken={csrfToken}
                     action={deleteUserAction}

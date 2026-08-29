@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-29T15:28:12.671Z",
-  "gitCommit": "d83a9e1ce350595c5f2ba8a8d7a51f89909ef7e9",
-  "gitCommitShort": "d83a9e1c",
+  "generatedAt": "2026-08-29T15:41:32.481Z",
+  "gitCommit": "406c6663b31bf840b08c02e0b31e2b91a9586690",
+  "gitCommitShort": "406c6663",
   "projectVersion": "0.1.0",
   "counts": {
     "routes": 56,
@@ -15,10 +15,10 @@
     "pageTypePatterns": 9,
     "publicForms": 7,
     "workerSiteFiles": 37,
-    "workerFiles": 75,
-    "dbColumns": 199,
+    "workerFiles": 76,
+    "dbColumns": 200,
     "auditActions": 71,
-    "workerExports": 303,
+    "workerExports": 306,
     "npmScripts": 32,
     "envVars": 19,
     "enums": 5
@@ -2139,6 +2139,7 @@
     "worker/admin/media-path.ts",
     "worker/admin/media-store.ts",
     "worker/admin/password.ts",
+    "worker/admin/protected-account.ts",
     "worker/admin/rate-limit.ts",
     "worker/admin/record-id.ts",
     "worker/admin/rich-text.ts",
@@ -3155,6 +3156,11 @@
     },
     {
       "table": "users",
+      "column": "protected",
+      "property": "protected"
+    },
+    {
+      "table": "users",
       "column": "role",
       "property": "role"
     },
@@ -3622,6 +3628,10 @@
       "name": "findStaticPage"
     },
     {
+      "file": "worker/admin/protected-account.ts",
+      "name": "firstProtectionError"
+    },
+    {
       "file": "worker/admin/lead-csv.ts",
       "name": "FIXED_COLUMNS"
     },
@@ -3804,6 +3814,10 @@
     {
       "file": "worker/db/operational-cities.ts",
       "name": "isOperationalCity"
+    },
+    {
+      "file": "worker/admin/protected-account.ts",
+      "name": "isProtectedAccount"
     },
     {
       "file": "worker/storage/r2.ts",
@@ -4116,6 +4130,10 @@
     {
       "file": "worker/site/blog.ts",
       "name": "postsForTaxonomy"
+    },
+    {
+      "file": "worker/admin/protected-account.ts",
+      "name": "protectionError"
     },
     {
       "file": "worker/site/public-routes.ts",

@@ -133,6 +133,7 @@ the reset action relies on.
 | `password_hash` | TEXT | `pbkdf2$iter$salt$hash` |
 | `role` | TEXT | `admin` \| `editor` |
 | `status` | TEXT | `active` \| `disabled` |
+| `protected` | INTEGER | `1` marks the owner account. Only its own holder can rename, demote, disable, delete or reset the password of it; the panel offers no way to clear the flag |
 | `created_at`, `updated_at` | TIMESTAMPTZ | `defaultNow()` |
 | `last_login_at` | TIMESTAMPTZ | Nullable |
 

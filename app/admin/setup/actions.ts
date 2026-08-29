@@ -57,6 +57,11 @@ export async function createFirstAdminAction(formData: FormData): Promise<void> 
     passwordHash: await hashPassword(password),
     role: "admin" as const,
     status: "active",
+    // The first admin is the owner of the install, so it is protected from the
+    // admins it goes on to create: no one else can rename, demote, disable,
+    // delete or reset the password of this account. See
+    // worker/admin/protected-account.ts.
+    protected: 1,
     lastLoginAt: now,
   };
 

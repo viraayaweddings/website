@@ -22,6 +22,19 @@ export const users = pgTable(
     role: text("role").$type<UserRole>().notNull().default("editor"),
     /** `disabled` keeps the row for audit history but blocks sign-in. */
     status: text("status").notNull().default("active"),
+    /**
+     * The owner account, which only its own holder may change.
+     *
+     * Admin is otherwise a flat role: any admin can rename, demote, disable,
+     * delete or reset the password of any other, which makes every admin one
+     * compromised session away from owning the site. A protected row refuses
+     * all five from anybody but the account itself.
+     *
+     * Deliberately has no control in the panel. An admin who could clear this
+     * flag could clear it and then delete the account, which is the same thing
+     * as not having it.
+     */
+    protected: integer("protected").notNull().default(0),
     createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
     lastLoginAt: timestamp("last_login_at", { withTimezone: true, mode: "date" }),

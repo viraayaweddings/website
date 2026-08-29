@@ -1,7 +1,7 @@
 {
-  "validatedAt": "2026-08-29T15:28:12.804Z",
-  "gitCommit": "d83a9e1ce350595c5f2ba8a8d7a51f89909ef7e9",
-  "gitCommitShort": "d83a9e1c",
+  "validatedAt": "2026-08-29T15:41:32.602Z",
+  "gitCommit": "406c6663b31bf840b08c02e0b31e2b91a9586690",
+  "gitCommitShort": "406c6663",
   "status": "PASS",
   "inventoryCounts": {
     "routes": 56,
@@ -15,18 +15,18 @@
     "pageTypePatterns": 9,
     "publicForms": 7,
     "workerSiteFiles": 37,
-    "workerFiles": 75,
-    "dbColumns": 199,
+    "workerFiles": 76,
+    "dbColumns": 200,
     "auditActions": 71,
-    "workerExports": 303,
+    "workerExports": 306,
     "npmScripts": 32,
     "envVars": 19,
     "enums": 5
   },
   "issueCount": 0,
-  "warningCount": 5,
+  "warningCount": 6,
   "coverage": {
-    "workerExports": "66/303 exported symbols named in the docs"
+    "workerExports": "66/306 exported symbols named in the docs"
   },
   "issues": [],
   "warnings": [
@@ -34,6 +34,7 @@
     "Admin file not referenced in docs: app/admin/_components/CsrfField.tsx",
     "Admin file not referenced in docs: app/admin/_components/CsrfInput.tsx",
     "Admin file not referenced in docs: app/admin/_lib/admin-path.ts",
-    "Admin file not referenced in docs: app/admin/_lib/csrf-fetch.ts"
+    "Admin file not referenced in docs: app/admin/_lib/csrf-fetch.ts",
+    "Manifest audited commit (d83a9e1) differs from HEAD (406c6663)"
   ]
 }

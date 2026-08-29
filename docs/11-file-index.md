@@ -120,6 +120,7 @@ Searchable inventory of meaningful project files.
 | `db/errors.ts` | Classifies driver errors | — |
 | `admin/session.ts` | Cookie sessions | schema |
 | `admin/password.ts` | PBKDF2 hash/verify | node:crypto |
+| `admin/protected-account.ts` | Guards the owner account from other admins | — |
 | `admin/rate-limit.ts` | Cross-instance attempt counters | schema (`rate_limits`) |
 | `admin/lead-store.ts` | Lead DB operations | schema |
 | `admin/lead-csv.ts` | CSV export, with a formula-injection guard | — |

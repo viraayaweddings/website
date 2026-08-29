@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { firstProtectionError, protectionError } from "@/worker/admin/protected-account";
 import { and, eq, inArray, ne, notInArray, sql } from "drizzle-orm";
 import { hashPassword, validatePasswordStrength } from "@/worker/admin/password";
 import { destroyUserSessions } from "@/worker/admin/session";
@@ -78,6 +79,12 @@ export async function updateUserAction(formData: FormData): Promise<void> {
   const target = (await db.select().from(users).where(eq(users.id, id)).limit(1))[0];
   if (!target) failed("That account no longer exists.");
 
+  // Ownership first, before anything is read off the form: the protected
+  // account is not editable by anyone else at all, so there is nothing to
+  // validate.
+  const blocked = protectionError(target, actor.id);
+  if (blocked) failed(blocked);
+
   const role = readRole(formData);
   const status = String(formData.get("status") || "active") === "disabled" ? "disabled" : "active";
 
@@ -140,6 +147,11 @@ export async function resetPasswordAction(formData: FormData): Promise<void> {
   const target = (await db.select().from(users).where(eq(users.id, id)).limit(1))[0];
   if (!target) failed("That account no longer exists.");
 
+  // The takeover route this whole flag exists for: reset the owner's password,
+  // then sign in as them.
+  const blocked = protectionError(target, actor.id);
+  if (blocked) failed(blocked);
+
   const weak = validatePasswordStrength(password);
   if (weak) failed(weak);
 
@@ -169,6 +181,9 @@ export async function deleteUserAction(formData: FormData): Promise<void> {
 
   const target = (await db.select().from(users).where(eq(users.id, id)).limit(1))[0];
   if (!target) failed("That account no longer exists.");
+
+  const blocked = protectionError(target, actor.id);
+  if (blocked) failed(blocked);
 
   if (target.role === "admin") {
     const otherAdmins = await db
@@ -205,6 +220,12 @@ export async function bulkDeleteUsersAction(formData: FormData): Promise<void> {
 
   const targets = await db.select().from(users).where(inArray(users.id, ids));
   if (targets.length !== ids.length) failed("Some selected accounts no longer exist. Refresh and try again.");
+
+  // Refuses the whole selection rather than quietly sparing the protected row:
+  // a select-all delete that reported success while leaving one account behind
+  // would read as the protection having failed.
+  const blocked = firstProtectionError(targets, actor.id);
+  if (blocked) failed(blocked);
 
   const deletingActiveAdmins = new Set(
     targets.filter((user) => user.role === "admin" && user.status === "active").map((user) => user.id),
