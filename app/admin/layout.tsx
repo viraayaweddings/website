@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import "./admin.css";
 import { THEME_BOOTSTRAP } from "./_lib/theme";
 import { AdminCsrfMeta } from "./_components/AdminCsrfMeta";
-import { isSecureRequest } from "./_lib/auth";
-import { primeAdminCsrf } from "@/worker/admin/csrf";
+import { adminPathFromRequest } from "./_lib/admin-path";
+import { loadAdminCsrf } from "@/worker/admin/csrf";
 
 export const metadata: Metadata = {
   title: "Admin · Viraaya Weddings",
@@ -14,7 +15,11 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  await primeAdminCsrf(await isSecureRequest());
+  const token = await loadAdminCsrf();
+  if (!token) {
+    const next = await adminPathFromRequest();
+    redirect(`/api/admin/csrf?next=${encodeURIComponent(next)}`);
+  }
 
   return (
     // `vw-admin` scopes the panel's tokens so none of them reach the public

@@ -11,7 +11,7 @@ import { getUserByToken, SESSION_COOKIE } from "@/worker/admin/session";
 import { auditLog, users, type User, type UserRole } from "@/worker/db/schema";
 import { primeFlashKey } from "./flash";
 import { trustedClientIp } from "@/worker/request-ip";
-import { assertAdminCsrfFromForm, primeAdminCsrf } from "@/worker/admin/csrf";
+import { assertAdminCsrfFromForm, ensureAdminCsrfCookie, loadAdminCsrf } from "@/worker/admin/csrf";
 
 export const LOGIN_PATH = "/admin/login";
 export const SETUP_PATH = "/admin/setup";
@@ -86,7 +86,7 @@ export async function assertSameOrigin(): Promise<void> {
   // key and CSRF cookie can be loaded without touching 250 redirect call sites.
   const secure = await isSecureRequest();
   await primeFlashKey(secure);
-  await primeAdminCsrf(secure);
+  await ensureAdminCsrfCookie(secure);
 }
 
 /**

@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-08-29T15:24:07.500Z",
-  "gitCommit": "ff22106cb7918db1276eee104e24b519ba59bdf6",
-  "gitCommitShort": "ff22106c",
+  "generatedAt": "2026-08-29T15:28:12.671Z",
+  "gitCommit": "d83a9e1ce350595c5f2ba8a8d7a51f89909ef7e9",
+  "gitCommitShort": "d83a9e1c",
   "projectVersion": "0.1.0",
   "counts": {
-    "routes": 55,
+    "routes": 56,
     "serverActions": 67,
     "dbTables": 23,
     "workerEndpoints": 30,
     "adminComponents": 21,
-    "adminFiles": 89,
+    "adminFiles": 90,
     "staticSiteRoutes": 292,
     "publicJsFiles": 7,
     "pageTypePatterns": 9,
@@ -18,7 +18,7 @@
     "workerFiles": 75,
     "dbColumns": 199,
     "auditActions": 71,
-    "workerExports": 301,
+    "workerExports": 303,
     "npmScripts": 32,
     "envVars": 19,
     "enums": 5
@@ -193,6 +193,11 @@
       "file": "app/admin/users/page.tsx",
       "route": "/admin/users",
       "kind": "page"
+    },
+    {
+      "file": "app/api/admin/csrf/route.ts",
+      "route": "/api/admin/csrf",
+      "kind": "api"
     },
     {
       "file": "app/api/calculator/data/route.ts",
@@ -741,6 +746,7 @@
     "app/admin/_components/icons.tsx",
     "app/admin/_components/nav.ts",
     "app/admin/_components/ui.tsx",
+    "app/admin/_lib/admin-path.ts",
     "app/admin/_lib/audit-labels.ts",
     "app/admin/_lib/auth.ts",
     "app/admin/_lib/clock.ts",
@@ -3532,6 +3538,10 @@
       "name": "enhancePublicHtml"
     },
     {
+      "file": "worker/admin/csrf.ts",
+      "name": "ensureAdminCsrfCookie"
+    },
+    {
       "file": "worker/site/labels.ts",
       "name": "ensureDefaultLabels"
     },
@@ -3804,6 +3814,10 @@
       "name": "isRateLimited"
     },
     {
+      "file": "worker/admin/csrf-tokens.ts",
+      "name": "issueAdminCsrfToken"
+    },
+    {
       "file": "worker/lead-csrf.ts",
       "name": "issueLeadCsrfToken"
     },
@@ -3854,6 +3868,10 @@
     {
       "file": "worker/site/static-pages.ts",
       "name": "listStaticPages"
+    },
+    {
+      "file": "worker/admin/csrf.ts",
+      "name": "loadAdminCsrf"
     },
     {
       "file": "worker/site/venue-types.ts",
@@ -4098,10 +4116,6 @@
     {
       "file": "worker/site/blog.ts",
       "name": "postsForTaxonomy"
-    },
-    {
-      "file": "worker/admin/csrf.ts",
-      "name": "primeAdminCsrf"
     },
     {
       "file": "worker/site/public-routes.ts",

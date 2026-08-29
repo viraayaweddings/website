@@ -1,5 +1,9 @@
 /**
  * Double-submit CSRF for the admin panel (server runtime).
+ *
+ * Cookies may only be written in Server Actions and Route Handlers — not in
+ * layout or page renders. `loadAdminCsrf` is for layouts; `ensureAdminCsrfCookie`
+ * is for server actions; `app/admin/csrf/route.ts` issues the first cookie.
  */
 import { cache } from "react";
 import { cookies } from "next/headers";
@@ -7,6 +11,7 @@ import {
   ADMIN_CSRF_COOKIE,
   ADMIN_CSRF_FIELD,
   adminCsrfTokensMatch,
+  issueAdminCsrfToken,
 } from "./csrf-tokens";
 
 export {
@@ -14,20 +19,27 @@ export {
   ADMIN_CSRF_FIELD,
   ADMIN_CSRF_HEADER,
   assertAdminCsrfFromRequest,
+  issueAdminCsrfToken,
   readAdminCsrfCookie,
 } from "./csrf-tokens";
 
-/** One hour — long enough for an edit session, short enough to limit reuse. */
-const MAX_AGE_SECONDS = 3600;
-
 const holder = cache((): { value: string } => ({ value: "" }));
 
-/** Token for the current request, set by `primeAdminCsrf`. */
+/** Token for the current request, set by `loadAdminCsrf` or `ensureAdminCsrfCookie`. */
 export function adminCsrfToken(): string {
   return holder().value;
 }
 
-export async function primeAdminCsrf(secure: boolean): Promise<void> {
+/** Read the existing cookie into the request cache. Safe in layouts. */
+export async function loadAdminCsrf(): Promise<string> {
+  const store = await cookies();
+  const existing = store.get(ADMIN_CSRF_COOKIE)?.value || "";
+  holder().value = existing;
+  return existing;
+}
+
+/** Issue or refresh the cookie. Only call from Server Actions. */
+export async function ensureAdminCsrfCookie(secure: boolean): Promise<void> {
   const store = await cookies();
   const existing = store.get(ADMIN_CSRF_COOKIE)?.value || "";
 
@@ -36,14 +48,14 @@ export async function primeAdminCsrf(secure: boolean): Promise<void> {
     return;
   }
 
-  const issued = crypto.randomUUID();
-  holder().value = issued;
-  store.set(ADMIN_CSRF_COOKIE, issued, {
+  const issued = issueAdminCsrfToken(secure);
+  holder().value = issued.token;
+  store.set(ADMIN_CSRF_COOKIE, issued.token, {
     path: "/admin",
     httpOnly: true,
     sameSite: "Strict",
     secure,
-    maxAge: MAX_AGE_SECONDS,
+    maxAge: 3600,
   });
 }
 

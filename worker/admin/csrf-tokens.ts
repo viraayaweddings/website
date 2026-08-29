@@ -2,6 +2,18 @@ export const ADMIN_CSRF_COOKIE = "vw_admin_csrf";
 export const ADMIN_CSRF_FIELD = "_csrf";
 export const ADMIN_CSRF_HEADER = "x-csrf-token";
 
+/** One hour — long enough for an edit session, short enough to limit reuse. */
+const MAX_AGE_SECONDS = 3600;
+
+export function issueAdminCsrfToken(secure: boolean): { token: string; cookie: string } {
+  const token = crypto.randomUUID();
+  const flags = secure ? "; Secure" : "";
+  return {
+    token,
+    cookie: `${ADMIN_CSRF_COOKIE}=${token}; Path=/admin; HttpOnly; SameSite=Strict; Max-Age=${MAX_AGE_SECONDS}${flags}`,
+  };
+}
+
 export function readAdminCsrfCookie(request: Request): string {
   const raw = request.headers.get("cookie") || "";
   for (const part of raw.split(";")) {

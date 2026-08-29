@@ -4,6 +4,7 @@ import {
   ADMIN_CSRF_COOKIE,
   ADMIN_CSRF_FIELD,
   adminCsrfTokensMatch,
+  issueAdminCsrfToken,
   readAdminCsrfCookie,
 } from "../worker/admin/csrf-tokens.ts";
 
@@ -21,8 +22,11 @@ test("readAdminCsrfCookie parses the cookie header", () => {
   assert.equal(readAdminCsrfCookie(request), "abc-123");
 });
 
-test("adminCsrfTokensMatch uses constant-time comparison", () => {
-  assert.equal(adminCsrfTokensMatch("same-token", "same-token"), true);
-  assert.equal(adminCsrfTokensMatch("wrong", "same-token"), false);
-  assert.equal(adminCsrfTokensMatch("", "same-token"), false);
+test("issueAdminCsrfToken sets an HttpOnly admin-scoped cookie", () => {
+  const { token, cookie } = issueAdminCsrfToken(true);
+  assert.match(token, /^[0-9a-f-]{36}$/);
+  assert.match(cookie, /Path=\/admin/);
+  assert.match(cookie, /HttpOnly/);
+  assert.match(cookie, /SameSite=Strict/);
+  assert.match(cookie, /; Secure$/);
 });

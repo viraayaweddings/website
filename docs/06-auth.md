@@ -170,7 +170,7 @@ Sessions destroyed when:
 
 - Open redirect prevented via `safeReturnPath`
 - Login throttle is Postgres-backed (`rate_limits` table); see `worker/admin/rate-limit.ts`
-- Admin CSRF uses `assertAdminRequest()` — cookie issued by `worker/admin/csrf.ts`, constants and header checks in `worker/admin/csrf-tokens.ts`
+- Admin CSRF uses `assertAdminRequest()` — cookie issued by `GET /api/admin/csrf` (route handler), constants in `worker/admin/csrf-tokens.ts`, server actions via `ensureAdminCsrfCookie` in `worker/admin/csrf.ts`
 - Client IP for throttling comes from `worker/request-ip.ts` (not spoofable `x-forwarded-for` prefixes)
 - Logout has no CSRF token (benign — only clears own session)
 - Admin panel: `robots: noindex` in layout metadata

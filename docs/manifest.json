@@ -36,6 +36,7 @@
       "/admin/settings",
       "/admin/setup",
       "/admin/users",
+      "/api/admin/csrf",
       "/api/calculator/data",
       "/api/currencies",
       "/api/currencies/select",
@@ -233,8 +234,8 @@
       "site-search.js"
     ]
   },
-  "lastUpdated": "2026-08-29T15:24:07.417Z",
-  "lastAuditedCommit": "ff22106cb7918db1276eee104e24b519ba59bdf6",
+  "lastUpdated": "2026-08-29T15:28:12.611Z",
+  "lastAuditedCommit": "d83a9e1ce350595c5f2ba8a8d7a51f89909ef7e9",
   "projectVersion": "0.1.0",
   "undocumentedCounts": {
     "adminComponents": 3

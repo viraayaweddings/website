@@ -1,15 +1,15 @@
 {
-  "validatedAt": "2026-08-29T15:24:07.674Z",
-  "gitCommit": "ff22106cb7918db1276eee104e24b519ba59bdf6",
-  "gitCommitShort": "ff22106c",
+  "validatedAt": "2026-08-29T15:28:12.804Z",
+  "gitCommit": "d83a9e1ce350595c5f2ba8a8d7a51f89909ef7e9",
+  "gitCommitShort": "d83a9e1c",
   "status": "PASS",
   "inventoryCounts": {
-    "routes": 55,
+    "routes": 56,
     "serverActions": 67,
     "dbTables": 23,
     "workerEndpoints": 30,
     "adminComponents": 21,
-    "adminFiles": 89,
+    "adminFiles": 90,
     "staticSiteRoutes": 292,
     "publicJsFiles": 7,
     "pageTypePatterns": 9,
@@ -18,21 +18,22 @@
     "workerFiles": 75,
     "dbColumns": 199,
     "auditActions": 71,
-    "workerExports": 301,
+    "workerExports": 303,
     "npmScripts": 32,
     "envVars": 19,
     "enums": 5
   },
   "issueCount": 0,
-  "warningCount": 4,
+  "warningCount": 5,
   "coverage": {
-    "workerExports": "65/301 exported symbols named in the docs"
+    "workerExports": "66/303 exported symbols named in the docs"
   },
   "issues": [],
   "warnings": [
     "Admin file not referenced in docs: app/admin/_components/AdminCsrfMeta.tsx",
     "Admin file not referenced in docs: app/admin/_components/CsrfField.tsx",
     "Admin file not referenced in docs: app/admin/_components/CsrfInput.tsx",
+    "Admin file not referenced in docs: app/admin/_lib/admin-path.ts",
     "Admin file not referenced in docs: app/admin/_lib/csrf-fetch.ts"
   ]
 }
