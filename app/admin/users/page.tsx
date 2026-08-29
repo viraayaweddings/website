@@ -4,7 +4,9 @@ export const dynamic = "force-dynamic";
 import { asc } from "drizzle-orm";
 import { MIN_PASSWORD_LENGTH } from "@/worker/admin/password";
 import { USER_ROLES, users } from "@/worker/db/schema";
+import { adminCsrfToken } from "@/worker/admin/csrf";
 import { AdminShell } from "../_components/AdminShell";
+import { CsrfField } from "../_components/CsrfField";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
 import { AutoSubmitControls, LiveSearch, SubmitButton } from "../_components/FormControls";
@@ -33,6 +35,7 @@ export default async function UsersPage({
 }: {
   searchParams: Promise<{ error?: string; saved?: string; delete?: string; q?: string; role?: string; status?: string; sort?: string }>;
 }) {
+  const csrfToken = adminCsrfToken();
   const currentUser = await requireRole("admin", "/admin/users", "user accounts");
   const db = await requireDb();
   const params = await searchParams;
@@ -133,6 +136,7 @@ export default async function UsersPage({
 
           {canBulkDelete ? (
             <form id={USERS_BULK_FORM}>
+            <CsrfField />
               <BulkSelection noun="account" formId={USERS_BULK_FORM}>
                 <SubmitButton
                   variant="danger-quiet"
@@ -200,6 +204,7 @@ export default async function UsersPage({
                     </div>
                   ) : (
                     <form action={updateUserAction} className="space-y-2.5">
+            <CsrfField />
                       <input type="hidden" name="id" value={account.id} />
                       <div className="grid gap-2.5 sm:grid-cols-2">
                         <Select
@@ -225,6 +230,7 @@ export default async function UsersPage({
                   )}
 
                   <form action={resetPasswordAction} className="space-y-2.5">
+            <CsrfField />
                     <input type="hidden" name="id" value={account.id} />
                     <Field
                       label="Set a new password"
@@ -243,7 +249,7 @@ export default async function UsersPage({
 
               {account.id === currentUser.id ? null : (
                 <div className="flex justify-end border-t px-5 py-2" style={{ borderColor: "var(--line)" }}>
-                  <DeleteConfirmTrigger
+                  <DeleteConfirmTrigger csrfToken={csrfToken}
                     action={deleteUserAction}
                     id={account.id}
                     what={account.email}
@@ -259,6 +265,7 @@ export default async function UsersPage({
         <Card className="h-fit lg:sticky lg:top-20" pad={false}>
           <CardHead title="Add a user" icon="plus" />
           <form action={createUserAction} className="vw-card-pad space-y-3">
+            <CsrfField />
             <Field label="Name" name="name" required />
             <Field label="Email" name="email" type="email" required />
             <Select

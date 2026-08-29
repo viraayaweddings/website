@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 
 import { redirect } from "next/navigation";
 import { SubmitButton } from "../_components/FormControls";
+import { CsrfField } from "../_components/CsrfField";
 import { Monogram } from "../_components/icons";
 import { Alert, Card, Field } from "../_components/ui";
 import { getCurrentUser, hasAnyUser, requireDb, safeReturnPath, SETUP_PATH } from "../_lib/auth";
@@ -52,6 +53,7 @@ export default async function LoginPage({
           ) : null}
 
           <form action={loginAction} className="space-y-4">
+            <CsrfField />
             <input type="hidden" name="next" value={next} />
             <Field label="Email" name="email" type="email" required autoComplete="username" />
             <Field label="Password" name="password" type="password" required autoComplete="current-password" />

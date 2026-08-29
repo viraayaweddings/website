@@ -2,6 +2,7 @@ import { sql } from "drizzle-orm";
 import { getDb } from "@/worker/db/client";
 import { seedSiteContent } from "@/worker/db/seed-content";
 import { blogPosts, heroSlides, hotels } from "@/worker/db/schema";
+import { ADMIN_CSRF_FIELD } from "@/worker/admin/csrf-tokens";
 import { getCurrentUser, isAdmin } from "../_lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -51,6 +52,20 @@ export async function GET(): Promise<Response> {
 
 export async function POST(request: Request): Promise<Response> {
   if (!isSameOrigin(request)) return Response.json({ error: "Refused." }, { status: 403 });
+
+  let form: FormData;
+  try {
+    form = await request.formData();
+  } catch {
+    return Response.json({ error: "Refused." }, { status: 403 });
+  }
+
+  const { cookies } = await import("next/headers");
+  const expected = (await cookies()).get("vw_admin_csrf")?.value || "";
+  const provided = String(form.get(ADMIN_CSRF_FIELD) || "");
+  if (!expected || provided !== expected) {
+    return Response.json({ error: "Refused." }, { status: 403 });
+  }
 
   const user = await getCurrentUser();
   if (!user || !isAdmin(user)) {

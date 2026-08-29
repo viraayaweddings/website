@@ -9,7 +9,7 @@ import { createSession, sessionCookieOptions, SESSION_COOKIE } from "@/worker/ad
 import { users } from "@/worker/db/schema";
 import { withFlashKey } from "../_lib/flash";
 import {
-  assertSameOrigin,
+  assertAdminRequest,
   isSecureRequest,
   LOGIN_PATH,
   recordAudit,
@@ -40,7 +40,7 @@ function failed(next: string, code: string): never {
 export async function loginAction(formData: FormData): Promise<void> {
   // A cross-site form post can otherwise sign someone into an account the
   // attacker controls and watch what they do in it.
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
 
   const email = String(formData.get("email") || "").trim().toLowerCase().slice(0, 254);
   const password = String(formData.get("password") || "");

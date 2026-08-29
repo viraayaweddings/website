@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-08-29T15:11:28.498Z",
-  "gitCommit": "ee3fc63246b9d1dc19b6c052dc33041c9a289f34",
-  "gitCommitShort": "ee3fc632",
+  "generatedAt": "2026-08-29T15:24:07.500Z",
+  "gitCommit": "ff22106cb7918db1276eee104e24b519ba59bdf6",
+  "gitCommitShort": "ff22106c",
   "projectVersion": "0.1.0",
   "counts": {
     "routes": 55,
     "serverActions": 67,
     "dbTables": 23,
     "workerEndpoints": 30,
-    "adminComponents": 18,
-    "adminFiles": 85,
+    "adminComponents": 21,
+    "adminFiles": 89,
     "staticSiteRoutes": 292,
     "publicJsFiles": 7,
     "pageTypePatterns": 9,
     "publicForms": 7,
     "workerSiteFiles": 37,
-    "workerFiles": 71,
+    "workerFiles": 75,
     "dbColumns": 199,
     "auditActions": 71,
-    "workerExports": 287,
+    "workerExports": 301,
     "npmScripts": 32,
     "envVars": 19,
     "enums": 5
@@ -697,6 +697,7 @@
     "/media"
   ],
   "adminComponents": [
+    "app/admin/_components/AdminCsrfMeta.tsx",
     "app/admin/_components/AdminHeaderBar.tsx",
     "app/admin/_components/AdminShell.tsx",
     "app/admin/_components/BulkBar.tsx",
@@ -704,6 +705,8 @@
     "app/admin/_components/Charts.tsx",
     "app/admin/_components/CommandPalette.tsx",
     "app/admin/_components/ConfirmDelete.tsx",
+    "app/admin/_components/CsrfField.tsx",
+    "app/admin/_components/CsrfInput.tsx",
     "app/admin/_components/DeleteConfirmTrigger.tsx",
     "app/admin/_components/FormControls.tsx",
     "app/admin/_components/MediaPicker.tsx",
@@ -717,6 +720,7 @@
     "app/admin/_components/ui.tsx"
   ],
   "adminFiles": [
+    "app/admin/_components/AdminCsrfMeta.tsx",
     "app/admin/_components/AdminHeaderBar.tsx",
     "app/admin/_components/AdminShell.tsx",
     "app/admin/_components/BulkBar.tsx",
@@ -724,6 +728,8 @@
     "app/admin/_components/Charts.tsx",
     "app/admin/_components/CommandPalette.tsx",
     "app/admin/_components/ConfirmDelete.tsx",
+    "app/admin/_components/CsrfField.tsx",
+    "app/admin/_components/CsrfInput.tsx",
     "app/admin/_components/DeleteConfirmTrigger.tsx",
     "app/admin/_components/FormControls.tsx",
     "app/admin/_components/MediaPicker.tsx",
@@ -739,6 +745,7 @@
     "app/admin/_lib/auth.ts",
     "app/admin/_lib/clock.ts",
     "app/admin/_lib/concurrency.ts",
+    "app/admin/_lib/csrf-fetch.ts",
     "app/admin/_lib/dates.ts",
     "app/admin/_lib/db-errors.ts",
     "app/admin/_lib/flash.ts",
@@ -2113,6 +2120,8 @@
     "worker/site/venue-types.ts"
   ],
   "workerFiles": [
+    "worker/admin/csrf-tokens.ts",
+    "worker/admin/csrf.ts",
     "worker/admin/form-rows.ts",
     "worker/admin/hotel-gallery-form.ts",
     "worker/admin/image-references.ts",
@@ -2145,7 +2154,9 @@
     "worker/lead-email.ts",
     "worker/lead-fields.ts",
     "worker/legacy-lead.ts",
+    "worker/monitoring.ts",
     "worker/public-endpoints.ts",
+    "worker/request-ip.ts",
     "worker/site/app-routes.ts",
     "worker/site/blog-inject.ts",
     "worker/site/blog.ts",
@@ -3273,6 +3284,26 @@
       "name": "ACCEPTED_UPLOAD_MIME_TYPES"
     },
     {
+      "file": "worker/admin/csrf-tokens.ts",
+      "name": "ADMIN_CSRF_COOKIE"
+    },
+    {
+      "file": "worker/admin/csrf-tokens.ts",
+      "name": "ADMIN_CSRF_FIELD"
+    },
+    {
+      "file": "worker/admin/csrf-tokens.ts",
+      "name": "ADMIN_CSRF_HEADER"
+    },
+    {
+      "file": "worker/admin/csrf.ts",
+      "name": "adminCsrfToken"
+    },
+    {
+      "file": "worker/admin/csrf-tokens.ts",
+      "name": "adminCsrfTokensMatch"
+    },
+    {
       "file": "worker/db/errors.ts",
       "name": "adminDatabaseMessage"
     },
@@ -3315,6 +3346,14 @@
     {
       "file": "worker/site/json-ld.ts",
       "name": "articleJsonLd"
+    },
+    {
+      "file": "worker/admin/csrf.ts",
+      "name": "assertAdminCsrfFromForm"
+    },
+    {
+      "file": "worker/admin/csrf-tokens.ts",
+      "name": "assertAdminCsrfFromRequest"
     },
     {
       "file": "worker/db/schema.ts",
@@ -3909,6 +3948,18 @@
       "name": "logDatabaseError"
     },
     {
+      "file": "worker/monitoring.ts",
+      "name": "logProductionError"
+    },
+    {
+      "file": "worker/monitoring.ts",
+      "name": "logProductionInfo"
+    },
+    {
+      "file": "worker/monitoring.ts",
+      "name": "logProductionWarn"
+    },
+    {
       "file": "worker/admin/lead-store.ts",
       "name": "markLeadEmailSent"
     },
@@ -4049,6 +4100,10 @@
       "name": "postsForTaxonomy"
     },
     {
+      "file": "worker/admin/csrf.ts",
+      "name": "primeAdminCsrf"
+    },
+    {
       "file": "worker/site/public-routes.ts",
       "name": "PUBLIC_REDIRECTS"
     },
@@ -4079,6 +4134,10 @@
     {
       "file": "worker/db/schema.ts",
       "name": "rateLimits"
+    },
+    {
+      "file": "worker/admin/csrf-tokens.ts",
+      "name": "readAdminCsrfCookie"
     },
     {
       "file": "worker/admin/session.ts",
@@ -4355,6 +4414,14 @@
     {
       "file": "worker/admin/form-rows.ts",
       "name": "TooManyRowsError"
+    },
+    {
+      "file": "worker/request-ip.ts",
+      "name": "trustedClientIp"
+    },
+    {
+      "file": "worker/request-ip.ts",
+      "name": "trustedClientIpOrUnknown"
     },
     {
       "file": "worker/admin/media-store.ts",

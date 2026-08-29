@@ -4,10 +4,12 @@ export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { listStaticPages } from "@/worker/site/static-pages";
 import { AdminShell } from "../_components/AdminShell";
+import { CsrfField } from "../_components/CsrfField";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
 import { AutoSubmitControls, LiveSearch, SubmitButton } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
+import { adminCsrfToken } from "@/worker/admin/csrf";
 import {
   Badge,
   Card,
@@ -68,6 +70,8 @@ export default async function StaticPagesIndex({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const csrfToken = adminCsrfToken();
+
   const user = await requireRole("admin", "/admin", "the pages");
   await requireDb();
   const params = await searchParams;
@@ -166,7 +170,7 @@ export default async function StaticPagesIndex({
               icon={page.published ? "external" : "eye"}
               external
             />
-            <DeleteConfirmTrigger
+            <DeleteConfirmTrigger csrfToken={csrfToken}
               action={resetStaticPageAction}
               id={page.path}
               what={`the stored copy of ${page.path}`}
@@ -276,6 +280,7 @@ export default async function StaticPagesIndex({
           ) : (
             <>
               <form id={PAGES_BULK_FORM}>
+            <CsrfField />
                 <input type="hidden" name="returnTo" value={listHref} />
                 <BulkSelection noun="page" formId={PAGES_BULK_FORM}>
                   <SubmitButton
@@ -351,6 +356,7 @@ export default async function StaticPagesIndex({
         <Card className="h-fit lg:sticky lg:top-20" pad={false}>
           <CardHead title="Add a page" icon="plus" />
           <form action={createStaticPageAction} className="vw-card-pad space-y-3">
+            <CsrfField />
             <input type="hidden" name="returnTo" value={listHref} />
             <p className="vw-hint">
               A new page starts as a copy of one that already works, so it keeps a layout the site can render.

@@ -14,7 +14,7 @@ import { loadCalculatorConfig } from "@/worker/site/calculator-store";
 import { invalidateVenueTypeCache, loadAllVenueTypes } from "@/worker/site/venue-types";
 import { invalidateTemplateCache } from "@/worker/site/template";
 import { invalidateCityListingCache } from "@/worker/site/venue-listing";
-import { assertSameOrigin, recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
+import { assertAdminRequest, recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
 import { hasMoved, readExpectedVersion, STALE_MESSAGE } from "../_lib/concurrency";
 import { publishContentChange } from "@/worker/site/content-version";
 import { withFlashKey } from "../_lib/flash";
@@ -194,7 +194,7 @@ function normaliseSlug(value: string): string {
  * are handled.
  */
 export async function createHotelAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireUser();
   const db = await requireDb();
   const target = "/admin/hotels/new";
@@ -289,7 +289,7 @@ export async function createHotelAction(formData: FormData): Promise<void> {
  * keep their original page; only ones added here disappear entirely.
  */
 export async function deleteHotelAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -331,7 +331,7 @@ export async function deleteHotelAction(formData: FormData): Promise<void> {
 
 /** Deletes every selected venue and removes listing rows that pointed at them. */
 export async function bulkDeleteHotelsAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -392,7 +392,7 @@ function readNearby(formData: FormData): string[] {
 }
 
 export async function updateHotelAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireUser();
   const db = await requireDb();
 
@@ -600,7 +600,7 @@ function readNearbyList(value: string): string[] {
  * six values, and nothing kept them in step.
  */
 export async function saveVenueTypeAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -653,7 +653,7 @@ export async function saveVenueTypeAction(formData: FormData): Promise<void> {
  * Unpublishing is the way to take a filter down without untagging anything.
  */
 export async function deleteVenueTypeAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 

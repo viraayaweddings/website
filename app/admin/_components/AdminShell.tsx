@@ -11,6 +11,7 @@
  * server action's success or error message was ever shown.
  */
 import type { User } from "@/worker/db/schema";
+import { adminCsrfToken } from "@/worker/admin/csrf";
 import { AdminHeaderBar } from "./AdminHeaderBar";
 import { SideNav } from "./SideNav";
 import { Toaster } from "./Toaster";
@@ -29,10 +30,11 @@ export function AdminShell({
   children: React.ReactNode;
 }) {
   const safeUser = { name: user.name, email: user.email, role: user.role };
+  const csrfToken = adminCsrfToken();
 
   return (
     <div className="flex min-h-screen">
-      <SideNav role={safeUser.role} name={safeUser.name} email={safeUser.email} />
+      <SideNav role={safeUser.role} name={safeUser.name} email={safeUser.email} csrfToken={csrfToken} />
 
       <div className="flex min-w-0 flex-1 flex-col">
         <AdminHeaderBar user={safeUser} title={title} />

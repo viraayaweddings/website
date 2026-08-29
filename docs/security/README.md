@@ -13,7 +13,7 @@ Security documentation for the full project.
 | X-Frame-Options | SAMEORIGIN | `build/sites-vite-plugin.ts` |
 | Same-origin API guard | Lead endpoints, admin upload, logout | `worker/lead-email.ts`, `app/admin/*/route.ts` |
 | Lead honeypot | Hidden fields rejected server-side | `worker/lead-email.ts` |
-| Lead rate limit | 8/10min/IP (in-memory) | `worker/lead-email.ts` |
+| Lead rate limit | 8/10min/IP (Postgres `rate_limits`) | `worker/lead-email.ts`, `worker/admin/rate-limit.ts` |
 | Form same-origin | POST must match origin | `worker/lead-email.ts` |
 | Body size limit | 20KB max on lead POST | `worker/lead-email.ts` |
 | HTML sanitization | Admin rich text only | `worker/admin/rich-text.ts` |
@@ -34,11 +34,14 @@ Security documentation for the full project.
 | Session TTL | 7 days | `worker/admin/session.ts` |
 | Open redirect prevention | `safeReturnPath()` | `app/admin/_lib/auth.ts` |
 | Role-based access | `requireRole("admin")` | `app/admin/_lib/auth.ts` |
-| Login rate limit | 8/15min/IP+email (in-memory) | `app/admin/login/actions.ts` |
+| Login rate limit | 8/15min/IP+email + 25/hour/account (Postgres) | `app/admin/login/actions.ts`, `worker/admin/rate-limit.ts` |
 | Admin noindex | robots + cache headers | `app/admin/layout.tsx`, worker |
 | Constant-time login | Unknown email hash comparison | `app/admin/login/actions.ts` |
 | Last admin guard | Cannot delete/demote last admin | `app/admin/users/actions.ts` |
 | Session invalidation | On password reset, disable, role change | `worker/admin/session.ts` |
+| Admin CSRF tokens | Double-submit cookie + form field / upload header | `worker/admin/csrf.ts`, `worker/admin/csrf-tokens.ts` |
+| Trusted client IP | Rate limits use Vercel-forwarded headers only | `worker/request-ip.ts` |
+| Production error logging | Structured JSON lines for log drains (no secrets) | `worker/monitoring.ts` |
 
 **Admin security issues:** [AUDIT-FINDINGS.md](../AUDIT-FINDINGS.md) — Security Issues
 
@@ -63,9 +66,9 @@ Security documentation for the full project.
 | --- | --- | --- |
 | XSS on public pages | CSP; admin content sanitized | Static HTML trusted clone |
 | XSS via admin content | rich-text sanitizer | Large HTML in RichText editor |
-| CSRF on forms | Same-origin check | No CSRF tokens |
-| Lead spam | Rate limit + honeypot | Per-isolate rate limit |
-| Admin brute force | Login throttle | Per-isolate throttle |
+| CSRF on forms | Lead double-submit; admin double-submit (`vw_admin_csrf` HttpOnly + `_csrf` field / `x-csrf-token` header) | `worker/lead-csrf.ts`, `worker/admin/csrf.ts`, `worker/admin/csrf-tokens.ts` |
+| Lead spam | Rate limit + honeypot | Postgres-backed; trusted IP via `worker/request-ip.ts` |
+| Admin brute force | Login throttle | Postgres-backed; trusted IP via `worker/request-ip.ts` |
 | IDOR on admin | Session + role checks | N/A for public (no user data) |
 | File upload attacks | Magic-byte validation, no SVG | — |
 | Secret exposure | Env vars, not in repo | `.env.local` gitignored |
@@ -90,7 +93,7 @@ Written into `_headers` by `build/sites-vite-plugin.ts`:
 
 See audit findings documents for full list. Top priorities:
 
-1. Postgres-backed rate limiting, already used for admin login
-2. CSRF tokens on state-changing endpoints
+1. Postgres-backed rate limiting — implemented for login and leads
+2. ~~CSRF tokens on admin server actions~~ — implemented (`assertAdminRequest`)
 3. Schema.org + SEO hardening (not security but trust)
 4. Cookie consent integration with analytics

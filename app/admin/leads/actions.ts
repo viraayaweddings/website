@@ -5,13 +5,13 @@ import { emptyEnv } from "@/worker/env";
 import { eq, inArray } from "drizzle-orm";
 import { resendStoredLeadEmail } from "@/worker/lead-email";
 import { leads, LEAD_STATUSES, type LeadStatus } from "@/worker/db/schema";
-import { assertSameOrigin, recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
+import { assertAdminRequest, recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
 import { parseRecordId } from "@/worker/admin/record-id";
 import { hasMoved, readExpectedVersion, STALE_MESSAGE } from "../_lib/concurrency";
 import { withFlashKey } from "../_lib/flash";
 
 export async function updateLeadAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const user = await requireUser();
   const db = await requireDb();
 
@@ -70,7 +70,7 @@ export async function updateLeadAction(formData: FormData): Promise<void> {
 
 /** Destructive, so admins only. */
 export async function deleteLeadAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const user = await requireRole("admin");
   const db = await requireDb();
   // Deleting from a filtered page should land back on that page, not on an
@@ -119,7 +119,7 @@ function backTo(formData: FormData): string {
  * morning's replies can be cleared in one pass rather than one at a time.
  */
 export async function bulkStatusAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const user = await requireUser();
   const db = await requireDb();
   const target = backTo(formData);
@@ -151,7 +151,7 @@ export async function bulkStatusAction(formData: FormData): Promise<void> {
 
 /** Destructive, so admins only — consistent with the single-row delete. */
 export async function bulkDeleteAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const user = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -184,7 +184,7 @@ export async function bulkDeleteAction(formData: FormData): Promise<void> {
  * had no way to be told about it a second time.
  */
 export async function resendLeadEmailAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const user = await requireUser();
   const db = await requireDb();
 

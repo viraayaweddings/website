@@ -5,6 +5,7 @@ import { asc } from "drizzle-orm";
 import { heroSlides, type HeroSlide } from "@/worker/db/schema";
 import { heroImageUrl } from "@/worker/site/hero";
 import { AdminShell } from "../_components/AdminShell";
+import { CsrfField } from "../_components/CsrfField";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { SubmitButton, UnsavedGuard } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
@@ -38,6 +39,7 @@ function SlideCard({
         ) : null}
         {slide.published ? <Badge tone="ok">live</Badge> : <Badge tone="neutral">hidden</Badge>}
         <form action={moveSlideAction} className="inline">
+            <CsrfField />
           <input type="hidden" name="id" value={slide.id} />
           <input type="hidden" name="direction" value="up" />
           <SubmitButton variant="ghost" size="sm" icon="arrowUp" pendingLabel="" label={`Move slide ${index + 1} up`}>
@@ -45,6 +47,7 @@ function SlideCard({
           </SubmitButton>
         </form>
         <form action={moveSlideAction} className="inline">
+            <CsrfField />
           <input type="hidden" name="id" value={slide.id} />
           <input type="hidden" name="direction" value="down" />
           <SubmitButton variant="ghost" size="sm" icon="arrowDown" pendingLabel="" label={`Move slide ${index + 1} down`}>
@@ -71,6 +74,7 @@ function SlideCard({
         </div>
 
         <form action={updateSlideAction} className="space-y-3">
+            <CsrfField />
           <UnsavedGuard />
           <input type="hidden" name="id" value={slide.id} />
 
@@ -108,6 +112,7 @@ function SlideCard({
       {canDelete ? (
         <div className="flex justify-end border-t px-5 py-2" style={{ borderColor: "var(--line)" }}>
           <form action={deleteSlideAction}>
+            <CsrfField />
             <input type="hidden" name="id" value={slide.id} />
             <SubmitButton
               variant="danger-quiet"
@@ -174,6 +179,7 @@ export default async function HeroPage({
             <>
               {isAdmin(user) ? (
                 <form id={HERO_BULK_FORM}>
+            <CsrfField />
                   <BulkSelection noun="slide" formId={HERO_BULK_FORM}>
                     <SubmitButton
                       variant="danger-quiet"
@@ -208,6 +214,7 @@ export default async function HeroPage({
         <Card className="h-fit lg:sticky lg:top-20" pad={false}>
           <CardHead title="Add a slide" icon="plus" />
           <form action={createSlideAction} className="vw-card-pad space-y-3">
+            <CsrfField />
             <UnsavedGuard />
             <Field label="Heading" name="title" required />
             <TextArea label="Description" name="description" rows={2} />

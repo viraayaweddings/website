@@ -1,3 +1,4 @@
+import { CsrfField } from "../../../_components/CsrfField";
 // Reads the session cookie on every request; never prerender or cache.
 export const dynamic = "force-dynamic";
 
@@ -69,6 +70,7 @@ export default async function CalculatorHotelPage({
       <Card pad={false}>
         <CardHead title="Details" icon="venue" />
         <form action={saveCalculatorHotelAction} className="vw-card-pad space-y-3">
+            <CsrfField />
           <UnsavedGuard />
           <input type="hidden" name="id" value={hotel.id} />
           <Field label="Name" name="name" defaultValue={hotel.name} required />
@@ -103,6 +105,7 @@ export default async function CalculatorHotelPage({
             hint="Per room per night, and per person for meals"
           />
           <form action={saveCalculatorPricesAction} className="vw-card-pad">
+            <CsrfField />
             <UnsavedGuard />
             <input type="hidden" name="hotelId" value={hotel.id} />
 
@@ -169,6 +172,7 @@ export default async function CalculatorHotelPage({
         <Card pad={false}>
           <CardHead title="Delete" icon="trash" />
           <form action={deleteCalculatorHotelAction} className="vw-card-pad">
+            <CsrfField />
             <input type="hidden" name="id" value={hotel.id} />
             <input type="hidden" name="returnTo" value="/admin/calculator/hotels" />
             <p className="vw-hint mb-3">

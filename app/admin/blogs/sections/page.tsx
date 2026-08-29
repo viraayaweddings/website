@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 import { asc } from "drizzle-orm";
 import { blogListings, blogPosts, pageTemplates } from "@/worker/db/schema";
 import { AdminShell } from "../../_components/AdminShell";
+import { CsrfField } from "../../_components/CsrfField";
 import { CopyButton, SubmitButton } from "../../_components/FormControls";
 import { Alert, Badge, Card, CardHead, EmptyState, LinkButton, TextArea } from "../../_components/ui";
 import { requireDb, requireRole } from "../../_lib/auth";
@@ -90,6 +91,7 @@ export default async function BlogSectionsPage({
                   </CardHead>
 
                   <form action={saveSectionAction} className="vw-card-pad space-y-3">
+            <CsrfField />
                     <input type="hidden" name="taxonomy" value={section.taxonomy} />
                     <input type="hidden" name="slug" value={section.slug} />
                     <TextArea

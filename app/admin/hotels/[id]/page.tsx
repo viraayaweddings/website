@@ -12,6 +12,7 @@ import { galleryFor, parseHighlights } from "@/worker/site/hotel";
 import { parseNearby } from "@/worker/site/venue-listing";
 import { loadAllVenueTypes, parseWeddingTypes } from "@/worker/site/venue-types";
 import { AdminShell } from "../../_components/AdminShell";
+import { CsrfField } from "../../_components/CsrfField";
 import { SubmitButton, UnsavedGuard, VersionField } from "../../_components/FormControls";
 import { MediaPicker } from "../../_components/MediaPicker";
 import { RichText } from "../../_components/RichText";
@@ -102,6 +103,7 @@ export default async function EditHotelPage({
       </div>
 
       <form action={updateHotelAction} className="grid gap-4 lg:grid-cols-3">
+            <CsrfField />
         <UnsavedGuard />
         <input type="hidden" name="id" value={hotel.id} />
         <VersionField value={versionOf(hotel)} />
@@ -416,6 +418,7 @@ export default async function EditHotelPage({
               without losing your edits.
             </p>
             <form action={deleteHotelAction}>
+            <CsrfField />
               <input type="hidden" name="id" value={hotel.id} />
               <SubmitButton
                 variant="danger-quiet"

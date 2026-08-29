@@ -9,6 +9,7 @@
 import { desc, ilike, or, sql } from "drizzle-orm";
 import { emptyEnv } from "@/worker/env";
 import { uploadImage } from "@/worker/admin/media-store";
+import { assertAdminCsrfFromRequest } from "@/worker/admin/csrf";
 import { media } from "@/worker/db/schema";
 import { getCurrentUser, requireDb } from "../../_lib/auth";
 
@@ -87,6 +88,11 @@ export async function POST(request: Request): Promise<Response> {
   const user = await getCurrentUser();
   if (!user) return json({ error: "Sign in again to upload." }, 401);
   if (!isSameOrigin(request)) return json({ error: "Refused." }, 403);
+  try {
+    assertAdminCsrfFromRequest(request);
+  } catch {
+    return json({ error: "Your session expired. Refresh the page and try again." }, 403);
+  }
 
   let form: FormData;
   try {

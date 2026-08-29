@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 
 import { LABEL_DEFINITIONS, readLabels } from "@/worker/site/labels";
 import { AdminShell } from "../_components/AdminShell";
+import { CsrfField } from "../_components/CsrfField";
 import { SubmitButton, UnsavedGuard } from "../_components/FormControls";
 import { Alert, Card, CardHead, Field } from "../_components/ui";
 import { requireDb, requireRole } from "../_lib/auth";
@@ -37,6 +38,7 @@ export default async function LabelsPage({
       </div>
 
       <form action={saveLabelsAction} className="space-y-4">
+            <CsrfField />
         <UnsavedGuard />
 
         {groups.map((group) => (

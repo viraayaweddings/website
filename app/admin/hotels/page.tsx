@@ -4,9 +4,11 @@ export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { and, asc, desc, eq, like, or, sql, type SQL } from "drizzle-orm";
 import { hotels } from "@/worker/db/schema";
+import { adminCsrfToken } from "@/worker/admin/csrf";
 import { loadCalculatorConfig } from "@/worker/site/calculator-store";
 import { loadAllVenueTypes } from "@/worker/site/venue-types";
 import { AdminShell } from "../_components/AdminShell";
+import { CsrfField } from "../_components/CsrfField";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
 import { AutoSubmitControls, LiveSearch, SubmitButton } from "../_components/FormControls";
@@ -35,6 +37,8 @@ export default async function HotelsPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const csrfToken = adminCsrfToken();
+
   const params = await searchParams;
   const single = (value: string | string[] | undefined) =>
     (Array.isArray(value) ? value[0] : value)?.trim() || "";
@@ -189,6 +193,7 @@ export default async function HotelsPage({
         <>
         {isAdmin(user) ? (
           <form id={HOTELS_BULK_FORM}>
+            <CsrfField />
             <input type="hidden" name="returnTo" value={listHref} />
             <BulkSelection noun="venue" formId={HOTELS_BULK_FORM}>
               <SubmitButton
@@ -295,7 +300,7 @@ export default async function HotelsPage({
                         external
                       />
                       {isAdmin(user) ? (
-                        <DeleteConfirmTrigger
+                        <DeleteConfirmTrigger csrfToken={csrfToken}
                           action={deleteHotelAction}
                           id={hotel.id}
                           what={hotel.name || hotel.slug}
@@ -383,6 +388,7 @@ export default async function HotelsPage({
                             action={saveVenueTypeAction}
                             className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4 lg:items-end"
                           >
+            <CsrfField />
                             <input type="hidden" name="typeId" value={type.id} />
                             <Field label="Slug" name="slug" defaultValue={type.slug} required />
                             <Field label="Label" name="label" defaultValue={type.label} required />
@@ -403,6 +409,7 @@ export default async function HotelsPage({
                             </div>
                           </form>
                           <form action={deleteVenueTypeAction} className="mt-2 flex justify-end">
+            <CsrfField />
                             <input type="hidden" name="typeId" value={type.id} />
                             <SubmitButton
                               size="sm"
@@ -423,6 +430,7 @@ export default async function HotelsPage({
             )}
             <div className="vw-card-pad" style={{ borderTop: "1px solid var(--line)" }}>
               <form action={saveVenueTypeAction} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:items-end">
+            <CsrfField />
                 <Field label="Slug" name="slug" placeholder="beach" required hint="Letters, digits and hyphens." />
                 <Field label="Label" name="label" placeholder="Beach Wedding" required />
                 <Field label="Order" name="position" placeholder="6" />

@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { eq, inArray, lt, sql } from "drizzle-orm";
 import { auditLog } from "@/worker/db/schema";
-import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { assertAdminRequest, recordAudit, requireDb, requireRole } from "../_lib/auth";
 import { withFlashKey } from "../_lib/flash";
 import { PRUNE_DAYS } from "./constants";
 
@@ -26,7 +26,7 @@ function withMessage(target: string, key: "error" | "deleted" | "saved", message
  * erased: a gap always has an entry beside it saying who made it.
  */
 export async function bulkDeleteActivityAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -61,7 +61,7 @@ export async function bulkDeleteActivityAction(formData: FormData): Promise<void
  * by one is for the odd mistake, not for housekeeping.
  */
 export async function pruneActivityAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -91,7 +91,7 @@ export async function pruneActivityAction(formData: FormData): Promise<void> {
 
 /** Deletes one entry, used by the row control. */
 export async function deleteActivityEntryAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);

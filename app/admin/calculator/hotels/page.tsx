@@ -4,7 +4,9 @@ export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { and, asc, desc, eq, ilike, sql, type SQL } from "drizzle-orm";
 import { calculatorCities, calculatorHotels, calculatorPrices } from "@/worker/db/schema";
+import { adminCsrfToken } from "@/worker/admin/csrf";
 import { AdminShell } from "../../_components/AdminShell";
+import { CsrfField } from "../../_components/CsrfField";
 import { BulkSelection, RowCheckbox } from "../../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../../_components/DeleteConfirmTrigger";
 import { AutoSubmitControls, LiveSearch, SubmitButton } from "../../_components/FormControls";
@@ -35,6 +37,8 @@ export default async function CalculatorHotelsPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const csrfToken = adminCsrfToken();
+
   const user = await requireRole("admin", "/admin/calculator/hotels", "calculator data");
   const db = await requireDb();
   const params = await searchParams;
@@ -120,6 +124,7 @@ export default async function CalculatorHotelsPage({
       <Card pad={false}>
         <CardHead title="Add a hotel" icon="plus" />
         <form action={saveCalculatorHotelAction} className="vw-card-pad space-y-3">
+            <CsrfField />
           <input type="hidden" name="returnTo" value={listHref} />
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <Field label="Name" name="name" required placeholder="e.g. The Leela Palace Udaipur" />
@@ -220,6 +225,7 @@ export default async function CalculatorHotelsPage({
           ) : (
             <>
               <form id={CALC_HOTELS_BULK_FORM} className="vw-card-pad pb-0">
+            <CsrfField />
                 <input type="hidden" name="returnTo" value={listHref} />
                 <BulkSelection noun="hotel" formId={CALC_HOTELS_BULK_FORM}>
                   <SubmitButton
@@ -287,7 +293,7 @@ export default async function CalculatorHotelsPage({
                               >
                                 Edit
                               </LinkButton>
-                              <DeleteConfirmTrigger
+                              <DeleteConfirmTrigger csrfToken={csrfToken}
                                 action={deleteCalculatorHotelAction}
                                 id={hotel.id}
                                 what={`${hotel.name} and its twelve monthly prices`}

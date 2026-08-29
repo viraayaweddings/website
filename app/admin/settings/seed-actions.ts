@@ -2,13 +2,13 @@
 
 import { redirect } from "next/navigation";
 import { seedSiteContent } from "@/worker/db/seed-content";
-import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { assertAdminRequest, recordAudit, requireDb, requireRole } from "../_lib/auth";
 import { withFlashKey } from "../_lib/flash";
 
 const SETTINGS_PATH = "/admin/settings";
 
-export async function importSiteContentAction(): Promise<void> {
-  await assertSameOrigin();
+export async function importSiteContentAction(formData: FormData): Promise<void> {
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin", SETTINGS_PATH, "site settings");
   const db = await requireDb();
 

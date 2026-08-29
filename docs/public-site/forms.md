@@ -51,7 +51,7 @@ Forms get `form.noValidate = true` — browser validation bypassed in favor of c
 | Rule | Detail |
 | --- | --- |
 | Same-origin | POST must come from same origin |
-| Rate limit | 8 submissions / 10 min / IP (in-memory per isolate) |
+| Rate limit | 8 submissions / 10 min / IP (Postgres `rate_limits`, trusted IP headers) |
 | Body size | Max 20KB |
 | Name | Minimum 2 characters |
 | Phone | Indian 10-digit, `+91` normalized |

@@ -8,7 +8,7 @@ import { mediaKeyFrom, mediaPathFromKey, readMediaPathValue } from "@/worker/adm
 import { heroSlides } from "@/worker/db/schema";
 import { invalidateHeroCache, safeHref } from "@/worker/site/hero";
 import { invalidateTemplateCache } from "@/worker/site/template";
-import { assertSameOrigin, recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
+import { assertAdminRequest, recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
 import { publishContentChange } from "@/worker/site/content-version";
 import { withFlashKey } from "../_lib/flash";
 
@@ -69,7 +69,7 @@ async function releaseStoredImage(value: string): Promise<void> {
 }
 
 export async function createSlideAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireUser();
   const db = await requireDb();
 
@@ -104,7 +104,7 @@ export async function createSlideAction(formData: FormData): Promise<void> {
 }
 
 export async function updateSlideAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireUser();
   const db = await requireDb();
 
@@ -144,7 +144,7 @@ export async function updateSlideAction(formData: FormData): Promise<void> {
 
 /** Destructive, so admins only — consistent with every other delete. */
 export async function deleteSlideAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -172,7 +172,7 @@ export async function deleteSlideAction(formData: FormData): Promise<void> {
 
 /** Deletes every selected hero slide and releases their images if unused. */
 export async function bulkDeleteSlidesAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const ids = formData
@@ -209,7 +209,7 @@ export async function bulkDeleteSlidesAction(formData: FormData): Promise<void> 
 
 /** Swaps a slide with its neighbour so the order can be nudged one step at a time. */
 export async function moveSlideAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireUser();
   const db = await requireDb();
 

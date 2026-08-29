@@ -13,6 +13,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { Icon, Monogram } from "./icons";
+import { CsrfInput } from "./CsrfInput";
 import { ADMIN_NAV_OPEN_EVENT } from "./AdminHeaderBar";
 import { navGroupsFor } from "./nav";
 
@@ -48,10 +49,12 @@ export function SideNav({
   role,
   name,
   email,
+  csrfToken,
 }: {
   role: string;
   name: string;
   email: string;
+  csrfToken: string;
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -167,6 +170,7 @@ export function SideNav({
           )}
 
           <form action="/admin/logout" method="post">
+            <CsrfInput token={csrfToken} />
             <button
               type="submit"
               className="vw-rail-link w-full"

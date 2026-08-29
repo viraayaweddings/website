@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 
 import { MIN_PASSWORD_LENGTH } from "@/worker/admin/password";
 import { AdminShell } from "../_components/AdminShell";
+import { CsrfField } from "../_components/CsrfField";
 import { SubmitButton } from "../_components/FormControls";
 import { Card, CardHead, DetailList, Field, formatDateTime } from "../_components/ui";
 import { requireUser } from "../_lib/auth";
@@ -47,6 +48,7 @@ export default async function AccountPage({
               Your email address is how you sign in, so only an admin can change it. Ask one if it is wrong.
             </p>
             <form action={updateOwnProfileAction} className="space-y-3">
+            <CsrfField />
               <Field label="Name" name="name" defaultValue={user.name} required autoComplete="name" />
               <SubmitButton pendingLabel="Saving…">Save name</SubmitButton>
             </form>
@@ -57,6 +59,7 @@ export default async function AccountPage({
           <CardHead title="Change password" icon="settings" />
           <div className="vw-card-pad space-y-4">
             <form action={changeOwnPasswordAction} className="space-y-3">
+            <CsrfField />
               <Field
                 label="Current password"
                 name="currentPassword"
@@ -95,6 +98,7 @@ export default async function AccountPage({
               have — end every session at once. You will be signed out here too and will need to sign in again.
             </p>
             <form action={signOutEverywhereAction}>
+            <CsrfField />
               <SubmitButton variant="danger" icon="warning" pendingLabel="Signing out…">
                 Sign out everywhere
               </SubmitButton>

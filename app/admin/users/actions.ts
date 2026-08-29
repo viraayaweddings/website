@@ -5,7 +5,7 @@ import { and, eq, inArray, ne, notInArray, sql } from "drizzle-orm";
 import { hashPassword, validatePasswordStrength } from "@/worker/admin/password";
 import { destroyUserSessions } from "@/worker/admin/session";
 import { sessions, users, USER_ROLES, type UserRole } from "@/worker/db/schema";
-import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { assertAdminRequest, recordAudit, requireDb, requireRole } from "../_lib/auth";
 import { isUniqueViolation } from "../_lib/db-errors";
 import { withFlashKey } from "../_lib/flash";
 
@@ -28,7 +28,7 @@ function readRole(formData: FormData): UserRole {
 }
 
 export async function createUserAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -70,7 +70,7 @@ export async function createUserAction(formData: FormData): Promise<void> {
 }
 
 export async function updateUserAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -130,7 +130,7 @@ export async function updateUserAction(formData: FormData): Promise<void> {
 }
 
 export async function resetPasswordAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -160,7 +160,7 @@ export async function resetPasswordAction(formData: FormData): Promise<void> {
  * your own account, so nobody can lock themselves out.
  */
 export async function deleteUserAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -193,7 +193,7 @@ export async function deleteUserAction(formData: FormData): Promise<void> {
 
 /** Deletes selected accounts without allowing self-delete or last-admin lockout. */
 export async function bulkDeleteUsersAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const selected = formData.getAll("ids").map((value) => String(value || "").trim()).filter(Boolean);

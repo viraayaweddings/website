@@ -10,6 +10,8 @@ import { getDatabaseUrl } from "@/worker/env";
 import { getUserByToken, SESSION_COOKIE } from "@/worker/admin/session";
 import { auditLog, users, type User, type UserRole } from "@/worker/db/schema";
 import { primeFlashKey } from "./flash";
+import { trustedClientIp } from "@/worker/request-ip";
+import { assertAdminCsrfFromForm, primeAdminCsrf } from "@/worker/admin/csrf";
 
 export const LOGIN_PATH = "/admin/login";
 export const SETUP_PATH = "/admin/setup";
@@ -41,27 +43,9 @@ export async function isSecureRequest(): Promise<boolean> {
   return !(requestHeaders.get("host") || "").startsWith("localhost");
 }
 
-/**
- * The caller's address, taken only from headers the platform sets.
- *
- * This used to read `cf-connecting-ip` first and then the raw
- * `x-forwarded-for`. The site deploys to Vercel, not Cloudflare, so nothing
- * strips `cf-connecting-ip` -- a client sets it to whatever it likes. Vercel
- * *appends* to `x-forwarded-for`, so a client-supplied prefix varies that too.
- * Either one let a caller pick a new rate-limit bucket per request.
- *
- * `x-vercel-forwarded-for` is written by the platform and cannot be spoofed.
- * The fallback takes the LAST entry of `x-forwarded-for`, which is the hop the
- * platform itself added; everything to its left is caller-supplied.
- */
+/** The caller's address, taken only from headers the platform sets. */
 export async function clientIp(requestHeaders: Headers): Promise<string | null> {
-  const trusted = requestHeaders.get("x-vercel-forwarded-for");
-  if (trusted) return trusted.split(",").pop()?.trim() || null;
-
-  const chain = requestHeaders.get("x-forwarded-for");
-  if (chain) return chain.split(",").pop()?.trim() || null;
-
-  return requestHeaders.get("x-real-ip");
+  return trustedClientIp(requestHeaders);
 }
 
 export async function requestContext() {
@@ -99,8 +83,20 @@ export async function assertSameOrigin(): Promise<void> {
   }
 
   // Every action passes through here, which makes it the one place the flash
-  // key can be loaded without touching 250 redirect call sites.
-  await primeFlashKey(await isSecureRequest());
+  // key and CSRF cookie can be loaded without touching 250 redirect call sites.
+  const secure = await isSecureRequest();
+  await primeFlashKey(secure);
+  await primeAdminCsrf(secure);
+}
+
+/**
+ * Validates same-origin and CSRF for a server action.
+ *
+ * Call at the top of every state-changing action, passing the form body.
+ */
+export async function assertAdminRequest(formData: FormData): Promise<void> {
+  await assertSameOrigin();
+  await assertAdminCsrfFromForm(formData);
 }
 
 export async function getCurrentUser(): Promise<User | null> {

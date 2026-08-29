@@ -13,6 +13,7 @@ import {
 import { getDb } from "./db/client";
 import { markLeadEmailSent, storeLead } from "./admin/lead-store";
 import { clearRateLimit, isRateLimited, recordRateLimitAttempt } from "./admin/rate-limit";
+import { trustedClientIpOrUnknown } from "./request-ip";
 
 export type LeadResponseMode = "lead" | "appointment";
 
@@ -176,9 +177,7 @@ function parseRequiredFields(value: unknown) {
 }
 
 function clientKey(request: Request) {
-  const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  const realIp = request.headers.get("x-real-ip")?.trim();
-  return forwarded || realIp || "unknown";
+  return trustedClientIpOrUnknown(request.headers);
 }
 
 function isSameOrigin(request: Request) {

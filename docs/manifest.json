@@ -233,8 +233,10 @@
       "site-search.js"
     ]
   },
-  "lastUpdated": "2026-08-24T16:30:11.612Z",
-  "lastAuditedCommit": "b5e399d96f3c436320d16f3de1cee99c8cc498ad",
+  "lastUpdated": "2026-08-29T15:24:07.417Z",
+  "lastAuditedCommit": "ff22106cb7918db1276eee104e24b519ba59bdf6",
   "projectVersion": "0.1.0",
-  "undocumentedCounts": {}
+  "undocumentedCounts": {
+    "adminComponents": 3
+  }
 }

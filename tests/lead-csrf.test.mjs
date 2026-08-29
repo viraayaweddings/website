@@ -17,6 +17,7 @@ test("the issued cookie carries the same token as the body", () => {
 test("the cookie is scoped and short-lived", () => {
   const { cookie } = issueLeadCsrfToken(true);
   assert.match(cookie, /Path=\//);
+  assert.match(cookie, /HttpOnly/);
   assert.match(cookie, /SameSite=Strict/);
   assert.match(cookie, /Max-Age=3600/);
   assert.match(cookie, /; Secure$/);

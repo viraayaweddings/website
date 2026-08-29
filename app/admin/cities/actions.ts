@@ -5,7 +5,7 @@ import { and, eq, inArray, sql } from "drizzle-orm";
 import { cityListings, cityPages, hotels } from "@/worker/db/schema";
 import { invalidateCityListingCache } from "@/worker/site/venue-listing";
 import { invalidateTemplateCache } from "@/worker/site/template";
-import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { assertAdminRequest, recordAudit, requireDb, requireRole } from "../_lib/auth";
 import { hasMoved, readExpectedVersion, STALE_MESSAGE } from "../_lib/concurrency";
 import { publishContentChange } from "@/worker/site/content-version";
 import { withFlashKey } from "../_lib/flash";
@@ -72,7 +72,7 @@ function readVenues(formData: FormData, city: string): { venueCity: string; venu
 
 /** City pages are site-wide structure, so editing them is admin-only. */
 export async function saveCityAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -150,7 +150,7 @@ export async function saveCityAction(formData: FormData): Promise<void> {
  * it needs a slug, a title and the numeric id the venue filter posts back.
  */
 export async function createCityAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -212,7 +212,7 @@ export async function createCityAction(formData: FormData): Promise<void> {
  * listed by other cities.
  */
 export async function deleteCityAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -242,7 +242,7 @@ export async function deleteCityAction(formData: FormData): Promise<void> {
 }
 
 export async function bulkDeleteCitiesAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -284,7 +284,7 @@ export async function bulkDeleteCitiesAction(formData: FormData): Promise<void> 
 
 /** Shows or hides the selected city pages in one pass. */
 export async function bulkPublishCitiesAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -338,7 +338,7 @@ export async function bulkPublishCitiesAction(formData: FormData): Promise<void>
  * added, so it is worth being able to correct without counting by hand.
  */
 export async function syncCityTotalAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 

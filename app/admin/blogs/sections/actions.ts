@@ -5,7 +5,7 @@ import { and, eq } from "drizzle-orm";
 import { blogListings } from "@/worker/db/schema";
 import { invalidateBlogListingCache } from "@/worker/site/blog";
 import { invalidateTemplateCache } from "@/worker/site/template";
-import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../../_lib/auth";
+import { assertAdminRequest, recordAudit, requireDb, requireRole } from "../../_lib/auth";
 import { publishContentChange } from "@/worker/site/content-version";
 import { withFlashKey } from "../../_lib/flash";
 
@@ -13,7 +13,7 @@ const SECTIONS_PATH = "/admin/blogs/sections";
 
 /** Category and tag pages are site structure, so editing them is admin-only. */
 export async function saveSectionAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { asc, eq } from "drizzle-orm";
 import { cityListings, cityPages, hotels } from "@/worker/db/schema";
 import { AdminShell } from "../../_components/AdminShell";
+import { CsrfField } from "../../_components/CsrfField";
 import { CopyButton, SubmitButton, UnsavedGuard, VersionField } from "../../_components/FormControls";
 import { Alert, Badge, Card, CardHead, Field, LinkButton, StatusBadge, TextArea } from "../../_components/ui";
 import { versionOf } from "../../_lib/concurrency";
@@ -70,6 +71,7 @@ export default async function EditCityPage({
       }
     >
       <form action={saveCityAction} className="grid gap-4 lg:grid-cols-3">
+            <CsrfField />
         <UnsavedGuard />
         <input type="hidden" name="city" value={city} />
 
@@ -148,6 +150,7 @@ export default async function EditCityPage({
         <Card pad={false}>
           <CardHead title="Match the total to the venues" icon="refresh" />
           <form action={syncCityTotalAction} className="vw-card-pad">
+            <CsrfField />
             <input type="hidden" name="city" value={city} />
             <p className="vw-hint mb-3">
               The stored total is {page.totalVenues}; {publishedCount} published venue
@@ -169,6 +172,7 @@ export default async function EditCityPage({
               the same effect without losing the list.
             </p>
             <form action={deleteCityAction}>
+            <CsrfField />
               <input type="hidden" name="id" value={city} />
               <VersionField value={versionOf(page)} />
               <SubmitButton

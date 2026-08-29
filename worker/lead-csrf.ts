@@ -18,7 +18,7 @@ export function issueLeadCsrfToken(secure: boolean): { token: string; cookie: st
   const flags = secure ? "; Secure" : "";
   return {
     token,
-    cookie: `${LEAD_CSRF_COOKIE}=${token}; Path=/; SameSite=Strict; Max-Age=${MAX_AGE_SECONDS}${flags}`,
+    cookie: `${LEAD_CSRF_COOKIE}=${token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${MAX_AGE_SECONDS}${flags}`,
   };
 }
 

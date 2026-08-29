@@ -14,6 +14,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ACCEPTED_UPLOAD_MIME_LIST, MAX_UPLOAD_BYTES } from "@/worker/admin/media-config";
 import { mediaSrc } from "@/worker/admin/media-path";
 import { Spinner } from "./FormControls";
+import { adminCsrfHeader } from "../_lib/csrf-fetch";
 import { Icon } from "./icons";
 
 const MAX_MB = Math.floor(MAX_UPLOAD_BYTES / 1024 / 1024);
@@ -190,7 +191,11 @@ function MediaBrowser({
     try {
       const body = new FormData();
       body.append("file", file);
-      const response = await fetch("/admin/media/upload", { method: "POST", body });
+      const response = await fetch("/admin/media/upload", {
+        method: "POST",
+        body,
+        headers: adminCsrfHeader(),
+      });
       const result = (await response.json()) as { url?: string; error?: string };
       if (!response.ok || !result.url) {
         setNotice(result.error || "That upload failed.");

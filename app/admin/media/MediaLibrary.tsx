@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { ACCEPTED_UPLOAD_MIME_LIST } from "@/worker/admin/media-config";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
+import { CsrfInput } from "../_components/CsrfInput";
 import { CopyButton, SubmitButton } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
 import { Badge } from "../_components/ui";
@@ -125,6 +126,7 @@ function MediaDetailsDrawer({
   naturalSize,
   onNaturalSize,
   onClose,
+  csrfToken,
 }: {
   item: MediaLibraryItem;
   isAdmin: boolean;
@@ -133,6 +135,7 @@ function MediaDetailsDrawer({
   naturalSize?: PixelSize;
   onNaturalSize: (key: string, size: PixelSize) => void;
   onClose: () => void;
+  csrfToken: string;
 }) {
   const [origin] = useState(() => (typeof window === "undefined" ? "" : window.location.origin));
   const path = imagePath(item);
@@ -275,6 +278,7 @@ function MediaDetailsDrawer({
             <section className="border-t pt-4" style={{ borderColor: "var(--line)" }}>
               <p className="vw-eyebrow mb-2">Replace</p>
               <form action={replaceAction} className="space-y-2">
+                <CsrfInput token={csrfToken} />
                 <input type="hidden" name="key" value={item.key} />
                 <input
                   type="file"
@@ -303,6 +307,7 @@ function MediaDetailsDrawer({
 
           {isAdmin && canDelete ? (
             <form action={deleteAction} className="border-t pt-4" style={{ borderColor: "var(--line)" }}>
+              <CsrfInput token={csrfToken} />
               <input type="hidden" name="key" value={item.key} />
               <SubmitButton
                 variant="danger-quiet"
@@ -336,12 +341,14 @@ export function MediaLibrary({
   deleteAction,
   replaceAction,
   bulkDeleteAction,
+  csrfToken,
 }: {
   items: MediaLibraryItem[];
   isAdmin: boolean;
   deleteAction: DeleteMediaAction;
   replaceAction: ReplaceMediaAction;
   bulkDeleteAction: DeleteMediaAction;
+  csrfToken: string;
 }) {
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [naturalSizes, setNaturalSizes] = useState<Record<string, PixelSize>>({});
@@ -364,6 +371,7 @@ export function MediaLibrary({
       <div>
         {isAdmin ? (
           <form id={MEDIA_BULK_FORM}>
+            <CsrfInput token={csrfToken} />
             <BulkSelection noun="image" formId={MEDIA_BULK_FORM}>
               <SubmitButton
                 variant="danger-quiet"
@@ -455,6 +463,7 @@ export function MediaLibrary({
         naturalSize={naturalSizes[selected.key]}
         onNaturalSize={rememberNaturalSize}
         onClose={() => setSelectedKey(null)}
+        csrfToken={csrfToken}
       />
     ) : null}
     </>

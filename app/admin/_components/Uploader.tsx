@@ -14,6 +14,7 @@ import { ACCEPTED_UPLOAD_MIME_LIST, MAX_UPLOAD_BYTES } from "@/worker/admin/medi
 import { Icon } from "./icons";
 import { Spinner } from "./FormControls";
 import { formatBytes } from "./ui";
+import { adminCsrfHeader } from "../_lib/csrf-fetch";
 
 const ACCEPTED = new Set(ACCEPTED_UPLOAD_MIME_LIST.split(","));
 
@@ -50,7 +51,11 @@ export function Uploader() {
         try {
           const body = new FormData();
           body.append("file", file);
-          const response = await fetch("/admin/media/upload", { method: "POST", body });
+          const response = await fetch("/admin/media/upload", {
+            method: "POST",
+            body,
+            headers: adminCsrfHeader(),
+          });
           const result = (await response.json()) as { error?: string };
           if (!response.ok) problems.push(`${file.name}: ${result.error || "upload failed"}`);
         } catch {

@@ -11,7 +11,7 @@ import { withFlashKey } from "../_lib/flash";
 /** Serialises concurrent first-run setups. Distinct from the migration lock. */
 const SETUP_LOCK_KEY = 842_002;
 import {
-  assertSameOrigin,
+  assertAdminRequest,
   hasAnyUser,
   isSecureRequest,
   LOGIN_PATH,
@@ -30,7 +30,7 @@ function failed(code: string): never {
  * exists, so this cannot be used to add accounts later.
  */
 export async function createFirstAdminAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const db = await requireDb();
   if (await hasAnyUser(db)) redirect(LOGIN_PATH);
 

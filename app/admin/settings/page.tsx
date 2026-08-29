@@ -6,6 +6,7 @@ import { sql } from "drizzle-orm";
 import { hotels } from "@/worker/db/schema";
 import { readSettings } from "@/worker/site/settings";
 import { AdminShell } from "../_components/AdminShell";
+import { CsrfField } from "../_components/CsrfField";
 import { SubmitButton, UnsavedGuard } from "../_components/FormControls";
 import { Alert, Card, CardHead, DetailList, Field, TextArea } from "../_components/ui";
 import { requireDb, requireRole } from "../_lib/auth";
@@ -42,6 +43,7 @@ export default async function SettingsPage({
                 templates from the legacy site export. Safe to run more than once.
               </p>
               <form action={importSiteContentAction}>
+            <CsrfField />
                 <SubmitButton icon="download" pendingLabel="Importing…">
                   Import site content
                 </SubmitButton>
@@ -63,6 +65,7 @@ export default async function SettingsPage({
         <Card className="lg:col-span-2" pad={false}>
           <CardHead title="Details" icon="settings" />
           <form action={saveSettingsAction} className="vw-card-pad space-y-4">
+            <CsrfField />
             <UnsavedGuard />
 
             <div className="grid gap-4 sm:grid-cols-2">

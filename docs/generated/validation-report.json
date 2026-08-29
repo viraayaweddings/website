@@ -1,35 +1,38 @@
 {
-  "validatedAt": "2026-08-29T15:11:28.610Z",
-  "gitCommit": "ee3fc63246b9d1dc19b6c052dc33041c9a289f34",
-  "gitCommitShort": "ee3fc632",
+  "validatedAt": "2026-08-29T15:24:07.674Z",
+  "gitCommit": "ff22106cb7918db1276eee104e24b519ba59bdf6",
+  "gitCommitShort": "ff22106c",
   "status": "PASS",
   "inventoryCounts": {
     "routes": 55,
     "serverActions": 67,
     "dbTables": 23,
     "workerEndpoints": 30,
-    "adminComponents": 18,
-    "adminFiles": 85,
+    "adminComponents": 21,
+    "adminFiles": 89,
     "staticSiteRoutes": 292,
     "publicJsFiles": 7,
     "pageTypePatterns": 9,
     "publicForms": 7,
     "workerSiteFiles": 37,
-    "workerFiles": 71,
+    "workerFiles": 75,
     "dbColumns": 199,
     "auditActions": 71,
-    "workerExports": 287,
+    "workerExports": 301,
     "npmScripts": 32,
     "envVars": 19,
     "enums": 5
   },
   "issueCount": 0,
-  "warningCount": 1,
+  "warningCount": 4,
   "coverage": {
-    "workerExports": "65/287 exported symbols named in the docs"
+    "workerExports": "65/301 exported symbols named in the docs"
   },
   "issues": [],
   "warnings": [
-    "Manifest audited commit (b5e399d) differs from HEAD (ee3fc632)"
+    "Admin file not referenced in docs: app/admin/_components/AdminCsrfMeta.tsx",
+    "Admin file not referenced in docs: app/admin/_components/CsrfField.tsx",
+    "Admin file not referenced in docs: app/admin/_components/CsrfInput.tsx",
+    "Admin file not referenced in docs: app/admin/_lib/csrf-fetch.ts"
   ]
 }

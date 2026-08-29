@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { CsrfInput } from "./CsrfInput";
 import { SubmitButton } from "./FormControls";
 import { Icon } from "./icons";
 
@@ -31,6 +32,7 @@ export function ConfirmDeleteBanner({
   note,
   onCancel,
   returnTo,
+  csrfToken,
 }: {
   action: (formData: FormData) => Promise<void>;
   id: number | string;
@@ -42,6 +44,7 @@ export function ConfirmDeleteBanner({
   onCancel?: () => void;
   /** List view to come back to, so filters and page survive the delete. */
   returnTo?: string;
+  csrfToken: string;
 }) {
   const banner = useRef<HTMLDivElement>(null);
 
@@ -82,6 +85,7 @@ export function ConfirmDeleteBanner({
         ) : null}
 
         <form action={action} className="mt-3 flex flex-wrap items-center gap-2">
+          <CsrfInput token={csrfToken} />
           <input type="hidden" name="id" value={id} />
           {returnTo ? <input type="hidden" name="returnTo" value={returnTo} /> : null}
           <SubmitButton variant="danger" size="sm" icon="trash" pendingLabel="Deleting…">

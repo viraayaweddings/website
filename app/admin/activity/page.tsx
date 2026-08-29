@@ -6,6 +6,7 @@ import { and, desc, eq, gte, like, lte, or, sql, type SQL } from "drizzle-orm";
 import { auditLog } from "@/worker/db/schema";
 import { istDayEnd, istDayStart } from "@/worker/admin/lead-filters";
 import { AdminShell } from "../_components/AdminShell";
+import { CsrfField } from "../_components/CsrfField";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { AutoSubmitControls, LiveSearch, SubmitButton } from "../_components/FormControls";
 import { Icon, type IconName } from "../_components/icons";
@@ -252,6 +253,7 @@ export default async function ActivityPage({
 
       {rows.length > 0 ? (
         <form id={ACTIVITY_BULK_FORM}>
+            <CsrfField />
           <input type="hidden" name="returnTo" value={listHref} />
           <BulkSelection noun="entry" formId={ACTIVITY_BULK_FORM}>
             <SubmitButton
@@ -358,6 +360,7 @@ export default async function ActivityPage({
       <Card className="mt-4" pad={false}>
         <CardHead title="Keep the log to a workable size" icon="trash" hint="Removals are themselves recorded" />
         <form action={pruneActivityAction} className="vw-card-pad flex flex-wrap items-end gap-3">
+            <CsrfField />
           <input type="hidden" name="returnTo" value="/admin/activity" />
           <label className="block">
             <span className="vw-label">Remove entries older than</span>

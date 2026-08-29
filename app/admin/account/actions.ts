@@ -17,7 +17,7 @@ import {
 import { clearRateLimit, isRateLimited, recordRateLimitAttempt } from "@/worker/admin/rate-limit";
 import { users } from "@/worker/db/schema";
 import {
-  assertSameOrigin,
+  assertAdminRequest,
   isSecureRequest,
   recordAudit,
   requestContext,
@@ -52,7 +52,7 @@ function done(message: string): never {
  * cannot be used to lock the owner out.
  */
 export async function changeOwnPasswordAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const user = await requireUser(ACCOUNT_PATH);
   const db = await requireDb();
 
@@ -101,7 +101,7 @@ export async function changeOwnPasswordAction(formData: FormData): Promise<void>
 
 /** Corrects the name shown beside your own entries in the activity log. */
 export async function updateOwnProfileAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const user = await requireUser(ACCOUNT_PATH);
   const db = await requireDb();
 
@@ -118,8 +118,8 @@ export async function updateOwnProfileAction(formData: FormData): Promise<void> 
 }
 
 /** Signs this account out everywhere, including the device asking. */
-export async function signOutEverywhereAction(): Promise<void> {
-  await assertSameOrigin();
+export async function signOutEverywhereAction(formData: FormData): Promise<void> {
+  await assertAdminRequest(formData);
   const user = await requireUser(ACCOUNT_PATH);
   const db = await requireDb();
 

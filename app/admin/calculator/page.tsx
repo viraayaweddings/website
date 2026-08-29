@@ -12,6 +12,7 @@ import {
   hotels,
 } from "@/worker/db/schema";
 import { AdminShell } from "../_components/AdminShell";
+import { CsrfField } from "../_components/CsrfField";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { AutoSubmitControls, LiveSearch, SubmitButton } from "../_components/FormControls";
 import { Icon } from "../_components/icons";
@@ -174,6 +175,7 @@ export default async function CalculatorAdminPage({
               prices into the database, after which this panel owns them and the file is no longer read.
             </p>
             <form action={importCalculatorDataAction}>
+            <CsrfField />
               <SubmitButton icon="check" pendingLabel="Importing…">
                 Import calculator data
               </SubmitButton>
@@ -245,6 +247,7 @@ export default async function CalculatorAdminPage({
           ) : (
             <>
               <form id={CALC_CITIES_BULK_FORM} className="vw-card-pad pb-0">
+            <CsrfField />
                 <BulkSelection noun="city" formId={CALC_CITIES_BULK_FORM}>
                   <SubmitButton
                     size="sm"
@@ -285,6 +288,7 @@ export default async function CalculatorAdminPage({
                               // The edit form lives in the row so the city it
                               // belongs to stays in front of the reader.
                               <form action={saveCalculatorCityAction} className="space-y-2">
+            <CsrfField />
                                 <input type="hidden" name="id" value={city.id} />
                                 <Field label="Name" name="name" defaultValue={city.name} required />
                                 <Field label="Order" name="position" defaultValue={String(city.position)} />
@@ -332,6 +336,7 @@ export default async function CalculatorAdminPage({
                                 </LinkButton>
                               )}
                               <form action={deleteCalculatorCityAction}>
+            <CsrfField />
                                 <input type="hidden" name="id" value={city.id} />
                                 <SubmitButton
                                   size="sm"
@@ -357,6 +362,7 @@ export default async function CalculatorAdminPage({
 
           <div className="vw-card-pad" style={{ borderTop: "1px solid var(--line)" }}>
             <form action={saveCalculatorCityAction} className="grid gap-3 sm:grid-cols-[2fr_1fr_auto] sm:items-end">
+            <CsrfField />
               <Field label="Add a city" name="name" placeholder="e.g. Coorg" required />
               <Field label="Order" name="position" defaultValue="0" hint="Lower numbers come first." />
               <SubmitButton size="sm" icon="plus" pendingLabel="Adding…">
@@ -398,6 +404,7 @@ export default async function CalculatorAdminPage({
           ) : (
             <>
               <form id={CALC_TAXES_BULK_FORM} className="vw-card-pad pb-0">
+            <CsrfField />
                 <BulkSelection noun="tax line" formId={CALC_TAXES_BULK_FORM}>
                   <SubmitButton
                     size="sm"
@@ -446,6 +453,7 @@ export default async function CalculatorAdminPage({
                             action={saveCalculatorTaxAction}
                             className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4 lg:items-end"
                           >
+            <CsrfField />
                             <input type="hidden" name="code" value={tax.code} />
                             <Field label="Label" name="label" defaultValue={tax.label} required />
                             <Field label="Rate %" name="percent" defaultValue={taxPercent(tax.percent)} required />
@@ -466,6 +474,7 @@ export default async function CalculatorAdminPage({
                             </div>
                           </form>
                           <form action={deleteCalculatorTaxAction} className="mt-2 flex justify-end">
+            <CsrfField />
                             <input type="hidden" name="code" value={tax.code} />
                             <SubmitButton
                               size="sm"
@@ -488,6 +497,7 @@ export default async function CalculatorAdminPage({
 
           <div className="vw-card-pad" style={{ borderTop: "1px solid var(--line)" }}>
             <form action={saveCalculatorTaxAction} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:items-end">
+            <CsrfField />
               <Field label="Code" name="code" placeholder="igst" required hint="Short key, letters and digits." />
               <Field label="Label" name="label" placeholder="IGST" required hint="Shown on the cost summary." />
               <Field label="Rate %" name="percent" placeholder="18" required />
@@ -516,6 +526,7 @@ export default async function CalculatorAdminPage({
           ) : (
             <>
               <form id={CALC_CURRENCIES_BULK_FORM} className="vw-card-pad pb-0">
+            <CsrfField />
                 <BulkSelection noun="currency" formId={CALC_CURRENCIES_BULK_FORM}>
                   <SubmitButton
                     size="sm"
@@ -560,6 +571,7 @@ export default async function CalculatorAdminPage({
                             action={saveCurrencyAction}
                             className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4 lg:items-end"
                           >
+            <CsrfField />
                             <input type="hidden" name="code" value={currency.code} />
                             <Field label="Name" name="currencyName" defaultValue={currency.name} required />
                             <Field label="Symbol" name="symbol" defaultValue={currency.symbol} />
@@ -580,6 +592,7 @@ export default async function CalculatorAdminPage({
                             </div>
                           </form>
                           <form action={deleteCurrencyAction} className="mt-2 flex justify-end">
+            <CsrfField />
                             <input type="hidden" name="code" value={currency.code} />
                             <SubmitButton
                               size="sm"
@@ -602,6 +615,7 @@ export default async function CalculatorAdminPage({
 
           <div className="vw-card-pad" style={{ borderTop: "1px solid var(--line)" }}>
             <form action={saveCurrencyAction} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:items-end">
+            <CsrfField />
               <Field label="Code" name="code" placeholder="USD" required hint="Three letters." />
               <Field label="Name" name="currencyName" placeholder="US Dollar" required />
               <Field label="Symbol" name="symbol" placeholder="$" />

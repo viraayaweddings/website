@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { and, desc, eq, sql } from "drizzle-orm";
 import { auditLog, leads, LEAD_STATUSES } from "@/worker/db/schema";
 import { AdminShell } from "../../_components/AdminShell";
+import { CsrfField } from "../../_components/CsrfField";
 import { CharCounter } from "../../_components/CharCounter";
 import { CopyButton, SubmitButton, UnsavedGuard, VersionField } from "../../_components/FormControls";
 import { Icon } from "../../_components/icons";
@@ -116,6 +117,7 @@ export default async function LeadDetailPage({
           <Alert tone="warning" title="The notification email did not go out">
             <p>The enquiry itself is safely stored — only the alert failed.</p>
             <form action={resendLeadEmailAction} className="mt-2">
+            <CsrfField />
               <input type="hidden" name="id" value={lead.id} />
               <SubmitButton variant="secondary" size="sm" icon="refresh" pendingLabel="Sending…">
                 Send it again
@@ -249,6 +251,7 @@ export default async function LeadDetailPage({
           <Card pad={false}>
             <CardHead title="Update" icon="edit" />
             <form action={updateLeadAction} className="vw-card-pad space-y-3">
+            <CsrfField />
               <UnsavedGuard />
               <input type="hidden" name="id" value={lead.id} />
               {/* updateLeadAction refuses a stale save, but only if the form
@@ -293,6 +296,7 @@ export default async function LeadDetailPage({
                   Deleting removes this submission permanently. Mark it as spam instead if you may need it later.
                 </p>
                 <form action={deleteLeadAction}>
+            <CsrfField />
                   <input type="hidden" name="id" value={lead.id} />
                   <SubmitButton
                     variant="danger-quiet"

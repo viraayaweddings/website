@@ -15,6 +15,7 @@ type DeleteConfirmTriggerProps = {
   ariaLabel?: string;
   /** List view to come back to, so filters and page survive the delete. */
   returnTo?: string;
+  csrfToken: string;
 };
 
 /**
@@ -35,6 +36,7 @@ export function DeleteConfirmTrigger({
   label = "Delete",
   ariaLabel,
   returnTo,
+  csrfToken,
 }: DeleteConfirmTriggerProps) {
   const [open, setOpen] = useState(false);
   const iconOnly = label === "Delete" && Boolean(ariaLabel);
@@ -55,6 +57,7 @@ export function DeleteConfirmTrigger({
                 cancelHref="#"
                 returnTo={returnTo}
                 onCancel={() => setOpen(false)}
+                csrfToken={csrfToken}
               />
             </div>,
             document.body,

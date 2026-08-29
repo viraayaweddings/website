@@ -4,7 +4,9 @@ export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { asc, sql } from "drizzle-orm";
 import { cityListings, cityPages, hotels } from "@/worker/db/schema";
+import { adminCsrfToken } from "@/worker/admin/csrf";
 import { AdminShell } from "../_components/AdminShell";
+import { CsrfField } from "../_components/CsrfField";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
 import { AutoSubmitControls, LiveSearch, SubmitButton } from "../_components/FormControls";
@@ -39,6 +41,8 @@ export default async function CitiesPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const csrfToken = adminCsrfToken();
+
   const user = await requireRole("admin", "/admin/cities", "city pages");
   const db = await requireDb();
   const params = await searchParams;
@@ -194,6 +198,7 @@ export default async function CitiesPage({
           ) : (
             <>
               <form id={CITIES_BULK_FORM}>
+            <CsrfField />
                 <input type="hidden" name="returnTo" value={listHref} />
                 <BulkSelection noun="city page" formId={CITIES_BULK_FORM}>
                   <SubmitButton
@@ -302,7 +307,7 @@ export default async function CitiesPage({
                                   icon="external"
                                   external
                                 />
-                                <DeleteConfirmTrigger
+                                <DeleteConfirmTrigger csrfToken={csrfToken}
                                   action={deleteCityAction}
                                   id={page.city}
                                   what={`the ${page.city} city page`}
@@ -326,6 +331,7 @@ export default async function CitiesPage({
         <Card className="h-fit lg:sticky lg:top-20" pad={false}>
           <CardHead title="Add a city page" icon="plus" />
           <form action={createCityAction} className="vw-card-pad space-y-3">
+            <CsrfField />
             <input type="hidden" name="returnTo" value={listHref} />
             <Field
               label="City slug"

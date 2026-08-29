@@ -10,7 +10,7 @@ import { highestId, readRowIndices, TooManyRowsError } from "@/worker/admin/form
 import { blogListings, blogPosts, POST_STATUSES, type BlogFaq, type PostStatus } from "@/worker/db/schema";
 import { invalidateBlogCache, invalidateBlogListingCache } from "@/worker/site/blog";
 import { invalidateTemplateCache } from "@/worker/site/template";
-import { assertSameOrigin, recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
+import { assertAdminRequest, recordAudit, requireDb, requireRole, requireUser } from "../_lib/auth";
 import { hasMoved, readExpectedVersion, STALE_MESSAGE } from "../_lib/concurrency";
 import { publishContentChange } from "@/worker/site/content-version";
 import { withFlashKey } from "../_lib/flash";
@@ -178,7 +178,7 @@ async function readFields(formData: FormData, target: string): Promise<PostField
 }
 
 export async function createPostAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireUser();
   const db = await requireDb();
   const target = "/admin/blogs/new";
@@ -236,7 +236,7 @@ export async function createPostAction(formData: FormData): Promise<void> {
 }
 
 export async function updatePostAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireUser();
   const db = await requireDb();
 
@@ -332,7 +332,7 @@ export async function updatePostAction(formData: FormData): Promise<void> {
 
 /** Removing an article breaks its URL, so this is restricted to admins. */
 export async function deletePostAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -375,7 +375,7 @@ export async function deletePostAction(formData: FormData): Promise<void> {
 
 /** Deletes every selected article and cleans up listing rows and unused images. */
 export async function bulkDeletePostsAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -421,7 +421,7 @@ export async function bulkDeletePostsAction(formData: FormData): Promise<void> {
 
 /** Nudges a post one place up or down the listing. */
 export async function movePostAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireUser();
   const db = await requireDb();
 

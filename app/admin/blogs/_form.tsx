@@ -1,5 +1,6 @@
 import { POST_STATUSES, type BlogFaq, type BlogPost } from "@/worker/db/schema";
 import { SubmitButton, UnsavedGuard, VersionField } from "../_components/FormControls";
+import { CsrfField } from "../_components/CsrfField";
 import { MediaPicker } from "../_components/MediaPicker";
 import { RichText } from "../_components/RichText";
 import { Card, CardHead, Field, Select, TextArea } from "../_components/ui";
@@ -46,6 +47,7 @@ export function PostForm({
     // No encType: a form whose action is a server function is always sent as
     // multipart, and setting it by hand makes React warn that it overrode it.
     <form action={action} className="grid gap-4 lg:grid-cols-3">
+            <CsrfField />
       <UnsavedGuard />
       {post ? <input type="hidden" name="id" value={post.id} /> : null}
       {post ? <VersionField value={versionOf(post)} /> : null}

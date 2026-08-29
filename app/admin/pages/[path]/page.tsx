@@ -6,6 +6,7 @@ import { eq } from "drizzle-orm";
 import { staticPages } from "@/worker/db/schema";
 import { normalizeStaticPath } from "@/worker/site/static-pages";
 import { AdminShell } from "../../_components/AdminShell";
+import { CsrfField } from "../../_components/CsrfField";
 import { SubmitButton, UnsavedGuard, VersionField } from "../../_components/FormControls";
 import { Icon } from "../../_components/icons";
 import { MediaPicker } from "../../_components/MediaPicker";
@@ -73,6 +74,7 @@ export default async function StaticPageEditor({
       <Card pad={false}>
         <CardHead title="Search listing" icon="search" hint="What Google shows for this page" />
         <form action={saveStaticPageAction} className="vw-card-pad space-y-3">
+            <CsrfField />
           <UnsavedGuard />
           <input type="hidden" name="path" value={path} />
           <VersionField value={versionOf(page)} />
@@ -109,6 +111,7 @@ export default async function StaticPageEditor({
                   // always sent as multipart, and setting it by hand makes React
                   // warn that it overrode it.
                   <form key={image} action={replacePageImageAction} className="vw-card vw-card-pad space-y-2">
+            <CsrfField />
                     <input type="hidden" name="path" value={path} />
                     <input type="hidden" name="current" value={image} />
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -136,6 +139,7 @@ export default async function StaticPageEditor({
         <Card pad={false}>
           <CardHead title="Start again" icon="refresh" />
           <form action={resetStaticPageAction} className="vw-card-pad">
+            <CsrfField />
             <input type="hidden" name="path" value={path} />
             <input type="hidden" name="returnTo" value="/admin/pages" />
             <p className="vw-hint mb-3">

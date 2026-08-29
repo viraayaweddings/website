@@ -14,6 +14,7 @@
  */
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { adminCsrfHeader } from "../_lib/csrf-fetch";
 
 interface Props {
   label: string;
@@ -538,7 +539,11 @@ export function RichText({ label, name, defaultValue = "", hint, minHeight = 320
     try {
       const body = new FormData();
       body.append("file", file);
-      const response = await fetch("/admin/media/upload", { method: "POST", body });
+      const response = await fetch("/admin/media/upload", {
+        method: "POST",
+        body,
+        headers: adminCsrfHeader(),
+      });
       const result = (await response.json()) as { url?: string; error?: string };
       if (!response.ok || !result.url) {
         setNotice(result.error || "Upload failed.");

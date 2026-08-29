@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { LABEL_DEFINITIONS, writeLabels } from "@/worker/site/labels";
 import { invalidateTemplateCache } from "@/worker/site/template";
-import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { assertAdminRequest, recordAudit, requireDb, requireRole } from "../_lib/auth";
 import { publishContentChange } from "@/worker/site/content-version";
 import { withFlashKey } from "../_lib/flash";
 
@@ -16,7 +16,7 @@ function failed(message: string): never {
 
 /** Wording is site-wide, so editing it is an admin-only action. */
 export async function saveLabelsAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 

@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { assertSameOrigin } from "../_lib/auth";
+import { assertAdminRequest } from "../_lib/auth";
 import { withFlashKey } from "../_lib/flash";
 
 const MEDIA_PATH = "/admin/media";
@@ -40,7 +40,7 @@ async function serverDependencies() {
  * picture shared by two venues cannot be pulled out from under one of them.
  */
 export async function deleteMediaAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const { emptyEnv, releaseImage, findImageReferences, recordAudit, requireDb, requireRole } =
     await serverDependencies();
   const actor = await requireRole("admin");
@@ -66,7 +66,7 @@ export async function deleteMediaAction(formData: FormData): Promise<void> {
 
 /** Removes selected uploaded images, refusing the batch if any are still used. */
 export async function bulkDeleteMediaAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const { emptyEnv, releaseImage, buildImageUsage, mediaKeyFrom, recordAudit, requireDb, requireRole } =
     await serverDependencies();
   const actor = await requireRole("admin");
@@ -105,7 +105,7 @@ export async function bulkDeleteMediaAction(formData: FormData): Promise<void> {
 
 /** Uploads a new image and repoints every database-managed reference to it. */
 export async function replaceMediaAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const { emptyEnv, uploadImage, releaseImage, replaceImageReferences, recordAudit, requireDb, requireRole } =
     await serverDependencies();
   const actor = await requireRole("admin");

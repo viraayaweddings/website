@@ -27,7 +27,7 @@ flowchart TD
 1. User visits `/admin/login` (or redirected with `?next=`)
 2. Submits `email`, `password`
 3. `loginAction` validates:
-   - Rate limit: 8 attempts / 15 min per IP+email (in-memory per isolate)
+   - Rate limit: 8 attempts / 15 min per IP+email + 25/hour per account (Postgres `rate_limits`)
    - Constant-time hash check for unknown emails
    - User status must be `active`
 4. Updates `users.last_login_at`

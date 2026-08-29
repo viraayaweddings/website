@@ -13,7 +13,7 @@ import {
 } from "@/worker/db/schema";
 import { invalidateCalculatorCache } from "@/worker/site/calculator-store";
 import { seedCalculatorData } from "@/worker/db/seed-calculator";
-import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { assertAdminRequest, recordAudit, requireDb, requireRole } from "../_lib/auth";
 import { publishContentChange } from "@/worker/site/content-version";
 import { withFlashKey } from "../_lib/flash";
 
@@ -76,7 +76,7 @@ function money(formData: FormData, name: string, month: string, field: string, t
 /* -------------------------------------------------------------- cities --- */
 
 export async function saveCalculatorCityAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -133,7 +133,7 @@ export async function saveCalculatorCityAction(formData: FormData): Promise<void
 }
 
 export async function deleteCalculatorCityAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -165,7 +165,7 @@ export async function deleteCalculatorCityAction(formData: FormData): Promise<vo
 }
 
 export async function bulkDeleteCalculatorCitiesAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const ids = formData
@@ -201,7 +201,7 @@ export async function bulkDeleteCalculatorCitiesAction(formData: FormData): Prom
 /* -------------------------------------------------------------- hotels --- */
 
 export async function saveCalculatorHotelAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -264,7 +264,7 @@ export async function saveCalculatorHotelAction(formData: FormData): Promise<voi
 }
 
 export async function deleteCalculatorHotelAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -291,7 +291,7 @@ export async function deleteCalculatorHotelAction(formData: FormData): Promise<v
 }
 
 export async function bulkDeleteCalculatorHotelsAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backToHotels(formData);
@@ -321,7 +321,7 @@ export async function bulkDeleteCalculatorHotelsAction(formData: FormData): Prom
 
 /** Saves all twelve months for one hotel in a single statement. */
 export async function saveCalculatorPricesAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -381,7 +381,7 @@ export async function saveCalculatorPricesAction(formData: FormData): Promise<vo
  * change, a new state levy or a service charge needs to be entered.
  */
 export async function saveCalculatorTaxAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -419,7 +419,7 @@ export async function saveCalculatorTaxAction(formData: FormData): Promise<void>
 }
 
 export async function deleteCalculatorTaxAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -441,7 +441,7 @@ export async function deleteCalculatorTaxAction(formData: FormData): Promise<voi
 }
 
 export async function bulkDeleteCalculatorTaxesAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const codes = [
@@ -465,7 +465,7 @@ export async function bulkDeleteCalculatorTaxesAction(formData: FormData): Promi
 /* ---------------------------------------------------------- currencies --- */
 
 export async function saveCurrencyAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -513,7 +513,7 @@ export async function saveCurrencyAction(formData: FormData): Promise<void> {
 }
 
 export async function deleteCurrencyAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -539,7 +539,7 @@ export async function deleteCurrencyAction(formData: FormData): Promise<void> {
 }
 
 export async function bulkDeleteCurrenciesAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const codes = [...new Set(formData.getAll("ids").map((value) => String(value || "").trim().toUpperCase()).filter(Boolean))]
@@ -593,8 +593,8 @@ async function ensureOneDefaultCurrency(db: Awaited<ReturnType<typeof requireDb>
 /* ---------------------------------------------------------------- seed --- */
 
 /** One-time import of the bundled dataset into empty tables. */
-export async function importCalculatorDataAction(): Promise<void> {
-  await assertSameOrigin();
+export async function importCalculatorDataAction(formData: FormData): Promise<void> {
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 

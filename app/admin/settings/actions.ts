@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { writeSettings, type SiteSettings } from "@/worker/site/settings";
-import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { assertAdminRequest, recordAudit, requireDb, requireRole } from "../_lib/auth";
 import { withFlashKey } from "../_lib/flash";
 
 const SETTINGS_PATH = "/admin/settings";
@@ -13,7 +13,7 @@ function failed(message: string): never {
 
 /** Contact details are site-wide, so editing them is an admin-only action. */
 export async function saveSettingsAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 

@@ -8,7 +8,7 @@ import { mediaPathFromKey } from "@/worker/admin/media-path";
 import { staticPages } from "@/worker/db/schema";
 import { invalidateStaticPageCache, normalizeStaticPath } from "@/worker/site/static-pages";
 import { STORED_PAGE_PATHS } from "@/worker/site/static-page-paths.generated";
-import { assertSameOrigin, recordAudit, requireDb, requireRole } from "../_lib/auth";
+import { assertAdminRequest, recordAudit, requireDb, requireRole } from "../_lib/auth";
 import { hasMoved, readExpectedVersion, STALE_MESSAGE } from "../_lib/concurrency";
 import { publishContentChange } from "@/worker/site/content-version";
 import { withFlashKey } from "../_lib/flash";
@@ -83,7 +83,7 @@ async function loadPage(db: Awaited<ReturnType<typeof requireDb>>, path: string)
 }
 
 export async function saveStaticPageAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -117,7 +117,7 @@ export async function saveStaticPageAction(formData: FormData): Promise<void> {
  * changing only one of them looks like a bug.
  */
 export async function replacePageImageAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
 
@@ -174,7 +174,7 @@ export async function replacePageImageAction(formData: FormData): Promise<void> 
  * missing, so dropping the row is the whole of the undo.
  */
 export async function resetStaticPageAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -213,7 +213,7 @@ export async function resetStaticPageAction(formData: FormData): Promise<void> {
  * the request falls through to the handler, which serves the stored row.
  */
 export async function createStaticPageAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -258,7 +258,7 @@ export async function createStaticPageAction(formData: FormData): Promise<void> 
 
 /** Shows or hides the selected pages in one pass. */
 export async function bulkPublishPagesAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);
@@ -292,7 +292,7 @@ export async function bulkPublishPagesAction(formData: FormData): Promise<void> 
 
 /** Puts every selected page back to the markup it shipped with. */
 export async function bulkResetPagesAction(formData: FormData): Promise<void> {
-  await assertSameOrigin();
+  await assertAdminRequest(formData);
   const actor = await requireRole("admin");
   const db = await requireDb();
   const target = backTo(formData);

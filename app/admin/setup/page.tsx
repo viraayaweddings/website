@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 import { redirect } from "next/navigation";
 import { MIN_PASSWORD_LENGTH } from "@/worker/admin/password";
 import { SubmitButton } from "../_components/FormControls";
+import { CsrfField } from "../_components/CsrfField";
 import { Monogram } from "../_components/icons";
 import { Alert, Card, Field } from "../_components/ui";
 import { hasAnyUser, LOGIN_PATH, requireDb, DatabaseUnavailableError } from "../_lib/auth";
@@ -87,6 +88,7 @@ export default async function SetupPage({
           ) : null}
 
           <form action={createFirstAdminAction} className="space-y-4">
+            <CsrfField />
             <Field label="Name" name="name" required autoComplete="name" />
             <Field label="Email" name="email" type="email" required autoComplete="username" />
             <Field

@@ -22,6 +22,7 @@ import {
 } from "../_components/ui";
 import { currentTime } from "../_lib/clock";
 import { isAdmin, requireDb, requireUser } from "../_lib/auth";
+import { adminCsrfToken } from "@/worker/admin/csrf";
 import { bulkDeleteMediaAction, deleteMediaAction, replaceMediaAction } from "./actions";
 import { MediaLibrary, type MediaLibraryItem } from "./MediaLibrary";
 
@@ -246,6 +247,7 @@ export default async function MediaPage({
           deleteAction={deleteMediaAction}
           replaceAction={replaceMediaAction}
           bulkDeleteAction={bulkDeleteMediaAction}
+          csrfToken={adminCsrfToken()}
         />
       )}
 

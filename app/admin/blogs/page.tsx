@@ -4,7 +4,9 @@ export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { asc } from "drizzle-orm";
 import { blogPosts } from "@/worker/db/schema";
+import { adminCsrfToken } from "@/worker/admin/csrf";
 import { AdminShell } from "../_components/AdminShell";
+import { CsrfField } from "../_components/CsrfField";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
 import { AutoSubmitControls, LiveSearch, SubmitButton } from "../_components/FormControls";
@@ -39,6 +41,8 @@ export default async function BlogsPage({
     sort?: string;
   }>;
 }) {
+  const csrfToken = adminCsrfToken();
+
   const user = await requireUser("/admin/blogs");
   const db = await requireDb();
   const params = await searchParams;
@@ -200,6 +204,7 @@ export default async function BlogsPage({
         <>
         {isAdmin(user) ? (
           <form id={BLOGS_BULK_FORM}>
+            <CsrfField />
             <input type="hidden" name="returnTo" value={listHref} />
             <BulkSelection noun="article" formId={BLOGS_BULK_FORM}>
               <SubmitButton
@@ -268,6 +273,7 @@ export default async function BlogsPage({
                   {canReorder ? (
                     <>
                       <form action={movePostAction}>
+            <CsrfField />
                         <input type="hidden" name="id" value={post.id} />
                         <input type="hidden" name="direction" value="up" />
                         <SubmitButton variant="ghost" size="sm" icon="arrowUp" pendingLabel="" label={`Move "${post.cardTitle || post.heading || post.slug}" up`}>
@@ -275,6 +281,7 @@ export default async function BlogsPage({
                         </SubmitButton>
                       </form>
                       <form action={movePostAction}>
+            <CsrfField />
                         <input type="hidden" name="id" value={post.id} />
                         <input type="hidden" name="direction" value="down" />
                         <SubmitButton variant="ghost" size="sm" icon="arrowDown" pendingLabel="" label={`Move "${post.cardTitle || post.heading || post.slug}" down`}>
@@ -288,7 +295,7 @@ export default async function BlogsPage({
                   </LinkButton>
                   <LinkButton href={`/blogs/${post.slug}`} size="sm" variant="ghost" icon="external" external />
                   {isAdmin(user) ? (
-                    <DeleteConfirmTrigger
+                    <DeleteConfirmTrigger csrfToken={csrfToken}
                       action={deletePostAction}
                       id={post.id}
                       what={post.heading || post.slug}

@@ -7,6 +7,7 @@ import { asc, eq } from "drizzle-orm";
 import { blogPosts } from "@/worker/db/schema";
 import { parseFaqs, tocEntries } from "@/worker/site/blog";
 import { AdminShell } from "../../_components/AdminShell";
+import { CsrfField } from "../../_components/CsrfField";
 import { SubmitButton } from "../../_components/FormControls";
 import { Alert, Badge, Card, CardHead, LinkButton, StatusBadge, formatDateTime } from "../../_components/ui";
 import { isAdmin, requireDb, requireUser } from "../../_lib/auth";
@@ -101,6 +102,7 @@ export default async function EditPostPage({
               want it hidden.
             </p>
             <form action={deletePostAction}>
+            <CsrfField />
               <input type="hidden" name="id" value={post.id} />
               <SubmitButton
                 variant="danger-quiet"

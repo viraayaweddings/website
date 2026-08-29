@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 
 import Link from "next/link";
 import { LEAD_STATUSES } from "@/worker/db/schema";
+import { adminCsrfToken } from "@/worker/admin/csrf";
 import { AdminShell } from "../_components/AdminShell";
 import { BulkSelection, RowCheckbox } from "../_components/BulkBar";
 import { DeleteConfirmTrigger } from "../_components/DeleteConfirmTrigger";
@@ -40,6 +41,8 @@ export default async function LeadsPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const csrfToken = adminCsrfToken();
+
   const params = await searchParams;
   const filters = parseFilters(params);
   const user = await requireUser(`/admin/leads?${filtersToQuery(filters)}`);
@@ -249,7 +252,7 @@ export default async function LeadsPage({
                           Open
                         </LinkButton>
                         {isAdmin(user) ? (
-                          <DeleteConfirmTrigger
+                          <DeleteConfirmTrigger csrfToken={csrfToken}
                             action={deleteLeadAction}
                             id={lead.id}
                             what={`the submission from ${lead.name || lead.email || "this visitor"}`}

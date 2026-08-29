@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 import { asc } from "drizzle-orm";
 import { hotels, POST_STATUSES } from "@/worker/db/schema";
 import { AdminShell } from "../../_components/AdminShell";
+import { CsrfField } from "../../_components/CsrfField";
 import { SubmitButton, UnsavedGuard } from "../../_components/FormControls";
 import { MediaPicker } from "../../_components/MediaPicker";
 import { RichText } from "../../_components/RichText";
@@ -43,6 +44,7 @@ export default async function NewHotelPage({
       </div>
 
       <form action={createHotelAction} className="grid gap-4 lg:grid-cols-3">
+            <CsrfField />
         <UnsavedGuard />
 
         <div className="min-w-0 space-y-4 lg:col-span-2">
