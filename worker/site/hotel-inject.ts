@@ -8,6 +8,7 @@ import { GLANCE_LABEL_KEYS, renderLabel, type ResolvedLabels } from "./labels";
 import { parseFaqs } from "./blog";
 import {
   parseHighlights,
+  galleryFor,
   renderGallery,
   renderGalleryThumbnails,
   renderHighlights,
@@ -198,17 +199,20 @@ export function applyHotelHandlers(
     },
   });
 
-  // The gallery repeats the banner and highlight images, so it is regenerated
-  // rather than inherited from whichever venue the shell came from.
+  // Regenerated rather than inherited from whichever venue the shell was cloned
+  // from. Both sliders render the one resolved list: slick pairs them by index,
+  // so a main slider and a thumbnail strip of different lengths scroll onto
+  // blanks.
+  const gallery = galleryFor(hotel, highlights);
   rewriter.on(".slider.main-slider", {
     element(element) {
-      element.setInnerContent(renderGallery(hotel, highlights), { html: true });
+      element.setInnerContent(renderGallery(gallery, hotel.name), { html: true });
     },
   });
 
   rewriter.on(".slider-thumbnails", {
     element(element) {
-      element.setInnerContent(renderGalleryThumbnails(hotel, highlights), { html: true });
+      element.setInnerContent(renderGalleryThumbnails(gallery, hotel.name), { html: true });
     },
   });
 

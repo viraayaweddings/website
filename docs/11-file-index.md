@@ -131,6 +131,7 @@ Searchable inventory of meaningful project files.
 | `admin/image-references.ts` | Image usage scanner across every column | schema |
 | `admin/rich-text.ts` | HTML sanitizer | `html-rewriter` |
 | `admin/form-rows.ts` | Bounded parsing of repeating form rows | — |
+| `admin/hotel-gallery-form.ts` | Reads the venue gallery's posted rows | form-rows, media-path |
 | `admin/record-id.ts` | Rejects an out-of-range id before it reaches SQL | — |
 | `storage/r2.ts` | R2 over the S3 API | @aws-sdk/client-s3 |
 | `site/inject.ts` | HTMLRewriter orchestrator | all site/* modules |
@@ -150,6 +151,7 @@ Searchable inventory of meaningful project files.
 | `site/blog-inject.ts` | Blog HTML patches | blog.ts |
 | `site/hotel.ts` | Hotel data loading | schema |
 | `site/hotel-inject.ts` | Hotel HTML patches | hotel.ts |
+| `site/hotel-gallery.ts` | The venue Event Spaces Gallery, stored and rendered | escape |
 | `site/venue-listing.ts` | City listing cards | schema |
 | `site/venue-listing-data.ts` | Loads the listing payload for a city | venue-listing-payload |
 | `site/venue-listing-payload.ts` | Builds the JSON the listing script reads | schema |

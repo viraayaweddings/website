@@ -247,6 +247,7 @@ as is `status`.
 | `description` | TEXT | Overview copy, stored as HTML |
 | `room_inventory`, `indoor_venues`, `outdoor_venues`, `guest_capacity`, `reception_capacity` | TEXT | The five "at a glance" values, in the order the template lays them out |
 | `highlights` | TEXT JSON | Array of `{ image, title }`; pages carry between two and six |
+| `gallery` | TEXT JSON | Event Spaces Gallery: array of `{ image, caption }` in display order. Empty falls back to the banner plus the highlight images, which is what the gallery was before it was stored |
 | `faqs` | TEXT JSON | Array of `{ id, question, answer }` |
 | `thumbnail_image` | TEXT | Card image for city listings and the nearby-venues strip |
 | `venue_category` | TEXT | e.g. `Luxury Hotel`. **Carried but not displayed** — the templates emit it commented out |

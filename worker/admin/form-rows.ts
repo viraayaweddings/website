@@ -16,9 +16,18 @@
 export const MAX_FORM_ROWS = 60;
 
 export class TooManyRowsError extends Error {
-  constructor(public readonly label: string, public readonly max: number) {
+  readonly label: string;
+  readonly max: number;
+
+  // Fields assigned in the body rather than declared as constructor parameter
+  // properties: that shorthand emits code rather than only types, so Node's
+  // type stripping refuses it and nothing under `node --test` could import this
+  // module -- which is why the cap had no test of its own.
+  constructor(label: string, max: number) {
     super(`Keep ${label} to ${max} or fewer.`);
     this.name = "TooManyRowsError";
+    this.label = label;
+    this.max = max;
   }
 }
 

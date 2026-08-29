@@ -151,7 +151,7 @@ function keysIn(value) {
 async function inspect(db) {
   const [hotels, slides, posts, pages, templates, settings, mediaRows] = await Promise.all([
     db`select id, city, slug, name, og_image, banner_image, thumbnail_image,
-        highlights, description, faqs from hotels order by id`,
+        highlights, gallery, description, faqs from hotels order by id`,
     db`select id, image_key from hero_slides`,
     db`select id, og_image, banner_image, card_image, body_html, faqs from blog_posts`,
     db`select path, html from static_pages`,
@@ -169,6 +169,7 @@ async function inspect(db) {
     const unsupported = [
       ["banner_image", hotel.banner_image],
       ["highlights", hotel.highlights],
+      ["gallery", hotel.gallery],
       ["description", hotel.description],
       ["faqs", hotel.faqs],
     ].flatMap(([field, value]) => keysIn(value).map((key) => `hotels/${hotel.id}.${field}: ${key}`));

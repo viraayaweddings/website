@@ -8,7 +8,7 @@ import { versionOf } from "../../_lib/concurrency";
 import { asc, eq } from "drizzle-orm";
 import { hotels, POST_STATUSES } from "@/worker/db/schema";
 import { parseFaqs } from "@/worker/site/blog";
-import { parseHighlights } from "@/worker/site/hotel";
+import { galleryFor, parseHighlights } from "@/worker/site/hotel";
 import { parseNearby } from "@/worker/site/venue-listing";
 import { loadAllVenueTypes, parseWeddingTypes } from "@/worker/site/venue-types";
 import { AdminShell } from "../../_components/AdminShell";
@@ -54,6 +54,9 @@ export default async function EditHotelPage({
   if (!hotel) notFound();
 
   const highlights = parseHighlights(hotel.highlights);
+  // Resolved, not raw: a venue whose gallery has never been filled opens on
+  // the pictures its page is actually rendering rather than on empty rows.
+  const gallery = galleryFor(hotel, highlights);
   const faqs = parseFaqs(hotel.faqs);
   const cities = await db.selectDistinct({ city: hotels.city }).from(hotels).orderBy(asc(hotels.city));
   // Hidden types are offered too: a venue already tagged with one should not
@@ -165,6 +168,36 @@ export default async function EditHotelPage({
                     name={`highlight_image_${index}`}
                     defaultValue={highlights[index]?.image ?? ""}
                     shape="card"
+                  />
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <Card pad={false}>
+            <CardHead
+              title="Event Spaces Gallery"
+              hint="Clear a picture to remove it. Rows render in this order; blank rows are ignored."
+              icon="sparkle"
+            />
+            <div className="vw-card-pad space-y-3">
+              {Array.from({ length: gallery.length + SPARE_ROWS }, (_, index) => (
+                <div
+                  key={index}
+                  className="grid gap-3 rounded-[10px] border p-3 sm:grid-cols-2"
+                  style={{ borderColor: "var(--line)", background: "var(--surface-2)" }}
+                >
+                  <MediaPicker
+                    label={`Picture ${index + 1}`}
+                    name={`gallery_image_${index}`}
+                    defaultValue={gallery[index]?.image ?? ""}
+                    shape="wide"
+                  />
+                  <Field
+                    label="Caption"
+                    name={`gallery_caption_${index}`}
+                    defaultValue={gallery[index]?.caption}
+                    hint="Shown in the lightbox and read by screen readers. Defaults to the venue name."
                   />
                 </div>
               ))}

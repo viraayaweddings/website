@@ -19,6 +19,7 @@ and what keeps it that way.
 | Currency, symbol, rate | `calculator_currencies` | `/admin/calculator` |
 | **Tax lines and rates** | `calculator_taxes` | `/admin/calculator` |
 | Which venue page uses which calculator hotel | `hotels.external_hotel_id` | `/admin/hotels/<id>` |
+| **Event Spaces Gallery** | `hotels.gallery` | `/admin/hotels/<id>` |
 
 Adding, editing, hiding or deleting any row changes every one of the 272
 calculator instances within about 15 seconds. Nothing needs a deploy.

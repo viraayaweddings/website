@@ -1,7 +1,7 @@
 {
-  "validatedAt": "2026-08-29T14:44:39.812Z",
-  "gitCommit": "d3b45466d87f00e0d2cef62fc99a18b99eba68c8",
-  "gitCommitShort": "d3b45466",
+  "validatedAt": "2026-08-29T15:11:28.610Z",
+  "gitCommit": "ee3fc63246b9d1dc19b6c052dc33041c9a289f34",
+  "gitCommitShort": "ee3fc632",
   "status": "PASS",
   "inventoryCounts": {
     "routes": 55,
@@ -14,11 +14,11 @@
     "publicJsFiles": 7,
     "pageTypePatterns": 9,
     "publicForms": 7,
-    "workerSiteFiles": 36,
-    "workerFiles": 69,
-    "dbColumns": 198,
+    "workerSiteFiles": 37,
+    "workerFiles": 71,
+    "dbColumns": 199,
     "auditActions": 71,
-    "workerExports": 284,
+    "workerExports": 287,
     "npmScripts": 32,
     "envVars": 19,
     "enums": 5
@@ -26,10 +26,10 @@
   "issueCount": 0,
   "warningCount": 1,
   "coverage": {
-    "workerExports": "65/284 exported symbols named in the docs"
+    "workerExports": "65/287 exported symbols named in the docs"
   },
   "issues": [],
   "warnings": [
-    "Manifest audited commit (b5e399d) differs from HEAD (d3b45466)"
+    "Manifest audited commit (b5e399d) differs from HEAD (ee3fc632)"
   ]
 }

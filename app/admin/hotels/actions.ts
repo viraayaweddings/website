@@ -4,10 +4,11 @@ import { redirect } from "next/navigation";
 import { emptyEnv } from "@/worker/env";
 import { and, eq, inArray, like, ne } from "drizzle-orm";
 import { releaseImage, uploadImage } from "@/worker/admin/media-store";
+import { readGalleryRows } from "@/worker/admin/hotel-gallery-form";
 import { mediaKeyFrom, mediaPathFromKey, readMediaPathValue } from "@/worker/admin/media-path";
 import { readRichText } from "@/worker/admin/rich-text";
 import { highestId, readRowIndices, TooManyRowsError } from "@/worker/admin/form-rows";
-import { cityListings, hotels, venueTypes, POST_STATUSES, type BlogFaq, type HotelHighlight, type PostStatus } from "@/worker/db/schema";
+import { cityListings, hotels, venueTypes, POST_STATUSES, type BlogFaq, type HotelGalleryImage, type HotelHighlight, type PostStatus } from "@/worker/db/schema";
 import { invalidateHotelCache } from "@/worker/site/hotel";
 import { loadCalculatorConfig } from "@/worker/site/calculator-store";
 import { invalidateVenueTypeCache, loadAllVenueTypes } from "@/worker/site/venue-types";
@@ -170,6 +171,13 @@ function readHighlights(formData: FormData, target: string): HotelHighlight[] {
   return highlights;
 }
 
+/** The gallery rows, failing the save the way the other readers do. */
+function readGallery(formData: FormData, target: string): HotelGalleryImage[] {
+  const result = readGalleryRows(formData);
+  if ("error" in result) failed(target, result.error);
+  return result.images;
+}
+
 /** URL-safe, lowercase, no leading or trailing hyphen. */
 function normaliseSlug(value: string): string {
   return value
@@ -249,6 +257,7 @@ export async function createHotelAction(formData: FormData): Promise<void> {
       guestCapacity: text("guestCapacity", 60),
       receptionCapacity: text("receptionCapacity", 60),
       highlights: JSON.stringify(readHighlights(formData, target)),
+      gallery: JSON.stringify(readGallery(formData, target)),
       faqs: JSON.stringify(faqs),
       nearbySlugs: JSON.stringify(readNearby(formData)),
       thumbnailImage: readMediaPath(text("thumbnailImage", 400), target),
@@ -467,6 +476,7 @@ export async function updateHotelAction(formData: FormData): Promise<void> {
       guestCapacity: text("guestCapacity", 60),
       receptionCapacity: text("receptionCapacity", 60),
       highlights: JSON.stringify(readHighlights(formData, target)),
+      gallery: JSON.stringify(readGallery(formData, target)),
       faqs: JSON.stringify(faqs),
       // The edit form is the only place this list can be changed, so leaving it
       // out of the update made the "Browse Similar Hotels" strip uneditable.

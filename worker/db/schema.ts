@@ -275,6 +275,17 @@ export const hotels = pgTable(
 
     /** JSON array of { image, title }; pages carry between two and six. */
     highlights: text("highlights").notNull().default("[]"),
+    /**
+     * The Event Spaces Gallery: JSON array of { image, caption }, in display
+     * order.
+     *
+     * JSON in a text column like `highlights` and `faqs` either side of it, and
+     * read with them on every venue load, so it costs no join. The gallery used
+     * to be derived from the banner plus the highlight images, which meant an
+     * editor could not put a picture in it without inventing a highlight to
+     * hang it on, and could not reorder or caption one at all.
+     */
+    gallery: text("gallery").notNull().default("[]"),
     /** JSON array of { id, question, answer }; id keeps accordion anchors stable. */
     faqs: text("faqs").notNull().default("[]"),
 
@@ -349,6 +360,12 @@ export type Hotel = typeof hotels.$inferSelect;
 export interface HotelHighlight {
   image: string;
   title: string;
+}
+
+/** One picture in a venue's Event Spaces Gallery. */
+export interface HotelGalleryImage {
+  image: string;
+  caption: string;
 }
 
 /* ------------------------------------------------------------------ *

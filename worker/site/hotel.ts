@@ -11,6 +11,16 @@ import { hotels, type BlogFaq, type Hotel, type HotelHighlight } from "../db/sch
 import { escapeHtml } from "./hero";
 import { onContentChanged } from "./content-version";
 
+// Re-exported so the venue-page modules keep importing everything they render
+// from one place; the gallery lives apart because it needs no database access
+// and is therefore loadable -- and testable -- on its own.
+export {
+  galleryFor,
+  parseGallery,
+  renderGallery,
+  renderGalleryThumbnails,
+} from "./hotel-gallery";
+
 export const HOTEL_PREFIX = "/destination-wedding/";
 
 /**
@@ -112,38 +122,6 @@ export function renderHotelFaqItems(faqs: BlogFaq[]): string {
  * repeats images already stored on the venue, so it is generated rather than
  * kept as separate data.
  */
-export function renderGallery(hotel: Hotel, highlights: HotelHighlight[]): string {
-  const name = escapeHtml(hotel.name);
-
-  const figure = (src: string, caption: string) => `<figure class="position-relative" data-aos="fade-up">
-    <img class="img-fluid w-100" alt="${escapeHtml(caption)}" src="${escapeHtml(src)}" style="opacity: 1;" decoding="async" loading="lazy" >
-    <div class="content-widget w-100 px-4 py-3 d-flex justify-content-between align-items-center position-absolute b-0">
-        <h4>${name}</h4>
-        <a href="${escapeHtml(src)}" data-fancybox="gallery" data-caption="${escapeHtml(caption)}"><i class="fa-jelly fa-regular fa-magnifying-glass-plus" aria-hidden="true"></i></a>
-    </div>
-</figure>`;
-
-  const figures: string[] = [];
-  if (hotel.bannerImage) figures.push(figure(hotel.bannerImage, `${hotel.name} header image`));
-  for (const highlight of highlights) figures.push(figure(highlight.image, highlight.title));
-
-  return figures.join("\n");
-}
-
-/** The thumbnail strip beneath the gallery, in the same order. */
-export function renderGalleryThumbnails(hotel: Hotel, highlights: HotelHighlight[]): string {
-  const figure = (src: string, caption: string) =>
-    `<figure>
-    <img src="${escapeHtml(src)}" class="img-fluid" alt="${escapeHtml(caption)} thumbnail" decoding="async" loading="lazy">
-</figure>`;
-
-  const figures: string[] = [];
-  if (hotel.bannerImage) figures.push(figure(hotel.bannerImage, `${hotel.name} header image`));
-  for (const highlight of highlights) figures.push(figure(highlight.image, highlight.title));
-
-  return figures.join("\n");
-}
-
 /** Published venues. Empty on failure, so callers leave the page untouched. */
 export async function loadHotels(env: DatabaseEnv): Promise<Hotel[]> {
   const now = Date.now();

@@ -13,6 +13,7 @@ import migration0006 from "../../drizzle-pg/0006_integrity_and_provenance.sql?ra
 import migration0007 from "../../drizzle-pg/0007_calculator_taxes.sql?raw";
 import migration0008 from "../../drizzle-pg/0008_venue_wedding_types.sql?raw";
 import migration0009 from "../../drizzle-pg/0009_hide_nonoperational_cities.sql?raw";
+import migration0010 from "../../drizzle-pg/0010_hotel_gallery.sql?raw";
 import type { Db } from "./client";
 import { splitStatements } from "./migrations";
 
@@ -27,6 +28,7 @@ const PG_MIGRATIONS: ReadonlyArray<{ name: string; sql: string }> = [
   { name: "0007_calculator_taxes", sql: migration0007 },
   { name: "0008_venue_wedding_types", sql: migration0008 },
   { name: "0009_hide_nonoperational_cities", sql: migration0009 },
+  { name: "0010_hotel_gallery", sql: migration0010 },
 ];
 
 const MIGRATION_LOCK_KEY = 842_001;

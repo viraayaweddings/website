@@ -23,6 +23,7 @@ import {
   staticPages,
 } from "../db/schema";
 import { parseNearby } from "../site/venue-listing";
+import { galleryFor, parseHighlights } from "../site/hotel";
 
 export interface ImageReference {
   /** Human description, e.g. "Venue banner". */
@@ -387,6 +388,7 @@ export async function buildImageUsage(db: Db): Promise<Map<string, ImageReferenc
       thumbnail: hotels.thumbnailImage,
       og: hotels.ogImage,
       highlights: hotels.highlights,
+      gallery: hotels.gallery,
       description: hotels.description,
       faqs: hotels.faqs,
       nearbySlugs: hotels.nearbySlugs,
@@ -401,9 +403,17 @@ export async function buildImageUsage(db: Db): Promise<Map<string, ImageReferenc
     add(venue.banner, { what: "Venue banner image", where, adminPath, publicPath });
     add(venue.thumbnail, { what: "Venue thumbnail", where, adminPath, publicPath });
     add(venue.og, { what: "Venue social image", where, adminPath, publicPath });
-    add(venue.banner, { what: "Venue gallery image", where, adminPath, publicPath });
     for (const image of highlightImages(venue.highlights)) {
       add(image, { what: "Venue highlight image", where, adminPath, publicPath });
+    }
+    // Through galleryFor rather than re-deriving banner + highlights here: the
+    // gallery is stored now, and a second opinion about what it contains is how
+    // the media screen ends up offering to delete a live picture. The same call
+    // keeps the derived fallback covered for a venue with nothing stored yet.
+    for (const { image } of galleryFor(
+      { gallery: venue.gallery, bannerImage: venue.banner, name: venue.name },
+      parseHighlights(venue.highlights),
+    )) {
       add(image, { what: "Venue gallery image", where, adminPath, publicPath });
     }
     for (const key of inlineKeys(venue.description, venue.faqs)) {
@@ -565,6 +575,7 @@ export async function replaceImageReferences(db: Db, oldKey: string, newKey: str
       thumbnailImage: replaceStoredImageValue(venue.thumbnailImage, oldKey, newKey),
       ogImage: replaceStoredImageValue(venue.ogImage, oldKey, newKey),
       highlights: replaceImageReferencesInText(venue.highlights, oldKey, newKey),
+      gallery: replaceImageReferencesInText(venue.gallery, oldKey, newKey),
       description: replaceImageReferencesInText(venue.description, oldKey, newKey),
       faqs: replaceImageReferencesInText(venue.faqs, oldKey, newKey),
     };

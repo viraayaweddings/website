@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-29T14:44:39.716Z",
-  "gitCommit": "d3b45466d87f00e0d2cef62fc99a18b99eba68c8",
-  "gitCommitShort": "d3b45466",
+  "generatedAt": "2026-08-29T15:11:28.498Z",
+  "gitCommit": "ee3fc63246b9d1dc19b6c052dc33041c9a289f34",
+  "gitCommitShort": "ee3fc632",
   "projectVersion": "0.1.0",
   "counts": {
     "routes": 55,
@@ -14,11 +14,11 @@
     "publicJsFiles": 7,
     "pageTypePatterns": 9,
     "publicForms": 7,
-    "workerSiteFiles": 36,
-    "workerFiles": 69,
-    "dbColumns": 198,
+    "workerSiteFiles": 37,
+    "workerFiles": 71,
+    "dbColumns": 199,
     "auditActions": 71,
-    "workerExports": 284,
+    "workerExports": 287,
     "npmScripts": 32,
     "envVars": 19,
     "enums": 5
@@ -2086,6 +2086,7 @@
     "worker/site/footer.ts",
     "worker/site/header-nav.ts",
     "worker/site/hero.ts",
+    "worker/site/hotel-gallery.ts",
     "worker/site/hotel-inject.ts",
     "worker/site/hotel.ts",
     "worker/site/image-dimensions.ts",
@@ -2113,6 +2114,7 @@
   ],
   "workerFiles": [
     "worker/admin/form-rows.ts",
+    "worker/admin/hotel-gallery-form.ts",
     "worker/admin/image-references.ts",
     "worker/admin/image-type.ts",
     "worker/admin/lead-csv.ts",
@@ -2156,6 +2158,7 @@
     "worker/site/footer.ts",
     "worker/site/header-nav.ts",
     "worker/site/hero.ts",
+    "worker/site/hotel-gallery.ts",
     "worker/site/hotel-inject.ts",
     "worker/site/hotel.ts",
     "worker/site/image-dimensions.ts",
@@ -2712,6 +2715,11 @@
       "table": "hotels",
       "column": "faqs",
       "property": "faqs"
+    },
+    {
+      "table": "hotels",
+      "column": "gallery",
+      "property": "gallery"
     },
     {
       "table": "hotels",
@@ -3569,6 +3577,10 @@
       "name": "FIXED_COLUMNS"
     },
     {
+      "file": "worker/site/hotel-gallery.ts",
+      "name": "galleryFor"
+    },
+    {
       "file": "worker/site/legacy-calculator-endpoints.ts",
       "name": "getCities"
     },
@@ -4001,6 +4013,10 @@
       "name": "parseFilters"
     },
     {
+      "file": "worker/site/hotel-gallery.ts",
+      "name": "parseGallery"
+    },
+    {
       "file": "worker/site/hotel.ts",
       "name": "parseHighlights"
     },
@@ -4069,6 +4085,10 @@
       "name": "readCookie"
     },
     {
+      "file": "worker/admin/hotel-gallery-form.ts",
+      "name": "readGalleryRows"
+    },
+    {
       "file": "worker/site/labels.ts",
       "name": "readLabels"
     },
@@ -4133,11 +4153,11 @@
       "name": "renderFromDatabase"
     },
     {
-      "file": "worker/site/hotel.ts",
+      "file": "worker/site/hotel-gallery.ts",
       "name": "renderGallery"
     },
     {
-      "file": "worker/site/hotel.ts",
+      "file": "worker/site/hotel-gallery.ts",
       "name": "renderGalleryThumbnails"
     },
     {
