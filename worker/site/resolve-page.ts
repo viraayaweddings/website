@@ -42,6 +42,12 @@ export interface ResolvedPage {
     cityVenues: Hotel[];
     cityPage: CityPage | null;
     labels: ResolvedLabels;
+    /**
+     * Cities, tax rates and currencies. Declared because render-page hands it
+     * to enhancePublicHtml, which prunes the hard-coded mega-menu and venue
+     * filter down to the cities this says are published.
+     */
+    calculator: Awaited<ReturnType<typeof loadCalculatorConfig>>;
     /** Set only for a stored page; carries its SEO fields. */
     staticPage: StaticPage | null;
   };

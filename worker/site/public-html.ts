@@ -2,6 +2,9 @@
  * Public-site HTML transforms: cookie consent, lazy images, inline analytics removal.
  */
 import imageMigrationMap from "../../scripts/image-migration-map.json";
+import type { CalculatorConfig } from "./calculator-store";
+import { filterCityMarkup } from "./city-menu";
+import { restoreHomeNavItem } from "./header-nav";
 import { loadMediaDimensions } from "./image-dimensions";
 import { isHtmlResponse } from "./inject";
 
@@ -298,6 +301,7 @@ function injectEnhancements(html: string, pathname: string): string {
 
   next = next.replace(GO_TOP_BUTTON, '<button id="goTop" type="button"');
   next = next.replace(LOGO_LINK, '$1$2 aria-label="Viraaya Weddings — home"$3');
+  next = restoreHomeNavItem(next, pathname);
   next = next.replace(MEGAMENU_HOTELS_LABEL, "<div$1>$2</div>");
   next = next.replace(MEGAMENU_CITY_LABEL, "<div$1>$2</div>");
   next = next.replace(MEGAMENU_PROMO_LABEL, "<span$1>$2</span>");
@@ -307,11 +311,29 @@ function injectEnhancements(html: string, pathname: string): string {
   return next.replace(/<img\b(?![^>]*\bloading=)([^>]*)>/gi, '<img loading="lazy"$1>');
 }
 
-export async function enhancePublicHtml(response: Response, pathname = ""): Promise<Response> {
+/** The published city ids, or an empty set when the config never loaded. */
+function publishedCityIds(calculator?: CalculatorConfig | null): Set<number> {
+  if (!calculator?.loaded) return new Set();
+  return new Set(calculator.cities.map((city) => Number(city.id)));
+}
+
+/**
+ * `calculator` is the config the caller already loaded for this request, and
+ * is what the mega-menu and venue filter are pruned against. Passing it in
+ * rather than loading it here keeps this a pure transform and avoids a second
+ * lookup: both call sites have it in hand. Omitted or unloaded, the city
+ * markup is left exactly as it is -- see filterCityMarkup.
+ */
+export async function enhancePublicHtml(
+  response: Response,
+  pathname = "",
+  calculator?: CalculatorConfig | null,
+): Promise<Response> {
   if (!isHtmlResponse(response)) return response;
 
   let html = await response.text();
   html = injectEnhancements(html, pathname);
+  html = filterCityMarkup(html, publishedCityIds(calculator));
   html = rewriteLegacyMediaPaths(html, pathname);
 
   const dimensions = await loadMediaDimensions();

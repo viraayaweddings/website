@@ -114,7 +114,8 @@ Searchable inventory of meaningful project files.
 | `db/apply-pg-migrations.ts` | The live Postgres migrations | `drizzle-pg/*.sql` |
 | `db/migrations.ts` | Legacy SQLite bundle, kept for its seed data | `drizzle/*.sql` |
 | `db/seed-content.ts` | Replays the legacy seeds through `sqliteToPostgres` | migrations |
-| `db/seed-calculator.ts` | Seeds the five calculator tables | schema |
+| `db/seed-calculator.ts` | Seeds the five calculator tables | schema, operational-cities |
+| `db/operational-cities.ts` | Which cities a fresh database ships selectable | — |
 | `db/seed-templates.ts` | Page template seeder | page-templates.generated |
 | `db/errors.ts` | Classifies driver errors | — |
 | `admin/session.ts` | Cookie sessions | schema |
@@ -135,7 +136,9 @@ Searchable inventory of meaningful project files.
 | `site/inject.ts` | HTMLRewriter orchestrator | all site/* modules |
 | `site/render-page.ts` | Renders a database-owned page; owns `isDatabaseOwnedPath` | resolve-page, inject |
 | `site/resolve-page.ts` | URL → content mapping | template, blog, hotel, static-pages |
-| `site/public-html.ts` | Shared enhancements: skip link, font preloads, lazy images | — |
+| `site/public-html.ts` | Shared enhancements: skip link, font preloads, lazy images | city-menu, header-nav |
+| `site/city-menu.ts` | Prunes the hard-coded mega-menu and venue filter to the published cities | — |
+| `site/header-nav.ts` | Restores the header's Home item and marks the current page | — |
 | `site/serve-static.ts` | Reads a file out of `site-public`; owns `cacheControlFor` | — |
 | `site/app-routes.ts` | Which prefixes the App Router owns | — |
 | `site/public-routes.ts` | Redirects and consultation slots | — |

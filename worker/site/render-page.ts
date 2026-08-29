@@ -71,7 +71,7 @@ export async function renderFromDatabase(
     resolved.input,
     origin,
   );
-  const enhanced = await enhancePublicHtml(injected, resolved.pathname);
+  const enhanced = await enhancePublicHtml(injected, resolved.pathname, resolved.input.calculator);
 
   if (!options.preview) return withCacheControl(enhanced, MANAGED_CACHE_CONTROL);
   return withCacheControl(enhanced, PREVIEW_CACHE_CONTROL, { "x-robots-tag": "noindex, nofollow" });
@@ -100,7 +100,7 @@ export async function applyManagedContent(
 
   const applyChanges = needsInjection(pathname, input);
   const injected = injectManagedContent(response, pathname, input, origin, applyChanges);
-  const enhanced = await enhancePublicHtml(injected, pathname);
+  const enhanced = await enhancePublicHtml(injected, pathname, input.calculator);
 
   return applyChanges ? withCacheControl(enhanced, MANAGED_CACHE_CONTROL) : enhanced;
 }

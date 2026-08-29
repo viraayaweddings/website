@@ -6,6 +6,7 @@
  */
 import { calculatorData } from "../calculator-data.ts";
 import type { Db } from "./client.ts";
+import { isOperationalCity } from "./operational-cities.ts";
 import {
   CALCULATOR_MONTHS,
   calculatorCities,
@@ -63,10 +64,16 @@ export async function seedCalculatorData(db: Db): Promise<CalculatorSeedResult> 
 
   const data = calculatorData as unknown as BundledCalculatorData;
 
+  // Published per OPERATIONAL_CITY_IDS rather than wholesale: the bundle still
+  // carries every city the clone shipped with, and publishing all of them here
+  // would have a rebuilt database offering cities the live site -- migrated by
+  // drizzle-pg/0009_hide_nonoperational_cities.sql -- does not. The rows
+  // themselves are still imported, so the hidden cities keep their hotels and
+  // prices and an admin can turn one back on without a reseed.
   const cityRows = data.cities.map((city, index) => ({
     id: Number(city.id),
     name: String(city.name),
-    published: 1,
+    published: isOperationalCity(Number(city.id)) ? 1 : 0,
     position: index,
   }));
 
