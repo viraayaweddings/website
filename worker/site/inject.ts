@@ -13,6 +13,7 @@ import { BLOG_LISTING_PATHS, blogSlugFromPath, blogTaxonomyFromPath, renderTaxon
 import { applyListingHandlers, applyPostHandlers } from "./blog-inject";
 import { hotelPathFrom } from "./hotel";
 import { applyCalculatorHandlers } from "./calculator-inject";
+import { renderFooter } from "./footer";
 import type { CalculatorConfig } from "./calculator-store";
 import { applyVenueListingHandlers } from "./venue-listing-inject";
 import type { VenueTypeOption } from "./venue-types";
@@ -309,6 +310,20 @@ export function injectManagedContent(
       });
     }
   }
+
+  // Outside the `applyChanges` gate, like the calculator below it: the footer
+  // is the page's own furniture rather than an admin override of it, and a
+  // page that skipped the rest still needs one. `replace` takes the element
+  // and its children, so the cloned markup goes with it.
+  //
+  // The stored contact details are written straight in, so the social-icon
+  // handlers above never need to match inside it -- replaced content is
+  // emitted as-is and is not re-parsed by this rewriter.
+  rewriter.on("footer.main-footer", {
+    element(element) {
+      element.replace(renderFooter(values, new Date().getFullYear()), { html: true });
+    },
+  });
 
   // Outside the `applyChanges` gate: the calculator config is the page's own
   // data, not an admin override of it, and a page that skipped the rest still

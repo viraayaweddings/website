@@ -1861,3 +1861,172 @@ ul#hotelTabs .nav-link.active {
         width: 100%;
     }
 }
+
+/* ==========================================================================
+   Footer — four columns over a rounded card.
+
+   Markup comes from worker/site/footer.ts, injected on every response, so the
+   selectors here are the contract between that file and this one. Colours are
+   the site's own tokens: the card is --vw-gold-dark rather than the reference
+   design's violet, and carries white text at 4.7:1, which the brighter
+   --vw-gold could not do (3.3:1) without failing WCAG AA.
+   ========================================================================== */
+.vw-footer {
+  padding: 90px 0 40px; position: relative;
+  /* A gold bloom rising from the top edge, so the field reads as lit rather
+     than flat. background-image only -- .main-footer owns background-color,
+     and the gold theme overrides that colour with !important. */
+  background-image: radial-gradient(120% 70% at 50% 0%, rgb(185 130 48 / 20%), transparent 62%);
+}
+/* Hairline across the top: transparent at the edges, gold in the middle, so the
+   footer separates from the page without a hard rule. */
+.vw-footer::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(208 175 115 / 55%), transparent);
+}
+.vw-footer-grid {row-gap: 45px;}
+/* Each column is a flex item so the about column's contact list sits directly
+   under its blurb rather than being pushed by the taller link columns. */
+.vw-footer-col {display: flex; flex-direction: column;}
+/* Scoped to .vw-footer so the element defaults in the responsive blocks above
+   cannot outrank it on specificity. */
+.vw-footer .vw-footer-title {
+  font-family: "Readex Pro", sans-serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: #D0AF73;
+  margin: 0 0 22px;
+}
+/* Gradient across the lettering. Behind @supports because the fallback for an
+   unsupported background-clip is transparent text -- an invisible heading. Both
+   stops stay above 6:1 on the field, so this cannot cost legibility. */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .vw-footer .vw-footer-title {
+    background: linear-gradient(92deg, #F2E3C6, #D0AF73 55%, #BE9A57);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+}
+.vw-footer-blurb {
+  font-size: 14px; font-weight: 300; line-height: 1.75;
+  color: rgb(255 255 255 / 72%); margin: 0 0 22px; max-width: 25ch;
+}
+.vw-footer-links, .vw-footer-contact {list-style: none; margin: 0; padding: 0;}
+.vw-footer-links li + li {margin-top: 13px;}
+.vw-footer-links a, .vw-footer-contact a, .vw-footer-contact span {
+  font-size: 14px; font-weight: 300; line-height: 1.6;
+  color: rgb(255 255 255 / 72%); text-decoration: none;
+}
+.vw-footer-links a, .vw-footer-contact a {transition: color .2s, text-shadow .2s;}
+.vw-footer-links a:hover, .vw-footer-links a:focus-visible,
+.vw-footer-contact a:hover, .vw-footer-contact a:focus-visible {
+  color: #E8D2A6; text-shadow: 0 0 14px rgb(208 175 115 / 45%);
+}
+.vw-footer-contact li {display: flex; gap: 10px; align-items: flex-start;}
+.vw-footer-contact li + li {margin-top: 14px;}
+/* Nudged onto the first line's optical centre; the address runs to three lines
+   and a centred icon would drift away from the text it labels. */
+.vw-footer-icon {flex: 0 0 16px; margin-top: 3px; color: #D0AF73;}
+
+/* The card carries the whole finish: a brushed-gold fill, a lit rim, a shadow
+   that floats it off the field, and a sheen that crosses it.
+
+   Every stop in the fill is at or below #936C35, which is the lightest gold
+   that still holds 4.7:1 against white text. The brighter --vw-gold (#B98230)
+   measures 3.3:1 and would have failed WCAG AA, so the gradient runs downward
+   into shadow rather than up into highlight. */
+.vw-footer-card {
+  position: relative; isolation: isolate; overflow: hidden;
+  border: 1px solid transparent; border-radius: 26px;
+  padding: 30px 40px; margin-top: 70px;
+  /* Two layers: the fill is clipped to the padding box, the rim gradient to the
+     border box, which is how a gradient border is drawn without a wrapper. */
+  background:
+    /* A wide swing -- deep bronze into gold and back down -- so the fill reads
+       as a curved metal surface rather than a tint. */
+    linear-gradient(152deg, #63461F 0%, #8A6430 22%, #936C35 44%,
+                    #7E5B2A 68%, #573D1C 100%) padding-box,
+    linear-gradient(118deg, rgb(226 200 156 / 25%), rgb(252 243 224 / 95%) 24%,
+                    rgb(226 200 156 / 18%) 50%, rgb(246 232 205 / 75%) 76%,
+                    rgb(226 200 156 / 25%)) border-box;
+  box-shadow:
+    0 26px 52px -24px rgb(0 0 0 / 85%),
+    0 0 70px -28px rgb(185 130 48 / 80%),
+    inset 0 1px 0 rgb(255 255 255 / 34%),
+    inset 0 -30px 50px -34px rgb(0 0 0 / 70%);
+}
+
+/* Light striking the top-left corner. Radial and low, and it sits over the
+   logo rather than the nav, so nothing it touches has a contrast floor. */
+.vw-footer-card::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(58% 90% at 14% 0%, rgb(255 246 227 / 16%), transparent 70%);
+}
+
+/* The sheen. Kept to 18% at its peak and 7s apart: it passes behind the
+   copyright line, and a brighter band would visibly wash the text out as it
+   crossed. z-index puts it under the content, and the rows below are lifted
+   above it. */
+.vw-footer-card::before {
+  content: ""; position: absolute; inset: -40% -10%; z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(72deg,
+    transparent 38%, rgb(255 255 255 / 9%) 46%, rgb(255 255 255 / 18%) 50%,
+    rgb(255 255 255 / 9%) 54%, transparent 62%);
+  transform: translateX(-115%);
+  animation: vw-footer-sheen 7s ease-in-out 1.5s infinite;
+}
+@keyframes vw-footer-sheen {
+  0% {transform: translateX(-115%);}
+  45%, 100% {transform: translateX(115%);}
+}
+/* A repeating sweep is exactly the kind of motion this setting exists to stop. */
+@media (prefers-reduced-motion: reduce) {
+  .vw-footer-card::before {animation: none; opacity: 0;}
+}
+.vw-footer-card-row {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap;
+}
+/* The divider fades at both ends rather than running edge to edge, which
+   matches the rim treatment and keeps the card from looking sectioned. */
+.vw-footer-card-base {
+  border-top: 0; margin-top: 24px; padding-top: 22px;
+}
+.vw-footer-card-base::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 1px;
+  background: linear-gradient(90deg, rgb(255 255 255 / 8%),
+              rgb(255 255 255 / 38%) 30%, rgb(255 255 255 / 38%) 70%,
+              rgb(255 255 255 / 8%));
+}
+.vw-footer-logo img {height: auto;}
+.vw-footer-nav {display: flex; gap: 34px; flex-wrap: wrap;}
+.vw-footer-nav a {
+  font-size: 14px; font-weight: 400; color: #fff; text-decoration: none;
+}
+.vw-footer-nav a:hover, .vw-footer-nav a:focus-visible {text-decoration: underline;}
+.vw-footer-copy {margin: 0; font-size: 13px; font-weight: 300; color: #fff;}
+.vw-footer-social {display: flex; gap: 12px; margin: 0; padding: 0; list-style: none;}
+.vw-footer-social a {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: solid 1px rgb(255 255 255 / 45%); color: #fff; font-size: 14px;
+  text-decoration: none; transition: background-color .2s, border-color .2s;
+}
+/* The circles are 32px by design, which is under the 44px touch target WCAG
+   2.5.5 asks for. An invisible ::after grows the hit area to 44px without
+   changing what is drawn -- the same trick the carousel dots use above. */
+.vw-footer-social a::after {content: ""; position: absolute; inset: -6px;}
+.vw-footer-social a:hover, .vw-footer-social a:focus-visible {
+  border-color: rgb(255 255 255 / 90%); color: #6E4F26;
+  background-image: linear-gradient(140deg, #FFF7E8, #E8D2A6);
+  box-shadow: 0 0 18px rgb(240 223 192 / 55%);
+}
+
+@media (max-width: 991px) {
+  .vw-footer {padding: 60px 0 30px;}
+  .vw-footer-card {padding: 26px 24px; margin-top: 45px; border-radius: 20px;}
+  /* Both rows stack, so the logo, the nav, the copyright and the icons read
+     top to bottom in that order rather than sitting on opposite edges. */
+  .vw-footer-card-row {flex-direction: column; align-items: flex-start;}
+  .vw-footer-nav {gap: 18px;}
+}

@@ -139,6 +139,7 @@ Searchable inventory of meaningful project files.
 | `site/public-html.ts` | Shared enhancements: skip link, font preloads, lazy images | city-menu, header-nav |
 | `site/city-menu.ts` | Prunes the hard-coded mega-menu and venue filter to the published cities | — |
 | `site/header-nav.ts` | Restores the header's Home item and marks the current page | — |
+| `site/footer.ts` | Renders the site footer, injected on every response | escape, settings |
 | `site/serve-static.ts` | Reads a file out of `site-public`; owns `cacheControlFor` | — |
 | `site/app-routes.ts` | Which prefixes the App Router owns | — |
 | `site/public-routes.ts` | Redirects and consultation slots | — |

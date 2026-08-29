@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-29T13:08:24.680Z",
-  "gitCommit": "9f5d4c6e759b7b38702362acf5e3c9708e0e2707",
-  "gitCommitShort": "9f5d4c6e",
+  "generatedAt": "2026-08-29T14:41:19.074Z",
+  "gitCommit": "d4d1d501644daa135ab2278c274474a619d35ec7",
+  "gitCommitShort": "d4d1d501",
   "projectVersion": "0.1.0",
   "counts": {
     "routes": 55,
@@ -14,11 +14,11 @@
     "publicJsFiles": 7,
     "pageTypePatterns": 9,
     "publicForms": 7,
-    "workerSiteFiles": 35,
-    "workerFiles": 68,
+    "workerSiteFiles": 36,
+    "workerFiles": 69,
     "dbColumns": 198,
     "auditActions": 71,
-    "workerExports": 283,
+    "workerExports": 284,
     "npmScripts": 32,
     "envVars": 19,
     "enums": 5
@@ -2083,6 +2083,7 @@
     "worker/site/city-menu.ts",
     "worker/site/content-version.ts",
     "worker/site/escape.ts",
+    "worker/site/footer.ts",
     "worker/site/header-nav.ts",
     "worker/site/hero.ts",
     "worker/site/hotel-inject.ts",
@@ -2152,6 +2153,7 @@
     "worker/site/city-menu.ts",
     "worker/site/content-version.ts",
     "worker/site/escape.ts",
+    "worker/site/footer.ts",
     "worker/site/header-nav.ts",
     "worker/site/hero.ts",
     "worker/site/hotel-inject.ts",
@@ -4121,6 +4123,10 @@
     {
       "file": "worker/site/blog.ts",
       "name": "renderFaqItems"
+    },
+    {
+      "file": "worker/site/footer.ts",
+      "name": "renderFooter"
     },
     {
       "file": "worker/site/render-page.ts",
