@@ -128,11 +128,19 @@ body {
     --site-page-gutter: clamp(24px, 3.6vw, 70px);
 }
 
+/*
+ * Keyed on the `main` element, not on `#main`. Every stored page ships
+ * `<main id="main">`, but `decoratePublicHtml` renames it to `main-content`
+ * when it injects the skip link, so an id-based selector matched locally and
+ * silently stopped matching once the page was served -- the header kept the
+ * page gutter while every section below it fell back to Bootstrap's 12px and
+ * ran wider than the header.
+ */
 .js-header > .container,
-#main > section > .container,
-#main > section > .container-fluid,
-#main > .banner-bottom-list > .container,
-#main > footer.main-footer > .container {
+main > section > .container,
+main > section > .container-fluid,
+main > .banner-bottom-list > .container,
+main > footer.main-footer > .container {
     max-width: none;
     width: 100%;
     padding-left: var(--site-page-gutter);
@@ -460,7 +468,6 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 /* END Packages  */
 
 .deal-season-wrapper {z-index: 99;padding: 64px 0px;}
-.deal-season-wrapper .container-fluid {max-width: 1600px;width: 94%;}
 .post-wedding-wrapper .content-widget .content02 a.btn {width: 202px;height: 48px;}
 .luxury-venues-wrapper.post-wedding-wrapper .content-widget {justify-content: flex-start;gap: 24px;}
 .luxury-venues-wrapper.post-wedding-wrapper .content-widget .content02 {margin-top: 0;}
