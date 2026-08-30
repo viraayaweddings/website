@@ -135,12 +135,15 @@ body {
  * silently stopped matching once the page was served -- the header kept the
  * page gutter while every section below it fell back to Bootstrap's 12px and
  * ran wider than the header.
+ *
+ * The footer is deliberately left out. Fixing the selector would have pulled it
+ * out to the page edges with everything else, but it was drawn against
+ * Bootstrap's centred `.container`, so it keeps that width on purpose.
  */
 .js-header > .container,
 main > section > .container,
 main > section > .container-fluid,
-main > .banner-bottom-list > .container,
-main > footer.main-footer > .container {
+main > .banner-bottom-list > .container {
     max-width: none;
     width: 100%;
     padding-left: var(--site-page-gutter);

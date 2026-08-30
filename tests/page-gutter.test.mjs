@@ -52,11 +52,26 @@ test("the gutter rule covers the header and the sections together", () => {
     "main > section > .container",
     "main > section > .container-fluid",
     "main > .banner-bottom-list > .container",
-    "main > footer.main-footer > .container",
   ]) {
     assert.ok(selectors.includes(selector), `the gutter rule no longer covers ${selector}`);
   }
 
   assert.match(body, /padding-left: var\(--site-page-gutter\)/);
   assert.match(body, /padding-right: var\(--site-page-gutter\)/);
+});
+
+test("the footer keeps Bootstrap's centred container", () => {
+  // The footer was drawn against `.container` and is the one piece that does
+  // not run to the page edges. Adding it to the rule above would widen it by
+  // roughly 150px on a laptop, which is a design change rather than a fix.
+  assert.doesNotMatch(css, /^main > footer\.main-footer > \.container/m);
+
+  // Nothing else may take the width off it either.
+  const footerWidthRules = css
+    .replace(/\/\*[\s\S]*?\*\//g, (comment) => comment.replace(/[^\n]/g, " "))
+    .split("}")
+    .filter((block) => /footer[^{]*>\s*\.container[^{]*\{/.test(block))
+    .filter((block) => /max-width|width\s*:/.test(block.split("{")[1] ?? ""));
+
+  assert.deepEqual(footerWidthRules, [], "something is overriding the footer container's width");
 });
