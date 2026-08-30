@@ -1,7 +1,7 @@
 {
-  "validatedAt": "2026-08-30T06:00:49.095Z",
-  "gitCommit": "30803f71f09cc876a168683987297b862e7d6f5f",
-  "gitCommitShort": "30803f71",
+  "validatedAt": "2026-08-30T06:08:36.673Z",
+  "gitCommit": "36ca0e81015d9cf7f8d70dd8f1f7cabf8899ad2c",
+  "gitCommitShort": "36ca0e81",
   "status": "PASS",
   "inventoryCounts": {
     "routes": 56,
@@ -35,6 +35,6 @@
     "Admin file not referenced in docs: app/admin/_components/CsrfInput.tsx",
     "Admin file not referenced in docs: app/admin/_lib/admin-path.ts",
     "Admin file not referenced in docs: app/admin/_lib/csrf-fetch.ts",
-    "Manifest audited commit (d83a9e1) differs from HEAD (30803f71)"
+    "Manifest audited commit (d83a9e1) differs from HEAD (36ca0e81)"
   ]
 }

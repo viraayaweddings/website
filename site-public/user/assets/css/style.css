@@ -139,10 +139,17 @@ body {
  * The footer is deliberately left out. Fixing the selector would have pulled it
  * out to the page edges with everything else, but it was drawn against
  * Bootstrap's centred `.container`, so it keeps that width on purpose.
+ *
+ * The banner is matched by descent rather than as a direct child: its container
+ * hangs off an `.item` slide, one level down on the inner banners and three
+ * once slick wraps the homepage carousel in its own track. Without this the
+ * banner heading was the one title on the page that started inboard of the
+ * logo above it.
  */
 .js-header > .container,
 main > section > .container,
 main > section > .container-fluid,
+main > section.banner-wrapper .item > .container,
 main > .banner-bottom-list > .container {
     max-width: none;
     width: 100%;

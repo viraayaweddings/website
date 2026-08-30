@@ -51,6 +51,10 @@ test("the gutter rule covers the header and the sections together", () => {
     ".js-header > .container",
     "main > section > .container",
     "main > section > .container-fluid",
+    // Matched by descent: the banner's container hangs off an `.item` slide,
+    // one level down on the inner banners and three once slick wraps the
+    // homepage carousel in a track of its own.
+    "main > section.banner-wrapper .item > .container",
     "main > .banner-bottom-list > .container",
   ]) {
     assert.ok(selectors.includes(selector), `the gutter rule no longer covers ${selector}`);
