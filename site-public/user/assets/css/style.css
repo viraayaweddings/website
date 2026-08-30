@@ -621,8 +621,11 @@ ul#hotelTabs li button:hover {background: #FFF;color: rgb(80 68 59 / 80%);border
 /* Inner banner CSS */
 .inner-banner {padding: 350px 0px 200px 0px;background-size: cover;background-repeat: no-repeat;position: relative;z-index: 99;background-position: center;}
 .inner-banner:after {position: absolute;content: '';top: 0px;height: 100%;width: 100%;background-color: rgba(0, 0, 0, 0.325);left: 0;z-index: -2;}
-.inner-banner .content h1, .inner-banner .content h2 {font-size: 44px;color: #ffffff;text-align: center;}
-.inner-banner .content .breadcrumb ul {display: flex;gap: 10px;align-items: center;justify-content: center;width: 100%;}
+/* `text-align` is `!important` because /cookie-preference-policy carries
+ * Bootstrap's `.text-center` directly on its h1. That page is stored in the
+ * database, so its markup cannot be corrected from this repository alone. */
+.inner-banner .content h1, .inner-banner .content h2 {font-size: 44px;color: #ffffff;text-align: left !important;}
+.inner-banner .content .breadcrumb ul {display: flex;gap: 10px;align-items: center;justify-content: flex-start;width: 100%;}
 .inner-banner .content .breadcrumb ul li {font-weight: 600;color: #ffffff;font-weight: 400;}
 .inner-banner .content .breadcrumb ul li a {color: #ffffff;font-weight: 400;}
 
@@ -1051,15 +1054,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 /*-----------DESTINATION 18 MAR 2026 CSS---------------------*/
 .custom-width {max-width: 1140px !important}
 /* HERO */
-.hero {min-height: 94vh;background: linear-gradient(170deg, rgba(14,12,9,.35) 0%, rgba(14,12,9,.72) 55%, rgba(14,12,9,.90) 100%);display: grid; place-items: center;text-align: center; padding: 130px 28px 90px;position: relative; overflow: hidden;}
+.hero {min-height: 94vh;background: linear-gradient(170deg, rgba(14,12,9,.35) 0%, rgba(14,12,9,.72) 55%, rgba(14,12,9,.90) 100%);display: grid; place-items: center start;text-align: left; padding: 130px var(--site-page-gutter) 90px;position: relative; overflow: hidden;}
      
 .hero-inner { position: relative; z-index: 1; }
 .hero-crumb { display: inline-flex; align-items: center; gap: 8px; background: rgba(185,130,48,.14); border: 1px solid rgba(185,130,48,.35); border-radius: 100px; padding: 6px 20px; font-size: 10.5px; letter-spacing: 2.5px; text-transform: uppercase; color: #fff; margin-bottom: 28px; }
 .hero-crumb span { opacity: .5; }
-.hero h1 { max-width: 860px; margin: 0 auto 14px; }
+.hero h1 { max-width: 860px; margin: 0 0 14px; }
     
-.hero-desc {   max-width: 580px; margin: 0 auto 38px; font-weight: 300; }
-.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.hero-desc {   max-width: 580px; margin: 0 0 38px; font-weight: 300; }
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: flex-start; }
      
 
 .stat-item {border-right: 1px solid rgba(255, 255, 255, 0.3);padding: 15px 5px;display: flex;align-items: center;justify-content: center;}
