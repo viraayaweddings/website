@@ -79,3 +79,42 @@ test("the footer keeps Bootstrap's centred container", () => {
 
   assert.deepEqual(footerWidthRules, [], "something is overriding the footer container's width");
 });
+
+/**
+ * The banner title starts where the header logo starts. Two page families used
+ * to centre it instead, and both are easy to re-centre by accident: the policy
+ * pages because one of them carries Bootstrap's `.text-center` in markup this
+ * repository does not own, and the destination heroes because centring is the
+ * default for the `place-items` shorthand.
+ */
+test("the policy banner title is left aligned, over Bootstrap's utility class", () => {
+  const rule = css.match(/^\.inner-banner \.content h1[^{]*\{([^}]*)\}/m);
+  assert.ok(rule, "the .inner-banner heading rule is gone from style.css");
+  // `.text-center` is `text-align: center !important`, so this has to match it.
+  assert.match(rule[1], /text-align: left !important/);
+
+  const crumb = css.match(/^\.inner-banner \.content \.breadcrumb ul \{([^}]*)\}/m);
+  assert.ok(crumb, "the .inner-banner breadcrumb rule is gone from style.css");
+  assert.match(crumb[1], /justify-content: flex-start/);
+});
+
+test("the destination hero lays its content out from the left", () => {
+  const rule = css.match(/^\.hero \{([^}]*)\}/m);
+  assert.ok(rule, "the .hero rule is gone from style.css");
+  // `place-items: center` alone would centre on both axes; the second keyword
+  // keeps the vertical centring and moves the block to the inline start.
+  assert.match(rule[1], /place-items: center start/);
+  assert.match(rule[1], /text-align: left/);
+  // The block starts on the same gutter as the header rather than a fixed inset.
+  assert.match(rule[1], /padding: 130px var\(--site-page-gutter\) 90px/);
+
+  for (const [selector, expected] of [
+    [/^\.hero h1 \{([^}]*)\}/m, /margin: 0 0 14px/],
+    [/^\.hero-desc \{([^}]*)\}/m, /margin: 0 0 38px/],
+    [/^\.hero-btns \{([^}]*)\}/m, /justify-content: flex-start/],
+  ]) {
+    const match = css.match(selector);
+    assert.ok(match, `a .hero child rule is gone from style.css: ${selector}`);
+    assert.match(match[1], expected);
+  }
+});
