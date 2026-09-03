@@ -22,6 +22,7 @@ export async function GET(): Promise<Response> {
       prices: data.prices,
       currencies: data.currencies,
       taxes: data.taxes,
+      budgets: data.budgets,
       roomsByHotel: data.roomsByHotel,
     },
     {

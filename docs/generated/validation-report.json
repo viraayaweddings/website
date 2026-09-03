@@ -1,32 +1,32 @@
 {
-  "validatedAt": "2026-08-30T06:16:02.198Z",
-  "gitCommit": "36ca0e81015d9cf7f8d70dd8f1f7cabf8899ad2c",
-  "gitCommitShort": "36ca0e81",
+  "validatedAt": "2026-09-03T08:37:40.499Z",
+  "gitCommit": "89504bbb6272ff9f67cca2ff6d0e9000b0e7fa4b",
+  "gitCommitShort": "89504bbb",
   "status": "PASS",
   "inventoryCounts": {
-    "routes": 56,
-    "serverActions": 67,
-    "dbTables": 23,
+    "routes": 57,
+    "serverActions": 70,
+    "dbTables": 24,
     "workerEndpoints": 30,
     "adminComponents": 21,
     "adminFiles": 90,
     "staticSiteRoutes": 292,
-    "publicJsFiles": 7,
+    "publicJsFiles": 8,
     "pageTypePatterns": 9,
     "publicForms": 7,
-    "workerSiteFiles": 37,
-    "workerFiles": 76,
-    "dbColumns": 200,
-    "auditActions": 71,
-    "workerExports": 306,
+    "workerSiteFiles": 39,
+    "workerFiles": 78,
+    "dbColumns": 207,
+    "auditActions": 74,
+    "workerExports": 316,
     "npmScripts": 32,
     "envVars": 19,
     "enums": 5
   },
   "issueCount": 0,
-  "warningCount": 6,
+  "warningCount": 5,
   "coverage": {
-    "workerExports": "66/306 exported symbols named in the docs"
+    "workerExports": "66/316 exported symbols named in the docs"
   },
   "issues": [],
   "warnings": [
@@ -34,7 +34,6 @@
     "Admin file not referenced in docs: app/admin/_components/CsrfField.tsx",
     "Admin file not referenced in docs: app/admin/_components/CsrfInput.tsx",
     "Admin file not referenced in docs: app/admin/_lib/admin-path.ts",
-    "Admin file not referenced in docs: app/admin/_lib/csrf-fetch.ts",
-    "Manifest audited commit (d83a9e1) differs from HEAD (36ca0e81)"
+    "Admin file not referenced in docs: app/admin/_lib/csrf-fetch.ts"
   ]
 }

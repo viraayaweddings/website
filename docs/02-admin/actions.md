@@ -394,6 +394,9 @@ the row *is* the undo, and the page stays up throughout.
 | `saveCalculatorPricesAction` | admin | hotelId, four prices per month | `calculator_prices`, twelve rows in one upsert | `calculator.prices_updated` |
 | `saveCalculatorTaxAction` | admin | code, label, percent, position, published | `calculator_taxes` | `calculator.tax_saved` |
 | `deleteCalculatorTaxAction` | admin | code | `calculator_taxes` | `calculator.tax_deleted` |
+| `saveCalculatorBudgetAction` | admin | code, label, minAmount, maxAmount, position, published | `calculator_budgets` | `calculator.budget_saved` |
+| `deleteCalculatorBudgetAction` | admin | code | `calculator_budgets` | `calculator.budget_deleted` |
+| `bulkDeleteCalculatorBudgetsAction` | admin | ids | `calculator_budgets` | `calculator.budget_bulk_deleted` |
 | `saveCurrencyAction` | admin | code, name, symbol, rateToUsd, isDefault | `calculator_currencies` | `calculator.currency_saved` |
 | `deleteCurrencyAction` | admin | code | `calculator_currencies` | `calculator.currency_deleted` |
 | `importCalculatorDataAction` | admin | none | Seeds all four tables from the bundle | `calculator.imported` |
@@ -473,6 +476,9 @@ otherwise neutral.
 | `calculator.hotel_created` | Calculator hotel created | ok |
 | `calculator.hotel_deleted` | Calculator hotel deleted | bad |
 | `calculator.hotel_updated` | Calculator hotel updated | neutral |
+| `calculator.budget_bulk_deleted` | Budget bands bulk deleted | bad |
+| `calculator.budget_deleted` | Budget band deleted | bad |
+| `calculator.budget_saved` | Budget band saved | neutral |
 | `calculator.imported` | Calculator data imported | neutral |
 | `calculator.prices_updated` | Prices updated | neutral |
 | `calculator.tax_bulk_deleted` | Tax rates bulk deleted | bad |

@@ -166,10 +166,10 @@ test("exactly one header nav item is marked current", () => {
   const nav = (markup) =>
     markup.slice(markup.indexOf('<ul class="navbar-nav me-auto">'));
 
-  const cases = [
-    ["site-public/index.html", "/", 'href="/"'],
-    ["site-public/wedding-packages/index.html", "/wedding-packages", 'href="/wedding-packages"'],
-  ];
+  // /wedding-packages was the second case here until the packages area was
+  // unpublished. It no longer has a nav item to mark, which the assertion
+  // below pins instead.
+  const cases = [["site-public/index.html", "/", 'href="/"']];
 
   for (const [path, pathname, expected] of cases) {
     const restored = restoreHomeNavItem(readFileSync(path, "utf8"), pathname);
@@ -182,6 +182,15 @@ test("exactly one header nav item is marked current", () => {
   // the bug being fixed: WEDDING PACKAGES claimed it on all 291 other pages.
   const other = restoreHomeNavItem(readFileSync("site-public/about-us/index.html", "utf8"), "/about-us");
   assert.equal([...nav(other).matchAll(/<a class="nav-link active"/g)].length, 0);
+
+  // Including the unpublished packages page itself: it is reachable by URL but
+  // the menu no longer offers it, so nothing there is the "current" item.
+  const unpublished = restoreHomeNavItem(
+    readFileSync("site-public/wedding-packages/index.html", "utf8"),
+    "/wedding-packages",
+  );
+  assert.equal([...nav(unpublished).matchAll(/<a class="nav-link active"/g)].length, 0);
+  assert.doesNotMatch(nav(unpublished), /href="\/wedding-packages"/);
 });
 
 test("restoreHomeNavItem does not add a second Home item", () => {

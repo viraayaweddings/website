@@ -25,6 +25,7 @@ const EXPECTED_TABLES = [
   "calculator_hotels",
   "calculator_prices",
   "calculator_taxes",
+  "calculator_budgets",
   "city_listings",
   "city_pages",
   "content_version",

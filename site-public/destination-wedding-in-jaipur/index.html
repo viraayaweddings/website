@@ -143,9 +143,6 @@ span.flatpickr-weekday { background: #b88a5c !important; color: #fff !important;
                     <div class="d-flex justify-content-between w-auto w-lg-100-custom">
                         <div class="main-menu">
                             <ul class="navbar-nav me-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="/wedding-packages" class="active">WEDDING PACKAGES</a>
-                                </li>
                                 <li class="nav-item dropdown position-static">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Hotels
@@ -1963,9 +1960,9 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="font-family01 fs-13 fw-500 position-absolute bg-white text-maroon-900">Hotel</label>
-                                <select class="form-control font-family01 fs-14" id="hotelSelect" disabled>
-                                    <option value="">Select a Hotel</option>
+                                <label class="font-family01 fs-13 fw-500 position-absolute bg-white text-maroon-900">Budget</label>
+                                <select class="form-control font-family01 fs-14" id="budgetSelect">
+                                    <option value="">Select a Budget</option>
                                 </select>
                                 <img src="/media/legacy/beea2f690689bf67.png" alt="" decoding="async" loading="lazy">
                             </div>
@@ -1998,7 +1995,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
                     <div class="form-group">
                         <button type="button" class="btn font-family03 fw-700 fs-13 text-uppercase w-100" id="calculateCost">
-                            Calculate HOTEL COST
+                            Find Hotels In My Budget
                         </button>
                     </div>
 
@@ -2438,9 +2435,6 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                       <a href="/real-weddings">Real Weddings</a>
                     </li>
                     <li>
-                      <a href="/package">Wedding Packages</a>
-                    </li>
-                    <li>
                       <a href="/blogs">Blogs</a>
                     </li>
                     <li>
@@ -2545,6 +2539,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
 <script src="/vendor/select2/select2.min.js"></script>
 <script src="/js/currency-switcher.js"></script>
+<script src="/js/cost-calculator-budget.js"></script>
   <script src="/js/site-search.js" defer></script>
 
 

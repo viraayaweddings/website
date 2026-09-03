@@ -24,6 +24,15 @@
  */
 import postgres from "postgres";
 import { PAGE_DATA_MARKER, transform } from "./lib/page-data-transform.mjs";
+import {
+  BUDGET_MARKER,
+  transform as budgetTransform,
+} from "./lib/calculator-budget-transform.mjs";
+import {
+  isPackagesPath,
+  PACKAGES_MARKER,
+  transform as packagesTransform,
+} from "./lib/unpublish-packages-transform.mjs";
 
 const apply = process.argv.includes("--apply");
 const ifConfigured = process.argv.includes("--if-configured");
@@ -43,24 +52,54 @@ const sql = postgres(databaseUrl, { max: 1, prepare: false, ssl: "require" });
 let failures = 0;
 const updates = { page_templates: [], static_pages: [] };
 
-function convert(html, where) {
-  if (!PAGE_DATA_MARKER.test(html)) return null;
-  const result = transform(html);
-  for (const problem of result.problems) {
-    console.error(`  ! ${where}: ${problem}`);
-    failures += 1;
+/**
+ * Both stored-markup transforms, in one pass over each row.
+ *
+ * They are separate changes -- one detached the pages from the data compiled
+ * into them, the other turned the hotel picker into a budget picker -- but a
+ * row must never have one and not the other, and a second pass over 270-odd
+ * rows of ~290KB each is a second write of all of them. Both are idempotent,
+ * so this stays a no-op once a row is current.
+ */
+const PASSES = [
+  { name: "page-data", marker: PAGE_DATA_MARKER, run: (html) => transform(html) },
+  { name: "budget", marker: BUDGET_MARKER, run: (html) => budgetTransform(html) },
+  {
+    name: "packages",
+    marker: PACKAGES_MARKER,
+    run: (html, path) => packagesTransform(html, isPackagesPath(path)),
+    // The five unpublished pages need the robots tag even when they carry no
+    // link left to strip, so this pass runs on them whatever the marker says.
+    always: (path) => isPackagesPath(path),
+  },
+];
+
+function convert(html, where, path) {
+  let current = html;
+
+  for (const pass of PASSES) {
+    if (!pass.marker.test(current) && !(pass.always && pass.always(path))) continue;
+    const result = pass.run(current, path);
+    for (const problem of result.problems) {
+      console.error(`  ! ${where} (${pass.name}): ${problem}`);
+      failures += 1;
+    }
+    if (result.changed) current = result.html;
   }
-  return result.changed ? result.html : null;
+
+  return current === html ? null : current;
 }
 
 try {
   for (const row of await sql`select key, html from page_templates`) {
-    const next = convert(row.html, `page_templates/${row.key}`);
+    // A shell is never one of the unpublished pages -- those are whole pages in
+    // static_pages -- so it only ever loses its menu and footer links.
+    const next = convert(row.html, `page_templates/${row.key}`, "");
     if (next) updates.page_templates.push({ id: row.key, html: next });
   }
 
   for (const row of await sql`select path, html from static_pages`) {
-    const next = convert(row.html, `static_pages${row.path}`);
+    const next = convert(row.html, `static_pages${row.path}`, row.path);
     if (next) updates.static_pages.push({ id: row.path, html: next });
   }
 

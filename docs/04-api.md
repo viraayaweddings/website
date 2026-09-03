@@ -42,7 +42,10 @@ CORS preflight for same-origin POST.
 
 ## Calculator / Search APIs
 
-Data source: `worker/calculator-data.ts` (static in-memory, no DB).
+Data source: the `calculator_*` tables in Postgres, read through
+`worker/site/calculator-store.ts` and edited at `/admin/calculator`.
+`worker/calculator-data.ts` is the seed those tables are first filled from, not
+a fallback the endpoints read.
 
 | Endpoint | Method | Auth | Purpose | Response |
 | --- | --- | --- | --- | --- |
@@ -52,12 +55,15 @@ Data source: `worker/calculator-data.ts` (static in-memory, no DB).
 | `/get-hotels-by-city/:cityId` | GET | Same-origin | Hotels by city ID | JSON |
 | `/get-hotel-price/:id/:month` | GET | Same-origin | Monthly price | JSON |
 | `/get-hotel-prices` | POST | Same-origin | Batch prices | JSON |
-| `/api/calculator/availability-data` | GET | Same-origin | Cities + hotels widget | JSON |
+| `/api/calculator/budget-match` | POST | Same-origin | Prices every hotel in a city against one enquiry and flags which fit the chosen band | JSON |
+| `/api/calculator/data` | GET | None | The whole dataset in one response | JSON |
 | `/data/calculator/cities.json` | GET | None | India cities | JSON |
 | `/data/calculator/hotels.json` | GET | None | All India hotels | JSON |
 | `/data/calculator/hotels-by-city.json` | GET | None | Hotels grouped | JSON |
 | `/data/calculator/prices.json` | GET | None | Price matrix | JSON |
 | `/data/calculator/currencies.json` | GET | None | INR only | JSON |
+| `/data/calculator/taxes.json` | GET | None | Published tax lines | JSON |
+| `/data/calculator/budgets.json` | GET | None | Published budget bands | JSON |
 | `/api/currencies` | GET | None | Currency list | JSON |
 | `/api/currencies/select` | POST | Same-origin | Stores the chosen currency in a cookie | `{ok:true, currency}` |
 | `/appointment/slots` | GET | None | Time slots | JSON array |

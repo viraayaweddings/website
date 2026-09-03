@@ -44,7 +44,7 @@ dead weight — and a second copy of the price table on disk is precisely the th
 an admin edit cannot reach, so a misconfigured rewrite could have shipped stale
 prices.
 
-`app/data/calculator/[file]/route.ts` answers all six names from
+`app/data/calculator/[file]/route.ts` answers all seven names from
 `loadCalculatorDataset()`. The names were kept because the homepage and
 `/hotel-cost-calculator` each carry their own inline loader that fetches these
 paths directly rather than going through `currency-switcher.js` — so serving the
@@ -59,6 +59,7 @@ it takes, with no page edits.
 | `/data/calculator/prices.json` | None | `calculator_prices` |
 | `/data/calculator/currencies.json` | None | `calculator_currencies` |
 | `/data/calculator/taxes.json` | None | `calculator_taxes` |
+| `/data/calculator/budgets.json` | None | `calculator_budgets` |
 
 Any other filename is a 404 — the list is a closed allowlist, so the path
 segment cannot be used to reach anything else.
@@ -66,8 +67,8 @@ segment cannot be used to reach anything else.
 | `/get-hotels-by-city` | Same-origin | Hotels for city |
 | `/get-hotels-by-city/:cityId` | Same-origin | By ID |
 | `/get-hotel-price/:id/:month` | Same-origin | Single hotel/month |
-| `/post /get-hotel-prices` | Same-origin | Batch lookup |
-| `/api/calculator/availability-data` | Same-origin | Widget data |
+| `POST /get-hotel-prices` | Same-origin | Batch lookup |
+| `POST /api/calculator/budget-match` | Same-origin | Hotels in a city that fit a band |
 
 **Blocked (404):** `/data/calculator/calculator-data.json`, `/data/calculator/availability-data.json`
 
@@ -75,15 +76,26 @@ segment cannot be used to reach anything else.
 
 ## Calculator Tools by Page
 
-### 1. Hotel Cost Calculator (`/hotel-cost-calculator/`)
+### 1. Hotel Cost Calculator (`/hotel-cost-calculator/`, the home page, the ten `destination-wedding-in-*` pages)
 
 | | |
 | --- | --- |
-| **Purpose** | Estimate wedding costs across multiple hotels |
-| **UI** | Multi-step: city → hotels → dates → guest count → breakdown |
-| **APIs** | Calculator endpoints above |
-| **Output** | Client-side cost table with GST |
-| **Lead capture** | Optional CTA forms (lead-forms.js) |
+| **Purpose** | Find the hotels in a place that fit a whole-stay budget |
+| **UI** | Place → check-in → check-out → budget → per-day rooms/lunch/hi-tea/dinner |
+| **API** | `POST /api/calculator/budget-match` |
+| **Output** | Hotels in that place, cheapest first, split into within/outside the band |
+| **Lead capture** | An enquiry form in the results panel, posted through lead-forms.js |
+
+There is **no hotel picker** on these pages. It was replaced by the budget
+picker: a visitor is not expected to have chosen a venue before asking what a
+venue costs. The bands come from `calculator_budgets` through
+`worker/site/calculator-inject.ts`, the same way the city list does.
+
+The behaviour is in `site-public/js/cost-calculator-budget.js`, shared by every
+calculator, and it takes over the page's own inline script through two hooks
+only — a `#citySelect` change (to un-gate the dates, which the removed hotel
+picker used to do) and a capture-phase `#calculateCost` click. Everything else
+on those pages is still their own code.
 
 ### 2. Compare Hotels (`/compare-hotel/`)
 
@@ -92,6 +104,11 @@ segment cannot be used to reach anything else.
 | **Purpose** | Side-by-side price comparison (up to 5 hotels) |
 | **APIs** | `/get-hotels-by-city`, POST `/get-hotel-prices` |
 | **Output** | Comparison table with currency formatting |
+| **Budget** | Recorded, not used to search — picking hotels is the point of this page |
+| **Lead capture** | An enquiry form appended under the result table, carrying the band, the dates and the hotels compared |
+
+The page carried no form at all before this, so a budget picked on it had
+nowhere to go. The comparison itself is untouched.
 
 ### 3. Venue Page Calculator (~259 pages)
 
@@ -100,7 +117,8 @@ segment cannot be used to reach anything else.
 | **Purpose** | Per-venue cost estimate with date picker |
 | **API** | `GET /get-hotel-price/{external_hotel_id}/{month}` |
 | **Hotel ID** | From `hotels.external_hotel_id` (admin-managed or static HTML) |
-| **UI** | Inline flatpickr + day sections + offcanvas breakdown |
+| **UI** | Budget + inline flatpickr + day sections + offcanvas breakdown |
+| **Budget** | Recorded on every enquiry form on the page; the hotel is fixed by the page, so it does not search |
 
 ### 4. Hotel Listing Filter (`/hotel-listing/`, city pages)
 
@@ -117,7 +135,7 @@ segment cannot be used to reach anything else.
 | File | Purpose |
 | --- | --- |
 | `/data/hotel-listing-data.json` | Full venue metadata for the client filter and the search fallback. **A route, not a file** — `app/data/hotel-listing-data.json/route.ts` builds it from the database; there is no `site-public/data/` directory |
-| `/data/calculator/*.json` | The six calculator payloads, served from the database by `app/data/calculator/[file]/route.ts`. The files that used to sit under `site-public/data/calculator/` were deleted |
+| `/data/calculator/*.json` | The seven calculator payloads, served from the database by `app/data/calculator/[file]/route.ts`. The files that used to sit under `site-public/data/calculator/` were deleted |
 
 ---
 
@@ -135,6 +153,7 @@ segment cannot be used to reach anything else.
 
 | Admin field | Calculator impact |
 | --- | --- |
+| `calculator_budgets` | The options in the Budget picker on every calculator |
 | `hotels.external_hotel_id` | Links venue page calculator to price data |
 | `city_pages.city_id` | City filter on listing pages |
 | `city_pages.total_venues` | Pagination count display |
@@ -200,6 +219,9 @@ CTA opens `#BookConsultation` where the page has it, or goes to `/contact`.
 | Offline/static fallback | `currency-switcher.js` serves local JSON |
 | Hotel not in calculator data | No pricing shown on venue calculator |
 | Hotel published with no room rate | "Price on request" panel, enquiry CTA instead of a quote |
+| No hotel in the city fits the chosen band | The nearest options are listed instead, with the enquiry form; never an empty panel |
+| Busiest day needs more rooms than a venue has | The venue is listed but marked over capacity and excluded from the band |
+| No budget bands published | The Budget picker shows only its placeholder and the calculator asks for one |
 
 ---
 

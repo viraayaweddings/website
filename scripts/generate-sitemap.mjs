@@ -8,7 +8,19 @@ import { join, resolve } from "node:path";
 
 const SITE_ORIGIN = process.env.SITE_ORIGIN || "https://viraayaweddings.com";
 const EXCLUDED_PREFIXES = ["/admin", "/appointment/payment-success", "/appointment/payment-failed"];
-const EXCLUDED_EXACT = new Set(["/blogs/category/weeding-planning/", "/appointment-booking/"]);
+const EXCLUDED_EXACT = new Set([
+  "/blogs/category/weeding-planning/",
+  "/appointment-booking/",
+  // The packages area is unpublished: the pages still answer at their URLs but
+  // nothing on the site links to them and they carry noindex, so listing them
+  // in the sitemap would be inviting the crawl the robots tag turns away.
+  // Reinstating packages means deleting these four lines.
+  "/wedding-packages/",
+  "/wedding-packages/shresht/",
+  "/wedding-packages/siddhi/",
+  "/wedding-packages/shobhana/",
+  "/package/",
+]);
 
 function normalizeRoute(relativePath) {
   const withoutIndex = relativePath.replace(/index\.html$/i, "");

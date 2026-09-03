@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-08-30T06:16:02.099Z",
-  "gitCommit": "36ca0e81015d9cf7f8d70dd8f1f7cabf8899ad2c",
-  "gitCommitShort": "36ca0e81",
+  "generatedAt": "2026-09-03T08:37:40.375Z",
+  "gitCommit": "89504bbb6272ff9f67cca2ff6d0e9000b0e7fa4b",
+  "gitCommitShort": "89504bbb",
   "projectVersion": "0.1.0",
   "counts": {
-    "routes": 56,
-    "serverActions": 67,
-    "dbTables": 23,
+    "routes": 57,
+    "serverActions": 70,
+    "dbTables": 24,
     "workerEndpoints": 30,
     "adminComponents": 21,
     "adminFiles": 90,
     "staticSiteRoutes": 292,
-    "publicJsFiles": 7,
+    "publicJsFiles": 8,
     "pageTypePatterns": 9,
     "publicForms": 7,
-    "workerSiteFiles": 37,
-    "workerFiles": 76,
-    "dbColumns": 200,
-    "auditActions": 71,
-    "workerExports": 306,
+    "workerSiteFiles": 39,
+    "workerFiles": 78,
+    "dbColumns": 207,
+    "auditActions": 74,
+    "workerExports": 316,
     "npmScripts": 32,
     "envVars": 19,
     "enums": 5
@@ -200,6 +200,11 @@
       "kind": "api"
     },
     {
+      "file": "app/api/calculator/budget-match/route.ts",
+      "route": "/api/calculator/budget-match",
+      "kind": "api"
+    },
+    {
       "file": "app/api/calculator/data/route.ts",
       "route": "/api/calculator/data",
       "kind": "api"
@@ -316,6 +321,10 @@
     },
     {
       "file": "app/admin/calculator/actions.ts",
+      "name": "bulkDeleteCalculatorBudgetsAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
       "name": "bulkDeleteCalculatorCitiesAction"
     },
     {
@@ -405,6 +414,10 @@
     {
       "file": "app/admin/activity/actions.ts",
       "name": "deleteActivityEntryAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
+      "name": "deleteCalculatorBudgetAction"
     },
     {
       "file": "app/admin/calculator/actions.ts",
@@ -500,6 +513,10 @@
     },
     {
       "file": "app/admin/calculator/actions.ts",
+      "name": "saveCalculatorBudgetAction"
+    },
+    {
+      "file": "app/admin/calculator/actions.ts",
       "name": "saveCalculatorCityAction"
     },
     {
@@ -587,6 +604,10 @@
     {
       "exportName": "blogPosts",
       "tableName": "blog_posts"
+    },
+    {
+      "exportName": "calculatorBudgets",
+      "tableName": "calculator_budgets"
     },
     {
       "exportName": "calculatorCities",
@@ -1989,6 +2010,7 @@
   "publicJsFiles": [
     "site-public/js/city-filter-mobile.js",
     "site-public/js/cookie-consent.js",
+    "site-public/js/cost-calculator-budget.js",
     "site-public/js/currency-switcher.js",
     "site-public/js/hotel-listing.js",
     "site-public/js/lead-forms.js",
@@ -2090,6 +2112,8 @@
     "worker/site/app-routes.ts",
     "worker/site/blog-inject.ts",
     "worker/site/blog.ts",
+    "worker/site/budget-formula.ts",
+    "worker/site/budget-match.ts",
     "worker/site/calculator-inject.ts",
     "worker/site/calculator-store.ts",
     "worker/site/city-heading.ts",
@@ -2167,6 +2191,8 @@
     "worker/site/app-routes.ts",
     "worker/site/blog-inject.ts",
     "worker/site/blog.ts",
+    "worker/site/budget-formula.ts",
+    "worker/site/budget-match.ts",
     "worker/site/calculator-inject.ts",
     "worker/site/calculator-store.ts",
     "worker/site/city-heading.ts",
@@ -2366,6 +2392,41 @@
     },
     {
       "table": "blog_posts",
+      "column": "updated_at",
+      "property": "updatedAt"
+    },
+    {
+      "table": "calculator_budgets",
+      "column": "code",
+      "property": "code"
+    },
+    {
+      "table": "calculator_budgets",
+      "column": "label",
+      "property": "label"
+    },
+    {
+      "table": "calculator_budgets",
+      "column": "max_amount",
+      "property": "maxAmount"
+    },
+    {
+      "table": "calculator_budgets",
+      "column": "min_amount",
+      "property": "minAmount"
+    },
+    {
+      "table": "calculator_budgets",
+      "column": "position",
+      "property": "position"
+    },
+    {
+      "table": "calculator_budgets",
+      "column": "published",
+      "property": "published"
+    },
+    {
+      "table": "calculator_budgets",
       "column": "updated_at",
       "property": "updatedAt"
     },
@@ -3215,6 +3276,9 @@
     "blog.reordered",
     "blog.updated",
     "blog_section.updated",
+    "calculator.budget_bulk_deleted",
+    "calculator.budget_deleted",
+    "calculator.budget_saved",
     "calculator.city_bulk_deleted",
     "calculator.city_created",
     "calculator.city_deleted",
@@ -3433,6 +3497,10 @@
     },
     {
       "file": "worker/db/schema.ts",
+      "name": "calculatorBudgets"
+    },
+    {
+      "file": "worker/db/schema.ts",
       "name": "calculatorCities"
     },
     {
@@ -3632,6 +3700,10 @@
       "name": "firstProtectionError"
     },
     {
+      "file": "worker/site/budget-formula.ts",
+      "name": "fitsBand"
+    },
+    {
       "file": "worker/admin/lead-csv.ts",
       "name": "FIXED_COLUMNS"
     },
@@ -3682,6 +3754,10 @@
     {
       "file": "worker/lead-email.ts",
       "name": "handleLeadRequest"
+    },
+    {
+      "file": "worker/site/budget-formula.ts",
+      "name": "hasAnyInput"
     },
     {
       "file": "worker/admin/password.ts",
@@ -3996,6 +4072,10 @@
       "name": "markLeadEmailSent"
     },
     {
+      "file": "worker/site/budget-match.ts",
+      "name": "matchBudget"
+    },
+    {
       "file": "worker/admin/form-rows.ts",
       "name": "MAX_FORM_ROWS"
     },
@@ -4044,6 +4124,18 @@
       "name": "MIN_PASSWORD_LENGTH"
     },
     {
+      "file": "worker/site/budget-formula.ts",
+      "name": "monthFromDate"
+    },
+    {
+      "file": "worker/site/budget-formula.ts",
+      "name": "MONTHS"
+    },
+    {
+      "file": "worker/site/budget-formula.ts",
+      "name": "multiplierFor"
+    },
+    {
       "file": "worker/site/inject.ts",
       "name": "needsInjection"
     },
@@ -4054,6 +4146,10 @@
     {
       "file": "worker/site/venue-listing.ts",
       "name": "NO_VENUES_MARKUP"
+    },
+    {
+      "file": "worker/site/budget-formula.ts",
+      "name": "normalizeDays"
     },
     {
       "file": "worker/lead-fields.ts",
@@ -4114,6 +4210,10 @@
     {
       "file": "worker/site/venue-listing-payload.ts",
       "name": "parseWeddingTypes"
+    },
+    {
+      "file": "worker/site/budget-formula.ts",
+      "name": "peakRooms"
     },
     {
       "file": "worker/db/apply-pg-migrations.ts",
@@ -4430,6 +4530,10 @@
     {
       "file": "worker/admin/lead-store.ts",
       "name": "storeLead"
+    },
+    {
+      "file": "worker/site/budget-formula.ts",
+      "name": "subtotalFor"
     },
     {
       "file": "worker/site/content-version.ts",

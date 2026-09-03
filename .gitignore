@@ -68,3 +68,6 @@ __pycache__/
 /.[a-z]*.mjs
 /.[a-z]*.html
 /.[a-z]*.py
+
+# Local restore points taken before a risky change; never part of the app.
+/.backups/

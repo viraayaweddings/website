@@ -729,9 +729,6 @@ span.flatpickr-weekday {
                                 <li class="nav-item">
                                     <a class="nav-link active" href="/">Home</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/wedding-packages">WEDDING PACKAGES</a>
-                                </li>
                                 <li class="nav-item dropdown position-static">
                                     <a class="nav-link dropdown-toggle" href="/hotel-listing" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Hotels
@@ -2643,9 +2640,9 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label class="font-family01 fs-13 fw-500 position-absolute bg-white text-maroon-900">Hotel</label>
-                                        <select class="form-control font-family01 fs-14 select2-hotel" id="hotelSelect" disabled>
-                                            <option value="">Select a Hotel</option>
+                                        <label class="font-family01 fs-13 fw-500 position-absolute bg-white text-maroon-900">Budget</label>
+                                        <select class="form-control font-family01 fs-14" id="budgetSelect">
+                                            <option value="">Select a Budget</option>
                                         </select>
                                         <img src="/media/legacy/beea2f690689bf67.png" alt="hotel" decoding="async" loading="lazy">
                                     </div>
@@ -2681,7 +2678,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                             <div class="form-group">
                                 <button type="button" class="btn font-family03 fw-700 fs-13 text-uppercase w-100"
                                         id="calculateCost" disabled>
-                                    Calculate HOTEL COST
+                                    Find Hotels In My Budget
                                 </button>
                             </div>
                         </div>
@@ -2797,217 +2794,6 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             </div>
         </section>
 
-        <section class="packages-wrapper">
-            <div class="container">
-                <div class="row">
-                     <div class="col-lg-8 m-auto mb-4 section-heading">
-                    <h4 class="all-heading font-family01 fs-37 fw-100 text-maroon-900">
-                        Our Wedding <span class="fw-600 text-primary">Packages</span>
-                    </h4>
-                    <p class="font-family03 fw-300 fs-15 text-maroon-900-80">We create tailored wedding packages that include your venue, guest hospitality and trusted vendors.  Our goal is to simplify the planning process for your special day.</p>
-                </div>
-                </div>
-                <div class="">
-                    <div class="packages-slider">
-                                        
-                        <div class="item">
-                            <div class="elite-card h-100">
-                            <div class="elite-top">
-                                <h2 class="elite-title font-family03 fw-500">Shresht</h2>
-                                                                <p class="elite-desc font-family02">An elegant foundation for destination weddings, combining a carefully selected venue, dependable vendors and structured planning support to deliver a beautifully coordinated celebration.</p>
-                                                                <div class="d-flex flex-column align-items-center gap-3">
-                                    <div>
-                                        <div class="price font-family03 text-white">
-                                            <span class="converted-price" data-price-inr="1.00">
-                                                1.00
-                                            </span>
-                                            <small class="currency-label">CR</small>
-                                        </div>
-                                        <div class="starting font-family03 text-white">STARTING PRICE</div>
-                                    </div>
-                                    <a href="/wedding-packages/shresht" class="explore-btn btn font-family03">EXPLORE</a>
-                                </div>
-                            </div>
-                            <div class="elite-bottom">
-                                <div>
-                                    <div class="included-title font-family03 fw-700 fs-14">WHAT'S INCLUDED?</div>
-                                    <div class="check-item d-flex mb-3">
-                                        <div class="check-icon"><img src="/media/legacy/da2005e29802bd2d.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
-                                        <div class="d-flex flex-column">
-                                            <strong class="font-family03 fs-15 fw-500">Guest Capacity:</strong>
-                                            <span class="font-family03">Up to 200 guests (200 adults + 15 children)</span>
-                                        </div>
-                                    </div>
-                                    <div class="check-item d-flex mb-3">
-                                        <div class="check-icon"><img src="/media/legacy/da2005e29802bd2d.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
-                                        <div class="d-flex flex-column">
-                                            <strong class="font-family03 fs-15 fw-500">Accommodation:</strong>
-                                            <span class="font-family03">85–100 rooms (including 20 extra beds)</span>
-                                        </div>
-                                    </div>
-                                    <div class="check-item d-flex mb-3">
-                                        <div class="check-icon"><img src="/media/legacy/da2005e29802bd2d.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
-                                        <div class="d-flex flex-column">
-                                            <strong class="font-family03 fs-15 fw-500">Duration:</strong>
-                                            <span class="font-family03">2 nights / 3 days</span>
-                                        </div>
-                                    </div>
-                                                                        <div class="check-item d-flex mb-0">
-                                        <div class="check-icon"><img src="/media/legacy/da2005e29802bd2d.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
-                                        <div class="d-flex flex-column">
-                                            <strong class="font-family03 fs-15 fw-500">Services:</strong>
-                                            <span class="font-family03">Hotel, Decorations, Light and Sound, Hospitality, Entertainment All Event, Photographer, Couple Entries, Mehandi Artist, Bride Makeup, Wedding Procession Band, Wedding Hospitality &amp; Vendor Coordination, Guest Welcome on Arrival, Room Hampers</span>
-                                        </div>
-                                    </div>
-                                                                    </div>
-                                                                <div>
-                                    <h5 class="Includes-title"><span class="font-family03 bg-white position-relative">Top Hotels Includes</span></h5>
-                                    <div class="p-logos">
-                                        <ul>
-                                                                                        <li><img src="/media/legacy/425a699e8983cc24.jpg" class="img-fluid" alt="Hotel logo" decoding="async" loading="lazy"></li>
-                                                                                        <li><img src="/media/legacy/b8df929ccd73f98b.jpg" class="img-fluid" alt="Hotel logo" decoding="async" loading="lazy"></li>
-                                                                                        <li><img src="/media/legacy/0551d49e5cb9cfbc.jpg" class="img-fluid" alt="Hotel logo" decoding="async" loading="lazy"></li>
-                                                                                    </ul>
-                                    </div>
-                                </div>
-                                                            </div>
-                        </div>
-                        </div>
-                    
-                                        
-                        <div class="item">
-                            <div class="elite-card h-100">
-                            <div class="elite-top">
-                                <h2 class="elite-title font-family03 fw-500">Siddhi {Most Popular!}</h2>
-                                                                <p class="elite-desc font-family02">Crafted for expansive celebrations, this tier elevates every detail with premium venues, curated vendor teams, enhanced guest hospitality and hands-on planning oversight.</p>
-                                                                <div class="d-flex flex-column align-items-center gap-3">
-                                    <div>
-                                        <div class="price font-family03 text-white">
-                                            <span class="converted-price" data-price-inr="1.31">
-                                                1.31
-                                            </span>
-                                            <small class="currency-label">CR</small>
-                                        </div>
-                                        <div class="starting font-family03 text-white">STARTING PRICE</div>
-                                    </div>
-                                    <a href="/wedding-packages/siddhi" class="explore-btn btn font-family03">EXPLORE</a>
-                                </div>
-                            </div>
-                            <div class="elite-bottom">
-                                <div>
-                                    <div class="included-title font-family03 fw-700 fs-14">WHAT'S INCLUDED?</div>
-                                    <div class="check-item d-flex mb-3">
-                                        <div class="check-icon"><img src="/media/legacy/da2005e29802bd2d.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
-                                        <div class="d-flex flex-column">
-                                            <strong class="font-family03 fs-15 fw-500">Guest Capacity:</strong>
-                                            <span class="font-family03">Up to 200 guests (225 adults + 25 children)</span>
-                                        </div>
-                                    </div>
-                                    <div class="check-item d-flex mb-3">
-                                        <div class="check-icon"><img src="/media/legacy/da2005e29802bd2d.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
-                                        <div class="d-flex flex-column">
-                                            <strong class="font-family03 fs-15 fw-500">Accommodation:</strong>
-                                            <span class="font-family03">85–95 rooms (including 25 extra beds)</span>
-                                        </div>
-                                    </div>
-                                    <div class="check-item d-flex mb-3">
-                                        <div class="check-icon"><img src="/media/legacy/da2005e29802bd2d.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
-                                        <div class="d-flex flex-column">
-                                            <strong class="font-family03 fs-15 fw-500">Duration:</strong>
-                                            <span class="font-family03">2 nights / 3 days</span>
-                                        </div>
-                                    </div>
-                                                                        <div class="check-item d-flex mb-0">
-                                        <div class="check-icon"><img src="/media/legacy/da2005e29802bd2d.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
-                                        <div class="d-flex flex-column">
-                                            <strong class="font-family03 fs-15 fw-500">Services:</strong>
-                                            <span class="font-family03">Hotels, Decorations, Light and Sound, Hospitality, Entertainment &amp; Wedding Services, Photography &amp; Wedding Films</span>
-                                        </div>
-                                    </div>
-                                                                    </div>
-                                                                <div>
-                                    <h5 class="Includes-title"><span class="font-family03 bg-white position-relative">Top Hotels Includes</span></h5>
-                                    <div class="p-logos">
-                                        <ul>
-                                                                                        <li><img src="/media/legacy/e4d4f5323d5c0df3.jpg" class="img-fluid" alt="Hotel logo" decoding="async" loading="lazy"></li>
-                                                                                        <li><img src="/media/legacy/cf713eb4c3bf0911.jpg" class="img-fluid" alt="Hotel logo" decoding="async" loading="lazy"></li>
-                                                                                        <li><img src="/media/legacy/42391d39cef98856.jpg" class="img-fluid" alt="Hotel logo" decoding="async" loading="lazy"></li>
-                                                                                    </ul>
-                                    </div>
-                                </div>
-                                                            </div>
-                        </div>
-                        </div>
-                    
-                                        
-                        <div class="item">
-                            <div class="elite-card h-100">
-                            <div class="elite-top">
-                                <h2 class="elite-title font-family03 fw-500">Shobhana</h2>
-                                                                <p class="elite-desc font-family02">Reserved for landmark occasions, this signature tier unites iconic destinations, exceptional venues, elite vendor talent and comprehensive end-to-end execution for a statement celebration.</p>
-                                                                <div class="d-flex flex-column align-items-center gap-3">
-                                    <div>
-                                        <div class="price font-family03 text-white">
-                                            <span class="converted-price" data-price-inr="1.80">
-                                                1.80
-                                            </span>
-                                            <small class="currency-label">CR</small>
-                                        </div>
-                                        <div class="starting font-family03 text-white">STARTING PRICE</div>
-                                    </div>
-                                    <a href="/wedding-packages/shobhana" class="explore-btn btn font-family03">EXPLORE</a>
-                                </div>
-                            </div>
-                            <div class="elite-bottom">
-                                <div>
-                                    <div class="included-title font-family03 fw-700 fs-14">WHAT'S INCLUDED?</div>
-                                    <div class="check-item d-flex mb-3">
-                                        <div class="check-icon"><img src="/media/legacy/da2005e29802bd2d.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
-                                        <div class="d-flex flex-column">
-                                            <strong class="font-family03 fs-15 fw-500">Guest Capacity:</strong>
-                                            <span class="font-family03">Up to 200 guests (225 adults + 25 children)</span>
-                                        </div>
-                                    </div>
-                                    <div class="check-item d-flex mb-3">
-                                        <div class="check-icon"><img src="/media/legacy/da2005e29802bd2d.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
-                                        <div class="d-flex flex-column">
-                                            <strong class="font-family03 fs-15 fw-500">Accommodation:</strong>
-                                            <span class="font-family03">85–95 rooms (including 25 extra beds)</span>
-                                        </div>
-                                    </div>
-                                    <div class="check-item d-flex mb-3">
-                                        <div class="check-icon"><img src="/media/legacy/da2005e29802bd2d.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
-                                        <div class="d-flex flex-column">
-                                            <strong class="font-family03 fs-15 fw-500">Duration:</strong>
-                                            <span class="font-family03">2 nights / 3 days</span>
-                                        </div>
-                                    </div>
-                                                                        <div class="check-item d-flex mb-0">
-                                        <div class="check-icon"><img src="/media/legacy/da2005e29802bd2d.png" width="16" height="16" alt="green-check" decoding="async" loading="lazy"></div>
-                                        <div class="d-flex flex-column">
-                                            <strong class="font-family03 fs-15 fw-500">Services:</strong>
-                                            <span class="font-family03">Iconic hotels, bespoke decor concepts, premium light and sound, celebrity entertainment coordination, photography and wedding films, bridal styling, guest hospitality, logistics planning and senior planner supervision.</span>
-                                        </div>
-                                    </div>
-                                                                    </div>
-                                                                <div>
-                                    <h5 class="Includes-title"><span class="font-family03 bg-white position-relative">Top Hotels Includes</span></h5>
-                                    <div class="p-logos">
-                                        <ul>
-                                                                                        <li><img src="/media/legacy/b8df929ccd73f98b.jpg" class="img-fluid" alt="Hotel logo" decoding="async" loading="lazy"></li>
-                                                                                        <li><img src="/media/legacy/42391d39cef98856.jpg" class="img-fluid" alt="Hotel logo" decoding="async" loading="lazy"></li>
-                                                                                        <li><img src="/media/legacy/e4d4f5323d5c0df3.jpg" class="img-fluid" alt="Hotel logo" decoding="async" loading="lazy"></li>
-                                                                                    </ul>
-                                    </div>
-                                </div>
-                                                            </div>
-                        </div>
-                        </div>
-                    
-                                        </div>
-                </div>
-            </div>
-        </section>
 
         <section class="deal-season-wrapper bg-primary position-relative">
             <div class="container-fluid">
@@ -3914,9 +3700,6 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                       <a href="/real-weddings">Real Weddings</a>
                     </li>
                     <li>
-                      <a href="/package">Wedding Packages</a>
-                    </li>
-                    <li>
                       <a href="/blogs">Blogs</a>
                     </li>
                     <li>
@@ -4021,6 +3804,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
 <script src="/vendor/select2/select2.min.js"></script>
 <script src="/js/currency-switcher.js"></script>
+<script src="/js/cost-calculator-budget.js"></script>
   <script src="/js/site-search.js" defer></script>
 
   

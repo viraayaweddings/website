@@ -711,6 +711,39 @@ export const calculatorTaxes = pgTable(
 export type CalculatorTax = typeof calculatorTaxes.$inferSelect;
 
 /**
+ * The whole-stay budget bands the calculators offer.
+ *
+ * Rows rather than `<option>` markup for the same reason the city list is: an
+ * option written into the page exists in five drifted script copies and in the
+ * stored shells behind 272 pages, so changing a band would be a deploy and a
+ * reseed instead of an edit. The calculators render one option per published
+ * row, in `position` order, from `viraaya-calculator-config`.
+ *
+ * Amounts are rupees held as text, matching `calculator_prices` and
+ * `calculator_taxes`: the page scripts parse them, and text round-trips as
+ * typed. `maxAmount` empty means the band has no ceiling.
+ */
+export const calculatorBudgets = pgTable(
+  "calculator_budgets",
+  {
+    /** Stable key, e.g. "70l-1cr". */
+    code: text("code").primaryKey(),
+    /** Shown in the picker, e.g. "₹70 Lakh - ₹1 Crore". */
+    label: text("label").notNull(),
+    minAmount: text("min_amount").notNull().default("0"),
+    /** Empty for an open-ended top band. */
+    maxAmount: text("max_amount").notNull().default(""),
+    /** Unpublished drops the band from every calculator without losing it. */
+    published: integer("published").notNull().default(1),
+    position: integer("position").notNull().default(0),
+    updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).notNull().defaultNow(),
+  },
+  (table) => [index("calculator_budgets_position_idx").on(table.position)],
+);
+
+export type CalculatorBudget = typeof calculatorBudgets.$inferSelect;
+
+/**
  * The wedding-type vocabulary the venue listing filters by.
  *
  * `id` is the `wedding_types[]=N` value in the filter checkboxes and in every

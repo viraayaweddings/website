@@ -192,6 +192,54 @@ a row that already exists needs an explicit `--refresh <path>` (repeatable), or
 reports success and the old shell keeps serving. The deploy chain passes neither,
 so a shell edited on disk does not reach an existing row by deploying.
 
+`stored:deploy` is the exception, and the reason markup changes to the
+calculators are written as transforms rather than as new shells. It runs
+`scripts/migrate-stored-pages.mjs`, which **edits stored markup in place** — so
+an admin's own edits to a page survive — and applies both passes:
+
+| Pass | Transform | What it does |
+| --- | --- | --- |
+| `page-data` | `scripts/lib/page-data-transform.mjs` | Detaches a page from the tax rates, city list and wedding types compiled into it |
+| `budget` | `scripts/lib/calculator-budget-transform.mjs` | Swaps the hotel picker for the budget picker, adds the shared script, drops the home-page packages strip |
+| `packages` | `scripts/lib/unpublish-packages-transform.mjs` | Unpublishes the wedding packages area: drops its header and footer links, and marks its five pages `noindex` |
+
+Both are idempotent, which is what makes running them on every deploy safe:
+each rewrites a row once and is a no-op afterwards.
+
+The matching pass over the **files** — `site-public/**/*.html` and
+`worker/db/page-templates.generated.ts` — is a development-time step, already
+applied and committed:
+
+```bash
+node scripts/apply-calculator-budget.mjs --check
+node scripts/unpublish-packages.mjs --check
+```
+
+### Reinstating the wedding packages pages
+
+The packages area is unpublished, not deleted: `/wedding-packages`, `/package`
+and the three tier pages still answer with their content intact, but nothing on
+the site links to them, they carry `noindex, nofollow`, and they are out of the
+sitemap. Bringing them back is four edits, not a rebuild:
+
+1. restore the two `Wedding Packages` entries in `worker/site/footer.ts`;
+2. revert the header-link and robots-tag changes (`git revert` of the
+   `unpublish-packages` commit, or delete the transform and re-run the pass);
+3. drop the five `/wedding-packages`-family entries from `EXCLUDED_EXACT` in
+   `scripts/generate-sitemap.mjs` and re-run `npm run sitemap:generate`;
+4. deploy, so `stored:deploy` rewrites the stored rows.
+
+Worth doing alongside a look at the prices: the cheapest tier reads
+"1.00 CR starting price" while the calculator's lowest band starts at ₹70 Lakh.
+
+Before pushing a calculator change to an existing database, take the restore
+point that covers the rows a deploy rewrites; `git revert` restores the files
+and leaves every visitor on the new markup otherwise:
+
+```bash
+node --env-file=.env.local scripts/backup-calculator-rows.mjs
+```
+
 #### Operational scripts (not run by the deploy)
 
 | Script | Purpose |

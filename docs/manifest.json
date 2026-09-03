@@ -37,6 +37,7 @@
       "/admin/setup",
       "/admin/users",
       "/api/admin/csrf",
+      "/api/calculator/budget-match",
       "/api/calculator/data",
       "/api/currencies",
       "/api/currencies/select",
@@ -62,6 +63,7 @@
     "serverActions": [
       "bulkDeleteAction",
       "bulkDeleteActivityAction",
+      "bulkDeleteCalculatorBudgetsAction",
       "bulkDeleteCalculatorCitiesAction",
       "bulkDeleteCalculatorHotelsAction",
       "bulkDeleteCalculatorTaxesAction",
@@ -85,6 +87,7 @@
       "createStaticPageAction",
       "createUserAction",
       "deleteActivityEntryAction",
+      "deleteCalculatorBudgetAction",
       "deleteCalculatorCityAction",
       "deleteCalculatorHotelAction",
       "deleteCalculatorTaxAction",
@@ -108,6 +111,7 @@
       "resendLeadEmailAction",
       "resetPasswordAction",
       "resetStaticPageAction",
+      "saveCalculatorBudgetAction",
       "saveCalculatorCityAction",
       "saveCalculatorHotelAction",
       "saveCalculatorPricesAction",
@@ -132,6 +136,7 @@
       "audit_log",
       "blog_listings",
       "blog_posts",
+      "calculator_budgets",
       "calculator_cities",
       "calculator_currencies",
       "calculator_hotels",
@@ -227,6 +232,7 @@
     "publicJsFiles": [
       "city-filter-mobile.js",
       "cookie-consent.js",
+      "cost-calculator-budget.js",
       "currency-switcher.js",
       "hotel-listing.js",
       "lead-forms.js",
@@ -234,8 +240,8 @@
       "site-search.js"
     ]
   },
-  "lastUpdated": "2026-08-29T15:28:12.611Z",
-  "lastAuditedCommit": "d83a9e1ce350595c5f2ba8a8d7a51f89909ef7e9",
+  "lastUpdated": "2026-09-03T08:28:47.833Z",
+  "lastAuditedCommit": "89504bbb6272ff9f67cca2ff6d0e9000b0e7fa4b",
   "projectVersion": "0.1.0",
   "undocumentedCounts": {
     "adminComponents": 3

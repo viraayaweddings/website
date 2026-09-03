@@ -28,8 +28,17 @@ guest-list, per-plate or savings calculator anywhere in the codebase).
 
 ### 1. Hotel Cost Calculator — full picker
 
-**12 pages.** City → hotel → check-in/check-out → a per-day grid of rooms,
-lunch pax, hi-tea pax, dinner pax → cost summary in an offcanvas panel.
+**12 pages.** Place → check-in/check-out → budget band → a per-day grid of
+rooms, lunch pax, hi-tea pax, dinner pax → the hotels in that place which fit
+the band, in an offcanvas panel, with an enquiry form under them.
+
+> **Changed 2026-09-03.** This used to be City → hotel → dates → grid → a quote
+> for the one hotel chosen. The hotel picker is gone: `#hotelSelect` was
+> replaced by `#budgetSelect`, and the button now reads "Find Hotels In My
+> Budget". The grid, the dates and the formula are unchanged. What drives it is
+> [site-public/js/cost-calculator-budget.js](site-public/js/cost-calculator-budget.js)
+> and `POST /api/calculator/budget-match`, not the page's inline script — see
+> [public-site/search-calculator.md](public-site/search-calculator.md).
 
 Pages:
 
@@ -52,7 +61,7 @@ The 10 `destination-wedding-in-<city>` pages are *not* pre-filtered to their
 city — each ships the full 53-city dropdown.
 
 Markup anchor: `<div class="cost-calculator-widget">` containing
-`#citySelect`, `#hotelSelect`, `#checkIn`, `#checkOut`, `#daysContainer`,
+`#citySelect`, `#budgetSelect`, `#checkIn`, `#checkOut`, `#daysContainer`,
 `#calculateCost`.
 
 ### 2. Hotel Cost Calculator — venue-page variant
@@ -153,6 +162,7 @@ Current size:
 | Table | Rows |
 | --- | --- |
 | Cities | 53 (all 53 have hotels) |
+| Budget bands | 4 (₹70L–1Cr, 1–2Cr, 2–4Cr, 4–5Cr; whole stay) |
 | Hotels | 259 |
 | Hotels with a price row | 259 |
 | Price cells (hotel × month) | 3,108 |
@@ -163,6 +173,7 @@ Current size:
 | Route | Used by |
 | --- | --- |
 | `GET /api/calculator/data` | whole dataset in one response — [app/api/calculator/data/route.ts](app/api/calculator/data/route.ts) |
+| `POST /api/calculator/budget-match` | prices every hotel in a city against one enquiry and says which fit the band — [worker/site/budget-match.ts](worker/site/budget-match.ts), formula in [budget-formula.ts](worker/site/budget-formula.ts) |
 | `GET /data/calculator/{cities,hotels,hotels-by-city,prices,currencies}.json` | home + `/hotel-cost-calculator` inline loaders — [app/data/calculator/[file]/route.ts](app/data/calculator/%5Bfile%5D/route.ts) |
 | `GET /get-cities?search=` | `/compare-hotel` select2 |
 | `GET /get-hotels-by-city/<cityId>` | pickers on calculators 1 and 3 |
@@ -177,6 +188,10 @@ against the same database rows. `currency-switcher.js` also installs a
 same paths client-side from the cached dataset.
 
 ### Admin
+
+Budget bands are editable at `/admin/calculator` alongside the tax lines, and
+reach every calculator through `viraaya-calculator-config` — no page carries a
+band of its own, the same rule the city list follows.
 
 Prices are editable at `/admin/calculator` (cities, currencies) and
 `/admin/calculator/hotels[/<id>]` (per-hotel monthly rates) —
@@ -241,8 +256,17 @@ overcount.
 4. **Room capacity is enforced on 260 of 272 instances.** Calculators 2 and 3
    clamp against `total_rooms`; the 12 full-picker instances do not, so the
    home page will happily quote 500 rooms at a 189-room hotel.
+
+   *Superseded on the 12 full-picker pages.* There is no single hotel to clamp
+   against before the search runs, so capacity is judged per hotel in the
+   result instead: a venue whose room count is below the busiest day of the
+   stay is listed, marked "fewer rooms than your busiest day needs", and left
+   out of the band.
 5. **`app/api/calculator/availability-data/` is an empty directory** with no
    `route.ts`. Dead scaffolding — safe to delete.
+
+   *Done.* The directory is gone. Two docs went on listing it as a live
+   endpoint until 2026-09-03; both now describe what is actually routed.
 6. **Only one currency is seeded** (INR). The switcher, the conversion helper
    and `rate_to_usd` are all wired up across all 272 instances, but there is
    nothing to switch to.

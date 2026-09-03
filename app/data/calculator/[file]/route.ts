@@ -18,7 +18,7 @@ export const runtime = "nodejs";
  * admin edit cannot reach -- keeping it would have meant a build could ship
  * stale prices the moment that rewrite were ever misconfigured.
  */
-const FILES = ["cities.json", "hotels.json", "hotels-by-city.json", "prices.json", "currencies.json", "taxes.json"] as const;
+const FILES = ["cities.json", "hotels.json", "hotels-by-city.json", "prices.json", "currencies.json", "taxes.json", "budgets.json"] as const;
 type FileName = (typeof FILES)[number];
 
 function isKnown(name: string): name is FileName {
@@ -40,6 +40,7 @@ export async function GET(
     : file === "hotels-by-city.json" ? source.hotelsByCity
     : file === "prices.json" ? source.prices
     : file === "taxes.json" ? source.taxes
+    : file === "budgets.json" ? source.budgets
     : source.currencies;
 
   return Response.json(body, {

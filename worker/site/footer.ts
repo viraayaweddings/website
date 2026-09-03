@@ -33,9 +33,9 @@ const EXPLORE: Link[] = [
   { href: "/", label: "Home" },
   { href: "/about-us", label: "About Us" },
   { href: "/real-weddings", label: "Real Weddings" },
-  // /package is a duplicate that canonicalises to /wedding-packages; the old
-  // footer linked to it, which pointed all 292 pages at the non-canonical copy.
-  { href: "/wedding-packages", label: "Wedding Packages" },
+  // Wedding Packages is unpublished: the pages are still live at their URLs,
+  // but nothing on the site links to them and they are noindex. Restoring the
+  // section is putting this line and its header counterpart back.
   { href: "/blogs", label: "Blogs" },
   { href: "/contact", label: "Contact Us" },
 ];
@@ -63,9 +63,7 @@ const USEFUL: Link[] = [
 /** The card's own nav, mirroring the reference's second row of links. */
 const CARD_NAV: Link[] = [
   { href: "/about-us", label: "About Us" },
-  // /package is a duplicate that canonicalises to /wedding-packages; the old
-  // footer linked to it, which pointed all 292 pages at the non-canonical copy.
-  { href: "/wedding-packages", label: "Wedding Packages" },
+  // Unpublished with the rest of the packages links; see EXPLORE above.
   { href: "/real-weddings", label: "Real Weddings" },
   { href: "/blogs", label: "Blog" },
   { href: "/contact", label: "Contact" },

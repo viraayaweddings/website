@@ -18,6 +18,7 @@
 import { asc, eq } from "drizzle-orm";
 import { getDb } from "../db/client";
 import {
+  calculatorBudgets,
   calculatorCities,
   calculatorCurrencies,
   calculatorHotels,
@@ -60,6 +61,16 @@ export interface TaxRow {
   percent: number;
 }
 
+/** One whole-stay budget band offered by the calculators. */
+export interface BudgetRow {
+  code: string;
+  label: string;
+  /** Rupees. */
+  min: number;
+  /** Rupees, or null for an open-ended top band. */
+  max: number | null;
+}
+
 /** Everything the pages need except the price table. */
 export interface CalculatorConfig {
   cities: CityRow[];
@@ -67,6 +78,8 @@ export interface CalculatorConfig {
   hotelsByCity: Record<string, HotelRow[]>;
   currencies: CurrencyRow[];
   taxes: TaxRow[];
+  /** The whole-stay budget bands, in picker order. */
+  budgets: BudgetRow[];
   /**
    * Room capacity for every hotel row, published or not.
    *
@@ -122,6 +135,7 @@ const EMPTY_CONFIG: CalculatorConfig = {
   hotelsByCity: {},
   currencies: [],
   taxes: [],
+  budgets: [],
   roomsByHotel: {},
   cityByHotel: {},
   loaded: false,
@@ -140,14 +154,15 @@ export async function loadCalculatorConfig(): Promise<CalculatorConfig> {
     const db = await getDb();
     if (!db) return configCache?.data ?? EMPTY_CONFIG;
 
-    const [cityRows, hotelRows, currencyRows, taxRows] = await Promise.all([
+    const [cityRows, hotelRows, currencyRows, taxRows, budgetRows] = await Promise.all([
       db.select().from(calculatorCities).orderBy(asc(calculatorCities.position), asc(calculatorCities.name)),
       db.select().from(calculatorHotels).orderBy(asc(calculatorHotels.position), asc(calculatorHotels.name)),
       db.select().from(calculatorCurrencies).orderBy(asc(calculatorCurrencies.position), asc(calculatorCurrencies.code)),
       db.select().from(calculatorTaxes).orderBy(asc(calculatorTaxes.position), asc(calculatorTaxes.code)),
+      db.select().from(calculatorBudgets).orderBy(asc(calculatorBudgets.position), asc(calculatorBudgets.code)),
     ]);
 
-    const data = buildConfig(cityRows, hotelRows, currencyRows, taxRows);
+    const data = buildConfig(cityRows, hotelRows, currencyRows, taxRows, budgetRows);
     configCache = { at: now, data };
     return data;
   } catch (error) {
@@ -165,12 +180,13 @@ export async function loadCalculatorDataset(): Promise<CalculatorDataset> {
     const db = await getDb();
     if (!db) return datasetCache?.data ?? EMPTY_DATASET;
 
-    const [cityRows, hotelRows, priceRows, currencyRows, taxRows] = await Promise.all([
+    const [cityRows, hotelRows, priceRows, currencyRows, taxRows, budgetRows] = await Promise.all([
       db.select().from(calculatorCities).orderBy(asc(calculatorCities.position), asc(calculatorCities.name)),
       db.select().from(calculatorHotels).orderBy(asc(calculatorHotels.position), asc(calculatorHotels.name)),
       db.select().from(calculatorPrices),
       db.select().from(calculatorCurrencies).orderBy(asc(calculatorCurrencies.position), asc(calculatorCurrencies.code)),
       db.select().from(calculatorTaxes).orderBy(asc(calculatorTaxes.position), asc(calculatorTaxes.code)),
+      db.select().from(calculatorBudgets).orderBy(asc(calculatorBudgets.position), asc(calculatorBudgets.code)),
     ]);
 
     const prices: Record<string, Record<string, PriceCell>> = {};
@@ -184,7 +200,7 @@ export async function loadCalculatorDataset(): Promise<CalculatorDataset> {
     }
 
     const data: CalculatorDataset = {
-      ...buildConfig(cityRows, hotelRows, currencyRows, taxRows),
+      ...buildConfig(cityRows, hotelRows, currencyRows, taxRows, budgetRows),
       prices,
     };
     datasetCache = { at: now, data };
@@ -201,12 +217,14 @@ type CityRecord = typeof calculatorCities.$inferSelect;
 type HotelRecord = typeof calculatorHotels.$inferSelect;
 type CurrencyRecord = typeof calculatorCurrencies.$inferSelect;
 type TaxRecord = typeof calculatorTaxes.$inferSelect;
+type BudgetRecord = typeof calculatorBudgets.$inferSelect;
 
 function buildConfig(
   cityRows: CityRecord[],
   hotelRows: HotelRecord[],
   currencyRows: CurrencyRecord[],
   taxRows: TaxRecord[],
+  budgetRows: BudgetRecord[],
 ): CalculatorConfig {
   const cities = cityRows
     .filter((row) => row.published === 1)
@@ -240,7 +258,18 @@ function buildConfig(
     .filter((row) => row.published === 1)
     .map((row) => ({ code: row.code, label: row.label, percent: Number(row.percent) || 0 }));
 
-  return { cities, hotels, hotelsByCity, currencies, taxes, roomsByHotel, cityByHotel, loaded: true };
+  // An empty ceiling is an open-ended top band, not a zero one -- Number("")
+  // is 0, which would make every hotel fall outside it.
+  const budgets = budgetRows
+    .filter((row) => row.published === 1)
+    .map((row) => ({
+      code: row.code,
+      label: row.label,
+      min: Number(row.minAmount) || 0,
+      max: String(row.maxAmount).trim() === "" ? null : Number(row.maxAmount) || 0,
+    }));
+
+  return { cities, hotels, hotelsByCity, currencies, taxes, budgets, roomsByHotel, cityByHotel, loaded: true };
 }
 
 /**

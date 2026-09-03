@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { asc, eq, inArray, sql } from "drizzle-orm";
 import {
   CALCULATOR_MONTHS,
+  calculatorBudgets,
   calculatorCities,
   calculatorCurrencies,
   calculatorHotels,
@@ -460,6 +461,124 @@ export async function bulkDeleteCalculatorTaxesAction(formData: FormData): Promi
   // only reach this one.
   await publishContentChange();
   done(CALCULATOR_PATH, `${codes.length} tax line${codes.length === 1 ? "" : "s"} deleted.`);
+}
+
+/* ------------------------------------------------------------- budgets --- */
+
+/**
+ * One whole-stay budget band.
+ *
+ * Amounts are whole rupees, typed the way an admin would type them --
+ * "70,00,000" and "₹7000000" both land as 7000000. The ceiling may be left
+ * empty, which is how an open-ended top band ("5 Cr and above") is expressed;
+ * the calculators read an empty ceiling as no ceiling rather than as zero.
+ */
+function rupees(formData: FormData, name: string, field: string): string | null {
+  const raw = String(formData.get(name) || "").trim();
+  if (!raw) return null;
+
+  const cleaned = raw.replace(/[\s,\u20b9]/g, "");
+  if (!/^\d+$/.test(cleaned)) {
+    failed(CALCULATOR_PATH, `The ${field} is not a whole number of rupees. Use figures like 7000000.`);
+  }
+
+  const value = Number.parseInt(cleaned, 10);
+  if (!Number.isFinite(value) || value < 0) failed(CALCULATOR_PATH, `The ${field} cannot be negative.`);
+  if (value > MAX_BUDGET) {
+    failed(CALCULATOR_PATH, `The ${field} looks like a typo; keep it under ${MAX_BUDGET.toLocaleString("en-IN")}.`);
+  }
+  return String(value);
+}
+
+/** ₹1,000 crore. A band above this is a typo, and it would match every hotel. */
+const MAX_BUDGET = 10_000_000_000;
+
+export async function saveCalculatorBudgetAction(formData: FormData): Promise<void> {
+  await assertAdminRequest(formData);
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+
+  const code = text(formData, "code", 24).toLowerCase().replace(/[^a-z0-9_-]/g, "");
+  const label = text(formData, "label", 60);
+  if (!code) failed(CALCULATOR_PATH, "Give the band a short code, e.g. 70l-1cr.");
+  if (!label) failed(CALCULATOR_PATH, "Enter the label shown in the picker, e.g. ₹70 Lakh - ₹1 Crore.");
+
+  const minAmount = rupees(formData, "minAmount", "lower amount") ?? "0";
+  const maxAmount = rupees(formData, "maxAmount", "upper amount");
+
+  // A band that reads backwards silently matches nothing, and nothing on the
+  // public side would say why: the picker offers it and the list comes back
+  // empty every time.
+  if (maxAmount !== null && Number(maxAmount) < Number(minAmount)) {
+    failed(CALCULATOR_PATH, "The upper amount is below the lower one; swap them.");
+  }
+
+  const published = formData.get("published") === "on" ? 1 : 0;
+  const rawPosition = String(formData.get("position") || "").trim();
+  const position = rawPosition ? Number.parseInt(rawPosition, 10) || 0 : 0;
+
+  await db
+    .insert(calculatorBudgets)
+    .values({ code, label, minAmount, maxAmount: maxAmount ?? "", published, position })
+    .onConflictDoUpdate({
+      target: calculatorBudgets.code,
+      set: { label, minAmount, maxAmount: maxAmount ?? "", published, position, updatedAt: new Date() },
+    });
+
+  await recordAudit(db, actor, "calculator.budget_saved", "calculator_budget", code, {
+    label,
+    minAmount,
+    maxAmount: maxAmount ?? "",
+  });
+  invalidateCalculatorCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
+  done(CALCULATOR_PATH, `${label} saved.`);
+}
+
+export async function deleteCalculatorBudgetAction(formData: FormData): Promise<void> {
+  await assertAdminRequest(formData);
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+
+  const code = text(formData, "code", 24).toLowerCase();
+  if (!code) failed(CALCULATOR_PATH, "That budget band no longer exists.");
+
+  const gone = await db
+    .delete(calculatorBudgets)
+    .where(eq(calculatorBudgets.code, code))
+    .returning({ code: calculatorBudgets.code });
+  if (!gone.length) failed(CALCULATOR_PATH, "That budget band no longer exists.");
+
+  await recordAudit(db, actor, "calculator.budget_deleted", "calculator_budget", code, {});
+  invalidateCalculatorCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
+  done(CALCULATOR_PATH, "Budget band removed. Every calculator drops it from the picker.");
+}
+
+export async function bulkDeleteCalculatorBudgetsAction(formData: FormData): Promise<void> {
+  await assertAdminRequest(formData);
+  const actor = await requireRole("admin");
+  const db = await requireDb();
+  const codes = [
+    ...new Set(formData.getAll("ids").map((value) => String(value || "").trim().toLowerCase()).filter(Boolean)),
+  ].slice(0, 200);
+
+  if (!codes.length) failed(CALCULATOR_PATH, "Select at least one budget band first.");
+
+  await db.delete(calculatorBudgets).where(inArray(calculatorBudgets.code, codes));
+
+  await recordAudit(db, actor, "calculator.budget_bulk_deleted", "calculator_budget", codes.join(","), {
+    count: codes.length,
+  });
+  invalidateCalculatorCache();
+  // Tells the other instances their caches are stale; the local calls above
+  // only reach this one.
+  await publishContentChange();
+  done(CALCULATOR_PATH, `${codes.length} budget band${codes.length === 1 ? "" : "s"} deleted.`);
 }
 
 /* ---------------------------------------------------------- currencies --- */

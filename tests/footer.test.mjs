@@ -55,13 +55,17 @@ test("every footer link points at a page that exists", () => {
   }
 });
 
-test("the footer links to the canonical wedding packages page", () => {
-  // /package exists but carries <link rel="canonical" href="/wedding-packages">.
-  // The previous footer linked to it from every page on the site.
+test("the footer does not link to the unpublished wedding packages pages", () => {
+  // This used to assert the opposite: /package carries
+  // <link rel="canonical" href="/wedding-packages">, and the cloned footer
+  // linked to the non-canonical copy from every page, so the test pinned the
+  // canonical one. The packages area is now unpublished -- the pages still
+  // answer and still declare that canonical, but nothing on the site links to
+  // them and they carry noindex. See scripts/lib/unpublish-packages-transform.mjs.
   const canonical = readFileSync("site-public/package/index.html", "utf8");
   assert.match(canonical, /<link rel="canonical" href="\/wedding-packages"/);
   assert.doesNotMatch(html, /href="\/package"/);
-  assert.match(html, /href="\/wedding-packages"/);
+  assert.doesNotMatch(html, /href="\/wedding-packages"/);
 });
 
 test("contact details and social links come from settings", () => {

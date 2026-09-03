@@ -57,6 +57,7 @@ under `site-public`, editable only by redeploying. See
 | `calculator_prices` | Room/lunch/hi-tea/dinner price per venue per month | `/admin/calculator/hotels/[id]` |
 | `calculator_currencies` | Display currencies and USD rates | `/admin/calculator` |
 | `calculator_taxes` | Tax lines applied to a subtotal | `/admin/calculator` |
+| `calculator_budgets` | Whole-stay budget bands offered by every calculator | `/admin/calculator` |
 
 ### Infrastructure
 
@@ -373,6 +374,25 @@ rather than against each other pair.
 | `published` | INTEGER 0/1 | Drops the line from every calculator without losing the rate |
 | `position` | INTEGER | Indexed; summary rows render in this order |
 | `updated_at` | TIMESTAMPTZ | |
+
+### `calculator_budgets`
+
+The options in the Budget picker on every calculator. Rows rather than
+`<option>` markup for the same reason the city list is: an option written into a
+page exists in five drifted script copies and in the shells behind 272 pages.
+
+| Column | Type | Notes |
+| --- | --- | --- |
+| `code` | TEXT PK | Stable key, e.g. `70l-1cr` |
+| `label` | TEXT | Shown in the picker, e.g. `₹70 Lakh - ₹1 Crore` |
+| `min_amount` | TEXT | Whole rupees for the **whole stay**, default `"0"` |
+| `max_amount` | TEXT | Whole rupees; **empty means no upper limit** |
+| `published` | INTEGER 0/1 | Drops the band from every picker without losing it |
+| `position` | INTEGER | Indexed; picker options render in this order |
+| `updated_at` | TIMESTAMPTZ | |
+
+Seeded by `drizzle-pg/0012_calculator_budgets.sql` with the four bands the site
+launched with: ₹70L–1Cr, ₹1–2Cr, ₹2–4Cr, ₹4–5Cr.
 
 CGST 9% and SGST 9% were hardcoded in four copies of the calculator script, and
 the same 18% appeared as a bare `* 1.18` in a fifth. As rows, the rate is edited

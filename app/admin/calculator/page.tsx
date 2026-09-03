@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { asc, sql } from "drizzle-orm";
 import {
+  calculatorBudgets,
   calculatorCities,
   calculatorCurrencies,
   calculatorHotels,
@@ -28,10 +29,13 @@ import {
 } from "../_components/ui";
 import { requireDb, requireRole } from "../_lib/auth";
 import {
+  bulkDeleteCalculatorBudgetsAction,
   bulkDeleteCalculatorCitiesAction,
   bulkDeleteCalculatorTaxesAction,
   bulkDeleteCurrenciesAction,
+  deleteCalculatorBudgetAction,
   deleteCalculatorTaxAction,
+  saveCalculatorBudgetAction,
   saveCalculatorTaxAction,
   deleteCalculatorCityAction,
   deleteCurrencyAction,
@@ -43,6 +47,7 @@ import {
 const CALC_CITIES_BULK_FORM = "calculator-cities-bulk-form";
 const CALC_CURRENCIES_BULK_FORM = "calculator-currencies-bulk-form";
 const CALC_TAXES_BULK_FORM = "calculator-taxes-bulk-form";
+const CALC_BUDGETS_BULK_FORM = "calculator-budgets-bulk-form";
 
 /** Whitelisted so a crafted query string cannot pick an arbitrary comparator. */
 const SORT_KEYS = ["order", "name", "hotels"] as const;
@@ -71,10 +76,11 @@ export default async function CalculatorAdminPage({
     : "order";
   const editingCity = Number.parseInt(single(params.city) || "", 10);
 
-  const [cities, currencies, taxes, hotelCounts, priceCount, unlinkedVenues] = await Promise.all([
+  const [cities, currencies, taxes, budgets, hotelCounts, priceCount, unlinkedVenues] = await Promise.all([
     db.select().from(calculatorCities).orderBy(asc(calculatorCities.position), asc(calculatorCities.name)),
     db.select().from(calculatorCurrencies).orderBy(asc(calculatorCurrencies.position), asc(calculatorCurrencies.code)),
     db.select().from(calculatorTaxes).orderBy(asc(calculatorTaxes.position), asc(calculatorTaxes.code)),
+    db.select().from(calculatorBudgets).orderBy(asc(calculatorBudgets.position), asc(calculatorBudgets.code)),
     db
       .select({ cityId: calculatorHotels.cityId, total: sql<number>`count(*)` })
       .from(calculatorHotels)
@@ -105,6 +111,13 @@ export default async function CalculatorAdminPage({
   const liveTaxes = taxes.filter((tax) => tax.published === 1);
   const taxTotal = liveTaxes.reduce((sum, tax) => sum + (Number(tax.percent) || 0), 0);
   const taxPercent = (value: string) => String(Math.round((Number(value) || 0) * 100) / 100);
+  const liveBudgets = budgets.filter((budget) => budget.published === 1);
+  /** Whole rupees, grouped the Indian way; an empty ceiling reads as open. */
+  const rupees = (value: string) => {
+    const trimmed = String(value ?? "").trim();
+    if (!trimmed) return "no limit";
+    return `\u20b9${(Number(trimmed) || 0).toLocaleString("en-IN")}`;
+  };
 
   const visibleCities = cities
     .filter((city) => {
@@ -509,6 +522,155 @@ export default async function CalculatorAdminPage({
                 </label>
                 <SubmitButton size="sm" icon="plus" pendingLabel="Adding…">
                   Add tax line
+                </SubmitButton>
+              </div>
+            </form>
+          </div>
+        </Card>
+      </div>
+
+      <div className="mt-4">
+        <Card pad={false}>
+          <CardHead
+            title="Budget bands"
+            icon="grid"
+            hint={
+              liveBudgets.length
+                ? `${liveBudgets.length} band${liveBudgets.length === 1 ? "" : "s"} in the calculator picker`
+                : "The budget picker is empty on every calculator"
+            }
+          />
+          <div className="vw-card-pad" style={{ borderBottom: "1px solid var(--line)" }}>
+            <p className="text-sm" style={{ color: "var(--ink-soft)" }}>
+              Each published band is one option in the Budget dropdown, in order. A visitor picks a place, the
+              dates, the rooms and meals per day and a band, and the calculator lists the hotels in that place
+              whose estimated total &mdash; taxes included &mdash; falls inside it. Amounts are whole rupees
+              for the <strong>whole stay</strong>, not per night. Leave the upper amount empty for an
+              open-ended top band.
+            </p>
+            {liveBudgets.length === 0 ? (
+              <Alert tone="warning" title="No budget bands published">
+                The Budget dropdown shows only its placeholder, so the calculators cannot list hotels by
+                budget. Add a band, or publish one below.
+              </Alert>
+            ) : null}
+          </div>
+          {budgets.length === 0 ? (
+            <EmptyState icon="grid" title="No budget bands yet">
+              Add one; until you do, the Budget dropdown on every calculator is empty.
+            </EmptyState>
+          ) : (
+            <>
+              <form id={CALC_BUDGETS_BULK_FORM} className="vw-card-pad pb-0">
+                <CsrfField />
+                <BulkSelection noun="budget band" formId={CALC_BUDGETS_BULK_FORM}>
+                  <SubmitButton
+                    size="sm"
+                    variant="danger-quiet"
+                    icon="trash"
+                    pendingLabel="Deleting…"
+                    formAction={bulkDeleteCalculatorBudgetsAction}
+                    confirm="Delete every selected band? The calculators drop them from the picker immediately."
+                  >
+                    Delete
+                  </SubmitButton>
+                </BulkSelection>
+              </form>
+              <div className="vw-table-wrap">
+                <table className="vw-table">
+                  <thead>
+                    <tr>
+                      <th style={{ width: "2.25rem" }}>
+                        <span className="sr-only">Select</span>
+                      </th>
+                      <th>Code</th>
+                      <th>Label</th>
+                      <th>From</th>
+                      <th>To</th>
+                      <th>Shown</th>
+                      <th className="text-end">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {budgets.map((budget) => (
+                      <tr key={budget.code}>
+                        <td>
+                          <RowCheckbox id={budget.code} label={budget.label} form={CALC_BUDGETS_BULK_FORM} />
+                        </td>
+                        <td className="vw-mono">{budget.code}</td>
+                        <td>{budget.label}</td>
+                        <td className="vw-mono">{rupees(budget.minAmount)}</td>
+                        <td className="vw-mono">{rupees(budget.maxAmount)}</td>
+                        <td>
+                          {budget.published === 1 ? (
+                            <Badge tone="ok">shown</Badge>
+                          ) : (
+                            <Badge tone="neutral">hidden</Badge>
+                          )}
+                        </td>
+                        <td className="text-end">
+                          <form
+                            action={saveCalculatorBudgetAction}
+                            className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5 lg:items-end"
+                          >
+                            <CsrfField />
+                            <input type="hidden" name="code" value={budget.code} />
+                            <Field label="Label" name="label" defaultValue={budget.label} required />
+                            <Field label="From ₹" name="minAmount" defaultValue={budget.minAmount} required />
+                            <Field label="To ₹" name="maxAmount" defaultValue={budget.maxAmount} />
+                            <Field label="Order" name="position" defaultValue={String(budget.position)} />
+                            <div className="space-y-2 text-start">
+                              <label className="flex items-center gap-2 text-sm" style={{ color: "var(--ink)" }}>
+                                <input
+                                  type="checkbox"
+                                  name="published"
+                                  className="vw-check"
+                                  defaultChecked={budget.published === 1}
+                                />
+                                <span>Shown</span>
+                              </label>
+                              <SubmitButton size="sm" icon="check">
+                                Save
+                              </SubmitButton>
+                            </div>
+                          </form>
+                          <form action={deleteCalculatorBudgetAction} className="mt-2 flex justify-end">
+                            <CsrfField />
+                            <input type="hidden" name="code" value={budget.code} />
+                            <SubmitButton
+                              size="sm"
+                              variant="danger-quiet"
+                              icon="trash"
+                              pendingLabel="Removing…"
+                              confirm={`Remove ${budget.label} from the budget picker?`}
+                            >
+                              Remove
+                            </SubmitButton>
+                          </form>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+
+          <div className="vw-card-pad" style={{ borderTop: "1px solid var(--line)" }}>
+            <form action={saveCalculatorBudgetAction} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5 lg:items-end">
+              <CsrfField />
+              <Field label="Code" name="code" placeholder="5cr-plus" required hint="Short key, letters and digits." />
+              <Field label="Label" name="label" placeholder="₹5 Crore and above" required hint="Shown in the picker." />
+              <Field label="From ₹" name="minAmount" placeholder="50000000" required hint="Whole stay, in rupees." />
+              <Field label="To ₹" name="maxAmount" placeholder="" hint="Empty means no upper limit." />
+              <Field label="Order" name="position" placeholder="4" />
+              <div className="sm:col-span-2 lg:col-span-5 flex items-center gap-4">
+                <label className="flex items-center gap-2 text-sm" style={{ color: "var(--ink)" }}>
+                  <input type="checkbox" name="published" className="vw-check" defaultChecked />
+                  <span>Shown in the picker</span>
+                </label>
+                <SubmitButton size="sm" icon="plus" pendingLabel="Adding…">
+                  Add budget band
                 </SubmitButton>
               </div>
             </form>

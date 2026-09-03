@@ -19,10 +19,13 @@
  * would silently rot the first time a calculator was added to a new page.
  */
 import type { CalculatorConfig } from "./calculator-store";
-import { escapeHtml } from "./escape";
+import { escapeHtml } from "./escape.ts";
 
 /** Matches the placeholder the cloned pages already carried. */
 const CITY_PLACEHOLDER = "Select a City";
+
+/** The empty row of `#budgetSelect`, which the markup ships with nothing else. */
+const BUDGET_PLACEHOLDER = "Select a Budget";
 
 function cityOptionsHtml(config: CalculatorConfig): string {
   const options = config.cities
@@ -47,10 +50,23 @@ function cityOptionsHtml(config: CalculatorConfig): string {
  * `TAX_SAFETY_NET` stays a real, executing script -- its content never
  * changes, so it hashes once and stays valid.
  */
+function budgetOptionsHtml(config: CalculatorConfig): string {
+  const options = config.budgets
+    .map(
+      (budget) =>
+        `<option value="${escapeHtml(budget.code)}" data-min="${escapeHtml(String(budget.min))}"` +
+        ` data-max="${escapeHtml(budget.max === null ? "" : String(budget.max))}">` +
+        `${escapeHtml(budget.label)}</option>`,
+    )
+    .join("");
+  return `<option value="">${BUDGET_PLACEHOLDER}</option>${options}`;
+}
+
 function configScript(config: CalculatorConfig): string {
   const payload = {
     cities: config.cities,
     taxes: config.taxes,
+    budgets: config.budgets,
     currencies: config.currencies,
     loaded: config.loaded,
   };
@@ -102,6 +118,17 @@ export function applyCalculatorHandlers(rewriter: HTMLRewriter, config: Calculat
     rewriter.on("#citySelect", {
       element(element) {
         element.setInnerContent(cityOptionsHtml(config), { html: true });
+      },
+    });
+  }
+
+  // Same trade as the city list: no band rather than a stale one. A picker
+  // with only its placeholder is a fault someone reports; four bands frozen at
+  // deploy time is one nobody notices.
+  if (config.loaded && config.budgets.length > 0) {
+    rewriter.on("#budgetSelect", {
+      element(element) {
+        element.setInnerContent(budgetOptionsHtml(config), { html: true });
       },
     });
   }

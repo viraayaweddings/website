@@ -276,7 +276,6 @@ export const STATIC_PUBLIC_ROUTES: readonly string[] = [
   "/faqs/",
   "/hotel-cost-calculator/",
   "/hotel-listing/",
-  "/package/",
   "/past-weddings-all/",
   "/privacy-policy/",
   "/real-weddings/",
@@ -285,9 +284,5 @@ export const STATIC_PUBLIC_ROUTES: readonly string[] = [
   "/real-weddings/ramneek-harleen/",
   "/real-weddings/rohan-aanya/",
   "/terms-of-use/",
-  "/wedding-consultation/",
-  "/wedding-packages/",
-  "/wedding-packages/shobhana/",
-  "/wedding-packages/shresht/",
-  "/wedding-packages/siddhi/"
+  "/wedding-consultation/"
 ];
