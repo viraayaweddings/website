@@ -92,6 +92,36 @@ export function subtotalFor(days: DayInput[], rates: RateCard | undefined): numb
   );
 }
 
+/**
+ * The lines this stay asks for that the hotel has no rate for.
+ *
+ * A zero in the price table is not a free lunch. It is how the table says "on
+ * request", and 22 published hotels across ten cities carry a `room_price` of
+ * zero in some month while still pricing their meals. Costing those from the
+ * meal lines alone quoted a wedding with the rooms thrown in free, which put
+ * them at the head of a list sorted cheapest-first -- Karma Lakelands offering
+ * 95 rooms at the top of Delhi NCR for the price of three meals.
+ *
+ * Only the lines the grid actually asks for count. A hotel with no hi-tea rate
+ * still prices a stay that asks for no hi-tea, and refusing it there would
+ * throw away a real answer.
+ */
+export function missingRates(days: DayInput[], rates: RateCard | undefined): string[] {
+  const lines: ReadonlyArray<readonly [keyof DayInput, keyof RateCard, string]> = [
+    ["rooms", "room_price", "rooms"],
+    ["lunch", "lunch_price", "lunch"],
+    ["hitea", "hitea_price", "hi-tea"],
+    ["dinner", "dinner_price", "dinner"],
+  ];
+
+  return lines
+    .filter(([field, column]) => {
+      const asked = days.some((day) => day[field] > 0);
+      return asked && !(parseFloat(rates?.[column] ?? "") > 0);
+    })
+    .map(([, , label]) => label);
+}
+
 /** 1.18 for the site's CGST 9% + SGST 9%, and whatever an admin makes it. */
 export function multiplierFor(taxes: ReadonlyArray<{ percent: number }>): number {
   const percent = taxes.reduce((sum, tax) => sum + (Number(tax.percent) || 0), 0);

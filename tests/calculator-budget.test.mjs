@@ -11,6 +11,7 @@ import {
 import {
   fitsBand,
   hasAnyInput,
+  missingRates,
   monthFromDate,
   multiplierFor,
   normalizeDays,
@@ -492,4 +493,77 @@ test("every page whose city field is a select2 is covered by the jQuery binding"
     return !/\$\('#citySelect'\)\.select2\(/.test(html) && !/\$\('\.select2-city'\)\.select2\(/.test(html);
   });
   assert.deepEqual(notSelect2, [], "these city pickers are no longer select2; the assumption above has moved");
+});
+
+/* =======================================================================
+ * A zero in the price table is "on request", not free
+ *
+ * 22 published hotels across ten cities carry a `room_price` of zero in some
+ * month while still pricing their meals -- half the inventory in Pushkar and
+ * Mussoorie. The matcher only skipped a hotel whose whole subtotal came out
+ * at zero, so those were costed from the meal lines alone: a wedding quoted
+ * with the rooms thrown in free. Because rooms are the largest line, they
+ * then sorted to the head of a cheapest-first list and were presented as the
+ * best value in the city -- Karma Lakelands offering 95 rooms at the top of
+ * Delhi NCR for ₹11,800, the price of three meals.
+ * ==================================================================== */
+
+const RATES = {
+  full: { room_price: "10000.00", lunch_price: "4000.00", hitea_price: "1000.00", dinner_price: "5000.00" },
+  roomsOnRequest: { room_price: "0.00", lunch_price: "4000.00", hitea_price: "1000.00", dinner_price: "5000.00" },
+  noHiTea: { room_price: "10000.00", lunch_price: "4000.00", hitea_price: "0.00", dinner_price: "5000.00" },
+};
+
+const day = (rooms, lunch, hitea, dinner) => [{ rooms, lunch, hitea, dinner }];
+
+test("a hotel whose rooms are on request is not costed from its meals", () => {
+  // Exactly the shape that produced the screenshot: one of everything.
+  assert.deepEqual(missingRates(day(1, 1, 1, 1), RATES.roomsOnRequest), ["rooms"]);
+  // And at any size -- it was never about the numbers being small.
+  assert.deepEqual(missingRates(day(60, 200, 200, 200), RATES.roomsOnRequest), ["rooms"]);
+});
+
+test("a rate only has to exist for what the grid actually asks for", () => {
+  // No hi-tea rate, and no hi-tea wanted: still a real answer, and refusing it
+  // would throw away a priceable hotel.
+  assert.deepEqual(missingRates(day(20, 100, 0, 100), RATES.noHiTea), []);
+  assert.deepEqual(missingRates(day(20, 100, 1, 100), RATES.noHiTea), ["hi-tea"]);
+});
+
+test("rooms on request does not hide a hotel from a meals-only enquiry", () => {
+  // A visitor pricing catering alone asks for no rooms, so the missing room
+  // rate is beside the point and the hotel still answers.
+  assert.deepEqual(missingRates(day(0, 100, 100, 100), RATES.roomsOnRequest), []);
+});
+
+test("no rate card at all is every asked-for line, not a free wedding", () => {
+  assert.deepEqual(missingRates(day(10, 10, 10, 10), undefined), ["rooms", "lunch", "hi-tea", "dinner"]);
+  assert.deepEqual(missingRates(day(10, 0, 0, 0), undefined), ["rooms"]);
+});
+
+test("a fully priced hotel is still priced", () => {
+  assert.deepEqual(missingRates(day(1, 1, 1, 1), RATES.full), []);
+  assert.equal(subtotalFor(day(1, 1, 1, 1), RATES.full), 20000);
+});
+
+test("a line asked for on any one day of the stay needs a rate", () => {
+  // The grid is per day. Hi-tea on day two alone is still hi-tea.
+  const stay = [
+    { rooms: 10, lunch: 50, hitea: 0, dinner: 50 },
+    { rooms: 10, lunch: 50, hitea: 50, dinner: 50 },
+  ];
+  assert.deepEqual(missingRates(stay, RATES.noHiTea), ["hi-tea"]);
+});
+
+test("the price table really does carry zero room rates, so the rule matters", () => {
+  // Guards the premise rather than the code: if the dataset is ever cleaned up
+  // so that "on request" is stored as a missing row instead of a zero, this
+  // says so rather than leaving the rule above looking like dead weight.
+  const zeroIsHowTheTableSaysOnRequest = parseFloat(RATES.roomsOnRequest.room_price) === 0;
+  assert.ok(zeroIsHowTheTableSaysOnRequest);
+  assert.equal(
+    subtotalFor(day(60, 200, 200, 200), RATES.roomsOnRequest),
+    2000000,
+    "the old behaviour: 60 rooms costed at nothing, and only the meals charged",
+  );
 });

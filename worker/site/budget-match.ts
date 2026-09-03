@@ -24,6 +24,7 @@
 import { loadCalculatorDataset, type BudgetRow } from "./calculator-store";
 import {
   fitsBand,
+  missingRates,
   monthFromDate,
   multiplierFor,
   peakRooms,
@@ -99,11 +100,23 @@ export async function matchBudget(input: BudgetMatchInput): Promise<BudgetMatchR
   const unpriced: Array<{ id: number; name: string }> = [];
 
   for (const hotel of data.hotelsByCity[cityId] ?? []) {
-    const subtotal = subtotalFor(days, data.prices[String(hotel.id)]?.[month]);
+    const rates = data.prices[String(hotel.id)]?.[month];
 
-    // Zero here is a hotel with no rate card for this month, or none at all --
-    // 33 published hotels are in that state. Either way it is "price on
-    // request", not a wedding that costs nothing.
+    // A missing rate for something the grid asked for is "price on request",
+    // not a line that costs nothing. This covers the hotel with no rate card
+    // for this month and the one whose rooms are on request while its meals
+    // are not -- the second of which used to be costed from the meals alone
+    // and so led the list, cheapest-first, with its rooms silently free.
+    const missing = missingRates(days, rates);
+    if (missing.length) {
+      unpriced.push({ id: hotel.id, name: hotel.name });
+      continue;
+    }
+
+    const subtotal = subtotalFor(days, rates);
+
+    // Belt and braces: with every asked-for line priced, this cannot be zero,
+    // because the grid is refused upstream unless a box carries a number.
     if (subtotal <= 0) {
       unpriced.push({ id: hotel.id, name: hotel.name });
       continue;

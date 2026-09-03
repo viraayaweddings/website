@@ -4,9 +4,9 @@
 | ----- | ----- |
 | Documentation version | 1.2.0 |
 | Project version | 0.1.0 |
-| Last updated | 2026-09-03T16:18:17.740Z |
-| Last audited commit | `3110a18c` (`3110a18cd317671edef53c1204d57376686e8d7f`) |
-| Last sync run | 2026-09-03T16:18:17.740Z |
+| Last updated | 2026-09-03T16:31:32.503Z |
+| Last audited commit | `0e737cee` (`0e737cee922949f46a50a905f03341713b6e2d1a`) |
+| Last sync run | 2026-09-03T16:31:32.503Z |
 | Synchronization status | Run `npm run docs:validate` for current status |
 | Coverage scope | Admin panel (complete), public website (complete), worker/API/DB (complete) |
 
@@ -31,7 +31,7 @@
 | npm scripts | 32 |
 | Environment variables | 19 |
 | Enumerations | 5 |
-| Exported worker symbols | 316 |
+| Exported worker symbols | 317 |
 
 ## Change History
 
@@ -44,3 +44,4 @@
 | 2026-08-29 | `d83a9e1c` | Inventory re-synced | `npm run docs:sync` |
 | 2026-09-03 | `89504bbb` | Inventory re-synced | `npm run docs:sync` |
 | 2026-09-03 | `3110a18c` | Inventory re-synced | `npm run docs:sync` |
+| 2026-09-03 | `0e737cee` | Inventory re-synced | `npm run docs:sync` |
