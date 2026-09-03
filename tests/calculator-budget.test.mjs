@@ -305,3 +305,191 @@ test("the venue budget field survives CRLF, which the first pattern did not", ()
   assert.ok(result.html.includes('id="budgetSelect"'), "CRLF venue page got no budget field");
   assert.equal(transform(result.html).changed, false, "not idempotent");
 });
+
+/* =======================================================================
+ * The select2 change, which is not a DOM event
+ *
+ * `#citySelect` is a select2 widget on every page carrying the full picker,
+ * and select2 announces a change with jQuery's `.trigger('change')`. jQuery
+ * walks its own handler registry from the element up to the document and
+ * calls what it finds; a listener added with `addEventListener` is not in
+ * that registry, so it never runs.
+ *
+ * The shared script listened natively and only natively. The city change that
+ * ungreys the date pickers reached nobody, the pickers stayed disabled, and
+ * with no dates there was no day grid and no way to reach a result -- the
+ * calculator was unusable on all twelve of those pages, the home page and
+ * /hotel-cost-calculator among them, with nothing in the console to say so.
+ *
+ * So the script is run here against a document that reproduces the split:
+ * jQuery-triggered changes reach only jQuery handlers, real ones reach both.
+ * ==================================================================== */
+
+/** The smallest document the shared script will run against. */
+function fakeEnvironment() {
+  const nativeListeners = { change: [], click: [], DOMContentLoaded: [] };
+  const jqDelegates = [];
+
+  const makeElement = (id) => ({
+    id,
+    value: "",
+    selectedIndex: -1,
+    options: [],
+    className: "",
+    style: {},
+    classList: {
+      names: new Set(),
+      add(name) { this.names.add(name); },
+      remove(name) { this.names.delete(name); },
+      contains(name) { return this.names.has(name); },
+    },
+  });
+
+  const elements = {};
+  for (const id of ["citySelect", "budgetSelect", "calculateCost", "checkIn", "checkOut"]) {
+    elements[id] = makeElement(id);
+  }
+  // The state the page's own script leaves behind: both pickers greyed out
+  // until something says a place has been chosen.
+  for (const id of ["checkIn", "checkOut"]) {
+    elements[id].classList.add("fp-disabled");
+    elements[id].style.opacity = "0.5";
+    elements[id].style.cursor = "not-allowed";
+  }
+
+  const document = {
+    readyState: "complete",
+    title: "Cost Calculator",
+    getElementById: (id) => elements[id] || null,
+    querySelectorAll: () => [],
+    querySelector: () => null,
+    createElement: () => makeElement(""),
+    addEventListener(type, handler) {
+      (nativeListeners[type] || (nativeListeners[type] = [])).push(handler);
+    },
+  };
+
+  // Only the two calls the shared script makes of it.
+  const jQuery = (subject) => ({
+    on(type, selector, handler) {
+      if (subject === document) jqDelegates.push({ type, selector, handler });
+    },
+  });
+
+  const window = { jQuery, addEventListener() {}, location: { href: "https://example.test/" } };
+
+  return {
+    elements,
+    /** A change the way select2 makes one: jQuery's registry, and nothing else. */
+    triggerViaJQuery(id) {
+      for (const { type, selector, handler } of jqDelegates) {
+        if (type === "change" && selector === `#${id}`) handler({});
+      }
+    },
+    /** A change on a plain <select>: the DOM event, which jQuery also relays. */
+    triggerNatively(id) {
+      const event = { target: elements[id] };
+      for (const { type, selector, handler } of jqDelegates) {
+        if (type === "change" && selector === `#${id}`) handler({ originalEvent: event });
+      }
+      for (const handler of nativeListeners.change) handler(event);
+    },
+    context: { window, document, globalThis: undefined },
+  };
+}
+
+async function runSharedScript(environment) {
+  const { default: vm } = await import("node:vm");
+  const source = readFileSync("site-public/js/cost-calculator-budget.js", "utf8");
+  const sandbox = {
+    ...environment.context,
+    Promise, Array, Object, Number, String, JSON, Math, Date, Intl, URL,
+    MutationObserver: class { observe() {} },
+    setTimeout, localStorage: { getItem: () => null },
+  };
+  sandbox.window.localStorage = sandbox.localStorage;
+  vm.createContext(sandbox);
+  vm.runInContext(source, sandbox);
+}
+
+test("a select2 city change ungreys the date pickers", async () => {
+  const environment = fakeEnvironment();
+  await runSharedScript(environment);
+
+  const { checkIn, checkOut, citySelect } = environment.elements;
+  assert.ok(checkIn.classList.contains("fp-disabled"), "the picker did not start disabled");
+
+  citySelect.value = "3";
+  environment.triggerViaJQuery("citySelect");
+
+  assert.equal(
+    checkIn.classList.contains("fp-disabled"),
+    false,
+    "a select2 change left check-in greyed out; the calculator cannot be used at all",
+  );
+  assert.equal(checkIn.style.opacity, "1");
+  assert.equal(checkIn.style.cursor, "pointer");
+  // Check-out is the check-in picker's business once a date is picked, so it
+  // is only ever disabled from here, never enabled.
+  assert.ok(checkOut.classList.contains("fp-disabled"));
+});
+
+test("clearing the place greys both pickers again", async () => {
+  const environment = fakeEnvironment();
+  await runSharedScript(environment);
+
+  const { checkIn, checkOut, citySelect } = environment.elements;
+  citySelect.value = "3";
+  environment.triggerViaJQuery("citySelect");
+  checkOut.classList.remove("fp-disabled");
+
+  citySelect.value = "";
+  environment.triggerViaJQuery("citySelect");
+
+  assert.ok(checkIn.classList.contains("fp-disabled"), "check-in stayed live with no place chosen");
+  assert.ok(checkOut.classList.contains("fp-disabled"), "check-out stayed live with no place chosen");
+});
+
+test("a plain change is still heard, and heard once", async () => {
+  const environment = fakeEnvironment();
+  await runSharedScript(environment);
+
+  const { checkIn, citySelect } = environment.elements;
+  // Both registries see a real DOM change, so the handler could run twice.
+  // Counting the writes it makes is how that shows up at all.
+  let writes = 0;
+  Object.defineProperty(checkIn.style, "cursor", {
+    set(next) { writes += 1; this._cursor = next; },
+    get() { return this._cursor; },
+    configurable: true,
+  });
+
+  citySelect.value = "3";
+  environment.triggerNatively("citySelect");
+
+  assert.equal(checkIn.classList.contains("fp-disabled"), false, "a plain change was not heard");
+  assert.equal(writes, 1, "the handler ran twice for one change");
+});
+
+test("every page whose city field is a select2 is covered by the jQuery binding", () => {
+  // The pairing that made the bug invisible: the markup says nothing about
+  // select2, the inline script turns the field into one, and the shared script
+  // is the only thing listening. If a page gains a city picker, it gains this
+  // problem unless the script keeps binding through jQuery.
+  const script = readFileSync("site-public/js/cost-calculator-budget.js", "utf8");
+  assert.match(
+    script,
+    /jq\(document\)\.on\('change'/,
+    "the shared script no longer binds through jQuery; select2 changes will not be heard",
+  );
+
+  const withCityPicker = PAGES.filter((file) => readFileSync(file, "utf8").includes('id="citySelect"'));
+  assert.ok(withCityPicker.length >= 12, `expected the full-picker pages, found ${withCityPicker.length}`);
+
+  const notSelect2 = withCityPicker.filter((file) => {
+    const html = readFileSync(file, "utf8");
+    // Either selector the pages use to initialise it.
+    return !/\$\('#citySelect'\)\.select2\(/.test(html) && !/\$\('\.select2-city'\)\.select2\(/.test(html);
+  });
+  assert.deepEqual(notSelect2, [], "these city pickers are no longer select2; the assumption above has moved");
+});

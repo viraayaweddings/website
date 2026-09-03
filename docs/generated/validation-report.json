@@ -1,7 +1,7 @@
 {
-  "validatedAt": "2026-09-03T08:38:30.792Z",
-  "gitCommit": "6d46d7ae9d9b2b31fb59aa7053f84b5a0f3a1d6d",
-  "gitCommitShort": "6d46d7ae",
+  "validatedAt": "2026-09-03T16:18:50.031Z",
+  "gitCommit": "3110a18cd317671edef53c1204d57376686e8d7f",
+  "gitCommitShort": "3110a18c",
   "status": "PASS",
   "inventoryCounts": {
     "routes": 57,
@@ -24,7 +24,7 @@
     "enums": 5
   },
   "issueCount": 0,
-  "warningCount": 6,
+  "warningCount": 5,
   "coverage": {
     "workerExports": "66/316 exported symbols named in the docs"
   },
@@ -34,7 +34,6 @@
     "Admin file not referenced in docs: app/admin/_components/CsrfField.tsx",
     "Admin file not referenced in docs: app/admin/_components/CsrfInput.tsx",
     "Admin file not referenced in docs: app/admin/_lib/admin-path.ts",
-    "Admin file not referenced in docs: app/admin/_lib/csrf-fetch.ts",
-    "Manifest audited commit (89504bb) differs from HEAD (6d46d7ae)"
+    "Admin file not referenced in docs: app/admin/_lib/csrf-fetch.ts"
   ]
 }

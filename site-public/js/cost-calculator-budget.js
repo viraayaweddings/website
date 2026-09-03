@@ -381,7 +381,72 @@
 
     /* ---------------------------------------------------------------------
      * Wiring
+     *
+     * Hearing a <select> change, whichever kind of change it is
+     * -------------------------------------------------------
+     * `#citySelect` is a select2 widget on all twelve pages carrying the full
+     * picker, and select2 announces a change with jQuery's `.trigger('change')`.
+     * That is not a DOM event. jQuery walks its own handler registry from the
+     * element up to the document and calls what it finds there; a listener
+     * added with `addEventListener` is not in that registry and never runs. So
+     * the city change that is supposed to ungrey the date pickers was heard by
+     * nobody, the pickers stayed disabled, and with no dates there was no day
+     * grid and no way to reach a result. That was the whole of the breakage.
+     *
+     * Both registries, then, and the same handler in each: jQuery's when jQuery
+     * is on the page, and the DOM's for `#budgetSelect` -- a plain <select>
+     * whose change is a real event -- and for any page that does not load
+     * jQuery at all.
+     *
+     * A real change on a plain <select> reaches both, and jQuery hands the
+     * native event over as `originalEvent` when it does, so ignoring a repeat
+     * of the event just seen keeps the handler running once either way. A
+     * jQuery-triggered change carries no `originalEvent`, so it is never
+     * mistaken for one already handled.
      * ------------------------------------------------------------------ */
+
+    /**
+     * jQuery, whenever it turns up.
+     *
+     * Every page under site-public/ loads jQuery above this script, but these
+     * pages are also served from stored rows an admin can edit, so this file
+     * cannot insist on the order. Retrying at DOMContentLoaded and at load
+     * means a page that moved the tag loses nothing.
+     */
+    function withJQuery(bind) {
+        var bound = false;
+
+        function attempt() {
+            if (bound || !window.jQuery) return;
+            bound = true;
+            bind(window.jQuery);
+        }
+
+        attempt();
+        if (bound) return;
+        document.addEventListener('DOMContentLoaded', attempt);
+        window.addEventListener('load', attempt);
+    }
+
+    function onSelectChange(id, handler) {
+        var lastSeen = null;
+
+        function once(event) {
+            var source = (event && event.originalEvent) || event;
+            if (source && source === lastSeen) return;
+            lastSeen = source;
+            handler();
+        }
+
+        document.addEventListener('change', function (event) {
+            if (event.target && event.target.id === id) once(event);
+        });
+
+        withJQuery(function (jq) {
+            jq(document).on('change', '#' + id, once);
+        });
+    }
+
     function onCityChange() {
         if (!isBudgetPicker()) return;
         var hasCity = !!value('citySelect');
@@ -391,15 +456,9 @@
         }
     }
 
-    // Bubble phase and delegated: select2 replaces the <select> with its own
-    // widget and re-fires `change` on the original element, so the event is
-    // heard here whichever picker the page uses. Runs after the page's own
-    // handler, which is what clears the day grid.
-    document.addEventListener('change', function (event) {
-        var target = event.target;
-        if (!target || target.id !== 'citySelect') return;
-        onCityChange();
-    });
+    // Delegated, so it runs after the page's own handler -- which is what
+    // clears the day grid -- rather than racing it.
+    onSelectChange('citySelect', onCityChange);
 
     function run(button) {
         var days = collectDays();
@@ -533,11 +592,9 @@
         });
     }
 
-    document.addEventListener('change', function (event) {
-        if (event.target && event.target.id === 'budgetSelect') {
-            syncBudgetToLeadForms();
-            syncCompareEnquiry();
-        }
+    onSelectChange('budgetSelect', function () {
+        syncBudgetToLeadForms();
+        syncCompareEnquiry();
     });
 
     /* ---------------------------------------------------------------------

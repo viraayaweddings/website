@@ -4,9 +4,9 @@
 | ----- | ----- |
 | Documentation version | 1.2.0 |
 | Project version | 0.1.0 |
-| Last updated | 2026-09-03T08:28:47.856Z |
-| Last audited commit | `89504bbb` (`89504bbb6272ff9f67cca2ff6d0e9000b0e7fa4b`) |
-| Last sync run | 2026-09-03T08:28:47.856Z |
+| Last updated | 2026-09-03T16:18:17.740Z |
+| Last audited commit | `3110a18c` (`3110a18cd317671edef53c1204d57376686e8d7f`) |
+| Last sync run | 2026-09-03T16:18:17.740Z |
 | Synchronization status | Run `npm run docs:validate` for current status |
 | Coverage scope | Admin panel (complete), public website (complete), worker/API/DB (complete) |
 
@@ -43,3 +43,4 @@
 | 2026-08-29 | `ff22106c` | Inventory re-synced | `npm run docs:sync` |
 | 2026-08-29 | `d83a9e1c` | Inventory re-synced | `npm run docs:sync` |
 | 2026-09-03 | `89504bbb` | Inventory re-synced | `npm run docs:sync` |
+| 2026-09-03 | `3110a18c` | Inventory re-synced | `npm run docs:sync` |
