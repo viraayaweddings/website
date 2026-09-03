@@ -193,7 +193,7 @@ function budgetRowHtml(indent, labelClass, columnClass) {
   );
 }
 
-const VENUE_DATE_ROW = /(\n([ \t]*)<div class="row gx-2 mb-3">\n)/;
+const VENUE_DATE_ROW = /(\r?\n([ \t]*)<div class="row gx-2 mb-3">\r?\n)/;
 
 function addVenueBudget(html, problems) {
   if (!VENUE_DATE_ROW.test(html)) {
@@ -211,17 +211,55 @@ function addVenueBudget(html, problems) {
   });
 }
 
-const COMPARE_BUTTON_COLUMN = /(\n([ \t]*)<div class="col-md-12 mt-3">\n\s*<div class="form-group">\n\s*<button type="button"\n)/;
+/**
+ * The comparison page's "Search Now" button.
+ *
+ * Anchored on the button's own id, not on the chrome around it. The first
+ * version of this spelled out `col-md-12 mt-3` > `form-group` >
+ * `<button type="button"` with exact newlines between each, and the stored
+ * `/compare-hotel` row had drifted far enough from the file it was seeded from
+ * that none of it matched -- which aborted the whole deploy, because a
+ * reported problem writes nothing at all.
+ *
+ * `id="calculateCost"` is the one part of this widget every copy agrees on
+ * (see docs/AUDIT-CALCULATORS.md, which notes the same id identifies the
+ * button on all three calculators). `[^>]*` spans newlines, so an attribute
+ * list broken across lines is fine, and `\r?\n` covers the CRLF pages.
+ *
+ * Two tiers: the button's own `.form-group` wrapper where there is one, and
+ * the bare button where there is not.
+ */
+const COMPARE_BUTTON_GROUP =
+  /(\r?\n)([ \t]*)(<div class="form-group">\s*<button\b[^>]*\bid="calculateCost")/;
+const COMPARE_BUTTON_BARE = /(\r?\n)([ \t]*)(<button\b[^>]*\bid="calculateCost")/;
+
+/** The budget field as a plain form-group, indented to sit with its sibling. */
+function compareBudgetHtml(indent, newline) {
+  return [
+    `${indent}<div class="form-group">`,
+    `${indent}    <label class="font-family01 fs-13 fw-500 text-maroon-900">Budget</label>`,
+    `${indent}    <select class="form-control font-family01 fs-14" id="budgetSelect">`,
+    `${indent}        <option value="">${BUDGET_PLACEHOLDER}</option>`,
+    `${indent}    </select>`,
+    `${indent}</div>`,
+  ].join(newline);
+}
 
 function addCompareBudget(html, problems) {
-  if (!COMPARE_BUTTON_COLUMN.test(html)) {
-    problems.push("comparison calculator found but its button column did not match");
+  const pattern = COMPARE_BUTTON_GROUP.test(html)
+    ? COMPARE_BUTTON_GROUP
+    : COMPARE_BUTTON_BARE.test(html)
+      ? COMPARE_BUTTON_BARE
+      : null;
+
+  if (!pattern) {
+    problems.push("comparison calculator found but its Search Now button did not match");
     return html;
   }
 
-  return html.replace(COMPARE_BUTTON_COLUMN, (whole, opening, indent) => {
-    const row = budgetRowHtml(indent.length, "font-family01 fs-13 fw-500 text-maroon-900", "col-md-12 mt-3");
-    return `\n${row}${opening.replace(/^\n/, "")}`;
+  return html.replace(pattern, (whole, newline, indent, tail) => {
+    const block = compareBudgetHtml(indent, newline);
+    return `${newline}${block}${newline}${indent}${tail}`;
   });
 }
 

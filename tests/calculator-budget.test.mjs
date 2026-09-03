@@ -226,3 +226,82 @@ test("the shared script reads every grid shape the calculators actually render",
     assert.ok(script.includes(bare), `the shared script does not read ${token}`);
   }
 });
+
+/**
+ * The stored rows are not the files.
+ *
+ * `/compare-hotel`'s row in `static_pages` had drifted from the file it was
+ * seeded from, and the first version of the comparison matcher -- which spelled
+ * out the column, the form-group and `<button type="button"` with exact
+ * newlines between them -- missed it. Because a reported problem writes
+ * nothing at all, that one page aborted the entire production deploy.
+ *
+ * These feed the shapes a stored row can plausibly have through the transform.
+ * None of them may report a problem, and every one must come out with a budget
+ * field.
+ */
+const COMPARE_SHAPES = {
+  "as the file has it": `<div class="col-md-12 mt-3">
+    <div class="form-group">
+        <button type="button"
+            class="btn w-100"
+            id="calculateCost">
+            Search Now
+        </button>
+    </div>
+</div>`,
+
+  "CRLF line endings": `<div class="col-md-12 mt-3">\r\n    <div class="form-group">\r\n        <button type="button" id="calculateCost">Search Now</button>\r\n    </div>\r\n</div>`,
+
+  "attributes on one line, different column class": `<div class="col-12">
+    <div class="form-group">
+        <button type="button" class="btn" id="calculateCost">Search Now</button>
+    </div>
+</div>`,
+
+  "no form-group wrapper at all": `<div class="col-md-12 mt-3">
+    <button type="button" id="calculateCost">Search Now</button>
+</div>`,
+
+  "attribute order reversed": `<div class="form-group">
+    <button id="calculateCost" type="button" class="btn">Search Now</button>
+</div>`,
+};
+
+test("the comparison budget field survives a stored row that has drifted", () => {
+  for (const [shape, markup] of Object.entries(COMPARE_SHAPES)) {
+    // Enough context for the transform to recognise a comparison page.
+    const page = `<html><head></head><body>
+<div id="daysContainer"></div>
+<select class="form-control hotel-select" data-index="1"><option value="">Select Hotel</option></select>
+${markup}
+<script src="/js/currency-switcher.js"></script>
+</body></html>`;
+
+    const result = transform(page);
+    assert.deepEqual(result.problems, [], `${shape}: reported a problem, which aborts the whole deploy`);
+    assert.ok(result.html.includes('id="budgetSelect"'), `${shape}: no budget field was added`);
+    // The button is still there and still the page's own.
+    assert.ok(result.html.includes('id="calculateCost"'), `${shape}: lost the Search Now button`);
+    // And a second pass is a no-op, so the deploy can run this every time.
+    assert.equal(transform(result.html).changed, false, `${shape}: not idempotent`);
+  }
+});
+
+test("the venue budget field survives CRLF, which the first pattern did not", () => {
+  const page = [
+    "<html><head></head><body>",
+    '<input type="hidden" id="hotelId" value="22">',
+    '<div class="row gx-2 mb-3">',
+    '    <div class="col-md-6"><input id="checkIn"></div>',
+    "</div>",
+    '<div id="daysContainer"></div>',
+    '<script src="/js/currency-switcher.js"></script>',
+    "</body></html>",
+  ].join("\r\n");
+
+  const result = transform(page);
+  assert.deepEqual(result.problems, []);
+  assert.ok(result.html.includes('id="budgetSelect"'), "CRLF venue page got no budget field");
+  assert.equal(transform(result.html).changed, false, "not idempotent");
+});
