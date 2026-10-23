@@ -1,8 +1,8 @@
 /**
  * Serves admin-uploaded files from R2 at /media/<key>.
  */
-import imageMigrationMap from "../../scripts/image-migration-map.json";
-import { isR2Configured, r2Get } from "../storage/r2";
+import imageMigrationMap from "../../scripts/image-migration-map.json" with { type: "json" };
+import { isR2Configured, r2Get, r2Head } from "../storage/r2";
 import { readStaticFile } from "./serve-static";
 
 const MEDIA_PREFIX = "/media/";
@@ -52,6 +52,7 @@ async function fetchLegacyFallback(publicPath: string, method: string, requestUr
   if (bypass) headers["x-vercel-protection-bypass"] = bypass;
 
   const response = await fetch(new URL(publicPath, requestUrl), {
+    method: method === "HEAD" ? "HEAD" : "GET",
     headers,
     redirect: "manual",
     signal: AbortSignal.timeout(5000),
@@ -96,6 +97,16 @@ export async function serveMedia(
 
   const key = keyFromPath(pathname);
   if (!key) return notFound;
+
+  // Never open an object stream for a metadata-only request: an unread GET body
+  // holds its S3 socket and eventually blocks every request in the shared pool.
+  if (method === "HEAD") {
+    const object = isR2Configured() ? await r2Head(key) : null;
+    if (!object) return (await legacyFallback(key, method, requestUrl)) ?? notFound;
+    return new Response(null, {
+      headers: mediaHeaders(object.contentType || "application/octet-stream", object.size, object.etag),
+    });
+  }
 
   const object = isR2Configured() ? await r2Get(key) : null;
   if (!object?.body) return (await legacyFallback(key, method, requestUrl)) ?? notFound;

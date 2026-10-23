@@ -25,6 +25,10 @@ function getClient(): { client: S3Client; config: R2Config } | null {
         accessKeyId: config.accessKeyId,
         secretAccessKey: config.secretAccessKey,
       },
+      requestHandler: {
+        connectionTimeout: 2000,
+        socketTimeout: 8000,
+      },
     });
     cachedConfig = config;
   }
@@ -36,15 +40,19 @@ export function isR2Configured(): boolean {
   return getR2Config() !== null;
 }
 
-export async function r2Head(key: string): Promise<{ contentType?: string; size?: number } | null> {
+export async function r2Head(key: string): Promise<{ contentType?: string; size?: number; etag?: string } | null> {
   const ctx = getClient();
   if (!ctx) return null;
 
   try {
-    const result = await ctx.client.send(new HeadObjectCommand({ Bucket: ctx.config.bucket, Key: key }));
+    const result = await ctx.client.send(
+      new HeadObjectCommand({ Bucket: ctx.config.bucket, Key: key }),
+      { abortSignal: AbortSignal.timeout(5000) },
+    );
     return {
       contentType: result.ContentType,
       size: result.ContentLength,
+      etag: result.ETag,
     };
   } catch {
     return null;
@@ -81,7 +89,10 @@ export async function r2Get(key: string): Promise<{
   if (!ctx) return null;
 
   try {
-    const result = await ctx.client.send(new GetObjectCommand({ Bucket: ctx.config.bucket, Key: key }));
+    const result = await ctx.client.send(
+      new GetObjectCommand({ Bucket: ctx.config.bucket, Key: key }),
+      { abortSignal: AbortSignal.timeout(8000) },
+    );
     if (!result.Body) return null;
 
     return {
