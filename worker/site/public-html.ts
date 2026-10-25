@@ -59,7 +59,7 @@ const PUBLIC_ENHANCEMENTS_STYLE = `<style id="vw-public-enhancements">
 .vw-skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 .vw-skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;padding:.5rem 1rem;background:#4B3D34;color:#FFF9F2;z-index:2000;border-radius:6px}
 @media (max-width:991px){
-  .sidebar-mobile-popup{display:none;position:fixed;inset:0;z-index:1050;background:rgba(0,0,0,.45);padding:1rem;overflow:auto}
+  .sidebar-mobile-popup{display:none;position:fixed;inset:0;z-index:1050;background:rgba(75,61,52,.45);padding:1rem;overflow:auto}
   .sidebar-mobile-popup.is-open{display:block}
   .sidebar-mobile-popup .sidebar{background:#FFF9F2;border-radius:12px;padding:1rem;max-width:420px;margin:3rem auto 0}
 }

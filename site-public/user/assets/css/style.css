@@ -100,8 +100,8 @@ body {color: var(--brand-espresso);}
 .flatpickr-calendar.arrowTop:after {border-bottom-color: var(--brand-ivory);}
 .flatpickr-calendar.arrowBottom:after {border-top-color: var(--brand-ivory);}
 /* Bootstrap's own colour components (blue primary, yellow warning, grey
-   secondary), mapped onto the brand roles. Danger stays red: it carries
-   meaning on form errors. */
+   secondary), mapped onto the brand roles. Errors are Burgundy on Sand:
+   the palette has no red, and Burgundy still reads as a warning. */
 .text-dark {color: var(--brand-espresso) !important;}
 .text-warning {color: var(--brand-champagne) !important;}
 .btn-primary {--bs-btn-color: var(--brand-ivory); --bs-btn-bg: var(--brand-espresso); --bs-btn-border-color: var(--brand-espresso); --bs-btn-hover-color: var(--brand-ivory); --bs-btn-hover-bg: var(--brand-taupe); --bs-btn-hover-border-color: var(--brand-taupe); --bs-btn-active-color: var(--brand-ivory); --bs-btn-active-bg: var(--brand-taupe); --bs-btn-active-border-color: var(--brand-taupe); --bs-btn-disabled-color: var(--brand-ivory); --bs-btn-disabled-bg: var(--brand-espresso); --bs-btn-disabled-border-color: var(--brand-espresso); --bs-btn-focus-shadow-rgb: 209, 170, 104;}
@@ -125,6 +125,45 @@ body {color: var(--brand-espresso);}
 .numInputWrapper span.arrowUp, .numInputWrapper span.arrowDown {border-color: rgb(75 61 52 / 15%);}
 .numInputWrapper span.arrowUp:after {border-bottom-color: var(--brand-espresso);}
 .numInputWrapper span.arrowDown:after {border-top-color: var(--brand-espresso);}
+.flatpickr-day.inRange, .flatpickr-day.prevMonthDay.inRange, .flatpickr-day.nextMonthDay.inRange, .flatpickr-day.today.inRange, .flatpickr-day.prevMonthDay.today.inRange, .flatpickr-day.nextMonthDay.today.inRange, .flatpickr-day:hover, .flatpickr-day.prevMonthDay:hover, .flatpickr-day.nextMonthDay:hover, .flatpickr-day:focus, .flatpickr-day.prevMonthDay:focus, .flatpickr-day.nextMonthDay:focus {background: var(--brand-sand); border-color: var(--brand-sand);}
+.flatpickr-day.inRange {box-shadow: -5px 0 0 var(--brand-sand), 5px 0 0 var(--brand-sand);}
+.flatpickr-day.today {border-color: var(--brand-champagne);}
+.flatpickr-day.today:hover, .flatpickr-day.today:focus {border-color: var(--brand-champagne); background: var(--brand-champagne); color: var(--brand-espresso);}
+.flatpickr-day.flatpickr-disabled, .flatpickr-day.flatpickr-disabled:hover {color: rgb(118 101 89 / 35%);}
+.flatpickr-months .flatpickr-month {color: var(--brand-espresso); fill: var(--brand-espresso);}
+.flatpickr-months .flatpickr-prev-month:hover, .flatpickr-months .flatpickr-next-month:hover {color: var(--brand-burgundy);}
+.flatpickr-months .flatpickr-prev-month:hover svg, .flatpickr-months .flatpickr-next-month:hover svg {fill: var(--brand-burgundy);}
+.flatpickr-calendar.arrowTop:before {border-bottom-color: var(--brand-sand);}
+.flatpickr-calendar.arrowBottom:before {border-top-color: var(--brand-sand);}
+.flatpickr-calendar.hasTime .flatpickr-time {border-top-color: var(--brand-sand);}
+.dayContainer + .dayContainer {box-shadow: -1px 0 0 var(--brand-sand);}
+.numInputWrapper span {border-color: rgb(75 61 52 / 15%);}
+.numInputWrapper span:hover {background: rgb(75 61 52 / 10%);}
+.numInputWrapper span:active {background: rgb(75 61 52 / 20%);}
+.numInputWrapper span svg path {fill: rgb(75 61 52 / 50%);}
+.numInputWrapper:hover, .flatpickr-current-month span.cur-month:hover, .flatpickr-current-month .flatpickr-monthDropdown-months:hover {background: rgb(75 61 52 / 5%);}
+.flatpickr-current-month .numInputWrapper span.arrowUp:after {border-bottom-color: var(--brand-espresso);}
+.flatpickr-current-month .numInputWrapper span.arrowDown:after {border-top-color: var(--brand-espresso);}
+.flatpickr-current-month input.cur-year[disabled], .flatpickr-current-month input.cur-year[disabled]:hover {color: var(--brand-taupe);}
+.flatpickr-current-month .flatpickr-monthDropdown-months {font-weight: 400;}
+/* Placeholders: the browser's and Bootstrap's greys, onto Taupe. */
+input::placeholder, textarea::placeholder, .form-control::placeholder {color: var(--brand-taupe); opacity: 1;}
+/* Bootstrap's close cross is black, and its alerts pink. */
+.btn-close {color: var(--brand-espresso); background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%234B3D34'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");}
+.btn-close:hover {color: var(--brand-espresso);}
+.navbar-brand:hover, .navbar-brand:focus {color: inherit;}
+.alert-danger {--bs-alert-color: var(--brand-burgundy); --bs-alert-bg: var(--brand-sand); --bs-alert-border-color: var(--brand-burgundy); --bs-alert-link-color: var(--brand-burgundy);}
+.alert-success {--bs-alert-color: var(--brand-espresso); --bs-alert-bg: var(--brand-sand); --bs-alert-border-color: var(--brand-taupe); --bs-alert-link-color: var(--brand-espresso);}
+/* The browser's own highlight on a chosen option. */
+select option:checked {background-color: var(--brand-sand); color: var(--brand-espresso);}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover, .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:focus {background-color: var(--brand-sand); color: var(--brand-espresso);}
+/* slick's dots are black and its arrows white. */
+.slick-dots li button:before, .slick-dots li.slick-active button:before {color: var(--brand-espresso);}
+.slick-prev:before, .slick-next:before {color: var(--brand-ivory);}
+/* The header's menu cards and the consultation popup bring black overlays in
+   their own markup and page styles. */
+.megamenu-image > [style*="rgba(0,0,0,0.7)"] {background: linear-gradient(to top, rgb(75 61 52 / 70%) 0%, transparent 100%) !important;}
+main > .booking-Confirm-wrapper {background-color: rgb(75 61 52 / 55%);}
 @font-face {
     font-family: 'Cormorant Garamond';
     font-style: normal;
@@ -160,10 +199,12 @@ body {color: var(--brand-espresso);}
     font-display: swap;
     src: url('/vendor/brand-fonts/lato-latin-400-normal.woff2') format('woff2');
 }
+/* The Bold face also answers 600, which much of the markup asks for: the
+   brand has no Lato SemiBold, and 600 already rendered with this file. */
 @font-face {
     font-family: 'Lato';
     font-style: normal;
-    font-weight: 700;
+    font-weight: 600 700;
     font-display: swap;
     src: url('/vendor/brand-fonts/lato-latin-700-normal.woff2') format('woff2');
 }
@@ -194,6 +235,21 @@ body {color: var(--brand-espresso);}
 :is(h1, h2, h3, h4, h5, h6):is(.fw-100, .fw-200, .fw-300, .fw-400, .fw-500) {font-weight: 600;}
 /* Article headings: the blog pages' own styles force them to 400 and 700. */
 main :is(.blog-description, .blog-details-content) :is(h1, h2, h3, h4, h5, h6) {font-weight: 600 !important;}
+/* Blog banners drop to 400 on small screens in the pages' own styles. */
+main .banner-wrapper .item .widget h1 {font-weight: 600;}
+/* .fw-300 sets every descendant to 400, headings included. */
+.fw-300 :is(h1, h2, h3, h4, h5, h6) {font-weight: 600;}
+/* Bootstrap's .h1-.h6 sizing classes carry its 500. */
+:is(h1, h2, h3, h4, h5, h6):is(.h1, .h2, .h3, .h4, .h5, .h6) {font-weight: 600;}
+/* Titles set in the label classes: the calculator heading and the package
+   names are titles, so Cormorant SemiBold in title case. */
+h4.font-family01.text-uppercase.fs-26 {font-family: var(--brand-font-display); font-weight: 600; text-transform: none !important;}
+h4.text-prime-dark.font-family03.fs-24 {font-family: var(--brand-font-display); font-weight: 600;}
+/* Burgundy text never sits on Espresso: on the dark call-to-action band the
+   label is Champagne. */
+.cta-sec .text-primary {color: var(--brand-champagne) !important;}
+/* The appointment result pages are light; their message is information. */
+.container.text-center > h1.text-prime-dark ~ p {color: var(--brand-taupe);}
 
 
 .text-deep-maroon-80 * {color: var(--brand-taupe);}
@@ -283,15 +339,15 @@ a:hover,
 button:hover,
 input[type=submit]:hover {cursor: pointer;color: var(--brand-burgundy);}
 
-form .lead-field-invalid {border-color: #c62828 !important;box-shadow: 0 0 0 2px rgba(198, 40, 40, 0.12) !important;}
-.lead-field-error {margin-top: 5px;color: #9f1d1d;font-size: 12px;line-height: 1.3;font-family: var(--brand-font-body);}
+form .lead-field-invalid {border-color: var(--brand-burgundy) !important;box-shadow: 0 0 0 2px rgb(106 65 71 / 14%) !important;}
+.lead-field-error {margin-top: 5px;color: var(--brand-burgundy);font-size: 12px;line-height: 1.3;font-family: var(--brand-font-body);}
 .lead-form-status {display: none;width: 100%;margin-top: 12px;padding: 10px 12px;border-radius: 8px;font-size: 14px;line-height: 1.35;font-family: var(--brand-font-body);}
 .lead-form-status--pending,
 .lead-form-status--success,
 .lead-form-status--error {display: block;}
 .lead-form-status--pending {background: var(--brand-ivory);color: var(--brand-burgundy);border: 1px solid var(--brand-sand);}
-.lead-form-status--success {background: #edf8f1;color: #17633a;border: 1px solid #bfe4ce;}
-.lead-form-status--error {background: #fff0f0;color: #9f1d1d;border: 1px solid #f0c7c7;}
+.lead-form-status--success {background: var(--brand-sand);color: var(--brand-espresso);border: 1px solid var(--brand-taupe);}
+.lead-form-status--error {background: var(--brand-sand);color: var(--brand-burgundy);border: 1px solid var(--brand-burgundy);}
 
 html, body {overflow-x: hidden;margin-top: 45px;}
 
@@ -495,7 +551,7 @@ ul#hotelTabs li button:hover {background: var(--brand-ivory);color: var(--brand-
 .main-footer .widget ul li a {transition: 0.3s ease-in-out; color: var(--brand-ivory); font-size: 13px; font-family: var(--brand-font-body);}
 .main-footer .widget ul li a:hover {text-decoration: underline;}
 .main-footer .social-icon li {margin-right: 4px;}
-.main-footer .footer-btm {border-top: solid 1px white;padding: 30px 0px;margin-top: 60px;}
+.main-footer .footer-btm {border-top: solid 1px var(--brand-ivory);padding: 30px 0px;margin-top: 60px;}
 .main-footer .footer-btm .copyrights {font-size: 16px;}
 .main-footer .footer-btm p {margin: 0;font-size: 14px;}
 .main-footer .widget a.btn {color: var(--brand-espresso); background-color: var(--brand-ivory);width: 252px;height: 64px;padding: 24px 0px;font-weight: 700;letter-spacing: 0.04em;}
@@ -512,7 +568,7 @@ ul#hotelTabs li button:hover {background: var(--brand-ivory);color: var(--brand-
 /* BANNER CSS */
 .slider-banner .slick-track {display: flex !important;}
 .banner-wrapper .item {background-size: cover;padding: 150px 0px;padding-bottom: 164px;z-index: 9;position: relative;background-position: top; height: auto !important;}
-.banner-wrapper .item::before {position: absolute;content: '';top: 0px;height: 100%;width: 100%;background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgb(255 249 242 / 0%));z-index: -1;}
+.banner-wrapper .item::before {position: absolute;content: '';top: 0px;height: 100%;width: 100%;background: linear-gradient(to right, rgb(75 61 52 / 50%), rgb(255 249 242 / 0%));z-index: -1;}
 .banner-wrapper .luxury-img img:first-child {margin-left: 0;}
 .banner-wrapper .luxury-img img {margin-left: -8px;}
 .banner-wrapper .item .widget .luxury-venues-widget .luxury-img {margin-right: 12px;}
@@ -580,7 +636,7 @@ ul#hotelTabs li button:hover {background: var(--brand-ivory);color: var(--brand-
 .estimator-wrapper .cost-calculator-widget {background-color: var(--brand-ivory);border: solid 1px rgb(209 170 104 / 12%);border-radius: 24px;padding: 38px 42px;position: relative;max-width: 560px;margin-left: auto;margin-top: 20px;}
 .estimator-wrapper .cost-calculator-widget .form-group {position: relative;margin-top: 28px;}
 .estimator-wrapper .cost-calculator-widget .form-group label {padding: 0px 6px;color: var(--brand-espresso);top: -9px;left: 11px;}
-.estimator-wrapper .cost-calculator-widget .form-group .form-control {height: 56px;font-size: 12px; border: solid 1px rgb(0 0 0 / 16%);border-radius: 12px;padding: 3px 0px 0px 52px;color: var(--brand-taupe);}
+.estimator-wrapper .cost-calculator-widget .form-group .form-control {height: 56px;font-size: 12px; border: solid 1px rgb(75 61 52 / 16%);border-radius: 12px;padding: 3px 0px 0px 52px;color: var(--brand-taupe);}
 .estimator-wrapper .cost-calculator-widget .form-group input::placeholder {color: var(--brand-taupe);}
 .estimator-wrapper .cost-calculator-widget .form-group img {position: absolute;bottom: 16px;width: 20px;left: 18px;}
 .estimator-wrapper .cost-calculator-widget .form-group button.btn {height: 64px;}
@@ -661,7 +717,7 @@ ul#hotelTabs li button:hover {background: var(--brand-ivory);color: var(--brand-
 .deal-season-wrapper .item .img-widget {position: relative;box-shadow: 0px 16px 24px 0px rgba(0, 0, 0, 0.2);margin: 50px 9px;border-radius: 32px;margin-top: 0;height: 650px; overflow: hidden;}
 .deal-season-wrapper .item .img-widget img {height: 100%;object-fit: cover; width: 100%;}
 .check-in-widget.custom-mt-5 .form-group.dropdown-icon:after {display: none;}
-.deal-season-wrapper .item .img-widget:before {position: absolute;content: '';background: linear-gradient(to top, rgb(0 0 0 / 39%), rgb(255 249 242 / 0%));z-index: 999;width: 100%;height: 100%;left: 0px;border-radius: 32px;}
+.deal-season-wrapper .item .img-widget:before {position: absolute;content: '';background: linear-gradient(to top, rgb(75 61 52 / 39%), rgb(255 249 242 / 0%));z-index: 999;width: 100%;height: 100%;left: 0px;border-radius: 32px;}
 .deal-season-wrapper .item .content {position: absolute;bottom: 50px;left: 0;right: 0;text-align: center; width: calc(100% - 41px);margin: 0 auto;z-index: 999;padding: 14px 0px;}
 .deal-season-wrapper .item .content .card-logo {width: 170px;height: 46px;margin: 0 auto;display: flex;align-items: center;justify-content: center;overflow: hidden;}
 .deal-season-wrapper .item .content .card-logo img {width: 150px;height: 42px;margin: 0 auto;object-fit: contain;}
@@ -836,7 +892,7 @@ ul#hotelTabs li button:hover {background: var(--brand-ivory);color: var(--brand-
 .faq-wrapper .accordion-item .accordion-header .accordion-button:not(.collapsed) {color: var(--brand-espresso);box-shadow: 0px 0px;}
 .faq-wrapper .accordion-item .accordion-collapse .accordion-body {padding: 0px 10px;}
 .faq-wrapper .accordion-item .accordion-header .accordion-button.collapsed:hover {color: var(--brand-espresso);}
-.faq-wrapper .accordion-item .accordion-header .accordion-button:after {background-color: var(--brand-espresso);width: 40px;height: 40px;border-radius: 50%;background-position: center;background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");background-size: 16px;}
+.faq-wrapper .accordion-item .accordion-header .accordion-button:after {background-color: var(--brand-espresso);width: 40px;height: 40px;border-radius: 50%;background-position: center;background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFF9F2'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");background-size: 16px;}
 .faq-wrapper .accordion-item.active .accordion-header .accordion-button:after {background-color: var(--brand-espresso);}
 
 /* BLOG CSS */
@@ -1088,7 +1144,7 @@ img[src*="/user/assets/images/f-icon"] {
 .accordion-collapse 
 .accordion 
 .accordion-item 
-.accordion-button::after {background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M8 1v14M1 8h14' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");transform: none;}
+.accordion-button::after {background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFF9F2'%3E%3Cpath d='M8 1v14M1 8h14' stroke='%23FFF9F2' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");transform: none;}
 
 /* When Open (Show Minus) */
 .package-details-wrapper 
@@ -1096,7 +1152,7 @@ img[src*="/user/assets/images/f-icon"] {
 .accordion-collapse 
 .accordion 
 .accordion-item 
-.accordion-button:not(.collapsed)::after {background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M1 8h14' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");}
+.accordion-button:not(.collapsed)::after {background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFF9F2'%3E%3Cpath d='M1 8h14' stroke='%23FFF9F2' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");}
 
 .package-details-wrapper .faq-wrapper .accordion-collapse .accordion .accordion-item .accordion-collapse {padding: 20px 0px;}
 .package-details-wrapper .faq-wrapper .accordion-collapse .accordion-body .widgte-list li i {color: var(--brand-taupe);}
@@ -1243,7 +1299,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 .stat-icon {color: var(--brand-taupe);font-size: 1.8rem;margin-right: 15px;}
 .stat-content h3 {font-size: 1.4rem;margin: 0;line-height: 1.2;}
 .stat-content p {font-size: 0.65rem;text-transform: uppercase;letter-spacing: 1px;margin: 0;opacity: 0.6;}
-.eyebrow {display: inline-block;font-size: 10.5px;font-weight: 600;letter-spacing: 3.5px;text-transform: uppercase;margin-bottom: 14px}
+.eyebrow {display: inline-block;font-family: var(--brand-font-body);font-size: 10.5px;font-weight: 700;letter-spacing: 3.5px;text-transform: uppercase;margin-bottom: 14px}
 .af { padding: 18px 15px;background: var(--brand-sand);border: 1px solid rgba(209, 170, 104, .22);border-radius:4px;}
 .af strong { display: block;font-size: 1.1rem; line-height: 1; margin-bottom: 4px;}
 .af span { font-size: .78rem; letter-spacing: .5px; }
@@ -1260,7 +1316,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 .gi:first-child { grid-column: span 2; grid-row: span 2; }
 .gi img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; display: block; }
 .gi:hover img { transform: scale(1.07); }
-.gi-lbl { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,.7), transparent); padding: 18px 14px 12px; font-size: .72rem; color: var(--brand-sand); letter-spacing: 1.5px; text-transform: uppercase; opacity: 0; transition: opacity .3s; }
+.gi-lbl { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgb(75 61 52 / 70%), transparent); padding: 18px 14px 12px; font-size: .72rem; color: var(--brand-sand); letter-spacing: 1.5px; text-transform: uppercase; opacity: 0; transition: opacity .3s; }
 .gi:hover .gi-lbl { opacity: 1; }
  
 
@@ -1286,7 +1342,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 .grandTotal{ font-size:22px; font-weight:700;}
 .c-h-a .form-group {position: relative;margin-top: 28px;}
 .c-h-a .form-group label {padding: 0px 6px;color: var(--brand-espresso);top: -9px;left: 11px;}
-.c-h-a .form-group .form-control {height: 56px;border: solid 1px rgb(0 0 0 / 16%);border-radius: 12px;padding: 3px 0px 0px 52px;color: var(--brand-taupe);}
+.c-h-a .form-group .form-control {height: 56px;border: solid 1px rgb(75 61 52 / 16%);border-radius: 12px;padding: 3px 0px 0px 52px;color: var(--brand-taupe);}
 .c-h-a .form-group input::placeholder {color: var(--brand-taupe);}
 .c-h-a .form-group img {position: absolute;bottom: 16px;width: 20px;left: 18px;}
 .c-h-a .form-group button.btn {height: 64px;}
@@ -1341,11 +1397,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 .select2-container--default .select2-selection--single .select2-selection__arrow b {left: auto !important;right: 0;border-color: var(--brand-sand) transparent transparent transparent !important;border-width: 6px 6px 0 6px !important;}
 .gallery-widget .img-widget{position: relative;}
 .past-wedding-details {height: 700px;display: flex;align-items: center; position: relative; z-index: 9;}
-.past-wedding-details:after {position: absolute;content: '';width: 100%;background: linear-gradient(45deg, black, transparent);height: 100%;z-index: -1;top: 0;left: 0;}
+.past-wedding-details:after {position: absolute;content: '';width: 100%;background: linear-gradient(45deg, var(--brand-espresso), transparent);height: 100%;z-index: -1;top: 0;left: 0;}
 .product-slider2 .item {padding: 0px 8px;}
 .highlights-items .item {padding: 12px 15px;background-color: var(--brand-ivory);margin-bottom: 10px;border-radius: 8px;}
 .post-wedding-wrapper .card {border: solid 1px var(--brand-sand);border-radius: 12px;position: sticky;top: 0;}
-.gallery-widget .img-widget::before {content: "";position: absolute;background: rgba(0,0,0,0.5);opacity: 0;width: 100%;height: 100%;transition: 0.4s;top: 0;left: 0;z-index: 99;}
+.gallery-widget .img-widget::before {content: "";position: absolute;background: rgb(75 61 52 / 50%);opacity: 0;width: 100%;height: 100%;transition: 0.4s;top: 0;left: 0;z-index: 99;}
 .gallery-widget .zoom-icon {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%) scale(0);color: var(--brand-ivory);font-size: 30px;z-index: 9999;transition: 0.4s;}
 .gallery-widget .img-widget:hover img {transform: scale(1.1);}
 .gallery-widget .img-widget:hover::before {opacity: 1;}
@@ -1429,7 +1485,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 .deal-season-wrapper .item .content a.btn.white-btn {width: 155px;height: 40px;padding: 12px 0px;color: var(--brand-espresso);font-weight: 600;font-family: var(--brand-font-body);}
 .MuiInputLabel-shrink .form-group {margin-bottom: 25px !important;position: relative;margin-top: 0 !important;}
 .MuiInputLabel-shrink .form-group .form-label {position: absolute;padding: 0px 6px;color: var(--brand-espresso) !important;top: -9px;left: 11px;font-weight: 600;font-size: 12px;background-color: var(--brand-ivory);}
-.MuiInputLabel-shrink .form-group .form-control {height: 56px;border: solid 1px rgb(0 0 0 / 16%);border-radius: 12px;font-size: 14px;}
+.MuiInputLabel-shrink .form-group .form-control {height: 56px;border: solid 1px rgb(75 61 52 / 16%);border-radius: 12px;font-size: 14px;}
 .MuiInputLabel-shrink .form-group textarea.form-control {min-height: 160px;padding: 20px .75rem;}
 .modal-backdrop {z-index: 10000000 !important;}
 .modal.viv-custom-modal {z-index: 10000001 !important;}
@@ -1500,7 +1556,7 @@ body .offcanvas.offcanvas-start {width: 100% !important;min-width: auto;border-r
     --cost-summary-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='5.5'/%3E%3Cpath d='M4 3v7'/%3E%3Cpath d='M6.5 3v7'/%3E%3Cpath d='M3 3v5a3.5 3.5 0 0 0 3.5 3.5V21'/%3E%3Cpath d='M20 3c-1.7 1.5-2.5 3.7-2.5 6.5V13H20'/%3E%3Cpath d='M20 3v18'/%3E%3C/svg%3E");
 }
 .short-text {max-height: 120px; /* jitna chhota dikhana hai */overflow: hidden;position: relative;}
-.short-text::after {content: "";position: absolute;bottom: 0;left: 0;width: 100%;height: 40px;background: linear-gradient(transparent, white);}
+.short-text::after {content: "";position: absolute;bottom: 0;left: 0;width: 100%;height: 40px;background: linear-gradient(transparent, var(--brand-ivory));}
 .description-text.expanded {max-height: none;}
 .description-text.expanded::after {display: none;}
 .listing-details-banner .widget img.logo {max-width: 150px;}
