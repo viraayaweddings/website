@@ -192,6 +192,8 @@ body {color: var(--brand-espresso);}
    at 700). Headings are titles, and titles are Cormorant SemiBold: the markup
    puts fw-100 to fw-500 on most of them, which used to render Regular. */
 :is(h1, h2, h3, h4, h5, h6):is(.fw-100, .fw-200, .fw-300, .fw-400, .fw-500) {font-weight: 600;}
+/* Article headings: the blog pages' own styles force them to 400 and 700. */
+main :is(.blog-description, .blog-details-content) :is(h1, h2, h3, h4, h5, h6) {font-weight: 600 !important;}
 
 
 .text-deep-maroon-80 * {color: var(--brand-taupe);}
@@ -218,8 +220,8 @@ body {color: var(--brand-espresso);}
 .text-white-50{color: var(--brand-sand) !important;}
 /* Italic text is Cormorant: Lato has no approved italic, and the browser
    would otherwise slant Lato itself. */
-em, cite, .fst-italic {font-family: var(--brand-font-display);font-style: italic;}
-p em, li em {font-size: 1.15em;}
+em, cite, .fst-italic, i:not([class*="fa"]) {font-family: var(--brand-font-display);font-style: italic;}
+p em, li em, p i:not([class*="fa"]), li i:not([class*="fa"]) {font-size: 1.15em;}
 /* The footer's line about intention is an emotional line, not a title. */
 .main-footer h5.line-h-32 {font-style: italic;font-weight: 400;}
 .select2-container--default .select2-selection--single .select2-selection__placeholder{color: var(--brand-taupe) !important;}
@@ -1051,7 +1053,7 @@ ul#hotelTabs li button:hover {background: var(--brand-ivory);color: var(--brand-
 
 
 .banner-wrapper__inner .widget-form {border: solid 1px rgb(255 249 242 / 20%);background-color: rgb(75 61 52 / 70%);border-radius: 14px;padding: 30px;width: 402px;margin-left: auto;backdrop-filter: blur(4px);}
-.banner-wrapper__inner .widget-form label {color: var(--brand-burgundy);font-size: 12px;letter-spacing: 0.06em;font-weight: 400;}
+.banner-wrapper__inner .widget-form label {color: var(--brand-sand);font-size: 12px;letter-spacing: 0.06em;font-weight: 400;}
 .banner-wrapper__inner .price-label span {font-size: 10px !important;color: var(--brand-ivory) !important;letter-spacing: 0.06em;font-weight: 400;}
 .banner-wrapper__inner .price-label .price {font-size: 19px !important;font-weight: 400;}
 .banner-wrapper__inner .price-label .price .number {font-size: 29px !important;font-weight: 700;}
