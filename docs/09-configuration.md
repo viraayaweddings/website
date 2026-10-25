@@ -202,6 +202,7 @@ an admin's own edits to a page survive — and applies both passes:
 | `page-data` | `scripts/lib/page-data-transform.mjs` | Detaches a page from the tax rates, city list and wedding types compiled into it |
 | `budget` | `scripts/lib/calculator-budget-transform.mjs` | Swaps the hotel picker for the budget picker, adds the shared script, drops the home-page packages strip |
 | `packages` | `scripts/lib/unpublish-packages-transform.mjs` | Unpublishes the wedding packages area: drops its header and footer links, and marks its five pages `noindex` |
+| `brand` | `scripts/lib/brand-markup-transform.mjs` | Applies the 2026 brand standard's markup changes (inline colours, the enquiry popup's fonts, the old Google Fonts link) as line rules from `brand-markup-rules.json`; a line that differs from its rule is left alone |
 
 Both are idempotent, which is what makes running them on every deploy safe:
 each rewrites a row once and is a no-op afterwards.

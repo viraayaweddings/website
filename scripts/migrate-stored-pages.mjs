@@ -33,6 +33,7 @@ import {
   PACKAGES_MARKER,
   transform as packagesTransform,
 } from "./lib/unpublish-packages-transform.mjs";
+import { BRAND_MARKER, transform as brandTransform } from "./lib/brand-markup-transform.mjs";
 
 const apply = process.argv.includes("--apply");
 const ifConfigured = process.argv.includes("--if-configured");
@@ -72,6 +73,9 @@ const PASSES = [
     // link left to strip, so this pass runs on them whatever the marker says.
     always: (path) => isPackagesPath(path),
   },
+  // The brand standard's markup changes: inline colours, the popup's fonts and
+  // the old Google Fonts link. Line rules, so an edited line is left alone.
+  { name: "brand", marker: BRAND_MARKER, run: (html) => brandTransform(html) },
 ];
 
 function convert(html, where, path) {
