@@ -63,9 +63,9 @@
 
 <style>
     .CostSummary { min-width: 580px; }
-    .CostSummary .offcanvas-header { background-color: #fae8e8; color: #000; font-weight: 600; }
-    .CostSummary .days-box .tp-txt  { font-size: 14px; color: #666; }
-    .CostSummary .days-box .prices  { font-size: 13px; color: #111; font-weight: 600; }
+    .CostSummary .offcanvas-header { background-color: var(--brand-sand); color: var(--brand-espresso); font-weight: 600; }
+    .CostSummary .days-box .tp-txt  { font-size: 14px; color: var(--brand-taupe); }
+    .CostSummary .days-box .prices  { font-size: 13px; color: var(--brand-espresso); font-weight: 600; }
     .grandTotal { font-size: 22px; font-weight: 700; }
 </style>
 
@@ -78,8 +78,8 @@
     }
 
     .bg-peach-50 {
-        background: #f9e5d7;
-        color: #8b5e3c;
+        background: var(--brand-sand);
+        color: var(--brand-burgundy);
         padding: 8px 15px;
         border-radius: 30px;
         font-size: 12px;
@@ -100,9 +100,9 @@
         padding: 0 8px;
         z-index: 2;
         font-size: 12px;
-        color: #6b4f3a;
+        color: var(--brand-espresso);
         letter-spacing: 0.3px;
-        background: white;
+        background: var(--brand-ivory);
         border-radius: 4px;
     }
 
@@ -110,20 +110,20 @@
     .form-group select {
         height: 52px;
         border-radius: 12px;
-        border: 1px solid #e8d9cc;
+        border: 1px solid var(--brand-sand);
         padding: 10px 15px;
         width: 100%;
         font-size: 14px;
-        color: #2d2d2d;
-        background: #ffffff;
+        color: var(--brand-espresso);
+        background: var(--brand-ivory);
         transition: all 0.3s ease;
     }
 
     .form-group input:focus,
     .form-group select:focus {
         outline: none;
-        border-color: #b88a5c;
-        box-shadow: 0 0 0 3px rgba(184, 138, 92, 0.1);
+        border-color: var(--brand-champagne);
+        box-shadow: 0 0 0 3px rgba(209, 170, 104, 0.1);
     }
 
     .form-group img {
@@ -158,93 +158,93 @@
     .flatpickr-input.fp-disabled {
         opacity: 0.5 !important;
         cursor: not-allowed !important;
-        background: #ffffff !important;
+        background: var(--brand-ivory) !important;
     }
     .flatpickr-calendar {
         border-radius: 14px !important;
-        border: 1px solid #e8d9cc !important;
+        border: 1px solid var(--brand-sand) !important;
         box-shadow: 0 15px 40px rgba(0,0,0,0.08) !important;
         font-family: inherit;
     }
     .flatpickr-day.selected,
     .flatpickr-day.selected:hover {
-        background: #b88a5c !important;
-        border-color: #b88a5c !important;
+        background: var(--brand-taupe) !important;
+        border-color: var(--brand-champagne) !important;
     }
     .flatpickr-day:hover {
-        background: #f3e5d8 !important;
-        border-color: #f3e5d8 !important;
+        background: var(--brand-sand) !important;
+        border-color: var(--brand-sand) !important;
     }
     .flatpickr-day.inRange {
-        background: #f3e5d8 !important;
-        border-color: #f3e5d8 !important;
-        box-shadow: -5px 0 0 #f3e5d8, 5px 0 0 #f3e5d8 !important;
+        background: var(--brand-sand) !important;
+        border-color: var(--brand-sand) !important;
+        box-shadow: -5px 0 0 var(--brand-sand), 5px 0 0 var(--brand-sand) !important;
     }
     .flatpickr-day.startRange,
     .flatpickr-day.endRange {
-        background: #b88a5c !important;
-        border-color: #b88a5c !important;
+        background: var(--brand-espresso) !important;
+        border-color: var(--brand-champagne) !important;
     }
     .flatpickr-months .flatpickr-month,
     .flatpickr-current-month,
     .flatpickr-monthDropdown-months {
-        background: #b88a5c !important;
-        color: #fff !important;
+        background: var(--brand-espresso) !important;
+        color: var(--brand-ivory) !important;
     }
-    .flatpickr-current-month .numInputWrapper span.arrowUp:after  { border-bottom-color: #fff !important; }
-    .flatpickr-current-month .numInputWrapper span.arrowDown:after { border-top-color: #fff !important; }
+    .flatpickr-current-month .numInputWrapper span.arrowUp:after  { border-bottom-color: var(--brand-ivory) !important; }
+    .flatpickr-current-month .numInputWrapper span.arrowDown:after { border-top-color: var(--brand-ivory) !important; }
     .flatpickr-months .flatpickr-prev-month,
-    .flatpickr-months .flatpickr-next-month { fill: #fff !important; color: #fff !important; }
+    .flatpickr-months .flatpickr-next-month { fill: var(--brand-ivory) !important; color: var(--brand-ivory) !important; }
     .flatpickr-months .flatpickr-prev-month:hover svg,
-    .flatpickr-months .flatpickr-next-month:hover svg { fill: #fff !important; opacity: 0.8; }
-    .flatpickr-weekdays { background: #b88a5c !important; }
-    span.flatpickr-weekday { background: #b88a5c !important; color: #fff !important; }
+    .flatpickr-months .flatpickr-next-month:hover svg { fill: var(--brand-ivory) !important; opacity: 0.8; }
+    .flatpickr-weekdays { background: var(--brand-espresso) !important; }
+    span.flatpickr-weekday { background: var(--brand-espresso) !important; color: var(--brand-ivory) !important; }
     .flatpickr-day.flatpickr-disabled,
-    .flatpickr-day.flatpickr-disabled:hover { color: #ccc !important; cursor: not-allowed !important; }
+    .flatpickr-day.flatpickr-disabled:hover { color: var(--brand-taupe) !important; cursor: not-allowed !important; }
 
     .select2-container { width: 100% !important; }
     .select2-container--default .select2-selection--single {
         height: 52px !important;
         border-radius: 14px !important;
-        border: 1px solid #e8d9cc !important;
-        background: #ffffff !important;
+        border: 1px solid var(--brand-sand) !important;
+        background: var(--brand-ivory) !important;
         display: flex !important;
         align-items: center !important;
         padding: 0 18px !important;
         transition: all 0.3s ease !important;
     }
-    .select2-container--default .select2-selection--single:hover { border-color: #b88a5c !important; }
+    .select2-container--default .select2-selection--single:hover { border-color: var(--brand-champagne) !important; }
     .select2-container--default.select2-container--open .select2-selection--single {
-        border-color: #b88a5c !important;
-        box-shadow: 0 0 0 3px rgba(184, 138, 92, 0.12) !important;
+        border-color: var(--brand-champagne) !important;
+        box-shadow: 0 0 0 3px rgba(209, 170, 104, 0.12) !important;
     }
     .select2-container--default .select2-selection__rendered {
-        color: #2d2d2d !important;
+        color: var(--brand-espresso) !important;
         font-size: 14px !important;
         padding-left: 0 !important;
         line-height: normal !important;
     }
     .select2-container--default .select2-selection__arrow { height: 52px !important; right: 15px !important; }
-    .select2-container--default .select2-selection__arrow b { border-color: #b88a5c transparent transparent transparent !important; }
+    .select2-container--default .select2-selection__arrow b { border-color: var(--brand-champagne) transparent transparent transparent !important; }
     .select2-container--default .select2-selection__clear {
         position: absolute !important;
         right: 35px !important;
         top: 50% !important;
         transform: translateY(-50%);
-        color: #8b5e3c !important;
+        color: var(--brand-burgundy) !important;
         font-size: 16px;
     }
     .select2-dropdown {
         border-radius: 14px !important;
-        border: 1px solid #e8d9cc !important;
+        border: 1px solid var(--brand-sand) !important;
         box-shadow: 0 15px 40px rgba(0,0,0,0.08) !important;
         overflow: hidden;
     }
     .select2-results__option { padding: 12px 16px !important; font-size: 14px !important; transition: background 0.2s ease; }
-    .select2-results__option--highlighted { background-color: #b88a5c !important; color: #ffffff !important; }
-    .select2-results__option[aria-selected="true"] { background-color: #f3e5d8 !important; color: #8b5e3c !important; }
+    .select2-results__option--highlighted { background-color: var(--brand-espresso) !important; color: var(--brand-ivory) !important; }
+    .select2-results__option[aria-selected="true"] { background-color: var(--brand-sand) !important; color: var(--brand-burgundy) !important; }
 
-    #calculateCost:disabled { background: #d9d0c7; cursor: not-allowed; opacity: 0.6; }
+    #calculateCost:disabled { background: var(--brand-sand); cursor: not-allowed; opacity: 0.6; }
 
     .estimator-wrapper .cost-calculator-widget .form-group span {
         margin: 0 auto;
@@ -256,7 +256,7 @@
     .select2-container--default .select2-selection--single:hover,
     .select2-container--default.select2-container--open .select2-selection--single {
         border-color: rgb(0 0 0 / 16%) !important;
-        box-shadow: 0 0 0 0px rgba(184, 138, 92, 0.12) !important;
+        box-shadow: 0 0 0 0px rgba(209, 170, 104, 0.12) !important;
     }
 
     .venue-title {
@@ -275,14 +275,14 @@
         top: 100%;
         left: 0;
         width: 100%;
-        background: #fff;
+        background: var(--brand-ivory);
         border-radius: 10px;
         margin-top: 6px;
         max-height: 300px;
         overflow-y: auto;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
         z-index: 9999;
-        border: 1px solid #f0e6dc;
+        border: 1px solid var(--brand-sand);
         display: none;
     }
     .home-search-suggestions.show { display: block; }
@@ -292,22 +292,22 @@
         align-items: center;
         gap: 8px;
         padding: 10px 14px;
-        border-bottom: 1px solid #f5ede7;
+        border-bottom: 1px solid var(--brand-sand);
         text-decoration: none;
-        color: #2d2d2d;
+        color: var(--brand-espresso);
         font-size: 13px;
-        font-family: var(--font-family02, sans-serif);
+        font-family: var(--brand-font-body);
         transition: background 0.18s ease;
     }
     .home-search-item:last-child { border-bottom: none; }
-    .home-search-item:hover { background: #fdf4ee; color: #8b5e3c; }
+    .home-search-item:hover { background: var(--brand-ivory); color: var(--brand-burgundy); }
     .home-search-item img { width: 14px; height: 14px; opacity: 0.5; flex-shrink: 0; }
 
-    .home-search-no-result { padding: 12px 16px; color: #999; font-size: 13px; }
+    .home-search-no-result { padding: 12px 16px; color: var(--brand-taupe); font-size: 13px; }
     .disclaimer {
     font-size: 14px;
     line-height: 1.6;
-    color: #000;
+    color: var(--brand-espresso);
     padding: 0px 15px;
 }
 
@@ -321,14 +321,14 @@
     list-style: disc;
 }
 .disclaimer-list li {
-    color: #707070;
+    color: var(--brand-taupe);
     margin-bottom: 10px;
     font-size: 13px;
 }
 .disclaimer-note {
     margin-top: 10px;
-    background: linear-gradient(57deg, #FFF8F3, #FBF3E8);
-    color: #393939;
+    background: linear-gradient(57deg, var(--brand-ivory), var(--brand-sand));
+    color: var(--brand-espresso);
     font-size: 13px;
     padding: 15px 15px;
     border-radius: 10px;
@@ -336,27 +336,27 @@
 
 .disclaimer-cta {
     margin-top: 15px;
-    color: #000;
+    color: var(--brand-espresso);
     font-size: 13px;
 }
 .disclaimer-cta a {
-        color: #936C35 !important;
+        color: var(--brand-burgundy) !important;
             text-decoration: underline !important;
 }
 
-/* Homepage-only gold theme trial sampled from Presentation1.pdf */
+/* Homepage theme tokens, aliased to the 2026 brand palette */
 :root {
-    --vw-ivory: #FFF8F3;
-    --vw-cream: #FBF3E8;
-    --vw-gold: #B98230;
-    --vw-gold-light: #D0AF73;
-    --vw-gold-soft: #E2C89C;
-    --vw-gold-dark: #936C35;
-    --vw-brown: #4A3C33;
-    --vw-brown-deep: #3A2D25;
-    --vw-text: #50443B;
-    --vw-muted: #8A7358;
-    --vw-border: #D6C9B7;
+    --vw-ivory: var(--brand-ivory);
+    --vw-cream: var(--brand-sand);
+    --vw-gold: var(--brand-champagne);
+    --vw-gold-light: var(--brand-champagne);
+    --vw-gold-soft: var(--brand-sand);
+    --vw-gold-dark: var(--brand-taupe);
+    --vw-brown: var(--brand-espresso);
+    --vw-brown-deep: var(--brand-espresso);
+    --vw-text: var(--brand-espresso);
+    --vw-muted: var(--brand-taupe);
+    --vw-border: var(--brand-sand);
 }
 
 body {
@@ -367,12 +367,12 @@ body {
 a:hover,
 button:hover,
 input[type=submit]:hover {
-    color: var(--vw-gold) !important;
+    color: var(--vw-accent-text) !important;
 }
 
 .text-primary,
 .text-mulberry {
-    color: var(--vw-gold) !important;
+    color: var(--vw-accent-text) !important;
 }
 
 .text-maroon-900,
@@ -384,11 +384,11 @@ input[type=submit]:hover {
 .text-deep-maroon-80 *,
 .text-maroon-900-80,
 .text-maroon-900-80 * {
-    color: rgb(80 68 59 / 80%) !important;
+    color: #766559 !important;
 }
 
 .text-maroon-900-50 {
-    color: rgb(80 68 59 / 50%) !important;
+    color: #766559 !important;
 }
 
 .bg-primary {
@@ -397,7 +397,7 @@ input[type=submit]:hover {
 
 .bg-primary-light,
 .bg-plum-800 {
-    background-color: var(--vw-gold) !important;
+    background-color: var(--vw-fill) !important;
 }
 
 .bg-lavender-50,
@@ -410,13 +410,13 @@ input[type=submit]:hover {
 }
 
 .btn {
-    background-color: var(--vw-gold);
-    color: #fff !important;
+    background-color: var(--vw-fill);
+    color: var(--vw-fill-text) !important;
 }
 
 .btn:hover {
-    background-color: var(--vw-gold-dark) !important;
-    color: #fff !important;
+    background-color: var(--vw-fill-hover) !important;
+    color: var(--vw-fill-hover-text) !important;
 }
 
 .white-btn {
@@ -425,8 +425,8 @@ input[type=submit]:hover {
 }
 
 .white-btn:hover {
-    background-color: var(--vw-gold) !important;
-    color: #fff !important;
+    background-color: var(--vw-fill-hover) !important;
+    color: var(--vw-fill-hover-text) !important;
 }
 
 .js-header .navbar .main-menu .nav-item .nav-link {
@@ -435,8 +435,8 @@ input[type=submit]:hover {
 
 .js-header .navbar .main-menu .dropdown-menu li a:hover,
 .js-header .navbar .main-menu .dropdown-menu li a:focus {
-    background-color: var(--vw-gold) !important;
-    color: #fff !important;
+    background-color: var(--vw-fill-hover) !important;
+    color: var(--vw-fill-hover-text) !important;
 }
 
 .js-header .search-btn,
@@ -448,7 +448,7 @@ input[type=submit]:hover {
 .text-prime-dark,
 .view-link,
 .view-link:hover {
-    color: var(--vw-gold) !important;
+    color: var(--vw-accent-text) !important;
 }
 
 .js-header .search-btn img,
@@ -469,12 +469,12 @@ img[src*="quote"] {
 }
 
 .disclaimer-cta a {
-    color: var(--vw-gold-dark) !important;
+    color: var(--vw-accent-text) !important;
 }
 
 .home-search-item:hover {
     background: var(--vw-cream) !important;
-    color: var(--vw-gold-dark) !important;
+    color: var(--vw-accent-text) !important;
 }
 
 .banner-bottom-list {
@@ -489,8 +489,8 @@ img[src*="quote"] {
 .btn-availability,
 ul#hotelTabs .nav-link.active,
 .close-btn {
-    background: var(--vw-gold) !important;
-    color: #fff !important;
+    background: var(--vw-fill) !important;
+    color: var(--vw-fill-text) !important;
 }
 
 .btn-availability:hover,
@@ -501,24 +501,24 @@ ul#hotelTabs .nav-link.active,
 
 .luxury-venues-wrapper .widget .search-box input::placeholder,
 .estimator-wrapper .cost-calculator-widget .form-group input::placeholder {
-    color: rgb(80 68 59 / 50%) !important;
+    color: #766559 !important;
 }
 
 .estimator-wrapper .cost-calculator-widget {
-    border-color: rgb(185 130 48 / 24%) !important;
+    border-color: rgb(209 170 104 / 24%) !important;
 }
 
 .estimator-wrapper .cost-calculator-widget .form-group label,
 .estimator-wrapper .cost-calculator-widget p,
 .estimator-wrapper .widget ul li .content p {
-    color: rgb(80 68 59 / 80%) !important;
+    color: #766559 !important;
 }
 
 .estimator-wrapper .cost-calculator-widget .form-group .form-control:focus,
 .select2-container--default .select2-selection--single:hover,
 .select2-container--default.select2-container--open .select2-selection--single {
     border-color: var(--vw-gold) !important;
-    box-shadow: 0 0 0 3px rgb(185 130 48 / 12%) !important;
+    box-shadow: 0 0 0 3px rgb(209 170 104 / 12%) !important;
 }
 
 .select2-results__option--highlighted,
@@ -531,9 +531,9 @@ ul#hotelTabs .nav-link.active,
 .flatpickr-monthDropdown-months,
 .flatpickr-weekdays,
 span.flatpickr-weekday {
-    background: var(--vw-gold) !important;
-    border-color: var(--vw-gold) !important;
-    color: #fff !important;
+    background: var(--vw-fill-hover) !important;
+    border-color: var(--vw-fill-hover) !important;
+    color: var(--vw-fill-hover-text) !important;
 }
 
 .flatpickr-day:hover,
@@ -552,7 +552,7 @@ span.flatpickr-weekday {
 .deal-season-wrapper:before,
 .questions-wrapper .widget::before {
     background-image: none !important;
-    background: linear-gradient(135deg, rgb(74 60 51 / 96%), rgb(58 45 37 / 92%)) !important;
+    background: linear-gradient(135deg, rgb(75 61 52 / 96%), rgb(75 61 52 / 92%)) !important;
     opacity: 1 !important;
 }
 
@@ -566,7 +566,7 @@ span.flatpickr-weekday {
 }
 
 .deal-season-wrapper.bg-primary {
-    background-color: #631755 !important;
+    background-color: var(--brand-burgundy) !important;
 }
 
 .deal-season-wrapper:before {
@@ -589,7 +589,7 @@ span.flatpickr-weekday {
 
 .testimonials-slider .item .outline .content p,
 .testimonials-slider .item .outline .user-details p {
-    color: rgb(80 68 59 / 70%) !important;
+    color: #766559 !important;
 }
 
 .testimonials-slider .item .outline .content h5,
@@ -603,7 +603,7 @@ span.flatpickr-weekday {
 }
 
 .partners-wrapper .widget .item h5 {
-    color: rgb(80 68 59 / 70%) !important;
+    color: #766559 !important;
 }
 
 .service-wrapper .widget .wodget-heading {
@@ -616,7 +616,7 @@ span.flatpickr-weekday {
 }
 
 .service-wrapper .widget .widget-content .btn-price .starts-from {
-    color: rgb(80 68 59 / 60%) !important;
+    color: #766559 !important;
 }
 
 .packages-wrapper .elite-card .elite-top {
@@ -625,16 +625,17 @@ span.flatpickr-weekday {
 }
 
 .packages-wrapper .elite-card .elite-top .explore-btn.btn {
-    background-color: var(--vw-gold) !important;
-    color: #fff !important;
+    background-color: var(--vw-fill) !important;
+    color: var(--vw-fill-text) !important;
 }
 
 .packages-wrapper .elite-card .elite-top .explore-btn.btn:hover {
-    background-color: var(--vw-gold-dark) !important;
+    background-color: var(--vw-fill-hover) !important;
+    color: var(--vw-fill-hover-text) !important;
 }
 
 .packages-wrapper .elite-card .elite-bottom {
-    border-color: rgb(185 130 48 / 24%) !important;
+    border-color: rgb(209 170 104 / 24%) !important;
 }
 
 .packages-wrapper .elite-card .elite-bottom .included-title,
@@ -642,7 +643,7 @@ span.flatpickr-weekday {
 .faq-wrapper .accordion-item.active .accordion-header .accordion-button:after,
 .partners-wrapper .widget h4 .highlight,
 .questions-wrapper .section-heading h3 .highlight {
-    color: var(--vw-gold) !important;
+    color: var(--vw-accent-text) !important;
 }
 
 .packages-wrapper .elite-card .elite-bottom .check-item strong {
@@ -650,7 +651,7 @@ span.flatpickr-weekday {
 }
 
 .packages-wrapper .elite-card .elite-bottom .check-item span {
-    color: rgb(80 68 59 / 80%) !important;
+    color: #766559 !important;
 }
 
 .faq-wrapper .accordion-item:has(.active),
@@ -666,17 +667,17 @@ span.flatpickr-weekday {
 .booking-Confirm-wrapper .time-slot.active,
 .Coupletestimonials .slick-dots li.slick-active button,
 .product-slider2 .slick-dots li.slick-active button {
-    background-color: var(--vw-gold) !important;
-    border-color: var(--vw-gold) !important;
+    background-color: var(--brand-espresso) !important;
+    border-color: var(--brand-espresso) !important;
 }
 
 .booking-Confirm-wrapper .booking-card .selected-info .icon {
     background-color: var(--vw-cream) !important;
-    color: var(--vw-gold) !important;
+    color: var(--vw-accent-text) !important;
 }
 
 .booking-Confirm-wrapper .time-slot:hover {
-    color: var(--vw-gold) !important;
+    color: var(--vw-accent-text) !important;
 }
 
 .main-footer {
@@ -685,24 +686,24 @@ span.flatpickr-weekday {
 
 .main-footer .widget a.btn:hover,
 .main-footer .go-to-top:hover {
-    background-color: var(--vw-gold) !important;
-    color: #fff !important;
+    background-color: var(--vw-fill-hover) !important;
+    color: var(--vw-fill-hover-text) !important;
 }
 
 .slick-dots li button,
 .feature-items .slick-dots li button,
 .product-slider2 .slick-dots li.slick-active+li+li button {
-    background-color: var(--vw-gold-soft) !important;
+    background-color: var(--brand-champagne) !important;
 }
 
 .slick-dots li.slick-active button,
 .feature-items .slick-dots li.slick-active button {
-    background-color: var(--vw-gold) !important;
+    background-color: var(--brand-espresso) !important;
 }
 </style>
   <link href="/vendor/fontawesome/css/all.min.css" rel="stylesheet" />
   <link href="/vendor/fontawesome/css/local-icon-fixes.css" rel="stylesheet" />
-  <link href="/user/assets/css/homepage-gold-theme.css?v=20260814-testimonial-ring" rel="stylesheet" type="text/css" />
+  <link href="/user/assets/css/homepage-gold-theme.css?v=20261025-brand" rel="stylesheet" type="text/css" />
   <script src="/js/mutation-observer-guard.js"></script>
   <script src="/js/lead-forms.js" defer></script>
 </head>
@@ -2174,7 +2175,7 @@ span.flatpickr-weekday {
     top: 100%;              /* directly below input */
     left: 0;
     width: 100%;
-    background: #fff;
+    background: var(--brand-ivory);
     border-radius: 6px;
     margin-top: 5px;
     max-height: 300px;
@@ -2186,18 +2187,18 @@ span.flatpickr-weekday {
 .search-item {
     display: block;
     padding: 10px 15px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--brand-sand);
     text-decoration: none;
-    color: #333;
+    color: var(--brand-espresso);
 }
 
 .search-item:hover {
-    background: #f5f5f5;
+    background: var(--brand-sand);
 }
 
 .no-result {
     padding: 10px 15px;
-    color: #999;
+    color: var(--brand-taupe);
 }
     </style>
 
@@ -2558,7 +2559,8 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                         </div>
                                                                             </div>
                                 </div>
-
+
+
                             </div>
                         </div>
                     </div>
@@ -2586,7 +2588,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                                         <ul data-aos="fade-up" class="mt-4 pt-4">
                                                                 <li class="d-flex align-items-center mb-2 mb-md-4 pb-3">
                                     <div class="icon">
-                                                                                    <svg class="step-icon" width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="#B98230" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;width:40px;height:40px" role="img" aria-label="Enter Your Details"><rect x="9" y="8" width="32" height="48" rx="4"/><rect x="19" y="4" width="12" height="7" rx="2.5"/><path d="M47.5 26.5l5 5-16 16-6.5 1.5 1.5-6.5z"/><g stroke="#D9B98A" stroke-width="1.3"><path d="M16 22h18M16 30h18M16 38h11"/><path d="M44.5 29.5l5 5"/></g></svg>
+                                                                                    <svg class="step-icon" width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="#D1AA68" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;width:40px;height:40px" role="img" aria-label="Enter Your Details"><rect x="9" y="8" width="32" height="48" rx="4"/><rect x="19" y="4" width="12" height="7" rx="2.5"/><path d="M47.5 26.5l5 5-16 16-6.5 1.5 1.5-6.5z"/><g stroke="#D1AA68" stroke-width="1.3"><path d="M16 22h18M16 30h18M16 38h11"/><path d="M44.5 29.5l5 5"/></g></svg>
                                                                             </div>
                                     <div class="content">
                                         <h4 class="font-family01 fs-18 fw-400 text-maroon-900 mb-6">Enter Your Details</h4>
@@ -2595,7 +2597,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                 </li>
                                                                 <li class="d-flex align-items-center mb-2 mb-md-4 pb-3">
                                     <div class="icon">
-                                                                                    <svg class="step-icon" width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="#B98230" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;width:40px;height:40px" role="img" aria-label="Receive an  Estimate"><path d="M14 6h36v48l-4.5-3-4.5 3-4.5-3-4.5 3-4.5-3-4.5 3-4.5-3-4.5 3z"/><path d="M21 40h22"/><path d="M30 45.5h13"/><g stroke="#D9B98A" stroke-width="1.3"><path d="M21 17h22M21 24h22M21 31h14"/></g></svg>
+                                                                                    <svg class="step-icon" width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="#D1AA68" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;width:40px;height:40px" role="img" aria-label="Receive an  Estimate"><path d="M14 6h36v48l-4.5-3-4.5 3-4.5-3-4.5 3-4.5-3-4.5 3-4.5-3-4.5 3z"/><path d="M21 40h22"/><path d="M30 45.5h13"/><g stroke="#D1AA68" stroke-width="1.3"><path d="M21 17h22M21 24h22M21 31h14"/></g></svg>
                                                                             </div>
                                     <div class="content">
                                         <h4 class="font-family01 fs-18 fw-400 text-maroon-900 mb-6">Receive an  Estimate</h4>
@@ -2604,7 +2606,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                 </li>
                                                                 <li class="d-flex align-items-center mb-2 mb-md-4 pb-3">
                                     <div class="icon">
-                                                                                    <svg class="step-icon" width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="#B98230" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;width:40px;height:40px" role="img" aria-label="Review Your Options"><rect x="7" y="16" width="22" height="28" rx="3"/><rect x="33" y="12" width="22" height="28" rx="3"/><circle cx="41" cy="43" r="8.5"/><path d="M47 49l6.5 6.5"/><g stroke="#D9B98A" stroke-width="1.3"><path d="M12 24h12M12 30h12M12 36h8"/><path d="M38 20h12M38 26h12"/></g></svg>
+                                                                                    <svg class="step-icon" width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="#D1AA68" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;width:40px;height:40px" role="img" aria-label="Review Your Options"><rect x="7" y="16" width="22" height="28" rx="3"/><rect x="33" y="12" width="22" height="28" rx="3"/><circle cx="41" cy="43" r="8.5"/><path d="M47 49l6.5 6.5"/><g stroke="#D1AA68" stroke-width="1.3"><path d="M12 24h12M12 30h12M12 36h8"/><path d="M38 20h12M38 26h12"/></g></svg>
                                                                             </div>
                                     <div class="content">
                                         <h4 class="font-family01 fs-18 fw-400 text-maroon-900 mb-6">Review Your Options</h4>
@@ -2613,7 +2615,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                 </li>
                                                                 <li class="d-flex align-items-center mb-2 mb-md-4 pb-3">
                                     <div class="icon">
-                                                                                    <svg class="step-icon" width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="#B98230" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;width:40px;height:40px" role="img" aria-label="Plan With Confidence"><circle cx="32" cy="26" r="16"/><path d="M24.5 26.5l5.5 5.5 11-12" stroke-width="2.2"/><path d="M22 39l-4 15 14-6 14 6-4-15"/><g stroke="#D9B98A" stroke-width="1.3"><circle cx="32" cy="26" r="11.5"/></g></svg>
+                                                                                    <svg class="step-icon" width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="#D1AA68" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:block;width:40px;height:40px" role="img" aria-label="Plan With Confidence"><circle cx="32" cy="26" r="16"/><path d="M24.5 26.5l5.5 5.5 11-12" stroke-width="2.2"/><path d="M22 39l-4 15 14-6 14 6-4-15"/><g stroke="#D1AA68" stroke-width="1.3"><circle cx="32" cy="26" r="11.5"/></g></svg>
                                                                             </div>
                                     <div class="content">
                                         <h4 class="font-family01 fs-18 fw-400 text-maroon-900 mb-6">Plan With Confidence</h4>
@@ -3283,10 +3285,10 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     =============================-->
     
     <style>
-        .whatsapp-btn{position: fixed;bottom: 40px;right: 40px;width: 60px;height: 60px;background: #25D366;color: #fff; border-radius: 50%;display: flex;align-items: center;justify-content: center;text-decoration: none;font-size: 30px;z-index: 9999;animation: float 3s ease-in-out infinite,pulse 2s infinite;}
+        .whatsapp-btn{position: fixed;bottom: 40px;right: 40px;width: 60px;height: 60px;background: #25D366;color: var(--brand-ivory); border-radius: 50%;display: flex;align-items: center;justify-content: center;text-decoration: none;font-size: 30px;z-index: 9999;animation: float 3s ease-in-out infinite,pulse 2s infinite;}
 
         .homepage-gold-theme .banner-wrapper {
-            background: #fff;
+            background: var(--brand-ivory);
         }
 
         .homepage-gold-theme .banner-wrapper .slider-banner {
@@ -3314,14 +3316,14 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         .homepage-gold-theme .viv-custom-modal .modal-content {
             border: 0;
             border-radius: 22px;
-            box-shadow: 0 30px 90px rgba(33, 18, 12, 0.38);
+            box-shadow: 0 30px 90px rgba(75,61,52, 0.38);
             overflow: hidden;
         }
 
         .enquiry-popup-grid {
             display: grid;
             grid-template-columns: minmax(300px, 0.9fr) 1fr;
-            background: #fffaf4;
+            background: var(--brand-ivory);
             min-height: 540px;
         }
 
@@ -3335,7 +3337,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             border-radius: 50%;
             background: rgba(255,255,255,0.92);
             z-index: 5;
-            box-shadow: 0 10px 26px rgba(33, 18, 12, 0.16);
+            box-shadow: 0 10px 26px rgba(75,61,52, 0.16);
         }
 
         .enquiry-popup-close:before,
@@ -3346,7 +3348,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             top: 18px;
             width: 16px;
             height: 2px;
-            background: #4A3C33;
+            background: var(--brand-espresso);
             border-radius: 2px;
         }
 
@@ -3361,7 +3363,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         .enquiry-popup-media {
             position: relative;
             min-height: 540px;
-            background-image: linear-gradient(180deg, rgba(58,45,37,0.08), rgba(58,45,37,0.84)), url('/media/legacy/b433fd68d0f4c602.jpg');
+            background-image: linear-gradient(180deg, rgb(75 61 52 / 8%), rgb(75 61 52 / 84%)), url('/media/legacy/b433fd68d0f4c602.jpg');
             background-position: center;
             background-size: cover;
         }
@@ -3371,7 +3373,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             left: 26px;
             right: 26px;
             bottom: 26px;
-            color: #fff;
+            color: var(--brand-ivory);
         }
 
         .enquiry-popup-brand {
@@ -3385,13 +3387,13 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             line-height: 1;
             letter-spacing: 0.16em;
             text-transform: uppercase;
-            font-family: "Readex Pro", sans-serif;
+            font-family: var(--brand-font-body);
         }
 
         .enquiry-popup-media h3 {
             margin: 0 0 18px;
-            color: #fff;
-            font-family: "Readex Pro", sans-serif;
+            color: var(--brand-ivory);
+            font-family: var(--brand-font-display);
             font-size: 30px;
             line-height: 1.16;
             font-weight: 500;
@@ -3407,8 +3409,8 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             padding: 8px 10px;
             border-radius: 999px;
             background: rgba(255,255,255,0.92);
-            color: #4A3C33;
-            font-family: "Public Sans", sans-serif;
+            color: var(--brand-espresso);
+            font-family: var(--brand-font-body);
             font-size: 11px;
             font-weight: 700;
         }
@@ -3426,9 +3428,9 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             margin-bottom: 14px;
             padding: 6px 12px;
             border-radius: 999px;
-            background: #F3E5D3;
-            color: #936C35;
-            font-family: "Readex Pro", sans-serif;
+            background: var(--brand-sand);
+            color: var(--brand-burgundy);
+            font-family: var(--brand-font-body);
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 0.12em;
@@ -3437,15 +3439,15 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
         .enquiry-popup-title {
             margin: 0 0 20px;
-            color: #3A2D25;
-            font-family: "Readex Pro", sans-serif;
+            color: var(--brand-espresso);
+            font-family: var(--brand-font-display);
             font-size: 29px;
             line-height: 1.16;
             font-weight: 600;
         }
 
         .enquiry-popup-copy {
-            color: rgba(58,45,37,0.72);
+            color: #766559;
             font-size: 14px;
             line-height: 1.6;
             margin: 0 0 20px;
@@ -3458,8 +3460,8 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
         .enquiry-popup-form .form-label {
             margin: 0 0 5px;
-            color: #4A3C33 !important;
-            font-family: "Readex Pro", sans-serif;
+            color: var(--brand-espresso) !important;
+            font-family: var(--brand-font-body);
             font-size: 11px;
             font-weight: 700;
         }
@@ -3467,12 +3469,12 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         .enquiry-popup-form .form-group input,
         .enquiry-popup-form .form-group textarea {
             width: 100%;
-            border: 1px solid #E1D3C1;
-            background: #fff;
+            border: 1px solid var(--brand-sand);
+            background: var(--brand-ivory);
             border-radius: 12px;
-            color: #3A2D25;
+            color: var(--brand-espresso);
             font-size: 13px;
-            box-shadow: 0 8px 20px rgba(74,60,51,0.04);
+            box-shadow: 0 8px 20px rgb(75 61 52 / 4%);
         }
 
         .enquiry-popup-form .form-group input {
@@ -3496,9 +3498,9 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             margin-top: 6px;
             padding: 0 18px;
             border-radius: 999px;
-            background: linear-gradient(90deg, #9F6E2C, #C58A32) !important;
-            color: #fff !important;
-            box-shadow: 0 14px 26px rgba(159,110,44,0.28);
+            background: linear-gradient(90deg, var(--brand-espresso), var(--brand-taupe)) !important;
+            color: var(--brand-ivory) !important;
+            box-shadow: 0 14px 26px rgba(209,170,104,0.28);
             letter-spacing: 0.04em;
             transform: translateY(0);
             transition: transform 0.25s ease, box-shadow 0.25s ease, background-position 0.35s ease;
@@ -3521,10 +3523,10 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
         .enquiry-popup-form button[type="submit"]:hover,
         .enquiry-popup-form button[type="submit"]:focus {
-            color: #fff !important;
-            background: linear-gradient(90deg, #B98230, #D6A14A) !important;
+            color: var(--brand-ivory) !important;
+            background: linear-gradient(90deg, var(--brand-taupe), var(--brand-taupe)) !important;
             background-position: right center !important;
-            box-shadow: 0 18px 34px rgba(159,110,44,0.36);
+            box-shadow: 0 18px 34px rgba(209,170,104,0.36);
             transform: translateY(-2px);
         }
 
@@ -3535,8 +3537,8 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
         .enquiry-popup-note {
             margin: 12px 0 0;
-            color: rgba(58,45,37,0.62);
-            font-family: "Public Sans", sans-serif;
+            color: #766559;
+            font-family: var(--brand-font-body);
             font-size: 11px;
             text-align: center;
         }
@@ -3544,11 +3546,11 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         .enquiry-success-panel {
             margin-top: 18px;
             padding: 34px 26px;
-            border: 1px solid rgba(185,130,48,0.26);
+            border: 1px solid rgba(209, 170, 104,0.26);
             border-radius: 18px;
-            background: linear-gradient(180deg, #fffdf9, #f8eddf);
+            background: linear-gradient(180deg, var(--brand-ivory), var(--brand-sand));
             text-align: center;
-            box-shadow: 0 18px 42px rgba(74,60,51,0.12);
+            box-shadow: 0 18px 42px rgb(75 61 52 / 12%);
             outline: none;
         }
 
@@ -3559,8 +3561,8 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             height: 54px;
             margin-bottom: 18px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #9F6E2C, #C58A32);
-            box-shadow: 0 14px 28px rgba(159,110,44,0.26);
+            background: linear-gradient(135deg, var(--brand-champagne), var(--brand-champagne));
+            box-shadow: 0 14px 28px rgba(209,170,104,0.26);
         }
 
         .enquiry-success-icon:after {
@@ -3570,7 +3572,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
             top: 48%;
             width: 15px;
             height: 26px;
-            border: solid #fff;
+            border: solid var(--brand-ivory);
             border-width: 0 3px 3px 0;
             transform: translate(-50%, -50%) rotate(45deg);
             transform-origin: center;
@@ -3578,8 +3580,8 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 
         .enquiry-success-panel h5 {
             margin: 0 0 10px;
-            color: #3A2D25;
-            font-family: "Readex Pro", sans-serif;
+            color: var(--brand-espresso);
+            font-family: var(--brand-font-display);
             font-size: 24px;
             line-height: 1.22;
             font-weight: 600;
@@ -3588,16 +3590,16 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
         .enquiry-success-panel p {
             margin: 0 auto 14px;
             max-width: 390px;
-            color: rgba(58,45,37,0.72);
-            font-family: "Public Sans", sans-serif;
+            color: #766559;
+            font-family: var(--brand-font-body);
             font-size: 14px;
             line-height: 1.65;
         }
 
         .enquiry-success-panel small {
             display: block;
-            color: #936C35;
-            font-family: "Readex Pro", sans-serif;
+            color: var(--brand-burgundy);
+            font-family: var(--brand-font-body);
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 0.08em;
@@ -4219,9 +4221,9 @@ var checkInPicker = flatpickr('#checkIn', {
 
     if (!hasRateData) {
         offcanvasBodyHtml = `
-            <div class="gst-box mt-3 mb-2 p-3" style="background:#fff7ef;border-radius:10px;border:1px solid #f0e0cc;">
+            <div class="gst-box mt-3 mb-2 p-3" style="background:var(--brand-ivory);border-radius:10px;border:1px solid var(--brand-sand);">
                 <h6 class="text-prime-dark fw600 mb-2">Estimate needs planner confirmation</h6>
-                <p class="font-family03 fs-13 mb-0" style="color:#6d5240;line-height:1.7;">We could not find current rate data for this hotel and month. Please share your details and our team will confirm the best available pricing.</p>
+                <p class="font-family03 fs-13 mb-0" style="color:var(--brand-espresso);line-height:1.7;">We could not find current rate data for this hotel and month. Please share your details and our team will confirm the best available pricing.</p>
             </div>
             <div class="text-end mt-4">
                 <a href="/wedding-consultation" class="btn text-uppercase">Book Consultation</a>
@@ -4232,14 +4234,14 @@ var checkInPicker = flatpickr('#checkIn', {
     var grandWithGst = ViraayaTax.total(grandTotal);
 
 offcanvasBodyHtml += `
-    <div class="gst-box mt-3 mb-2 p-3" style="background:#fdf6f0;border-radius:10px;border:1px solid #f0e0cc;">
+    <div class="gst-box mt-3 mb-2 p-3" style="background:#FFF9F2;border-radius:10px;border:1px solid #E7D9CD;">
         ${ViraayaTax.rowsHtml(grandTotal, convertAndFormat)}
         
     </div>
 
     <div class="cost-row total mb-2 d-flex justify-content-between align-items-center mt-3 p-3"
-         style="background:linear-gradient(57deg,#FFF8F3,#FBF3E8);border-radius:10px;">
-        <span style="font-size:14px;font-weight:600;color:#2d2d2d;">Total Estimated Cost <small style="font-size:11px;color:#999;">(${ViraayaTax.totalNote()})</small></span>
+         style="background:linear-gradient(57deg,#FFF9F2,#E7D9CD);border-radius:10px;">
+        <span style="font-size:14px;font-weight:600;color:#4B3D34;">Total Estimated Cost <small style="font-size:11px;color:#766559;">(${ViraayaTax.totalNote()})</small></span>
         <span class="grandTotal text-prime">${convertAndFormat(grandWithGst)}</span>
     </div>
 

@@ -43,23 +43,25 @@ const SKIP_LINK =
 const CITY_FILTER_SCRIPT = '<script src="/js/city-filter-mobile.js" defer></script>';
 
 /**
- * The two fonts every page needs before first paint: Inter 400 is the `body`
- * default, Readex Pro 600 is what every `<h1>` renders in. Preloading only
- * these -- not all 47 -- keeps the hint on the actual critical path; hinting
- * every weight would just contend with the two that matter and the browser
- * would still discover the rest from the stylesheet at the normal time.
+ * The two fonts every page needs before first paint: Lato 400 is the `body`
+ * default, Cormorant Garamond 600 is what every `<h1>` renders in. Preloading
+ * only these -- not every brand face -- keeps the hint on the actual critical
+ * path; hinting every weight would just contend with the two that matter and
+ * the browser would still discover the rest from the stylesheet at the normal
+ * time.
  */
+const FONT_PRELOAD_MARKER = "lato-latin-400-normal.woff2";
 const FONT_PRELOADS =
-  '<link rel="preload" as="font" type="font/woff2" href="/vendor/google-fonts/font-12.woff2" crossorigin>' +
-  '<link rel="preload" as="font" type="font/woff2" href="/vendor/google-fonts/font-40.woff2" crossorigin>';
+  `<link rel="preload" as="font" type="font/woff2" href="/vendor/brand-fonts/${FONT_PRELOAD_MARKER}" crossorigin>` +
+  '<link rel="preload" as="font" type="font/woff2" href="/vendor/brand-fonts/cormorant-garamond-latin-600-normal.woff2" crossorigin>';
 
 const PUBLIC_ENHANCEMENTS_STYLE = `<style id="vw-public-enhancements">
 .vw-skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
-.vw-skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;padding:.5rem 1rem;background:#111;color:#fff;z-index:2000;border-radius:6px}
+.vw-skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;padding:.5rem 1rem;background:#4B3D34;color:#FFF9F2;z-index:2000;border-radius:6px}
 @media (max-width:991px){
   .sidebar-mobile-popup{display:none;position:fixed;inset:0;z-index:1050;background:rgba(0,0,0,.45);padding:1rem;overflow:auto}
   .sidebar-mobile-popup.is-open{display:block}
-  .sidebar-mobile-popup .sidebar{background:#fff;border-radius:12px;padding:1rem;max-width:420px;margin:3rem auto 0}
+  .sidebar-mobile-popup .sidebar{background:#FFF9F2;border-radius:12px;padding:1rem;max-width:420px;margin:3rem auto 0}
 }
 /* The visible carousel dots stay pixel-tiny by design (4-8px); WCAG 2.5.5
    wants a 44px tap target regardless. An invisible ::after expands the hit
@@ -271,7 +273,7 @@ function injectEnhancements(html: string, pathname: string): string {
   // font (by parsing the stylesheet, which it has not fetched yet at this
   // point) -- appended at the end of head like the rest of this function, it
   // would be no earlier than the browser finding it itself.
-  if (!next.includes("font-12.woff2") && next.includes('<meta charset="utf-8">')) {
+  if (!next.includes(FONT_PRELOAD_MARKER) && next.includes('<meta charset="utf-8">')) {
     next = next.replace('<meta charset="utf-8">', `<meta charset="utf-8">${FONT_PRELOADS}`);
   }
 

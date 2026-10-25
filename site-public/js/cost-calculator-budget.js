@@ -46,8 +46,8 @@
     'use strict';
 
     var ENDPOINT = '/api/calculator/budget-match';
-    var GOLD = '#B98230';
-    var INK = '#4A3C33';
+    var GOLD = '#6A4147'; // brand Burgundy: accent text on light grounds
+    var INK = '#4B3D34';
 
     /**
      * True on the pages carrying the full picker.
@@ -217,7 +217,7 @@
      * ------------------------------------------------------------------ */
     function hotelRow(hotel, format, highlight) {
         var capacity = hotel.total_rooms > 0
-            ? '<span style="font-size:11px;color:#999;"> &middot; ' + hotel.total_rooms + ' rooms</span>'
+            ? '<span style="font-size:11px;color:#766559;"> &middot; ' + hotel.total_rooms + ' rooms</span>'
             : '';
         var note = hotel.over_capacity
             ? '<div style="font-size:11px;color:#b3261e;margin-top:2px;">Fewer rooms than your busiest day needs</div>'
@@ -226,8 +226,8 @@
         return ''
             + '<li style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;'
             + 'padding:10px 12px;border-radius:8px;margin-bottom:6px;'
-            + 'background:' + (highlight ? '#FFF8F0' : '#fafafa') + ';'
-            + 'border:1px solid ' + (highlight ? '#f0e0cc' : '#eee') + ';">'
+            + 'background:' + (highlight ? '#E7D9CD' : '#FFF9F2') + ';'
+            + 'border:1px solid ' + (highlight ? '#D1AA68' : '#E7D9CD') + ';">'
             + '<div><span style="font-size:13px;color:' + INK + ';font-weight:600;">'
             + escapeHtml(hotel.name) + '</span>' + capacity + note + '</div>'
             + '<span style="font-size:13px;font-weight:600;color:' + GOLD + ';white-space:nowrap;">'
@@ -239,7 +239,7 @@
         if (!hotels.length) return '';
         return ''
             + '<div class="mb-3">'
-            + '<div style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#999;margin-bottom:8px;">'
+            + '<div style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#766559;margin-bottom:8px;">'
             + escapeHtml(title) + '</div>'
             + '<ul style="list-style:none;padding:0;margin:0;">'
             + hotels.map(function (hotel) { return hotelRow(hotel, format, highlight); }).join('')
@@ -261,7 +261,7 @@
 
         return ''
             + '<form method="post" action="/api/lead" data-form-name="Cost Calculator Budget Enquiry"'
-            + ' class="viraaya-budget-enquiry mt-4 p-3" style="background:#fdf6f0;border:1px solid #f0e0cc;border-radius:10px;">'
+            + ' class="viraaya-budget-enquiry mt-4 p-3" style="background:#FFF9F2;border:1px solid #E7D9CD;border-radius:10px;">'
             + hidden
             + '<div style="font-size:13px;font-weight:600;color:' + INK + ';margin-bottom:10px;">'
             + 'Send this to our team</div>'
@@ -301,7 +301,7 @@
 
         return ''
             + '<h5 class="text-prime-dark fw600 mb-1">' + headline + '</h5>'
-            + '<p class="font-family03" style="font-size:12px;color:#888;">' + subline + '</p>';
+            + '<p class="font-family03" style="font-size:12px;color:#766559;">' + subline + '</p>';
     }
 
     function renderResults(result, format) {
@@ -320,12 +320,12 @@
             false,
         );
         if (others.length > 12) {
-            body += '<p class="font-family03" style="font-size:11px;color:#999;">'
+            body += '<p class="font-family03" style="font-size:11px;color:#766559;">'
                 + 'Showing the 12 closest of ' + others.length + ' other hotels here.</p>';
         }
 
         if (result.unpriced.length) {
-            body += '<p class="font-family03" style="font-size:11px;color:#999;">'
+            body += '<p class="font-family03" style="font-size:11px;color:#766559;">'
                 + result.unpriced.length + ' more '
                 + (result.unpriced.length === 1 ? 'hotel is' : 'hotels are')
                 + ' priced on request and are not costed above: '

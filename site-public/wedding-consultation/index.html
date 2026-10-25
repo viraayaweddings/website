@@ -1523,7 +1523,7 @@
     top: 100%;              /* directly below input */
     left: 0;
     width: 100%;
-    background: #fff;
+    background: var(--brand-ivory);
     border-radius: 6px;
     margin-top: 5px;
     max-height: 300px;
@@ -1535,18 +1535,18 @@
 .search-item {
     display: block;
     padding: 10px 15px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--brand-sand);
     text-decoration: none;
-    color: #333;
+    color: var(--brand-espresso);
 }
 
 .search-item:hover {
-    background: #f5f5f5;
+    background: var(--brand-sand);
 }
 
 .no-result {
     padding: 10px 15px;
-    color: #999;
+    color: var(--brand-taupe);
 }
     </style>
 
@@ -1616,23 +1616,23 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 <style>
 .booking-Confirm-wrapper { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:1050; align-items:center; justify-content:center; }
 .booking-Confirm-wrapper.active { display:flex; }
-.booking-Confirm-wrapper .booking-card { background:#fff; border-radius:12px; padding:0px; width:100%; max-width:480px; position:relative; box-shadow:0 20px 60px rgba(0,0,0,0.25); max-height:90vh; overflow-y:auto; }
+.booking-Confirm-wrapper .booking-card { background:var(--brand-ivory); border-radius:12px; padding:0px; width:100%; max-width:480px; position:relative; box-shadow:0 20px 60px rgba(0,0,0,0.25); max-height:90vh; overflow-y:auto; }
 .booking-Confirm-wrapper .close-modal-btn { position:absolute; top:14px; right:14px; background:none; border:none; cursor:pointer; padding:4px; line-height:1; }
 .booking-Confirm-wrapper .close-modal-btn img { width:20px; }
 .form-group { position:relative; }
-.form-group i { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:#aaa; pointer-events:none; z-index:1; }
+.form-group i { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--brand-taupe); pointer-events:none; z-index:1; }
 
 /*.form-group .form-control { padding-left:36px; }*/
-.selected-info { background:#f9f5ef; border-radius:8px; padding:14px 16px; margin-bottom:20px; display:flex; gap:32px; }
-.selected-info .icon { font-size:18px; color:#b5893a; margin-right:10px; margin-top:2px; }
-.selected-info .content p { margin:0; font-size:11px; color:#888; text-transform:uppercase; letter-spacing:0.5px; }
-.selected-info .content h5 { margin:2px 0 0; font-size:14px; font-weight:600; color:#2a1a0e; }
-.booking-title { font-size:20px; font-weight:700; margin-bottom:20px; color:#2a1a0e; }
+.selected-info { background:var(--brand-ivory); border-radius:8px; padding:14px 16px; margin-bottom:20px; display:flex; gap:32px; }
+.selected-info .icon { font-size:18px; color:var(--brand-burgundy); margin-right:10px; margin-top:2px; }
+.selected-info .content p { margin:0; font-size:11px; color:var(--brand-taupe); text-transform:uppercase; letter-spacing:0.5px; }
+.selected-info .content h5 { margin:2px 0 0; font-size:14px; font-weight:600; color:var(--brand-espresso); }
+.booking-title { font-size:20px; font-weight:700; margin-bottom:20px; color:var(--brand-espresso); }
 .invalid-feedback[data-error] { display:none; font-size:12px; color:#dc3545; margin-top:4px; }
 .invalid-feedback[data-error].visible { display:block; }
 .form-control.is-invalid { border-color:#dc3545; }
 #topErrors { margin-bottom:12px; font-size:13px; }
-.consultation-form-note { text-align:center; color:#888; margin-top:8px; margin-bottom:0; }
+.consultation-form-note { text-align:center; color:var(--brand-taupe); margin-top:8px; margin-bottom:0; }
 .consultation-wrapper .widget ul li .icon img {
     filter: brightness(0) saturate(100%) invert(48%) sepia(70%) saturate(495%) hue-rotate(357deg) brightness(95%) contrast(89%);
     opacity: .74;
@@ -1643,7 +1643,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #B98230;
+    color: var(--brand-burgundy);
     font-size: 30px;
 }
 .what-cons-wrapper img[src*="/storage/appointment/"][src$=".png"],
@@ -1660,14 +1660,14 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 .consultation-wrapper .booking-layout {
     --consult-time-width: 140px;
     display: flex;
-    border: 1px solid #eadfce;
+    border: 1px solid var(--brand-sand);
     border-radius: 24px;
     overflow: hidden;
     margin-top: 24px;
-    background: #fff;
+    background: var(--brand-ivory);
 }
 .consultation-wrapper .booking-left { flex: 1 1 calc(100% - var(--consult-time-width)); min-width: 0; padding: 12px 22px 18px; }
-.consultation-wrapper .booking-right { flex: 0 0 var(--consult-time-width); min-width: var(--consult-time-width); max-width: var(--consult-time-width); overflow: hidden; background: #fbf3e8; }
+.consultation-wrapper .booking-right { flex: 0 0 var(--consult-time-width); min-width: var(--consult-time-width); max-width: var(--consult-time-width); overflow: hidden; background: var(--brand-sand); }
 .consultation-wrapper .booking-right #time-slots.time-slot-list {
     display: flex !important;
     flex-direction: column !important;
@@ -1695,7 +1695,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     margin: 0 0 6px !important;
     text-align: center !important;
 }
-.consultation-wrapper .booking-right #time-slots.time-slot-list h5 { color: #B98230; font-size: 13px; font-weight: 600; }
+.consultation-wrapper .booking-right #time-slots.time-slot-list h5 { color: var(--brand-burgundy); font-size: 13px; font-weight: 600; }
 .consultation-wrapper .booking-right #time-slots .time-slot {
     width: 105px !important;
     min-width: 105px !important;
@@ -1706,7 +1706,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     margin: 0 auto !important;
     border: 0 !important;
     background: transparent;
-    color: #6d625a;
+    color: var(--brand-espresso);
     border-radius: 12px;
     padding: 8px 14px !important;
     font-size: 14px;
@@ -1715,7 +1715,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     cursor: pointer;
 }
 .consultation-wrapper .booking-right #time-slots .time-slot:hover,
-.consultation-wrapper .booking-right #time-slots .time-slot.active { background: #B98230; color: #fff; }
+.consultation-wrapper .booking-right #time-slots .time-slot.active { background: var(--brand-taupe); color: var(--brand-ivory); }
 .consultation-wrapper .booking-layout .flatpickr-calendar {
     width: min(414px, 100%) !important;
     max-width: 100% !important;
@@ -1730,9 +1730,9 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
 .consultation-wrapper .booking-layout .flatpickr-day { max-width: none; height: 42px; line-height: 42px; border: 0; }
 .consultation-wrapper .booking-layout .flatpickr-day.selected,
 .consultation-wrapper .booking-layout .flatpickr-day.selected:hover {
-    background: #B98230;
-    color: #fff;
-    border-color: #B98230;
+    background: var(--brand-taupe);
+    color: var(--brand-ivory);
+    border-color: var(--brand-champagne);
 }
 .consultation-wrapper .booking-layout .flatpickr-months .flatpickr-month,
 .consultation-wrapper .booking-layout .flatpickr-current-month,
@@ -1740,9 +1740,9 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     background: transparent;
 }
 .consultation-wrapper .booking-layout .flatpickr-monthDropdown-months {
-    background-color: #fbf3e8;
+    background-color: var(--brand-sand);
     border-radius: 20px;
-    color: #3A2D25;
+    color: var(--brand-espresso);
     font-weight: 500;
     padding: 0 12px;
 }
@@ -1758,11 +1758,11 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     padding: 40px 20px 30px 20px;
 }
 .booking-Confirm-wrapper .booking-card .modal-header {
-    background-color: #ffe8ce;
+    background-color: var(--brand-sand);
     padding: 14px 20px;
 }
 .booking-Confirm-wrapper .booking-card .modal-header .booking-title {
-    color: #B98230;
+    color: var(--brand-burgundy);
     margin-bottom: 0;
     font-size: 20px;
 }
@@ -2031,7 +2031,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                             <div class="col-md-6" data-aos="fade-up">
                     <div class="box-bgr h-100">
                                                     <h5 class="text-primary fs-18 mb-md-3 mb-2">
-                                <svg class="heading-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B98230" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;width:20px;height:20px" role="img" aria-label=""><circle cx="12" cy="12" r="8.5"/><path d="M15.4 8.6l-2.1 4.7-4.7 2.1 2.1-4.7z"/></svg> You Don’t Know Where to Start
+                                <svg class="heading-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D1AA68" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;width:20px;height:20px" role="img" aria-label=""><circle cx="12" cy="12" r="8.5"/><path d="M15.4 8.6l-2.1 4.7-4.7 2.1 2.1-4.7z"/></svg> You Don’t Know Where to Start
                             </h5>
                                                 <p><p>You know you want a destination wedding, but everything after that feels unclear. Which city makes sense, how do you shortlist venues, when do you start booking vendors and what actually matters first? It’s easy to feel stuck before you even begin. In this consultation, our expert helps you break things down into simple, clear steps so you&rsquo;re not stumbling your way through the process.</p></p>
                     </div>
@@ -2039,7 +2039,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                 <div class="col-md-6" data-aos="fade-up">
                     <div class="box-bgr h-100">
                                                     <h5 class="text-primary fs-18 mb-md-3 mb-2">
-                                <svg class="heading-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B98230" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;width:20px;height:20px" role="img" aria-label=""><path d="M12 5.5v14M9 19.5h6"/><circle cx="12" cy="4" r="1.2"/><path d="M4 8.5h16M4 8.5v3.5M20 8.5v3.5"/><path d="M1.5 12a3 3 0 0 0 5 0M17.5 12a3 3 0 0 0 5 0"/></svg> You’re Confused Between What to Pick
+                                <svg class="heading-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D1AA68" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;width:20px;height:20px" role="img" aria-label=""><path d="M12 5.5v14M9 19.5h6"/><circle cx="12" cy="4" r="1.2"/><path d="M4 8.5h16M4 8.5v3.5M20 8.5v3.5"/><path d="M1.5 12a3 3 0 0 0 5 0M17.5 12a3 3 0 0 0 5 0"/></svg> You’re Confused Between What to Pick
                             </h5>
                                                 <p><p>You’ve done your research and shortlisted a few venues or destinations, but now everything looks equally good. The more you read, the more confusing it gets, and most information online feels either exaggerated or incomplete. Instead of going in circles, our expert helps you compare your options properly based on your priorities, so you can make a decision that feels right from the start.</p></p>
                     </div>
@@ -2047,7 +2047,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                 <div class="col-md-6" data-aos="fade-up">
                     <div class="box-bgr h-100">
                                                     <h5 class="text-primary fs-18 mb-md-3 mb-2">
-                                <svg class="heading-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B98230" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;width:20px;height:20px" role="img" aria-label=""><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v5c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 11v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"/></svg> You’re Tired of Uncertain Budgets
+                                <svg class="heading-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D1AA68" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;width:20px;height:20px" role="img" aria-label=""><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v5c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 11v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"/></svg> You’re Tired of Uncertain Budgets
                             </h5>
                                                 <p><p>Every time you ask for a quote, the numbers change. Different planners, different vendors, different estimates, and none of it feels reliable. It becomes difficult to understand what you should actually expect to spend. In this consultation, our expert gives you a clear, realistic budget based on your vision, backed by direct hospitality partnerships. That means you get access to negotiated pricing and a more accurate final closing budget, not just rough estimates.</p></p>
                     </div>
@@ -2055,7 +2055,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                 <div class="col-md-6" data-aos="fade-up">
                     <div class="box-bgr h-100">
                                                     <h5 class="text-primary fs-18 mb-md-3 mb-2">
-                                <svg class="heading-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B98230" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;width:20px;height:20px" role="img" aria-label=""><path d="M12 2.8l7.5 3v6.2c0 4.6-3.1 7.8-7.5 9.2-4.4-1.4-7.5-4.6-7.5-9.2V5.8z"/><path d="M8.8 12.1l2.3 2.3 4.1-4.5"/></svg> You Need Some Reassurance
+                                <svg class="heading-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D1AA68" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;width:20px;height:20px" role="img" aria-label=""><path d="M12 2.8l7.5 3v6.2c0 4.6-3.1 7.8-7.5 9.2-4.4-1.4-7.5-4.6-7.5-9.2V5.8z"/><path d="M8.8 12.1l2.3 2.3 4.1-4.5"/></svg> You Need Some Reassurance
                             </h5>
                                                 <p><p>You might already have a strong vision and know exactly what you want. But when it comes to making final decisions, there’s some hesitation. What if there’s a better option or something you’ve missed? That’s where this consultation helps. Our industry expert reviews your plan, validates your choices, and gives you the confidence that everything you&rsquo;re deciding is aligned with how destination weddings actually work.</p></p>
                     </div>
@@ -2269,7 +2269,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     =============================-->
     
     <style>
-        .whatsapp-btn{position: fixed;bottom: 40px;right: 40px;width: 60px;height: 60px;background: #25D366;color: #fff; border-radius: 50%;display: flex;align-items: center;justify-content: center;text-decoration: none;font-size: 30px;z-index: 9999;animation: float 3s ease-in-out infinite,pulse 2s infinite;}
+        .whatsapp-btn{position: fixed;bottom: 40px;right: 40px;width: 60px;height: 60px;background: #25D366;color: var(--brand-ivory); border-radius: 50%;display: flex;align-items: center;justify-content: center;text-decoration: none;font-size: 30px;z-index: 9999;animation: float 3s ease-in-out infinite,pulse 2s infinite;}
 
         /* Floating animation */
         @keyframes float {

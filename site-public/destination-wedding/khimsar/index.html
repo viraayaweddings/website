@@ -62,7 +62,7 @@
 <style>
 .hotel-card {
     border-radius: 14px;
-    border: solid 1px rgb(185 130 48 / 16%);
+    border: solid 1px rgb(209 170 104 / 16%);
 }
 
 .hotel-img {
@@ -80,9 +80,9 @@
     height: 38px;
     padding: 0 10px;
     border-radius: 48px;
-    border: 1px solid #ffecd9;
-    background: #fff;
-    color: #2d2d2d;
+    border: 1px solid var(--brand-sand);
+    background: var(--brand-ivory);
+    color: var(--brand-espresso);
     font-size: 13px;
     text-decoration: none;
     transition: all 0.2s ease;
@@ -90,23 +90,23 @@
 }
 
 .custom-pagination .page-btn:hover:not(.disabled):not(.active) {
-    background: #fdf4ee;
-    border-color: #b88a5c;
-    color: #8b5e3c;
+    background: var(--brand-ivory);
+    border-color: var(--brand-champagne);
+    color: var(--brand-burgundy);
 }
 
 .custom-pagination .page-btn.active {
-    background: #B98230;
-    border-color: #B98230;
-    color: #fff;
+    background: var(--brand-espresso);
+    border-color: var(--brand-champagne);
+    color: var(--brand-ivory);
     font-weight: 600;
     cursor: default;
 }
 
 .custom-pagination .page-btn.disabled {
-    background: #f5f5f5;
-    border-color: #e8d9cc;
-    color: #bbb;
+    background: var(--brand-sand);
+    border-color: var(--brand-sand);
+    color: var(--brand-taupe);
     cursor: default;
     pointer-events: none;
 }
@@ -140,10 +140,10 @@
 }
 
 .city-select-wrapper .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background: #800000 !important;
+    background: var(--brand-burgundy) !important;
     border: none !important;
     border-radius: 20px !important;
-    color: #fff !important;
+    color: var(--brand-ivory) !important;
     font-size: 11px !important;
     padding: 2px 10px !important;
     margin: 0 !important;
@@ -155,24 +155,24 @@
 }
 
 .city-select-wrapper .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
-    color: #fff !important;
+    color: var(--brand-ivory) !important;
     background: transparent !important;
 }
 
 .city-select-wrapper .select2-container--default .select2-search--inline .select2-search__field {
     font-size: 13px !important;
     margin: 0 !important;
-    color: #555 !important;
+    color: var(--brand-espresso) !important;
 }
 
 .city-select-wrapper .select2-container--default .select2-search--inline .select2-search__field::placeholder {
-    color: #aaa;
+    color: var(--brand-taupe);
 }
 
 /* Dropdown */
 .select2-dropdown {
     border-radius: 10px !important;
-    border: 1px solid #f0e6dc !important;
+    border: 1px solid var(--brand-sand) !important;
     box-shadow: 0 8px 24px rgba(0,0,0,0.10) !important;
     overflow: hidden;
 }
@@ -183,12 +183,12 @@
 }
 
 .select2-container--default .select2-results__option--highlighted {
-    background: #800000 !important;
+    background: var(--brand-burgundy) !important;
 }
 
 .select2-container--default .select2-results__option[aria-selected="true"] {
-    background: #fdf4ee !important;
-    color: #8b5e3c !important;
+    background: var(--brand-ivory) !important;
+    color: var(--brand-burgundy) !important;
 }
 
 .change-colm.list-view .col-xxl-4,
@@ -1689,7 +1689,7 @@
     top: 100%;              /* directly below input */
     left: 0;
     width: 100%;
-    background: #fff;
+    background: var(--brand-ivory);
     border-radius: 6px;
     margin-top: 5px;
     max-height: 300px;
@@ -1701,18 +1701,18 @@
 .search-item {
     display: block;
     padding: 10px 15px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--brand-sand);
     text-decoration: none;
-    color: #333;
+    color: var(--brand-espresso);
 }
 
 .search-item:hover {
-    background: #f5f5f5;
+    background: var(--brand-sand);
 }
 
 .no-result {
     padding: 10px 15px;
-    color: #999;
+    color: var(--brand-taupe);
 }
     </style>
 
@@ -2290,7 +2290,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
                                         <i class="fa-solid fa-users" aria-hidden="true"></i>
                                         200 Pax
                                     </span>
-                                    <!--<i class="fa-solid fa-circle" style="font-size:6px;color:#ccc;"></i>-->
+                                    <!--<i class="fa-solid fa-circle" style="font-size:6px;color:#766559;"></i>-->
                                     <!--<span class="text-muted">-->
                                     <!--    <i class="fa-regular fa-building"></i>-->
                                     <!--    Heritage Hotel-->
@@ -2317,7 +2317,7 @@ fetch("/hotel-search?q=" + encodeURIComponent(query))
     =============================-->
     
     <style>
-        .whatsapp-btn{position: fixed;bottom: 40px;right: 40px;width: 60px;height: 60px;background: #25D366;color: #fff; border-radius: 50%;display: flex;align-items: center;justify-content: center;text-decoration: none;font-size: 30px;z-index: 9999;animation: float 3s ease-in-out infinite,pulse 2s infinite;}
+        .whatsapp-btn{position: fixed;bottom: 40px;right: 40px;width: 60px;height: 60px;background: #25D366;color: var(--brand-ivory); border-radius: 50%;display: flex;align-items: center;justify-content: center;text-decoration: none;font-size: 30px;z-index: 9999;animation: float 3s ease-in-out infinite,pulse 2s infinite;}
 
         /* Floating animation */
         @keyframes float {

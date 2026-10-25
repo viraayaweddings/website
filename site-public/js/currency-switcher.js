@@ -229,7 +229,7 @@ const ViraayaTax = (() => {
      */
     function rowsHtml(subtotal, format) {
         const row = function (label, amount) {
-            return '<div class="d-flex justify-content-between mb-1" style="font-size:13px;color:#666;">'
+            return '<div class="d-flex justify-content-between mb-1" style="font-size:13px;color:#766559;">'
                 + '<span>' + escapeHtml(label) + '</span>'
                 + '<span class="fw-600 text-dark">' + format(amount) + '</span>'
                 + '</div>';
@@ -600,8 +600,8 @@ document.addEventListener('DOMContentLoaded', () => CurrencySwitcher.init());
     'use strict';
 
     const OVERLAY_ID = 'viraaya-price-on-request';
-    const GOLD = '#B98230';
-    const INK = '#4A3C33';
+    const GOLD = '#4B3D34'; // brand Espresso: solid fills carry Ivory text
+    const INK = '#4B3D34';
 
     function api() {
         const data = window.ViraayaCalculatorData;
@@ -681,14 +681,14 @@ document.addEventListener('DOMContentLoaded', () => CurrencySwitcher.init());
         overlay.setAttribute('aria-label', 'Price on request');
         overlay.style.cssText = [
             'position:fixed', 'inset:0', 'z-index:20000',
-            'background:rgba(30,22,18,0.55)',
+            'background:rgba(75,61,52,0.55)',
             'display:flex', 'align-items:center', 'justify-content:center',
             'padding:24px'
         ].join(';');
 
         const card = document.createElement('div');
         card.style.cssText = [
-            'background:#ffffff', 'border-radius:16px', 'max-width:420px', 'width:100%',
+            'background:#FFF9F2', 'border-radius:16px', 'max-width:420px', 'width:100%',
             'padding:32px 28px', 'text-align:center', 'box-shadow:0 24px 60px rgba(0,0,0,0.25)',
             'color:' + INK, 'font-family:inherit'
         ].join(';');
@@ -706,7 +706,7 @@ document.addEventListener('DOMContentLoaded', () => CurrencySwitcher.init());
         cta.textContent = 'REQUEST A QUOTE';
         cta.style.cssText = [
             'display:block', 'width:100%', 'border:none', 'cursor:pointer',
-            'background:' + GOLD, 'color:#ffffff', 'border-radius:40px',
+            'background:' + GOLD, 'color:#FFF9F2', 'border-radius:40px',
             'padding:16px 24px', 'font-size:12px', 'font-weight:700', 'letter-spacing:0.04em'
         ].join(';');
         cta.addEventListener('click', enquire);
