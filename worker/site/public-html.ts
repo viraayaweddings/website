@@ -73,11 +73,11 @@ const PUBLIC_ENHANCEMENTS_STYLE = `<style id="vw-public-enhancements">
    44px floor; padding grows the box without changing the visible chrome. */
 .hero-search input[type="search"],
 #searchbox{min-height:44px;padding-top:.5rem;padding-bottom:.5rem}
-@media (max-width:767px){
-  /* 12px is this site's own stated legibility floor; fs-8/9/10/11 sat below
-     it site-wide. fs-12 and up are left alone. */
-  .fs-8,.fs-9,.fs-10,.fs-11{font-size:12px!important}
-}
+/* 13px is the site's legibility floor for labels, buttons and footnotes;
+   style.css holds its own rules to it, but the page shells carry <style>
+   blocks of their own that set these classes smaller. */
+.fs-8,.fs-9,.fs-10,.fs-11,.fs-12{font-size:13px!important}
+.disclaimer-note,.disclaimer-cta,.disclaimer-list li,.form-group label,.bg-peach-50{font-size:14px}
 </style>`;
 
 const BLOG_FORM_EMAIL_FIELD =
