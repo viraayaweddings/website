@@ -229,6 +229,10 @@ main > .booking-Confirm-wrapper {background-color: rgb(75 61 52 / 55%);}
 
 
 .fs-10{font-size: 14px;}.fs-11{font-size: 14px;}.fs-12{font-size: 14px;}.fs-13{font-size: 16px !important;}.fs-14{font-size: 17px;}.fs-15{font-size: 17px;}.fs-16{font-size: 17px;}.fs-17{font-size: 18px !important;}.fs-18{font-size: 19px;}.fs-22{font-size: 22px;}.fs-20{font-size: 22px;}.fs-28{font-size: 28px;}.fs-23{font-size: 23px;}.fs-24{font-size: 24px;}.fs-26{font-size: 26px;}.fs-30{font-size: 30px !important;}.fs-31{font-size: 31px;}.fs-37{font-size: 37px;}.fs-40{font-size: 40px !important;}.fs-44{font-size: 44px;}.fs-48{font-size: 48px;}.fs-58{font-size: 58px;}
+/* Cormorant has a small x-height: a heading set in it at body sizes reads a
+   size smaller than the Lato beside it (a 17px title over 17px copy looked
+   like the caption), so display-face headings start at 20px. */
+:is(h1, h2, h3, h4, h5, h6):is(.font-family01, .font-family04):is(.fs-15, .fs-16, .fs-17, .fs-18) {font-size: 20px !important;line-height: 1.3;}
 
 
 .fw-100{font-weight: 400;}.fw-200{font-weight: 400;}.fw-300{font-weight: 400;}.fw-400{font-weight: 400;}.fw-500{font-weight: 400;}.fw-600{font-weight: 600;}.fw-700{font-weight: 700;}.fw-800{font-weight: 700;}
@@ -415,6 +419,9 @@ ul {list-style: none;padding: 0;margin: 0;}
  * Paragraphs
  */
 body {font-family: var(--brand-font-body);}
+/* Cormorant defaults to old-style figures, which set "70" as "7o" and "1" as
+   "I" in prices and counts; the brand reads numbers as lining figures. */
+html {font-variant-numeric: lining-nums;}
 
 .form-control:focus {color: var(--brand-espresso);background-color: var(--brand-ivory);border-color: rgba(209, 170, 104, 0.25);outline: 0;box-shadow: 0 0 0 .25rem rgba(209, 170, 104, 0.25);}
 
@@ -477,7 +484,7 @@ p {font-family: var(--brand-font-body);font-size: 17px;font-weight: normal;color
 /**
  * Base button styles
  */
-.btn {display: inline-block;vertical-align: middle;white-space: nowrap;font-size: 14px;cursor: pointer;border: none;margin: 0;padding: 16px 24px 16px 24px;overflow: visible;text-align: center;border-radius: 40px;-webkit-user-select: none;-moz-user-select: none;user-select: none;position: relative;z-index: 9;color: var(--brand-ivory);transition: all 0.5s ease;background-color: var(--brand-espresso);height: 48px;}
+.btn {display: inline-flex;align-items: center;justify-content: center;vertical-align: middle;white-space: nowrap;font-size: 14px;cursor: pointer;border: none;margin: 0;padding: 16px 24px 16px 24px;overflow: visible;text-align: center;border-radius: 40px;-webkit-user-select: none;-moz-user-select: none;user-select: none;position: relative;z-index: 9;color: var(--brand-ivory);transition: all 0.5s ease;background-color: var(--brand-espresso);height: 48px;}
 .btn:hover {color: var(--brand-ivory) !important;background-color: var(--brand-taupe);}
 .white-btn {color: var(--brand-espresso);background-color: var(--brand-ivory);}
 .white-btn:hover {color: var(--brand-ivory);background-color: var(--brand-taupe);}
@@ -740,7 +747,7 @@ ul#hotelTabs li button:hover {background: var(--brand-ivory);color: var(--brand-
 .deal-season-slider .slick-dots li.slick-active button {background-color: var(--brand-ivory) !important;}
 .deal-season-slider .slick-dots {bottom: 8px;}
 .deal-season-wrapper .deal-season-slider .slick-arrow {top: 45%;}
-.deal-season-wrapper .item.slick-current.slick-active.slick-center .content a.btn.white-btn {display: inline-block;}
+.deal-season-wrapper .item.slick-current.slick-active.slick-center .content a.btn.white-btn {display: inline-flex;}
 
 .post-wedding-wrapper .wedding-card {border: solid 1px rgb(209 170 104 / 16%);border-radius: 14px;overflow: hidden;background-color: var(--brand-ivory);}
 .post-wedding-wrapper .wedding-card #mainImg {border-radius: 14px;}
