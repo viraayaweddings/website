@@ -2308,3 +2308,27 @@ body .offcanvas.offcanvas-start.CostSummary.vw-budget-results {width: min(920px,
 .vw-result-actions .btn {display: inline-flex;align-items: center;justify-content: center;height: 42px;padding: 0 16px;font-size: 14px;font-weight: 700;text-transform: uppercase;}
 .vw-result-actions .btn-availability {flex: 1 1 auto;}
 .viraaya-budget-enquiry .form-control {font-size: 16px;}
+
+/* Hotels mega-menu on the brand: Cormorant for the city title and the
+   promo caption (italic, an emotional line), Lato for labels and links,
+   Champagne for the call to action and the scrollbars, and a soft edge
+   where the city list scrolls instead of a word cut in half. */
+.tablink-wrapper, .megamenulink-wrapper .megamenu-links {scrollbar-width: thin;scrollbar-color: var(--brand-champagne) transparent;}
+.tablink-wrapper::-webkit-scrollbar, .megamenulink-wrapper .megamenu-links::-webkit-scrollbar {width: 6px;}
+.tablink-wrapper::-webkit-scrollbar-track, .megamenulink-wrapper .megamenu-links::-webkit-scrollbar-track {background: transparent;}
+.tablink-wrapper::-webkit-scrollbar-thumb, .megamenulink-wrapper .megamenu-links::-webkit-scrollbar-thumb {background-color: var(--brand-champagne);border-radius: 6px;}
+@media (min-width: 993px) {
+    .nav-item.dropdown.position-static .dropdown-menu.megamenu {border: 1px solid rgb(209 170 104 / 24%);box-shadow: 0 28px 48px -28px rgb(75 61 52 / 40%);}
+    .tablink-wrapper {-webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent);mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent);padding-bottom: 36px;}
+    .tablink-wrapper > .text-prime-dark, .tablink-wrapper > .text-prime-dark small {font-size: 14px;font-weight: 700;letter-spacing: .08em;text-transform: uppercase;color: var(--brand-taupe) !important;}
+    ul#hotelTabs li button {font-size: 15px;font-weight: 700;letter-spacing: .04em;}
+    .megamenulink-wrapper .text-prime.text-uppercase {font-family: var(--brand-font-display);font-size: 28px !important;font-weight: 600;line-height: 1.2;text-transform: none !important;color: var(--brand-espresso) !important;}
+    #hotelTabsContent .megamenu-links ul li a {font-size: 16px;padding: 12px 0;border-bottom: 1px solid rgb(209 170 104 / 18%);}
+    .megamenulink-wrapper .btn.btn-outline-dark {padding: 10px 22px;font-size: 14px;font-weight: 700;text-transform: uppercase;letter-spacing: .04em;background-color: var(--brand-espresso) !important;color: var(--brand-ivory) !important;border: 0;text-decoration: none;}
+    .megamenulink-wrapper .btn.btn-outline-dark:hover {background-color: var(--brand-sand) !important;color: var(--brand-espresso) !important;}
+    .megamenu-image > div {background: linear-gradient(to top, rgb(75 61 52 / 88%) 0%, rgb(75 61 52 / 45%) 40%, transparent 70%) !important;}
+    .megamenu-image :is(h5, span).text-white {font-family: var(--brand-font-display);font-style: italic;font-size: 30px;font-weight: 600;line-height: 1.15;color: var(--brand-ivory) !important;}
+    .megamenu-image p.text-white {font-size: 16px !important;color: var(--brand-sand) !important;opacity: 1 !important;}
+    .megamenu-image .btn.btn-light {padding: 14px 20px;font-size: 14px;font-weight: 700;text-transform: uppercase;letter-spacing: .06em !important;background-color: var(--brand-champagne) !important;color: var(--brand-espresso) !important;border: 0;}
+    .megamenu-image .btn.btn-light:hover {background-color: var(--brand-ivory) !important;color: var(--brand-espresso) !important;}
+}
