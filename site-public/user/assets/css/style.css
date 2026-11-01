@@ -121,7 +121,8 @@ body {color: var(--brand-espresso);}
 /* flatpickr ships its own greys. */
 .flatpickr-day, span.flatpickr-weekday, .flatpickr-current-month, .flatpickr-months .flatpickr-prev-month, .flatpickr-months .flatpickr-next-month {color: var(--brand-espresso);}
 .flatpickr-months .flatpickr-prev-month svg, .flatpickr-months .flatpickr-next-month svg {fill: var(--brand-espresso);}
-.flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay, .flatpickr-day.flatpickr-disabled {color: rgb(118 101 89 / 60%);}
+.flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay {color: var(--brand-taupe);}
+.flatpickr-day.flatpickr-disabled {color: rgb(118 101 89 / 60%);}
 .numInputWrapper span.arrowUp, .numInputWrapper span.arrowDown {border-color: rgb(75 61 52 / 15%);}
 .numInputWrapper span.arrowUp:after {border-bottom-color: var(--brand-espresso);}
 .numInputWrapper span.arrowDown:after {border-top-color: var(--brand-espresso);}
@@ -225,7 +226,15 @@ main > .booking-Confirm-wrapper {background-color: rgb(75 61 52 / 55%);}
 /* Cormorant is for display sizes only; small or uppercase text set in the
    display class is information, which the brand sets in Lato. */
 .font-family01:is(.text-uppercase, .fs-10, .fs-11, .fs-12, .fs-13, .fs-14),
-.font-family04:is(.text-uppercase, .fs-10, .fs-11, .fs-12, .fs-13, .fs-14) {font-family: var(--brand-font-body);}
+.font-family04:is(.text-uppercase, .fs-10, .fs-11, .fs-12, .fs-13, .fs-14),
+.form-group label.font-family01,
+.card-box h5.font-family01,
+.product-images .content-widget h4 {font-family: var(--brand-font-body) !important;}
+/* An emotional line stays in Cormorant italic, at a size it can carry. */
+.about-content .alert em {font-size: 1.15em;}
+/* Sections that fade from Ivory into Sand: Taupe drops to 4.03:1 at the Sand
+   end, so supporting copy on them is set in Espresso. */
+body :is(.estimator-wrapper, .luxury-feedback, .bg-all-wrapper, .bg-gradient2, .venue-card-sidebar) :is(p, .text-deep-maroon-80, .text-deep-maroon-80 *, .text-maroon-900-80, .text-maroon-900-50, .venue-address, .card-footer-text) {color: var(--brand-espresso) !important;}
 
 
 .fs-10{font-size: 14px;}.fs-11{font-size: 14px;}.fs-12{font-size: 14px;}.fs-13{font-size: 16px !important;}.fs-14{font-size: 17px;}.fs-15{font-size: 17px;}.fs-16{font-size: 17px;}.fs-17{font-size: 18px !important;}.fs-18{font-size: 19px;}.fs-22{font-size: 22px;}.fs-20{font-size: 22px;}.fs-28{font-size: 28px;}.fs-23{font-size: 23px;}.fs-24{font-size: 24px;}.fs-26{font-size: 26px;}.fs-30{font-size: 30px !important;}.fs-31{font-size: 31px;}.fs-37{font-size: 37px;}.fs-40{font-size: 40px !important;}.fs-44{font-size: 44px;}.fs-48{font-size: 48px;}.fs-58{font-size: 58px;}
@@ -579,7 +588,9 @@ ul#hotelTabs li button:hover {background: var(--brand-ivory);color: var(--brand-
 /* BANNER CSS */
 .slider-banner .slick-track {display: flex !important;}
 .banner-wrapper .item {background-size: cover;padding: 150px 0px;padding-bottom: 164px;z-index: 9;position: relative;background-position: top; height: auto !important;}
-.banner-wrapper .item::before {position: absolute;content: '';top: 0px;height: 100%;width: 100%;background: linear-gradient(to right, rgb(75 61 52 / 50%), rgb(255 249 242 / 0%));z-index: -1;}
+.banner-wrapper .item::before {position: absolute;content: '';top: 0px;height: 100%;width: 100%;background: linear-gradient(to right, rgb(75 61 52 / 88%) 0%, rgb(75 61 52 / 78%) 45%, rgb(75 61 52 / 25%) 80%, rgb(75 61 52 / 0%) 100%);z-index: -1;}
+/* On phones the copy spans the full width, so the overlay does too. */
+@media (max-width: 767.98px) {.banner-wrapper .item::before {background: linear-gradient(to bottom, rgb(75 61 52 / 72%), rgb(75 61 52 / 86%));}}
 .banner-wrapper .luxury-img img:first-child {margin-left: 0;}
 .banner-wrapper .luxury-img img {margin-left: -8px;}
 .banner-wrapper .item .widget .luxury-venues-widget .luxury-img {margin-right: 12px;}
@@ -702,7 +713,8 @@ ul#hotelTabs li button:hover {background: var(--brand-ivory);color: var(--brand-
 .packages-wrapper .elite-card .elite-top .price {font-size: 33px;font-weight: 600;line-height: 28px;margin-top: 7px;}
 .packages-wrapper .elite-card .elite-top .price small {font-weight: 400;font-size: 21px;color: var(--brand-ivory);}
 .packages-wrapper .elite-card .elite-top .starting {font-size: 14px;font-weight: 400;}
-.packages-wrapper .elite-card .elite-top .explore-btn.btn {font-weight: 700;width: 236px;position: absolute;bottom: -28px;height: 58px;background-color: var(--brand-espresso); padding: 21px 0px;}
+.packages-wrapper .elite-card .elite-top .explore-btn.btn {font-weight: 700;width: 236px;position: absolute;bottom: -28px;height: 58px;background-color: var(--brand-champagne); color: var(--brand-espresso) !important; padding: 21px 0px;}
+.packages-wrapper .elite-card .elite-top .explore-btn.btn:hover {background-color: var(--brand-sand); color: var(--brand-espresso) !important;}
 .packages-wrapper .elite-card .elite-bottom .included-title {color: var(--brand-burgundy);margin-bottom: 14px;}
 .packages-wrapper .elite-card .elite-bottom .check-item strong {color: var(--brand-espresso);}
 .packages-wrapper .elite-card .elite-bottom .check-item span {color: var(--brand-taupe);font-size: 16px;}
@@ -728,7 +740,7 @@ ul#hotelTabs li button:hover {background: var(--brand-ivory);color: var(--brand-
 .deal-season-wrapper .item .img-widget {position: relative;box-shadow: 0px 16px 24px 0px rgba(0, 0, 0, 0.2);margin: 50px 9px;border-radius: 32px;margin-top: 0;height: 650px; overflow: hidden;}
 .deal-season-wrapper .item .img-widget img {height: 100%;object-fit: cover; width: 100%;}
 .check-in-widget.custom-mt-5 .form-group.dropdown-icon:after {display: none;}
-.deal-season-wrapper .item .img-widget:before {position: absolute;content: '';background: linear-gradient(to top, rgb(75 61 52 / 39%), rgb(255 249 242 / 0%));z-index: 999;width: 100%;height: 100%;left: 0px;border-radius: 32px;}
+.deal-season-wrapper .item .img-widget:before {position: absolute;content: '';background: linear-gradient(to top, rgb(75 61 52 / 92%) 0%, rgb(75 61 52 / 75%) 28%, rgb(75 61 52 / 0%) 60%);z-index: 999;width: 100%;height: 100%;left: 0px;border-radius: 32px;}
 .deal-season-wrapper .item .content {position: absolute;bottom: 50px;left: 0;right: 0;text-align: center; width: calc(100% - 41px);margin: 0 auto;z-index: 999;padding: 14px 0px;}
 .deal-season-wrapper .item .content .card-logo {width: 170px;height: 46px;margin: 0 auto;display: flex;align-items: center;justify-content: center;overflow: hidden;}
 .deal-season-wrapper .item .content .card-logo img {width: 150px;height: 42px;margin: 0 auto;object-fit: contain;}
@@ -1021,7 +1033,7 @@ ul#hotelTabs li button:hover {background: var(--brand-ivory);color: var(--brand-
 .listing-wrapper .search-box input.form-control::placeholder{color: var(--brand-taupe);}
 .listing-details-banner {background-size: cover;padding-top: 140px;background-repeat: no-repeat;padding-bottom: 130px;}
 .listing-details-banner .widget p {font-size: 17px;font-weight: 400;color: var(--brand-sand);letter-spacing: 0.02em;}
-.listing-details-banner .widget{max-width:390px;text-align: center;  padding: 30px 20px; border: solid 1px rgb(255 249 242 / 20%);background-color: rgb(75 61 52 / 70%);border-radius: 14px;backdrop-filter: blur(4px);}
+.listing-details-banner .widget{max-width:390px;text-align: center;  padding: 30px 20px; border: solid 1px rgb(255 249 242 / 20%);background-color: rgb(75 61 52 / 88%);border-radius: 14px;backdrop-filter: blur(4px);}
 
 .Air-porp{ color: var(--brand-champagne) !important;}
 
@@ -1051,7 +1063,7 @@ ul#hotelTabs li button:hover {background: var(--brand-ivory);color: var(--brand-
 .listing-details-wrapper .listing-heading .title-highlight {font-weight: 600;}
 .listing-details-wrapper .listing-heading a {font-size: 16px;color: var(--brand-taupe);}
 .listing-details-wrapper .listing-heading {margin-bottom: 20px;margin-top: 60px;}
-.listing-details-wrapper .product-images .content-widget {bottom: 0;}
+.listing-details-wrapper .product-images .content-widget {bottom: 0;background: linear-gradient(to top, rgb(75 61 52 / 90%), rgb(75 61 52 / 0%));}
 .listing-details-wrapper .product-images .content-widget h4 {font-size: 17px;color: var(--brand-ivory);font-weight: 600;margin: 0;}
 .listing-details-wrapper .product-images .content-widget a i {color: var(--brand-ivory);}
 .listing-details-wrapper .slider-thumbnails {margin: 14px -6px 0;max-width: 100%;overflow: hidden;}
@@ -1423,8 +1435,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 .past-wedding-details-widget {max-width: 440px;}
 .past-wedding-details .all-title {font-size: 50px;letter-spacing: -0.06rem;font-weight: 600;}
 .past-wedding-details-widget p {font-size: 18px;color: var(--brand-sand);letter-spacing: 0.02rem;}
-.past-wedding-details-widget .past-tags .tag {background-color: rgb(255 249 242 / 16%);padding: 7px 18px;display: inline-block;color: var(--brand-ivory);font-size: 16px;border-radius: 40px;backdrop-filter: blur(10px);}
-.sub-heading-tag {background-color: rgb(209 170 104 / 80%);padding: 7px 18px;border-radius: 40px;color: var(--brand-ivory);font-size: 17px;margin-bottom: 13px;display: inline-block;}
+.past-wedding-details-widget .past-tags .tag {background-color: rgb(75 61 52 / 78%);padding: 7px 18px;display: inline-block;color: var(--brand-ivory);font-size: 16px;border-radius: 40px;backdrop-filter: blur(10px);}
+.sub-heading-tag {background-color: var(--brand-champagne);padding: 7px 18px;border-radius: 40px;color: var(--brand-espresso);font-weight: 700;font-size: 17px;margin-bottom: 13px;display: inline-block;}
 
 
 
@@ -1453,7 +1465,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
 .venue-card-sidebar .btn.btn-outline-main:hover {background-color: var(--brand-taupe);border: solid 2px var(--brand-champagne);color: var(--brand-ivory);}
 .venue-card-sidebar .card-footer-text {display: flex; gap: 7px; justify-content: center; border-top: solid 1px var(--brand-sand); background-color: var(--brand-ivory);font-size: 14px;color: var(--brand-taupe);padding: 20px 0px;border-radius: 0px 0px 20px 20px;}
 .venue-card-sidebar .card-footer-text .dot {color: var(--brand-burgundy);}
-.sub-heading {color: var(--brand-burgundy);font-size: 14px;font-weight: 600;}
+.sub-heading {color: var(--brand-burgundy);font-size: 14px;font-weight: 700;font-family: var(--brand-font-body);letter-spacing: 0.08em;}
 .post-wedding-widget p {color: var(--brand-taupe);font-size: 17px;line-height: 26px;}
 .quote-box {border: solid 1px var(--brand-sand);background-color: var(--brand-ivory);border-radius: 12px;display: flex;gap: 30px;padding: 28px 32px;}
 .quote-box .quote-icon img {width: 58px;}
