@@ -2363,8 +2363,9 @@ body .offcanvas.offcanvas-start.CostSummary.vw-budget-results {width: min(920px,
 .testimonials-wrapper img.img-fluid {object-fit: cover;}
 /* Calendar weekday letters were 12.6px (flatpickr's 90%). */
 span.flatpickr-weekday {font-size: 14px !important;}
-/* Compare page: the "Rooms & Meals" hint under each day was 12px. */
-.day-block small {font-size: 14px;}
+/* Compare page: the "Rooms & Meals" hint under each day was 12px. The page's own
+   <style> sets the same selector later, hence the body prefix. */
+body .day-block small {font-size: 14px;}
 /* "View More" and map links were 21px-tall tap targets. */
 .view-more-btn, .view-link {display: inline-block;padding-top: 10px;padding-bottom: 10px;}
 /* About page section copy was 15px against 17px everywhere else. */
