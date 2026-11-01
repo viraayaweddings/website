@@ -194,8 +194,8 @@ export function renderListingCards(posts: BlogPost[], labels?: ResolvedLabels): 
         <div class="blog-content">
             <div>
                 <span class="blog-category">${escapeHtml(post.category)}</span>
-                <h5 class="blog-title">${escapeHtml(post.cardTitle)}</h5>
-                <p class="blog-text">${escapeHtml(post.cardExcerpt)}</p>
+                <h5 class="blog-title">${escapeHtml(decodeEntities(post.cardTitle))}</h5>
+                <p class="blog-text">${escapeHtml(decodeEntities(post.cardExcerpt))}</p>
             </div>
             <a href="/blogs/${escapeHtml(post.slug)}" class="btn blog-read-more">${readMore || "Read More"} </a>
         </div>

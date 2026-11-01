@@ -7,6 +7,7 @@ import { filterCityMarkup } from "./city-menu";
 import { restoreHomeNavItem } from "./header-nav";
 import { loadMediaDimensions } from "./image-dimensions";
 import { isHtmlResponse } from "./inject";
+import { isHeldBack } from "./seo-hold";
 
 const legacyMediaPaths = imageMigrationMap as Record<string, string>;
 
@@ -224,6 +225,26 @@ function mediaPathFor(publicPath: string, suffix = ""): string | null {
   return migrated ? `${migrated}${suffix}` : null;
 }
 
+/**
+ * Two kinds of stale reference left in stored shells.
+ *
+ * One blog shell (top-beachside-wedding-venues-goa) points its phone menu icon
+ * at `assets/images/menu.svg`, a bare relative path that resolves under
+ * /blogs/ and 404s, so the menu button rendered empty. Anchoring it to
+ * /user/assets/ lets the media map below find it like every other page's.
+ *
+ * The city landing pages link to /appointment-booking, which only redirects to
+ * the consultation page.
+ */
+const BARE_ASSET_PATH = /(\b(?:src|href)=")assets\//g;
+const OLD_BOOKING_LINK = /href="\/appointment-booking\/?"/g;
+
+function fixStaleReferences(html: string): string {
+  return html
+    .replace(BARE_ASSET_PATH, "$1/user/assets/")
+    .replace(OLD_BOOKING_LINK, 'href="/wedding-consultation"');
+}
+
 function rewriteLegacyMediaPaths(html: string, pathname: string): string {
   const baseUrl = pageBaseUrl(pathname || "/");
 
@@ -286,6 +307,13 @@ function injectEnhancements(html: string, pathname: string): string {
     next = next.replace(/<body([^>]*)>/i, `<body$1>${SKIP_LINK}`);
   }
 
+  // A held-back page keeps answering but tells crawlers to leave it out,
+  // whatever robots tag its stored copy carries.
+  if (isHeldBack(pathname)) {
+    next = next.replace(/<meta\s+name="robots"[^>]*>/gi, "");
+    next = next.replace("</head>", '<meta name="robots" content="noindex, nofollow"></head>');
+  }
+
   if (!next.includes("/js/cookie-consent.js")) {
     next = next.replace("</head>", '<script src="/js/cookie-consent.js" defer></script></head>');
   }
@@ -336,6 +364,7 @@ export async function enhancePublicHtml(
   let html = await response.text();
   html = injectEnhancements(html, pathname);
   html = filterCityMarkup(html, publishedCityIds(calculator));
+  html = fixStaleReferences(html);
   html = rewriteLegacyMediaPaths(html, pathname);
 
   const dimensions = await loadMediaDimensions();

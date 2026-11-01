@@ -37,6 +37,24 @@ import {
 import type { CityPage, StaticPage } from "../db/schema";
 import type { ResolvedLabels } from "./labels";
 
+/**
+ * The seeded description every city index shipped with. 46 cities still carry
+ * it, which gave 46 pages one identical description; a city that has its own
+ * keeps it, and the rest get one naming the place (taken from the SEO title,
+ * "Luxury Wedding Hotels in Agra | Viraaya Weddings") and its venue count.
+ */
+const GENERIC_CITY_DESCRIPTION =
+  "Browse luxury destination wedding hotels and venues across India. Filter by city, rooms and guest capacity.";
+
+function cityDescription(cityPage: { metaDescription: string; seoTitle: string }, total: number): string {
+  const own = cityPage.metaDescription.trim();
+  if (own && own !== GENERIC_CITY_DESCRIPTION) return own;
+  const place = /\bin (.+?)\s*\|/.exec(cityPage.seoTitle)?.[1];
+  if (!place) return own;
+  const count = total > 1 ? `${total} ` : "";
+  return `Compare ${count}luxury wedding hotels and venues in ${place} by rooms and guest capacity, then check availability and costs with Viraaya Weddings.`;
+}
+
 export interface InjectionInput {
   settings: ResolvedSettings;
   heroSlides: HeroSlide[];
@@ -267,7 +285,7 @@ export function injectManagedContent(
     });
     rewriter.on('meta[name="description"]', {
       element(element) {
-        element.setAttribute("content", cityPage.metaDescription);
+        element.setAttribute("content", cityDescription(cityPage, total));
       },
     });
     rewriter.on('input[name="city_ids[]"]', {

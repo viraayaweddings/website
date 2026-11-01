@@ -45,7 +45,10 @@ const PLANNING: Link[] = [
   { href: "/check-hotel-availability", label: "Hotel Availability Check" },
   { href: "/hotel-cost-calculator", label: "Hotel Cost Calculator" },
   { href: "/hotel-listing?country=india", label: "Indian Venues" },
-  { href: "/faqs", label: "FAQs" },
+  // FAQs is held back: its two answers are placeholder copy (Lorem Ipsum), so
+  // the page is noindex and out of the sitemap until real answers are written.
+  // Restoring it is putting this line back and dropping /faqs from
+  // HELD_BACK_PATHS in seo-hold.ts.
 ];
 
 /**

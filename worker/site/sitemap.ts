@@ -7,6 +7,7 @@ import { getDb } from "../db/client";
 import { blogPosts, hotels, staticPages } from "../db/schema";
 import { STATIC_PUBLIC_ROUTES } from "./static-routes.generated";
 import { loadStaticPagePaths } from "./static-pages";
+import { isHeldBack } from "./seo-hold";
 
 function escapeXml(value: string): string {
   return value
@@ -103,6 +104,16 @@ const EXCLUDED_FROM_SITEMAP = new Set([
   "/appointment-booking",
 ]);
 
+/**
+ * The wedding packages area is unpublished but still answers (see
+ * scripts/lib/unpublish-packages-transform.mjs): its pages are stored rows
+ * marked `noindex`, so they come back through `loadStaticPagePaths` unless
+ * they are dropped here.
+ */
+function isUnpublishedPackagesPath(path: string): boolean {
+  return path === "/package" || path === "/wedding-packages" || path.startsWith("/wedding-packages/");
+}
+
 export async function buildSitemapXml(origin: string, env: DatabaseEnv): Promise<string> {
   const lastmod = await contentLastModified(env);
 
@@ -111,7 +122,9 @@ export async function buildSitemapXml(origin: string, env: DatabaseEnv): Promise
       [...STATIC_PUBLIC_ROUTES, ...(await managedRoutes(env))].map(canonicalPath),
     ),
   ]
-    .filter((path) => !EXCLUDED_FROM_SITEMAP.has(path))
+    .filter(
+      (path) => !EXCLUDED_FROM_SITEMAP.has(path) && !isUnpublishedPackagesPath(path) && !isHeldBack(path),
+    )
     .sort();
 
   const body = urls

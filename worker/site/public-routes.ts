@@ -13,14 +13,14 @@ export const CONSULTATION_SLOTS = [
 
 /** Permanent public URL redirects (old path → new path). */
 export const PUBLIC_REDIRECTS: Readonly<Record<string, string>> = {
-  "/appointment-booking": "/wedding-consultation/",
-  "/appointment-booking/": "/wedding-consultation/",
-  "/blogs/category/weeding-planning": "/blogs/category/wedding-planning/",
-  "/blogs/category/weeding-planning/": "/blogs/category/wedding-planning/",
-  "/appointment/payment-success": "/appointment/confirmation/",
-  "/appointment/payment-success/": "/appointment/confirmation/",
-  "/appointment/payment-failed": "/appointment/request-failed/",
-  "/appointment/payment-failed/": "/appointment/request-failed/",
+  "/appointment-booking": "/wedding-consultation",
+  "/appointment-booking/": "/wedding-consultation",
+  "/blogs/category/weeding-planning": "/blogs/category/wedding-planning",
+  "/blogs/category/weeding-planning/": "/blogs/category/wedding-planning",
+  "/appointment/payment-success": "/appointment/confirmation",
+  "/appointment/payment-success/": "/appointment/confirmation",
+  "/appointment/payment-failed": "/appointment/request-failed",
+  "/appointment/payment-failed/": "/appointment/request-failed",
 };
 
 export function publicRedirectTarget(pathname: string): string | null {
