@@ -623,7 +623,7 @@ ul#hotelTabs li button:hover {background: var(--brand-ivory);color: var(--brand-
 .luxury-venues-wrapper .widget .search-box input {outline: none;}
 .luxury-venues-wrapper .widget .search-box input::placeholder {color: var(--brand-taupe);}
 .luxury-venues-wrapper .widget .search-box {height: 44px;border-radius: 40px;padding: 0px 12px 0px 22px;width: 216px;}
-.luxury-venues-wrapper .content-widget .content02 a.btn {height: 48px;width: 188px;letter-spacing: 0.04em;}
+.luxury-venues-wrapper .content-widget .content02 a.btn {height: 48px;min-width: 188px;letter-spacing: 0.04em;}
 .product-slider .slick-slide {padding: 0 12px;box-sizing: border-box;}
 .product-slider .slick-list {margin: 0 -12px;}
 .luxury-venues-wrapper .product-slider .slick-slide {padding: 0 8px;}
