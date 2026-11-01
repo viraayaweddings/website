@@ -2283,3 +2283,28 @@ ul#hotelTabs .nav-link.active {
   .vw-footer-card-row {flex-direction: column; align-items: flex-start;}
   .vw-footer-nav {gap: 18px;}
 }
+
+/* Budget calculator results: hotel cards like the listing pages, two
+   columns in a panel widened while the results are up. */
+body .offcanvas.offcanvas-start.CostSummary.vw-budget-results {width: min(920px, 100vw) !important;max-width: min(920px, 100vw) !important;}
+.vw-result-heading {font-size: 14px;font-weight: 700;letter-spacing: .06em;text-transform: uppercase;color: var(--brand-taupe);margin: 22px 0 12px;}
+.vw-result-grid {list-style: none;padding: 0;margin: 0;display: grid;grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));gap: 18px;}
+.vw-result-card {display: flex;flex-direction: column;background-color: var(--brand-ivory);border: 1px solid rgb(209 170 104 / 22%);border-radius: 22px;overflow: hidden;}
+.vw-result-card.is-fit {border-color: var(--brand-champagne);box-shadow: 0 0 0 1px var(--brand-champagne);}
+.vw-result-img {display: block;height: 190px;overflow: hidden;}
+.vw-result-img img {width: 100%;height: 100%;object-fit: cover;transition: transform .4s ease;}
+.vw-result-card:hover .vw-result-img img {transform: scale(1.06);}
+.vw-result-body {display: flex;flex: 1 1 auto;flex-direction: column;gap: 8px;padding: 16px 14px;}
+.vw-result-name {margin: 0;font-family: var(--brand-font-display);font-size: 20px;font-weight: 600;line-height: 1.3;color: var(--brand-espresso);}
+.vw-result-name a {color: inherit;}
+.vw-result-place, .vw-result-meta {display: flex;flex-wrap: wrap;align-items: center;gap: 6px;margin: 0;font-size: 16px;color: var(--brand-espresso);}
+.vw-result-meta {gap: 18px;font-weight: 600;}
+.vw-result-meta i {margin-right: 6px;color: var(--brand-burgundy);}
+.vw-result-price {display: flex;align-items: baseline;justify-content: space-between;gap: 8px;margin-top: 4px;padding-top: 10px;border-top: 1px solid var(--brand-sand);}
+.vw-result-price span {font-size: 14px;color: var(--brand-taupe);}
+.vw-result-price strong {font-size: 20px;font-weight: 700;color: var(--brand-burgundy);white-space: nowrap;}
+.vw-result-note {margin: 0;font-size: 14px;color: var(--brand-burgundy);}
+.vw-result-actions {display: flex;gap: 8px;margin-top: auto;padding-top: 6px;}
+.vw-result-actions .btn {display: inline-flex;align-items: center;justify-content: center;height: 42px;padding: 0 16px;font-size: 14px;font-weight: 700;text-transform: uppercase;}
+.vw-result-actions .btn-availability {flex: 1 1 auto;}
+.viraaya-budget-enquiry .form-control {font-size: 16px;}

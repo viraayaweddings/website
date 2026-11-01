@@ -46,7 +46,6 @@
     'use strict';
 
     var ENDPOINT = '/api/calculator/budget-match';
-    var GOLD = '#6A4147'; // brand Burgundy: accent text on light grounds
     var INK = '#4B3D34';
 
     /**
@@ -214,35 +213,78 @@
 
     /* ---------------------------------------------------------------------
      * The results panel
+     *
+     * Each hotel is a card like the ones on the hotel listing pages: photo,
+     * name, place, rooms and guests, then the estimate and the same Details /
+     * Check Availability pair. The answer from the budget endpoint carries
+     * only the calculator's own fields (name, rooms, price), so the photo, the
+     * venue page and the guest capacity come from /data/hotel-listing-data.json
+     * -- the payload the listing pages already read -- joined on the same
+     * calculator hotel id. A hotel with no venue page still gets a card, just
+     * without the photo and the Details link.
      * ------------------------------------------------------------------ */
-    function hotelRow(hotel, format, highlight) {
-        var capacity = hotel.total_rooms > 0
-            ? '<span style="font-size:11px;color:#766559;"> &middot; ' + hotel.total_rooms + ' rooms</span>'
-            : '';
-        var note = hotel.over_capacity
-            ? '<div style="font-size:11px;color:#b3261e;margin-top:2px;">Fewer rooms than your busiest day needs</div>'
-            : '';
+    var LISTING_DATA = '/data/hotel-listing-data.json';
+    var PIN_ICON = '/media/legacy/128f0249f07c980b.svg';
+    var venuesRequest = null;
 
-        return ''
-            + '<li style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;'
-            + 'padding:10px 12px;border-radius:8px;margin-bottom:6px;'
-            + 'background:' + (highlight ? '#E7D9CD' : '#FFF9F2') + ';'
-            + 'border:1px solid ' + (highlight ? '#D1AA68' : '#E7D9CD') + ';">'
-            + '<div><span style="font-size:13px;color:' + INK + ';font-weight:600;">'
-            + escapeHtml(hotel.name) + '</span>' + capacity + note + '</div>'
-            + '<span style="font-size:13px;font-weight:600;color:' + GOLD + ';white-space:nowrap;">'
-            + format(hotel.total) + '</span>'
-            + '</li>';
+    function venueDirectory() {
+        if (!venuesRequest) {
+            venuesRequest = fetch(LISTING_DATA, { credentials: 'same-origin' })
+                .then(function (response) { return response.ok ? response.json() : null; })
+                .then(function (data) {
+                    var byId = {};
+                    (data && Array.isArray(data.hotels) ? data.hotels : []).forEach(function (venue) {
+                        byId[String(venue.id)] = venue;
+                    });
+                    return byId;
+                })
+                // Cards without photos beat no answer at all.
+                .catch(function () { return {}; });
+        }
+        return venuesRequest;
     }
 
-    function listBlock(title, hotels, format, highlight) {
+    function hotelCard(hotel, venue, place, format, fits) {
+        var name = escapeHtml(hotel.name);
+        var href = venue && venue.url ? escapeHtml(venue.url) : '';
+        var rooms = hotel.total_rooms || (venue && venue.rooms) || 0;
+        var pax = venue && venue.capacity > 0 ? venue.capacity : 0;
+
+        var image = href && venue.image
+            ? '<a class="vw-result-img" href="' + href + '"><img src="' + escapeHtml(venue.image) + '" alt="' + name
+              + '" decoding="async" loading="lazy"></a>'
+            : '';
+        var title = href ? '<a href="' + href + '">' + name + '</a>' : name;
+        var meta = (rooms ? '<span><i class="fa fa-solid fa-bed" aria-hidden="true"></i>' + rooms + ' Rooms</span>' : '')
+            + (pax ? '<span><i class="fa-solid fa-users" aria-hidden="true"></i>' + pax + ' Pax</span>' : '');
+        var note = hotel.over_capacity
+            ? '<p class="vw-result-note">Fewer rooms than your busiest day needs</p>'
+            : '';
+        var details = href ? '<a href="' + href + '" class="btn sm-btn font-family02 btn-details">Details</a>' : '';
+
+        return ''
+            + '<li class="vw-result-card' + (fits ? ' is-fit' : '') + '">'
+            + image
+            + '<div class="vw-result-body">'
+            + '<h6 class="vw-result-name">' + title + '</h6>'
+            + (place ? '<p class="vw-result-place"><img src="' + PIN_ICON + '" width="14" alt="">' + escapeHtml(place) + '</p>' : '')
+            + (meta ? '<p class="vw-result-meta">' + meta + '</p>' : '')
+            + '<div class="vw-result-price"><span>Estimated total</span><strong>' + format(hotel.total) + '</strong></div>'
+            + note
+            + '<div class="vw-result-actions">' + details
+            + '<a href="/check-hotel-availability" class="btn sm-btn font-family02 btn-availability">Check Availability</a>'
+            + '</div></div></li>';
+    }
+
+    function cardBlock(title, hotels, venues, place, format, fits) {
         if (!hotels.length) return '';
         return ''
             + '<div class="mb-3">'
-            + '<div style="font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#766559;margin-bottom:8px;">'
-            + escapeHtml(title) + '</div>'
-            + '<ul style="list-style:none;padding:0;margin:0;">'
-            + hotels.map(function (hotel) { return hotelRow(hotel, format, highlight); }).join('')
+            + '<div class="vw-result-heading">' + escapeHtml(title) + '</div>'
+            + '<ul class="vw-result-grid">'
+            + hotels.map(function (hotel) {
+                return hotelCard(hotel, venues[String(hotel.id)], place, format, fits);
+            }).join('')
             + '</ul></div>';
     }
 
@@ -263,7 +305,7 @@
             + '<form method="post" action="/api/lead" data-form-name="Cost Calculator Budget Enquiry"'
             + ' class="viraaya-budget-enquiry mt-4 p-3" style="background:#FFF9F2;border:1px solid #E7D9CD;border-radius:10px;">'
             + hidden
-            + '<div style="font-size:13px;font-weight:600;color:' + INK + ';margin-bottom:10px;">'
+            + '<div style="font-size:16px;font-weight:600;color:' + INK + ';margin-bottom:10px;">'
             + 'Send this to our team</div>'
             + '<div class="form-group mb-2"><input type="text" class="form-control" name="name"'
             + ' placeholder="Your name" required></div>'
@@ -271,7 +313,7 @@
             + ' placeholder="Phone number" required></div>'
             + '<div class="form-group mb-3"><input type="email" class="form-control" name="email"'
             + ' placeholder="Email address" required></div>'
-            + '<button type="submit" class="btn font-family03 fw-700 fs-13 text-uppercase w-100">Send Enquiry</button>'
+            + '<button type="submit" class="btn font-family03 fw-700 text-uppercase w-100">Send Enquiry</button>'
             + '</form>';
     }
 
@@ -301,31 +343,34 @@
 
         return ''
             + '<h5 class="text-prime-dark fw600 mb-1">' + headline + '</h5>'
-            + '<p class="font-family03" style="font-size:12px;color:#766559;">' + subline + '</p>';
+            + '<p class="font-family03" style="font-size:16px;color:#766559;">' + subline + '</p>';
     }
 
-    function renderResults(result, format) {
+    function renderResults(result, format, venues) {
         var fitting = result.hotels.filter(function (hotel) { return hotel.fits; });
         var others = result.hotels.filter(function (hotel) { return !hotel.fits; });
 
         var body = summaryHead(result, format);
 
-        body += listBlock('Within your budget', fitting, format, true);
+        var place = result.city ? result.city.name : '';
+        body += cardBlock('Within your budget', fitting, venues, place, format, true);
         // Capped rather than dropped silently: a city with 30 priced hotels
         // would otherwise bury the enquiry form under a wall of rows.
-        body += listBlock(
+        body += cardBlock(
             fitting.length ? 'Outside your budget' : 'Closest to your budget',
             others.slice(0, 12),
+            venues,
+            place,
             format,
             false,
         );
         if (others.length > 12) {
-            body += '<p class="font-family03" style="font-size:11px;color:#766559;">'
+            body += '<p class="font-family03" style="font-size:14px;color:#766559;">'
                 + 'Showing the 12 closest of ' + others.length + ' other hotels here.</p>';
         }
 
         if (result.unpriced.length) {
-            body += '<p class="font-family03" style="font-size:11px;color:#766559;">'
+            body += '<p class="font-family03" style="font-size:14px;color:#766559;">'
                 + result.unpriced.length + ' more '
                 + (result.unpriced.length === 1 ? 'hotel is' : 'hotels are')
                 + ' priced on request and are not costed above: '
@@ -371,6 +416,17 @@
         if (stray) stray.remove();
 
         target.innerHTML = html + disclaimerHtml;
+
+        // Wide enough for two columns of cards while the results are up. The
+        // venue pages reuse this panel for their own one-hotel summary, so the
+        // class comes off again when it closes.
+        offcanvas.classList.add('vw-budget-results');
+        if (!offcanvas.dataset.vwBudgetWatch) {
+            offcanvas.dataset.vwBudgetWatch = '1';
+            offcanvas.addEventListener('hidden.bs.offcanvas', function () {
+                offcanvas.classList.remove('vw-budget-results');
+            });
+        }
         target.scrollTop = 0;
         offcanvas.scrollTop = 0;
 
@@ -502,15 +558,17 @@
                 return response.json().then(function (data) { return { ok: response.ok, data: data }; });
             }),
             makeFormatter(),
+            venueDirectory(),
         ])
             .then(function (parts) {
                 var result = parts[0];
                 var format = parts[1];
+                var venues = parts[2];
                 if (!result.ok || !result.data || result.data.ok === false) {
                     window.alert((result.data && result.data.message) || 'Could not work out costs right now.');
                     return;
                 }
-                showPanel(renderResults(result.data, format));
+                showPanel(renderResults(result.data, format, venues));
             })
             .catch(function () {
                 window.alert('Could not work out costs right now. Please try again.');
