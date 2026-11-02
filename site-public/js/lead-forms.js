@@ -672,4 +672,27 @@
     event.stopImmediatePropagation();
     submitLead(form);
   }, true);
+
+  /**
+   * The home page opens #BookConsultation on a five-second timer, whatever the
+   * visitor is doing; it landed on top of the cost calculator's results while
+   * they were being read. That timer lives in the stored page, so the guard is
+   * here: a timed open (Bootstrap passes no relatedTarget) is skipped while a
+   * panel or another dialog is open, or while the visitor has been typing in a
+   * form within the last half minute. A click on a button that opens it still
+   * works, since that open carries the button as its relatedTarget.
+   */
+  var lastFormActivity = 0;
+  ["focusin", "input"].forEach(function (type) {
+    document.addEventListener(type, function (event) {
+      if (event.target && event.target.closest && event.target.closest("form")) lastFormActivity = Date.now();
+    }, true);
+  });
+
+  document.addEventListener("show.bs.modal", function (event) {
+    var modal = event.target;
+    if (!modal || modal.id !== "BookConsultation" || event.relatedTarget) return;
+    var otherOpen = document.querySelector(".offcanvas.show, .offcanvas.showing, .modal.show:not(#BookConsultation)");
+    if (otherOpen || Date.now() - lastFormActivity < 30000) event.preventDefault();
+  });
 })();
