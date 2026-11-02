@@ -678,14 +678,18 @@
    * visitor is doing; it landed on top of the cost calculator's results while
    * they were being read. That timer lives in the stored page, so the guard is
    * here: a timed open (Bootstrap passes no relatedTarget) is skipped while a
-   * panel or another dialog is open, or while the visitor has been typing in a
-   * form within the last half minute. A click on a button that opens it still
-   * works, since that open carries the button as its relatedTarget.
+   * panel or another dialog is open, while a calculator search is running, or
+   * within half a minute of the visitor using any field. "Any field", not "a
+   * form": the calculator's inputs sit outside a <form>, and its city and date
+   * pickers are select2 and flatpickr widgets. A click on a button that opens
+   * the popup still works, since that open carries the button as its
+   * relatedTarget.
    */
-  var lastFormActivity = 0;
-  ["focusin", "input"].forEach(function (type) {
+  var FIELD = "input, select, textarea, .select2-container, .flatpickr-calendar";
+  var lastFieldActivity = 0;
+  ["focusin", "input", "change", "mousedown", "touchstart"].forEach(function (type) {
     document.addEventListener(type, function (event) {
-      if (event.target && event.target.closest && event.target.closest("form")) lastFormActivity = Date.now();
+      if (event.target && event.target.closest && event.target.closest(FIELD)) lastFieldActivity = Date.now();
     }, true);
   });
 
@@ -693,6 +697,9 @@
     var modal = event.target;
     if (!modal || modal.id !== "BookConsultation" || event.relatedTarget) return;
     var otherOpen = document.querySelector(".offcanvas.show, .offcanvas.showing, .modal.show:not(#BookConsultation)");
-    if (otherOpen || Date.now() - lastFormActivity < 30000) event.preventDefault();
+    // Not :disabled, which the page also sets on load until the form is filled.
+    var button = document.getElementById("calculateCost");
+    var searching = button && /finding hotels/i.test(button.textContent || "");
+    if (otherOpen || searching || Date.now() - lastFieldActivity < 30000) event.preventDefault();
   });
 })();
